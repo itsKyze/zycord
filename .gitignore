@@ -3,7 +3,7 @@ db/
 dist/
 node_modules
 *.exe
-assets/public/download/*.exe
+!assets/public/download/ZycordSetup.exe
 database.db
 tsconfig.tsbuildinfo
 files/
