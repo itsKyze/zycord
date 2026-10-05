@@ -1,7 +1,27 @@
-const { app, BrowserWindow, Tray, Menu, ipcMain, shell, session, desktopCapturer, clipboard } = require("electron");
+const { app, BrowserWindow, Tray, Menu, ipcMain, shell, session, desktopCapturer, clipboard, nativeImage } = require("electron");
 const path = require("path");
 const UpdaterService = require("./updater/UpdaterService");
 const UpdaterConfig = require("./updater/UpdaterConfig");
+
+// Thumbar and Tray Mascot Icons
+const thumbarIcons = {
+    cameraOn: nativeImage.createFromPath(path.join(__dirname, "../assets/thumbar/camera_on.png")),
+    cameraOff: nativeImage.createFromPath(path.join(__dirname, "../assets/thumbar/camera_off.png")),
+    mic: nativeImage.createFromPath(path.join(__dirname, "../assets/thumbar/mic.png")),
+    micMuted: nativeImage.createFromPath(path.join(__dirname, "../assets/thumbar/mic_muted.png")),
+    headset: nativeImage.createFromPath(path.join(__dirname, "../assets/thumbar/headset.png")),
+    deafen: nativeImage.createFromPath(path.join(__dirname, "../assets/thumbar/deafen.png")),
+    disconnect: nativeImage.createFromPath(path.join(__dirname, "../assets/thumbar/disconnect.png")),
+};
+const trayMascotIcon = nativeImage.createFromPath(path.join(__dirname, "../assets/tray_mascot.png"));
+
+let clientState = {
+    inVoice: false,
+    isMuted: false,
+    isDeafened: false,
+    isVideoOn: false,
+    unreadBadge: "",
+};
 
 // Single Instance Lock
 const gotTheLock = app.requestSingleInstanceLock();
@@ -115,6 +135,7 @@ function createMainWindow() {
 
         mainWindow.show();
         mainWindow.focus();
+        updateThumbarButtons();
 
         // Safely destroy updater window now that main window is visible
         if (updaterWindow && !updaterWindow.isDestroyed()) {
@@ -174,17 +195,15 @@ function createMainWindow() {
     setupScreenShareHandler();
 }
 
-// System Tray
-function createTray() {
-    if (tray) return;
+// System Tray & Thumbnail Toolbar
+function updateTrayMenu() {
+    if (!tray) return;
 
     try {
-        tray = new Tray(ICON_PATH);
-        tray.setToolTip("Zycord");
-
         const contextMenu = Menu.buildFromTemplate([
             {
-                label: "Open Zycord",
+                label: "Zycord",
+                icon: trayMascotIcon,
                 click: () => {
                     mainWindow?.show();
                     mainWindow?.focus();
@@ -192,20 +211,31 @@ function createTray() {
             },
             { type: "separator" },
             {
+                label: "Mute",
+                type: "checkbox",
+                checked: Boolean(clientState.isMuted),
+                click: () => {
+                    mainWindow?.webContents.send("action-toggle-mute");
+                },
+            },
+            {
+                label: "Deafen",
+                type: "checkbox",
+                checked: Boolean(clientState.isDeafened),
+                click: () => {
+                    mainWindow?.webContents.send("action-toggle-deafen");
+                },
+            },
+            {
                 label: "Check for Updates…",
                 click: () => {
                     updaterService?.checkForUpdates();
                 },
             },
             {
-                label: "Start with Windows",
-                type: "checkbox",
-                checked: app.getLoginItemSettings().openAtLogin,
-                click: (menuItem) => {
-                    app.setLoginItemSettings({
-                        openAtLogin: menuItem.checked,
-                        openAsHidden: true,
-                    });
+                label: "Acknowledgements",
+                click: () => {
+                    shell.openExternal("https://app.zyron.site/legal.html");
                 },
             },
             { type: "separator" },
@@ -219,6 +249,68 @@ function createTray() {
         ]);
 
         tray.setContextMenu(contextMenu);
+    } catch (e) {
+        console.warn("[Zycord] Tray context menu error:", e);
+    }
+}
+
+function updateThumbarButtons() {
+    if (!mainWindow || mainWindow.isDestroyed() || process.platform !== "win32") return;
+
+    try {
+        const inVoice = Boolean(clientState.inVoice);
+        const isMuted = Boolean(clientState.isMuted);
+        const isDeafened = Boolean(clientState.isDeafened);
+        const isVideoOn = Boolean(clientState.isVideoOn);
+
+        const buttons = [
+            {
+                tooltip: isVideoOn ? "Turn Off Camera" : "Turn On Camera",
+                icon: isVideoOn ? thumbarIcons.cameraOn : thumbarIcons.cameraOff,
+                flags: inVoice ? [] : ["disabled"],
+                click: () => {
+                    mainWindow?.webContents.send("action-toggle-video");
+                },
+            },
+            {
+                tooltip: isMuted ? "Unmute" : "Mute",
+                icon: isMuted ? thumbarIcons.micMuted : thumbarIcons.mic,
+                flags: [],
+                click: () => {
+                    mainWindow?.webContents.send("action-toggle-mute");
+                },
+            },
+            {
+                tooltip: isDeafened ? "Undeafen" : "Deafen",
+                icon: isDeafened ? thumbarIcons.deafen : thumbarIcons.headset,
+                flags: [],
+                click: () => {
+                    mainWindow?.webContents.send("action-toggle-deafen");
+                },
+            },
+            {
+                tooltip: "Disconnect",
+                icon: thumbarIcons.disconnect,
+                flags: inVoice ? [] : ["disabled"],
+                click: () => {
+                    mainWindow?.webContents.send("action-toggle-disconnect");
+                },
+            },
+        ];
+
+        mainWindow.setThumbarButtons(buttons);
+    } catch (err) {
+        console.warn("[Zycord] Thumbar update error:", err);
+    }
+}
+
+function createTray() {
+    if (tray) return;
+
+    try {
+        tray = new Tray(ICON_PATH);
+        tray.setToolTip("Zycord");
+        updateTrayMenu();
 
         tray.on("click", () => {
             if (mainWindow?.isVisible()) {
@@ -283,11 +375,67 @@ ipcMain.on("set-badge-count", (event, count) => {
     app.setBadgeCount(Number(count) || 0);
 });
 
+// IPC Handlers for Discord Client State (Tray & Taskbar Thumbar)
+ipcMain.on("discord-state-change", (event, state) => {
+    clientState = { ...clientState, ...state };
+    updateTrayMenu();
+    updateThumbarButtons();
+});
+
+ipcMain.on("set-taskbar-badge", (event, dataUrl) => {
+    if (!mainWindow || mainWindow.isDestroyed() || process.platform !== "win32") return;
+    try {
+        if (!dataUrl) {
+            mainWindow.setOverlayIcon(null, "");
+        } else {
+            const overlay = nativeImage.createFromDataURL(dataUrl);
+            mainWindow.setOverlayIcon(overlay, "Unread notifications");
+        }
+    } catch (e) {
+        console.warn("[Zycord] Overlay icon error:", e);
+    }
+});
+
 // App Lifecycle
 app.whenReady().then(() => {
+    if (process.platform === "win32") {
+        try {
+            app.setUserTasks([
+                {
+                    program: process.execPath,
+                    arguments: "--toggle-mute",
+                    iconPath: process.execPath,
+                    iconIndex: 0,
+                    title: "Toggle Mute",
+                    description: "Mute or unmute microphone",
+                },
+                {
+                    program: process.execPath,
+                    arguments: "--toggle-deafen",
+                    iconPath: process.execPath,
+                    iconIndex: 0,
+                    title: "Toggle Deafen",
+                    description: "Deafen or undeafen audio",
+                },
+            ]);
+        } catch (e) {
+            console.warn("[Zycord] JumpList error:", e);
+        }
+    }
+
     createUpdaterWindow();
 
-    app.on("second-instance", () => {
+    app.on("second-instance", (event, commandLine) => {
+        if (Array.isArray(commandLine)) {
+            if (commandLine.includes("--toggle-mute")) {
+                mainWindow?.webContents.send("action-toggle-mute");
+                return;
+            }
+            if (commandLine.includes("--toggle-deafen")) {
+                mainWindow?.webContents.send("action-toggle-deafen");
+                return;
+            }
+        }
         if (mainWindow) {
             if (mainWindow.isMinimized()) mainWindow.restore();
             mainWindow.show();
