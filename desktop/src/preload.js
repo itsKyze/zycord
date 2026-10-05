@@ -54,8 +54,9 @@ window.addEventListener("DOMContentLoaded", () => {
 
         const style = document.createElement("style");
         style.textContent = `
+            :root { --zy-bar-h: 22px; }
             #zycord-titlebar {
-                height: 22px;
+                height: var(--zy-bar-h);
                 background: transparent;
                 display: flex;
                 align-items: center;
@@ -67,7 +68,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 z-index: 999999;
                 user-select: none;
                 -webkit-user-select: none;
-                -webkit-app-region: drag;
+                pointer-events: none;
             }
             .zycord-nav-controls {
                 display: flex;
@@ -75,6 +76,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 gap: 2px;
                 padding-left: 8px;
                 height: 100%;
+                pointer-events: auto;
                 -webkit-app-region: no-drag;
             }
             .zycord-nav-btn {
@@ -98,16 +100,18 @@ window.addEventListener("DOMContentLoaded", () => {
             .zycord-drag-area {
                 flex: 1;
                 height: 100%;
+                pointer-events: auto;
                 -webkit-app-region: drag;
             }
             .zycord-win-controls {
                 display: flex;
                 height: 100%;
+                pointer-events: auto;
                 -webkit-app-region: no-drag;
             }
             .zycord-win-btn {
                 width: 28px;
-                height: 22px;
+                height: 100%;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -124,9 +128,17 @@ window.addEventListener("DOMContentLoaded", () => {
                 background: #f23f43 !important;
                 color: #ffffff !important;
             }
-            #app-mount {
+
+            /* No Discord top bar (login, splash): standalone 22px bar */
+            html:not(.zy-has-bar) #app-mount {
                 padding-top: 22px !important;
                 box-sizing: border-box !important;
+            }
+
+            /* Discord's own top bar present: merge into a single row */
+            html.zy-has-bar .zycord-drag-area {
+                pointer-events: none;
+                -webkit-app-region: no-drag;
             }
             /* Center Zycord logo above login form */
             .discordLogo__921c5,
@@ -148,6 +160,55 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("zycord-btn-min")?.addEventListener("click", () => ipcRenderer.send("window-minimize"));
         document.getElementById("zycord-btn-max")?.addEventListener("click", () => ipcRenderer.send("window-maximize"));
         document.getElementById("zycord-btn-close")?.addEventListener("click", () => ipcRenderer.send("window-close"));
+
+        // Detect Discord's own top bar (title + Inbox/Help) and merge with it
+        const root = document.documentElement;
+        const barStyle = document.createElement("style");
+        barStyle.id = "zycord-native-bar-style";
+        document.head.appendChild(barStyle);
+        let currentBarClass = null;
+        const syncNativeBar = () => {
+            let bar = null;
+            for (const el of document.querySelectorAll('[class^="bar_"], [class*=" bar_"]')) {
+                if (el.closest("#zycord-titlebar")) continue;
+                const r = el.getBoundingClientRect();
+                if (r.top <= 24 && r.height >= 16 && r.height <= 60 && r.width >= window.innerWidth * 0.6) {
+                    bar = el;
+                    break;
+                }
+            }
+            const barClass = bar ? [...bar.classList].find((c) => c.startsWith("bar_")) : null;
+            if (barClass !== currentBarClass) {
+                currentBarClass = barClass;
+                const s = barClass ? `html.zy-has-bar .${CSS.escape(barClass)}` : null;
+                barStyle.textContent = s ? `
+                    ${s} {
+                        -webkit-app-region: drag;
+                        padding-left: 56px !important;
+                        padding-right: 92px !important;
+                        box-sizing: border-box !important;
+                    }
+                    ${s} button, ${s} a, ${s} input, ${s} [role="button"], ${s} [tabindex] {
+                        -webkit-app-region: no-drag;
+                    }
+                ` : "";
+            }
+            if (bar) {
+                root.classList.add("zy-has-bar");
+                root.style.setProperty("--zy-bar-h", `${Math.round(bar.getBoundingClientRect().height)}px`);
+            } else {
+                root.classList.remove("zy-has-bar");
+                root.style.setProperty("--zy-bar-h", "22px");
+            }
+        };
+        let pending = false;
+        new MutationObserver(() => {
+            if (pending) return;
+            pending = true;
+            requestAnimationFrame(() => { pending = false; syncNativeBar(); });
+        }).observe(document.body, { childList: true, subtree: true });
+        window.addEventListener("resize", syncNativeBar);
+        syncNativeBar();
     } catch (err) {
         console.warn("[Zycord] Titlebar injection skipped:", err);
     }
