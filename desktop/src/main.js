@@ -373,11 +373,15 @@ ipcMain.on("updater:close", () => {
 });
 
 // IPC Handlers for DiscordNative & Window Controls
+let lastMaximizeTime = 0;
 ipcMain.on("window-minimize", (event) => {
     const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
     win?.minimize();
 });
 ipcMain.on("window-maximize", (event) => {
+    const now = Date.now();
+    if (now - lastMaximizeTime < 350) return;
+    lastMaximizeTime = now;
     const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
     if (win?.isMaximized()) win.unmaximize();
     else win?.maximize();
