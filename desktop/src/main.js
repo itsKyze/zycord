@@ -76,14 +76,15 @@ function createUpdaterWindow() {
 }
 
 function launchMainWindow() {
-    if (mainWindow) return;
+    if (mainWindow) {
+        if (!mainWindow.isVisible()) {
+            mainWindow.show();
+            mainWindow.focus();
+        }
+        return;
+    }
 
     createMainWindow();
-
-    if (updaterWindow && !updaterWindow.isDestroyed()) {
-        updaterWindow.close();
-        updaterWindow = null;
-    }
 }
 
 // Create Main Application Window
@@ -111,9 +112,46 @@ function createMainWindow() {
     mainWindow.webContents.setUserAgent(DISCORD_USER_AGENT);
     mainWindow.loadURL(APP_URL);
 
-    mainWindow.once("ready-to-show", () => {
+    let hasShown = false;
+    const showMainWindowSafely = () => {
+        if (hasShown) return;
+        hasShown = true;
+        if (!mainWindow || mainWindow.isDestroyed()) return;
+
         mainWindow.show();
         mainWindow.focus();
+
+        // Safely destroy updater window now that main window is visible
+        if (updaterWindow && !updaterWindow.isDestroyed()) {
+            updaterWindow.destroy();
+            updaterWindow = null;
+        }
+    };
+
+    mainWindow.once("ready-to-show", () => {
+        showMainWindowSafely();
+    });
+
+    mainWindow.webContents.once("did-finish-load", () => {
+        showMainWindowSafely();
+    });
+
+    // Safety fallback: ensure window shows within 2.5s even on slow network
+    setTimeout(showMainWindowSafely, 2500);
+
+    mainWindow.webContents.on("did-fail-load", (event, errorCode, errorDescription) => {
+        console.warn("[Zycord] Page load notice:", errorCode, errorDescription);
+        showMainWindowSafely();
+    });
+
+    // Keyboard shortcuts for convenience (Ctrl+R to reload, Ctrl+Shift+I for DevTools)
+    mainWindow.webContents.on("before-input-event", (event, input) => {
+        if (input.control && input.key.toLowerCase() === "r") {
+            mainWindow.reload();
+        }
+        if (input.control && input.shift && input.key.toLowerCase() === "i") {
+            mainWindow.webContents.toggleDevTools();
+        }
     });
 
     // External URL handling
@@ -265,6 +303,15 @@ app.whenReady().then(() => {
 app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createUpdaterWindow();
+    }
+});
+
+app.on("window-all-closed", (e) => {
+    if (isQuitting) {
+        app.quit();
+    } else {
+        // Prevent default quit so transitioning between updater and main window doesn't terminate process
+        e.preventDefault();
     }
 });
 

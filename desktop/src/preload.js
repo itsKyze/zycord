@@ -40,8 +40,9 @@ try {
 
 // Inject Discord Frameless Window Controls and Drag Bar
 window.addEventListener("DOMContentLoaded", () => {
-    // Inject custom Discord titlebar if not already present
-    if (document.getElementById("zycord-titlebar")) return;
+    try {
+        if (!document.body || !document.head) return;
+        if (document.getElementById("zycord-titlebar")) return;
 
     const titlebar = document.createElement("div");
     titlebar.id = "zycord-titlebar";
@@ -132,4 +133,7 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("zycord-btn-min")?.addEventListener("click", () => DiscordNative.window.minimize());
     document.getElementById("zycord-btn-max")?.addEventListener("click", () => DiscordNative.window.maximize());
     document.getElementById("zycord-btn-close")?.addEventListener("click", () => DiscordNative.window.close());
+    } catch (err) {
+        console.warn("[Zycord] Titlebar injection skipped:", err);
+    }
 });

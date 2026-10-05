@@ -59,6 +59,23 @@ router.get(
     },
 );
 
+router.get(
+    ["/portable", "/windows/portable"],
+    route({
+        spacebarOnly: true,
+        authentication: "never",
+    }),
+    async (req: Request, res: Response) => {
+        const localPortable = path.join(PAGE_FOLDER, "Zycord-Portable.exe");
+        try {
+            await fs.access(localPortable);
+            return res.download(localPortable, "Zycord-Portable.exe");
+        } catch {
+            res.redirect("https://github.com/itsKyze/zycord/releases/latest/download/Zycord-Portable.exe");
+        }
+    },
+);
+
 router.use(express.static(PAGE_FOLDER, { index: false, setHeaders: (res) => res.set("Cache-Control", "no-cache") }));
 
 export default router;

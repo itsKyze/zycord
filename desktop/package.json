@@ -33,22 +33,32 @@
                     "arch": [
                         "x64"
                     ]
+                },
+                {
+                    "target": "portable",
+                    "arch": [
+                        "x64"
+                    ]
                 }
             ],
-            "icon": "assets/icon.ico",
-            "artifactName": "ZycordSetup.${ext}"
+            "icon": "assets/icon.ico"
         },
         "nsis": {
             "oneClick": true,
             "perMachine": false,
-            "allowElevation": true,
+            "allowElevation": false,
             "allowToChangeInstallationDirectory": false,
             "createDesktopShortcut": "always",
             "createStartMenuShortcut": true,
             "shortcutName": "Zycord",
             "uninstallDisplayName": "Zycord",
             "runAfterFinish": true,
-            "deleteAppDataOnUninstall": false
+            "deleteAppDataOnUninstall": false,
+            "include": "installer.nsh",
+            "artifactName": "ZycordSetup.${ext}"
+        },
+        "portable": {
+            "artifactName": "Zycord-Portable.${ext}"
         },
         "publish": [
             {
