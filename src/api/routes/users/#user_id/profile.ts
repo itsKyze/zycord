@@ -26,7 +26,7 @@ import { PartialConnectedAccountResponse, PrivateUserProjection, PublicUserProje
 
 import { prideBadges } from "@spacebar/api/util/utility/prideBadges";
 
-import { isSubscriptionBadge } from "@spacebar/api/util/utility/profile";
+import { BOOST_MILESTONES, calculateMonthsElapsed, isSubscriptionBadge, NITRO_MILESTONES } from "@spacebar/api/util/utility/profile";
 
 import { profileApplication } from "@spacebar/api/util/handlers/Application";
 
@@ -114,13 +114,40 @@ router.get("/", route({ responses: { 200: { body: "UserProfileResponse" } } }), 
         ? (user.premium_since ?? user.created_at ?? new Date())
         : null;
 
-    if (premiumSince && !badges.some((b) => isSubscriptionBadge(b))) {
+    if (premiumSince) {
         const sinceDate = new Date(premiumSince);
+        const months = calculateMonthsElapsed(sinceDate);
+        const milestone = NITRO_MILESTONES.find((m) => months >= m.months);
+        const badgeId = milestone?.id ?? "premium";
+        const badgeIcon = milestone?.icon ?? "2ba85e8026a8614b640c2837bcdfe21b";
         const formatted = sinceDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+        for (let i = badges.length - 1; i >= 0; i--) {
+            if (isSubscriptionBadge(badges[i])) {
+                badges.splice(i, 1);
+            }
+        }
+
         badges.unshift({
-            id: "premium",
+            id: badgeId,
             description: `Subscriber since ${formatted}`,
-            icon: "2ba85e8026a8614b640c2837bcdfe21b",
+            icon: badgeIcon,
+            link: null,
+        } as unknown as Badge);
+    }
+
+    if (guild_member?.premium_since && !badges.some((b) => b.id.startsWith("guild_booster"))) {
+        const boostDate = new Date(guild_member.premium_since);
+        const boostMonths = calculateMonthsElapsed(boostDate);
+        const boostMilestone = BOOST_MILESTONES.find((m) => boostMonths >= m.months);
+        const boostBadgeId = boostMilestone?.id ?? "guild_booster_lvl1";
+        const boostBadgeIcon = boostMilestone?.icon ?? "51040c70d4f20a921ad6674ff86fc95c";
+        const formattedBoost = boostDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+        badges.push({
+            id: boostBadgeId,
+            description: `Server boosting since ${formattedBoost}`,
+            icon: boostBadgeIcon,
             link: null,
         } as unknown as Badge);
     }
