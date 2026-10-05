@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Download __INSTANCE_NAME__ for Windows</title>
+        <link rel="icon" href="/favicon.svg" />
+        <style>
+            :root {
+                --bg: #090d16;
+                --bg-gradient: radial-gradient(ellipse 90% 60% at 50% -10%, rgba(88, 101, 242, 0.25), transparent 75%);
+                --card: #111726;
+                --border: rgba(255, 255, 255, 0.08);
+                --text: #f8fafc;
+                --text-secondary: #94a3b8;
+                --text-muted: #64748b;
+                --brand: #5865f2;
+                --brand-hover: #4752c4;
+                --ok: #10b981;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            }
+
+            * {
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                background-color: var(--bg);
+                background-image: var(--bg-gradient);
+                background-repeat: no-repeat;
+                color: var(--text);
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            header {
+                max-width: 1040px;
+                margin: 0 auto;
+                width: 100%;
+                padding: 28px 24px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                text-decoration: none;
+                color: var(--text);
+            }
+
+            .brand-icon {
+                width: 40px;
+                height: 40px;
+                border-radius: 12px;
+                object-fit: cover;
+            }
+
+            .brand-title {
+                font-size: 20px;
+                font-weight: 800;
+                letter-spacing: -0.02em;
+            }
+
+            .nav-link {
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 600;
+                padding: 8px 16px;
+                border-radius: 999px;
+                border: 1px solid var(--border);
+                transition: all 0.2s ease;
+            }
+
+            .nav-link:hover {
+                background: rgba(255, 255, 255, 0.06);
+                color: var(--text);
+            }
+
+            main {
+                max-width: 880px;
+                margin: 0 auto;
+                width: 100%;
+                padding: 40px 24px 80px;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 6px 14px;
+                border-radius: 999px;
+                background: rgba(88, 101, 242, 0.15);
+                border: 1px solid rgba(88, 101, 242, 0.35);
+                color: #818cf8;
+                font-size: 13px;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                margin-bottom: 24px;
+            }
+
+            h1 {
+                margin: 0 0 16px;
+                font-size: 46px;
+                font-weight: 800;
+                letter-spacing: -0.03em;
+                line-height: 1.15;
+            }
+
+            p.lead {
+                margin: 0 auto 36px;
+                font-size: 18px;
+                color: var(--text-secondary);
+                max-width: 600px;
+                line-height: 1.6;
+            }
+
+            .download-card {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 36px 40px;
+                width: 100%;
+                max-width: 540px;
+                box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.6);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 16px;
+            }
+
+            .btn-download {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 12px;
+                width: 100%;
+                padding: 16px 28px;
+                border-radius: 12px;
+                background: var(--brand);
+                color: #ffffff;
+                font-size: 17px;
+                font-weight: 700;
+                text-decoration: none;
+                transition: all 0.2s ease;
+                box-shadow: 0 8px 24px rgba(88, 101, 242, 0.4);
+            }
+
+            .btn-download:hover {
+                background: var(--brand-hover);
+                transform: translateY(-2px);
+                box-shadow: 0 12px 28px rgba(88, 101, 242, 0.55);
+            }
+
+            .btn-download svg {
+                width: 22px;
+                height: 22px;
+                flex: none;
+            }
+
+            .meta-info {
+                font-size: 13px;
+                color: var(--text-muted);
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .or-browser {
+                margin-top: 10px;
+                font-size: 14px;
+                color: var(--text-secondary);
+            }
+
+            .or-browser a {
+                color: #818cf8;
+                text-decoration: none;
+                font-weight: 600;
+            }
+
+            .or-browser a:hover {
+                text-decoration: underline;
+            }
+
+            /* Features Grid */
+            .features-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin-top: 60px;
+                width: 100%;
+                text-align: left;
+            }
+
+            @media (max-width: 720px) {
+                .features-grid {
+                    grid-template-columns: 1fr;
+                }
+                h1 {
+                    font-size: 34px;
+                }
+            }
+
+            .feature-item {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 22px;
+            }
+
+            .feature-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 8px;
+                background: rgba(88, 101, 242, 0.12);
+                color: #818cf8;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 14px;
+            }
+
+            .feature-item h3 {
+                margin: 0 0 6px;
+                font-size: 15px;
+                font-weight: 700;
+            }
+
+            .feature-item p {
+                margin: 0;
+                font-size: 13px;
+                color: var(--text-secondary);
+                line-height: 1.5;
+            }
+
+            footer {
+                max-width: 1040px;
+                margin: 0 auto;
+                width: 100%;
+                padding: 24px;
+                text-align: center;
+                font-size: 13px;
+                color: var(--text-muted);
+                border-top: 1px solid var(--border);
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="/" class="brand">
+                __INSTANCE_ICON__
+                <span class="brand-title">__INSTANCE_NAME__</span>
+            </a>
+            <a href="/app" class="nav-link">Open in Browser</a>
+        </header>
+
+        <main>
+            <div class="badge">Official Desktop Client</div>
+            <h1>Get __INSTANCE_NAME__ for Windows</h1>
+            <p class="lead">
+                Low-latency crystal clear voice, 60fps screen sharing, global push-to-talk, system tray notifications, and seamless automatic updates.
+            </p>
+
+            <div class="download-card">
+                <a href="/download/windows" class="btn-download">
+                    <svg viewBox="0 0 88 88" fill="currentColor">
+                        <path d="M0 12.402l35.687-4.86.016 34.423-35.67.203zm35.67 33.529l.028 34.453L.028 75.48.016 45.728zm4.326-39.027L87.914 0v41.527l-47.918.378zm47.918 44.757L87.914 88l-47.918-6.76V45.792z"/>
+                    </svg>
+                    <span>Download for Windows (64-bit)</span>
+                </a>
+                <div class="meta-info">
+                    <span>Windows 10 / 11 (64-bit)</span>
+                    <span>·</span>
+                    <span>One-Click Discord Setup</span>
+                </div>
+                <div class="or-browser">
+                    or continue in your <a href="/app">Web Browser</a>
+                </div>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Native Low Latency</h3>
+                    <p>Direct hardware acceleration and optimized audio pipeline for zero-delay voice channels.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🖥️</div>
+                    <h3>60fps Screen Sharing</h3>
+                    <p>Stream your gameplay or apps with crisp high frame rate and dedicated system audio capture.</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Automatic Updates</h3>
+                    <p>Launches with an authentic Discord splash screen that checks and updates seamlessly in the background.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            __INSTANCE_NAME__ Desktop Client · Powered by Zyron Solutions Ltd
+        </footer>
+    </body>
+</html>

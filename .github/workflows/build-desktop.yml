@@ -1,0 +1,46 @@
+name: Build Zycord Desktop (Windows EXE)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Desktop Dependencies
+        working-directory: ./desktop
+        run: npm install
+
+      - name: Build Windows Installer (ZycordSetup.exe)
+        working-directory: ./desktop
+        run: npm run build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload ZycordSetup.exe Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Zycord-Windows-Installer
+          path: desktop/dist/ZycordSetup.exe
+
+      - name: Release to GitHub (on tag)
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            desktop/dist/ZycordSetup.exe
+            desktop/dist/latest.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

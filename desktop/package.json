@@ -1,0 +1,67 @@
+{
+    "name": "zycord",
+    "productName": "Zycord",
+    "version": "1.0.0",
+    "description": "Zycord Official Desktop Client - Communication platform by Zyron Solutions Ltd",
+    "main": "src/main.js",
+    "author": "Zyron Solutions Ltd",
+    "license": "AGPL-3.0-only",
+    "scripts": {
+        "start": "electron .",
+        "pack": "electron-builder --dir",
+        "build": "electron-builder --win",
+        "build:dir": "electron-builder --win --dir",
+        "build:portable": "electron-builder --win portable",
+        "dist": "electron-builder --win nsis"
+    },
+    "build": {
+        "appId": "com.zyron.zycord",
+        "productName": "Zycord",
+        "copyright": "Copyright © 2026 Zyron Solutions Ltd",
+        "directories": {
+            "output": "dist",
+            "buildResources": "assets"
+        },
+        "files": [
+            "src/**/*",
+            "assets/**/*"
+        ],
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ],
+            "icon": "assets/icon.ico",
+            "artifactName": "ZycordSetup.${ext}"
+        },
+        "nsis": {
+            "oneClick": true,
+            "perMachine": false,
+            "allowElevation": true,
+            "allowToChangeInstallationDirectory": false,
+            "createDesktopShortcut": "always",
+            "createStartMenuShortcut": true,
+            "shortcutName": "Zycord",
+            "uninstallDisplayName": "Zycord",
+            "runAfterFinish": true,
+            "deleteAppDataOnUninstall": false
+        },
+        "publish": [
+            {
+                "provider": "generic",
+                "url": "https://app.zyron.site/updates/windows/"
+            }
+        ]
+    },
+    "devDependencies": {
+        "electron": "^32.2.0",
+        "electron-builder": "^25.1.8"
+    },
+    "dependencies": {
+        "electron-updater": "^6.3.9"
+    }
+}
