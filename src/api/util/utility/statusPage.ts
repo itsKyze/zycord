@@ -17,7 +17,7 @@
 */
 
 import { In, MoreThan, Not } from "typeorm";
-import { RESOLVED_INCIDENT_STATES, StatusComponent, StatusComponentStatus, StatusIncident } from "@spacebar/database";
+import { RESOLVED_INCIDENT_STATES, StatusComponent, StatusComponentStatus, StatusIncident, getDatabase } from "@spacebar/database";
 import { Config, Snowflake } from "@spacebar/util";
 
 // statuspage.io-compatible shapes, so existing status tooling (and the discord client's upcoming.json poll) understand them
@@ -135,6 +135,11 @@ export async function getStatusSummary() {
             name: Config.get().general.instanceName,
             url: Config.get().general.frontPage,
             updated_at: updatedAt ?? new Date(0),
+        },
+        system: {
+            uptime_seconds: Math.floor(process.uptime()),
+            server_time: now,
+            database_connected: !!getDatabase(),
         },
         status: { indicator, description: INDICATOR_DESCRIPTIONS[indicator] },
         components: components.map((c) => ({ ...serializeComponent(c), ...componentUptime(c, [...open, ...quarter], now) })),
