@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-const NativeBridge = {
+const ZycordNative = {
     isElectron: true,
     window: {
         minimize: () => ipcRenderer.send("window-minimize"),
@@ -9,22 +9,12 @@ const NativeBridge = {
         isMaximized: () => ipcRenderer.sendSync("window-is-maximized"),
         setAlwaysOnTop: (enabled) => ipcRenderer.send("window-set-always-on-top", enabled),
     },
-    clipboard: {
-        copy: (text) => ipcRenderer.send("clipboard-copy", text),
-        read: () => ipcRenderer.sendSync("clipboard-read"),
-    },
-    ipc: {
-        send: (channel, ...args) => ipcRenderer.send(channel, ...args),
-        on: (channel, listener) => ipcRenderer.on(channel, listener),
-    }
 };
 
 try {
-    contextBridge.exposeInMainWorld("DiscordNative", NativeBridge);
-    contextBridge.exposeInMainWorld("ZycordNative", NativeBridge);
+    contextBridge.exposeInMainWorld("ZycordNative", ZycordNative);
 } catch (e) {
-    window.DiscordNative = NativeBridge;
-    window.ZycordNative = NativeBridge;
+    window.ZycordNative = ZycordNative;
 }
 
 // 1. Inject Authentic Top Bar Window Controls (Inbox, Minimize, Maximize, Close)
