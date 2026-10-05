@@ -179,3 +179,172 @@ window.addEventListener("DOMContentLoaded", () => {
         console.warn("[Zycord] Titlebar injection skipped:", err);
     }
 });
+
+// Discord Voice, Mute, Deafen, and Taskbar Integration
+(function setupDiscordIntegration() {
+    let lastState = {
+        inVoice: false,
+        isMuted: false,
+        isDeafened: false,
+        isVideoOn: false,
+    };
+    let lastBadgeText = null;
+
+    // Helper: Render crisp 16x16 red notification badge for Taskbar overlay
+    function renderBadgeDataURL(text) {
+        if (!text) return null;
+        try {
+            const canvas = document.createElement("canvas");
+            canvas.width = 16;
+            canvas.height = 16;
+            const ctx = canvas.getContext("2d");
+
+            // Red circle background
+            ctx.fillStyle = "#f23f43";
+            ctx.beginPath();
+            ctx.arc(8, 8, 7.5, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Dark outline
+            ctx.strokeStyle = "#1e1f22";
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // White text
+            ctx.fillStyle = "#ffffff";
+            ctx.font = "bold 9px sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+
+            const display = text.length > 2 ? "9+" : text;
+            ctx.fillText(display, 8, 8.5);
+
+            return canvas.toDataURL("image/png");
+        } catch (e) {
+            return null;
+        }
+    }
+
+    function checkState() {
+        try {
+            // 1. Mute button detection
+            const muteBtn = document.querySelector(
+                'button[aria-label="Mute"], button[aria-label="Unmute"], button[aria-label*="Mute" i], button[aria-label*="micro" i]'
+            );
+            let isMuted = false;
+            if (muteBtn) {
+                const label = (muteBtn.getAttribute("aria-label") || "").toLowerCase();
+                const checked = muteBtn.getAttribute("aria-checked");
+                isMuted =
+                    label.includes("unmute") ||
+                    label.includes("activer") ||
+                    checked === "true" ||
+                    Boolean(muteBtn.querySelector('[stroke*="red"], [fill*="red"], line'));
+            }
+
+            // 2. Deafen button detection
+            const deafenBtn = document.querySelector(
+                'button[aria-label="Deafen"], button[aria-label="Undeafen"], button[aria-label*="Deafen" i], button[aria-label*="casque" i]'
+            );
+            let isDeafened = false;
+            if (deafenBtn) {
+                const label = (deafenBtn.getAttribute("aria-label") || "").toLowerCase();
+                const checked = deafenBtn.getAttribute("aria-checked");
+                isDeafened =
+                    label.includes("undeafen") ||
+                    label.includes("activer") ||
+                    checked === "true" ||
+                    Boolean(deafenBtn.querySelector('[stroke*="red"], [fill*="red"], line'));
+            }
+
+            // 3. In voice room detection (Voice Connected bar or disconnect button)
+            const disconnectBtn = document.querySelector(
+                'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], [class*="disconnectButton_"]'
+            );
+            const inVoice =
+                Boolean(disconnectBtn) ||
+                Boolean(document.querySelector('[class*="rtcConnectionStatus_"], [class*="voiceUsers_"], [class*="callContainer_"]'));
+
+            // 4. Video state detection
+            const videoBtn = document.querySelector(
+                'button[aria-label*="Camera" i], button[aria-label*="Video" i]'
+            );
+            let isVideoOn = false;
+            if (videoBtn) {
+                const label = (videoBtn.getAttribute("aria-label") || "").toLowerCase();
+                isVideoOn = label.includes("turn off") || label.includes("désactiver");
+            }
+
+            // 5. Unread badge from document.title
+            const titleMatch = /^\((\d+\+?)\)/.exec(document.title);
+            const badgeText = titleMatch ? titleMatch[1] : (document.title.startsWith("•") ? "•" : "");
+
+            if (badgeText !== lastBadgeText) {
+                lastBadgeText = badgeText;
+                const dataUrl = renderBadgeDataURL(badgeText);
+                ipcRenderer.send("set-taskbar-badge", dataUrl);
+            }
+
+            // Notify main process if voice state changed
+            if (
+                lastState.inVoice !== inVoice ||
+                lastState.isMuted !== isMuted ||
+                lastState.isDeafened !== isDeafened ||
+                lastState.isVideoOn !== isVideoOn
+            ) {
+                lastState = { inVoice, isMuted, isDeafened, isVideoOn };
+                ipcRenderer.send("discord-state-change", lastState);
+            }
+        } catch (e) {
+            // Ignore DOM errors
+        }
+    }
+
+    // Check frequently for instant response
+    setInterval(checkState, 400);
+
+    // IPC Action Handlers from Tray & Taskbar Thumbar
+    ipcRenderer.on("action-toggle-mute", () => {
+        const muteBtn = document.querySelector(
+            'button[aria-label="Mute"], button[aria-label="Unmute"], button[aria-label*="Mute" i], button[aria-label*="micro" i]'
+        );
+        if (muteBtn) {
+            muteBtn.click();
+        } else {
+            window.dispatchEvent(new KeyboardEvent("keydown", { key: "M", code: "KeyM", ctrlKey: true, shiftKey: true, bubbles: true }));
+        }
+        setTimeout(checkState, 80);
+    });
+
+    ipcRenderer.on("action-toggle-deafen", () => {
+        const deafenBtn = document.querySelector(
+            'button[aria-label="Deafen"], button[aria-label="Undeafen"], button[aria-label*="Deafen" i], button[aria-label*="casque" i]'
+        );
+        if (deafenBtn) {
+            deafenBtn.click();
+        } else {
+            window.dispatchEvent(new KeyboardEvent("keydown", { key: "D", code: "KeyD", ctrlKey: true, shiftKey: true, bubbles: true }));
+        }
+        setTimeout(checkState, 80);
+    });
+
+    ipcRenderer.on("action-toggle-video", () => {
+        const videoBtn = document.querySelector(
+            'button[aria-label*="Camera" i], button[aria-label*="Video" i]'
+        );
+        if (videoBtn) {
+            videoBtn.click();
+        }
+        setTimeout(checkState, 80);
+    });
+
+    ipcRenderer.on("action-toggle-disconnect", () => {
+        const disconnectBtn = document.querySelector(
+            'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], [class*="disconnectButton_"]'
+        );
+        if (disconnectBtn) {
+            disconnectBtn.click();
+        }
+        setTimeout(checkState, 80);
+    });
+})();
