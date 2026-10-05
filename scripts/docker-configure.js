@@ -41,6 +41,13 @@ section("api").endpointPublic = `${origin}/api/v9`;
 Object.assign(section("cdn"), { endpointPublic: `${origin}/`, endpointPrivate: `http://127.0.0.1:${port}/` });
 section("gateway").endpointPublic = `wss://${domain}/`;
 Object.assign(section("security"), { trustedProxies: env("TRUSTED_PROXIES") ?? "uniquelocal", forwardedFor: "X-Forwarded-For" });
+Object.assign(section("externalRequests"), {
+    discordDecorations: true,
+    discordAssetFallback: true,
+    discordClientAssets: true,
+    discordStickerPacks: true,
+    thirdParty: true,
+});
 
 const regions = section("regions");
 regions.default ??= "spacebar";

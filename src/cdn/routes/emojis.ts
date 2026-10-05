@@ -21,7 +21,7 @@ import { Router, Response, Request } from "express";
 import { fileTypeFromBuffer } from "file-type";
 import { HTTPError } from "lambert-server/HTTPError";
 import { Config } from "@spacebar/util";
-import { storage, multer, setCacheControl, setCacheControlNotFound } from "../util";
+import { storage, multer, setCacheControl, setCacheControlNotFound, fetchUpstreamAsset } from "../util";
 
 // TODO: check premium and animated pfp are allowed in the config
 // TODO: generate different sizes of icon
@@ -65,7 +65,12 @@ router.get("/:emoji_id", setCacheControl, async (req: Request, res: Response) =>
     emoji_id = emoji_id.split(".")[0]; // remove .file extension
     const path = `${pathPrefix}/${emoji_id}`;
 
-    const file = await storage.get(path);
+    let file = await storage.get(path);
+    if (!file && /^[0-9a-fA-F_]{15,40}$/.test(emoji_id)) {
+        const rawId = emoji_id.replace(/^a_/, "");
+        const ext = emoji_id.startsWith("a_") ? "gif" : "png";
+        file = await fetchUpstreamAsset(path, `https://cdn.discordapp.com/emojis/${rawId}.${ext}`);
+    }
     if (!file) return setCacheControlNotFound(req, res);
     const type = await fileTypeFromBuffer(file);
 
