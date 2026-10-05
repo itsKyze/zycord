@@ -49,14 +49,15 @@ COPY --from=build /app/dist dist
 COPY --chown=node:node assets assets
 COPY --from=build --chown=node:node /app/assets/vencord assets/vencord
 COPY scripts/client.js scripts/e2ee-anchors.js scripts/clan-badges.js scripts/compress-client.js scripts/docker-configure.js scripts/
-COPY docker/entrypoint.sh docker/
+COPY --chmod=755 docker/entrypoint.sh docker/
 ARG REVISION=""
 ARG REVISION_TIME="0"
 RUN if [ -n "$REVISION" ]; then printf '{"rev":"%s","lastModified":%s}\n' "$REVISION" "$REVISION_TIME" > .rev; fi \
+    && chmod +x /app/docker/entrypoint.sh \
     && mkdir -p /data/state /data/storage /data/client /run/sfu \
     && ln -s /data/client/cache assets/cache \
     && ln -s /data/client/cache_compressed assets/cache_compressed \
-    && chown -R node:node /data /run/sfu
+    && chown -R node:node /data /run/sfu /app
 USER node
 EXPOSE 3001
 ENTRYPOINT ["/app/docker/entrypoint.sh"]
