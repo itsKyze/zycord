@@ -3,5 +3,5 @@
 !macroend
 
 !macro customInstall
-  ExecShell "open" "$appExe"
+  Exec '"$appExe"'
 !macroend
