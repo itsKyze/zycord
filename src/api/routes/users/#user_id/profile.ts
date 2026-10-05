@@ -110,15 +110,30 @@ router.get("/", route({ responses: { 200: { body: "UserProfileResponse" } } }), 
             ...(x.metadata_visibility != 0 && x.metadata_ ? { metadata: x.metadata_ } : {}),
         }));
 
+    const premiumSince = (!user.hide_premium_badge && (user.premium_type ?? 0) > 0)
+        ? (user.premium_since ?? user.created_at ?? new Date())
+        : null;
+
+    if (premiumSince && !badges.some((b) => isSubscriptionBadge(b))) {
+        const sinceDate = new Date(premiumSince);
+        const formatted = sinceDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+        badges.unshift({
+            id: "premium",
+            description: `Subscriber since ${formatted}`,
+            icon: "2ba85e8026a8614b640c2837bcdfe21b",
+            link: null,
+        } as unknown as Badge);
+    }
+
     res.json({
         user: { ...user.toPartialUser(), bio: user.bio ?? "" },
         connected_accounts,
-        premium_since: null,
+        premium_since: premiumSince,
         premium_type: user.premium_type,
-        premium_guild_since: null,
+        premium_guild_since: guild_member?.premium_since ? new Date(guild_member.premium_since) : null,
         profile_themes_experiment_bucket: 4,
         user_profile: profileMetadata(user),
-        badges: badges.filter((badge) => !isSubscriptionBadge(badge)),
+        badges: user.hide_premium_badge ? badges.filter((badge) => !isSubscriptionBadge(badge)) : badges,
         guild_badges: [],
         widgets: user.profile_widgets ?? [],
         legacy_username: null,
