@@ -53,8 +53,7 @@ const instanceName = env("INSTANCE_NAME");
 const appliedNameFile = path.join(path.dirname(file), ".instance-name");
 const appliedName = fs.existsSync(appliedNameFile) ? fs.readFileSync(appliedNameFile, "utf8") : null;
 // before this was remembered, INSTANCE_NAME was applied on every start, so an existing config already carries it or a newer admin panel name
-const firstRemembered = appliedName === null && !!config.general?.instanceName;
-if (instanceName && instanceName !== appliedName && !firstRemembered) {
+if (instanceName && instanceName !== appliedName) {
     section("general").instanceName = instanceName;
     section("client").instanceName = instanceName;
 }
