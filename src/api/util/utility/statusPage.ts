@@ -19,6 +19,7 @@
 import { In, MoreThan, Not } from "typeorm";
 import { RESOLVED_INCIDENT_STATES, StatusComponent, StatusComponentStatus, StatusIncident, getDatabase } from "@spacebar/database";
 import { Config, Snowflake } from "@spacebar/util";
+import { Monitoring } from "../../../util/monitoring/Monitoring";
 
 // statuspage.io-compatible shapes, so existing status tooling (and the discord client's upcoming.json poll) understand them
 const IMPACT_SEVERITY = { none: 0, maintenance: 1, minor: 2, major: 3, critical: 4 } as const;
@@ -129,6 +130,29 @@ export async function getStatusSummary() {
         null,
     );
 
+    let traffic = null;
+    try {
+        const snap = await Monitoring.snapshot();
+        traffic = {
+            total_requests: snap.requests,
+            errors: snap.errors,
+            rate_limited: snap.rate_limited,
+            memory_heap_used: snap.memory.heapUsed,
+            memory_rss: snap.memory.rss,
+            event_loop_ms: Math.round(snap.event_loop.mean_ms * 100) / 100,
+        };
+    } catch {
+        const mem = process.memoryUsage();
+        traffic = {
+            total_requests: 0,
+            errors: 0,
+            rate_limited: 0,
+            memory_heap_used: mem.heapUsed,
+            memory_rss: mem.rss,
+            event_loop_ms: 0,
+        };
+    }
+
     return {
         page: {
             id: Config.get().general.instanceId,
@@ -140,6 +164,7 @@ export async function getStatusSummary() {
             uptime_seconds: Math.floor(process.uptime()),
             server_time: now,
             database_connected: !!getDatabase(),
+            traffic,
         },
         status: { indicator, description: INDICATOR_DESCRIPTIONS[indicator] },
         components: components.map((c) => ({ ...serializeComponent(c), ...componentUptime(c, [...open, ...quarter], now) })),
