@@ -17,7 +17,7 @@ try {
     window.ZycordNative = ZycordNative;
 }
 
-// Inject Zycord Frameless Window Controls and Drag Bar
+// Inject Discord Authentic Top Bar with Navigation & Window Controls
 window.addEventListener("DOMContentLoaded", () => {
     try {
         if (!document.body || !document.head) return;
@@ -26,34 +26,40 @@ window.addEventListener("DOMContentLoaded", () => {
         const titlebar = document.createElement("div");
         titlebar.id = "zycord-titlebar";
         titlebar.innerHTML = `
-            <div class="zycord-titlebar-drag">
-                <span class="zycord-titlebar-title">Zycord</span>
+            <div class="zycord-nav-controls">
+                <button class="zycord-nav-btn" id="zycord-btn-back" title="Back">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <button class="zycord-nav-btn" id="zycord-btn-forward" title="Forward">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
-            <div class="zycord-titlebar-controls">
-                <button class="zycord-titlebar-btn" id="zycord-btn-min" title="Minimize">
-                    <svg width="12" height="12" viewBox="0 0 12 12"><rect fill="currentColor" width="10" height="1" x="1" y="6"></rect></svg>
-                </button>
-                <button class="zycord-titlebar-btn" id="zycord-btn-max" title="Maximize">
-                    <svg width="12" height="12" viewBox="0 0 12 12"><rect fill="none" stroke="currentColor" width="9" height="9" x="1.5" y="1.5"></rect></svg>
-                </button>
-                <button class="zycord-titlebar-btn close" id="zycord-btn-close" title="Close">
-                    <svg width="12" height="12" viewBox="0 0 12 12"><polygon fill="currentColor" fill-rule="evenodd" points="11 1.576 6.576 6 11 10.424 10.424 11 6 6.576 1.576 11 1 10.424 5.424 6 1 1.576 1.576 1 6 5.424 10.424 1"></polygon></svg>
-                </button>
+            <div class="zycord-drag-area"></div>
+            <div class="zycord-win-controls">
+                <div class="zycord-win-btn" id="zycord-btn-min" title="Minimize">
+                    <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1" x="0" y="5"></rect></svg>
+                </div>
+                <div class="zycord-win-btn" id="zycord-btn-max" title="Maximize">
+                    <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1"></rect></svg>
+                </div>
+                <div class="zycord-win-btn close" id="zycord-btn-close" title="Close">
+                    <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
+                </div>
             </div>
         `;
 
         const style = document.createElement("style");
         style.textContent = `
             #zycord-titlebar {
-                height: 28px;
-                background: #1e1f22;
+                height: 22px;
+                background: transparent;
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                color: #949ba4;
-                font-size: 12px;
-                font-weight: 600;
-                font-family: "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                 position: fixed;
                 top: 0;
                 left: 0;
@@ -61,46 +67,65 @@ window.addEventListener("DOMContentLoaded", () => {
                 z-index: 999999;
                 user-select: none;
                 -webkit-user-select: none;
-            }
-            .zycord-titlebar-drag {
-                flex: 1;
-                height: 100%;
-                display: flex;
-                align-items: center;
-                padding-left: 12px;
                 -webkit-app-region: drag;
             }
-            .zycord-titlebar-title {
-                opacity: 0.8;
-                letter-spacing: 0.02em;
-            }
-            .zycord-titlebar-controls {
+            .zycord-nav-controls {
                 display: flex;
+                align-items: center;
+                gap: 2px;
+                padding-left: 8px;
                 height: 100%;
                 -webkit-app-region: no-drag;
             }
-            .zycord-titlebar-btn {
-                width: 38px;
-                height: 100%;
+            .zycord-nav-btn {
+                width: 18px;
+                height: 18px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: transparent;
                 border: none;
+                color: #80848e;
+                cursor: pointer;
+                border-radius: 3px;
+                padding: 0;
+                transition: color 0.15s ease, background 0.15s ease;
+            }
+            .zycord-nav-btn:hover {
+                color: #dbdee1;
+                background: rgba(255, 255, 255, 0.08);
+            }
+            .zycord-drag-area {
+                flex: 1;
+                height: 100%;
+                -webkit-app-region: drag;
+            }
+            .zycord-win-controls {
+                display: flex;
+                height: 100%;
+                -webkit-app-region: no-drag;
+            }
+            .zycord-win-btn {
+                width: 28px;
+                height: 22px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: transparent;
                 color: #949ba4;
                 cursor: pointer;
-                transition: all 0.15s ease;
+                transition: background 0.12s ease, color 0.12s ease;
             }
-            .zycord-titlebar-btn:hover {
-                background: rgba(255, 255, 255, 0.08);
-                color: #dbdee1;
-            }
-            .zycord-titlebar-btn.close:hover {
-                background: #da373c;
+            .zycord-win-btn:hover {
+                background: rgba(255, 255, 255, 0.1);
                 color: #ffffff;
             }
+            .zycord-win-btn.close:hover {
+                background: #f23f43 !important;
+                color: #ffffff !important;
+            }
             #app-mount {
-                padding-top: 28px !important;
+                padding-top: 22px !important;
                 box-sizing: border-box !important;
             }
             /* Center Zycord logo above login form */
@@ -118,6 +143,8 @@ window.addEventListener("DOMContentLoaded", () => {
         document.head.appendChild(style);
         document.body.prepend(titlebar);
 
+        document.getElementById("zycord-btn-back")?.addEventListener("click", () => window.history.back());
+        document.getElementById("zycord-btn-forward")?.addEventListener("click", () => window.history.forward());
         document.getElementById("zycord-btn-min")?.addEventListener("click", () => ipcRenderer.send("window-minimize"));
         document.getElementById("zycord-btn-max")?.addEventListener("click", () => ipcRenderer.send("window-maximize"));
         document.getElementById("zycord-btn-close")?.addEventListener("click", () => ipcRenderer.send("window-close"));
