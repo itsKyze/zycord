@@ -20,15 +20,40 @@ import { CollectiblePurchase } from "@spacebar/database";
 import { CollectibleItemType, Collectibles, DiscordApiErrors } from "@spacebar/util";
 
 export const listCollectiblePurchases = async (user_id: string) => {
-    const purchases = await CollectiblePurchase.find({ where: { user_id }, order: { purchased_at: "DESC" } });
-    const owned = await Promise.all(
-        purchases.map(async ({ sku_id, purchased_at }) => {
+    const catalog = await Collectibles.get();
+    const now = new Date().toISOString();
+    const seen = new Set<string>();
+    const result: any[] = [];
+
+    // All usable products in the store/catalog are unlocked and free for everyone
+    for (const product of catalog.products.values()) {
+        if (!product || product.type === CollectibleItemType.BUNDLE || product.type === CollectibleItemType.VARIANTS_GROUP) continue;
+        seen.add(product.sku_id);
+        result.push({
+            ...product,
+            purchased_at: now,
+            purchase_type: 0,
+            expires_at: null,
+        });
+    }
+
+    try {
+        const purchases = await CollectiblePurchase.find({ where: { user_id }, order: { purchased_at: "DESC" } });
+        for (const { sku_id, purchased_at } of purchases) {
+            if (seen.has(sku_id)) continue;
             const product = await Collectibles.product(sku_id);
-            if (!product || product.type === CollectibleItemType.BUNDLE || product.type === CollectibleItemType.VARIANTS_GROUP) return undefined;
-            return { ...product, purchased_at: purchased_at.toISOString(), purchase_type: 0, expires_at: null };
-        }),
-    );
-    return owned.filter((x) => x !== undefined);
+            if (!product || product.type === CollectibleItemType.BUNDLE || product.type === CollectibleItemType.VARIANTS_GROUP) continue;
+            seen.add(sku_id);
+            result.push({
+                ...product,
+                purchased_at: purchased_at.toISOString(),
+                purchase_type: 0,
+                expires_at: null,
+            });
+        }
+    } catch (_) {}
+
+    return result;
 };
 
 export const grantCollectible = async (user_id: string, sku_id: string) => {

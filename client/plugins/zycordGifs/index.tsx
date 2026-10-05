@@ -25,7 +25,7 @@ import { ZycordAuthor } from "../zycordCore/shared";
 import { SettingsSection } from "../zycordCore/ui";
 
 const storageKey = "zycord.gifProvider";
-let defaultProvider = "klipy";
+let defaultProvider = "tenor";
 let providers: Record<string, { available: boolean }> = {};
 function selectedProvider() {
     const value = localStorage.getItem(storageKey);
@@ -88,8 +88,14 @@ export default definePlugin({
         try {
             const { body } = await RestAPI.get({ url: "/gifs/providers" });
             providers = body.providers || {};
-            if (body.defaultProvider === "tenor" || body.defaultProvider === "klipy") defaultProvider = body.defaultProvider;
-        } catch {}
+            if (body.defaultProvider === "klipy" && providers.klipy?.available) {
+                defaultProvider = "klipy";
+            } else {
+                defaultProvider = "tenor";
+            }
+        } catch {
+            defaultProvider = "tenor";
+        }
     },
     stop() {
         removeFromArray(SettingsPlugin.customEntries, (entry) => entry.key === "zycord_gifs");
