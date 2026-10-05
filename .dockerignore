@@ -12,6 +12,7 @@
 !scripts/compress-client.js
 !scripts/vencord.js
 !scripts/default-avatars.js
+!scripts/generate-collectibles.mjs
 !scripts/docker-configure.js
 !extra/pion-sfu
 !docker
@@ -20,7 +21,6 @@ assets/cache_compressed
 assets/cacheMisses
 assets/cacheFailures
 assets/vencord
-assets/collectibles.json
 assets/detectable.json
 extra/pion-sfu/pion-sfu
 **/.DS_Store
