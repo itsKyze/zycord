@@ -1,0 +1,35 @@
+/*
+	Zycord: Communication platform by Zyron Solutions Ltd.
+	Copyright (C) 2026 Zyron Solutions Ltd
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published
+	by the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+	
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { MuteConfig, UserGuildSettings } from "@spacebar/schemas";
+
+// This sucks. I would use a DeepPartial, my own or typeorms, but they both generate inncorect schema
+export interface UserGuildSettingsSchema extends Partial<Omit<UserGuildSettings, "channel_overrides">> {
+    channel_overrides?: {
+        [channel_id: string]: ChannelOverrideSchema;
+    };
+}
+
+export interface ChannelOverrideSchema {
+    message_notifications?: number;
+    mute_config?: MuteConfig | null;
+    muted?: boolean;
+    channel_id?: string | null;
+    collapsed?: boolean;
+    flags?: number;
+}

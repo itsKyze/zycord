@@ -1,0 +1,193 @@
+.zycord-pride {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border-subtle, var(--background-modifier-accent));
+    color: var(--text-default, var(--text-normal));
+}
+.zycord-pride .zycord-ui-section-heading {
+    display: grid;
+    gap: 8px;
+}
+.zycord-pride .zycord-ui-section-heading h3 {
+    margin: 0;
+    text-wrap: balance;
+}
+.zycord-pride .zycord-ui-section-heading p {
+    text-wrap: pretty;
+}
+.zycord-pride-search {
+    display: grid;
+    gap: 8px;
+}
+.zycord-pride-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: 8px;
+    max-height: 312px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thin-thumb) var(--scrollbar-thin-track);
+    padding: 2px 8px 2px 2px;
+}
+.zycord-pride-option {
+    display: grid;
+    min-width: 0;
+    min-height: 48px;
+    border-radius: 8px;
+    background: var(--background-base-lowest, var(--background-secondary));
+    box-shadow: inset 0 0 0 1px var(--border-subtle, var(--background-modifier-accent));
+}
+.zycord-pride-option[data-selected="true"] {
+    background: var(--background-mod-subtle, var(--background-base-low));
+    box-shadow: inset 0 0 0 1px var(--control-primary-background-default, var(--brand-500));
+}
+.zycord-pride-option > label,
+.zycord-pride-option > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    min-height: 48px;
+    padding: 8px 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.zycord-pride-option [class*="label_"] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    height: auto;
+}
+.zycord-pride-option img {
+    flex: none;
+    object-fit: contain;
+    border-radius: 2px;
+    outline: 1px solid rgb(255 255 255 / 8%);
+    outline-offset: -1px;
+}
+.zycord-pride-option p {
+    min-width: 0;
+    text-wrap: pretty;
+}
+.zycord-pride-option:focus-within {
+    outline: 2px solid var(--focus-primary);
+    outline-offset: 1px;
+}
+.zycord-pride-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+}
+.zycord-pride-count {
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+.zycord-pride-actions button:not(:disabled):active {
+    scale: 0.97;
+}
+.theme-light .zycord-pride-option img {
+    outline-color: rgb(0 0 0 / 8%);
+}
+@media (hover: hover) {
+    .zycord-pride-option:hover {
+        background: var(--background-mod-subtle, var(--background-base-low));
+    }
+}
+@media (max-width: 480px) {
+    .zycord-pride-grid {
+        grid-template-columns: minmax(0, 1fr);
+        max-height: 288px;
+    }
+    .zycord-pride-count {
+        margin-left: 0;
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    .zycord-pride-actions button {
+        transition: scale 200ms ease-out;
+    }
+}
+.zycord-pride-mobile-nav {
+    display: none;
+}
+@media (max-width: 700px) {
+    .zycord-pride-shell {
+        position: relative;
+        width: 100%;
+        min-width: 0;
+    }
+    .zycord-pride-shell > aside {
+        display: none;
+    }
+    .zycord-pride-shell > [class*="content_"] {
+        width: 100%;
+        min-width: 0;
+    }
+    .zycord-pride-mobile-nav {
+        display: block;
+        flex: none;
+    }
+    .zycord-pride-shell [class*="contentHeader_"] {
+        gap: 8px;
+        padding-inline: 12px;
+    }
+    .zycord-pride-shell [class*="contentHeaderLeft_"] {
+        min-width: 0;
+    }
+    .zycord-pride-shell [class*="panel_"] {
+        width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+    }
+    .zycord-pride-shell [class*="categories_"] {
+        min-width: 0;
+    }
+    .zycord-pride-shell [class*="settingsPage_"] {
+        min-width: 0;
+        width: 100%;
+    }
+    .zycord-pride-shell [class*="baseLayout_"] {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 24px;
+        min-width: 0;
+    }
+    .zycord-pride-shell [class*="previewsContainer_"],
+    .zycord-pride-shell [class*="formContent_"],
+    .zycord-pride-shell [class*="sectionsContainer_"] {
+        position: static;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+    .zycord-pride-shell[data-zycord-settings-menu="true"] > aside {
+        display: flex;
+        position: absolute;
+        inset: 72px 0 0;
+        width: 100%;
+        z-index: 2;
+    }
+    .zycord-pride-shell[data-zycord-settings-menu="true"] [class*="contentBody_"] {
+        visibility: hidden;
+    }
+    .zycord-pride-shell button {
+        min-height: 40px;
+    }
+}
+.zycord-pride-credit {
+    text-wrap: pretty;
+}
+.zycord-pride-credit a {
+    color: var(--text-link);
+    text-decoration: underline;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: auto;
+}

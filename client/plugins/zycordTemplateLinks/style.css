@@ -1,0 +1,31 @@
+.zycord-template-link {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 16px;
+    text-align: left;
+}
+
+.zycord-template-link > :first-child {
+    text-align: center;
+}
+
+.zycord-template-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.zycord-template-actions > :first-child {
+    flex: 1;
+}
+
+.zycord-template-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    background: var(--background-mod-subtle, rgb(0 0 0 / 0.08));
+}

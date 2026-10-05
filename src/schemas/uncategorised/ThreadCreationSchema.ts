@@ -1,0 +1,47 @@
+/*
+	Zycord: Communication platform by Zyron Solutions Ltd.
+	Copyright (C) 2026 Zyron Solutions Ltd
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published
+	by the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { BaseMessageComponents, ChannelType, Embed } from "@spacebar/schemas/api";
+import { MessageActivity } from "./MessageActivity";
+import { MessageCreateAttachment, MessageCreateCloudAttachment } from "./MessageCreateSchema";
+
+export interface ThreadCreationSchema {
+    auto_archive_duration?: number;
+    rate_limit_per_user?: number;
+    name: string;
+    type?: ChannelType.GUILD_PUBLIC_THREAD | ChannelType.GUILD_PRIVATE_THREAD | ChannelType.GUILD_NEWS_THREAD;
+    invitable?: boolean;
+    applied_tags?: string[];
+    location?: string; //Ignore it
+    message?: {
+        content?: string;
+        embeds?: Embed[];
+        allowed_mentions?: {
+            parse?: string[];
+            roles?: string[];
+            users?: string[];
+            replied_user?: boolean;
+        };
+        components?: BaseMessageComponents[] | null;
+        sticker_ids?: string[];
+        activity?: MessageActivity;
+        application_id?: string;
+        flags?: number;
+        attachments?: (MessageCreateAttachment | MessageCreateCloudAttachment)[];
+    };
+}

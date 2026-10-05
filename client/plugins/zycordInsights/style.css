@@ -1,0 +1,243 @@
+.zycord-insights {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+}
+
+.zycord-insights-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.zycord-insights-range {
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    border-radius: 8px;
+    background: var(--background-mod-subtle);
+}
+
+.zycord-insights-range button {
+    min-height: 28px;
+    padding: 0 12px;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 500;
+    transition:
+        background-color 120ms ease-out,
+        color 120ms ease-out,
+        scale 200ms ease-out;
+}
+
+.zycord-insights-range button:active {
+    scale: 0.97;
+}
+
+.zycord-insights-range button[aria-pressed="true"] {
+    background: var(--background-surface-high);
+    color: var(--text-strong);
+}
+
+.zycord-insights-range button:focus-visible {
+    outline: 2px solid var(--brand-500);
+    outline-offset: 1px;
+}
+
+@media (hover: hover) {
+    .zycord-insights-range button:hover {
+        color: var(--text-default);
+    }
+}
+
+.zycord-insights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+.zycord-insights-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    background: var(--background-base-lower);
+}
+
+.zycord-insights-card-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.zycord-insights-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+}
+
+.zycord-insights-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.zycord-insights-swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+}
+
+.zycord-insights-number {
+    font-variant-numeric: tabular-nums;
+}
+
+.zycord-insights-plot {
+    display: flex;
+    gap: 8px;
+}
+
+.zycord-insights-axis-y {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 140px;
+    min-width: 16px;
+}
+
+.zycord-insights-canvas {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+}
+
+.zycord-insights-canvas svg {
+    display: block;
+    width: 100%;
+    height: 140px;
+    overflow: visible;
+}
+
+.zycord-insights-baseline {
+    stroke: var(--border-subtle);
+    stroke-width: 1;
+}
+
+.zycord-insights-gridline {
+    stroke: var(--border-subtle);
+    stroke-width: 1;
+    stroke-dasharray: 2 4;
+}
+
+.zycord-insights-hover {
+    fill: var(--background-mod-subtle);
+}
+
+.zycord-insights-primary {
+    fill: var(--brand-500);
+    stroke: var(--brand-500);
+    background: var(--brand-500);
+}
+
+.zycord-insights-secondary {
+    fill: var(--text-feedback-warning);
+    stroke: var(--text-feedback-warning);
+    background: var(--text-feedback-warning);
+}
+
+.zycord-insights-line {
+    fill: none;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.zycord-insights-axis-x {
+    position: relative;
+    height: 16px;
+    margin-top: 4px;
+}
+
+.zycord-insights-axis-x > * {
+    position: absolute;
+    translate: -50% 0;
+    white-space: nowrap;
+}
+
+.zycord-insights-axis-x > :first-child {
+    translate: 0 0;
+}
+
+.zycord-insights-axis-x > :last-child:not(:first-child) {
+    translate: -100% 0;
+}
+
+.zycord-insights-tooltip {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--background-surface-high);
+    box-shadow:
+        0 0 0 1px var(--border-subtle),
+        0 2px 4px rgb(0 0 0 / 0.08),
+        0 8px 16px rgb(0 0 0 / 0.12);
+    pointer-events: none;
+}
+
+.zycord-insights-ranking {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.zycord-insights-ranking li {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.zycord-insights-ranking-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.zycord-insights-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.zycord-insights-meter {
+    height: 6px;
+    border-radius: 3px;
+    background: var(--background-mod-subtle);
+    overflow: hidden;
+}
+
+.zycord-insights-meter > div {
+    height: 100%;
+    border-radius: 3px;
+}
+
+.zycord-insights-empty {
+    text-wrap: pretty;
+}

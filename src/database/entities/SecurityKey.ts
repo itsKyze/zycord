@@ -1,0 +1,57 @@
+/*
+	Zycord: Communication platform by Zyron Solutions Ltd.
+	Copyright (C) 2026 Zyron Solutions Ltd
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published
+	by the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { BaseClass } from "./BaseClass";
+import { User } from "./User";
+
+@Entity({
+    name: "security_keys",
+})
+export class SecurityKey extends BaseClass {
+    @Column({ nullable: true })
+    user_id: string;
+
+    @JoinColumn({ name: "user_id", foreignKeyConstraintName: "FK_security_key_user_id" })
+    @ManyToOne(() => User, {
+        onDelete: "CASCADE",
+    })
+    user: User;
+
+    @Column()
+    key_id: string;
+
+    @Column()
+    public_key: string;
+
+    @Column()
+    counter: number;
+
+    @Column()
+    name: string;
+
+    static async authenticatorTypes(user_id: string) {
+        const [keys, user] = await Promise.all([
+            SecurityKey.count({ where: { user_id } }),
+            User.findOne({ where: { id: user_id }, select: { id: true, mfa_enabled: true, totp_secret: true, flags: true, phone: true } }),
+        ]);
+        const totp = !!(user?.mfa_enabled && user.totp_secret);
+        const sms = totp && !!user?.phone && (BigInt(String(user.flags ?? 0)) & 16n) === 16n;
+        return [...(keys ? [1] : []), ...(totp ? [2] : []), ...(sms ? [3] : [])];
+    }
+}

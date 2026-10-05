@@ -1,0 +1,85 @@
+/*
+	Zycord: Communication platform by Zyron Solutions Ltd.
+	Copyright (C) 2026 Zyron Solutions Ltd
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published
+	by the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { Column, Entity, JoinColumn, ManyToOne, Index } from "typeorm";
+import { BaseClass } from "./BaseClass";
+import { Application } from "./Application";
+import { Guild } from "./Guild";
+import { User } from "./User";
+
+@Entity({
+    name: "emojis",
+})
+export class Emoji extends BaseClass {
+    @Column()
+    animated: boolean;
+
+    @Column()
+    available: boolean; // whether this emoji can be used, may be false due to various reasons
+
+    @Column({ nullable: true })
+    @Index("IDX_emojis_guild_id")
+    guild_id: string | null;
+
+    @JoinColumn({ name: "guild_id", foreignKeyConstraintName: "FK_emoji_guild_id" })
+    @ManyToOne(() => Guild, (guild) => guild.emojis, {
+        onDelete: "CASCADE",
+        nullable: true,
+    })
+    guild: Guild | null;
+
+    @Column({ nullable: true })
+    application_id: string | null;
+
+    @JoinColumn({ name: "application_id", foreignKeyConstraintName: "FK_emoji_application_id" })
+    @ManyToOne(() => Application, (application) => application.emojis, {
+        onDelete: "CASCADE",
+        nullable: true,
+    })
+    application: Application | null;
+
+    @Column({ nullable: true })
+    user_id: string;
+
+    @JoinColumn({ name: "user_id", foreignKeyConstraintName: "FK_emoji_user_id" })
+    @ManyToOne(() => User)
+    user: User;
+
+    @Column()
+    managed: boolean;
+
+    @Column()
+    name: string;
+
+    @Column({ type: "bigint", default: 0 })
+    version: string;
+
+    @Column()
+    require_colons: boolean;
+
+    @Column({ type: "int8", array: true })
+    roles: string[]; // roles this emoji is whitelisted to (new discord feature?)
+
+    @Column({ type: "int8", array: true, nullable: true })
+    groups: string[]; // user groups this emoji is whitelisted to (Spacebar extension)
+
+    toJSON() {
+        const json = super.toJSON();
+        return { ...json, roles: json.roles ?? [], user: this.user?.toPublicUser?.() ?? undefined };
+    }
+}

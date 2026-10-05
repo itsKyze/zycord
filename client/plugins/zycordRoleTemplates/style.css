@@ -1,0 +1,54 @@
+.zycord-role-templates {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.zycord-role-templates-head {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.zycord-role-templates-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+}
+
+.zycord-role-template {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-subtle);
+    border-radius: 8px;
+    background: var(--background-base-lower);
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background-color 120ms ease-out,
+        border-color 120ms ease-out;
+}
+
+.zycord-role-template:hover:not(:disabled) {
+    background: var(--background-mod-subtle);
+}
+
+.zycord-role-template[aria-pressed="true"] {
+    border-color: var(--brand-500);
+}
+
+.zycord-role-template:focus-visible {
+    outline: 2px solid var(--brand-500);
+    outline-offset: 2px;
+}
+
+.zycord-role-template:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

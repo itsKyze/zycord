@@ -1,0 +1,86 @@
+/*
+	Zycord: Communication platform by Zyron Solutions Ltd.
+	Copyright (C) 2026 Zyron Solutions Ltd
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published
+	by the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+	
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { Payload, WebSocket } from "@spacebar/gateway";
+import fs from "node:fs/promises";
+import path from "node:path";
+
+import { JSONReplacer, JSONStringify } from "@spacebar/util";
+import { bufferForResume, rememberDispatch, resolveSocket } from "./SessionResume";
+import * as erlpack from "harmony-erlpack";
+
+// don't care
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const recurseJsonReplace = (json: any) => {
+    for (const key in json) {
+        // eslint-disable-next-line no-prototype-builtins
+        if (!json.hasOwnProperty(key)) continue;
+
+        json[key] = JSONReplacer.call(json, key, json[key]);
+
+        if (typeof json[key] == "object" && json[key] !== null) json[key] = recurseJsonReplace(json[key]);
+    }
+    return json;
+};
+
+export async function Send(target: WebSocket, data: Payload) {
+    const socket = resolveSocket(target);
+    if (socket.pendingDispatches && data.op === 0 && data.t !== "READY" && data.t !== "READY_SUPPLEMENTAL" && data.t !== "GUILD_CREATE") {
+        socket.pendingDispatches.push(data);
+        return;
+    }
+    if (socket.readyState !== 1 && data.op === 0 && bufferForResume(socket, data)) return;
+    rememberDispatch(socket, data);
+    if (process.env.WS_VERBOSE) console.log(`[Websocket] Outgoing message: ${JSON.stringify(data)}`);
+
+    if (process.env.WS_DUMP) {
+        const id = socket.session_id || "unknown";
+
+        await fs.mkdir(path.join("dump", id), {
+            recursive: true,
+        });
+        await fs.writeFile(path.join("dump", id, `${Date.now()}.out.json`), JSON.stringify(data, null, 2));
+    }
+
+    let buffer: Buffer | string;
+    if (socket.encoding === "etf" && erlpack) {
+        // Erlpack doesn't like Date objects, encodes them as {}
+        data = recurseJsonReplace(data);
+        buffer = Buffer.from(erlpack.pack(data));
+    }
+    // TODO: encode circular object
+    else if (socket.encoding === "json") buffer = JSONStringify(data);
+    else return;
+
+    // TODO: compression
+    if (socket.compress === "zlib-stream") {
+        buffer = socket.deflate!.process(buffer) as Buffer;
+    } else if (socket.compress === "zstd-stream") {
+        if (typeof buffer === "string") buffer = Buffer.from(buffer as string);
+
+        buffer = socket.zstdEncoder!.encodeSync(buffer as Buffer);
+    }
+
+    return new Promise((res) => {
+        if (socket.readyState === 1) socket.send(buffer, () => res(null));
+        else {
+            socket.close();
+            res(null);
+        }
+    });
+}

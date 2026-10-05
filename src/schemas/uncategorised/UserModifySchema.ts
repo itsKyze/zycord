@@ -1,0 +1,82 @@
+/*
+	Zycord: Communication platform by Zyron Solutions Ltd.
+	Copyright (C) 2026 Zyron Solutions Ltd
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published
+	by the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+// TODO: dedicated schemas?
+import { User_DisplayNameEffect, User_DisplayNameFont } from "discord-protos";
+
+export interface UserModifySchema {
+    /**
+     * @minLength 2
+     */
+    username?: string;
+    /**
+     * @maxLength 32
+     */
+    global_name?: string | null;
+    avatar?: string | null;
+    avatar_description?: string | null;
+    bio?: string;
+    accent_color?: number;
+    banner?: string | null;
+    /**
+     * @minLength 1
+     * @maxLength 72
+     */
+    password?: string;
+    /**
+     * @minLength 1
+     * @maxLength 72
+     */
+    new_password?: string;
+    /**
+     * @minLength 6
+     * @maxLength 6
+     */
+    code?: string;
+    /**
+     * @TJS-format email
+     */
+    email?: string;
+    /**
+     * @minLength 4
+     * @maxLength 4
+     */
+    discriminator?: string;
+
+    avatar_id?: string | null;
+    email_token?: string;
+    legacy_username?: string | null;
+    date_of_birth?: string;
+    flags?: number;
+
+    display_name_colors?: number[] | null;
+    display_name_effect_id?: User_DisplayNameEffect | null;
+    display_name_font_id?: User_DisplayNameFont | null;
+
+    avatar_decoration_id?: string | null;
+    avatar_decoration_sku_id?: string | null;
+    nameplate_sku_id?: string | null;
+    primary_guild_id?: string | null;
+    vad_colors?: number[] | null;
+    typing_indicator_style?: number | null;
+
+    push_provider?: string;
+    push_token?: string;
+    push_voip_provider?: string;
+    push_voip_token?: string;
+}

@@ -1,0 +1,50 @@
+/*
+	Zycord: Communication platform by Zyron Solutions Ltd.
+	Copyright (C) 2026 Zyron Solutions Ltd
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published
+	by the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+	
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { FindOptionsWhere } from "typeorm";
+import { OPCODES, Payload, WebSocket } from "@spacebar/gateway";
+import { Session } from "@spacebar/database";
+import { setHeartbeat } from "../util/Heartbeat";
+import { Send } from "../util/Send";
+
+interface QoSData {
+    seq: number | null;
+    qos: QoSPayload;
+}
+
+export interface QoSPayload {
+    ver: number;
+    active: boolean;
+    reasons: string[];
+}
+
+export async function onHeartbeat(this: WebSocket, data: Payload) {
+    // TODO: validate payload
+
+    setHeartbeat(this);
+
+    if (data.op === OPCODES.SetQoS) {
+        this.qos = (data.d as QoSData).qos;
+    }
+
+    await Send(this, { op: 11, d: {} });
+    if (this.session)
+        Session.update({ session_id: this.session.session_id, user_id: this.user_id } as FindOptionsWhere<Session>, { last_seen: new Date() }).catch((e) =>
+            console.error(`[Gateway/${this.user_id}] failed to record heartbeat`, e),
+        );
+}

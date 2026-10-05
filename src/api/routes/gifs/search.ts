@@ -1,0 +1,68 @@
+/*
+	Zycord: Communication platform by Zyron Solutions Ltd.
+	Copyright (C) 2026 Zyron Solutions Ltd
+	
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published
+	by the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+	
+	You should have received a copy of the GNU Affero General Public License
+	along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { Request, Response, Router } from "express";
+import { route } from "@spacebar/api/middlewares";
+import { GifMediaTypes } from "@spacebar/schemas";
+import { GifProviderManager } from "@spacebar/integrations/gifs";
+
+const router = Router({ mergeParams: true });
+
+router.get(
+    "/",
+    route({
+        query: {
+            q: {
+                type: "string",
+                required: true,
+                description: "Search query",
+            },
+            media_format: {
+                type: "string",
+                description: "Media format",
+                values: Object.keys(GifMediaTypes).filter((key) => isNaN(Number(key))),
+            },
+            locale: {
+                type: "string",
+                description: "Locale",
+            },
+            limit: {
+                type: "number",
+                description: "Maximum number of GIFs to return",
+            },
+            provider: {
+                type: "string",
+                description: "Provider to use",
+            },
+        },
+        responses: {
+            200: {
+                body: "GifsResponse",
+            },
+        },
+    }),
+    async (req: Request, res: Response) => {
+        const impl = GifProviderManager.findProvider(req.query.provider as string);
+        if (!impl) return res.status(503).json({ message: "This GIF provider is not configured. Ask the instance administrator to enable it." });
+        const result = await impl.search(req.query as typeof impl.search.arguments).catch(() => null);
+        if (result === null) return res.status(502).json({ message: "The GIF provider could not complete the search. Try again or choose another provider." });
+        res.json(result);
+    },
+);
+
+export default router;
