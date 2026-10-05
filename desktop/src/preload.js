@@ -3,29 +3,57 @@ const { contextBridge, ipcRenderer } = require("electron");
 // Expose DiscordNative APIs to renderer process
 const DiscordNative = {
     isElectron: true,
+    process: {
+        platform: "win32",
+        arch: process.arch || "x64",
+        env: {},
+    },
+    os: {
+        arch: process.arch || "x64",
+        release: "10.0.22631",
+    },
+    app: {
+        getReleaseChannel: () => "stable",
+        getVersion: () => "1.0.9168",
+        getBuildNumber: () => 109168,
+        getModuleVersions: () => ({}),
+        getPath: (name) => "",
+        relaunch: () => ipcRenderer.send("app-relaunch"),
+    },
     window: {
         minimize: () => ipcRenderer.send("window-minimize"),
         maximize: () => ipcRenderer.send("window-maximize"),
         close: () => ipcRenderer.send("window-close"),
         isMaximized: () => ipcRenderer.sendSync("window-is-maximized"),
         setAlwaysOnTop: (enabled) => ipcRenderer.send("window-set-always-on-top", enabled),
-    },
-    app: {
-        getReleaseChannel: () => "stable",
-        getVersion: () => ipcRenderer.sendSync("get-app-version"),
-        getBuildNumber: () => 109168,
-        relaunch: () => ipcRenderer.send("app-relaunch"),
-    },
-    os: {
-        arch: process.arch,
-        release: process.platform,
+        setDevtoolsCallbacks: () => {},
+        setBackgroundThrottling: () => {},
     },
     clipboard: {
         copy: (text) => ipcRenderer.send("clipboard-copy", text),
         read: () => ipcRenderer.sendSync("clipboard-read"),
+        copyImage: () => {},
+    },
+    ipc: {
+        send: (event, ...args) => ipcRenderer.send(event, ...args),
+        on: (event, listener) => ipcRenderer.on(event, listener),
     },
     notifications: {
         setBadgeCount: (count) => ipcRenderer.send("set-badge-count", count),
+    },
+    powerSaveBlocker: {
+        blockDisplaySleep: () => 0,
+        unblockDisplaySleep: () => {},
+    },
+    spellCheck: {
+        getAvailableDictionaries: () => Promise.resolve([]),
+    },
+    settings: {
+        get: (k, def) => def,
+        set: () => {},
+    },
+    crashReporter: {
+        updateCrashReporter: () => {},
     },
 };
 

@@ -28,10 +28,9 @@ function createUpdaterWindow() {
         height: UpdaterConfig.window.height || 300,
         resizable: false,
         frame: false,
-        transparent: true,
-        backgroundColor: UpdaterConfig.window.backgroundColor || "#25282E",
+        backgroundColor: "#282b30",
         center: true,
-        show: false,
+        show: true,
         alwaysOnTop: true,
         icon: ICON_PATH,
         webPreferences: {
@@ -44,29 +43,25 @@ function createUpdaterWindow() {
 
     updaterWindow.loadFile(path.join(__dirname, "updater/updater.html"));
 
-    updaterWindow.once("ready-to-show", () => {
-        updaterWindow.show();
-        updaterWindow.focus();
+    updaterService = new UpdaterService(UpdaterConfig);
 
-        // Initialize and start update state machine
-        updaterService = new UpdaterService(UpdaterConfig);
+    updaterService.on("state", (payload) => {
+        if (updaterWindow && !updaterWindow.isDestroyed()) {
+            updaterWindow.webContents.send("updater:state", payload);
+        }
+    });
 
-        updaterService.on("state", (payload) => {
-            if (updaterWindow && !updaterWindow.isDestroyed()) {
-                updaterWindow.webContents.send("updater:state", payload);
-            }
-        });
+    updaterService.on("retry-tick", (payload) => {
+        if (updaterWindow && !updaterWindow.isDestroyed()) {
+            updaterWindow.webContents.send("updater:retry-tick", payload);
+        }
+    });
 
-        updaterService.on("retry-tick", (payload) => {
-            if (updaterWindow && !updaterWindow.isDestroyed()) {
-                updaterWindow.webContents.send("updater:retry-tick", payload);
-            }
-        });
+    updaterService.on("ready-to-launch", () => {
+        launchMainWindow();
+    });
 
-        updaterService.on("ready-to-launch", () => {
-            launchMainWindow();
-        });
-
+    updaterWindow.webContents.once("did-finish-load", () => {
         updaterService.start();
     });
 
@@ -183,55 +178,59 @@ function createMainWindow() {
 function createTray() {
     if (tray) return;
 
-    tray = new Tray(ICON_PATH);
-    tray.setToolTip("Zycord");
+    try {
+        tray = new Tray(ICON_PATH);
+        tray.setToolTip("Zycord");
 
-    const contextMenu = Menu.buildFromTemplate([
-        {
-            label: "Open Zycord",
-            click: () => {
+        const contextMenu = Menu.buildFromTemplate([
+            {
+                label: "Open Zycord",
+                click: () => {
+                    mainWindow?.show();
+                    mainWindow?.focus();
+                },
+            },
+            { type: "separator" },
+            {
+                label: "Check for Updates…",
+                click: () => {
+                    updaterService?.checkForUpdates();
+                },
+            },
+            {
+                label: "Start with Windows",
+                type: "checkbox",
+                checked: app.getLoginItemSettings().openAtLogin,
+                click: (menuItem) => {
+                    app.setLoginItemSettings({
+                        openAtLogin: menuItem.checked,
+                        openAsHidden: true,
+                    });
+                },
+            },
+            { type: "separator" },
+            {
+                label: "Quit Zycord",
+                click: () => {
+                    isQuitting = true;
+                    app.quit();
+                },
+            },
+        ]);
+
+        tray.setContextMenu(contextMenu);
+
+        tray.on("click", () => {
+            if (mainWindow?.isVisible()) {
+                mainWindow.hide();
+            } else {
                 mainWindow?.show();
                 mainWindow?.focus();
-            },
-        },
-        { type: "separator" },
-        {
-            label: "Check for Updates…",
-            click: () => {
-                updaterService?.checkForUpdates();
-            },
-        },
-        {
-            label: "Start with Windows",
-            type: "checkbox",
-            checked: app.getLoginItemSettings().openAtLogin,
-            click: (menuItem) => {
-                app.setLoginItemSettings({
-                    openAtLogin: menuItem.checked,
-                    openAsHidden: true,
-                });
-            },
-        },
-        { type: "separator" },
-        {
-            label: "Quit Zycord",
-            click: () => {
-                isQuitting = true;
-                app.quit();
-            },
-        },
-    ]);
-
-    tray.setContextMenu(contextMenu);
-
-    tray.on("click", () => {
-        if (mainWindow?.isVisible()) {
-            mainWindow.hide();
-        } else {
-            mainWindow?.show();
-            mainWindow?.focus();
-        }
-    });
+            }
+        });
+    } catch (e) {
+        console.warn("[Zycord] Tray icon notice:", e);
+    }
 }
 
 // Handle Screen Sharing Permission

@@ -33,12 +33,6 @@
                     "arch": [
                         "x64"
                     ]
-                },
-                {
-                    "target": "portable",
-                    "arch": [
-                        "x64"
-                    ]
                 }
             ],
             "icon": "assets/icon.ico"
@@ -56,9 +50,6 @@
             "deleteAppDataOnUninstall": false,
             "include": "installer.nsh",
             "artifactName": "ZycordSetup.${ext}"
-        },
-        "portable": {
-            "artifactName": "Zycord-Portable.${ext}"
         },
         "publish": [
             {
