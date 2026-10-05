@@ -110,7 +110,12 @@ function initWindowControls() {
                     color: #ffffff !important;
                 }
 
-                /* Hide Help button from native toolbar so native Inbox is the last item right next to the separator */
+                /* Hide Help button from native header so native Inbox is the last item right next to the separator */
+                [class*="trailing_"] a[href*="support.discord.com"],
+                [class*="trailing_"] [aria-label*="Help" i],
+                [class*="trailing_"] [aria-label*="مساعدة" i],
+                [class*="trailing_"] [aria-label*="Aide" i],
+                [class*="trailing_"] [aria-label*="Hilfe" i],
                 [class*="toolbar_"] a[href*="support.discord.com"],
                 [class*="toolbar_"] [aria-label*="Help" i],
                 [class*="toolbar_"] [aria-label*="مساعدة" i],
@@ -119,16 +124,23 @@ function initWindowControls() {
                     display: none !important;
                 }
 
-                /* Shift Discord's native toolbar 98px away from the right edge so native Inbox sits directly to the left of the separator */
+                /* Shift Discord's native header trailing container (where Inbox sits) 104px away from the right edge so native Inbox sits directly to the left beside - */
+                [class*="trailing_"],
                 [class*="toolbar_"],
+                [class*="headerBar_"] [class*="trailing_"],
+                section[class*="title_"] [class*="trailing_"],
                 section[class*="title_"] [class*="toolbar_"],
+                header[class*="header_"] [class*="trailing_"],
                 header[class*="header_"] [class*="toolbar_"],
-                [class*="upperContainer_"] [class*="toolbar_"] {
-                    margin-right: 98px !important;
+                [class*="upperContainer_"] [class*="trailing_"],
+                [class*="upperContainer_"] [class*="toolbar_"],
+                [class*="bar_c38106"] [class*="trailing_"] {
+                    margin-right: 104px !important;
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
                 }
 
+                [class*="trailing_"] *,
                 [class*="toolbar_"] *,
                 section[class*="title_"] [class*="toolbar_"] * {
                     -webkit-app-region: no-drag !important;
