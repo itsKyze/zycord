@@ -225,57 +225,94 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function findVoiceButtons() {
+        const panels = document.querySelectorAll('section[class*="panels_"], [class*="sidebar_"] [class*="container_"]');
+        let muteBtn = null;
+        let deafenBtn = null;
+
+        for (const panel of panels) {
+            const btns = panel.querySelectorAll('button');
+            for (const btn of btns) {
+                const label = (btn.getAttribute("aria-label") || "").toLowerCase();
+                if (!muteBtn && (label.includes("mute") || label.includes("micro") || label.includes("كتم"))) {
+                    muteBtn = btn;
+                } else if (!deafenBtn && (label.includes("deafen") || label.includes("casque") || label.includes("سماعة") || label.includes("headphone") || label.includes("audio"))) {
+                    deafenBtn = btn;
+                }
+            }
+            if (muteBtn && deafenBtn) break;
+        }
+
+        // Broad fallback if panels not found
+        if (!muteBtn) {
+            muteBtn = document.querySelector('button[aria-label*="Mute" i], button[aria-label*="micro" i], button[aria-label*="كتم" i]');
+        }
+        if (!deafenBtn) {
+            deafenBtn = document.querySelector('button[aria-label*="Deafen" i], button[aria-label*="casque" i], button[aria-label*="سماعة" i]');
+        }
+
+        return { muteBtn, deafenBtn };
+    }
+
+    function isButtonActive(btn, type) {
+        if (!btn) return false;
+        const checked = btn.getAttribute("aria-checked");
+        if (checked === "true") return true;
+        if (checked === "false") return false;
+
+        const label = (btn.getAttribute("aria-label") || "").toLowerCase();
+        if (type === "mute") {
+            if (label.includes("unmute") || label.includes("activer") || label.includes("إلغاء")) return true;
+            if (label.startsWith("mute") || label.includes("couper") || label.startsWith("كتم")) return false;
+        } else if (type === "deafen") {
+            if (label.includes("undeafen") || label.includes("activer") || label.includes("إلغاء")) return true;
+            if (label.startsWith("deafen") || label.includes("couper") || label.startsWith("كتم")) return false;
+        }
+
+        const html = btn.innerHTML;
+        if (
+            html.includes("strikethrough") ||
+            html.includes("line") ||
+            html.includes("polygon") ||
+            html.includes("red") ||
+            html.includes("danger") ||
+            html.includes("#f23f43") ||
+            html.includes("hsl(359")
+        ) {
+            return true;
+        }
+
+        return false;
+    }
+
     function checkState() {
         try {
-            // 1. Mute button detection
-            const muteBtn = document.querySelector(
-                'button[aria-label="Mute"], button[aria-label="Unmute"], button[aria-label*="Mute" i], button[aria-label*="micro" i]'
-            );
-            let isMuted = false;
-            if (muteBtn) {
-                const label = (muteBtn.getAttribute("aria-label") || "").toLowerCase();
-                const checked = muteBtn.getAttribute("aria-checked");
-                isMuted =
-                    label.includes("unmute") ||
-                    label.includes("activer") ||
-                    checked === "true" ||
-                    Boolean(muteBtn.querySelector('[stroke*="red"], [fill*="red"], line'));
-            }
+            const { muteBtn, deafenBtn } = findVoiceButtons();
+            const isMuted = isButtonActive(muteBtn, "mute");
+            const isDeafened = isButtonActive(deafenBtn, "deafen");
 
-            // 2. Deafen button detection
-            const deafenBtn = document.querySelector(
-                'button[aria-label="Deafen"], button[aria-label="Undeafen"], button[aria-label*="Deafen" i], button[aria-label*="casque" i]'
-            );
-            let isDeafened = false;
-            if (deafenBtn) {
-                const label = (deafenBtn.getAttribute("aria-label") || "").toLowerCase();
-                const checked = deafenBtn.getAttribute("aria-checked");
-                isDeafened =
-                    label.includes("undeafen") ||
-                    label.includes("activer") ||
-                    checked === "true" ||
-                    Boolean(deafenBtn.querySelector('[stroke*="red"], [fill*="red"], line'));
-            }
-
-            // 3. In voice room detection (Voice Connected bar or disconnect button)
+            // In voice room detection
             const disconnectBtn = document.querySelector(
-                'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], [class*="disconnectButton_"]'
+                'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], button[aria-label*="قطع" i], [class*="disconnectButton"]'
             );
+            const rtcStatus = document.querySelector('[class*="rtcConnectionStatus"], [class*="connection_"]');
             const inVoice =
                 Boolean(disconnectBtn) ||
-                Boolean(document.querySelector('[class*="rtcConnectionStatus_"], [class*="voiceUsers_"], [class*="callContainer_"]'));
+                Boolean(rtcStatus) ||
+                Boolean(document.querySelector('[class*="voiceUsers"], [class*="callContainer"]')) ||
+                document.querySelectorAll('audio[id^="audio-"], audio[srcObject]').length > 0;
 
-            // 4. Video state detection
+            // Video state detection
             const videoBtn = document.querySelector(
                 'button[aria-label*="Camera" i], button[aria-label*="Video" i]'
             );
             let isVideoOn = false;
             if (videoBtn) {
                 const label = (videoBtn.getAttribute("aria-label") || "").toLowerCase();
-                isVideoOn = label.includes("turn off") || label.includes("désactiver");
+                isVideoOn = label.includes("turn off") || label.includes("désactiver") || label.includes("إيقاف");
             }
 
-            // 5. Unread badge from document.title
+            // Unread badge from document.title
             const titleMatch = /^\((\d+\+?)\)/.exec(document.title);
             const badgeText = titleMatch ? titleMatch[1] : (document.title.startsWith("•") ? "•" : "");
 
@@ -300,32 +337,38 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Check frequently for instant response
-    setInterval(checkState, 400);
+    // High frequency interval (200ms) for instant responsiveness
+    setInterval(checkState, 200);
+
+    // Instant reaction to user clicks anywhere in the interface
+    document.addEventListener("click", () => {
+        checkState();
+        setTimeout(checkState, 40);
+        setTimeout(checkState, 120);
+        setTimeout(checkState, 300);
+    }, true);
 
     // IPC Action Handlers from Tray & Taskbar Thumbar
     ipcRenderer.on("action-toggle-mute", () => {
-        const muteBtn = document.querySelector(
-            'button[aria-label="Mute"], button[aria-label="Unmute"], button[aria-label*="Mute" i], button[aria-label*="micro" i]'
-        );
+        const { muteBtn } = findVoiceButtons();
         if (muteBtn) {
             muteBtn.click();
         } else {
             window.dispatchEvent(new KeyboardEvent("keydown", { key: "M", code: "KeyM", ctrlKey: true, shiftKey: true, bubbles: true }));
         }
-        setTimeout(checkState, 80);
+        setTimeout(checkState, 40);
+        setTimeout(checkState, 120);
     });
 
     ipcRenderer.on("action-toggle-deafen", () => {
-        const deafenBtn = document.querySelector(
-            'button[aria-label="Deafen"], button[aria-label="Undeafen"], button[aria-label*="Deafen" i], button[aria-label*="casque" i]'
-        );
+        const { deafenBtn } = findVoiceButtons();
         if (deafenBtn) {
             deafenBtn.click();
         } else {
             window.dispatchEvent(new KeyboardEvent("keydown", { key: "D", code: "KeyD", ctrlKey: true, shiftKey: true, bubbles: true }));
         }
-        setTimeout(checkState, 80);
+        setTimeout(checkState, 40);
+        setTimeout(checkState, 120);
     });
 
     ipcRenderer.on("action-toggle-video", () => {
@@ -335,16 +378,18 @@ window.addEventListener("DOMContentLoaded", () => {
         if (videoBtn) {
             videoBtn.click();
         }
-        setTimeout(checkState, 80);
+        setTimeout(checkState, 40);
+        setTimeout(checkState, 120);
     });
 
     ipcRenderer.on("action-toggle-disconnect", () => {
         const disconnectBtn = document.querySelector(
-            'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], [class*="disconnectButton_"]'
+            'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], button[aria-label*="قطع" i], [class*="disconnectButton"]'
         );
         if (disconnectBtn) {
             disconnectBtn.click();
         }
-        setTimeout(checkState, 80);
+        setTimeout(checkState, 40);
+        setTimeout(checkState, 120);
     });
 })();

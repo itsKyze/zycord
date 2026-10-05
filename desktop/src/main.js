@@ -259,6 +259,13 @@ function updateThumbarButtons() {
 
     try {
         const inVoice = Boolean(clientState.inVoice);
+
+        // Only show thumbnail toolbar buttons when connected to a voice room
+        if (!inVoice) {
+            mainWindow.setThumbarButtons([]);
+            return;
+        }
+
         const isMuted = Boolean(clientState.isMuted);
         const isDeafened = Boolean(clientState.isDeafened);
         const isVideoOn = Boolean(clientState.isVideoOn);
@@ -267,7 +274,7 @@ function updateThumbarButtons() {
             {
                 tooltip: isVideoOn ? "Turn Off Camera" : "Turn On Camera",
                 icon: isVideoOn ? thumbarIcons.cameraOn : thumbarIcons.cameraOff,
-                flags: inVoice ? [] : ["disabled"],
+                flags: [],
                 click: () => {
                     mainWindow?.webContents.send("action-toggle-video");
                 },
@@ -291,7 +298,7 @@ function updateThumbarButtons() {
             {
                 tooltip: "Disconnect",
                 icon: thumbarIcons.disconnect,
-                flags: inVoice ? [] : ["disabled"],
+                flags: [],
                 click: () => {
                     mainWindow?.webContents.send("action-toggle-disconnect");
                 },
