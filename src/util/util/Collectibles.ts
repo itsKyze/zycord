@@ -299,6 +299,17 @@ const load = async (backgroundRefresh = true): Promise<Catalog> => {
             console.error("[Collectibles] could not parse local snapshots", error);
         }
     }
+    if (!catalogFile.raw) {
+        try {
+            const { spawnSync } = await import("node:child_process");
+            const scriptPath = path.join(__dirname, "..", "..", "..", "scripts", "generate-collectibles.mjs");
+            spawnSync(process.execPath, [scriptPath], { stdio: "ignore" });
+            const [retryCatalog, retryEffects] = await Promise.all([read(SOURCES.catalog), read(SOURCES.effects)]);
+            if (retryCatalog.raw) {
+                return withCustom(parse(retryCatalog.raw, retryEffects.raw));
+            }
+        } catch (_) {}
+    }
     return withCustom({ categories: [], products: new Map(), items: new Map() });
 };
 

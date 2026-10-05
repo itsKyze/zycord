@@ -31,6 +31,7 @@ export const listCollectiblePurchases = async (user_id: string) => {
         seen.add(product.sku_id);
         result.push({
             ...product,
+            id: product.sku_id,
             purchased_at: now,
             purchase_type: 0,
             expires_at: null,
@@ -46,6 +47,7 @@ export const listCollectiblePurchases = async (user_id: string) => {
             seen.add(sku_id);
             result.push({
                 ...product,
+                id: product.sku_id,
                 purchased_at: purchased_at.toISOString(),
                 purchase_type: 0,
                 expires_at: null,

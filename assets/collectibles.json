@@ -1,0 +1,2247 @@
+[
+  {
+    "sku_id": "1000000000000000000",
+    "name": "Anime Vibes",
+    "summary": "Energetic auras, blossoms, and legendary hero items.",
+    "store_listing_id": "1000000000000000000",
+    "hero_ranking": [
+      "1000000000000000001",
+      "1000000000000000003",
+      "1000000000000000005",
+      "1000000000000000007",
+      "1000000000000000009",
+      "1000000000000000011",
+      "1000000000000000013",
+      "1000000000000000015"
+    ],
+    "products": [
+      {
+        "sku_id": "1000000000000000001",
+        "id": "1000000000000000001",
+        "store_listing_id": "1000000000000000001",
+        "name": "Sakura Petals",
+        "summary": "Sakura Petals",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000000",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000002",
+            "id": "1000000000000000002",
+            "asset": "a_fed43ab12698df65902ba06727e20c0e",
+            "label": "Sakura Petals"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000003",
+        "id": "1000000000000000003",
+        "store_listing_id": "1000000000000000003",
+        "name": "Ki Energy Aura",
+        "summary": "Ki Energy Aura",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000000",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000004",
+            "id": "1000000000000000004",
+            "asset": "a_7d305bca6cf371df98c059f9d2ef05e4",
+            "label": "Ki Energy Aura"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000005",
+        "id": "1000000000000000005",
+        "store_listing_id": "1000000000000000005",
+        "name": "Ninja Mask",
+        "summary": "Ninja Mask",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000000",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000006",
+            "id": "1000000000000000006",
+            "asset": "a_f997880d666be69b7782bb377617b4fd",
+            "label": "Ninja Mask"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000007",
+        "id": "1000000000000000007",
+        "store_listing_id": "1000000000000000007",
+        "name": "Cyber Katana",
+        "summary": "Cyber Katana",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000000",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000008",
+            "id": "1000000000000000008",
+            "asset": "a_4bdece8072c6c5e6fee2590f05312af2",
+            "label": "Cyber Katana"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000009",
+        "id": "1000000000000000009",
+        "store_listing_id": "1000000000000000009",
+        "name": "Sakura Blossom Storm",
+        "summary": "Sakura Blossom Storm",
+        "type": 1,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000000",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 1,
+            "sku_id": "1000000000000000010",
+            "id": "1000000000000000010",
+            "title": "Sakura Blossom Storm",
+            "description": "Sakura Blossom Storm",
+            "accessibilityLabel": "Sakura Blossom Storm",
+            "animationType": 2,
+            "effects": [
+              {
+                "src": "https://cdn.discordapp.com/assets/content/effect.png",
+                "loop": true,
+                "height": 880,
+                "width": 450,
+                "duration": 3000,
+                "start": 0,
+                "loopDelay": 0,
+                "position": {
+                  "x": 0,
+                  "y": 0
+                },
+                "zIndex": 100,
+                "randomizedSources": []
+              }
+            ]
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000011",
+        "id": "1000000000000000011",
+        "store_listing_id": "1000000000000000011",
+        "name": "Cherry Blossom Crest",
+        "summary": "Cherry Blossom Crest",
+        "type": 3,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000000",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 3,
+            "sku_id": "1000000000000000012",
+            "id": "1000000000000000012",
+            "label": "Cherry Blossom Crest",
+            "layers": [
+              {
+                "id": "1",
+                "type": "staple",
+                "order": "front",
+                "anchor": "top",
+                "responsive": false
+              }
+            ],
+            "inner_width": 1200,
+            "overflow_top": 0,
+            "overflow_bottom": 0,
+            "overflow_horizontal": 56
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000013",
+        "id": "1000000000000000013",
+        "store_listing_id": "1000000000000000013",
+        "name": "Crimson Honor",
+        "summary": "Anime Vibes",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000000",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000014",
+            "id": "1000000000000000014",
+            "asset": "nameplates/custom/1000000000000000014/",
+            "palette": "crimson",
+            "label": "Crimson Honor"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000015",
+        "id": "1000000000000000015",
+        "store_listing_id": "1000000000000000015",
+        "name": "Violet Blade",
+        "summary": "Anime Vibes",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000000",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000016",
+            "id": "1000000000000000016",
+            "asset": "nameplates/custom/1000000000000000016/",
+            "palette": "violet",
+            "label": "Violet Blade"
+          }
+        ],
+        "is_first_party": true
+      }
+    ]
+  },
+  {
+    "sku_id": "1000000000000000017",
+    "name": "Cyberpunk & Tech",
+    "summary": "Neon glitches, high-tech visors, and neural interfaces.",
+    "store_listing_id": "1000000000000000017",
+    "hero_ranking": [
+      "1000000000000000018",
+      "1000000000000000020",
+      "1000000000000000022",
+      "1000000000000000024",
+      "1000000000000000026",
+      "1000000000000000028",
+      "1000000000000000030",
+      "1000000000000000032"
+    ],
+    "products": [
+      {
+        "sku_id": "1000000000000000018",
+        "id": "1000000000000000018",
+        "store_listing_id": "1000000000000000018",
+        "name": "Cyber Visor",
+        "summary": "Cyber Visor",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000017",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000019",
+            "id": "1000000000000000019",
+            "asset": "a_f997880d666be69b7782bb377617b4fd",
+            "label": "Cyber Visor"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000020",
+        "id": "1000000000000000020",
+        "store_listing_id": "1000000000000000020",
+        "name": "Hacker Glitch",
+        "summary": "Hacker Glitch",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000017",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000021",
+            "id": "1000000000000000021",
+            "asset": "a_7d305bca6cf371df98c059f9d2ef05e4",
+            "label": "Hacker Glitch"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000022",
+        "id": "1000000000000000022",
+        "store_listing_id": "1000000000000000022",
+        "name": "Neon Skull",
+        "summary": "Neon Skull",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000017",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000023",
+            "id": "1000000000000000023",
+            "asset": "a_fed43ab12698df65902ba06727e20c0e",
+            "label": "Neon Skull"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000024",
+        "id": "1000000000000000024",
+        "store_listing_id": "1000000000000000024",
+        "name": "Holo Circuit",
+        "summary": "Holo Circuit",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000017",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000025",
+            "id": "1000000000000000025",
+            "asset": "a_479d6b5f1184c3cc5bef4f2cd3a6e15f",
+            "label": "Holo Circuit"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000026",
+        "id": "1000000000000000026",
+        "store_listing_id": "1000000000000000026",
+        "name": "Matrix Grid Surge",
+        "summary": "Matrix Grid Surge",
+        "type": 1,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000017",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 1,
+            "sku_id": "1000000000000000027",
+            "id": "1000000000000000027",
+            "title": "Matrix Grid Surge",
+            "description": "Matrix Grid Surge",
+            "accessibilityLabel": "Matrix Grid Surge",
+            "animationType": 2,
+            "effects": [
+              {
+                "src": "https://cdn.discordapp.com/assets/content/effect.png",
+                "loop": true,
+                "height": 880,
+                "width": 450,
+                "duration": 3000,
+                "start": 0,
+                "loopDelay": 0,
+                "position": {
+                  "x": 0,
+                  "y": 0
+                },
+                "zIndex": 100,
+                "randomizedSources": []
+              }
+            ]
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000028",
+        "id": "1000000000000000028",
+        "store_listing_id": "1000000000000000028",
+        "name": "Neural Frame",
+        "summary": "Neural Frame",
+        "type": 3,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000017",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 3,
+            "sku_id": "1000000000000000029",
+            "id": "1000000000000000029",
+            "label": "Neural Frame",
+            "layers": [
+              {
+                "id": "1",
+                "type": "staple",
+                "order": "front",
+                "anchor": "top",
+                "responsive": false
+              }
+            ],
+            "inner_width": 1200,
+            "overflow_top": 0,
+            "overflow_bottom": 0,
+            "overflow_horizontal": 56
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000030",
+        "id": "1000000000000000030",
+        "store_listing_id": "1000000000000000030",
+        "name": "Cobalt Grid",
+        "summary": "Cyberpunk & Tech",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000017",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000031",
+            "id": "1000000000000000031",
+            "asset": "nameplates/custom/1000000000000000031/",
+            "palette": "cobalt",
+            "label": "Cobalt Grid"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000032",
+        "id": "1000000000000000032",
+        "store_listing_id": "1000000000000000032",
+        "name": "Teal Terminal",
+        "summary": "Cyberpunk & Tech",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000017",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000033",
+            "id": "1000000000000000033",
+            "asset": "nameplates/custom/1000000000000000033/",
+            "palette": "teal",
+            "label": "Teal Terminal"
+          }
+        ],
+        "is_first_party": true
+      }
+    ]
+  },
+  {
+    "sku_id": "1000000000000000034",
+    "name": "Fantasy & Magic",
+    "summary": "Mystical runes, dragon crowns, and enchanted spells.",
+    "store_listing_id": "1000000000000000034",
+    "hero_ranking": [
+      "1000000000000000035",
+      "1000000000000000037",
+      "1000000000000000039",
+      "1000000000000000041",
+      "1000000000000000043",
+      "1000000000000000045",
+      "1000000000000000047",
+      "1000000000000000049"
+    ],
+    "products": [
+      {
+        "sku_id": "1000000000000000035",
+        "id": "1000000000000000035",
+        "store_listing_id": "1000000000000000035",
+        "name": "Wizard Hat & Wand",
+        "summary": "Wizard Hat",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000034",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000036",
+            "id": "1000000000000000036",
+            "asset": "a_479d6b5f1184c3cc5bef4f2cd3a6e15f",
+            "label": "Wizard Hat"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000037",
+        "id": "1000000000000000037",
+        "store_listing_id": "1000000000000000037",
+        "name": "Dragon Flame Horns",
+        "summary": "Dragon Horns",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000034",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000038",
+            "id": "1000000000000000038",
+            "asset": "a_7d305bca6cf371df98c059f9d2ef05e4",
+            "label": "Dragon Horns"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000039",
+        "id": "1000000000000000039",
+        "store_listing_id": "1000000000000000039",
+        "name": "Celestial Halo",
+        "summary": "Celestial Halo",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000034",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000040",
+            "id": "1000000000000000040",
+            "asset": "a_fed43ab12698df65902ba06727e20c0e",
+            "label": "Celestial Halo"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000041",
+        "id": "1000000000000000041",
+        "store_listing_id": "1000000000000000041",
+        "name": "Phoenix Crown",
+        "summary": "Phoenix Crown",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000034",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000042",
+            "id": "1000000000000000042",
+            "asset": "a_4bdece8072c6c5e6fee2590f05312af2",
+            "label": "Phoenix Crown"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000043",
+        "id": "1000000000000000043",
+        "store_listing_id": "1000000000000000043",
+        "name": "Cosmic Nebula Swirl",
+        "summary": "Cosmic Nebula Swirl",
+        "type": 1,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000034",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 1,
+            "sku_id": "1000000000000000044",
+            "id": "1000000000000000044",
+            "title": "Cosmic Nebula Swirl",
+            "description": "Cosmic Nebula Swirl",
+            "accessibilityLabel": "Cosmic Nebula Swirl",
+            "animationType": 2,
+            "effects": [
+              {
+                "src": "https://cdn.discordapp.com/assets/content/effect.png",
+                "loop": true,
+                "height": 880,
+                "width": 450,
+                "duration": 3000,
+                "start": 0,
+                "loopDelay": 0,
+                "position": {
+                  "x": 0,
+                  "y": 0
+                },
+                "zIndex": 100,
+                "randomizedSources": []
+              }
+            ]
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000045",
+        "id": "1000000000000000045",
+        "store_listing_id": "1000000000000000045",
+        "name": "Golden Royalty Frame",
+        "summary": "Golden Royalty Frame",
+        "type": 3,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000034",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 3,
+            "sku_id": "1000000000000000046",
+            "id": "1000000000000000046",
+            "label": "Golden Royalty Frame",
+            "layers": [
+              {
+                "id": "1",
+                "type": "staple",
+                "order": "front",
+                "anchor": "top",
+                "responsive": false
+              }
+            ],
+            "inner_width": 1200,
+            "overflow_top": 0,
+            "overflow_bottom": 0,
+            "overflow_horizontal": 56
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000047",
+        "id": "1000000000000000047",
+        "store_listing_id": "1000000000000000047",
+        "name": "Berry Mystic",
+        "summary": "Fantasy & Magic",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000034",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000048",
+            "id": "1000000000000000048",
+            "asset": "nameplates/custom/1000000000000000048/",
+            "palette": "berry",
+            "label": "Berry Mystic"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000049",
+        "id": "1000000000000000049",
+        "store_listing_id": "1000000000000000049",
+        "name": "Forest Magic",
+        "summary": "Fantasy & Magic",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000034",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000050",
+            "id": "1000000000000000050",
+            "asset": "nameplates/custom/1000000000000000050/",
+            "palette": "forest",
+            "label": "Forest Magic"
+          }
+        ],
+        "is_first_party": true
+      }
+    ]
+  },
+  {
+    "sku_id": "1000000000000000051",
+    "name": "Cute & Cozy",
+    "summary": "Adorable companions, froggy hats, and pastel dreams.",
+    "store_listing_id": "1000000000000000051",
+    "hero_ranking": [
+      "1000000000000000052",
+      "1000000000000000054",
+      "1000000000000000056",
+      "1000000000000000058",
+      "1000000000000000060",
+      "1000000000000000062",
+      "1000000000000000064",
+      "1000000000000000066"
+    ],
+    "products": [
+      {
+        "sku_id": "1000000000000000052",
+        "id": "1000000000000000052",
+        "store_listing_id": "1000000000000000052",
+        "name": "Froggy Hat",
+        "summary": "Froggy Hat",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000051",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000053",
+            "id": "1000000000000000053",
+            "asset": "a_4bdece8072c6c5e6fee2590f05312af2",
+            "label": "Froggy Hat"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000054",
+        "id": "1000000000000000054",
+        "store_listing_id": "1000000000000000054",
+        "name": "Cat Ears & Whiskers",
+        "summary": "Cat Ears",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000051",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000055",
+            "id": "1000000000000000055",
+            "asset": "a_fed43ab12698df65902ba06727e20c0e",
+            "label": "Cat Ears"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000056",
+        "id": "1000000000000000056",
+        "store_listing_id": "1000000000000000056",
+        "name": "Puppy Paws",
+        "summary": "Puppy Paws",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000051",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000057",
+            "id": "1000000000000000057",
+            "asset": "a_f997880d666be69b7782bb377617b4fd",
+            "label": "Puppy Paws"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000058",
+        "id": "1000000000000000058",
+        "store_listing_id": "1000000000000000058",
+        "name": "Duck Floatie",
+        "summary": "Duck Floatie",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000051",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000059",
+            "id": "1000000000000000059",
+            "asset": "a_479d6b5f1184c3cc5bef4f2cd3a6e15f",
+            "label": "Duck Floatie"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000060",
+        "id": "1000000000000000060",
+        "store_listing_id": "1000000000000000060",
+        "name": "Sparkling Hearts Shower",
+        "summary": "Sparkling Hearts",
+        "type": 1,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000051",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 1,
+            "sku_id": "1000000000000000061",
+            "id": "1000000000000000061",
+            "title": "Sparkling Hearts Shower",
+            "description": "Sparkling Hearts",
+            "accessibilityLabel": "Sparkling Hearts",
+            "animationType": 2,
+            "effects": [
+              {
+                "src": "https://cdn.discordapp.com/assets/content/effect.png",
+                "loop": true,
+                "height": 880,
+                "width": 450,
+                "duration": 3000,
+                "start": 0,
+                "loopDelay": 0,
+                "position": {
+                  "x": 0,
+                  "y": 0
+                },
+                "zIndex": 100,
+                "randomizedSources": []
+              }
+            ]
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000062",
+        "id": "1000000000000000062",
+        "store_listing_id": "1000000000000000062",
+        "name": "Pastel Cloud Frame",
+        "summary": "Pastel Cloud Frame",
+        "type": 3,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000051",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 3,
+            "sku_id": "1000000000000000063",
+            "id": "1000000000000000063",
+            "label": "Pastel Cloud Frame",
+            "layers": [
+              {
+                "id": "1",
+                "type": "staple",
+                "order": "front",
+                "anchor": "top",
+                "responsive": false
+              }
+            ],
+            "inner_width": 1200,
+            "overflow_top": 0,
+            "overflow_bottom": 0,
+            "overflow_horizontal": 56
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000064",
+        "id": "1000000000000000064",
+        "store_listing_id": "1000000000000000064",
+        "name": "Bubble Gum Pink",
+        "summary": "Cute & Cozy",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000051",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000065",
+            "id": "1000000000000000065",
+            "asset": "nameplates/custom/1000000000000000065/",
+            "palette": "bubble_gum",
+            "label": "Bubble Gum Pink"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000066",
+        "id": "1000000000000000066",
+        "store_listing_id": "1000000000000000066",
+        "name": "Lemon Sunbeam",
+        "summary": "Cute & Cozy",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000051",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000067",
+            "id": "1000000000000000067",
+            "asset": "nameplates/custom/1000000000000000067/",
+            "palette": "lemon",
+            "label": "Lemon Sunbeam"
+          }
+        ],
+        "is_first_party": true
+      }
+    ]
+  },
+  {
+    "sku_id": "1000000000000000068",
+    "name": "Dark & Gothic",
+    "summary": "Shadow realm reapers, cursed flames, and gothic spines.",
+    "store_listing_id": "1000000000000000068",
+    "hero_ranking": [
+      "1000000000000000069",
+      "1000000000000000071",
+      "1000000000000000073",
+      "1000000000000000075",
+      "1000000000000000077",
+      "1000000000000000079",
+      "1000000000000000081",
+      "1000000000000000083"
+    ],
+    "products": [
+      {
+        "sku_id": "1000000000000000069",
+        "id": "1000000000000000069",
+        "store_listing_id": "1000000000000000069",
+        "name": "Reaper Scythe",
+        "summary": "Reaper Scythe",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000068",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000070",
+            "id": "1000000000000000070",
+            "asset": "a_7d305bca6cf371df98c059f9d2ef05e4",
+            "label": "Reaper Scythe"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000071",
+        "id": "1000000000000000071",
+        "store_listing_id": "1000000000000000071",
+        "name": "Vampire Fangs",
+        "summary": "Vampire Fangs",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000068",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000072",
+            "id": "1000000000000000072",
+            "asset": "a_f997880d666be69b7782bb377617b4fd",
+            "label": "Vampire Fangs"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000073",
+        "id": "1000000000000000073",
+        "store_listing_id": "1000000000000000073",
+        "name": "Ghost Spirit",
+        "summary": "Ghost Spirit",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000068",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000074",
+            "id": "1000000000000000074",
+            "asset": "a_fed43ab12698df65902ba06727e20c0e",
+            "label": "Ghost Spirit"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000075",
+        "id": "1000000000000000075",
+        "store_listing_id": "1000000000000000075",
+        "name": "Demon Wings",
+        "summary": "Demon Wings",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000068",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000076",
+            "id": "1000000000000000076",
+            "asset": "a_479d6b5f1184c3cc5bef4f2cd3a6e15f",
+            "label": "Demon Wings"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000077",
+        "id": "1000000000000000077",
+        "store_listing_id": "1000000000000000077",
+        "name": "Abyssal Shadow Flame",
+        "summary": "Abyssal Shadow Flame",
+        "type": 1,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000068",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 1,
+            "sku_id": "1000000000000000078",
+            "id": "1000000000000000078",
+            "title": "Abyssal Shadow Flame",
+            "description": "Abyssal Shadow Flame",
+            "accessibilityLabel": "Abyssal Shadow Flame",
+            "animationType": 2,
+            "effects": [
+              {
+                "src": "https://cdn.discordapp.com/assets/content/effect.png",
+                "loop": true,
+                "height": 880,
+                "width": 450,
+                "duration": 3000,
+                "start": 0,
+                "loopDelay": 0,
+                "position": {
+                  "x": 0,
+                  "y": 0
+                },
+                "zIndex": 100,
+                "randomizedSources": []
+              }
+            ]
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000079",
+        "id": "1000000000000000079",
+        "store_listing_id": "1000000000000000079",
+        "name": "Gothic Spikes Frame",
+        "summary": "Gothic Spikes Frame",
+        "type": 3,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000068",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 3,
+            "sku_id": "1000000000000000080",
+            "id": "1000000000000000080",
+            "label": "Gothic Spikes Frame",
+            "layers": [
+              {
+                "id": "1",
+                "type": "staple",
+                "order": "front",
+                "anchor": "top",
+                "responsive": false
+              }
+            ],
+            "inner_width": 1200,
+            "overflow_top": 0,
+            "overflow_bottom": 0,
+            "overflow_horizontal": 56
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000081",
+        "id": "1000000000000000081",
+        "store_listing_id": "1000000000000000081",
+        "name": "Void Obsidian",
+        "summary": "Dark & Gothic",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000068",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000082",
+            "id": "1000000000000000082",
+            "asset": "nameplates/custom/1000000000000000082/",
+            "palette": "black",
+            "label": "Void Obsidian"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000083",
+        "id": "1000000000000000083",
+        "store_listing_id": "1000000000000000083",
+        "name": "Blood Crimson",
+        "summary": "Dark & Gothic",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000068",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000084",
+            "id": "1000000000000000084",
+            "asset": "nameplates/custom/1000000000000000084/",
+            "palette": "crimson",
+            "label": "Blood Crimson"
+          }
+        ],
+        "is_first_party": true
+      }
+    ]
+  },
+  {
+    "sku_id": "1000000000000000085",
+    "name": "Retro Arcade",
+    "summary": "8-bit nostalgia, pixel hearts, and synthwave beats.",
+    "store_listing_id": "1000000000000000085",
+    "hero_ranking": [
+      "1000000000000000086",
+      "1000000000000000088",
+      "1000000000000000090",
+      "1000000000000000092",
+      "1000000000000000094",
+      "1000000000000000096",
+      "1000000000000000098"
+    ],
+    "products": [
+      {
+        "sku_id": "1000000000000000086",
+        "id": "1000000000000000086",
+        "store_listing_id": "1000000000000000086",
+        "name": "Pixel Heart Crown",
+        "summary": "Pixel Heart Crown",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000085",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000087",
+            "id": "1000000000000000087",
+            "asset": "a_fed43ab12698df65902ba06727e20c0e",
+            "label": "Pixel Heart Crown"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000088",
+        "id": "1000000000000000088",
+        "store_listing_id": "1000000000000000088",
+        "name": "Arcade Joystick",
+        "summary": "Arcade Joystick",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000085",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000089",
+            "id": "1000000000000000089",
+            "asset": "a_f997880d666be69b7782bb377617b4fd",
+            "label": "Arcade Joystick"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000090",
+        "id": "1000000000000000090",
+        "store_listing_id": "1000000000000000090",
+        "name": "Game Over Glitch",
+        "summary": "Game Over Glitch",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000085",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000091",
+            "id": "1000000000000000091",
+            "asset": "a_7d305bca6cf371df98c059f9d2ef05e4",
+            "label": "Game Over Glitch"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000092",
+        "id": "1000000000000000092",
+        "store_listing_id": "1000000000000000092",
+        "name": "Retro Synth Sunset",
+        "summary": "Retro Synth Sunset",
+        "type": 1,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000085",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 1,
+            "sku_id": "1000000000000000093",
+            "id": "1000000000000000093",
+            "title": "Retro Synth Sunset",
+            "description": "Retro Synth Sunset",
+            "accessibilityLabel": "Retro Synth Sunset",
+            "animationType": 2,
+            "effects": [
+              {
+                "src": "https://cdn.discordapp.com/assets/content/effect.png",
+                "loop": true,
+                "height": 880,
+                "width": 450,
+                "duration": 3000,
+                "start": 0,
+                "loopDelay": 0,
+                "position": {
+                  "x": 0,
+                  "y": 0
+                },
+                "zIndex": 100,
+                "randomizedSources": []
+              }
+            ]
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000094",
+        "id": "1000000000000000094",
+        "store_listing_id": "1000000000000000094",
+        "name": "Pixel CRT Border Frame",
+        "summary": "Pixel CRT Border Frame",
+        "type": 3,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000085",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 3,
+            "sku_id": "1000000000000000095",
+            "id": "1000000000000000095",
+            "label": "Pixel CRT Border Frame",
+            "layers": [
+              {
+                "id": "1",
+                "type": "staple",
+                "order": "front",
+                "anchor": "top",
+                "responsive": false
+              }
+            ],
+            "inner_width": 1200,
+            "overflow_top": 0,
+            "overflow_bottom": 0,
+            "overflow_horizontal": 56
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000096",
+        "id": "1000000000000000096",
+        "store_listing_id": "1000000000000000096",
+        "name": "Clover Arcade",
+        "summary": "Retro Arcade",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000085",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000097",
+            "id": "1000000000000000097",
+            "asset": "nameplates/custom/1000000000000000097/",
+            "palette": "clover",
+            "label": "Clover Arcade"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000098",
+        "id": "1000000000000000098",
+        "store_listing_id": "1000000000000000098",
+        "name": "Sky Glider",
+        "summary": "Retro Arcade",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000085",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000099",
+            "id": "1000000000000000099",
+            "asset": "nameplates/custom/1000000000000000099/",
+            "palette": "sky",
+            "label": "Sky Glider"
+          }
+        ],
+        "is_first_party": true
+      }
+    ]
+  },
+  {
+    "sku_id": "1000000000000000100",
+    "name": "Elements & Nature",
+    "summary": "Raw elemental powers: fire, ice, storm, and earth.",
+    "store_listing_id": "1000000000000000100",
+    "hero_ranking": [
+      "1000000000000000101",
+      "1000000000000000103",
+      "1000000000000000105",
+      "1000000000000000107",
+      "1000000000000000109",
+      "1000000000000000111",
+      "1000000000000000113"
+    ],
+    "products": [
+      {
+        "sku_id": "1000000000000000101",
+        "id": "1000000000000000101",
+        "store_listing_id": "1000000000000000101",
+        "name": "Blazing Inferno",
+        "summary": "Blazing Inferno",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000100",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000102",
+            "id": "1000000000000000102",
+            "asset": "a_7d305bca6cf371df98c059f9d2ef05e4",
+            "label": "Blazing Inferno"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000103",
+        "id": "1000000000000000103",
+        "store_listing_id": "1000000000000000103",
+        "name": "Glacial Frost Ice",
+        "summary": "Glacial Frost",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000100",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000104",
+            "id": "1000000000000000104",
+            "asset": "a_fed43ab12698df65902ba06727e20c0e",
+            "label": "Glacial Frost"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000105",
+        "id": "1000000000000000105",
+        "store_listing_id": "1000000000000000105",
+        "name": "Lightning Shock Spark",
+        "summary": "Lightning Shock",
+        "type": 0,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000100",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 0,
+            "sku_id": "1000000000000000106",
+            "id": "1000000000000000106",
+            "asset": "a_f997880d666be69b7782bb377617b4fd",
+            "label": "Lightning Shock"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000107",
+        "id": "1000000000000000107",
+        "store_listing_id": "1000000000000000107",
+        "name": "Thunderstorm Flash",
+        "summary": "Thunderstorm Flash",
+        "type": 1,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000100",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 1,
+            "sku_id": "1000000000000000108",
+            "id": "1000000000000000108",
+            "title": "Thunderstorm Flash",
+            "description": "Thunderstorm Flash",
+            "accessibilityLabel": "Thunderstorm Flash",
+            "animationType": 2,
+            "effects": [
+              {
+                "src": "https://cdn.discordapp.com/assets/content/effect.png",
+                "loop": true,
+                "height": 880,
+                "width": 450,
+                "duration": 3000,
+                "start": 0,
+                "loopDelay": 0,
+                "position": {
+                  "x": 0,
+                  "y": 0
+                },
+                "zIndex": 100,
+                "randomizedSources": []
+              }
+            ]
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000109",
+        "id": "1000000000000000109",
+        "store_listing_id": "1000000000000000109",
+        "name": "Elemental Surge Frame",
+        "summary": "Elemental Surge Frame",
+        "type": 3,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000100",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 3,
+            "sku_id": "1000000000000000110",
+            "id": "1000000000000000110",
+            "label": "Elemental Surge Frame",
+            "layers": [
+              {
+                "id": "1",
+                "type": "staple",
+                "order": "front",
+                "anchor": "top",
+                "responsive": false
+              }
+            ],
+            "inner_width": 1200,
+            "overflow_top": 0,
+            "overflow_bottom": 0,
+            "overflow_horizontal": 56
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000111",
+        "id": "1000000000000000111",
+        "store_listing_id": "1000000000000000111",
+        "name": "Teal Tides",
+        "summary": "Elements & Nature",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000100",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000112",
+            "id": "1000000000000000112",
+            "asset": "nameplates/custom/1000000000000000112/",
+            "palette": "teal",
+            "label": "Teal Tides"
+          }
+        ],
+        "is_first_party": true
+      },
+      {
+        "sku_id": "1000000000000000113",
+        "id": "1000000000000000113",
+        "store_listing_id": "1000000000000000113",
+        "name": "Pure White Diamond",
+        "summary": "Elements & Nature",
+        "type": 2,
+        "premium_type": 2,
+        "hide_badge": true,
+        "category_sku_id": "1000000000000000100",
+        "prices": {
+          "0": {
+            "country_prices": {
+              "country_code": "US",
+              "prices": [
+                {
+                  "amount": 0,
+                  "currency": "usd",
+                  "exponent": 2
+                }
+              ]
+            }
+          }
+        },
+        "items": [
+          {
+            "type": 2,
+            "sku_id": "1000000000000000114",
+            "id": "1000000000000000114",
+            "asset": "nameplates/custom/1000000000000000114/",
+            "palette": "white",
+            "label": "Pure White Diamond"
+          }
+        ],
+        "is_first_party": true
+      }
+    ]
+  }
+]
