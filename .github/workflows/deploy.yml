@@ -162,11 +162,13 @@ jobs:
             sed -i 's/^INSTANCE_NAME=.*/INSTANCE_NAME=Zycord/' .env
 
             # 3. Handle Port 80 and Reverse Proxy (Caddy vs Host Nginx)
-            # Stop any lingering containers from old /opt/fosscord if present
-            if [ -d /opt/fosscord ]; then
-              echo "🛑 Stopping old fosscord containers..."
-              (cd /opt/fosscord && docker compose down) 2>/dev/null || true
-            fi
+            # Stop any lingering legacy containers from other folders in /opt
+            for dir in /opt/*; do
+              if [ -d "$dir" ] && [ "$dir" != "/opt/zycord" ] && [ -f "$dir/docker-compose.yml" ]; then
+                echo "🛑 Stopping outdated containers in $dir..."
+                (cd "$dir" && docker compose down) 2>/dev/null || true
+              fi
+            done
 
             # Check if port 80 is in use
             if ss -tlpn | grep -q ":80 "; then
