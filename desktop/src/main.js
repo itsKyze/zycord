@@ -187,6 +187,14 @@ function createMainWindow() {
         }
     });
 
+    mainWindow.on("maximize", () => {
+        mainWindow?.webContents.send("window-maximized-state", true);
+    });
+
+    mainWindow.on("unmaximize", () => {
+        mainWindow?.webContents.send("window-maximized-state", false);
+    });
+
     mainWindow.on("closed", () => {
         mainWindow = null;
     });
