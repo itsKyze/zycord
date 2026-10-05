@@ -17,157 +17,65 @@ try {
     window.ZycordNative = ZycordNative;
 }
 
-// 1. Inject Authentic Top Bar Window Controls (Inbox, Help, Separator, Minimize, Maximize, Close)
-function initWindowControls() {
+// 1. Native Window Controls & Discord Top Bar Integration (Inside the website, no floating overlays)
+function setupNativeWindowControls() {
     try {
-        if (!document.body || !document.head) return;
-        if (document.getElementById("zycord-win-controls")) return;
-
-        // Window controls container: matches Discord's authentic top-right layout exactly
-        const winControls = document.createElement("div");
-        winControls.id = "zycord-win-controls";
-        winControls.innerHTML = `
-            <button class="zycord-win-btn" id="zycord-btn-inbox" title="Inbox" aria-label="Inbox">
-                <svg width="16" height="16" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5v-3h3.56c.69 1.19 1.97 2 3.44 2s2.75-.81 3.44-2H19v3zm0-5h-4.18c-.41 1.16-1.51 2-2.82 2s-2.41-.84-2.82-2H5V5h14v9z"/>
-                </svg>
-            </button>
-            <button class="zycord-win-btn" id="zycord-btn-help" title="Help" aria-label="Help">
-                <svg width="16" height="16" viewBox="0 0 24 24">
-                    <path fill="currentColor" fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
-                </svg>
-            </button>
-            <div class="zycord-win-separator"></div>
-            <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
-                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1.4" x="0" y="5"></rect></svg>
-            </button>
-            <button class="zycord-win-btn" id="zycord-btn-max" title="Maximize" aria-label="Maximize">
-                <svg id="zycord-icon-max" width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1.2"></rect></svg>
-            </button>
-            <button class="zycord-win-btn close" id="zycord-btn-close" title="Close" aria-label="Close">
-                <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
-            </button>
-        `;
+        // Remove any legacy floating controls if present
+        const legacyControls = document.getElementById("zycord-win-controls");
+        if (legacyControls) legacyControls.remove();
 
         if (!document.getElementById("zycord-app-styles")) {
             const style = document.createElement("style");
             style.id = "zycord-app-styles";
             style.textContent = `
-                /* Hide Discord's broken internal window buttons so our controls are 100% in charge */
+                /* Ensure Discord native window buttons are fully visible and clickable inside the bar */
                 [class*="winButton_"],
                 [class*="winButtonClose_"],
                 [class*="winButtonMinMax_"] {
-                    display: none !important;
-                }
-
-                /* Hide duplicate Inbox and Help in lower channel toolbar so they only appear in the top bar */
-                [class*="toolbar_"] [aria-label*="Inbox" i],
-                [class*="toolbar_"] [aria-label*="صندوق الوارد" i],
-                [class*="toolbar_"] [aria-label*="Boîte de réception" i],
-                [class*="toolbar_"] [aria-label*="Help" i],
-                [class*="toolbar_"] [aria-label*="مساعدة" i],
-                [class*="toolbar_"] [aria-label*="Aide" i],
-                [class*="toolbar_"] a[href*="support.discord.com"] {
-                    display: none !important;
-                }
-
-                /* Window Controls Container: solid background matching Discord titlebar to prevent drag passthrough */
-                #zycord-win-controls {
-                    position: fixed !important;
-                    top: 0 !important;
-                    right: 0 !important;
-                    height: 24px !important;
-                    width: 170px !important;
-                    z-index: 2147483647 !important;
                     display: flex !important;
-                    align-items: center !important;
-                    justify-content: flex-end !important;
-                    -webkit-app-region: no-drag !important;
-                    pointer-events: auto !important;
-                    background: #111214 !important;
-                    padding-right: 2px !important;
-                }
-
-                #zycord-win-controls,
-                #zycord-win-controls *,
-                .zycord-win-btn,
-                .zycord-win-btn * {
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
                     cursor: pointer !important;
                     user-select: none !important;
                 }
 
-                .zycord-win-separator {
-                    width: 1px !important;
-                    height: 14px !important;
-                    background: rgba(255, 255, 255, 0.18) !important;
-                    margin: 0 4px !important;
+                [class*="winButton_"]:hover {
+                    background-color: rgba(255, 255, 255, 0.08) !important;
+                    color: #ffffff !important;
                 }
 
-                .zycord-win-btn {
-                    width: 28px !important;
-                    height: 24px !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    background: transparent !important;
-                    border: none !important;
-                    padding: 0 !important;
-                    margin: 0 !important;
-                    color: #949ba4 !important;
-                    outline: none !important;
-                    cursor: pointer !important;
+                [class*="winButtonClose_"]:hover {
+                    background-color: #f23f43 !important;
+                    color: #ffffff !important;
+                }
+
+                /* Ensure Discord native toolbar (including native Inbox, Help, etc.) is fully visible & clickable */
+                [class*="toolbar_"],
+                [class*="toolbar_"] *,
+                section[class*="title_"] [class*="toolbar_"] {
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
-                    transition: background 0.12s ease, color 0.12s ease !important;
+                    cursor: pointer !important;
                 }
 
-                .zycord-win-btn:hover {
-                    background: rgba(255, 255, 255, 0.08) !important;
-                    color: #ffffff !important;
-                }
-
-                .zycord-win-btn.close {
-                    width: 32px !important;
-                }
-
-                .zycord-win-btn.close:hover {
-                    background: #f23f43 !important;
-                    color: #ffffff !important;
-                }
-
-                /* Stop Discord native title bar dragging BEFORE #zycord-win-controls (170px) */
+                /* Draggable Discord top bar while keeping interactive buttons non-draggable */
                 [class*="typeWindows_"],
                 [class*="titleBar_"] {
-                    height: 24px !important;
                     -webkit-app-region: drag !important;
-                    max-width: calc(100% - 170px) !important;
-                    width: calc(100% - 170px) !important;
-                    padding-right: 0 !important;
-                    box-sizing: border-box !important;
                 }
 
-                /* Ensure all top bar buttons (navigation arrows ← →, wordmark, etc.) are 100% clickable */
                 [class*="typeWindows_"] button,
                 [class*="typeWindows_"] [role="button"],
                 [class*="typeWindows_"] a,
                 [class*="typeWindows_"] svg,
                 [class*="typeWindows_"] [class*="history_"] *,
+                [class*="typeWindows_"] [class*="winButton_"],
+                [class*="typeWindows_"] [class*="winButton_"] *,
                 [class*="titleBar_"] button,
                 [class*="titleBar_"] [role="button"],
                 [class*="titleBar_"] a,
                 [class*="titleBar_"] svg,
                 [class*="titleBar_"] * {
-                    -webkit-app-region: no-drag !important;
-                    pointer-events: auto !important;
-                    cursor: pointer !important;
-                }
-
-                /* Discord native toolbar in channel header */
-                [class*="toolbar_"],
-                [class*="toolbar_"] *,
-                section[class*="title_"] [class*="toolbar_"] {
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
                     cursor: pointer !important;
@@ -184,170 +92,102 @@ function initWindowControls() {
                     display: block !important;
                 }
             `;
-            document.head.appendChild(style);
+            (document.head || document.documentElement).appendChild(style);
         }
 
-        document.body.prepend(winControls);
-
-        function toggleInbox() {
-            const nativeInbox = document.querySelector(
-                '[aria-label*="Inbox" i], [aria-label*="صندوق الوارد" i], [aria-label*="Boîte de réception" i], button[aria-label*="Inbox" i]'
-            );
-            if (nativeInbox) {
-                nativeInbox.click();
-            } else {
-                const init = {
-                    key: "i",
-                    code: "KeyI",
-                    keyCode: 73,
-                    which: 73,
-                    ctrlKey: true,
-                    bubbles: true,
-                    cancelable: true,
-                    view: window,
-                };
-                window.dispatchEvent(new KeyboardEvent("keydown", init));
-                document.dispatchEvent(new KeyboardEvent("keydown", init));
-                window.dispatchEvent(new KeyboardEvent("keyup", init));
-                document.dispatchEvent(new KeyboardEvent("keyup", init));
+        // If the website's title bar exists but winButtons are not rendered by Discord yet,
+        // place them neatly INSIDE the titlebar (never floating outside)
+        const titleBar = document.querySelector('[class*="typeWindows_"], [class*="titleBar_"]');
+        if (titleBar && !titleBar.querySelector('[class*="winButton_"], [class*="winButtonMinMax_"], [class*="winButtonClose_"]')) {
+            let container = titleBar.querySelector(".zycord-native-win-container");
+            if (!container) {
+                container = document.createElement("div");
+                container.className = "zycord-native-win-container";
+                container.style.cssText = "display:flex;align-items:center;margin-left:auto;height:100%;-webkit-app-region:no-drag !important;z-index:100;";
+                container.innerHTML = `
+                    <div class="winButtonMinMax_native winButton_native" role="button" aria-label="Minimize" title="Minimize" style="width:28px;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#949ba4;-webkit-app-region:no-drag !important;">
+                        <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1.4" x="0" y="5"></rect></svg>
+                    </div>
+                    <div class="winButtonMinMax_native winButton_native" role="button" aria-label="Maximize" title="Maximize" style="width:28px;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#949ba4;-webkit-app-region:no-drag !important;">
+                        <svg id="zycord-icon-max-native" width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1.2"></rect></svg>
+                    </div>
+                    <div class="winButtonClose_native winButton_native" role="button" aria-label="Close" title="Close" style="width:32px;height:100%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#949ba4;-webkit-app-region:no-drag !important;">
+                        <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
+                    </div>
+                `;
+                titleBar.appendChild(container);
             }
         }
-
-        function openHelp() {
-            const nativeHelp = document.querySelector(
-                'a[href*="support.discord.com"], [aria-label*="Help" i], [aria-label*="مساعدة" i]'
-            );
-            if (nativeHelp) {
-                nativeHelp.click();
-            } else {
-                ipcRenderer.send("open-external", "https://support.discord.com");
-            }
-        }
-
-        // Direct button bindings
-        const bindButton = (id, handler) => {
-            const btn = document.getElementById(id);
-            if (!btn) return;
-            const run = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handler();
-            };
-            btn.addEventListener("click", run, true);
-            btn.addEventListener("mousedown", run, true);
-        };
-
-        bindButton("zycord-btn-inbox", toggleInbox);
-        bindButton("zycord-btn-help", openHelp);
-        bindButton("zycord-btn-min", () => ipcRenderer.send("window-minimize"));
-        bindButton("zycord-btn-max", () => ipcRenderer.send("window-maximize"));
-        bindButton("zycord-btn-close", () => ipcRenderer.send("window-close"));
-
-        // Initial restore icon sync
-        try {
-            if (ipcRenderer.sendSync("window-is-maximized")) {
-                const maxBtn = document.getElementById("zycord-btn-max");
-                if (maxBtn) {
-                    maxBtn.title = "Restore";
-                    maxBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1" d="M3 1h6v6m-2-4h-6v6h6v-6z"/></svg>`;
-                }
-            }
-        } catch (_) {}
-
     } catch (err) {
-        console.warn("[Zycord] Titlebar injection skipped:", err);
+        console.warn("[Zycord] Controls setup skipped:", err);
     }
 }
 
-// Global capture delegation for window controls as guaranteed fallback
-document.addEventListener("click", (e) => {
-    if (e.target.closest('#zycord-btn-close, [class*="winButtonClose_"]')) {
+// Master event listener for all window buttons (both Discord native and inside-titlebar)
+function handleNativeWindowControl(e) {
+    const target = e.target;
+    if (!target) return;
+
+    const closeBtn = target.closest('[class*="winButtonClose_"], [class*="winButtonClose"]');
+    if (closeBtn) {
         e.preventDefault();
         e.stopPropagation();
+        e.stopImmediatePropagation();
         ipcRenderer.send("window-close");
         return;
     }
-    if (e.target.closest('#zycord-btn-max, [class*="winButtonMinMax_"]:not(:first-child)')) {
-        e.preventDefault();
-        e.stopPropagation();
-        ipcRenderer.send("window-maximize");
-        return;
-    }
-    if (e.target.closest('#zycord-btn-min, [class*="winButtonMinMax_"]:first-child')) {
-        e.preventDefault();
-        e.stopPropagation();
-        ipcRenderer.send("window-minimize");
-        return;
-    }
-    if (e.target.closest('#zycord-btn-inbox')) {
-        e.preventDefault();
-        e.stopPropagation();
-        const nativeInbox = document.querySelector(
-            '[aria-label*="Inbox" i], [aria-label*="صندوق الوارد" i], [aria-label*="Boîte de réception" i], button[aria-label*="Inbox" i]'
-        );
-        if (nativeInbox) nativeInbox.click();
-        return;
-    }
-    if (e.target.closest('#zycord-btn-help')) {
-        e.preventDefault();
-        e.stopPropagation();
-        ipcRenderer.send("open-external", "https://support.discord.com");
-        return;
-    }
-}, true);
 
-document.addEventListener("mousedown", (e) => {
-    if (e.target.closest('#zycord-btn-close, [class*="winButtonClose_"]')) {
+    const minMaxBtn = target.closest('[class*="winButtonMinMax_"], [class*="winButtonMinMax"]');
+    if (minMaxBtn) {
         e.preventDefault();
         e.stopPropagation();
-        ipcRenderer.send("window-close");
-    } else if (e.target.closest('#zycord-btn-max, [class*="winButtonMinMax_"]:not(:first-child)')) {
-        e.preventDefault();
-        e.stopPropagation();
-        ipcRenderer.send("window-maximize");
-    } else if (e.target.closest('#zycord-btn-min, [class*="winButtonMinMax_"]:first-child')) {
-        e.preventDefault();
-        e.stopPropagation();
-        ipcRenderer.send("window-minimize");
-    } else if (e.target.closest('#zycord-btn-inbox')) {
-        e.preventDefault();
-        e.stopPropagation();
-        const nativeInbox = document.querySelector(
-            '[aria-label*="Inbox" i], [aria-label*="صندوق الوارد" i], [aria-label*="Boîte de réception" i], button[aria-label*="Inbox" i]'
-        );
-        if (nativeInbox) nativeInbox.click();
-    } else if (e.target.closest('#zycord-btn-help')) {
-        e.preventDefault();
-        e.stopPropagation();
-        ipcRenderer.send("open-external", "https://support.discord.com");
-    }
-}, true);
+        e.stopImmediatePropagation();
 
-// Dynamically update Maximize / Restore icon
+        const label = (minMaxBtn.getAttribute("aria-label") || minMaxBtn.getAttribute("title") || "").toLowerCase();
+        if (label.includes("min") || label.includes("تصغير")) {
+            ipcRenderer.send("window-minimize");
+            return;
+        }
+        if (label.includes("max") || label.includes("restore") || label.includes("تكبير") || label.includes("استعادة")) {
+            ipcRenderer.send("window-maximize");
+            return;
+        }
+
+        const parent = minMaxBtn.parentElement;
+        const siblings = parent ? Array.from(parent.querySelectorAll('[class*="winButtonMinMax"]')) : [];
+        if (siblings.length >= 2) {
+            if (siblings.indexOf(minMaxBtn) === 0) {
+                ipcRenderer.send("window-minimize");
+            } else {
+                ipcRenderer.send("window-maximize");
+            }
+        } else {
+            ipcRenderer.send("window-maximize");
+        }
+    }
+}
+
+document.addEventListener("mousedown", handleNativeWindowControl, true);
+document.addEventListener("click", handleNativeWindowControl, true);
+
+// Dynamically update Maximize / Restore icon on custom inside buttons
 ipcRenderer.on("window-maximized-state", (event, isMaximized) => {
-    const maxBtn = document.getElementById("zycord-btn-max");
+    const maxBtn = document.getElementById("zycord-icon-max-native");
     if (!maxBtn) return;
     if (isMaximized) {
-        maxBtn.title = "Restore";
-        maxBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1" d="M3 1h6v6m-2-4h-6v6h6v-6z"/></svg>`;
+        maxBtn.outerHTML = `<svg id="zycord-icon-max-native" width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1" d="M3 1h6v6m-2-4h-6v6h6v-6z"/></svg>`;
     } else {
-        maxBtn.title = "Maximize";
-        maxBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1.2"></rect></svg>`;
+        maxBtn.outerHTML = `<svg id="zycord-icon-max-native" width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1.2"></rect></svg>`;
     }
 });
 
 if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initWindowControls);
+    document.addEventListener("DOMContentLoaded", setupNativeWindowControls);
 } else {
-    initWindowControls();
+    setupNativeWindowControls();
 }
 
-// Watchdog interval to ensure window controls are always present
-setInterval(() => {
-    if (!document.getElementById("zycord-win-controls") && document.body) {
-        initWindowControls();
-    }
-}, 1000);
+setInterval(setupNativeWindowControls, 1000);
 
 // 2. Discord Voice, Mute, Deafen, and Taskbar Integration
 (function setupDiscordIntegration() {
