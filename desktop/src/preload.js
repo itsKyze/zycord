@@ -17,56 +17,37 @@ try {
     window.ZycordNative = ZycordNative;
 }
 
-// 1. Inject Authentic Top Bar Window Controls & Header Drag Management
+// 1. Inject Authentic Top Bar Window Controls (Minimize, Maximize, Close)
 window.addEventListener("DOMContentLoaded", () => {
     try {
         if (!document.body || !document.head) return;
         if (document.getElementById("zycord-win-controls")) return;
-
-        // Fallback drag area for login / initial loading screen
-        const dragArea = document.createElement("div");
-        dragArea.id = "zycord-drag-area";
 
         // Window controls container (Minimize, Maximize, Close)
         const winControls = document.createElement("div");
         winControls.id = "zycord-win-controls";
         winControls.innerHTML = `
             <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
-                <svg width="12" height="12" viewBox="0 0 12 12"><rect fill="currentColor" width="10" height="1.2" x="1" y="6"></rect></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1" x="0" y="5"></rect></svg>
             </button>
             <button class="zycord-win-btn" id="zycord-btn-max" title="Maximize" aria-label="Maximize">
-                <svg id="zycord-icon-max" width="12" height="12" viewBox="0 0 12 12"><rect fill="none" stroke="currentColor" width="9" height="9" x="1.5" y="1.5" stroke-width="1.2"></rect></svg>
+                <svg id="zycord-icon-max" width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1"></rect></svg>
             </button>
             <button class="zycord-win-btn close" id="zycord-btn-close" title="Close" aria-label="Close">
-                <svg width="12" height="12" viewBox="0 0 12 12"><polygon fill="currentColor" fill-rule="evenodd" points="11 1.8 10.2 1 6 5.2 1.8 1 1 1.8 5.2 6 1 10.2 1.8 11 6 6.8 10.2 11 11 10.2 6.8 6"></polygon></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
             </button>
         `;
 
         const style = document.createElement("style");
         style.id = "zycord-app-styles";
         style.textContent = `
-            /* Initial / login fallback drag bar */
-            #zycord-drag-area {
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 112px;
-                height: 28px;
-                z-index: 9999;
-                -webkit-app-region: drag;
-                pointer-events: auto;
-            }
-            body.app-ready #zycord-drag-area {
-                display: none !important;
-            }
-
-            /* Window Controls Container */
+            /* Window Controls Container (22px height matching Discord native top bar) */
             #zycord-win-controls {
                 position: fixed !important;
                 top: 0 !important;
                 right: 0 !important;
-                width: 108px !important;
-                height: 32px !important;
+                width: 84px !important;
+                height: 22px !important;
                 z-index: 2147483647 !important;
                 display: flex !important;
                 align-items: center !important;
@@ -75,17 +56,20 @@ window.addEventListener("DOMContentLoaded", () => {
                 pointer-events: auto !important;
                 background: transparent !important;
             }
+
             #zycord-win-controls,
             #zycord-win-controls *,
             .zycord-win-btn,
             .zycord-win-btn * {
                 -webkit-app-region: no-drag !important;
                 pointer-events: auto !important;
+                cursor: pointer !important;
                 user-select: none !important;
             }
+
             .zycord-win-btn {
-                width: 36px !important;
-                height: 32px !important;
+                width: 28px !important;
+                height: 22px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: center !important;
@@ -94,48 +78,40 @@ window.addEventListener("DOMContentLoaded", () => {
                 padding: 0 !important;
                 margin: 0 !important;
                 color: #949ba4 !important;
-                cursor: pointer !important;
                 outline: none !important;
                 transition: background 0.12s ease, color 0.12s ease !important;
             }
+
             .zycord-win-btn:hover {
                 background: rgba(255, 255, 255, 0.1) !important;
                 color: #ffffff !important;
             }
+
             .zycord-win-btn.close:hover {
                 background: #f23f43 !important;
                 color: #ffffff !important;
             }
 
-            /* Shift Discord's top toolbar to avoid any collision with window controls */
-            [class*="toolbar_"] {
-                margin-right: 112px !important;
-                -webkit-app-region: no-drag !important;
-                pointer-events: auto !important;
-            }
-            [class*="toolbar_"],
-            [class*="toolbar_"] * {
-                -webkit-app-region: no-drag !important;
-                pointer-events: auto !important;
-                cursor: pointer !important;
-            }
-
-            /* Make Discord header bars draggable */
-            section[class*="title_"],
-            div[class*="subtitleContainer_"],
-            header[class*="header_"] {
+            /* Make Discord native top title bar draggable */
+            [class*="typeWindows_"],
+            [class*="titleBar_"] {
+                height: 22px !important;
                 -webkit-app-region: drag !important;
+                padding-right: 88px !important;
+                box-sizing: border-box !important;
             }
 
-            /* Ensure all buttons, search bar, and interactive items inside headers are clickable */
-            section[class*="title_"] button,
-            section[class*="title_"] [role="button"],
-            section[class*="title_"] a,
-            section[class*="title_"] input,
-            section[class*="title_"] svg,
-            section[class*="title_"] [class*="children_"] > *,
-            header[class*="header_"] button,
-            header[class*="header_"] * {
+            /* Ensure all top bar buttons (navigation arrows ← →, wordmark, etc.) are 100% clickable */
+            [class*="typeWindows_"] button,
+            [class*="typeWindows_"] [role="button"],
+            [class*="typeWindows_"] a,
+            [class*="typeWindows_"] svg,
+            [class*="typeWindows_"] [class*="history_"] *,
+            [class*="titleBar_"] button,
+            [class*="titleBar_"] [role="button"],
+            [class*="titleBar_"] a,
+            [class*="titleBar_"] svg,
+            [class*="titleBar_"] * {
                 -webkit-app-region: no-drag !important;
                 pointer-events: auto !important;
                 cursor: pointer !important;
@@ -154,10 +130,9 @@ window.addEventListener("DOMContentLoaded", () => {
         `;
 
         document.head.appendChild(style);
-        document.body.prepend(dragArea);
         document.body.prepend(winControls);
 
-        // Bind control buttons with multiple event types to guarantee responsive action
+        // Bind control buttons with multiple event types
         const bindControl = (id, action) => {
             const el = document.getElementById(id);
             if (!el) return;
@@ -181,27 +156,12 @@ window.addEventListener("DOMContentLoaded", () => {
             if (!maxBtn) return;
             if (isMaximized) {
                 maxBtn.title = "Restore";
-                maxBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12"><path fill="none" stroke="currentColor" stroke-width="1.2" d="M3.5 1.5h6v6m-2-4h-6v6h6v-6z"/></svg>`;
+                maxBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1" d="M3 1h6v6m-2-4h-6v6h6v-6z"/></svg>`;
             } else {
                 maxBtn.title = "Maximize";
-                maxBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12"><rect fill="none" stroke="currentColor" width="9" height="9" x="1.5" y="1.5" stroke-width="1.2"></rect></svg>`;
+                maxBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1"></rect></svg>`;
             }
         });
-
-        // App mounted state tracker to hide fallback drag bar
-        const checkAppMounted = () => {
-            const hasHeader = Boolean(
-                document.querySelector('section[class*="title_"], header[class*="header_"], [class*="panels_"]')
-            );
-            if (hasHeader && !document.body.classList.contains("app-ready")) {
-                document.body.classList.add("app-ready");
-            } else if (!hasHeader && document.body.classList.contains("app-ready")) {
-                document.body.classList.remove("app-ready");
-            }
-        };
-
-        new MutationObserver(checkAppMounted).observe(document.body, { childList: true, subtree: true });
-        checkAppMounted();
     } catch (err) {
         console.warn("[Zycord] Titlebar injection skipped:", err);
     }
@@ -253,64 +213,89 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     // Precise Voice Button Finder (Mute, Deafen)
+    // Filters out chevron dropdown menus, avatar buttons, and settings
     function findVoiceButtons() {
         let muteBtn = null;
         let deafenBtn = null;
 
-        const panels = document.querySelector('section[class*="panels_"]');
-        if (panels) {
-            // Find all buttons inside the bottom user section
-            const allButtons = Array.from(panels.querySelectorAll("button"));
+        const panel = document.querySelector('section[class*="panels_"]');
+        if (panel) {
+            const buttons = Array.from(panel.querySelectorAll("button"));
 
-            // Find Settings button (gear icon or settings label in any language)
-            const settingsBtn = allButtons.find((b) => {
-                const label = (b.getAttribute("aria-label") || "").toLowerCase();
-                return (
+            // Helper: Detect dropdown chevron / options button
+            const isChevronOrSettings = (b) => {
+                const label = (b.getAttribute("aria-label") || "").toLowerCase().trim();
+                if (
                     label.includes("setting") ||
-                    label.includes("param") ||
-                    label.includes("إعداد") ||
-                    label.includes("einstell") ||
-                    label.includes("ajuste") ||
-                    label.includes("config")
-                );
-            });
+                    label.includes("option") ||
+                    label.includes("device") ||
+                    label.includes("خيارات") ||
+                    label.includes("إعداد")
+                ) {
+                    return true;
+                }
+                if (b.offsetWidth > 0 && b.offsetWidth < 28) return true;
+                const cls = (b.className || "").toLowerCase();
+                if (cls.includes("dropdown") || cls.includes("arrow")) return true;
+                return false;
+            };
 
-            if (settingsBtn && settingsBtn.parentElement) {
-                // In Discord, Mute, Deafen, and Settings are direct siblings in the same container div
-                const siblings = Array.from(settingsBtn.parentElement.querySelectorAll("button"));
-                const sIdx = siblings.indexOf(settingsBtn);
-                if (sIdx >= 2) {
-                    muteBtn = siblings[sIdx - 2];
-                    deafenBtn = siblings[sIdx - 1];
-                } else if (siblings.length >= 3) {
-                    muteBtn = siblings[0];
-                    deafenBtn = siblings[1];
+            // 1. Search by exact toggle aria-label keywords
+            for (const b of buttons) {
+                if (isChevronOrSettings(b)) continue;
+                const label = (b.getAttribute("aria-label") || "").toLowerCase().trim();
+
+                if (
+                    label === "mute" ||
+                    label === "unmute" ||
+                    label.startsWith("mute ") ||
+                    label.startsWith("unmute ") ||
+                    label.includes("كتم الصوت") ||
+                    label.includes("couper le micro") ||
+                    label.includes("activer le micro") ||
+                    label.includes("stummschalten")
+                ) {
+                    muteBtn = b;
+                } else if (
+                    label === "deafen" ||
+                    label === "undeafen" ||
+                    label.startsWith("deafen ") ||
+                    label.startsWith("undeafen ") ||
+                    label.includes("سماعة الرأس") ||
+                    label.includes("mettre en sourdine") ||
+                    label.includes("désactiver la sourdine") ||
+                    label.includes("taubschalten")
+                ) {
+                    deafenBtn = b;
                 }
             }
 
-            // Fallback: Look for the cluster div inside panels that contains exactly 3 buttons
+            // 2. Structural fallback: candidate action buttons inside user panel
             if (!muteBtn || !deafenBtn) {
-                const allDivs = Array.from(panels.querySelectorAll("div"));
-                for (const d of allDivs) {
-                    const btns = Array.from(d.children).filter((c) => c.tagName === "BUTTON");
-                    if (btns.length === 3) {
-                        muteBtn = btns[0];
-                        deafenBtn = btns[1];
-                        break;
-                    }
+                const candidates = buttons.filter((b) => {
+                    const label = (b.getAttribute("aria-label") || "").toLowerCase();
+                    const isAvatar = b.querySelector('img[class*="avatar_"]') || label.includes("avatar") || label.includes("status");
+                    const isSettings = label.includes("user setting") || label.includes("إعدادات المستخدم");
+                    const isDisconnect = label.includes("disconnect") || label.includes("hang up") || label.includes("قطع");
+                    return !isAvatar && !isSettings && !isDisconnect && !isChevronOrSettings(b);
+                });
+
+                if (candidates.length >= 2) {
+                    if (!muteBtn) muteBtn = candidates[0];
+                    if (!deafenBtn) deafenBtn = candidates[1];
                 }
             }
         }
 
-        // Secondary fallback by explicit aria-labels
+        // 3. Fallback queries
         if (!muteBtn) {
             muteBtn = document.querySelector(
-                'button[aria-label*="Mute" i], button[aria-label*="micro" i], button[aria-label*="كتم" i]'
+                'button[aria-label="Mute" i], button[aria-label="Unmute" i]'
             );
         }
         if (!deafenBtn) {
             deafenBtn = document.querySelector(
-                'button[aria-label*="Deafen" i], button[aria-label*="Undeafen" i], button[aria-label*="sourdine" i], button[aria-label*="casque" i], button[aria-label*="headphone" i]'
+                'button[aria-label="Deafen" i], button[aria-label="Undeafen" i]'
             );
         }
 
@@ -321,40 +306,51 @@ window.addEventListener("DOMContentLoaded", () => {
     function isButtonActive(btn, type) {
         if (!btn) return false;
 
-        // 1. Check aria-checked switch attribute
-        const checked = btn.getAttribute("aria-checked");
-        if (checked === "true") return true;
-        if (checked === "false") return false;
-
-        // 2. Check aria-label for active toggle keywords across languages
+        // 1. Aria-label check
         const label = (btn.getAttribute("aria-label") || "").toLowerCase().trim();
         if (type === "mute") {
             if (
-                label.startsWith("un") ||
+                label.startsWith("unmute") ||
                 label.includes("unmute") ||
-                label.includes("إلغاء") ||
+                label.includes("إلغاء كتم") ||
                 label.includes("activer") ||
-                label.includes("désactiver") ||
-                label.includes("réactiver") ||
-                label.includes("microfon einschalten")
-            ) {
-                return true;
-            }
-        } else if (type === "deafen") {
-            if (
-                label.startsWith("un") ||
-                label.includes("undeafen") ||
-                label.includes("إلغاء") ||
-                label.includes("activer") ||
-                label.includes("désactiver") ||
-                label.includes("réactiver") ||
                 label.includes("einschalten")
             ) {
                 return true;
             }
+            if (label === "mute" || label.startsWith("mute ") || label === "كتم الصوت") {
+                return false;
+            }
+        } else if (type === "deafen") {
+            if (
+                label.startsWith("undeafen") ||
+                label.includes("undeafen") ||
+                label.includes("إلغاء كتم") ||
+                label.includes("désactiver la sourdine") ||
+                label.includes("aufheben")
+            ) {
+                return true;
+            }
+            if (label === "deafen" || label.startsWith("deafen ") || label.includes("كتم صوت")) {
+                return false;
+            }
         }
 
-        // 3. Check for Discord's red danger / strikethrough styling
+        // 2. Aria-checked
+        const checked = btn.getAttribute("aria-checked");
+        if (checked === "true") return true;
+        if (checked === "false") return false;
+
+        // 3. Red danger styling in class, style or svg
+        const className = (btn.className || "").toLowerCase();
+        if (
+            className.includes("danger") ||
+            className.includes("red") ||
+            className.includes("strikethrough")
+        ) {
+            return true;
+        }
+
         const html = btn.innerHTML.toLowerCase();
         if (
             html.includes("status-danger") ||
@@ -367,7 +363,7 @@ window.addEventListener("DOMContentLoaded", () => {
             return true;
         }
 
-        // 4. Check if any SVG child element has a red stroke or fill
+        // 4. Strikethrough line / red stroke
         const redEl = btn.querySelector(
             '[stroke*="f23f43" i], [fill*="f23f43" i], [stroke*="red" i], [fill*="red" i], [class*="strikethrough" i], line'
         );
@@ -411,6 +407,26 @@ window.addEventListener("DOMContentLoaded", () => {
                 return false;
             }
         }
+    }
+
+    function triggerShortcut(code, keyCode) {
+        const key = code.replace("Key", "");
+        const opts = {
+            key: key,
+            code: code,
+            keyCode: keyCode,
+            which: keyCode,
+            ctrlKey: true,
+            shiftKey: true,
+            bubbles: true,
+            cancelable: true,
+            composed: true,
+            view: window,
+        };
+        window.dispatchEvent(new KeyboardEvent("keydown", opts));
+        document.dispatchEvent(new KeyboardEvent("keydown", opts));
+        window.dispatchEvent(new KeyboardEvent("keyup", opts));
+        document.dispatchEvent(new KeyboardEvent("keyup", opts));
     }
 
     function checkState() {
@@ -475,67 +491,25 @@ window.addEventListener("DOMContentLoaded", () => {
     // IPC Action Handlers from Tray & Taskbar Thumbar
     ipcRenderer.on("action-toggle-mute", () => {
         const { muteBtn } = findVoiceButtons();
-        const wasMuted = isButtonActive(muteBtn, "mute");
-        simulateClick(muteBtn);
-
-        // Fallback check after 120ms: if state didn't change, trigger Ctrl+Shift+M keybind
-        setTimeout(() => {
-            const { muteBtn: curBtn } = findVoiceButtons();
-            if (isButtonActive(curBtn, "mute") === wasMuted) {
-                const init = {
-                    key: "M",
-                    code: "KeyM",
-                    keyCode: 77,
-                    which: 77,
-                    ctrlKey: true,
-                    shiftKey: true,
-                    bubbles: true,
-                    cancelable: true,
-                    composed: true,
-                    view: window,
-                };
-                window.dispatchEvent(new KeyboardEvent("keydown", init));
-                document.dispatchEvent(new KeyboardEvent("keydown", init));
-                window.dispatchEvent(new KeyboardEvent("keyup", init));
-                document.dispatchEvent(new KeyboardEvent("keyup", init));
-            }
-            checkState();
-        }, 120);
-
+        if (muteBtn) {
+            simulateClick(muteBtn);
+        } else {
+            triggerShortcut("KeyM", 77);
+        }
         setTimeout(checkState, 40);
+        setTimeout(checkState, 120);
         setTimeout(checkState, 300);
     });
 
     ipcRenderer.on("action-toggle-deafen", () => {
         const { deafenBtn } = findVoiceButtons();
-        const wasDeafened = isButtonActive(deafenBtn, "deafen");
-        simulateClick(deafenBtn);
-
-        // Fallback check after 120ms: if state didn't change, trigger Ctrl+Shift+D keybind
-        setTimeout(() => {
-            const { deafenBtn: curBtn } = findVoiceButtons();
-            if (isButtonActive(curBtn, "deafen") === wasDeafened) {
-                const init = {
-                    key: "D",
-                    code: "KeyD",
-                    keyCode: 68,
-                    which: 68,
-                    ctrlKey: true,
-                    shiftKey: true,
-                    bubbles: true,
-                    cancelable: true,
-                    composed: true,
-                    view: window,
-                };
-                window.dispatchEvent(new KeyboardEvent("keydown", init));
-                document.dispatchEvent(new KeyboardEvent("keydown", init));
-                window.dispatchEvent(new KeyboardEvent("keyup", init));
-                document.dispatchEvent(new KeyboardEvent("keyup", init));
-            }
-            checkState();
-        }, 120);
-
+        if (deafenBtn) {
+            simulateClick(deafenBtn);
+        } else {
+            triggerShortcut("KeyD", 68);
+        }
         setTimeout(checkState, 40);
+        setTimeout(checkState, 120);
         setTimeout(checkState, 300);
     });
 
