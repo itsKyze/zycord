@@ -17,68 +17,72 @@ try {
     window.ZycordNative = ZycordNative;
 }
 
-// Inject Discord Authentic Top Bar with Navigation & Window Controls
+// Inject Discord Authentic Top Bar with Drag Region & Window Controls
 window.addEventListener("DOMContentLoaded", () => {
     try {
         if (!document.body || !document.head) return;
-        if (document.getElementById("zycord-titlebar")) return;
+        if (document.getElementById("zycord-win-controls")) return;
 
-        const titlebar = document.createElement("div");
-        titlebar.id = "zycord-titlebar";
-        titlebar.innerHTML = `
-            <div class="zycord-drag-area"></div>
-            <div class="zycord-win-controls">
-                <div class="zycord-win-btn" id="zycord-btn-min" title="Minimize">
-                    <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1" x="0" y="5"></rect></svg>
-                </div>
-                <div class="zycord-win-btn" id="zycord-btn-max" title="Maximize">
-                    <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1"></rect></svg>
-                </div>
-                <div class="zycord-win-btn close" id="zycord-btn-close" title="Close">
-                    <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
-                </div>
-            </div>
+        // 1. Draggable area spanning from left edge up to 140px from the right edge
+        // (stops well before Inbox and window controls to prevent click interception)
+        const dragArea = document.createElement("div");
+        dragArea.id = "zycord-drag-area";
+
+        // 2. Window control buttons container (top-right, completely isolated with no-drag)
+        const winControls = document.createElement("div");
+        winControls.id = "zycord-win-controls";
+        winControls.innerHTML = `
+            <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
+                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1" x="0" y="5"></rect></svg>
+            </button>
+            <button class="zycord-win-btn" id="zycord-btn-max" title="Maximize" aria-label="Maximize">
+                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1"></rect></svg>
+            </button>
+            <button class="zycord-win-btn close" id="zycord-btn-close" title="Close" aria-label="Close">
+                <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
+            </button>
         `;
 
         const style = document.createElement("style");
         style.textContent = `
-            :root { --zy-bar-h: 22px; }
-            #zycord-titlebar {
-                height: var(--zy-bar-h);
-                background: transparent;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+            #zycord-drag-area {
                 position: fixed;
                 top: 0;
                 left: 0;
-                right: 0;
-                z-index: 999999;
-                user-select: none;
-                -webkit-user-select: none;
-                pointer-events: none;
-            }
-            .zycord-drag-area {
-                flex: 1;
-                height: 100%;
-                pointer-events: auto;
+                right: 140px;
+                height: 24px;
+                z-index: 99998;
                 -webkit-app-region: drag;
-            }
-            .zycord-win-controls {
-                display: flex;
-                height: 100%;
                 pointer-events: auto;
-                -webkit-app-region: no-drag;
+            }
+            #zycord-win-controls {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: 88px;
+                height: 24px;
+                z-index: 2147483647;
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                -webkit-app-region: no-drag !important;
+                pointer-events: auto !important;
             }
             .zycord-win-btn {
                 width: 28px;
-                height: 100%;
+                height: 24px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 background: transparent;
+                border: none;
+                padding: 0;
+                margin: 0;
                 color: #949ba4;
                 cursor: pointer;
+                outline: none;
+                -webkit-app-region: no-drag !important;
+                pointer-events: auto !important;
                 transition: background 0.12s ease, color 0.12s ease;
             }
             .zycord-win-btn:hover {
@@ -90,8 +94,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 color: #ffffff !important;
             }
 
-            /* Layout mode (standalone vs merged with Discord's bar) is injected
-               dynamically into #zycord-native-bar-style */
             /* Center Zycord logo above login form */
             .discordLogo__921c5,
             .authBoxExpanded__921c5 .discordLogo__921c5 {
@@ -105,11 +107,21 @@ window.addEventListener("DOMContentLoaded", () => {
         `;
 
         document.head.appendChild(style);
-        document.body.prepend(titlebar);
+        document.body.prepend(dragArea);
+        document.body.prepend(winControls);
 
-        document.getElementById("zycord-btn-min")?.addEventListener("click", () => ipcRenderer.send("window-minimize"));
-        document.getElementById("zycord-btn-max")?.addEventListener("click", () => ipcRenderer.send("window-maximize"));
-        document.getElementById("zycord-btn-close")?.addEventListener("click", () => ipcRenderer.send("window-close"));
+        document.getElementById("zycord-btn-min")?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            ipcRenderer.send("window-minimize");
+        });
+        document.getElementById("zycord-btn-max")?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            ipcRenderer.send("window-maximize");
+        });
+        document.getElementById("zycord-btn-close")?.addEventListener("click", (e) => {
+            e.stopPropagation();
+            ipcRenderer.send("window-close");
+        });
 
         // Detect Discord's own top bar (title + Inbox/Help) and merge with it.
         // All state lives in our own <style>; Discord rewrites <html> class/style,
@@ -144,15 +156,16 @@ window.addEventListener("DOMContentLoaded", () => {
                 key = `bar|${barClass}|${h}`;
                 const s = `.${CSS.escape(barClass)}`;
                 css = `
-                    #zycord-titlebar { height: ${h}px !important; }
-                    .zycord-drag-area { pointer-events: none !important; -webkit-app-region: no-drag !important; }
+                    #zycord-drag-area { display: none !important; }
                     ${s} {
                         -webkit-app-region: drag;
-                        padding-right: 92px !important;
+                        padding-right: 96px !important;
                         box-sizing: border-box !important;
                     }
-                    ${s} button, ${s} a, ${s} input, ${s} [role="button"], ${s} [tabindex] {
-                        -webkit-app-region: no-drag;
+                    ${s} button, ${s} a, ${s} input, ${s} [role="button"], ${s} [tabindex], ${s} svg, ${s} [class*="icon"], [class*="toolbar"] * {
+                        -webkit-app-region: no-drag !important;
+                        pointer-events: auto !important;
+                        cursor: pointer !important;
                     }
                 `;
             } else {
