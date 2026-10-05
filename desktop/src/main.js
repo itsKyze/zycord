@@ -399,6 +399,13 @@ ipcMain.on("open-external", (event, url) => {
         shell.openExternal(url);
     }
 });
+ipcMain.on("action-toggle-inbox", (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
+    if (!win) return;
+    win.webContents.sendInputEvent({ type: "keyDown", keyCode: "I", modifiers: ["control"] });
+    win.webContents.sendInputEvent({ type: "char", keyCode: "I", modifiers: ["control"] });
+    win.webContents.sendInputEvent({ type: "keyUp", keyCode: "I", modifiers: ["control"] });
+});
 ipcMain.on("window-set-always-on-top", (event, enabled) => {
     const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
     win?.setAlwaysOnTop(Boolean(enabled));
