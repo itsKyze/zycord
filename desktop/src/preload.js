@@ -103,6 +103,16 @@ window.addEventListener("DOMContentLoaded", () => {
                 padding-top: 28px !important;
                 box-sizing: border-box !important;
             }
+            /* Center Zycord logo above login form */
+            .discordLogo__921c5,
+            .authBoxExpanded__921c5 .discordLogo__921c5 {
+                background: url("/branding/meowcord.svg") no-repeat center !important;
+                background-size: contain !important;
+                width: 72px !important;
+                height: 72px !important;
+                margin: 0 auto 16px auto !important;
+                display: block !important;
+            }
         `;
 
         document.head.appendChild(style);
