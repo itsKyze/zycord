@@ -161,7 +161,58 @@ jobs:
             sed -i 's/^DOMAIN=.*/DOMAIN=app.zyron.site/' .env
             sed -i 's/^INSTANCE_NAME=.*/INSTANCE_NAME=Zycord/' .env
 
-            # 3. Ensure Caddyfile exists
+            # 3. Handle Port 80 and Reverse Proxy (Caddy vs Host Nginx)
+            # Stop any lingering containers from old /opt/fosscord if present
+            if [ -d /opt/fosscord ]; then
+              echo "🛑 Stopping old fosscord containers..."
+              (cd /opt/fosscord && docker compose down) 2>/dev/null || true
+            fi
+
+            # Check if port 80 is in use
+            if ss -tlpn | grep -q ":80 "; then
+              echo "ℹ️ Port 80 is currently in use:"
+              ss -tlpn | grep ":80 " || true
+
+              # Stop any docker container holding port 80 from other projects
+              DOCKER_PORT_80=$(docker ps --filter "publish=80" -q)
+              if [ -n "$DOCKER_PORT_80" ]; then
+                echo "🛑 Stopping old docker container holding port 80: $DOCKER_PORT_80"
+                docker stop $DOCKER_PORT_80 || true
+              fi
+
+              # If host Nginx is active, use it as reverse proxy and disable Caddy container
+              if systemctl is-active --quiet nginx; then
+                echo "🌐 Host Nginx is active. Configuring app.zyron.site reverse proxy via Nginx..."
+                mkdir -p /etc/nginx/conf.d
+                cat << 'NGINX_EOF' > /etc/nginx/conf.d/zycord.conf
+server {
+    server_name app.zyron.site;
+    listen 80;
+
+    location / {
+        proxy_pass http://127.0.0.1:3002;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+    }
+}
+NGINX_EOF
+                if [ -d /etc/nginx/sites-available ]; then
+                  cp -f /etc/nginx/conf.d/zycord.conf /etc/nginx/sites-available/zycord 2>/dev/null || true
+                  ln -sf /etc/nginx/sites-available/zycord /etc/nginx/sites-enabled/zycord 2>/dev/null || true
+                fi
+                nginx -t && systemctl reload nginx || true
+                echo "✅ Nginx configured for app.zyron.site -> 127.0.0.1:3002"
+
+                # Disable bundled caddy profile so docker compose won't try to bind port 80
+                sed -i 's/^COMPOSE_PROFILES=.*/COMPOSE_PROFILES=/' .env
+              fi
+            fi
+
+            # Ensure Caddyfile exists (for standalone Caddy mode)
             if [ ! -f docker/Caddyfile ]; then
               mkdir -p docker
               cat << 'EOF' > docker/Caddyfile
@@ -202,7 +253,7 @@ jobs:
 
             # 6. Restart services
             echo "🚀 Starting Zycord containers..."
-            docker compose up -d
+            docker compose up -d --remove-orphans
 
             # 7. Health verification
             echo "🔍 Verifying running containers..."
