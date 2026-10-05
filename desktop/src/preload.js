@@ -17,81 +17,128 @@ try {
     window.ZycordNative = ZycordNative;
 }
 
-// Inject Discord Authentic Top Bar with Drag Region & Window Controls
+// 1. Inject Authentic Top Bar Window Controls & Header Drag Management
 window.addEventListener("DOMContentLoaded", () => {
     try {
         if (!document.body || !document.head) return;
         if (document.getElementById("zycord-win-controls")) return;
 
-        // 1. Draggable area spanning from left edge up to 140px from the right edge
-        // (stops well before Inbox and window controls to prevent click interception)
+        // Fallback drag area for login / initial loading screen
         const dragArea = document.createElement("div");
         dragArea.id = "zycord-drag-area";
 
-        // 2. Window control buttons container (top-right, completely isolated with no-drag)
+        // Window controls container (Minimize, Maximize, Close)
         const winControls = document.createElement("div");
         winControls.id = "zycord-win-controls";
         winControls.innerHTML = `
             <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
-                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1" x="0" y="5"></rect></svg>
+                <svg width="12" height="12" viewBox="0 0 12 12"><rect fill="currentColor" width="10" height="1.2" x="1" y="6"></rect></svg>
             </button>
             <button class="zycord-win-btn" id="zycord-btn-max" title="Maximize" aria-label="Maximize">
-                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1"></rect></svg>
+                <svg id="zycord-icon-max" width="12" height="12" viewBox="0 0 12 12"><rect fill="none" stroke="currentColor" width="9" height="9" x="1.5" y="1.5" stroke-width="1.2"></rect></svg>
             </button>
             <button class="zycord-win-btn close" id="zycord-btn-close" title="Close" aria-label="Close">
-                <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
+                <svg width="12" height="12" viewBox="0 0 12 12"><polygon fill="currentColor" fill-rule="evenodd" points="11 1.8 10.2 1 6 5.2 1.8 1 1 1.8 5.2 6 1 10.2 1.8 11 6 6.8 10.2 11 11 10.2 6.8 6"></polygon></svg>
             </button>
         `;
 
         const style = document.createElement("style");
+        style.id = "zycord-app-styles";
         style.textContent = `
+            /* Initial / login fallback drag bar */
             #zycord-drag-area {
                 position: fixed;
                 top: 0;
                 left: 0;
-                right: 140px;
-                height: 24px;
-                z-index: 99998;
+                right: 112px;
+                height: 28px;
+                z-index: 9999;
                 -webkit-app-region: drag;
                 pointer-events: auto;
             }
+            body.app-ready #zycord-drag-area {
+                display: none !important;
+            }
+
+            /* Window Controls Container */
             #zycord-win-controls {
-                position: fixed;
-                top: 0;
-                right: 0;
-                width: 88px;
-                height: 24px;
-                z-index: 2147483647;
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
+                position: fixed !important;
+                top: 0 !important;
+                right: 0 !important;
+                width: 108px !important;
+                height: 32px !important;
+                z-index: 2147483647 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: flex-end !important;
                 -webkit-app-region: no-drag !important;
                 pointer-events: auto !important;
+                background: transparent !important;
+            }
+            #zycord-win-controls,
+            #zycord-win-controls *,
+            .zycord-win-btn,
+            .zycord-win-btn * {
+                -webkit-app-region: no-drag !important;
+                pointer-events: auto !important;
+                user-select: none !important;
             }
             .zycord-win-btn {
-                width: 28px;
-                height: 24px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: transparent;
-                border: none;
-                padding: 0;
-                margin: 0;
-                color: #949ba4;
-                cursor: pointer;
-                outline: none;
-                -webkit-app-region: no-drag !important;
-                pointer-events: auto !important;
-                transition: background 0.12s ease, color 0.12s ease;
+                width: 36px !important;
+                height: 32px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                color: #949ba4 !important;
+                cursor: pointer !important;
+                outline: none !important;
+                transition: background 0.12s ease, color 0.12s ease !important;
             }
             .zycord-win-btn:hover {
-                background: rgba(255, 255, 255, 0.1);
-                color: #ffffff;
+                background: rgba(255, 255, 255, 0.1) !important;
+                color: #ffffff !important;
             }
             .zycord-win-btn.close:hover {
                 background: #f23f43 !important;
                 color: #ffffff !important;
+            }
+
+            /* Shift Discord's top toolbar to avoid any collision with window controls */
+            [class*="toolbar_"] {
+                margin-right: 112px !important;
+                -webkit-app-region: no-drag !important;
+                pointer-events: auto !important;
+            }
+            [class*="toolbar_"],
+            [class*="toolbar_"] * {
+                -webkit-app-region: no-drag !important;
+                pointer-events: auto !important;
+                cursor: pointer !important;
+            }
+
+            /* Make Discord header bars draggable */
+            section[class*="title_"],
+            div[class*="subtitleContainer_"],
+            header[class*="header_"] {
+                -webkit-app-region: drag !important;
+            }
+
+            /* Ensure all buttons, search bar, and interactive items inside headers are clickable */
+            section[class*="title_"] button,
+            section[class*="title_"] [role="button"],
+            section[class*="title_"] a,
+            section[class*="title_"] input,
+            section[class*="title_"] svg,
+            section[class*="title_"] [class*="children_"] > *,
+            header[class*="header_"] button,
+            header[class*="header_"] * {
+                -webkit-app-region: no-drag !important;
+                pointer-events: auto !important;
+                cursor: pointer !important;
             }
 
             /* Center Zycord logo above login form */
@@ -110,90 +157,57 @@ window.addEventListener("DOMContentLoaded", () => {
         document.body.prepend(dragArea);
         document.body.prepend(winControls);
 
-        document.getElementById("zycord-btn-min")?.addEventListener("click", (e) => {
-            e.stopPropagation();
-            ipcRenderer.send("window-minimize");
-        });
-        document.getElementById("zycord-btn-max")?.addEventListener("click", (e) => {
-            e.stopPropagation();
-            ipcRenderer.send("window-maximize");
-        });
-        document.getElementById("zycord-btn-close")?.addEventListener("click", (e) => {
-            e.stopPropagation();
-            ipcRenderer.send("window-close");
-        });
-
-        // Detect Discord's own top bar (title + Inbox/Help) and merge with it.
-        // All state lives in our own <style>; Discord rewrites <html> class/style,
-        // so relying on those caused the bar to flicker.
-        const barStyle = document.createElement("style");
-        barStyle.id = "zycord-native-bar-style";
-        document.head.appendChild(barStyle);
-        let currentBar = null;
-        let currentKey = "";
-
-        const findBar = () => {
-            if (currentBar && currentBar.isConnected && !currentBar.closest("#zycord-titlebar")) {
-                const r = currentBar.getBoundingClientRect();
-                if (r.top <= 24 && r.height >= 16) return currentBar;
-            }
-            for (const el of document.querySelectorAll('[class^="bar_"], [class*=" bar_"]')) {
-                if (el.closest("#zycord-titlebar")) continue;
-                const r = el.getBoundingClientRect();
-                if (r.top <= 24 && r.height >= 16 && r.height <= 60 && r.width >= window.innerWidth * 0.6) return el;
-            }
-            return null;
+        // Bind control buttons with multiple event types to guarantee responsive action
+        const bindControl = (id, action) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            const trigger = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                ipcRenderer.send(action);
+            };
+            el.addEventListener("click", trigger, true);
+            el.addEventListener("mouseup", trigger, true);
+            el.addEventListener("pointerup", trigger, true);
         };
 
-        const syncNativeBar = () => {
-            const bar = findBar();
-            currentBar = bar;
-            let key;
-            let css;
-            if (bar) {
-                const barClass = [...bar.classList].find((c) => c.startsWith("bar_"));
-                const h = Math.round(bar.getBoundingClientRect().height);
-                key = `bar|${barClass}|${h}`;
-                const s = `.${CSS.escape(barClass)}`;
-                css = `
-                    #zycord-drag-area { display: none !important; }
-                    ${s} {
-                        -webkit-app-region: drag;
-                        padding-right: 96px !important;
-                        box-sizing: border-box !important;
-                    }
-                    ${s} button, ${s} a, ${s} input, ${s} [role="button"], ${s} [tabindex], ${s} svg, ${s} [class*="icon"], [class*="toolbar"] * {
-                        -webkit-app-region: no-drag !important;
-                        pointer-events: auto !important;
-                        cursor: pointer !important;
-                    }
-                `;
+        bindControl("zycord-btn-min", "window-minimize");
+        bindControl("zycord-btn-max", "window-maximize");
+        bindControl("zycord-btn-close", "window-close");
+
+        // Dynamically update Maximize / Restore icon
+        ipcRenderer.on("window-maximized-state", (event, isMaximized) => {
+            const maxBtn = document.getElementById("zycord-btn-max");
+            if (!maxBtn) return;
+            if (isMaximized) {
+                maxBtn.title = "Restore";
+                maxBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12"><path fill="none" stroke="currentColor" stroke-width="1.2" d="M3.5 1.5h6v6m-2-4h-6v6h6v-6z"/></svg>`;
             } else {
-                key = "standalone";
-                css = `
-                    #zycord-titlebar { height: 22px !important; }
-                    #app-mount { padding-top: 22px !important; box-sizing: border-box !important; }
-                `;
+                maxBtn.title = "Maximize";
+                maxBtn.innerHTML = `<svg width="12" height="12" viewBox="0 0 12 12"><rect fill="none" stroke="currentColor" width="9" height="9" x="1.5" y="1.5" stroke-width="1.2"></rect></svg>`;
             }
-            if (key !== currentKey) {
-                currentKey = key;
-                barStyle.textContent = css;
+        });
+
+        // App mounted state tracker to hide fallback drag bar
+        const checkAppMounted = () => {
+            const hasHeader = Boolean(
+                document.querySelector('section[class*="title_"], header[class*="header_"], [class*="panels_"]')
+            );
+            if (hasHeader && !document.body.classList.contains("app-ready")) {
+                document.body.classList.add("app-ready");
+            } else if (!hasHeader && document.body.classList.contains("app-ready")) {
+                document.body.classList.remove("app-ready");
             }
         };
-        let pending = false;
-        new MutationObserver(() => {
-            if (pending) return;
-            pending = true;
-            requestAnimationFrame(() => { pending = false; syncNativeBar(); });
-        }).observe(document.body, { childList: true, subtree: true });
-        window.addEventListener("resize", syncNativeBar);
-        syncNativeBar();
+
+        new MutationObserver(checkAppMounted).observe(document.body, { childList: true, subtree: true });
+        checkAppMounted();
     } catch (err) {
         console.warn("[Zycord] Titlebar injection skipped:", err);
     }
 });
 
-// Discord Voice, Mute, Deafen, and Taskbar Integration
+// 2. Discord Voice, Mute, Deafen, and Taskbar Integration
 (function setupDiscordIntegration() {
     let lastState = {
         inVoice: false,
@@ -238,70 +252,165 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Precise Voice Button Finder (Mute, Deafen)
     function findVoiceButtons() {
-        let muteBtn = document.querySelector('button[aria-label*="Mute" i], button[aria-label*="micro" i]');
-        let deafenBtn = document.querySelector('button[aria-label*="Deafen" i], button[aria-label*="casque" i], button[aria-label*="headphone" i]');
+        let muteBtn = null;
+        let deafenBtn = null;
 
-        // Reliable index fallback inside Discord's user panel
-        const panel = document.querySelector('section[class*="panels_"]');
-        if (panel) {
-            const buttons = Array.from(panel.querySelectorAll('button')).filter((b) => {
+        const panels = document.querySelector('section[class*="panels_"]');
+        if (panels) {
+            // Find all buttons inside the bottom user section
+            const allButtons = Array.from(panels.querySelectorAll("button"));
+
+            // Find Settings button (gear icon or settings label in any language)
+            const settingsBtn = allButtons.find((b) => {
                 const label = (b.getAttribute("aria-label") || "").toLowerCase();
-                return !b.querySelector('img[class*="avatar_"]') && !label.includes("status") && !label.includes("profil");
+                return (
+                    label.includes("setting") ||
+                    label.includes("param") ||
+                    label.includes("إعداد") ||
+                    label.includes("einstell") ||
+                    label.includes("ajuste") ||
+                    label.includes("config")
+                );
             });
-            if (buttons.length >= 2) {
-                if (!muteBtn) muteBtn = buttons[0];
-                if (!deafenBtn) deafenBtn = buttons[1];
+
+            if (settingsBtn && settingsBtn.parentElement) {
+                // In Discord, Mute, Deafen, and Settings are direct siblings in the same container div
+                const siblings = Array.from(settingsBtn.parentElement.querySelectorAll("button"));
+                const sIdx = siblings.indexOf(settingsBtn);
+                if (sIdx >= 2) {
+                    muteBtn = siblings[sIdx - 2];
+                    deafenBtn = siblings[sIdx - 1];
+                } else if (siblings.length >= 3) {
+                    muteBtn = siblings[0];
+                    deafenBtn = siblings[1];
+                }
             }
+
+            // Fallback: Look for the cluster div inside panels that contains exactly 3 buttons
+            if (!muteBtn || !deafenBtn) {
+                const allDivs = Array.from(panels.querySelectorAll("div"));
+                for (const d of allDivs) {
+                    const btns = Array.from(d.children).filter((c) => c.tagName === "BUTTON");
+                    if (btns.length === 3) {
+                        muteBtn = btns[0];
+                        deafenBtn = btns[1];
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Secondary fallback by explicit aria-labels
+        if (!muteBtn) {
+            muteBtn = document.querySelector(
+                'button[aria-label*="Mute" i], button[aria-label*="micro" i], button[aria-label*="كتم" i]'
+            );
+        }
+        if (!deafenBtn) {
+            deafenBtn = document.querySelector(
+                'button[aria-label*="Deafen" i], button[aria-label*="Undeafen" i], button[aria-label*="sourdine" i], button[aria-label*="casque" i], button[aria-label*="headphone" i]'
+            );
         }
 
         return { muteBtn, deafenBtn };
     }
 
+    // Accurate active state detector (detects muted / deafened)
     function isButtonActive(btn, type) {
         if (!btn) return false;
 
-        // 1. Check aria-checked switch state
+        // 1. Check aria-checked switch attribute
         const checked = btn.getAttribute("aria-checked");
         if (checked === "true") return true;
         if (checked === "false") return false;
 
-        // 2. Check aria-label for active toggle keywords
+        // 2. Check aria-label for active toggle keywords across languages
         const label = (btn.getAttribute("aria-label") || "").toLowerCase().trim();
         if (type === "mute") {
-            if (label.includes("unmute") || label.includes("activer") || label.includes("إلغاء كتم الصوت") || label.includes("microfon einschalten")) {
+            if (
+                label.startsWith("un") ||
+                label.includes("unmute") ||
+                label.includes("إلغاء") ||
+                label.includes("activer") ||
+                label.includes("désactiver") ||
+                label.includes("réactiver") ||
+                label.includes("microfon einschalten")
+            ) {
                 return true;
             }
         } else if (type === "deafen") {
-            if (label.includes("undeafen") || label.includes("activer") || label.includes("إلغاء كتم") || label.includes("einschalten")) {
+            if (
+                label.startsWith("un") ||
+                label.includes("undeafen") ||
+                label.includes("إلغاء") ||
+                label.includes("activer") ||
+                label.includes("désactiver") ||
+                label.includes("réactiver") ||
+                label.includes("einschalten")
+            ) {
                 return true;
             }
         }
 
-        // 3. Check for red danger styling or strikethrough slash in SVG/HTML
+        // 3. Check for Discord's red danger / strikethrough styling
         const html = btn.innerHTML.toLowerCase();
         if (
             html.includes("status-danger") ||
             html.includes("strikethrough") ||
             html.includes("#f23f43") ||
             html.includes("rgb(242, 63, 67)") ||
-            html.includes("hsl(359") ||
-            html.includes("red")
+            html.includes("rgb(242,63,67)") ||
+            html.includes("hsl(359")
         ) {
             return true;
         }
 
-        // 4. In Discord, muted and deafened icons render the diagonal slash path (2+ paths vs 1 path)
-        const paths = btn.querySelectorAll("svg path");
-        if (paths.length >= 2) {
-            return true;
-        }
-
-        // 5. Check if any SVG child element has a red stroke or fill
-        const redEl = btn.querySelector('[stroke*="red"], [fill*="red"], [stroke*="f23f43"], [fill*="f23f43"], [class*="strikethrough"]');
+        // 4. Check if any SVG child element has a red stroke or fill
+        const redEl = btn.querySelector(
+            '[stroke*="f23f43" i], [fill*="f23f43" i], [stroke*="red" i], [fill*="red" i], [class*="strikethrough" i], line'
+        );
         if (redEl) return true;
 
         return false;
+    }
+
+    // React 18 & DOM safe click simulation
+    function simulateClick(el) {
+        if (!el) return false;
+        try {
+            const rect = el.getBoundingClientRect();
+            const clientX = rect.left + rect.width / 2;
+            const clientY = rect.top + rect.height / 2;
+
+            const opts = {
+                bubbles: true,
+                cancelable: true,
+                composed: true,
+                view: window,
+                clientX,
+                clientY,
+                button: 0,
+                buttons: 1,
+            };
+
+            const target = el.querySelector("svg") || el.firstElementChild || el;
+            target.dispatchEvent(new PointerEvent("pointerdown", opts));
+            target.dispatchEvent(new MouseEvent("mousedown", opts));
+            target.dispatchEvent(new PointerEvent("pointerup", opts));
+            target.dispatchEvent(new MouseEvent("mouseup", opts));
+            target.dispatchEvent(new MouseEvent("click", opts));
+            el.click();
+            return true;
+        } catch (e) {
+            try {
+                el.click();
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
     }
 
     function checkState() {
@@ -311,9 +420,8 @@ window.addEventListener("DOMContentLoaded", () => {
             const isDeafened = isButtonActive(deafenBtn, "deafen");
 
             // In voice room detection: ONLY true when the user is actually connected!
-            // In Discord, the Disconnect button and RTC status only exist when actively in a voice channel or call.
             const disconnectBtn = document.querySelector(
-                'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], button[aria-label*="قطع" i], [class*="disconnectButton_"]'
+                'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], button[aria-label*="قطع" i], [class*="disconnectButton"]'
             );
             const rtcStatus = document.querySelector('[class*="rtcConnectionStatus_"]');
             const inVoice = Boolean(disconnectBtn) || Boolean(rtcStatus);
@@ -367,24 +475,68 @@ window.addEventListener("DOMContentLoaded", () => {
     // IPC Action Handlers from Tray & Taskbar Thumbar
     ipcRenderer.on("action-toggle-mute", () => {
         const { muteBtn } = findVoiceButtons();
-        if (muteBtn) {
-            muteBtn.click();
-        } else {
-            window.dispatchEvent(new KeyboardEvent("keydown", { key: "M", code: "KeyM", ctrlKey: true, shiftKey: true, bubbles: true }));
-        }
+        const wasMuted = isButtonActive(muteBtn, "mute");
+        simulateClick(muteBtn);
+
+        // Fallback check after 120ms: if state didn't change, trigger Ctrl+Shift+M keybind
+        setTimeout(() => {
+            const { muteBtn: curBtn } = findVoiceButtons();
+            if (isButtonActive(curBtn, "mute") === wasMuted) {
+                const init = {
+                    key: "M",
+                    code: "KeyM",
+                    keyCode: 77,
+                    which: 77,
+                    ctrlKey: true,
+                    shiftKey: true,
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                    view: window,
+                };
+                window.dispatchEvent(new KeyboardEvent("keydown", init));
+                document.dispatchEvent(new KeyboardEvent("keydown", init));
+                window.dispatchEvent(new KeyboardEvent("keyup", init));
+                document.dispatchEvent(new KeyboardEvent("keyup", init));
+            }
+            checkState();
+        }, 120);
+
         setTimeout(checkState, 40);
-        setTimeout(checkState, 120);
+        setTimeout(checkState, 300);
     });
 
     ipcRenderer.on("action-toggle-deafen", () => {
         const { deafenBtn } = findVoiceButtons();
-        if (deafenBtn) {
-            deafenBtn.click();
-        } else {
-            window.dispatchEvent(new KeyboardEvent("keydown", { key: "D", code: "KeyD", ctrlKey: true, shiftKey: true, bubbles: true }));
-        }
+        const wasDeafened = isButtonActive(deafenBtn, "deafen");
+        simulateClick(deafenBtn);
+
+        // Fallback check after 120ms: if state didn't change, trigger Ctrl+Shift+D keybind
+        setTimeout(() => {
+            const { deafenBtn: curBtn } = findVoiceButtons();
+            if (isButtonActive(curBtn, "deafen") === wasDeafened) {
+                const init = {
+                    key: "D",
+                    code: "KeyD",
+                    keyCode: 68,
+                    which: 68,
+                    ctrlKey: true,
+                    shiftKey: true,
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                    view: window,
+                };
+                window.dispatchEvent(new KeyboardEvent("keydown", init));
+                document.dispatchEvent(new KeyboardEvent("keydown", init));
+                window.dispatchEvent(new KeyboardEvent("keyup", init));
+                document.dispatchEvent(new KeyboardEvent("keyup", init));
+            }
+            checkState();
+        }, 120);
+
         setTimeout(checkState, 40);
-        setTimeout(checkState, 120);
+        setTimeout(checkState, 300);
     });
 
     ipcRenderer.on("action-toggle-video", () => {
@@ -392,7 +544,7 @@ window.addEventListener("DOMContentLoaded", () => {
             'button[aria-label*="Camera" i], button[aria-label*="Video" i]'
         );
         if (videoBtn) {
-            videoBtn.click();
+            simulateClick(videoBtn);
         }
         setTimeout(checkState, 40);
         setTimeout(checkState, 120);
@@ -403,7 +555,7 @@ window.addEventListener("DOMContentLoaded", () => {
             'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], button[aria-label*="قطع" i], [class*="disconnectButton"]'
         );
         if (disconnectBtn) {
-            disconnectBtn.click();
+            simulateClick(disconnectBtn);
         }
         setTimeout(checkState, 40);
         setTimeout(checkState, 120);
