@@ -60,15 +60,14 @@ class UpdaterService extends EventEmitter {
         autoUpdater.on("update-not-available", (info) => {
             this._clearTimers();
             this.retryCount = 0;
-            this._setState(UpdaterState.NO_UPDATE, {
+            this._setState(UpdaterState.STARTING, {
+                message: "Starting...",
                 version: app.getVersion(),
             });
 
-            if (this.config.closeWhenUpToDate) {
-                setTimeout(() => {
-                    if (!this.isDisposed) this.emit("ready-to-launch");
-                }, 1000);
-            }
+            setTimeout(() => {
+                if (!this.isDisposed) this.emit("ready-to-launch");
+            }, 600);
         });
 
         autoUpdater.on("download-progress", (progress) => {
@@ -83,7 +82,6 @@ class UpdaterService extends EventEmitter {
 
         autoUpdater.on("update-downloaded", (info) => {
             this._clearTimers();
-            // Transition to VERIFYING state first
             this._setState(UpdaterState.VERIFYING, {
                 version: info?.version,
             });
@@ -99,9 +97,9 @@ class UpdaterService extends EventEmitter {
                         if (this.isDisposed) return;
                         this._setState(UpdaterState.COMPLETED);
                         autoUpdater.quitAndInstall(false, true);
-                    }, 1500);
+                    }, 1200);
                 }
-            }, 1200);
+            }, 1000);
         });
 
         autoUpdater.on("error", (err) => {
@@ -112,21 +110,41 @@ class UpdaterService extends EventEmitter {
     _handleError(err) {
         this._clearTimers();
         this.lastError = err ? err.message || String(err) : "Unknown update error";
-        console.warn("[UpdaterService] Error encountered:", this.lastError);
+        console.warn("[UpdaterService] Notice:", this.lastError);
 
-        // Check if retry count reached maximum
-        if (this.retryCount >= this.config.maxRetries) {
-            this._setState(UpdaterState.ERROR, {
-                message: "Update failed. Please try again later.",
-                error: this.lastError,
-                isPermanent: true,
-                retryCount: this.retryCount,
-                maxRetries: this.config.maxRetries,
-            });
+        // If error happened while in CHECKING phase:
+        // Do NOT block the user on an error screen!
+        // Show "Starting..." and seamlessly open the main application!
+        if (this.state === UpdaterState.CHECKING || this.state === UpdaterState.STARTING) {
+            console.log("[UpdaterService] Check skipped/no update release. Launching application...");
+            this._setState(UpdaterState.STARTING, { message: "Starting..." });
+            setTimeout(() => {
+                if (!this.isDisposed) {
+                    this.emit("ready-to-launch");
+                }
+            }, 700);
             return;
         }
 
-        // Increment retry count and start real countdown
+        // If error happened during an ACTIVE download, then handle retry:
+        if (this.retryCount >= this.config.maxRetries) {
+            // After max retries during download, fallback to app
+            if (this.config.fallbackToAppOnError) {
+                console.log("[UpdaterService] Max retries reached during download. Launching application...");
+                this._setState(UpdaterState.STARTING, { message: "Starting..." });
+                setTimeout(() => {
+                    if (!this.isDisposed) this.emit("ready-to-launch");
+                }, 800);
+            } else {
+                this._setState(UpdaterState.ERROR, {
+                    message: "Update failed. Please try again later.",
+                    error: this.lastError,
+                    isPermanent: true,
+                });
+            }
+            return;
+        }
+
         this.retryCount++;
         this.retryCountdown = this.config.retryDelay;
 
@@ -135,8 +153,6 @@ class UpdaterService extends EventEmitter {
             error: this.lastError,
             retryIn: this.retryCountdown,
             retryCount: this.retryCount,
-            maxRetries: this.config.maxRetries,
-            isPermanent: false,
         });
 
         this.retryTimer = setInterval(() => {
@@ -174,23 +190,28 @@ class UpdaterService extends EventEmitter {
 
     start() {
         this._setState(UpdaterState.STARTING, {
+            message: "Starting...",
             version: app.getVersion(),
         });
 
         setTimeout(() => {
             if (this.isDisposed) return;
             this.checkForUpdates();
-        }, 800);
+        }, 500);
     }
 
     checkForUpdates() {
         this._clearTimers();
         this._setState(UpdaterState.CHECKING);
 
-        // Set safety timeout for checking phase
+        // Safety timeout for checking phase (e.g. 5 seconds)
         this.checkTimeoutTimer = setTimeout(() => {
             if (this.state === UpdaterState.CHECKING) {
-                this._handleError(new Error("Update check timed out"));
+                console.log("[UpdaterService] Check timeout. Launching application...");
+                this._setState(UpdaterState.STARTING, { message: "Starting..." });
+                setTimeout(() => {
+                    if (!this.isDisposed) this.emit("ready-to-launch");
+                }, 600);
             }
         }, this.config.checkTimeoutMs);
 
@@ -199,19 +220,15 @@ class UpdaterService extends EventEmitter {
                 this._handleError(err);
             });
         } else {
-            // Development / Unpackaged environment handling:
-            // Simulates real connection check to update endpoint
+            // Development mode: brief check simulation then launch app
             setTimeout(() => {
                 if (this.isDisposed) return;
                 this._clearTimers();
-                this._setState(UpdaterState.NO_UPDATE, {
-                    version: app.getVersion(),
-                    isDev: true,
-                });
+                this._setState(UpdaterState.STARTING, { message: "Starting..." });
                 setTimeout(() => {
                     if (!this.isDisposed) this.emit("ready-to-launch");
-                }, 1000);
-            }, 1600);
+                }, 600);
+            }, 1200);
         }
     }
 

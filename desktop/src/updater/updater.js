@@ -1,8 +1,8 @@
-// Updater UI Renderer State Machine
+// Updater UI Renderer Controller
 (function () {
     "use strict";
 
-    const logoContainer = document.getElementById("logo-container");
+    const logoStage = document.getElementById("logo-stage");
     const statusPrimary = document.getElementById("status-primary");
     const statusSecondary = document.getElementById("status-secondary");
     const progressWrapper = document.getElementById("progress-wrapper");
@@ -10,14 +10,14 @@
     const actionWrapper = document.getElementById("action-wrapper");
     const btnRetry = document.getElementById("btn-retry");
 
-    // Format Bytes helper
+    // Format bytes helper
     function formatBytes(bytes) {
         if (!bytes || bytes <= 0) return "";
         const mb = bytes / (1024 * 1024);
         return `${mb.toFixed(1)} MB`;
     }
 
-    // Set Text with subtle fade transition
+    // Set text with subtle fade transition
     function updateText(primary, secondary = "") {
         if (statusPrimary.textContent === primary && statusSecondary.textContent === secondary) return;
 
@@ -26,7 +26,7 @@
             statusPrimary.textContent = primary;
             statusPrimary.classList.remove("fade-out");
             statusPrimary.classList.add("fade-in");
-        }, 120);
+        }, 100);
 
         if (secondary) {
             statusSecondary.textContent = secondary;
@@ -41,44 +41,41 @@
     function handleState(payload) {
         const { state, version, percent, transferred, total, message, retryIn, isPermanent } = payload;
 
-        // Reset error / buttons by default
-        statusPrimary.classList.remove("error");
         actionWrapper.hidden = true;
 
         switch (state) {
             case "STARTING":
-                logoContainer.className = "logo-container animating";
+                logoStage.className = "logo-stage";
                 progressWrapper.classList.remove("visible");
-                updateText("Starting...");
+                updateText(message || "Starting...");
                 break;
 
             case "CHECKING":
             case "RETRYING":
-                logoContainer.className = "logo-container animating";
+                logoStage.className = "logo-stage";
                 progressWrapper.classList.remove("visible");
                 updateText("Checking for updates...");
                 break;
 
             case "NO_UPDATE":
-                logoContainer.className = "logo-container";
+                logoStage.className = "logo-stage idle";
                 progressWrapper.classList.remove("visible");
-                updateText("You're up to date.", version ? `Version ${version}` : "");
+                updateText("Starting...");
                 break;
 
             case "UPDATE_AVAILABLE":
-                logoContainer.className = "logo-container animating";
+                logoStage.className = "logo-stage";
                 progressWrapper.classList.remove("visible");
-                updateText("Update available", version ? `Version ${version}` : "");
+                updateText("Update available");
                 break;
 
             case "DOWNLOADING": {
-                logoContainer.className = "logo-container animating";
+                logoStage.className = "logo-stage";
                 progressWrapper.classList.add("visible");
 
                 const currentPercent = typeof percent === "number" ? Math.min(100, Math.max(0, percent)) : 0;
                 progressFill.style.width = `${currentPercent}%`;
 
-                // Display download message
                 let downloadText = "Downloading update...";
                 if (currentPercent > 0) {
                     downloadText = `Downloading update — ${Math.round(currentPercent)}%`;
@@ -94,33 +91,32 @@
             }
 
             case "VERIFYING":
-                logoContainer.className = "logo-container animating";
+                logoStage.className = "logo-stage";
                 progressWrapper.classList.remove("visible");
                 updateText("Verifying update...");
                 break;
 
             case "INSTALLING":
-                logoContainer.className = "logo-container animating";
+                logoStage.className = "logo-stage";
                 progressWrapper.classList.remove("visible");
                 updateText("Installing update...");
                 break;
 
             case "COMPLETED":
-                logoContainer.className = "logo-container";
+                logoStage.className = "logo-stage";
                 progressWrapper.classList.remove("visible");
                 updateText("Restarting...");
                 break;
 
             case "ERROR":
-                logoContainer.className = "logo-container error";
+                logoStage.className = "logo-stage error";
                 progressWrapper.classList.remove("visible");
-                statusPrimary.classList.add("error");
 
                 if (isPermanent) {
                     updateText("Update failed", "Please try again later.");
                     actionWrapper.hidden = false;
                 } else {
-                    const countdown = retryIn != null ? retryIn : 11;
+                    const countdown = retryIn != null ? retryIn : 10;
                     updateText(`Update failed — retrying in ${countdown} sec...`);
                 }
                 break;
@@ -130,12 +126,11 @@
         }
     }
 
-    // Real Retry Tick Listener
+    // Bind IPC listeners
     if (window.updater) {
         window.updater.onState(handleState);
 
         window.updater.onRetryTick(({ retryIn, message }) => {
-            statusPrimary.classList.add("error");
             statusPrimary.textContent = message || `Update failed — retrying in ${retryIn} sec...`;
         });
 

@@ -15,14 +15,14 @@ html, body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* 360x300 Frameless Native Desktop Window Container */
+/* 360x300 Frameless Native Desktop Updater Window */
 .updater-window {
     width: 360px;
     height: 300px;
-    background-color: #25282E;
+    background-color: #282b30;
     border-radius: 10px;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,43 +38,49 @@ html, body {
     align-items: center;
     justify-content: center;
     gap: 22px;
-    width: 280px;
+    width: 290px;
     text-align: center;
 }
 
-/* Original Geometric Logo */
-.logo-container {
-    width: 54px;
-    height: 54px;
+/* Discord Signature Logo Stage */
+.logo-stage {
+    position: relative;
+    width: 86px;
+    height: 86px;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    transition: transform 0.3s ease;
 }
 
-.updater-logo {
-    width: 52px;
-    height: 52px;
-    display: block;
+/* Orbiting Kinetic Blur Trails */
+.orbit-spinner {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    animation: discord-orbit-spin 1.4s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    transform-origin: center center;
 }
 
-/* Subtle Kinetic Orbit Animation during checking/starting/downloading */
-.logo-container.animating .orbit-arc {
-    transform-origin: 28px 28px;
-    animation: orbit-spin 1.8s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+.orbit-trail {
+    stroke: #FFFFFF;
+    stroke-linecap: round;
+    transition: opacity 0.3s ease;
 }
 
-.logo-container.animating .orbit-arc-2 {
-    animation-delay: -0.9s;
+.trail-1 {
+    opacity: 0.95;
 }
 
-.logo-container.animating .core-shape {
-    transform-origin: 28px 28px;
-    animation: core-breathe 2.4s infinite ease-in-out;
+.trail-2 {
+    opacity: 0.75;
 }
 
-@keyframes orbit-spin {
+.trail-3 {
+    opacity: 0.5;
+}
+
+@keyframes discord-orbit-spin {
     0% {
         transform: rotate(0deg);
     }
@@ -83,9 +89,60 @@ html, body {
     }
 }
 
-@keyframes core-breathe {
+/* Center Mascot Controller with Signature Playful Tilt/Wobble */
+.mascot-wrapper {
+    width: 52px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    animation: discord-mascot-wobble 2.4s infinite ease-in-out;
+    transform-origin: center center;
+}
+
+.mascot-svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+@keyframes discord-mascot-wobble {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    18% {
+        transform: rotate(-12deg) scale(1.03, 0.97);
+    }
+    38% {
+        transform: rotate(8deg) scale(0.97, 1.03);
+    }
+    58% {
+        transform: rotate(-5deg) scale(1.02, 0.98);
+    }
+    78% {
+        transform: rotate(3deg) scale(0.99, 1.01);
+    }
+    100% {
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* Idle / Error State: stops orbit & wobble */
+.logo-stage.idle .orbit-spinner,
+.logo-stage.error .orbit-spinner {
+    animation: none;
+    opacity: 0.3;
+}
+
+.logo-stage.idle .mascot-wrapper,
+.logo-stage.error .mascot-wrapper {
+    animation: calm-pulse 2s infinite ease-in-out;
+}
+
+@keyframes calm-pulse {
     0%, 100% {
-        transform: scale(0.96);
+        transform: scale(1);
         opacity: 0.9;
     }
     50% {
@@ -94,55 +151,27 @@ html, body {
     }
 }
 
-/* Error State on Logo: stops rotation and pulses calmly */
-.logo-container.error .orbit-arc {
-    animation: none;
-    stroke: #FFFFFF;
-    opacity: 0.6;
-}
-
-.logo-container.error .core-shape {
-    animation: error-pulse 1.8s infinite ease-in-out;
-    fill: #FFFFFF;
-}
-
-@keyframes error-pulse {
-    0%, 100% {
-        opacity: 0.7;
-        transform: scale(1);
-    }
-    50% {
-        opacity: 1;
-        transform: scale(1.06);
-    }
-}
-
-/* Typography */
+/* Typography Matching Reference Images */
 .text-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     min-height: 22px;
 }
 
 .status-primary {
-    font-size: 13.5px;
-    font-weight: 500;
-    color: #F5F5F5;
-    letter-spacing: -0.01em;
-    line-height: 1.4;
-    transition: opacity 0.2s ease, color 0.2s ease;
-}
-
-.status-primary.error {
+    font-size: 14.5px;
+    font-weight: 700;
     color: #FFFFFF;
-    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+    transition: opacity 0.15s ease;
 }
 
 .status-secondary {
     font-size: 11px;
-    font-weight: 400;
+    font-weight: 500;
     color: #B8BCC4;
     font-variant-numeric: tabular-nums;
     opacity: 0;
@@ -156,10 +185,10 @@ html, body {
     height: auto;
 }
 
-/* Thin Modern Progress Bar */
+/* Thin Progress Bar Matching Reference */
 .progress-wrapper {
     display: none;
-    width: 200px;
+    width: 210px;
     height: 4px;
     margin-top: 2px;
     opacity: 0;
@@ -173,8 +202,8 @@ html, body {
 
 .progress-track {
     width: 100%;
-    height: 3.5px;
-    background-color: #191B20;
+    height: 4px;
+    background-color: #1e1f22;
     border-radius: 999px;
     overflow: hidden;
     position: relative;
@@ -185,10 +214,10 @@ html, body {
     width: 0%;
     background-color: #FFFFFF;
     border-radius: 999px;
-    transition: width 0.2s cubic-bezier(0.2, 0, 0, 1);
+    transition: width 0.25s cubic-bezier(0.2, 0, 0, 1);
 }
 
-/* Flat Minimal Retry Button (Shown only after max retries fail) */
+/* Retry Action Button */
 .action-wrapper {
     margin-top: 6px;
 }
@@ -196,32 +225,32 @@ html, body {
 .btn-retry {
     padding: 6px 18px;
     border-radius: 4px;
-    background: #191B20;
-    color: #F5F5F5;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: #1e1f22;
+    color: #FFFFFF;
+    border: 1px solid rgba(255, 255, 255, 0.12);
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
     transition: all 0.15s ease;
     -webkit-app-region: no-drag;
 }
 
 .btn-retry:hover {
-    background: #20242B;
-    border-color: rgba(255, 255, 255, 0.2);
+    background: #2b2d31;
+    border-color: rgba(255, 255, 255, 0.25);
 }
 
 .btn-retry:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
 }
 
-/* Fade between state transitions */
+/* Fade transitions */
 .fade-out {
     opacity: 0;
-    transition: opacity 0.15s ease;
+    transition: opacity 0.12s ease;
 }
 
 .fade-in {
     opacity: 1;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.18s ease;
 }
