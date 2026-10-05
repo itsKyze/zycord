@@ -17,21 +17,27 @@ try {
     window.ZycordNative = ZycordNative;
 }
 
-// 1. Inject Authentic Top Bar Window Controls (Minimize, Maximize, Close)
+// 1. Inject Authentic Top Bar Window Controls (Inbox, Minimize, Maximize, Close)
 window.addEventListener("DOMContentLoaded", () => {
     try {
         if (!document.body || !document.head) return;
         if (document.getElementById("zycord-win-controls")) return;
 
-        // Window controls container (Minimize, Maximize, Close)
+        // Window controls container (Inbox + Minimize, Maximize, Close)
         const winControls = document.createElement("div");
         winControls.id = "zycord-win-controls";
         winControls.innerHTML = `
+            <button class="zycord-win-btn zycord-inbox-btn" id="zycord-btn-inbox" title="Inbox" aria-label="Inbox">
+                <svg width="14" height="14" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5v-3h3.56c.69 1.19 1.97 2 3.44 2s2.75-.81 3.44-2H19v3zm0-5h-4.18c-.41 1.16-1.51 2-2.82 2s-2.41-.84-2.82-2H5V5h14v9z"/>
+                </svg>
+            </button>
+            <div class="zycord-win-separator"></div>
             <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
-                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1" x="0" y="5"></rect></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1.4" x="0" y="5"></rect></svg>
             </button>
             <button class="zycord-win-btn" id="zycord-btn-max" title="Maximize" aria-label="Maximize">
-                <svg id="zycord-icon-max" width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1"></rect></svg>
+                <svg id="zycord-icon-max" width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1.2"></rect></svg>
             </button>
             <button class="zycord-win-btn close" id="zycord-btn-close" title="Close" aria-label="Close">
                 <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
@@ -41,12 +47,12 @@ window.addEventListener("DOMContentLoaded", () => {
         const style = document.createElement("style");
         style.id = "zycord-app-styles";
         style.textContent = `
-            /* Window Controls Container (22px height matching Discord native top bar) */
+            /* Window Controls Container: strictly isolated from drag region */
             #zycord-win-controls {
                 position: fixed !important;
                 top: 0 !important;
                 right: 0 !important;
-                width: 84px !important;
+                width: 120px !important;
                 height: 22px !important;
                 z-index: 2147483647 !important;
                 display: flex !important;
@@ -65,6 +71,13 @@ window.addEventListener("DOMContentLoaded", () => {
                 pointer-events: auto !important;
                 cursor: pointer !important;
                 user-select: none !important;
+            }
+
+            .zycord-win-separator {
+                width: 1px !important;
+                height: 12px !important;
+                background: rgba(255, 255, 255, 0.12) !important;
+                margin: 0 2px !important;
             }
 
             .zycord-win-btn {
@@ -92,12 +105,13 @@ window.addEventListener("DOMContentLoaded", () => {
                 color: #ffffff !important;
             }
 
-            /* Make Discord native top title bar draggable */
+            /* Make Discord native top title bar draggable, but STOP 125px before right edge */
             [class*="typeWindows_"],
             [class*="titleBar_"] {
                 height: 22px !important;
                 -webkit-app-region: drag !important;
-                padding-right: 88px !important;
+                margin-right: 125px !important;
+                width: auto !important;
                 box-sizing: border-box !important;
             }
 
@@ -132,23 +146,58 @@ window.addEventListener("DOMContentLoaded", () => {
         document.head.appendChild(style);
         document.body.prepend(winControls);
 
-        // Bind control buttons with multiple event types
+        // Bind control buttons with multiple event types (immediate reaction on mousedown/click)
         const bindControl = (id, action) => {
             const el = document.getElementById(id);
             if (!el) return;
+            let fired = false;
             const trigger = (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                if (fired) return;
+                fired = true;
+                setTimeout(() => { fired = false; }, 300);
                 ipcRenderer.send(action);
             };
             el.addEventListener("click", trigger, true);
-            el.addEventListener("mouseup", trigger, true);
-            el.addEventListener("pointerup", trigger, true);
+            el.addEventListener("mousedown", trigger, true);
+            el.addEventListener("pointerdown", (e) => e.stopPropagation(), true);
         };
 
         bindControl("zycord-btn-min", "window-minimize");
         bindControl("zycord-btn-max", "window-maximize");
         bindControl("zycord-btn-close", "window-close");
+
+        // Inbox button click handler
+        const inboxBtn = document.getElementById("zycord-btn-inbox");
+        if (inboxBtn) {
+            inboxBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const nativeInbox = document.querySelector(
+                    'button[aria-label*="Inbox" i], [aria-label*="Inbox" i], [aria-label*="صندوق الوارد" i]'
+                );
+                if (nativeInbox) {
+                    nativeInbox.click();
+                } else {
+                    // Dispatch Ctrl+I shortcut
+                    const init = {
+                        key: "i",
+                        code: "KeyI",
+                        keyCode: 73,
+                        which: 73,
+                        ctrlKey: true,
+                        bubbles: true,
+                        cancelable: true,
+                        view: window,
+                    };
+                    window.dispatchEvent(new KeyboardEvent("keydown", init));
+                    document.dispatchEvent(new KeyboardEvent("keydown", init));
+                    window.dispatchEvent(new KeyboardEvent("keyup", init));
+                    document.dispatchEvent(new KeyboardEvent("keyup", init));
+                }
+            });
+        }
 
         // Dynamically update Maximize / Restore icon
         ipcRenderer.on("window-maximized-state", (event, isMaximized) => {
@@ -176,6 +225,10 @@ window.addEventListener("DOMContentLoaded", () => {
         isVideoOn: false,
     };
     let lastBadgeText = null;
+
+    // Debounce flags to eliminate duplicate toggles and double audio chimes
+    let isTogglingMute = false;
+    let isTogglingDeafen = false;
 
     // Helper: Render crisp 16x16 red notification badge for Taskbar overlay
     function renderBadgeDataURL(text) {
@@ -287,7 +340,7 @@ window.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        // 3. Fallback queries
+        // 3. Document-wide fallback
         if (!muteBtn) {
             muteBtn = document.querySelector(
                 'button[aria-label="Mute" i], button[aria-label="Unmute" i]'
@@ -372,43 +425,6 @@ window.addEventListener("DOMContentLoaded", () => {
         return false;
     }
 
-    // React 18 & DOM safe click simulation
-    function simulateClick(el) {
-        if (!el) return false;
-        try {
-            const rect = el.getBoundingClientRect();
-            const clientX = rect.left + rect.width / 2;
-            const clientY = rect.top + rect.height / 2;
-
-            const opts = {
-                bubbles: true,
-                cancelable: true,
-                composed: true,
-                view: window,
-                clientX,
-                clientY,
-                button: 0,
-                buttons: 1,
-            };
-
-            const target = el.querySelector("svg") || el.firstElementChild || el;
-            target.dispatchEvent(new PointerEvent("pointerdown", opts));
-            target.dispatchEvent(new MouseEvent("mousedown", opts));
-            target.dispatchEvent(new PointerEvent("pointerup", opts));
-            target.dispatchEvent(new MouseEvent("mouseup", opts));
-            target.dispatchEvent(new MouseEvent("click", opts));
-            el.click();
-            return true;
-        } catch (e) {
-            try {
-                el.click();
-                return true;
-            } catch (_) {
-                return false;
-            }
-        }
-    }
-
     function triggerShortcut(code, keyCode) {
         const key = code.replace("Key", "");
         const opts = {
@@ -489,28 +505,35 @@ window.addEventListener("DOMContentLoaded", () => {
     }, true);
 
     // IPC Action Handlers from Tray & Taskbar Thumbar
+    // Guaranteed single-click with debounce to eliminate double sounds and bouncing
     ipcRenderer.on("action-toggle-mute", () => {
+        if (isTogglingMute) return;
+        isTogglingMute = true;
+        setTimeout(() => { isTogglingMute = false; }, 350);
+
         const { muteBtn } = findVoiceButtons();
         if (muteBtn) {
-            simulateClick(muteBtn);
+            muteBtn.click();
         } else {
             triggerShortcut("KeyM", 77);
         }
-        setTimeout(checkState, 40);
-        setTimeout(checkState, 120);
-        setTimeout(checkState, 300);
+        setTimeout(checkState, 50);
+        setTimeout(checkState, 180);
     });
 
     ipcRenderer.on("action-toggle-deafen", () => {
+        if (isTogglingDeafen) return;
+        isTogglingDeafen = true;
+        setTimeout(() => { isTogglingDeafen = false; }, 350);
+
         const { deafenBtn } = findVoiceButtons();
         if (deafenBtn) {
-            simulateClick(deafenBtn);
+            deafenBtn.click();
         } else {
             triggerShortcut("KeyD", 68);
         }
-        setTimeout(checkState, 40);
-        setTimeout(checkState, 120);
-        setTimeout(checkState, 300);
+        setTimeout(checkState, 50);
+        setTimeout(checkState, 180);
     });
 
     ipcRenderer.on("action-toggle-video", () => {
@@ -518,7 +541,7 @@ window.addEventListener("DOMContentLoaded", () => {
             'button[aria-label*="Camera" i], button[aria-label*="Video" i]'
         );
         if (videoBtn) {
-            simulateClick(videoBtn);
+            videoBtn.click();
         }
         setTimeout(checkState, 40);
         setTimeout(checkState, 120);
@@ -529,7 +552,7 @@ window.addEventListener("DOMContentLoaded", () => {
             'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], button[aria-label*="قطع" i], [class*="disconnectButton"]'
         );
         if (disconnectBtn) {
-            simulateClick(disconnectBtn);
+            disconnectBtn.click();
         }
         setTimeout(checkState, 40);
         setTimeout(checkState, 120);
