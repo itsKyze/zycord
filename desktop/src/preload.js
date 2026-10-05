@@ -26,18 +26,6 @@ window.addEventListener("DOMContentLoaded", () => {
         const titlebar = document.createElement("div");
         titlebar.id = "zycord-titlebar";
         titlebar.innerHTML = `
-            <div class="zycord-nav-controls">
-                <button class="zycord-nav-btn" id="zycord-btn-back" title="Back">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="15 18 9 12 15 6"></polyline>
-                    </svg>
-                </button>
-                <button class="zycord-nav-btn" id="zycord-btn-forward" title="Forward">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <polyline points="9 18 15 12 9 6"></polyline>
-                    </svg>
-                </button>
-            </div>
             <div class="zycord-drag-area"></div>
             <div class="zycord-win-controls">
                 <div class="zycord-win-btn" id="zycord-btn-min" title="Minimize">
@@ -69,33 +57,6 @@ window.addEventListener("DOMContentLoaded", () => {
                 user-select: none;
                 -webkit-user-select: none;
                 pointer-events: none;
-            }
-            .zycord-nav-controls {
-                display: flex;
-                align-items: center;
-                gap: 2px;
-                padding-left: 8px;
-                height: 100%;
-                pointer-events: auto;
-                -webkit-app-region: no-drag;
-            }
-            .zycord-nav-btn {
-                width: 18px;
-                height: 18px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background: transparent;
-                border: none;
-                color: #80848e;
-                cursor: pointer;
-                border-radius: 3px;
-                padding: 0;
-                transition: color 0.15s ease, background 0.15s ease;
-            }
-            .zycord-nav-btn:hover {
-                color: #dbdee1;
-                background: rgba(255, 255, 255, 0.08);
             }
             .zycord-drag-area {
                 flex: 1;
@@ -146,8 +107,6 @@ window.addEventListener("DOMContentLoaded", () => {
         document.head.appendChild(style);
         document.body.prepend(titlebar);
 
-        document.getElementById("zycord-btn-back")?.addEventListener("click", () => window.history.back());
-        document.getElementById("zycord-btn-forward")?.addEventListener("click", () => window.history.forward());
         document.getElementById("zycord-btn-min")?.addEventListener("click", () => ipcRenderer.send("window-minimize"));
         document.getElementById("zycord-btn-max")?.addEventListener("click", () => ipcRenderer.send("window-maximize"));
         document.getElementById("zycord-btn-close")?.addEventListener("click", () => ipcRenderer.send("window-close"));
@@ -158,7 +117,6 @@ window.addEventListener("DOMContentLoaded", () => {
         const barStyle = document.createElement("style");
         barStyle.id = "zycord-native-bar-style";
         document.head.appendChild(barStyle);
-        const NAV_LABELS = ["back", "forward", "retour", "précédent", "suivant", "رجوع", "للأمام", "السابق", "التالي"];
         let currentBar = null;
         let currentKey = "";
 
@@ -175,11 +133,6 @@ window.addEventListener("DOMContentLoaded", () => {
             return null;
         };
 
-        const hasOwnNav = (bar) => [...bar.querySelectorAll("[aria-label]")].some((el) => {
-            const label = (el.getAttribute("aria-label") || "").trim().toLowerCase();
-            return NAV_LABELS.includes(label);
-        });
-
         const syncNativeBar = () => {
             const bar = findBar();
             currentBar = bar;
@@ -188,16 +141,13 @@ window.addEventListener("DOMContentLoaded", () => {
             if (bar) {
                 const barClass = [...bar.classList].find((c) => c.startsWith("bar_"));
                 const h = Math.round(bar.getBoundingClientRect().height);
-                const ownNav = hasOwnNav(bar);
-                key = `bar|${barClass}|${h}|${ownNav}`;
+                key = `bar|${barClass}|${h}`;
                 const s = `.${CSS.escape(barClass)}`;
                 css = `
                     #zycord-titlebar { height: ${h}px !important; }
                     .zycord-drag-area { pointer-events: none !important; -webkit-app-region: no-drag !important; }
-                    ${ownNav ? ".zycord-nav-controls { display: none !important; }" : ""}
                     ${s} {
                         -webkit-app-region: drag;
-                        ${ownNav ? "" : "padding-left: 56px !important;"}
                         padding-right: 92px !important;
                         box-sizing: border-box !important;
                     }
