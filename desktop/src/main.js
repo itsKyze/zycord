@@ -372,18 +372,32 @@ ipcMain.on("updater:close", () => {
     app.quit();
 });
 
-// IPC Handlers for DiscordNative
-ipcMain.on("window-minimize", () => mainWindow?.minimize());
-ipcMain.on("window-maximize", () => {
-    if (mainWindow?.isMaximized()) mainWindow.unmaximize();
-    else mainWindow?.maximize();
+// IPC Handlers for DiscordNative & Window Controls
+ipcMain.on("window-minimize", (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
+    win?.minimize();
 });
-ipcMain.on("window-close", () => mainWindow?.close());
+ipcMain.on("window-maximize", (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
+    if (win?.isMaximized()) win.unmaximize();
+    else win?.maximize();
+});
+ipcMain.on("window-close", (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
+    win?.close();
+});
 ipcMain.on("window-is-maximized", (event) => {
-    event.returnValue = mainWindow ? mainWindow.isMaximized() : false;
+    const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
+    event.returnValue = win ? win.isMaximized() : false;
+});
+ipcMain.on("open-external", (event, url) => {
+    if (typeof url === "string" && (url.startsWith("http://") || url.startsWith("https://"))) {
+        shell.openExternal(url);
+    }
 });
 ipcMain.on("window-set-always-on-top", (event, enabled) => {
-    mainWindow?.setAlwaysOnTop(Boolean(enabled));
+    const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
+    win?.setAlwaysOnTop(Boolean(enabled));
 });
 ipcMain.on("get-app-version", (event) => {
     event.returnValue = app.getVersion();
