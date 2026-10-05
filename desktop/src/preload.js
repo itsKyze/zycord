@@ -17,16 +17,23 @@ try {
     window.ZycordNative = ZycordNative;
 }
 
-// 1. Authentic Top Bar Window Controls ([ - ] [ □ ] [ ✕ ])
+// 1. Authentic Top Bar Window Controls ([ Inbox ] [ ? ] | [ - ] [ □ ] [ ✕ ])
 function initWindowControls() {
     try {
         if (!document.documentElement) return;
         if (document.getElementById("zycord-win-controls")) return;
 
-        // Window controls container: ONLY [ - ] [ □ ] [ ✕ ], matching Discord desktop
+        // Top bar controls: Inbox, Help, Separator, Minimize, Maximize, Close
         const winControls = document.createElement("div");
         winControls.id = "zycord-win-controls";
         winControls.innerHTML = `
+            <button class="zycord-win-btn" id="zycord-btn-inbox" title="Inbox" aria-label="Inbox">
+                <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5v-3h3.56c.69 1.19 1.97 2 3.44 2s2.75-.81 3.44-2H19v3zm0-5h-4.18c-.41 1.16-1.51 2-2.82 2s-2.41-.84-2.82-2H5V5h14v9z"/></svg>
+            </button>
+            <button class="zycord-win-btn" id="zycord-btn-help" title="Help" aria-label="Help">
+                <svg width="16" height="16" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+            </button>
+            <div class="zycord-win-separator"></div>
             <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
                 <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1.4" x="0" y="5"></rect></svg>
             </button>
@@ -47,7 +54,7 @@ function initWindowControls() {
                     position: fixed !important;
                     top: 0 !important;
                     right: 0 !important;
-                    width: 88px !important;
+                    width: 152px !important;
                     height: 22px !important;
                     z-index: 2147483647 !important;
                     display: flex !important;
@@ -68,6 +75,14 @@ function initWindowControls() {
                     user-select: none !important;
                 }
 
+                .zycord-win-separator {
+                    width: 1px !important;
+                    height: 14px !important;
+                    background: rgba(255, 255, 255, 0.16) !important;
+                    margin: 0 4px !important;
+                    flex-shrink: 0 !important;
+                }
+
                 .zycord-win-btn {
                     width: 28px !important;
                     height: 22px !important;
@@ -84,6 +99,7 @@ function initWindowControls() {
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
                     transition: background 0.12s ease, color 0.12s ease !important;
+                    flex-shrink: 0 !important;
                 }
 
                 .zycord-win-btn:hover {
@@ -100,7 +116,20 @@ function initWindowControls() {
                     color: #ffffff !important;
                 }
 
-                /* Ensure Discord native toolbar (Inbox, Help, etc.) is fully visible & clickable */
+                /* Hide duplicate native Inbox & Help from lower channel header toolbar */
+                [class*="toolbar_"] [aria-label*="Inbox" i]:not(#zycord-win-controls *),
+                [class*="toolbar_"] [aria-label*="صندوق الوارد" i]:not(#zycord-win-controls *),
+                [class*="toolbar_"] [aria-label*="Boîte de réception" i]:not(#zycord-win-controls *),
+                [class*="toolbar_"] [aria-label*="Posteingang" i]:not(#zycord-win-controls *),
+                [class*="toolbar_"] [aria-label*="Help" i]:not(#zycord-win-controls *),
+                [class*="toolbar_"] [aria-label*="مساعدة" i]:not(#zycord-win-controls *),
+                [class*="toolbar_"] [aria-label*="Aide" i]:not(#zycord-win-controls *),
+                [class*="toolbar_"] [aria-label*="Hilfe" i]:not(#zycord-win-controls *),
+                [class*="toolbar_"] a[href*="support.discord.com"]:not(#zycord-win-controls *) {
+                    display: none !important;
+                }
+
+                /* Ensure Discord native toolbar is clickable */
                 [class*="toolbar_"],
                 [class*="toolbar_"] *,
                 section[class*="title_"] [class*="toolbar_"] {
@@ -109,15 +138,15 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
-                /* Stop draggable top bar 92px before right edge so window controls are in a 100% non-drag zone */
+                /* Stop draggable top bar 155px before right edge so window controls are in a 100% non-drag zone */
                 [class*="typeWindows_"],
                 [class*="titleBar_"],
                 [class*="withFrame_"] {
                     height: 22px !important;
                     -webkit-app-region: drag !important;
-                    max-width: calc(100% - 92px) !important;
-                    width: calc(100% - 92px) !important;
-                    margin-right: 92px !important;
+                    max-width: calc(100% - 155px) !important;
+                    width: calc(100% - 155px) !important;
+                    margin-right: 155px !important;
                     box-sizing: border-box !important;
                 }
 
@@ -152,22 +181,24 @@ function initWindowControls() {
 
         (document.body || document.documentElement).appendChild(winControls);
 
-        const bindBtn = (id, action) => {
+        const bindBtn = (id, handler) => {
             const el = document.getElementById(id);
             if (!el) return;
             el.addEventListener("click", (e) => {
                 e.preventDefault();
-                ipcRenderer.send(action);
+                handler();
             });
             el.addEventListener("mousedown", (e) => {
                 e.preventDefault();
-                ipcRenderer.send(action);
+                handler();
             });
         };
 
-        bindBtn("zycord-btn-min", "window-minimize");
-        bindBtn("zycord-btn-max", "window-maximize");
-        bindBtn("zycord-btn-close", "window-close");
+        bindBtn("zycord-btn-inbox", toggleInbox);
+        bindBtn("zycord-btn-help", openHelp);
+        bindBtn("zycord-btn-min", () => ipcRenderer.send("window-minimize"));
+        bindBtn("zycord-btn-max", () => ipcRenderer.send("window-maximize"));
+        bindBtn("zycord-btn-close", () => ipcRenderer.send("window-close"));
 
         try {
             if (ipcRenderer.sendSync("window-is-maximized")) {
@@ -180,6 +211,68 @@ function initWindowControls() {
         } catch (_) {}
     } catch (err) {
         console.warn("[Zycord] Controls setup error:", err);
+    }
+}
+
+// Find native Discord inbox button from DOM without matching our custom controls
+function findNativeInbox() {
+    const selector = [
+        '[class*="toolbar_"] [aria-label*="Inbox" i]',
+        '[class*="toolbar_"] [aria-label*="صندوق الوارد" i]',
+        '[class*="toolbar_"] [aria-label*="Boîte de réception" i]',
+        '[class*="toolbar_"] [aria-label*="Posteingang" i]',
+        '[aria-label*="Inbox" i]',
+        '[aria-label*="صندوق الوارد" i]',
+        '[aria-label*="Boîte de réception" i]',
+    ].join(",");
+    const list = document.querySelectorAll(selector);
+    for (const el of list) {
+        if (!el.closest("#zycord-win-controls")) {
+            return el;
+        }
+    }
+    return null;
+}
+
+// Toggle Discord Inbox popout (native click with Ctrl+I fallback)
+function toggleInbox() {
+    const nativeBtn = findNativeInbox();
+    if (nativeBtn) {
+        try {
+            nativeBtn.click();
+            return;
+        } catch (_) {}
+    }
+
+    const opts = {
+        key: "i",
+        code: "KeyI",
+        keyCode: 73,
+        which: 73,
+        ctrlKey: true,
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+        view: window,
+    };
+    window.dispatchEvent(new KeyboardEvent("keydown", opts));
+    document.dispatchEvent(new KeyboardEvent("keydown", opts));
+    window.dispatchEvent(new KeyboardEvent("keyup", opts));
+    document.dispatchEvent(new KeyboardEvent("keyup", opts));
+}
+
+// Open Discord Support
+function openHelp() {
+    const nativeHelp = document.querySelector(
+        '[class*="toolbar_"] a[href*="support.discord.com"], ' +
+        '[class*="toolbar_"] [aria-label*="Help" i], ' +
+        '[class*="toolbar_"] [aria-label*="مساعدة" i], ' +
+        'a[href*="support.discord.com"]'
+    );
+    if (nativeHelp && !nativeHelp.closest("#zycord-win-controls")) {
+        nativeHelp.click();
+    } else {
+        ipcRenderer.send("open-external", "https://support.discord.com");
     }
 }
 
@@ -200,6 +293,16 @@ document.addEventListener("click", (e) => {
         ipcRenderer.send("window-minimize");
         return;
     }
+    if (e.target.closest("#zycord-btn-inbox")) {
+        e.preventDefault();
+        toggleInbox();
+        return;
+    }
+    if (e.target.closest("#zycord-btn-help")) {
+        e.preventDefault();
+        openHelp();
+        return;
+    }
 }, true);
 
 document.addEventListener("mousedown", (e) => {
@@ -212,6 +315,12 @@ document.addEventListener("mousedown", (e) => {
     } else if (e.target.closest('#zycord-btn-min, [class*="winButtonMinMax_"]:first-child')) {
         e.preventDefault();
         ipcRenderer.send("window-minimize");
+    } else if (e.target.closest("#zycord-btn-inbox")) {
+        e.preventDefault();
+        toggleInbox();
+    } else if (e.target.closest("#zycord-btn-help")) {
+        e.preventDefault();
+        openHelp();
     }
 }, true);
 
