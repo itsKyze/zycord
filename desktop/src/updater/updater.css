@@ -1,0 +1,227 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: transparent;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 360x300 Frameless Native Desktop Window Container */
+.updater-window {
+    width: 360px;
+    height: 300px;
+    background-color: #25282E;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    -webkit-app-region: drag;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Centered Content Stack */
+.content-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    width: 280px;
+    text-align: center;
+}
+
+/* Original Geometric Logo */
+.logo-container {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.updater-logo {
+    width: 52px;
+    height: 52px;
+    display: block;
+}
+
+/* Subtle Kinetic Orbit Animation during checking/starting/downloading */
+.logo-container.animating .orbit-arc {
+    transform-origin: 28px 28px;
+    animation: orbit-spin 1.8s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+}
+
+.logo-container.animating .orbit-arc-2 {
+    animation-delay: -0.9s;
+}
+
+.logo-container.animating .core-shape {
+    transform-origin: 28px 28px;
+    animation: core-breathe 2.4s infinite ease-in-out;
+}
+
+@keyframes orbit-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes core-breathe {
+    0%, 100% {
+        transform: scale(0.96);
+        opacity: 0.9;
+    }
+    50% {
+        transform: scale(1.04);
+        opacity: 1;
+    }
+}
+
+/* Error State on Logo: stops rotation and pulses calmly */
+.logo-container.error .orbit-arc {
+    animation: none;
+    stroke: #FFFFFF;
+    opacity: 0.6;
+}
+
+.logo-container.error .core-shape {
+    animation: error-pulse 1.8s infinite ease-in-out;
+    fill: #FFFFFF;
+}
+
+@keyframes error-pulse {
+    0%, 100% {
+        opacity: 0.7;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.06);
+    }
+}
+
+/* Typography */
+.text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-height: 22px;
+}
+
+.status-primary {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #F5F5F5;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.status-primary.error {
+    color: #FFFFFF;
+    font-weight: 500;
+}
+
+.status-secondary {
+    font-size: 11px;
+    font-weight: 400;
+    color: #B8BCC4;
+    font-variant-numeric: tabular-nums;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.2s ease;
+}
+
+.status-secondary.visible {
+    opacity: 0.85;
+    height: auto;
+}
+
+/* Thin Modern Progress Bar */
+.progress-wrapper {
+    display: none;
+    width: 200px;
+    height: 4px;
+    margin-top: 2px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.progress-wrapper.visible {
+    display: block;
+    opacity: 1;
+}
+
+.progress-track {
+    width: 100%;
+    height: 3.5px;
+    background-color: #191B20;
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #FFFFFF;
+    border-radius: 999px;
+    transition: width 0.2s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Flat Minimal Retry Button (Shown only after max retries fail) */
+.action-wrapper {
+    margin-top: 6px;
+}
+
+.btn-retry {
+    padding: 6px 18px;
+    border-radius: 4px;
+    background: #191B20;
+    color: #F5F5F5;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    -webkit-app-region: no-drag;
+}
+
+.btn-retry:hover {
+    background: #20242B;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-retry:active {
+    transform: scale(0.98);
+}
+
+/* Fade between state transitions */
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}

@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Tray, Menu, ipcMain, shell, session, desktopCapturer, clipboard } = require("electron");
 const path = require("path");
-const { autoUpdater } = require("electron-updater");
+const UpdaterService = require("./updater/UpdaterService");
+const UpdaterConfig = require("./updater/UpdaterConfig");
 
 // Single Instance Lock
 const gotTheLock = app.requestSingleInstanceLock();
@@ -10,7 +11,8 @@ if (!gotTheLock) {
 }
 
 // Global References
-let splashWindow = null;
+let updaterWindow = null;
+let updaterService = null;
 let mainWindow = null;
 let tray = null;
 let isQuitting = false;
@@ -19,96 +21,72 @@ const APP_URL = "https://app.zyron.site/app";
 const ICON_PATH = path.join(__dirname, "../assets/icon.ico");
 const DISCORD_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9168 Chrome/128.0.6613.186 Electron/32.2.0 Safari/537.36";
 
-// Configure Auto-Updater
-autoUpdater.autoDownload = true;
-autoUpdater.autoInstallOnAppQuit = true;
-
-// Create Discord Splash Screen Window
-function createSplashWindow() {
-    splashWindow = new BrowserWindow({
-        width: 320,
-        height: 380,
+// Create Minimal Centered Desktop Updater Window (360x300)
+function createUpdaterWindow() {
+    updaterWindow = new BrowserWindow({
+        width: UpdaterConfig.window.width || 360,
+        height: UpdaterConfig.window.height || 300,
         resizable: false,
         frame: false,
-        transparent: false,
-        backgroundColor: "#2b2d31",
+        transparent: true,
+        backgroundColor: UpdaterConfig.window.backgroundColor || "#25282E",
         center: true,
         show: false,
         alwaysOnTop: true,
         icon: ICON_PATH,
         webPreferences: {
-            nodeIntegration: true,
-            contextIsolation: false,
+            preload: path.join(__dirname, "updater/preload-updater.js"),
+            contextIsolation: true,
+            nodeIntegration: false,
+            backgroundThrottling: false,
         },
     });
 
-    splashWindow.loadFile(path.join(__dirname, "splash/splash.html"));
+    updaterWindow.loadFile(path.join(__dirname, "updater/updater.html"));
 
-    splashWindow.once("ready-to-show", () => {
-        splashWindow.show();
-        splashWindow.webContents.send("version", app.getVersion());
+    updaterWindow.once("ready-to-show", () => {
+        updaterWindow.show();
+        updaterWindow.focus();
 
-        // Check for updates
-        checkForUpdates();
+        // Initialize and start update state machine
+        updaterService = new UpdaterService(UpdaterConfig);
+
+        updaterService.on("state", (payload) => {
+            if (updaterWindow && !updaterWindow.isDestroyed()) {
+                updaterWindow.webContents.send("updater:state", payload);
+            }
+        });
+
+        updaterService.on("retry-tick", (payload) => {
+            if (updaterWindow && !updaterWindow.isDestroyed()) {
+                updaterWindow.webContents.send("updater:retry-tick", payload);
+            }
+        });
+
+        updaterService.on("ready-to-launch", () => {
+            launchMainWindow();
+        });
+
+        updaterService.start();
     });
 
-    splashWindow.on("closed", () => {
-        splashWindow = null;
+    updaterWindow.on("closed", () => {
+        updaterWindow = null;
     });
 }
 
-// Auto-Updater lifecycle
-function checkForUpdates() {
-    if (app.isPackaged) {
-        autoUpdater.checkForUpdates().catch((err) => {
-            console.warn("[Updater] Check failed:", err.message);
-            proceedToMainWindow("Starting Zycord...");
-        });
-    } else {
-        // Dev mode simulation
-        setTimeout(() => proceedToMainWindow("Starting Zycord..."), 1500);
+function launchMainWindow() {
+    if (mainWindow) return;
+
+    createMainWindow();
+
+    if (updaterWindow && !updaterWindow.isDestroyed()) {
+        updaterWindow.close();
+        updaterWindow = null;
     }
 }
 
-autoUpdater.on("checking-for-update", () => {
-    splashWindow?.webContents.send("status", { message: "Checking for updates...", determinate: false });
-});
-
-autoUpdater.on("update-available", (info) => {
-    splashWindow?.webContents.send("status", { message: "Downloading update 1 of 1...", percent: 0, determinate: true });
-});
-
-autoUpdater.on("download-progress", (progress) => {
-    splashWindow?.webContents.send("status", {
-        message: `Downloading update 1 of 1 (${Math.round(progress.percent)}%)...`,
-        percent: progress.percent,
-        determinate: true,
-    });
-});
-
-autoUpdater.on("update-downloaded", () => {
-    splashWindow?.webContents.send("status", { message: "Installing update...", percent: 100, determinate: true });
-    setTimeout(() => {
-        autoUpdater.quitAndInstall(false, true);
-    }, 1200);
-});
-
-autoUpdater.on("update-not-available", () => {
-    proceedToMainWindow("Starting Zycord...");
-});
-
-autoUpdater.on("error", () => {
-    proceedToMainWindow("Starting Zycord...");
-});
-
-function proceedToMainWindow(statusMessage) {
-    splashWindow?.webContents.send("status", { message: statusMessage, determinate: false });
-    setTimeout(() => {
-        createMainWindow();
-    }, 800);
-}
-
-// Create Main Discord Window
+// Create Main Application Window
 function createMainWindow() {
     if (mainWindow) return;
 
@@ -130,22 +108,15 @@ function createMainWindow() {
         },
     });
 
-    // Set Discord User Agent
     mainWindow.webContents.setUserAgent(DISCORD_USER_AGENT);
-
-    // Load Zycord Web Client
     mainWindow.loadURL(APP_URL);
 
-    // When ready, swap splash with main window
     mainWindow.once("ready-to-show", () => {
-        if (splashWindow) {
-            splashWindow.close();
-        }
         mainWindow.show();
         mainWindow.focus();
     });
 
-    // Prevent external window popups; open in system default browser
+    // External URL handling
     mainWindow.webContents.setWindowOpenHandler(({ url }) => {
         if (!url.startsWith("https://app.zyron.site")) {
             shell.openExternal(url);
@@ -189,7 +160,7 @@ function createTray() {
         {
             label: "Check for Updates…",
             click: () => {
-                autoUpdater.checkForUpdatesAndNotify().catch(() => {});
+                updaterService?.checkForUpdates();
             },
         },
         {
@@ -236,6 +207,15 @@ function setupScreenShareHandler() {
     });
 }
 
+// IPC Handlers for Updater
+ipcMain.on("updater:retry-now", () => {
+    updaterService?.retryNow();
+});
+
+ipcMain.on("updater:close", () => {
+    app.quit();
+});
+
 // IPC Handlers for DiscordNative
 ipcMain.on("window-minimize", () => mainWindow?.minimize());
 ipcMain.on("window-maximize", () => {
@@ -268,23 +248,27 @@ ipcMain.on("set-badge-count", (event, count) => {
 
 // App Lifecycle
 app.whenReady().then(() => {
-    createSplashWindow();
+    createUpdaterWindow();
 
     app.on("second-instance", () => {
         if (mainWindow) {
             if (mainWindow.isMinimized()) mainWindow.restore();
             mainWindow.show();
             mainWindow.focus();
+        } else if (updaterWindow) {
+            updaterWindow.show();
+            updaterWindow.focus();
         }
     });
 });
 
 app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-        createSplashWindow();
+        createUpdaterWindow();
     }
 });
 
 app.on("before-quit", () => {
     isQuitting = true;
+    updaterService?.dispose();
 });

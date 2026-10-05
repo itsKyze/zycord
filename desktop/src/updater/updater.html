@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Zycord Updater</title>
+        <link rel="stylesheet" href="updater.css" />
+    </head>
+    <body>
+        <div class="updater-window" id="updater-window">
+            <!-- Center Content Stack -->
+            <div class="content-wrapper">
+                <!-- Original Minimalist Logo -->
+                <div class="logo-container" id="logo-container">
+                    <svg class="updater-logo" id="updater-logo" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Outer Kinetic Orbital Arcs -->
+                        <path
+                            class="orbit-arc orbit-arc-1"
+                            d="M 28 6 A 22 22 0 0 1 50 28"
+                            stroke="#FFFFFF"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                        />
+                        <path
+                            class="orbit-arc orbit-arc-2"
+                            d="M 28 50 A 22 22 0 0 1 6 28"
+                            stroke="#FFFFFF"
+                            stroke-width="3"
+                            stroke-linecap="round"
+                        />
+                        <!-- Inner Geometric Core -->
+                        <polygon
+                            class="core-shape"
+                            points="28,17 38,23 38,33 28,39 18,33 18,23"
+                            fill="#FFFFFF"
+                        />
+                    </svg>
+                </div>
+
+                <!-- Status Text Area -->
+                <div class="text-container">
+                    <div class="status-primary" id="status-primary">Starting...</div>
+                    <div class="status-secondary" id="status-secondary"></div>
+                </div>
+
+                <!-- Minimal Progress Bar Container -->
+                <div class="progress-wrapper" id="progress-wrapper">
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Permanent Error Action Button (hidden by default) -->
+                <div class="action-wrapper" id="action-wrapper" hidden>
+                    <button class="btn-retry" id="btn-retry">Retry</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="updater.js"></script>
+    </body>
+</html>
