@@ -2,7 +2,7 @@
     "name": "zycord",
     "productName": "Zycord",
     "version": "1.0.0",
-    "description": "Zycord Official Desktop Client - Communication platform by Zyron Solutions Ltd",
+    "description": "Zycord",
     "main": "src/main.js",
     "author": "Zyron Solutions Ltd",
     "license": "AGPL-3.0-only",
