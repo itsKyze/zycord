@@ -260,24 +260,22 @@ window.addEventListener("DOMContentLoaded", () => {
         if (checked === "true") return true;
         if (checked === "false") return false;
 
-        const label = (btn.getAttribute("aria-label") || "").toLowerCase();
+        const label = (btn.getAttribute("aria-label") || "").toLowerCase().trim();
         if (type === "mute") {
-            if (label.includes("unmute") || label.includes("activer") || label.includes("إلغاء")) return true;
+            if (label.includes("unmute") || label.includes("activer") || label.includes("إلغاء كتم")) return true;
             if (label.startsWith("mute") || label.includes("couper") || label.startsWith("كتم")) return false;
         } else if (type === "deafen") {
-            if (label.includes("undeafen") || label.includes("activer") || label.includes("إلغاء")) return true;
+            if (label.includes("undeafen") || label.includes("activer") || label.includes("إلغاء كتم")) return true;
             if (label.startsWith("deafen") || label.includes("couper") || label.startsWith("كتم")) return false;
         }
 
         const html = btn.innerHTML;
         if (
+            html.includes("status-danger") ||
             html.includes("strikethrough") ||
-            html.includes("line") ||
-            html.includes("polygon") ||
-            html.includes("red") ||
-            html.includes("danger") ||
             html.includes("#f23f43") ||
-            html.includes("hsl(359")
+            html.includes("rgb(242, 63, 67)") ||
+            Boolean(btn.querySelector('[stroke*="f23f43"], [fill*="f23f43"]'))
         ) {
             return true;
         }
@@ -291,16 +289,13 @@ window.addEventListener("DOMContentLoaded", () => {
             const isMuted = isButtonActive(muteBtn, "mute");
             const isDeafened = isButtonActive(deafenBtn, "deafen");
 
-            // In voice room detection
+            // In voice room detection: ONLY true when the user is actually connected!
+            // In Discord, the Disconnect button and RTC status only exist when actively in a voice channel or call.
             const disconnectBtn = document.querySelector(
-                'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], button[aria-label*="قطع" i], [class*="disconnectButton"]'
+                'button[aria-label*="Disconnect" i], button[aria-label*="Hang Up" i], button[aria-label*="Déconnexion" i], button[aria-label*="قطع" i], [class*="disconnectButton_"]'
             );
-            const rtcStatus = document.querySelector('[class*="rtcConnectionStatus"], [class*="connection_"]');
-            const inVoice =
-                Boolean(disconnectBtn) ||
-                Boolean(rtcStatus) ||
-                Boolean(document.querySelector('[class*="voiceUsers"], [class*="callContainer"]')) ||
-                document.querySelectorAll('audio[id^="audio-"], audio[srcObject]').length > 0;
+            const rtcStatus = document.querySelector('[class*="rtcConnectionStatus_"]');
+            const inVoice = Boolean(disconnectBtn) || Boolean(rtcStatus);
 
             // Video state detection
             const videoBtn = document.querySelector(

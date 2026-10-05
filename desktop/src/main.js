@@ -200,7 +200,8 @@ function updateTrayMenu() {
     if (!tray) return;
 
     try {
-        const contextMenu = Menu.buildFromTemplate([
+        const inVoice = Boolean(clientState.inVoice);
+        const menuTemplate = [
             {
                 label: "Zycord",
                 icon: trayMascotIcon,
@@ -210,22 +211,32 @@ function updateTrayMenu() {
                 },
             },
             { type: "separator" },
-            {
-                label: "Mute",
-                type: "checkbox",
-                checked: Boolean(clientState.isMuted),
-                click: () => {
-                    mainWindow?.webContents.send("action-toggle-mute");
+        ];
+
+        // Mute & Deafen only appear when the user is in a voice room
+        if (inVoice) {
+            menuTemplate.push(
+                {
+                    label: "Mute",
+                    type: "checkbox",
+                    checked: Boolean(clientState.isMuted),
+                    click: () => {
+                        mainWindow?.webContents.send("action-toggle-mute");
+                    },
                 },
-            },
-            {
-                label: "Deafen",
-                type: "checkbox",
-                checked: Boolean(clientState.isDeafened),
-                click: () => {
-                    mainWindow?.webContents.send("action-toggle-deafen");
+                {
+                    label: "Deafen",
+                    type: "checkbox",
+                    checked: Boolean(clientState.isDeafened),
+                    click: () => {
+                        mainWindow?.webContents.send("action-toggle-deafen");
+                    },
                 },
-            },
+                { type: "separator" }
+            );
+        }
+
+        menuTemplate.push(
             {
                 label: "Check for Updates…",
                 click: () => {
@@ -245,9 +256,10 @@ function updateTrayMenu() {
                     isQuitting = true;
                     app.quit();
                 },
-            },
-        ]);
+            }
+        );
 
+        const contextMenu = Menu.buildFromTemplate(menuTemplate);
         tray.setContextMenu(contextMenu);
     } catch (e) {
         console.warn("[Zycord] Tray context menu error:", e);
