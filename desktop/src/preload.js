@@ -17,6 +17,12 @@ try {
     window.ZycordNative = ZycordNative;
 }
 
+try {
+    if (!localStorage.getItem("zycord.gifProvider")) {
+        localStorage.setItem("zycord.gifProvider", "tenor");
+    }
+} catch (_) {}
+
 // 1. Authentic Top Bar Window Controls (| [ - ] [ □ ] [ ✕ ])
 function initWindowControls() {
     try {
