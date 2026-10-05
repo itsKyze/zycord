@@ -1,57 +1,221 @@
-name: Deploy Zycord to Server
+name: Build and Deploy to Production
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
+
 jobs:
-  deploy:
-    name: Deploy to VPS
+  detect-changes:
+    name: detect-changes
     runs-on: ubuntu-latest
+    outputs:
+      server-changed: ${{ steps.changes.outputs.server }}
+      sfu-changed: ${{ steps.changes.outputs.sfu }}
+      force-build: ${{ steps.check-images.outputs.force-build }}
     steps:
-      - name: Deploy to Server via SSH
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          host: ${{ secrets.SERVER_HOST }}
-          username: ${{ secrets.SERVER_USER }}
+          fetch-depth: 2
+
+      - name: Detect changed services
+        id: changes
+        uses: dorny/paths-filter@v3
+        with:
+          filters: |
+            server:
+              - 'src/**'
+              - 'client/**'
+              - 'assets/**'
+              - 'package*.json'
+              - 'patches/**'
+              - 'scripts/**'
+              - 'Dockerfile'
+              - 'docker-compose.yml'
+            sfu:
+              - 'extra/pion-sfu/**'
+              - 'Dockerfile'
+
+      - name: Check if images exist
+        id: check-images
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "force-build=true" >> $GITHUB_OUTPUT
+            echo "🔄 Manual trigger - force building all services"
+            exit 0
+          fi
+          if ! docker manifest inspect ghcr.io/itskyze/zycord:server-main > /dev/null 2>&1 || \
+             ! docker manifest inspect ghcr.io/itskyze/zycord:sfu-main > /dev/null 2>&1; then
+            echo "force-build=true" >> $GITHUB_OUTPUT
+            echo "🔄 First deployment detected - will build all services"
+          else
+            echo "force-build=false" >> $GITHUB_OUTPUT
+            echo "✅ All images exist in GHCR"
+          fi
+
+  build:
+    name: build
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Build and push Zycord SFU image
+      - name: Build and push SFU Docker image
+        if: needs.detect-changes.outputs.sfu-changed == 'true' || needs.detect-changes.outputs.force-build == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: sfu
+          push: true
+          tags: ghcr.io/itskyze/zycord:sfu-main
+          cache-from: type=gha,scope=sfu
+          cache-to: type=gha,mode=max,scope=sfu
+
+      # Build and push Zycord Server image
+      - name: Build and push Server Docker image
+        if: needs.detect-changes.outputs.server-changed == 'true' || needs.detect-changes.outputs.force-build == 'true'
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          target: server
+          push: true
+          tags: ghcr.io/itskyze/zycord:server-main
+          cache-from: type=gha,scope=server
+          cache-to: type=gha,mode=max,scope=server
+
+  deploy:
+    name: deploy
+    needs: [detect-changes, build]
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare docker-compose.yml payload
+        id: compose_payload
+        run: |
+          COMPOSE_B64=$(base64 -w 0 docker-compose.yml)
+          echo "b64=$COMPOSE_B64" >> $GITHUB_OUTPUT
+
+      - name: Deploy and verify on production server
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SERVER_HOST || secrets.DEPLOY_HOST }}
+          username: ${{ secrets.SERVER_USER || secrets.DEPLOY_USER }}
           password: ${{ secrets.SERVER_PASSWORD }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
+          key: ${{ secrets.SERVER_SSH_KEY || secrets.DEPLOY_KEY }}
           passphrase: ${{ secrets.SERVER_SSH_PASSPHRASE }}
           port: ${{ secrets.SERVER_PORT || 22 }}
+          timeout: 60s
+          command_timeout: 15m
           script: |
             set -e
-            echo "🚀 Starting Zycord deployment on $(hostname)..."
+            echo "🚀 Deploying Zycord on $(hostname)..."
 
-            # 1. Ensure target directory exists
-            mkdir -p /opt/zycord
+            mkdir -p /opt/zycord/docker
             cd /opt/zycord
 
-            # 2. Sync latest code from GitHub
-            if [ -d .git ]; then
-              echo "📥 Fetching latest commits from GitHub..."
-              git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-              git fetch origin main
-              git reset --hard origin/main
-            else
-              echo "📦 Cloning repository..."
-              git clone https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git .
-            fi
+            # 1. Update docker-compose.yml directly from repository
+            echo "${{ steps.compose_payload.outputs.b64 }}" | base64 -d > docker-compose.yml
 
-            # 3. Ensure .env exists with required domain and configuration
+            # 2. Check/initialize .env file
             if [ ! -f .env ]; then
-              echo "⚠️ .env not found, initializing from .env.example..."
-              cp .env.example .env
+              echo "⚠️ .env file not found, creating default .env..."
+              cat << 'EOF' > .env
+            DOMAIN=app.zyron.site
+            INSTANCE_NAME=Zycord
+            POSTGRES_PASSWORD=zycord_secure_pass_$(openssl rand -hex 12)
+            WRTC_PUBLIC_IP=5.175.223.58
+            WRTC_PORT=50000
+            COMPOSE_PROFILES=caddy
+            EOF
             fi
 
-            # Keep domain and instance name updated
+            # Ensure domain and name are synced
             sed -i 's/^DOMAIN=.*/DOMAIN=app.zyron.site/' .env
             sed -i 's/^INSTANCE_NAME=.*/INSTANCE_NAME=Zycord/' .env
 
-            # 4. Rebuild and launch Docker containers
-            echo "🐳 Building and starting Docker services..."
-            docker compose down || true
-            docker compose up -d --build
+            # 3. Ensure Caddyfile exists
+            if [ ! -f docker/Caddyfile ]; then
+              mkdir -p docker
+              cat << 'EOF' > docker/Caddyfile
+            {
+            	{$CADDY_GLOBAL_OPTIONS}
+            	servers {
+            		protocols h1 h2 h3
+            	}
+            }
 
-            echo "✅ Zycord successfully deployed to https://app.zyron.site"
+            {$DOMAIN} {
+            	@websockets {
+            		path / /voice /voice/* /remote-auth /remote-auth/*
+            		header Connection *Upgrade*
+            		header Upgrade websocket
+            	}
+
+            	handle @websockets {
+            		reverse_proxy server:3001 {
+            			stream_close_delay 5m
+            		}
+            	}
+
+            	handle {
+            		encode zstd gzip
+            		reverse_proxy server:3001
+            	}
+            }
+            EOF
+            fi
+
+            # 4. Login to GitHub Container Registry on VPS
+            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            # 5. Pull pre-built images from GHCR
+            echo "📥 Pulling latest pre-built Zycord images from GHCR..."
+            docker compose pull server sfu
+
+            # 6. Restart services
+            echo "🚀 Starting Zycord containers..."
+            docker compose up -d
+
+            # 7. Health verification
+            echo "🔍 Verifying running containers..."
+            sleep 10
+            docker compose ps
+
+            echo "🚀 Deployment and verification completed successfully!"
+
+      - name: Deployment Summary
+        run: |
+          echo "📋 Deployment Summary:"
+          echo "Server Changed: ${{ needs.detect-changes.outputs.server-changed }}"
+          echo "SFU Changed: ${{ needs.detect-changes.outputs.sfu-changed }}"
+          echo "Force Build: ${{ needs.detect-changes.outputs.force-build }}"
+          echo ""
+          echo "🌐 Zycord is available at: https://app.zyron.site"
