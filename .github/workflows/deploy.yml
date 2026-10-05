@@ -117,11 +117,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Prepare docker-compose.yml payload
-        id: compose_payload
+      - name: Prepare payloads
+        id: payloads
         run: |
-          COMPOSE_B64=$(base64 -w 0 docker-compose.yml)
-          echo "b64=$COMPOSE_B64" >> $GITHUB_OUTPUT
+          echo "compose=$(base64 -w 0 docker-compose.yml)" >> $GITHUB_OUTPUT
+          echo "nginx=$(base64 -w 0 nginx.conf)" >> $GITHUB_OUTPUT
+          echo "caddy=$(base64 -w 0 docker/Caddyfile)" >> $GITHUB_OUTPUT
 
       - name: Deploy and verify on production server
         uses: appleboy/ssh-action@v1.2.0
@@ -141,20 +142,19 @@ jobs:
             mkdir -p /opt/zycord/docker
             cd /opt/zycord
 
-            # 1. Update docker-compose.yml directly from repository
-            echo "${{ steps.compose_payload.outputs.b64 }}" | base64 -d > docker-compose.yml
+            # 1. Update config files directly from repository payloads
+            echo "${{ steps.payloads.outputs.compose }}" | base64 -d > docker-compose.yml
+            echo "${{ steps.payloads.outputs.caddy }}" | base64 -d > docker/Caddyfile
 
             # 2. Check/initialize .env file
             if [ ! -f .env ]; then
               echo "⚠️ .env file not found, creating default .env..."
-              cat << 'EOF' > .env
-            DOMAIN=app.zyron.site
-            INSTANCE_NAME=Zycord
-            POSTGRES_PASSWORD=zycord_secure_pass_$(openssl rand -hex 12)
-            WRTC_PUBLIC_IP=5.175.223.58
-            WRTC_PORT=50000
-            COMPOSE_PROFILES=caddy
-            EOF
+              echo "DOMAIN=app.zyron.site" > .env
+              echo "INSTANCE_NAME=Zycord" >> .env
+              echo "POSTGRES_PASSWORD=zycord_secure_pass_$(openssl rand -hex 12)" >> .env
+              echo "WRTC_PUBLIC_IP=5.175.223.58" >> .env
+              echo "WRTC_PORT=50000" >> .env
+              echo "COMPOSE_PROFILES=caddy" >> .env
             fi
 
             # Ensure domain and name are synced
@@ -186,22 +186,8 @@ jobs:
               if systemctl is-active --quiet nginx; then
                 echo "🌐 Host Nginx is active. Configuring app.zyron.site reverse proxy via Nginx..."
                 mkdir -p /etc/nginx/conf.d
-                cat << 'NGINX_EOF' > /etc/nginx/conf.d/zycord.conf
-                server {
-                    server_name app.zyron.site;
-                    listen 80;
+                echo "${{ steps.payloads.outputs.nginx }}" | base64 -d > /etc/nginx/conf.d/zycord.conf
 
-                    location / {
-                        proxy_pass http://127.0.0.1:3002;
-                        proxy_set_header Host $host;
-                        proxy_set_header X-Real-IP $remote_addr;
-                        proxy_set_header X-Forwarded-Proto https;
-                        proxy_set_header X-Forwarded-For $remote_addr;
-                        proxy_set_header Upgrade $http_upgrade;
-                        proxy_set_header Connection "upgrade";
-                    }
-                }
-                NGINX_EOF
                 if [ -d /etc/nginx/sites-available ]; then
                   cp -f /etc/nginx/conf.d/zycord.conf /etc/nginx/sites-available/zycord 2>/dev/null || true
                   ln -sf /etc/nginx/sites-available/zycord /etc/nginx/sites-enabled/zycord 2>/dev/null || true
@@ -212,38 +198,6 @@ jobs:
                 # Disable bundled caddy profile so docker compose won't try to bind port 80
                 sed -i 's/^COMPOSE_PROFILES=.*/COMPOSE_PROFILES=/' .env
               fi
-            fi
-
-            # Ensure Caddyfile exists (for standalone Caddy mode)
-            if [ ! -f docker/Caddyfile ]; then
-              mkdir -p docker
-              cat << 'EOF' > docker/Caddyfile
-            {
-            	{$CADDY_GLOBAL_OPTIONS}
-            	servers {
-            		protocols h1 h2 h3
-            	}
-            }
-
-            {$DOMAIN} {
-            	@websockets {
-            		path / /voice /voice/* /remote-auth /remote-auth/*
-            		header Connection *Upgrade*
-            		header Upgrade websocket
-            	}
-
-            	handle @websockets {
-            		reverse_proxy server:3001 {
-            			stream_close_delay 5m
-            		}
-            	}
-
-            	handle {
-            		encode zstd gzip
-            		reverse_proxy server:3001
-            	}
-            }
-            EOF
             fi
 
             # 4. Login to GitHub Container Registry on VPS
