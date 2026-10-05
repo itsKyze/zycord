@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Tray, Menu, ipcMain, shell, session, desktopCapturer, clipboard, nativeImage } = require("electron");
+const { autoUpdater } = require("electron-updater");
 const path = require("path");
 const UpdaterService = require("./updater/UpdaterService");
 const UpdaterConfig = require("./updater/UpdaterConfig");
@@ -142,6 +143,19 @@ function createMainWindow() {
             updaterWindow.destroy();
             updaterWindow = null;
         }
+
+        // Start periodic background desktop update checks
+        setTimeout(() => {
+            if (app.isPackaged) {
+                autoUpdater.checkForUpdates().catch(() => {});
+            }
+        }, 15000);
+
+        setInterval(() => {
+            if (app.isPackaged) {
+                autoUpdater.checkForUpdates().catch(() => {});
+            }
+        }, 20 * 60 * 1000);
     };
 
     mainWindow.once("ready-to-show", () => {
@@ -370,6 +384,29 @@ ipcMain.on("updater:retry-now", () => {
 
 ipcMain.on("updater:close", () => {
     app.quit();
+});
+
+ipcMain.on("updater:install-update", () => {
+    try {
+        autoUpdater.quitAndInstall(false, true);
+    } catch (e) {
+        console.warn("[Zycord] Install update fallback to relaunch:", e);
+        app.relaunch();
+        app.exit(0);
+    }
+});
+
+// Forward background update events to the main window
+autoUpdater.on("update-available", (info) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send("update-available-badge", { available: true, version: info?.version });
+    }
+});
+
+autoUpdater.on("update-downloaded", (info) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send("update-available-badge", { ready: true, version: info?.version });
+    }
 });
 
 // IPC Handlers for DiscordNative & Window Controls

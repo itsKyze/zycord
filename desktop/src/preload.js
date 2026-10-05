@@ -29,10 +29,16 @@ function initWindowControls() {
         if (!document.documentElement) return;
         if (document.getElementById("zycord-win-controls")) return;
 
-        // Top bar controls: Separator, Minimize, Maximize, Close
+        // Top bar controls: Update Badge, Separator, Minimize, Maximize, Close
         const winControls = document.createElement("div");
         winControls.id = "zycord-win-controls";
         winControls.innerHTML = `
+            <button class="zycord-update-btn" id="zycord-btn-update" title="تحديث جديد جاهز! اضغط لإعادة التشغيل والتثبيت" aria-label="Update Ready" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#23A55A" />
+                    <path d="M12 7V13.5M12 13.5L9 10.5M12 13.5L15 10.5M8 16.5H16" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
             <div class="zycord-win-separator"></div>
             <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
                 <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1.4" x="0" y="5"></rect></svg>
@@ -49,12 +55,11 @@ function initWindowControls() {
             const style = document.createElement("style");
             style.id = "zycord-app-styles";
             style.textContent = `
-                /* Window Controls Container: Separator, Min, Max, Close */
+                /* Window Controls Container: Update Badge, Separator, Min, Max, Close */
                 #zycord-win-controls {
                     position: fixed !important;
                     top: 0 !important;
                     right: 0 !important;
-                    width: 98px !important;
                     height: 22px !important;
                     z-index: 2147483647 !important;
                     display: flex !important;
@@ -68,11 +73,48 @@ function initWindowControls() {
                 #zycord-win-controls,
                 #zycord-win-controls *,
                 .zycord-win-btn,
-                .zycord-win-btn * {
+                .zycord-win-btn *,
+                .zycord-update-btn,
+                .zycord-update-btn * {
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
                     cursor: pointer !important;
                     user-select: none !important;
+                }
+
+                /* Discord-style Emerald Green Update Button */
+                .zycord-update-btn {
+                    width: 26px !important;
+                    height: 20px !important;
+                    display: none;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    background: transparent !important;
+                    border: none !important;
+                    padding: 0 !important;
+                    margin: 0 2px !important;
+                    cursor: pointer !important;
+                    outline: none !important;
+                    -webkit-app-region: no-drag !important;
+                    pointer-events: auto !important;
+                    transition: transform 0.15s ease, filter 0.15s ease !important;
+                    flex-shrink: 0 !important;
+                }
+
+                .zycord-update-btn.visible {
+                    display: flex !important;
+                    animation: zycord-badge-pulse 2s infinite ease-in-out !important;
+                }
+
+                .zycord-update-btn:hover {
+                    transform: scale(1.18) !important;
+                    filter: drop-shadow(0 0 6px rgba(35, 165, 90, 0.9)) !important;
+                }
+
+                @keyframes zycord-badge-pulse {
+                    0% { filter: drop-shadow(0 0 2px rgba(35, 165, 90, 0.4)); }
+                    50% { filter: drop-shadow(0 0 7px rgba(35, 165, 90, 0.9)); }
+                    100% { filter: drop-shadow(0 0 2px rgba(35, 165, 90, 0.4)); }
                 }
 
                 .zycord-win-separator {
@@ -116,7 +158,7 @@ function initWindowControls() {
                     color: #ffffff !important;
                 }
 
-                /* Position the REAL native Discord Inbox button from the website at top: 0, right: 98px in the title bar */
+                /* Position the REAL native Discord Inbox button from the website */
                 [class*="iconWrapper_"]:has([aria-label*="Inbox" i]),
                 [class*="iconWrapper_"]:has([aria-label*="صندوق الوارد" i]),
                 [class*="trailing_"] [class*="iconWrapper_"]:has([aria-label*="Inbox" i]),
@@ -125,17 +167,6 @@ function initWindowControls() {
                 [class*="toolbar_"] [class*="iconWrapper_"]:has([aria-label*="صندوق الوارد" i]) {
                     position: fixed !important;
                     top: 0 !important;
-                    right: 98px !important;
-                    width: 28px !important;
-                    height: 22px !important;
-                    z-index: 2147483647 !important;
-                    display: flex !important;
-                    align-items: center !important;
-                    justify-content: center !important;
-                    -webkit-app-region: no-drag !important;
-                    pointer-events: auto !important;
-                    margin: 0 !important;
-                    padding: 0 !important;
                     cursor: pointer !important;
                 }
 
@@ -167,15 +198,15 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
-                /* Stop draggable top bar 130px before right edge so both original inbox and window controls are 100% non-drag */
+                /* Stop draggable top bar 145px before right edge so both original inbox and window controls are 100% non-drag */
                 [class*="typeWindows_"],
                 [class*="titleBar_"],
                 [class*="withFrame_"] {
                     height: 22px !important;
                     -webkit-app-region: drag !important;
-                    max-width: calc(100% - 130px) !important;
-                    width: calc(100% - 130px) !important;
-                    margin-right: 130px !important;
+                    max-width: calc(100% - 145px) !important;
+                    width: calc(100% - 145px) !important;
+                    margin-right: 145px !important;
                     box-sizing: border-box !important;
                 }
 
@@ -261,16 +292,18 @@ function initWindowControls() {
     }
 }
 
-// Ensure original website Inbox button is placed at top: 0, right: 98px
+// Ensure original website Inbox button is placed dynamically left of window controls
 function ensureNativeInboxPosition() {
     try {
         const inbox = document.querySelector('[class*="trailing_"] [aria-label*="Inbox" i], [class*="trailing_"] [aria-label*="صندوق الوارد" i], [class*="iconWrapper_"] [aria-label*="Inbox" i], [aria-label*="Inbox" i]:not(#zycord-win-controls *)');
         if (!inbox) return;
         const wrapper = inbox.closest('[class*="iconWrapper_"]') || inbox.parentElement || inbox;
         if (wrapper && wrapper.id !== "zycord-win-controls") {
+            const winControls = document.getElementById("zycord-win-controls");
+            const controlsWidth = winControls ? Math.max(98, Math.round(winControls.getBoundingClientRect().width)) : 98;
             wrapper.style.setProperty("position", "fixed", "important");
             wrapper.style.setProperty("top", "0px", "important");
-            wrapper.style.setProperty("right", "98px", "important");
+            wrapper.style.setProperty("right", `${controlsWidth}px`, "important");
             wrapper.style.setProperty("width", "28px", "important");
             wrapper.style.setProperty("height", "22px", "important");
             wrapper.style.setProperty("z-index", "2147483647", "important");
@@ -339,6 +372,77 @@ if (document.readyState === "loading") {
 }
 
 setInterval(ensureWindowControls, 1000);
+
+// Discord-Style Dynamic Update System (Web Updates + Desktop Updates)
+(function setupUpdateNotificationSystem() {
+    let pendingUpdateType = null; // "desktop" | "web"
+
+    function triggerUpdateBadge(type, message) {
+        pendingUpdateType = type;
+        const btn = document.getElementById("zycord-btn-update");
+        if (btn) {
+            btn.classList.add("visible");
+            btn.style.setProperty("display", "flex", "important");
+            if (message) btn.title = message;
+            ensureNativeInboxPosition();
+        }
+    }
+
+    // A. Listen for Desktop App updates from Electron
+    ipcRenderer.on("update-available-badge", (event, data) => {
+        if (data?.ready) {
+            triggerUpdateBadge("desktop", "تحديث البرنامج جاهز! اضغط لإعادة التشغيل والتثبيت\nZycord Desktop update ready! Click to restart");
+        } else if (data?.available) {
+            triggerUpdateBadge("desktop", "يتم تحميل تحديث البرنامج في الخلفية...\nDownloading update in background...");
+        }
+    });
+
+    // B. Detect Web & Server updates by polling version hash
+    let initialVersionHash = null;
+
+    async function checkWebUpdate() {
+        try {
+            const channel = window.GLOBAL_ENV?.RELEASE_CHANNEL || "stable";
+            const res = await fetch(`/assets/version.${channel}.json?_t=${Date.now()}`, {
+                cache: "no-cache",
+                headers: { "Cache-Control": "no-cache" },
+            });
+            if (!res.ok) return;
+            const data = await res.json();
+            const currentHash = data?.hash;
+            if (!currentHash) return;
+
+            if (!initialVersionHash) {
+                initialVersionHash = window.GLOBAL_ENV?.VERSION_HASH || currentHash;
+            } else if (currentHash !== initialVersionHash) {
+                console.log("[Zycord] New web build detected:", currentHash, "Initial:", initialVersionHash);
+                triggerUpdateBadge("web", "تحديث جديد في الموقع متوفر! اضغط لتحديث الصفحة فوراً\nWeb update available! Click to reload");
+            }
+        } catch (_) {}
+    }
+
+    // Initial check after 10 seconds, then poll every 60 seconds
+    setTimeout(checkWebUpdate, 10000);
+    setInterval(checkWebUpdate, 60000);
+
+    // C. Click handler for the green update button
+    document.addEventListener(
+        "click",
+        (e) => {
+            const btn = e.target.closest("#zycord-btn-update");
+            if (!btn) return;
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (pendingUpdateType === "desktop") {
+                ipcRenderer.send("updater:install-update");
+            } else {
+                window.location.reload();
+            }
+        },
+        true,
+    );
+})();
 
 // 2. Discord Voice, Mute, Deafen, and Taskbar Integration
 (function setupDiscordIntegration() {
