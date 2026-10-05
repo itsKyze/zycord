@@ -1,0 +1,184 @@
+[
+  {
+    "type": 1,
+    "sku_id": "1000000000000000010",
+    "id": "1000000000000000010",
+    "title": "Sakura Blossom Storm",
+    "description": "Sakura Blossom Storm",
+    "accessibilityLabel": "Sakura Blossom Storm",
+    "animationType": 2,
+    "effects": [
+      {
+        "src": "https://cdn.discordapp.com/assets/content/effect.png",
+        "loop": true,
+        "height": 880,
+        "width": 450,
+        "duration": 3000,
+        "start": 0,
+        "loopDelay": 0,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 100,
+        "randomizedSources": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "sku_id": "1000000000000000027",
+    "id": "1000000000000000027",
+    "title": "Matrix Grid Surge",
+    "description": "Matrix Grid Surge",
+    "accessibilityLabel": "Matrix Grid Surge",
+    "animationType": 2,
+    "effects": [
+      {
+        "src": "https://cdn.discordapp.com/assets/content/effect.png",
+        "loop": true,
+        "height": 880,
+        "width": 450,
+        "duration": 3000,
+        "start": 0,
+        "loopDelay": 0,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 100,
+        "randomizedSources": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "sku_id": "1000000000000000044",
+    "id": "1000000000000000044",
+    "title": "Cosmic Nebula Swirl",
+    "description": "Cosmic Nebula Swirl",
+    "accessibilityLabel": "Cosmic Nebula Swirl",
+    "animationType": 2,
+    "effects": [
+      {
+        "src": "https://cdn.discordapp.com/assets/content/effect.png",
+        "loop": true,
+        "height": 880,
+        "width": 450,
+        "duration": 3000,
+        "start": 0,
+        "loopDelay": 0,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 100,
+        "randomizedSources": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "sku_id": "1000000000000000061",
+    "id": "1000000000000000061",
+    "title": "Sparkling Hearts Shower",
+    "description": "Sparkling Hearts",
+    "accessibilityLabel": "Sparkling Hearts",
+    "animationType": 2,
+    "effects": [
+      {
+        "src": "https://cdn.discordapp.com/assets/content/effect.png",
+        "loop": true,
+        "height": 880,
+        "width": 450,
+        "duration": 3000,
+        "start": 0,
+        "loopDelay": 0,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 100,
+        "randomizedSources": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "sku_id": "1000000000000000078",
+    "id": "1000000000000000078",
+    "title": "Abyssal Shadow Flame",
+    "description": "Abyssal Shadow Flame",
+    "accessibilityLabel": "Abyssal Shadow Flame",
+    "animationType": 2,
+    "effects": [
+      {
+        "src": "https://cdn.discordapp.com/assets/content/effect.png",
+        "loop": true,
+        "height": 880,
+        "width": 450,
+        "duration": 3000,
+        "start": 0,
+        "loopDelay": 0,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 100,
+        "randomizedSources": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "sku_id": "1000000000000000093",
+    "id": "1000000000000000093",
+    "title": "Retro Synth Sunset",
+    "description": "Retro Synth Sunset",
+    "accessibilityLabel": "Retro Synth Sunset",
+    "animationType": 2,
+    "effects": [
+      {
+        "src": "https://cdn.discordapp.com/assets/content/effect.png",
+        "loop": true,
+        "height": 880,
+        "width": 450,
+        "duration": 3000,
+        "start": 0,
+        "loopDelay": 0,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 100,
+        "randomizedSources": []
+      }
+    ]
+  },
+  {
+    "type": 1,
+    "sku_id": "1000000000000000108",
+    "id": "1000000000000000108",
+    "title": "Thunderstorm Flash",
+    "description": "Thunderstorm Flash",
+    "accessibilityLabel": "Thunderstorm Flash",
+    "animationType": 2,
+    "effects": [
+      {
+        "src": "https://cdn.discordapp.com/assets/content/effect.png",
+        "loop": true,
+        "height": 880,
+        "width": 450,
+        "duration": 3000,
+        "start": 0,
+        "loopDelay": 0,
+        "position": {
+          "x": 0,
+          "y": 0
+        },
+        "zIndex": 100,
+        "randomizedSources": []
+      }
+    ]
+  }
+]

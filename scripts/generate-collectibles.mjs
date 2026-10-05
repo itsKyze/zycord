@@ -135,6 +135,7 @@ for (const catData of categoriesData) {
             catalogItem = {
                 type: 0,
                 sku_id: itemSku,
+                id: itemSku,
                 asset: itemData.asset,
                 label: itemData.label,
             };
@@ -169,6 +170,7 @@ for (const catData of categoriesData) {
             catalogItem = {
                 type: 2,
                 sku_id: itemSku,
+                id: itemSku,
                 asset: `nameplates/custom/${itemSku}/`,
                 palette: itemData.palette || "crimson",
                 label: itemData.name,
@@ -178,6 +180,7 @@ for (const catData of categoriesData) {
             catalogItem = {
                 type: 3,
                 sku_id: itemSku,
+                id: itemSku,
                 label: itemData.label,
                 layers: [
                     { id: "1", type: "staple", order: "front", anchor: "top", responsive: false }
@@ -191,6 +194,7 @@ for (const catData of categoriesData) {
 
         const product = {
             sku_id: prodSku,
+            id: prodSku,
             store_listing_id: prodSku,
             name: itemData.name,
             summary: itemData.label || catData.name,
