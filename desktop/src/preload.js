@@ -129,17 +129,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 color: #ffffff !important;
             }
 
-            /* No Discord top bar (login, splash): standalone 22px bar */
-            html:not(.zy-has-bar) #app-mount {
-                padding-top: 22px !important;
-                box-sizing: border-box !important;
-            }
-
-            /* Discord's own top bar present: merge into a single row */
-            html.zy-has-bar .zycord-drag-area {
-                pointer-events: none;
-                -webkit-app-region: no-drag;
-            }
+            /* Layout mode (standalone vs merged with Discord's bar) is injected
+               dynamically into #zycord-native-bar-style */
             /* Center Zycord logo above login form */
             .discordLogo__921c5,
             .authBoxExpanded__921c5 .discordLogo__921c5 {
@@ -161,44 +152,69 @@ window.addEventListener("DOMContentLoaded", () => {
         document.getElementById("zycord-btn-max")?.addEventListener("click", () => ipcRenderer.send("window-maximize"));
         document.getElementById("zycord-btn-close")?.addEventListener("click", () => ipcRenderer.send("window-close"));
 
-        // Detect Discord's own top bar (title + Inbox/Help) and merge with it
-        const root = document.documentElement;
+        // Detect Discord's own top bar (title + Inbox/Help) and merge with it.
+        // All state lives in our own <style>; Discord rewrites <html> class/style,
+        // so relying on those caused the bar to flicker.
         const barStyle = document.createElement("style");
         barStyle.id = "zycord-native-bar-style";
         document.head.appendChild(barStyle);
-        let currentBarClass = null;
-        const syncNativeBar = () => {
-            let bar = null;
+        const NAV_LABELS = ["back", "forward", "retour", "précédent", "suivant", "رجوع", "للأمام", "السابق", "التالي"];
+        let currentBar = null;
+        let currentKey = "";
+
+        const findBar = () => {
+            if (currentBar && currentBar.isConnected && !currentBar.closest("#zycord-titlebar")) {
+                const r = currentBar.getBoundingClientRect();
+                if (r.top <= 24 && r.height >= 16) return currentBar;
+            }
             for (const el of document.querySelectorAll('[class^="bar_"], [class*=" bar_"]')) {
                 if (el.closest("#zycord-titlebar")) continue;
                 const r = el.getBoundingClientRect();
-                if (r.top <= 24 && r.height >= 16 && r.height <= 60 && r.width >= window.innerWidth * 0.6) {
-                    bar = el;
-                    break;
-                }
+                if (r.top <= 24 && r.height >= 16 && r.height <= 60 && r.width >= window.innerWidth * 0.6) return el;
             }
-            const barClass = bar ? [...bar.classList].find((c) => c.startsWith("bar_")) : null;
-            if (barClass !== currentBarClass) {
-                currentBarClass = barClass;
-                const s = barClass ? `html.zy-has-bar .${CSS.escape(barClass)}` : null;
-                barStyle.textContent = s ? `
+            return null;
+        };
+
+        const hasOwnNav = (bar) => [...bar.querySelectorAll("[aria-label]")].some((el) => {
+            const label = (el.getAttribute("aria-label") || "").trim().toLowerCase();
+            return NAV_LABELS.includes(label);
+        });
+
+        const syncNativeBar = () => {
+            const bar = findBar();
+            currentBar = bar;
+            let key;
+            let css;
+            if (bar) {
+                const barClass = [...bar.classList].find((c) => c.startsWith("bar_"));
+                const h = Math.round(bar.getBoundingClientRect().height);
+                const ownNav = hasOwnNav(bar);
+                key = `bar|${barClass}|${h}|${ownNav}`;
+                const s = `.${CSS.escape(barClass)}`;
+                css = `
+                    #zycord-titlebar { height: ${h}px !important; }
+                    .zycord-drag-area { pointer-events: none !important; -webkit-app-region: no-drag !important; }
+                    ${ownNav ? ".zycord-nav-controls { display: none !important; }" : ""}
                     ${s} {
                         -webkit-app-region: drag;
-                        padding-left: 56px !important;
+                        ${ownNav ? "" : "padding-left: 56px !important;"}
                         padding-right: 92px !important;
                         box-sizing: border-box !important;
                     }
                     ${s} button, ${s} a, ${s} input, ${s} [role="button"], ${s} [tabindex] {
                         -webkit-app-region: no-drag;
                     }
-                ` : "";
-            }
-            if (bar) {
-                root.classList.add("zy-has-bar");
-                root.style.setProperty("--zy-bar-h", `${Math.round(bar.getBoundingClientRect().height)}px`);
+                `;
             } else {
-                root.classList.remove("zy-has-bar");
-                root.style.setProperty("--zy-bar-h", "22px");
+                key = "standalone";
+                css = `
+                    #zycord-titlebar { height: 22px !important; }
+                    #app-mount { padding-top: 22px !important; box-sizing: border-box !important; }
+                `;
+            }
+            if (key !== currentKey) {
+                currentKey = key;
+                barStyle.textContent = css;
             }
         };
         let pending = false;
