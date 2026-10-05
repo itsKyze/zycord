@@ -44,7 +44,7 @@ test("subscription badges are removed without hiding ordinary admin or pride bad
     for (const id of ["premium", "premium_tenure_12_month_v2", "nitro", "subscriber", "guild_booster"]) assert.equal(isSubscriptionBadge({ id, icon: "generic" }), true);
     assert.equal(isSubscriptionBadge({ id: "numeric", icon: "2ba85e8026a8614b640c2837bcdfe21b" }), true);
     assert.equal(isSubscriptionBadge({ id: "numeric", icon: "premium_tenure_72_month_v2" }), true);
-    for (const id of ["operator", "8000000000000000001", "premium-art-contest"]) assert.equal(isSubscriptionBadge({ id, icon: "pride_rainbow" }), false);
+    for (const id of ["operator", "8000000000000000001", "premium-art-contest"]) assert.equal(isSubscriptionBadge({ id, icon: "flag_palestine" }), false);
 });
 
 test("profile response keeps free feature entitlements and custom badges without subscription tenure", async () => {
@@ -54,7 +54,7 @@ test("profile response keeps free feature entitlements and custom badges without
         premium_type: 2,
         created_at: new Date("2020-01-01"),
         badge_ids: ["operator", "premium"],
-        pride_badges: ["rainbow"],
+        pride_badges: ["palestine"],
         connected_accounts: [],
         toPartialUser: () => ({ id: "self", premium_type: 2 }),
     };
@@ -77,7 +77,7 @@ test("profile response keeps free feature entitlements and custom badges without
         },
         "@spacebar/util": {},
         "@spacebar/schemas": {},
-        "@spacebar/api/util/utility/prideBadges": { prideBadges: () => [{ id: "8000000000000000001", icon: "pride_rainbow" }] },
+        "@spacebar/api/util/utility/prideBadges": { prideBadges: () => [{ id: "8000000000000000001", icon: "flag_palestine" }] },
         "@spacebar/api/util/utility/profile": utilities(),
         "@spacebar/api/util/handlers/Application": {},
     });

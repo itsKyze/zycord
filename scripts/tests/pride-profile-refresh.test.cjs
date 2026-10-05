@@ -144,16 +144,16 @@ test("at most 32 users refresh concurrently, with capacity released after comple
 
 test("event refreshes ignore uncached profiles and handle rejected requests", async () => {
     const h = harness();
-    h.profileChanged({ user: { id: "uncached", pride_badges: ["rainbow"] } });
+    h.profileChanged({ user: { id: "uncached", pride_badges: ["palestine"] } });
     assert.equal(h.requests.length, 0);
     h.profiles.set("friend", { user: { id: "friend" }, badges: [] });
-    h.profileChanged({ updates: [{ user: { id: "friend", pride_badges: ["rainbow"] } }] });
+    h.profileChanged({ updates: [{ user: { id: "friend", pride_badges: ["palestine"] } }] });
     assert.equal(h.requests.length, 1);
     h.requests[0].reject(Error("network"));
     await tick();
-    h.profileChanged({ user: { id: "friend", pride_badges: ["transgender"] } });
+    h.profileChanged({ user: { id: "friend", pride_badges: ["saudi_arabia"] } });
     assert.equal(h.requests.length, 2);
-    h.resolve(1, ["transgender"]);
+    h.resolve(1, ["saudi_arabia"]);
     await tick();
 });
 

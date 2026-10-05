@@ -339,14 +339,14 @@ test("profile hydration keeps connection visibility, metadata visibility and dec
     assert.equal(JSON.stringify(result).includes("private@example.invalid"), false);
 });
 
-test("ordinary profile appends selected pride flags without replacing assigned badges or exposing the selection column", async () => {
+test("ordinary profile appends selected country flags without replacing assigned badges or exposing the selection column", async () => {
     const h = harness();
-    h.user.pride_badges = ["transgender", "rainbow"];
+    h.user.pride_badges = ["palestine", "saudi_arabia"];
     h.user.badge_ids = ["assigned"];
     const response = await h.get({}, "123");
     assert.deepEqual(
         Array.from(response.badges, (badge) => badge.description),
-        ["Admin-assigned", "Transgender", "Rainbow"],
+        ["Admin-assigned", "Palestine 🇵🇸", "Saudi Arabia 🇸🇦"],
     );
     assert.equal(response.user.pride_badges, undefined);
     assert.deepEqual(h.user.badge_ids, ["assigned"]);

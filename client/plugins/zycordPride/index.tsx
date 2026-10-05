@@ -131,15 +131,15 @@ function PridePicker() {
             setSaved(body.flags);
             persisted = true;
             await refreshProfile(UserStore.getCurrentUser().id);
-            setMessage(selection.length ? "Pride badges saved." : "Pride badges removed.");
+            setMessage(selection.length ? "Country flags saved." : "Country flags removed.");
         } catch {
-            setError(persisted ? "Pride badges saved, but the preview could not refresh. Reopen your profile." : "Could not save pride badges. Try again.");
+            setError(persisted ? "Country flags saved, but the preview could not refresh. Reopen your profile." : "Could not save country flags. Try again.");
         } finally {
             setBusy(false);
         }
     };
     return (
-        <SettingsSection className="zycord-pride" title="Pride badges" description="Choose flags to show on your profile. Everyone who can view your profile can see them.">
+        <SettingsSection className="zycord-pride" title="Country flags" description="Choose country flags to show on your profile. Everyone who can view your profile can see them.">
             {navigationHost &&
                 ReactDOM.createPortal(
                     <Button variant="secondary" onClick={() => setSettingsMenu(!settingsMenu)}>
@@ -153,11 +153,11 @@ function PridePicker() {
                 <>
                     <Field
                         id="zycord-pride-search"
-                        label="Search flags"
+                        label="Search countries"
                         type="search"
                         value={query}
                         onChange={setQuery}
-                        placeholder="Find a flag"
+                        placeholder="Find a country"
                         className="zycord-pride-search"
                     />
                     <div className="zycord-pride-grid">
@@ -170,8 +170,8 @@ function PridePicker() {
                                         disabled={busy}
                                         size={20}
                                         onChange={(_, checked) => {
-                                            setMessage("");
-                                            setFlags((current) => (checked ? [...current, badge.slug] : current.filter((slug) => slug !== badge.slug)));
+                                             setMessage("");
+                                             setFlags((current) => (checked ? [...current, badge.slug] : current.filter((slug) => slug !== badge.slug)));
                                         }}
                                     >
                                         <img
@@ -185,10 +185,10 @@ function PridePicker() {
                                 </div>
                             ))}
                     </div>
-                    {!catalog.some((badge) => badge.description.toLowerCase().includes(query.trim().toLowerCase())) && <p>No flags match your search.</p>}
+                    {!catalog.some((badge) => badge.description.toLowerCase().includes(query.trim().toLowerCase())) && <p>No countries match your search.</p>}
                     <div className="zycord-pride-actions">
                         <Button disabled={busy} onClick={() => save(flags)}>
-                            {busy ? "Saving…" : "Save pride badges"}
+                            {busy ? "Saving…" : "Save country flags"}
                         </Button>
                         <Button variant="secondary" disabled={busy || (!flags.length && !saved.length)} onClick={() => save([])}>
                             Remove all
@@ -201,16 +201,7 @@ function PridePicker() {
             )}
             {!loading && (
                 <Text variant="text-xs/normal" color="text-muted" className="zycord-pride-credit">
-                    {catalog.filter((badge) => badge.source === "twemoji-flags").length} Twemoji flags and {catalog.filter((badge) => badge.source === "supplemental").length}{" "}
-                    additional flags. Artwork by{" "}
-                    <a href="https://github.com/b3yc0d3/twemoji-flags" target="_blank" rel="noreferrer">
-                        b3yc0d3 and contributors
-                    </a>{" "}
-                    (
-                    <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">
-                        CC BY 4.0
-                    </a>
-                    ).
+                    {catalog.length} national country flags available.
                 </Text>
             )}
             {error && <p role="alert">{error}</p>}
@@ -221,7 +212,7 @@ function PridePicker() {
 
 export default definePlugin({
     name: "ZycordPride",
-    description: "Choose locally hosted pride flag badges in Profiles settings.",
+    description: "Choose country flag badges in Profiles settings.",
     authors: [ZycordAuthor],
     required: true,
     managedStyle,

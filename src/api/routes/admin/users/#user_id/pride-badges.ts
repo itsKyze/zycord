@@ -34,7 +34,7 @@ router.patch("/", route({ right: "MANAGE_USERS", spacebarOnly: true, requestBody
     const target = await adminCustomizationTarget(req);
     const { flags } = req.body as PrideBadgesSchema;
     if (!Array.isArray(flags) || flags.length > PRIDE_BADGES.length || flags.some((slug) => typeof slug !== "string" || !PRIDE_BADGES.some((badge) => badge.slug === slug)))
-        throw FieldErrors({ flags: { code: "BASE_TYPE_INVALID", message: "Choose flags from the pride badge catalog." } });
+        throw FieldErrors({ flags: { code: "BASE_TYPE_INVALID", message: "Choose flags from the country badge catalog." } });
     const selected = [...new Set(flags)];
     const changed = await getDatabase()!.transaction(async (manager) => {
         const result = await manager

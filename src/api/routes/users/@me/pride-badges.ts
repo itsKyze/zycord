@@ -33,7 +33,7 @@ router.get("/", route({ responses: { 200: {} } }), async (req: Request, res: Res
 router.patch("/", route({ requestBody: "PrideBadgesSchema", responses: { 200: {}, 400: { body: "APIErrorResponse" } } }), async (req: Request, res: Response) => {
     const { flags } = req.body as PrideBadgesSchema;
     if (!Array.isArray(flags) || flags.length > PRIDE_BADGES.length || flags.some((slug) => typeof slug !== "string" || !PRIDE_BADGES.some((badge) => badge.slug === slug)))
-        throw FieldErrors({ flags: { code: "BASE_TYPE_INVALID", message: "Choose flags from the pride badge catalog." } });
+        throw FieldErrors({ flags: { code: "BASE_TYPE_INVALID", message: "Choose flags from the country badge catalog." } });
     const selected = [...new Set(flags)];
     const result = await User.createQueryBuilder()
         .update(User)

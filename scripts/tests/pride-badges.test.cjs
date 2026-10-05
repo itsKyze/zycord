@@ -40,7 +40,7 @@ const harness = () => {
     const handlers = {};
     const writes = [];
     const broadcasts = [];
-    const user = { id: "self", pride_badges: ["rainbow"], badge_ids: ["operator"], email: "private@example.invalid", rights: "secret" };
+    const user = { id: "self", pride_badges: ["palestine"], badge_ids: ["operator"], email: "private@example.invalid", rights: "secret" };
     load("src/api/routes/users/@me/pride-badges.ts", {
         express: { Router: () => ({ get: (_path, _options, fn) => (handlers.get = fn), patch: (_path, _options, fn) => (handlers.patch = fn) }) },
         "@spacebar/api/middlewares": { route: (options) => options },
@@ -93,7 +93,7 @@ const harness = () => {
     return { invoke, writes, broadcasts, user };
 };
 
-test("catalog has every upstream flag plus preserved supplemental flags and unique locally hosted flag icons and valid badge identifiers", () => {
+test("catalog has every country flag with unique locally hosted flag icons and valid badge identifiers", () => {
     assert.equal(catalog.PRIDE_BADGES.length, 50);
     for (const field of ["slug", "id", "icon"]) assert.equal(new Set(catalog.PRIDE_BADGES.map((b) => b[field])).size, 50);
     for (const badge of catalog.PRIDE_BADGES) {
@@ -106,13 +106,12 @@ test("catalog has every upstream flag plus preserved supplemental flags and uniq
 });
 
 test("profile projection preserves selection order, removes duplicates and ignores unknown stored flags", () => {
-    const badges = catalog.prideBadges(["transgender", "rainbow", "transgender", "operator"]);
+    const badges = catalog.prideBadges(["palestine", "saudi_arabia", "palestine", "operator"]);
     assert.deepEqual(
         JSON.parse(JSON.stringify(badges)),
         JSON.parse(
             JSON.stringify(
-                catalog.PRIDE_BADGES.filter((b) => ["transgender", "rainbow"].includes(b.slug))
-                    .reverse()
+                catalog.PRIDE_BADGES.filter((b) => ["palestine", "saudi_arabia"].includes(b.slug))
                     .map(({ id, description, icon }) => ({ id, description, icon })),
             ),
         ),
@@ -120,12 +119,12 @@ test("profile projection preserves selection order, removes duplicates and ignor
     assert.equal(catalog.prideBadges(null).length, 0);
 });
 
-test("own selection persists only pride flags and emits only explicit public selections", async () => {
+test("own selection persists only country flags and emits only explicit public selections", async () => {
     const h = harness();
-    const result = await h.invoke("patch", { flags: ["transgender", "rainbow", "transgender"], badge_ids: ["admin"], user_id: "other" });
-    assert.deepEqual(JSON.parse(JSON.stringify(h.writes)), [{ where: { id: "self" }, data: { pride_badges: ["transgender", "rainbow"] } }]);
+    const result = await h.invoke("patch", { flags: ["palestine", "saudi_arabia", "palestine"], badge_ids: ["admin"], user_id: "other" });
+    assert.deepEqual(JSON.parse(JSON.stringify(h.writes)), [{ where: { id: "self" }, data: { pride_badges: ["palestine", "saudi_arabia"] } }]);
     assert.deepEqual(Array.from(h.user.badge_ids), ["operator"]);
-    assert.deepEqual(JSON.parse(JSON.stringify(h.broadcasts)), [{ id: "self", flags: ["transgender", "rainbow"] }]);
+    assert.deepEqual(JSON.parse(JSON.stringify(h.broadcasts)), [{ id: "self", flags: ["palestine", "saudi_arabia"] }]);
     assert.doesNotMatch(JSON.stringify(result), /private@example|secret|operator/);
 });
 
@@ -138,7 +137,7 @@ test("clearing selections preserves admin badges and GET returns the persisted e
 });
 
 test("unknown flags, admin IDs, invalid shapes and oversized arrays never write or broadcast", async () => {
-    for (const flags of [["operator"], [catalog.PRIDE_BADGES[0].id], [null], [1], "rainbow", null, Array(catalog.PRIDE_BADGES.length + 1).fill("rainbow")]) {
+    for (const flags of [["operator"], [catalog.PRIDE_BADGES[0].id], [null], [1], "palestine", null, Array(catalog.PRIDE_BADGES.length + 1).fill("palestine")]) {
         const h = harness();
         await assert.rejects(h.invoke("patch", { flags }), /invalid flags/);
         assert.equal(h.writes.length, 0);
@@ -146,7 +145,7 @@ test("unknown flags, admin IDs, invalid shapes and oversized arrays never write 
     }
 });
 
-test("observer events use the public user projection plus explicit pride slugs", async () => {
+test("observer events use the public user projection plus explicit country slugs", async () => {
     const events = [];
     const presence = load("src/util/util/Presence.ts", {
         "@spacebar/database": {
@@ -160,18 +159,18 @@ test("observer events use the public user projection plus explicit pride slugs",
         "@spacebar/schemas": { RelationshipType: { FRIEND: 1 } },
         typeorm: { In: (value) => value, Not: (value) => value },
     });
-    await presence.broadcastUserUpdate("self", ["transgender"]);
+    await presence.broadcastUserUpdate("self", ["palestine"]);
     assert.equal(events.length, 3);
     for (const event of events) {
-        assert.deepEqual(JSON.parse(JSON.stringify(event.data.user)), { id: "self", username: "public", pride_badges: ["transgender"] });
+        assert.deepEqual(JSON.parse(JSON.stringify(event.data.user)), { id: "self", username: "public", pride_badges: ["palestine"] });
         assert.doesNotMatch(JSON.stringify(event), /email|token|rights|password|account_preferences/);
     }
 });
 
 test("unchanged selections perform no write and no observer fanout", async () => {
     const h = harness();
-    const result = await h.invoke("patch", { flags: ["rainbow", "rainbow"] });
-    assert.deepEqual(Array.from(result.flags), ["rainbow"]);
+    const result = await h.invoke("patch", { flags: ["palestine", "palestine"] });
+    assert.deepEqual(Array.from(result.flags), ["palestine"]);
     assert.equal(h.writes.length, 0);
     assert.equal(h.broadcasts.length, 0);
 });
@@ -185,53 +184,18 @@ test("all catalog flags can be selected together without changing assigned badge
     assert.deepEqual(Array.from(h.user.badge_ids), ["operator"]);
 });
 
-test("all 33 existing flag slugs and badge IDs remain stable", () => {
-    const slugs = [
-        "rainbow",
-        "original-rainbow",
-        "philadelphia",
-        "progress",
-        "intersex-progress",
-        "transgender",
-        "bisexual",
-        "pansexual",
-        "lesbian-five",
-        "lesbian-seven",
-        "gay-five",
-        "gay-seven",
-        "asexual",
-        "aromantic",
-        "aroace",
-        "agender",
-        "nonbinary",
-        "genderqueer",
-        "genderfluid",
-        "demiboy",
-        "demigirl",
-        "demigender",
-        "demisexual",
-        "demiromantic",
-        "gray-asexual",
-        "grayromantic",
-        "polysexual",
-        "omnisexual",
-        "intersex",
-        "abrosexual",
-        "unlabeled",
-        "neutrois",
-        "androgyne",
-    ];
-    slugs.forEach((slug, index) => {
-        const badge = catalog.PRIDE_BADGES.find((item) => item.slug === slug);
+test("all country flag slugs and badge IDs remain stable", () => {
+    catalog.PRIDE_BADGES.forEach((badge, index) => {
         assert.equal(badge.id, String(8000000000000000001n + BigInt(index)));
+        assert.match(badge.icon, /^flag_/);
     });
 });
 
 test("stored unknown selections remain visible to their owner and are never silently discarded", async () => {
     const h = harness();
-    h.user.pride_badges = ["rainbow", "future-custom-flag"];
-    assert.deepEqual(Array.from((await h.invoke("get")).flags), ["rainbow", "future-custom-flag"]);
-    await assert.rejects(h.invoke("patch", { flags: ["rainbow", "future-custom-flag", "transgender"] }), /invalid flags/);
+    h.user.pride_badges = ["palestine", "future-custom-flag"];
+    assert.deepEqual(Array.from((await h.invoke("get")).flags), ["palestine", "future-custom-flag"]);
+    await assert.rejects(h.invoke("patch", { flags: ["palestine", "future-custom-flag", "saudi_arabia"] }), /invalid flags/);
     assert.equal(h.writes.length, 0);
-    assert.deepEqual(h.user.pride_badges, ["rainbow", "future-custom-flag"]);
+    assert.deepEqual(h.user.pride_badges, ["palestine", "future-custom-flag"]);
 });
