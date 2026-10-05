@@ -226,29 +226,20 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     function findVoiceButtons() {
-        const panels = document.querySelectorAll('section[class*="panels_"], [class*="sidebar_"] [class*="container_"]');
-        let muteBtn = null;
-        let deafenBtn = null;
+        let muteBtn = document.querySelector('button[aria-label*="Mute" i], button[aria-label*="micro" i]');
+        let deafenBtn = document.querySelector('button[aria-label*="Deafen" i], button[aria-label*="casque" i], button[aria-label*="headphone" i]');
 
-        for (const panel of panels) {
-            const btns = panel.querySelectorAll('button');
-            for (const btn of btns) {
-                const label = (btn.getAttribute("aria-label") || "").toLowerCase();
-                if (!muteBtn && (label.includes("mute") || label.includes("micro") || label.includes("كتم"))) {
-                    muteBtn = btn;
-                } else if (!deafenBtn && (label.includes("deafen") || label.includes("casque") || label.includes("سماعة") || label.includes("headphone") || label.includes("audio"))) {
-                    deafenBtn = btn;
-                }
+        // Reliable index fallback inside Discord's user panel
+        const panel = document.querySelector('section[class*="panels_"]');
+        if (panel) {
+            const buttons = Array.from(panel.querySelectorAll('button')).filter((b) => {
+                const label = (b.getAttribute("aria-label") || "").toLowerCase();
+                return !b.querySelector('img[class*="avatar_"]') && !label.includes("status") && !label.includes("profil");
+            });
+            if (buttons.length >= 2) {
+                if (!muteBtn) muteBtn = buttons[0];
+                if (!deafenBtn) deafenBtn = buttons[1];
             }
-            if (muteBtn && deafenBtn) break;
-        }
-
-        // Broad fallback if panels not found
-        if (!muteBtn) {
-            muteBtn = document.querySelector('button[aria-label*="Mute" i], button[aria-label*="micro" i], button[aria-label*="كتم" i]');
-        }
-        if (!deafenBtn) {
-            deafenBtn = document.querySelector('button[aria-label*="Deafen" i], button[aria-label*="casque" i], button[aria-label*="سماعة" i]');
         }
 
         return { muteBtn, deafenBtn };
@@ -256,29 +247,46 @@ window.addEventListener("DOMContentLoaded", () => {
 
     function isButtonActive(btn, type) {
         if (!btn) return false;
+
+        // 1. Check aria-checked switch state
         const checked = btn.getAttribute("aria-checked");
         if (checked === "true") return true;
         if (checked === "false") return false;
 
+        // 2. Check aria-label for active toggle keywords
         const label = (btn.getAttribute("aria-label") || "").toLowerCase().trim();
         if (type === "mute") {
-            if (label.includes("unmute") || label.includes("activer") || label.includes("إلغاء كتم")) return true;
-            if (label.startsWith("mute") || label.includes("couper") || label.startsWith("كتم")) return false;
+            if (label.includes("unmute") || label.includes("activer") || label.includes("إلغاء كتم الصوت") || label.includes("microfon einschalten")) {
+                return true;
+            }
         } else if (type === "deafen") {
-            if (label.includes("undeafen") || label.includes("activer") || label.includes("إلغاء كتم")) return true;
-            if (label.startsWith("deafen") || label.includes("couper") || label.startsWith("كتم")) return false;
+            if (label.includes("undeafen") || label.includes("activer") || label.includes("إلغاء كتم") || label.includes("einschalten")) {
+                return true;
+            }
         }
 
-        const html = btn.innerHTML;
+        // 3. Check for red danger styling or strikethrough slash in SVG/HTML
+        const html = btn.innerHTML.toLowerCase();
         if (
             html.includes("status-danger") ||
             html.includes("strikethrough") ||
             html.includes("#f23f43") ||
             html.includes("rgb(242, 63, 67)") ||
-            Boolean(btn.querySelector('[stroke*="f23f43"], [fill*="f23f43"]'))
+            html.includes("hsl(359") ||
+            html.includes("red")
         ) {
             return true;
         }
+
+        // 4. In Discord, muted and deafened icons render the diagonal slash path (2+ paths vs 1 path)
+        const paths = btn.querySelectorAll("svg path");
+        if (paths.length >= 2) {
+            return true;
+        }
+
+        // 5. Check if any SVG child element has a red stroke or fill
+        const redEl = btn.querySelector('[stroke*="red"], [fill*="red"], [stroke*="f23f43"], [fill*="f23f43"], [class*="strikethrough"]');
+        if (redEl) return true;
 
         return false;
     }
