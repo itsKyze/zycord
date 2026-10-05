@@ -19,7 +19,7 @@ let isQuitting = false;
 
 const APP_URL = "https://app.zyron.site/app";
 const ICON_PATH = path.join(__dirname, "../assets/icon.ico");
-const DISCORD_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9168 Chrome/128.0.6613.186 Electron/32.2.0 Safari/537.36";
+const ZYCORD_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36 Zycord/1.0.0";
 
 // Create Minimal Centered Desktop Updater Window (360x300)
 function createUpdaterWindow() {
@@ -104,7 +104,7 @@ function createMainWindow() {
         },
     });
 
-    mainWindow.webContents.setUserAgent(DISCORD_USER_AGENT);
+    mainWindow.webContents.setUserAgent(ZYCORD_USER_AGENT);
     mainWindow.loadURL(APP_URL);
 
     let hasShown = false;
