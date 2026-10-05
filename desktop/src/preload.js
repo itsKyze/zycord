@@ -1,6 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
-const ZycordNative = {
+const NativeBridge = {
     isElectron: true,
     window: {
         minimize: () => ipcRenderer.send("window-minimize"),
@@ -9,12 +9,22 @@ const ZycordNative = {
         isMaximized: () => ipcRenderer.sendSync("window-is-maximized"),
         setAlwaysOnTop: (enabled) => ipcRenderer.send("window-set-always-on-top", enabled),
     },
+    clipboard: {
+        copy: (text) => ipcRenderer.send("clipboard-copy", text),
+        read: () => ipcRenderer.sendSync("clipboard-read"),
+    },
+    ipc: {
+        send: (channel, ...args) => ipcRenderer.send(channel, ...args),
+        on: (channel, listener) => ipcRenderer.on(channel, listener),
+    }
 };
 
 try {
-    contextBridge.exposeInMainWorld("ZycordNative", ZycordNative);
+    contextBridge.exposeInMainWorld("DiscordNative", NativeBridge);
+    contextBridge.exposeInMainWorld("ZycordNative", NativeBridge);
 } catch (e) {
-    window.ZycordNative = ZycordNative;
+    window.DiscordNative = NativeBridge;
+    window.ZycordNative = NativeBridge;
 }
 
 // 1. Inject Authentic Top Bar Window Controls (Inbox, Minimize, Maximize, Close)
@@ -47,7 +57,14 @@ window.addEventListener("DOMContentLoaded", () => {
         const style = document.createElement("style");
         style.id = "zycord-app-styles";
         style.textContent = `
-            /* Window Controls Container: strictly isolated from drag region */
+            /* Hide Discord's broken internal window buttons so our controls are 100% in charge */
+            [class*="winButton_"],
+            [class*="winButtonClose_"],
+            [class*="winButtonMinMax_"] {
+                display: none !important;
+            }
+
+            /* Window Controls Container */
             #zycord-win-controls {
                 position: fixed !important;
                 top: 0 !important;
@@ -146,58 +163,74 @@ window.addEventListener("DOMContentLoaded", () => {
         document.head.appendChild(style);
         document.body.prepend(winControls);
 
-        // Bind control buttons with multiple event types (immediate reaction on mousedown/click)
-        const bindControl = (id, action) => {
-            const el = document.getElementById(id);
-            if (!el) return;
-            let fired = false;
-            const trigger = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                if (fired) return;
-                fired = true;
-                setTimeout(() => { fired = false; }, 300);
-                ipcRenderer.send(action);
-            };
-            el.addEventListener("click", trigger, true);
-            el.addEventListener("mousedown", trigger, true);
-            el.addEventListener("pointerdown", (e) => e.stopPropagation(), true);
-        };
-
-        bindControl("zycord-btn-min", "window-minimize");
-        bindControl("zycord-btn-max", "window-maximize");
-        bindControl("zycord-btn-close", "window-close");
-
-        // Inbox button click handler
-        const inboxBtn = document.getElementById("zycord-btn-inbox");
-        if (inboxBtn) {
-            inboxBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                const nativeInbox = document.querySelector(
-                    'button[aria-label*="Inbox" i], [aria-label*="Inbox" i], [aria-label*="صندوق الوارد" i]'
-                );
-                if (nativeInbox) {
-                    nativeInbox.click();
-                } else {
-                    // Dispatch Ctrl+I shortcut
-                    const init = {
-                        key: "i",
-                        code: "KeyI",
-                        keyCode: 73,
-                        which: 73,
-                        ctrlKey: true,
-                        bubbles: true,
-                        cancelable: true,
-                        view: window,
-                    };
-                    window.dispatchEvent(new KeyboardEvent("keydown", init));
-                    document.dispatchEvent(new KeyboardEvent("keydown", init));
-                    window.dispatchEvent(new KeyboardEvent("keyup", init));
-                    document.dispatchEvent(new KeyboardEvent("keyup", init));
-                }
-            });
+        function toggleInbox() {
+            const nativeInbox = document.querySelector(
+                'button[aria-label*="Inbox" i], [aria-label*="Inbox" i], [aria-label*="صندوق الوارد" i]'
+            );
+            if (nativeInbox) {
+                nativeInbox.click();
+            } else {
+                const init = {
+                    key: "i",
+                    code: "KeyI",
+                    keyCode: 73,
+                    which: 73,
+                    ctrlKey: true,
+                    bubbles: true,
+                    cancelable: true,
+                    view: window,
+                };
+                window.dispatchEvent(new KeyboardEvent("keydown", init));
+                document.dispatchEvent(new KeyboardEvent("keydown", init));
+                window.dispatchEvent(new KeyboardEvent("keyup", init));
+                document.dispatchEvent(new KeyboardEvent("keyup", init));
+            }
         }
+
+        // Global capture-phase event delegation: guarantees instant click execution
+        document.addEventListener("click", (e) => {
+            if (e.target.closest('#zycord-btn-close, [class*="winButtonClose_"]')) {
+                e.preventDefault();
+                e.stopPropagation();
+                ipcRenderer.send("window-close");
+                return;
+            }
+            if (e.target.closest('#zycord-btn-max, [class*="winButtonMinMax_"]:not(:first-child)')) {
+                e.preventDefault();
+                e.stopPropagation();
+                ipcRenderer.send("window-maximize");
+                return;
+            }
+            if (e.target.closest('#zycord-btn-min, [class*="winButtonMinMax_"]:first-child')) {
+                e.preventDefault();
+                e.stopPropagation();
+                ipcRenderer.send("window-minimize");
+                return;
+            }
+            if (e.target.closest('#zycord-btn-inbox')) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleInbox();
+                return;
+            }
+        }, true);
+
+        // Immediate reaction on mousedown
+        document.addEventListener("mousedown", (e) => {
+            if (e.target.closest('#zycord-btn-close')) {
+                e.preventDefault();
+                e.stopPropagation();
+                ipcRenderer.send("window-close");
+            } else if (e.target.closest('#zycord-btn-max')) {
+                e.preventDefault();
+                e.stopPropagation();
+                ipcRenderer.send("window-maximize");
+            } else if (e.target.closest('#zycord-btn-min')) {
+                e.preventDefault();
+                e.stopPropagation();
+                ipcRenderer.send("window-minimize");
+            }
+        }, true);
 
         // Dynamically update Maximize / Restore icon
         ipcRenderer.on("window-maximized-state", (event, isMaximized) => {
@@ -208,7 +241,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 maxBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10"><path fill="none" stroke="currentColor" stroke-width="1" d="M3 1h6v6m-2-4h-6v6h6v-6z"/></svg>`;
             } else {
                 maxBtn.title = "Maximize";
-                maxBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1"></rect></svg>`;
+                maxBtn.innerHTML = `<svg width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1.2"></rect></svg>`;
             }
         });
     } catch (err) {
@@ -505,11 +538,10 @@ window.addEventListener("DOMContentLoaded", () => {
     }, true);
 
     // IPC Action Handlers from Tray & Taskbar Thumbar
-    // Guaranteed single-click with debounce to eliminate double sounds and bouncing
     ipcRenderer.on("action-toggle-mute", () => {
         if (isTogglingMute) return;
         isTogglingMute = true;
-        setTimeout(() => { isTogglingMute = false; }, 350);
+        setTimeout(() => { isTogglingMute = false; }, 400);
 
         const { muteBtn } = findVoiceButtons();
         if (muteBtn) {
@@ -524,7 +556,7 @@ window.addEventListener("DOMContentLoaded", () => {
     ipcRenderer.on("action-toggle-deafen", () => {
         if (isTogglingDeafen) return;
         isTogglingDeafen = true;
-        setTimeout(() => { isTogglingDeafen = false; }, 350);
+        setTimeout(() => { isTogglingDeafen = false; }, 400);
 
         const { deafenBtn } = findVoiceButtons();
         if (deafenBtn) {
