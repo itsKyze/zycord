@@ -326,16 +326,13 @@ window.addEventListener("DOMContentLoaded", () => {
                 return false;
             };
 
-            // 1. Search by exact toggle aria-label keywords
+            // 1. Search by toggle aria-label keywords
             for (const b of buttons) {
                 if (isChevronOrSettings(b)) continue;
                 const label = (b.getAttribute("aria-label") || "").toLowerCase().trim();
 
                 if (
-                    label === "mute" ||
-                    label === "unmute" ||
-                    label.startsWith("mute ") ||
-                    label.startsWith("unmute ") ||
+                    label.includes("mute") ||
                     label.includes("كتم الصوت") ||
                     label.includes("couper le micro") ||
                     label.includes("activer le micro") ||
@@ -343,11 +340,10 @@ window.addEventListener("DOMContentLoaded", () => {
                 ) {
                     muteBtn = b;
                 } else if (
-                    label === "deafen" ||
-                    label === "undeafen" ||
-                    label.startsWith("deafen ") ||
-                    label.startsWith("undeafen ") ||
+                    label.includes("deafen") ||
                     label.includes("سماعة الرأس") ||
+                    label.includes("casque") ||
+                    label.includes("headphone") ||
                     label.includes("mettre en sourdine") ||
                     label.includes("désactiver la sourdine") ||
                     label.includes("taubschalten")
@@ -376,12 +372,12 @@ window.addEventListener("DOMContentLoaded", () => {
         // 3. Document-wide fallback
         if (!muteBtn) {
             muteBtn = document.querySelector(
-                'button[aria-label="Mute" i], button[aria-label="Unmute" i]'
+                'button[aria-label*="Mute" i], button[aria-label*="Unmute" i]'
             );
         }
         if (!deafenBtn) {
             deafenBtn = document.querySelector(
-                'button[aria-label="Deafen" i], button[aria-label="Undeafen" i]'
+                'button[aria-label*="Deafen" i], button[aria-label*="Undeafen" i]'
             );
         }
 
@@ -392,53 +388,13 @@ window.addEventListener("DOMContentLoaded", () => {
     function isButtonActive(btn, type) {
         if (!btn) return false;
 
-        // 1. Aria-label check
-        const label = (btn.getAttribute("aria-label") || "").toLowerCase().trim();
-        if (type === "mute") {
-            if (
-                label.startsWith("unmute") ||
-                label.includes("unmute") ||
-                label.includes("إلغاء كتم") ||
-                label.includes("activer") ||
-                label.includes("einschalten")
-            ) {
-                return true;
-            }
-            if (label === "mute" || label.startsWith("mute ") || label === "كتم الصوت") {
-                return false;
-            }
-        } else if (type === "deafen") {
-            if (
-                label.startsWith("undeafen") ||
-                label.includes("undeafen") ||
-                label.includes("إلغاء كتم") ||
-                label.includes("désactiver la sourdine") ||
-                label.includes("aufheben")
-            ) {
-                return true;
-            }
-            if (label === "deafen" || label.startsWith("deafen ") || label.includes("كتم صوت")) {
-                return false;
-            }
-        }
-
-        // 2. Aria-checked
-        const checked = btn.getAttribute("aria-checked");
-        if (checked === "true") return true;
-        if (checked === "false") return false;
-
-        // 3. Red danger styling in class, style or svg
+        // 1. Red danger styling in class, style or svg (most reliable in Discord)
         const className = (btn.className || "").toLowerCase();
+        const html = btn.innerHTML.toLowerCase();
         if (
             className.includes("danger") ||
             className.includes("red") ||
-            className.includes("strikethrough")
-        ) {
-            return true;
-        }
-
-        const html = btn.innerHTML.toLowerCase();
-        if (
+            className.includes("strikethrough") ||
             html.includes("status-danger") ||
             html.includes("strikethrough") ||
             html.includes("#f23f43") ||
@@ -449,11 +405,36 @@ window.addEventListener("DOMContentLoaded", () => {
             return true;
         }
 
-        // 4. Strikethrough line / red stroke
         const redEl = btn.querySelector(
             '[stroke*="f23f43" i], [fill*="f23f43" i], [stroke*="red" i], [fill*="red" i], [class*="strikethrough" i], line'
         );
         if (redEl) return true;
+
+        // 2. Aria-checked attribute
+        const checked = btn.getAttribute("aria-checked");
+        if (checked === "true") return true;
+
+        // 3. Aria-label check
+        const label = (btn.getAttribute("aria-label") || "").toLowerCase().trim();
+        if (type === "mute") {
+            if (
+                label.includes("unmute") ||
+                label.includes("إلغاء كتم") ||
+                label.includes("activer") ||
+                label.includes("einschalten")
+            ) {
+                return true;
+            }
+        } else if (type === "deafen") {
+            if (
+                label.includes("undeafen") ||
+                label.includes("إلغاء كتم") ||
+                label.includes("désactiver la sourdine") ||
+                label.includes("aufheben")
+            ) {
+                return true;
+            }
+        }
 
         return false;
     }
