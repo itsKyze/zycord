@@ -158,7 +158,7 @@ export const Email: {
         );
         const { frontPage, serverName } = Config.get().general;
         const endpoint = Config.get().api.endpointPublic;
-        const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "";
+        const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
         return `${origin}/${reset ? "reset" : "verify"}#token=${token}`;
     },
 
@@ -191,15 +191,10 @@ export const Email: {
 
         const textTemplate = await fs.readFile(path.join(ASSET_FOLDER_PATH, "email_templates", textTemplateNames[type]), { encoding: "utf-8" });
 
-        const logoPath = path.join(ASSET_FOLDER_PATH, "logo.png");
-        const hasLogo = await fs
-            .access(logoPath)
-            .then(() => true)
-            .catch(() => false);
-
-        // When sending email, use inline CID attachment so all email clients (Gmail, Outlook, Apple Mail)
-        // render the logo directly without proxy errors or blocked remote image warnings.
-        const logoUrl = hasLogo ? "cid:zycord_logo" : undefined;
+        const { frontPage, serverName } = Config.get().general;
+        const endpoint = Config.get().api.endpointPublic;
+        const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
+        const logoUrl = `${origin}/static/logo.png`;
 
         // replace email template placeholders
         const html = this.doReplacements(
@@ -221,24 +216,12 @@ export const Email: {
         // extract the title from the email template to use as the email subject
         const subject = html.match(/<title>(.*)<\/title>/)?.[1] || "";
 
-        const attachments = hasLogo
-            ? [
-                  {
-                      filename: "logo.png",
-                      path: logoPath,
-                      cid: "zycord_logo",
-                      contentType: "image/png",
-                  },
-              ]
-            : undefined;
-
         const message: IEmail = {
             from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
             to: email,
             subject,
             text,
             html,
-            attachments,
         };
 
         return this.transporter.sendMail(message);
@@ -324,7 +307,7 @@ export const Email: {
         <div class="container">
             <div class="card">
                 <div class="logo-container">
-                    <img class="logo" src="${finalLogoUrl}" alt="${instanceName}" style="max-width: 140px; height: auto; display: block; margin: 0 auto; border: 0;" />
+                    <img class="logo" src="${finalLogoUrl}" alt="${instanceName}" width="80" height="80" style="width: 80px; height: 80px; border-radius: 18px; display: block; margin: 0 auto; border: 0;" />
                 </div>
                 ${contentHtml}
             </div>
@@ -341,15 +324,13 @@ export const Email: {
      */
     sendCustomMail: async function (to: string, subject: string, text: string, contentHtml: string) {
         if (!this.transporter) return;
-        const attachments = await this.getLogoAttachment();
-        const html = this.renderHtml(subject, contentHtml, attachments ? "cid:zycord_logo" : undefined);
+        const html = this.renderHtml(subject, contentHtml);
         return this.transporter.sendMail({
             from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
             to,
             subject,
             text,
             html,
-            attachments,
         });
     },
 };

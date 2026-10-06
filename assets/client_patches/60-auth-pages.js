@@ -12,8 +12,9 @@
     };
     let token = readToken();
 
-    const params = new URLSearchParams(location.hash.slice(1) || location.search.slice(1));
-    const verifyToken = params.get("token");
+    const hashParams = new URLSearchParams(location.hash.replace(/^#/, ""));
+    const searchParams = new URLSearchParams(location.search);
+    const verifyToken = hashParams.get("token") || searchParams.get("token");
     const instanceName = document.title || "Discord";
 
     if (remoteAuth && !token) {
