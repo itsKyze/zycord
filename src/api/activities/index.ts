@@ -29,6 +29,7 @@ import {
     Channel,
     EmbeddedActivity,
     Session,
+    User,
     VoiceState,
 } from "@spacebar/database";
 import { ApplicationCommandHandlerType, ApplicationCommandType, ChannelType } from "@spacebar/schemas";
@@ -160,7 +161,19 @@ async function uploadBuiltinAssets(builtin: BuiltinActivity, activity: EmbeddedA
 }
 
 async function ensureBuiltin(builtin: BuiltinActivity) {
-    const fields = { name: builtin.name, description: builtin.description, summary: builtin.description, tags: builtin.tags, flags: EMBEDDED_FLAGS };
+    const fields = {
+        name: builtin.name,
+        description: builtin.description,
+        summary: builtin.description,
+        tags: builtin.tags,
+        flags: EMBEDDED_FLAGS,
+        bot_public: true,
+        integration_public: true,
+        integration_types_config: {
+            "0": { oauth2_install_params: { scopes: ["bot", "applications.commands"], permissions: "0" } },
+            "1": { oauth2_install_params: { scopes: ["applications.commands"] } },
+        },
+    };
     let activity = await EmbeddedActivity.findOne({ where: { builtin: builtin.key }, relations: { application: true } });
     if (!activity) {
         const owner = await getSystemAccount("official");
@@ -169,9 +182,7 @@ async function ensureBuiltin(builtin: BuiltinActivity) {
             ...fields,
             owner,
             verify_key: "",
-            bot_public: false,
             hook: false,
-            integration_public: false,
             discoverability_state: 1,
         }).save();
         activity = await EmbeddedActivity.create({
@@ -183,6 +194,22 @@ async function ensureBuiltin(builtin: BuiltinActivity) {
         activity.application = application;
         console.log(`[Activities] Registered the ${builtin.name} activity (${application.id})`);
     } else await Application.update({ id: activity.application_id }, fields);
+
+    // Ensure bot user exists and is linked
+    let botUser = await User.findOne({ where: { id: activity.application_id } });
+    if (!botUser) {
+        botUser = await User.register({
+            username: builtin.name,
+            password: undefined,
+            id: activity.application_id,
+            bot: true,
+        });
+        botUser.id = activity.application_id;
+        botUser.premium_since = new Date();
+        botUser.bot = true;
+        await botUser.save();
+    }
+    await Application.update({ id: activity.application_id }, { bot: { id: botUser.id }, bot_public: true, integration_public: true });
 
     await ensureEntryPoint(activity.application_id, builtin.name);
 

@@ -37,11 +37,39 @@ import {
 import { emitCommandIndexUpdate } from "@spacebar/api/util/handlers/ApplicationCommands";
 import { issueOAuth2Token, signTicket } from "@spacebar/api/util";
 import { toPublicApplication } from "@spacebar/api/util/handlers/Application";
+import { getSystemAccount } from "@spacebar/api/util/utility/systemAccounts";
 import { randomBytes } from "node:crypto";
 import { In } from "typeorm";
 import { ApplicationAuthorizeSchema, AuditLogEvents } from "@spacebar/schemas";
 
 const router = Router({ mergeParams: true });
+
+const ensureAppBot = async (app: Application, req?: Request): Promise<User | null> => {
+    if (app.bot) return app.bot;
+    try {
+        let botUser = await User.findOne({ where: { id: app.id } });
+        if (!botUser) {
+            botUser = await User.register({
+                username: app.name,
+                password: undefined,
+                id: app.id,
+                req,
+                bot: true,
+            });
+            botUser.id = app.id;
+            botUser.premium_since = new Date();
+            botUser.bot = true;
+            if (app.icon) botUser.avatar = app.icon;
+            await botUser.save();
+        }
+        app.bot = botUser;
+        await Application.update({ id: app.id }, { bot: { id: botUser.id }, bot_public: true, integration_public: true });
+        return botUser;
+    } catch (err) {
+        console.error("[OAuth2/Authorize] Failed to ensure app bot:", err);
+        return null;
+    }
+};
 
 const requestedScopes = (scope: unknown, fallback: string[] = []) => {
     const scopes = String(scope ?? "")
@@ -127,6 +155,7 @@ router.get(
         // TODO: use DiscordApiErrors
         // findOneOrFail throws code 404
         if (!app) throw DiscordApiErrors.UNKNOWN_APPLICATION;
+        await ensureAppBot(app, req);
         const integrationType = integrationTypeOf(app, req);
         const scopes = requestedScopes(req.query.scope, integrationType === 1 ? ["applications.commands"] : ["bot"]);
         if (!app.bot && scopes.includes("bot") && integrationType !== 1) throw DiscordApiErrors.OAUTH2_APPLICATION_BOT_ABSENT;
@@ -275,6 +304,7 @@ router.post(
             relations: { bot: true },
         });
         if (!app) throw DiscordApiErrors.UNKNOWN_APPLICATION;
+        await ensureAppBot(app, req);
         const integrationType = integrationTypeOf(app, req, body);
         const scopes = requestedScopes(req.query.scope, integrationType === 1 ? ["applications.commands"] : ["bot"]);
         const code_challenge = pkceOf(req);
@@ -338,7 +368,12 @@ router.post(
             return res.json({ location: location.toString() });
         }
         if (!app.bot) throw DiscordApiErrors.OAUTH2_APPLICATION_BOT_ABSENT;
-        if (app.bot_public === false && app.owner_id !== req.user_id) throw new HTTPError("This bot is private, so only its owner can add it to servers.", 403);
+        if (app.bot_public === false && app.owner_id !== req.user_id && app.discoverability_state !== 1) {
+            const officialAccount = await getSystemAccount("official").catch(() => null);
+            if (!officialAccount || app.owner_id !== officialAccount.id) {
+                throw new HTTPError("This bot is private, so only its owner can add it to servers.", 403);
+            }
+        }
         if (app.bot_require_code_grant && req.query.response_type !== "code") throw new HTTPError("This bot can only be added through the full OAuth2 code grant flow.", 400);
         if (!body.guild_id) throw FieldErrors({ guild_id: { code: "BASE_TYPE_REQUIRED", message: req.t("common:field.BASE_TYPE_REQUIRED") } });
 
