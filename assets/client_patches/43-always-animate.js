@@ -17,14 +17,14 @@
         } catch (_) {}
     };
 
+    let reqInstance;
     (window.webpackChunkdiscord_app = window.webpackChunkdiscord_app || []).push([
         [Symbol("zycord-always-animate")],
         {},
         (req) => {
+            reqInstance = req;
             patchAnimations(req);
-            setTimeout(() => patchAnimations(req), 500);
-            setTimeout(() => patchAnimations(req), 1500);
-            setTimeout(() => patchAnimations(req), 3500);
+            setInterval(() => patchAnimations(reqInstance), 1000);
         },
     ]);
 })();
