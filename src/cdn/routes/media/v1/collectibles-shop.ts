@@ -348,6 +348,12 @@ async function sendUpstream(req: Request, res: Response, asset: string, slot: "s
     const path = `collectibles-shop-upstream/${asset}`;
     let file = (await storage.get(path)) ?? (await fetchUpstreamAsset(path, `https://cdn.discordapp.com/media/v1/collectibles-shop/${asset}`));
 
+    if (!file && asset.endsWith("/animated")) {
+        const staticAsset = asset.replace(/\/animated$/, "/static");
+        const staticPath = `collectibles-shop-upstream/${staticAsset}`;
+        file = (await storage.get(staticPath)) ?? (await fetchUpstreamAsset(staticPath, `https://cdn.discordapp.com/media/v1/collectibles-shop/${staticAsset}`));
+    }
+
     if (!file) {
         // Fallback: look up sku_id in catalog
         const cleanAsset = asset.replace(/\.[a-z0-9]+$/i, "");

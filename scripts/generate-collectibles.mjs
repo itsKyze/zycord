@@ -157,82 +157,92 @@ if (discordEffects.length > 0) {
     }
 }
 
-// Add Nameplates (all 12 palettes represented)
-const nameplatesList = [
-    { name: "Crimson Honor", palette: "crimson", catIdx: 0 },
-    { name: "Sakura Blossom", palette: "bubble_gum", catIdx: 0 },
-    { name: "Cyber Matrix", palette: "teal", catIdx: 1 },
-    { name: "Cobalt Grid", palette: "cobalt", catIdx: 1 },
-    { name: "Mystic Arcana", palette: "violet", catIdx: 2 },
-    { name: "Forest Enchanter", palette: "forest", catIdx: 2 },
-    { name: "Pastel Cloud", palette: "bubble_gum", catIdx: 3 },
-    { name: "Lemon Sunshine", palette: "lemon", catIdx: 3 },
-    { name: "Void Abyss", palette: "black", catIdx: 4 },
-    { name: "Blood Ruby", palette: "crimson", catIdx: 4 },
-    { name: "Arcade 8-Bit", palette: "clover", catIdx: 5 },
-    { name: "Retro Wave", palette: "violet", catIdx: 5 },
-    { name: "Blazing Fire", palette: "crimson", catIdx: 6 },
-    { name: "Glacial Frost", palette: "sky", catIdx: 6 },
-    { name: "Ocean Tide", palette: "teal", catIdx: 6 },
-    { name: "Cosmic Twilight", palette: "cobalt", catIdx: 7 },
-    { name: "Pure Starlight", palette: "white", catIdx: 7 },
-    { name: "Berry Nova", palette: "berry", catIdx: 7 },
-    { name: "Royal Gold", palette: "lemon", catIdx: 8 },
-    { name: "Obsidian Onyx", palette: "black", catIdx: 8 },
-    { name: "Diamond Sparkle", palette: "white", catIdx: 8 },
-    { name: "Emerald Clover", palette: "clover", catIdx: 8 },
-    { name: "Sky Glider", palette: "sky", catIdx: 8 },
-    { name: "Violet Sovereign", palette: "violet", catIdx: 8 },
-    { name: "Spider-Man vs. Venom", palette: "crimson", catIdx: 8 },
-    { name: "Woody's Badge", palette: "lemon", catIdx: 8 },
-    { name: "The Clawww", palette: "cobalt", catIdx: 8 },
-    { name: "Andy's Room Clouds", palette: "sky", catIdx: 8 },
-    { name: "Always Watching", palette: "black", catIdx: 4 },
-    { name: "Water Stalker", palette: "black", catIdx: 4 },
-    { name: "Trapped Souls", palette: "black", catIdx: 4 },
-];
-
-for (const np of nameplatesList) {
-    categoryBuckets[np.catIdx].nameplates.push({
-        name: np.name,
-        palette: np.palette,
-    });
+// Load real Discord nameplates (285 items) and real frames (68 items)
+let discordNameplates = [];
+try {
+    const rawNp = await fs.readFile(path.join(assetsDir, "discord-nameplates.json"), "utf8");
+    discordNameplates = JSON.parse(rawNp);
+} catch {
+    console.warn("Could not read discord-nameplates.json");
 }
 
-// Add Profile Frames
-const framesList = [
-    { name: "Cherry Blossom Crest", catIdx: 0 },
-    { name: "Katana Blade Border", catIdx: 0 },
-    { name: "Samurai Gold Dragon", catIdx: 0 },
-    { name: "Cyber Neural Frame", catIdx: 1 },
-    { name: "Holo Terminal Border", catIdx: 1 },
-    { name: "Neon Matrix Grid", catIdx: 1 },
-    { name: "Golden Royalty Crest", catIdx: 2 },
-    { name: "Arcane Runestone Frame", catIdx: 2 },
-    { name: "Mystic Archmage Halo", catIdx: 2 },
-    { name: "Pastel Cloud Ribbon", catIdx: 3 },
-    { name: "Heart Blossom Border", catIdx: 3 },
-    { name: "Cozy Kitten Garland", catIdx: 3 },
-    { name: "Gothic Spikes Frame", catIdx: 4 },
-    { name: "Cursed Skull Obsidian", catIdx: 4 },
-    { name: "Shadow Realm Reaver", catIdx: 4 },
-    { name: "Pixel CRT Monitor", catIdx: 5 },
-    { name: "Arcade Cabinet Frame", catIdx: 5 },
-    { name: "Synthwave Sunset Rail", catIdx: 5 },
-    { name: "Elemental Surge Crest", catIdx: 6 },
-    { name: "Glacial Ice Shield", catIdx: 6 },
-    { name: "Inferno Flame Corona", catIdx: 6 },
-    { name: "Celestial Star Halo", catIdx: 7 },
-    { name: "Galaxy Orbit Ring", catIdx: 7 },
-    { name: "Solar Eclipse Corona", catIdx: 7 },
-    { name: "Imperial Diamond Crest", catIdx: 8 },
-    { name: "Emerald Sovereign Plinth", catIdx: 8 },
-];
+let discordFrames = [];
+try {
+    const rawFrames = await fs.readFile(path.join(assetsDir, "discord-frames.json"), "utf8");
+    discordFrames = JSON.parse(rawFrames);
+} catch {
+    console.warn("Could not read discord-frames.json");
+}
 
-for (const fr of framesList) {
-    categoryBuckets[fr.catIdx].frames.push({
-        name: fr.name,
-    });
+const getPaletteFromName = (name) => {
+    const l = (name || "").toLowerCase();
+    if (l.includes("sakura") || l.includes("blossom") || l.includes("pink") || l.includes("bubble")) return "bubble_gum";
+    if (l.includes("crimson") || l.includes("blood") || l.includes("fire") || l.includes("ruby") || l.includes("red")) return "crimson";
+    if (l.includes("cyber") || l.includes("teal") || l.includes("matrix") || l.includes("ocean") || l.includes("water")) return "teal";
+    if (l.includes("gold") || l.includes("sun") || l.includes("lemon") || l.includes("yellow")) return "lemon";
+    if (l.includes("violet") || l.includes("mystic") || l.includes("purple") || l.includes("arcana")) return "violet";
+    if (l.includes("sky") || l.includes("frost") || l.includes("ice") || l.includes("blue")) return "sky";
+    if (l.includes("dark") || l.includes("void") || l.includes("black") || l.includes("onyx") || l.includes("shadow")) return "black";
+    if (l.includes("clover") || l.includes("emerald") || l.includes("green") || l.includes("forest") || l.includes("garden")) return "forest";
+    if (l.includes("cobalt") || l.includes("star") || l.includes("cosmic") || l.includes("galaxy")) return "cobalt";
+    if (l.includes("berry") || l.includes("rose")) return "berry";
+    if (l.includes("white") || l.includes("starlight") || l.includes("diamond")) return "white";
+    return "violet";
+};
+
+// Categorize Nameplates
+for (const np of discordNameplates) {
+    const nameLower = np.name.toLowerCase();
+    const palette = getPaletteFromName(np.name);
+    let assigned = false;
+    for (let i = 0; i < categoryBuckets.length - 1; i++) {
+        const bucket = categoryBuckets[i];
+        if (bucket.keywords.some((k) => nameLower.includes(k))) {
+            bucket.nameplates.push({
+                sku_id: np.sku_id,
+                name: np.name,
+                asset: np.asset,
+                palette,
+            });
+            assigned = true;
+            break;
+        }
+    }
+    if (!assigned) {
+        categoryBuckets[categoryBuckets.length - 1].nameplates.push({
+            sku_id: np.sku_id,
+            name: np.name,
+            asset: np.asset,
+            palette,
+        });
+    }
+}
+
+// Categorize Profile Frames
+for (const fr of discordFrames) {
+    const nameLower = fr.name.toLowerCase();
+    let assigned = false;
+    for (let i = 0; i < categoryBuckets.length - 1; i++) {
+        const bucket = categoryBuckets[i];
+        if (bucket.keywords.some((k) => nameLower.includes(k))) {
+            bucket.frames.push({
+                sku_id: fr.sku_id,
+                name: fr.name,
+                layer_id: fr.layer_id || fr.sku_id,
+                asset: fr.asset,
+            });
+            assigned = true;
+            break;
+        }
+    }
+    if (!assigned) {
+        categoryBuckets[categoryBuckets.length - 1].frames.push({
+            sku_id: fr.sku_id,
+            name: fr.name,
+            layer_id: fr.layer_id || fr.sku_id,
+            asset: fr.asset,
+        });
+    }
 }
 
 // Assemble final categories and profile effects
@@ -341,14 +351,14 @@ for (const bucket of categoryBuckets) {
 
     // 3. Process Nameplates
     for (const np of bucket.nameplates) {
-        const skuId = nextSku();
+        const skuId = np.sku_id || nextSku();
         heroRanking.push(skuId);
 
         const catalogItem = {
             type: 2,
             sku_id: skuId,
             id: skuId,
-            asset: `nameplates/custom/${skuId}/`,
+            asset: np.asset || `nameplates/${skuId}/`,
             palette: np.palette,
             label: np.name,
         };
@@ -380,16 +390,25 @@ for (const bucket of categoryBuckets) {
 
     // 4. Process Profile Frames
     for (const fr of bucket.frames) {
-        const skuId = nextSku();
+        const skuId = fr.sku_id || nextSku();
         heroRanking.push(skuId);
+        const layerAsset = fr.asset || `${skuId}/${fr.layer_id || skuId}`;
 
         const catalogItem = {
             type: 3,
             sku_id: skuId,
             id: skuId,
             label: fr.name,
+            asset: layerAsset,
             layers: [
-                { id: "1", type: "staple", order: "front", anchor: "top", responsive: false },
+                {
+                    id: fr.layer_id || skuId,
+                    asset: layerAsset,
+                    type: "staple",
+                    order: "front",
+                    anchor: "top",
+                    responsive: false
+                },
             ],
             inner_width: 1200,
             overflow_top: 40,
