@@ -420,10 +420,10 @@ export const Collectibles = {
         return (await Collectibles.get()).products.get(sku_id);
     },
 
-    async item(sku_id: string, type: CollectibleItemType) {
+    async item(sku_id: string, type?: CollectibleItemType) {
         const { items, products } = await Collectibles.get();
-        const item = items.get(sku_id) ?? products.get(sku_id)?.items.find((x) => x.type === type);
-        return item?.type === type ? item : undefined;
+        const item = items.get(sku_id) ?? products.get(sku_id)?.items.find((x) => type === undefined || x.type === type);
+        return type === undefined || item?.type === type ? item : undefined;
     },
 
     async grantable(sku_id: string) {
