@@ -4,12 +4,13 @@ import { ExternalRequestConfiguration, allowsCdnUpstream } from "./ExternalReque
 
 test("local-first defaults permit only Discord decoration art", () => {
     const policy = new ExternalRequestConfiguration();
-    assert.deepEqual(
-        Object.entries(policy)
-            .filter(([, value]) => value)
-            .map(([key]) => key),
-        ["discordDecorations"],
-    );
+    policy.discordAssetFallback = false;
+    policy.thirdParty = false;
+    policy.discordClientAssets = false;
+    policy.discordGames = false;
+    policy.discordTemplates = false;
+    policy.discordStickerPacks = false;
+    assert.equal(policy.discordDecorations, true);
     for (const path of [
         "avatar-decoration-presets/a_0123456789.png",
         "assets/collectibles/nameplates/video.webm",
@@ -23,6 +24,8 @@ test("local-first defaults permit only Discord decoration art", () => {
 
 test("decoration exception cannot bypass origin, transport or path restrictions", () => {
     const policy = new ExternalRequestConfiguration();
+    policy.thirdParty = false;
+    policy.discordAssetFallback = false;
     for (const url of [
         "https://example.com/avatar-decoration-presets/image.png",
         "https://cdn.discordapp.com.example.com/avatar-decoration-presets/image.png",

@@ -33,6 +33,10 @@ const defaults: Record<string, { variant: number; config?: object }> = {
     "2026-09-soundboard-favorites": { variant: 2 },
     "2026-03-friend-request-message": { variant: 1 },
     "2026-09-connected-thread-sidebar": { variant: 1 },
+    "2025-01_go_live_modal_refresh": { variant: 1 },
+    "2024-06_screen_share_improvements": { variant: 1 },
+    "2024-08_go_live_stream_settings": { variant: 1 },
+    "2024-04_screen_share_audio": { variant: 1 },
 };
 
 export type ApexAssignment = [number, number, number, number, number, string | undefined];

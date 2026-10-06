@@ -51,12 +51,29 @@ function generateNameplateSvg(label: string, paletteName: string = "violet"): Bu
       <stop offset="100%" stop-color="${c2}" stop-opacity="0.95"/>
     </linearGradient>
     <linearGradient id="npborder" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
-      <stop offset="50%" stop-color="${c1}" stop-opacity="0.2"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7">
+        <animate attributeName="stop-opacity" values="0.7;0.2;0.7" dur="2.5s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="${c1}" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.7">
+        <animate attributeName="stop-opacity" values="0.2;0.7;0.2" dur="2.5s" repeatCount="indefinite"/>
+      </stop>
     </linearGradient>
+    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="rectclip">
+      <rect x="2" y="2" width="296" height="68" rx="14"/>
+    </clipPath>
   </defs>
   <rect x="2" y="2" width="296" height="68" rx="14" fill="url(#npgrad)" stroke="url(#npborder)" stroke-width="2"/>
+  <g clip-path="url(#rectclip)">
+    <rect x="-100" y="0" width="80" height="72" fill="url(#shimmer)">
+      <animateTransform attributeName="transform" type="translate" from="-120 0" to="420 0" dur="2.8s" repeatCount="indefinite"/>
+    </rect>
+  </g>
   <circle cx="36" cy="36" r="16" fill="#ffffff" fill-opacity="0.2"/>
   <path d="M30 36 L34 40 L42 32" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
   <text x="64" y="42" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" letter-spacing="0.5">${safeLabel}</text>
@@ -69,14 +86,24 @@ function generateFrameSvg(label: string): Buffer {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
   <defs>
     <linearGradient id="fgrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8b5cf6"/>
-      <stop offset="50%" stop-color="#ec4899"/>
-      <stop offset="100%" stop-color="#3b82f6"/>
+      <stop offset="0%" stop-color="#8b5cf6">
+        <animate attributeName="stop-color" values="#8b5cf6;#ec4899;#3b82f6;#8b5cf6" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="50%" stop-color="#ec4899">
+        <animate attributeName="stop-color" values="#ec4899;#3b82f6;#8b5cf6;#ec4899" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="100%" stop-color="#3b82f6">
+        <animate attributeName="stop-color" values="#3b82f6;#8b5cf6;#ec4899;#3b82f6" dur="4s" repeatCount="indefinite"/>
+      </stop>
     </linearGradient>
   </defs>
-  <rect x="12" y="12" width="216" height="216" rx="32" fill="none" stroke="url(#fgrad)" stroke-width="8" stroke-dasharray="16 8"/>
-  <rect x="24" y="24" width="192" height="192" rx="24" fill="#0f172a" fill-opacity="0.3" stroke="url(#fgrad)" stroke-width="2"/>
-  <circle cx="120" cy="120" r="48" fill="url(#fgrad)" fill-opacity="0.15" stroke="url(#fgrad)" stroke-width="3"/>
+  <rect x="12" y="12" width="216" height="216" rx="32" fill="none" stroke="url(#fgrad)" stroke-width="8" stroke-dasharray="24 12">
+    <animate attributeName="stroke-dashoffset" values="0;72" dur="3s" repeatCount="indefinite"/>
+  </rect>
+  <rect x="24" y="24" width="192" height="192" rx="24" fill="#0f172a" fill-opacity="0.35" stroke="url(#fgrad)" stroke-width="2"/>
+  <circle cx="120" cy="120" r="48" fill="url(#fgrad)" fill-opacity="0.18" stroke="url(#fgrad)" stroke-width="3">
+    <animate attributeName="r" values="46;50;46" dur="2s" repeatCount="indefinite"/>
+  </circle>
   <path d="M110 120 L117 127 L132 112" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
   <text x="120" y="195" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" text-anchor="middle">${safeLabel}</text>
 </svg>`;
@@ -88,22 +115,31 @@ function generateEffectSvg(label: string): Buffer {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
   <defs>
     <radialGradient id="eglow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.8"/>
-      <stop offset="60%" stop-color="#8b5cf6" stop-opacity="0.4"/>
+      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.9">
+        <animate attributeName="stop-color" values="#60a5fa;#c084fc;#f472b6;#60a5fa" dur="4s" repeatCount="indefinite"/>
+      </stop>
+      <stop offset="60%" stop-color="#8b5cf6" stop-opacity="0.45"/>
       <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="240" height="240" fill="#0f172a" fill-opacity="0.5" rx="20"/>
-  <circle cx="120" cy="120" r="80" fill="url(#eglow)"/>
-  <circle cx="120" cy="120" r="40" fill="none" stroke="#67e8f9" stroke-width="2" stroke-dasharray="6 4"/>
-  <polygon points="120,80 125,115 160,120 125,125 120,160 115,125 80,120 115,115" fill="#ffffff" opacity="0.9"/>
+  <rect width="240" height="240" fill="#0f172a" fill-opacity="0.55" rx="20"/>
+  <circle cx="120" cy="120" r="80" fill="url(#eglow)">
+    <animate attributeName="r" values="75;85;75" dur="2.5s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="120" cy="120" r="40" fill="none" stroke="#67e8f9" stroke-width="2" stroke-dasharray="8 6">
+    <animateTransform attributeName="transform" type="rotate" from="0 120 120" to="360 120 120" dur="6s" repeatCount="indefinite"/>
+  </circle>
+  <g>
+    <animateTransform attributeName="transform" type="rotate" from="0 120 120" to="-360 120 120" dur="10s" repeatCount="indefinite"/>
+    <polygon points="120,70 125,115 170,120 125,125 120,170 115,125 70,120 115,115" fill="#ffffff" opacity="0.95"/>
+  </g>
   <text x="120" y="200" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" text-anchor="middle">${safeLabel}</text>
 </svg>`;
     return Buffer.from(svg, "utf8");
 }
 
 async function resolveAvatarDecorationBuffer(assetHash: string, slot: "static" | "animated"): Promise<Buffer | null> {
-    const passthrough = slot === "animated";
+    const passthrough = slot === "animated" || assetHash.startsWith("a_");
     const cacheKey = `avatar-decoration-presets-upstream/${assetHash}${passthrough ? "" : "-static"}`;
     const cached = await storage.get(cacheKey);
     if (cached) return cached;
@@ -128,9 +164,8 @@ router.get("/:sku_id/static", setCacheControl, async (req: Request, res: Respons
         return sendUpstream(req, res, `${sku_id}/static`, "static");
     }
 
-    const type = await fileTypeFromBuffer(file!);
-    res.set("Content-Type", type?.mime ?? "image/png");
-    return res.send(file);
+    res.set("Access-Control-Allow-Origin", "*");
+    return sendAsset(res, file!, `${sku_id}-static.png`);
 });
 
 router.get("/:sku_id/animated", setCacheControl, async (req: Request, res: Response) => {
@@ -140,15 +175,12 @@ router.get("/:sku_id/animated", setCacheControl, async (req: Request, res: Respo
     let file: Buffer<ArrayBufferLike> | null = null;
     if (await storage.exists(basePath + "/animated")) {
         file = await storage.get(basePath + "/animated");
-    } else if (await storage.exists(basePath + "/static")) {
-        file = await storage.get(basePath + "/static");
     } else {
         return sendUpstream(req, res, `${sku_id}/animated`, "animated");
     }
 
-    const type = await fileTypeFromBuffer(file!);
-    res.set("Content-Type", type?.mime ?? "image/png");
-    return res.send(file);
+    res.set("Access-Control-Allow-Origin", "*");
+    return sendAsset(res, file!, `${sku_id}-animated.png`);
 });
 
 // Any other art (nameplate videos, frame layers, etc.) is served from storage first
@@ -157,8 +189,8 @@ router.get("/*path", setCacheControl, async (req: Request, res: Response) => {
     if (!validAssetPath(asset)) return setCacheControlNotFound(req, res);
     const file = await storage.get(`collectibles-shop/${asset}`);
     if (!file) return sendUpstream(req, res, asset, "static");
-    res.set("Content-Type", (await fileTypeFromBuffer(file))?.mime ?? "application/octet-stream");
-    return res.send(file);
+    res.set("Access-Control-Allow-Origin", "*");
+    return sendAsset(res, file, asset);
 });
 
 const validAssetPath = (asset: string) => {
@@ -180,10 +212,14 @@ async function sendUpstream(req: Request, res: Response, asset: string, slot: "s
 
             if (item) {
                 if (item.type === CollectibleItemType.AVATAR_DECORATION || (item.asset && /^(a_)?[0-9a-f]{32}$/i.test(item.asset))) {
-                    const decoBuffer = await resolveAvatarDecorationBuffer(item.asset!, slot);
+                    const effectiveSlot = (slot === "animated" || item.asset?.startsWith("a_")) ? "animated" : "static";
+                    const decoBuffer = await resolveAvatarDecorationBuffer(item.asset!, effectiveSlot);
                     if (decoBuffer) {
                         file = decoBuffer;
                         await storage.set(`collectibles-shop/${asset}`, decoBuffer);
+                        if (effectiveSlot === "animated") {
+                            await storage.set(`collectibles-shop/${skuId}/animated`, decoBuffer);
+                        }
                     }
                 } else if (item.type === CollectibleItemType.NAMEPLATE) {
                     const svgBuffer = generateNameplateSvg(item.label || product?.name || "Nameplate", ((item as any).palette as string) || "violet");
@@ -207,7 +243,16 @@ async function sendUpstream(req: Request, res: Response, asset: string, slot: "s
         } catch (_) {}
     }
 
+    if (!file) {
+        // As a last-ditch fallback for animated, if static exists
+        const skuId = asset.split("/")[0];
+        if (slot === "animated" && (await storage.exists(`collectibles-shop/${skuId}/static`))) {
+            file = await storage.get(`collectibles-shop/${skuId}/static`);
+        }
+    }
+
     if (!file) return setCacheControlNotFound(req, res);
+    res.set("Access-Control-Allow-Origin", "*");
     return sendAsset(res, file, asset);
 }
 

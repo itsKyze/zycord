@@ -141,7 +141,11 @@ const localize = (raw: string) => {
     const branded = raw.replace(/\bDiscord\b/g, JSON.stringify(instanceName()).slice(1, -1));
     const cdn = Config.get().cdn.endpointPublic?.replace(/\/+$/, "");
     if (!cdn) return branded;
-    return branded.replaceAll("https://cdn.discordapp.com/assets/content/", `${cdn}/content-assets/`).replaceAll("https://cdn.discordapp.com/media/v1/", `${cdn}/media/v1/`);
+    return branded
+        .replaceAll("https://cdn.discordapp.com/assets/content/", `${cdn}/content-assets/`)
+        .replaceAll("https://cdn.discordapp.com/assets/profile_effects/", `${cdn}/assets/profile_effects/`)
+        .replaceAll("https://cdn.discordapp.com/avatar-decoration-presets/", `${cdn}/avatar-decoration-presets/`)
+        .replaceAll("https://cdn.discordapp.com/media/v1/", `${cdn}/media/v1/`);
 };
 
 const parse = (raw: string, effectsRaw?: string): Catalog => {
