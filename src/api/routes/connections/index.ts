@@ -55,6 +55,7 @@ router.get(
         for (const type of allTypes) {
             result[type] = { enabled: true };
         }
+        result["discord"] = { enabled: false };
         for (const [key, value] of Object.entries(config)) {
             if (value?.enabled !== undefined) {
                 result[key] = { enabled: !!value.enabled };
