@@ -94,7 +94,7 @@ router.post(
         }
 
         // check if the user agreed to the Terms of Service
-        if (!body.consent) {
+        if (body.consent === false) {
             throw FieldErrors({
                 consent: {
                     code: "CONSENT_REQUIRED",
@@ -102,6 +102,7 @@ router.post(
                 },
             });
         }
+        body.consent = true;
 
         if (!regTokenUsed && register.disabled) {
             throw FieldErrors({

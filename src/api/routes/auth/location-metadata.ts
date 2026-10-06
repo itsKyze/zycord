@@ -38,8 +38,8 @@ router.get(
         res.json({
             consent_required: false,
             country_code: country_code ?? "US",
-            // pre_checked: false makes the checkbox optional and unchecked by default (shows the optional checkbox)
-            promotional_email_opt_in: { required: false, pre_checked: false },
+            // promotional_email_opt_in.required: true displays the optional email marketing checkbox on register form (with pre_checked: false)
+            promotional_email_opt_in: { required: true, pre_checked: false },
         });
     },
 );

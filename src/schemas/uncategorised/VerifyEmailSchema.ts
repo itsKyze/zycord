@@ -17,6 +17,6 @@
 */
 
 export interface VerifyEmailSchema {
-    captcha_key?: string | null;
+    captcha_key?: string | string[] | null;
     token: string;
 }

@@ -24,7 +24,7 @@ export interface LoginSchema {
      */
     password: string;
     undelete?: boolean;
-    captcha_key?: string;
+    captcha_key?: string | string[];
     login_source?: string;
     gift_code_sku_id?: string;
 }
