@@ -23,7 +23,7 @@ import { Config } from "../Config";
 import crypto from "node:crypto";
 import jwt from "jsonwebtoken";
 import { JwtKeypairManager } from "../Token";
-import { IEmail, IEmailClient } from "./clients/IEmailClient";
+import { IEmail, IEmailAttachment, IEmailClient } from "./clients/IEmailClient";
 import { SendGridEmailClient } from "./clients/SendGridEmailClient";
 import { SMTPEmailClient } from "./clients/SMTPEmailClient";
 import { MailGunEmailClient } from "./clients/MailGunEmailClient";
@@ -55,7 +55,11 @@ export const Email: {
             region: string;
             country_name: string;
         },
+        logoUrl?: string,
     ) => string;
+    getLogoAttachment: () => Promise<IEmailAttachment[] | undefined>;
+    renderHtml: (title: string, contentHtml: string, logoUrl?: string) => string;
+    sendCustomMail: (to: string, subject: string, text: string, contentHtml: string) => Promise<void>;
 } = {
     transporter: null,
     init: async function () {
@@ -99,11 +103,16 @@ export const Email: {
             region: string;
             country_name: string;
         },
+        logoUrl?: string,
     ) {
-        const { instanceName } = Config.get().general;
+        const { instanceName, frontPage, serverName } = Config.get().general;
+        const endpoint = Config.get().api.endpointPublic;
+        const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
+        const finalLogoUrl = logoUrl || `${origin}/static/logo.png`;
 
         const replacements = [
             ["{instanceName}", instanceName],
+            ["{logoUrl}", finalLogoUrl],
             ["{userUsername}", user.username],
             ["{userDiscriminator}", user.discriminator],
             ["{userId}", user.id],
@@ -182,12 +191,24 @@ export const Email: {
 
         const textTemplate = await fs.readFile(path.join(ASSET_FOLDER_PATH, "email_templates", textTemplateNames[type]), { encoding: "utf-8" });
 
+        const logoPath = path.join(ASSET_FOLDER_PATH, "logo.png");
+        const hasLogo = await fs
+            .access(logoPath)
+            .then(() => true)
+            .catch(() => false);
+
+        // When sending email, use inline CID attachment so all email clients (Gmail, Outlook, Apple Mail)
+        // render the logo directly without proxy errors or blocked remote image warnings.
+        const logoUrl = hasLogo ? "cid:zycord_logo" : undefined;
+
         // replace email template placeholders
         const html = this.doReplacements(
             htmlTemplate,
             user,
             // password change emails don't have links
             type != MailTypes.changePassword ? await this.generateLink(type, user.id) : undefined,
+            undefined,
+            logoUrl,
         );
 
         const text = this.doReplacements(
@@ -200,12 +221,24 @@ export const Email: {
         // extract the title from the email template to use as the email subject
         const subject = html.match(/<title>(.*)<\/title>/)?.[1] || "";
 
+        const attachments = hasLogo
+            ? [
+                  {
+                      filename: "logo.png",
+                      path: logoPath,
+                      cid: "zycord_logo",
+                      contentType: "image/png",
+                  },
+              ]
+            : undefined;
+
         const message: IEmail = {
             from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
             to: email,
             subject,
             text,
             html,
+            attachments,
         };
 
         return this.transporter.sendMail(message);
@@ -230,5 +263,93 @@ export const Email: {
      */
     sendPasswordChanged: async function (user, email) {
         return this.sendMail(MailTypes.changePassword, user, email);
+    },
+
+    /**
+     * Returns inline logo attachment if logo exists on disk
+     */
+    getLogoAttachment: async function () {
+        const logoPath = path.join(ASSET_FOLDER_PATH, "logo.png");
+        const hasLogo = await fs
+            .access(logoPath)
+            .then(() => true)
+            .catch(() => false);
+        return hasLogo
+            ? [
+                  {
+                      filename: "logo.png",
+                      path: logoPath,
+                      cid: "zycord_logo",
+                      contentType: "image/png",
+                  },
+              ]
+            : undefined;
+    },
+
+    /**
+     * Wraps HTML content into Discord/Zycord official email template with brand logo
+     */
+    renderHtml: function (title: string, contentHtml: string, logoUrl?: string) {
+        const { instanceName, frontPage, serverName } = Config.get().general;
+        const endpoint = Config.get().api.endpointPublic;
+        const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
+        const finalLogoUrl = logoUrl || `${origin}/static/logo.png`;
+
+        return `<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>${title}</title>
+        <style>
+            body { margin: 0; padding: 0; background-color: #f2f3f5; font-family: 'gg sans', 'Noto Sans', Helvetica, Arial, sans-serif; color: #2e3338; -webkit-font-smoothing: antialiased; }
+            .container { max-width: 640px; margin: 0 auto; padding: 40px 20px; }
+            .card { background-color: #ffffff; border-radius: 8px; padding: 40px 50px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
+            .logo-container { text-align: center; padding-bottom: 30px; }
+            .logo { width: 140px; height: auto; display: block; margin: 0 auto; border: 0; }
+            h1 { font-size: 20px; font-weight: 700; line-height: 24px; color: #2e3338; margin: 0 0 16px; }
+            p { font-size: 15px; line-height: 22px; color: #4f545c; margin: 0 0 20px; }
+            .code-box { background-color: #f2f3f5; border-radius: 6px; padding: 16px 20px; margin: 24px 0; text-align: center; font-size: 26px; font-weight: 700; letter-spacing: 4px; color: #5865f2; }
+            .btn-container { text-align: center; padding: 24px 0 32px; }
+            .btn { background-color: #5865f2; color: #ffffff !important; text-decoration: none; font-size: 15px; font-weight: 600; padding: 14px 32px; border-radius: 4px; display: inline-block; }
+            .btn:hover { background-color: #4752c4; }
+            hr { border: none; border-top: 1px solid #e3e5e8; margin: 24px 0; }
+            .footer-text { font-size: 12px; line-height: 18px; color: #747f8d; text-align: center; }
+            .footer-text a { color: #00aff4; text-decoration: none; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="card">
+                <div class="logo-container">
+                    <img class="logo" src="${finalLogoUrl}" alt="${instanceName}" style="max-width: 140px; height: auto; display: block; margin: 0 auto; border: 0;" />
+                </div>
+                ${contentHtml}
+            </div>
+            <div style="padding-top: 20px;">
+                <p class="footer-text">Sent by ${instanceName} • Security Notification</p>
+            </div>
+        </div>
+    </body>
+</html>`;
+    },
+
+    /**
+     * Sends custom email with official Zycord styling and brand logo
+     */
+    sendCustomMail: async function (to: string, subject: string, text: string, contentHtml: string) {
+        if (!this.transporter) return;
+        const attachments = await this.getLogoAttachment();
+        const html = this.renderHtml(subject, contentHtml, attachments ? "cid:zycord_logo" : undefined);
+        return this.transporter.sendMail({
+            from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
+            to,
+            subject,
+            text,
+            html,
+            attachments,
+        });
     },
 };

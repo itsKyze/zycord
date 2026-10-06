@@ -246,13 +246,18 @@ export async function createHarvest(user_id: string, requested: unknown) {
             if (!Email.transporter || !user.email) return console.log(`[Harvest] Data package ${harvest.harvest_id} for user ${user_id} is ready; email delivery is unavailable`);
             const url = downloadUrl(user_id, harvest.harvest_id);
             const { instanceName } = Config.get().general;
-            await Email.transporter.sendMail({
-                from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
-                to: user.email,
-                subject: `Your ${instanceName} data package is ready`,
-                text: `Hey ${user.username},\n\nYour data package is ready. Download it here within 14 days: ${url}`,
-                html: `<p>Hey ${user.username},</p><p>Your data package is ready. <a href="${url}">Download it here</a> within 14 days.</p>`,
-            });
+            await Email.sendCustomMail(
+                user.email,
+                `Your ${instanceName} data package is ready`,
+                `Hey ${user.username},\n\nYour data package is ready. Download it here within 14 days: ${url}`,
+                `<h1>Hey ${user.username},</h1>
+                <p>Your requested data package is ready for download.</p>
+                <div class="btn-container">
+                    <a class="btn" href="${url}" target="_blank">Download Data Package</a>
+                </div>
+                <hr />
+                <p style="font-size: 13px; color: #747f8d; margin-bottom: 0;">This download link will expire in 14 days.</p>`,
+            );
         } catch {
             console.error(`[Harvest] Failed to build or deliver data package for user ${user_id}`);
             await save(user_id, { ...harvest, state: "FAILED", status: HarvestStatus.FAILED, updated_at: new Date().toISOString() }).catch(() => undefined);

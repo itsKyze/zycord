@@ -4,116 +4,124 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<meta http-equiv="Content-Type" content="text/html charset=UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Verify {instanceName} Login from New Location</title>
-
 		<style>
-			* {
-				font-size: 16px;
+			body {
+				margin: 0;
+				padding: 0;
+				background-color: #f2f3f5;
+				font-family: 'gg sans', 'Noto Sans', Helvetica, Arial, sans-serif;
+				color: #2e3338;
+				-webkit-font-smoothing: antialiased;
+			}
+			.container {
+				max-width: 640px;
+				margin: 0 auto;
+				padding: 40px 20px;
+			}
+			.card {
+				background-color: #ffffff;
+				border-radius: 8px;
+				padding: 40px 50px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+			}
+			.logo-container {
+				text-align: center;
+				padding-bottom: 30px;
+			}
+			.logo {
+				width: 140px;
+				height: auto;
+			}
+			h1 {
+				font-size: 20px;
+				font-weight: 700;
 				line-height: 24px;
-				font-family: Arial, Helvetica, sans-serif;
+				color: #2e3338;
+				margin: 0 0 16px;
 			}
-
 			p {
-				color: white;
+				font-size: 15px;
+				line-height: 22px;
+				color: #4f545c;
+				margin: 0 0 20px;
 			}
-
-			.ExternalClass {
-				width: 100%;
+			.location-box {
+				background-color: #f2f3f5;
+				border-radius: 6px;
+				padding: 16px 20px;
+				margin: 20px 0;
+			}
+			.location-box p {
+				margin: 0;
+				font-size: 14px;
+				line-height: 22px;
+				color: #2e3338;
+			}
+			.btn-container {
+				text-align: center;
+				padding: 24px 0 32px;
+			}
+			.btn {
+				background-color: #5865f2;
+				color: #ffffff !important;
+				text-decoration: none;
+				font-size: 15px;
+				font-weight: 600;
+				padding: 14px 32px;
+				border-radius: 4px;
+				display: inline-block;
+			}
+			.btn:hover {
+				background-color: #4752c4;
+			}
+			hr {
+				border: none;
+				border-top: 1px solid #e3e5e8;
+				margin: 24px 0;
+			}
+			.footer-text {
+				font-size: 12px;
+				line-height: 18px;
+				color: #747f8d;
+				text-align: center;
+			}
+			.footer-text a {
+				color: #00aff4;
+				text-decoration: none;
 			}
 		</style>
 	</head>
-
 	<body>
-		<div style="background-color: #202225">
-			<img
-				src="https://raw.githubusercontent.com/spacebarchat/spacebarchat/master/branding/svg/Spacebar__Logo-Blue.svg"
-				alt="Branding"
-				style="
-					width: 100%;
-					max-width: 200px;
-					margin: 0 auto;
-					display: block;
-					padding: 20px;
-				"
-			/>
-			<div
-				style="
-					width: 100%;
-					max-width: 500px;
-					margin: 0 auto;
-					padding: 40px 50px;
-					background-color: #32353b;
-					border-radius: 5px;
-				"
-			>
-				<p
-					style="
-						font-weight: 600;
-						font-size: 20px;
-						letter-spacing: 0.27px;
-						line-height: 24px;
-					"
-				>
-					Hey {userUsername},
-				</p>
-				<p>
-					It looks like someone tried to log into your {instanceName}
-					account from a new location. If this is you, follow the link
-					below to authorize logging in from this location on your
-					account. If this isn't you, we suggest changing your
-					password as soon as possible.
-				</p>
-				<p>
-					<strong>IP Address:</strong> {ipAddress}
-					<br />
-					<strong>Location:</strong> {locationCity}, {locationRegion},
-					{locationCountryName}
-				</p>
-				<div>
-					<div
-						style="
-							text-align: center;
-							justify-content: center;
-							padding-bottom: 10px;
-						"
-					>
-						<a
-							href="{actionUrl}"
-							target="_blank"
-							style="
-								font-size: 15px;
-								border: none;
-								text-decoration: none;
-								color: white;
-								cursor: pointer;
-								padding: 15px 19px;
-								background-color: #0185ff;
-								border-radius: 5px;
-							"
-							>Verify Login</a
-						>
-					</div>
-					<hr />
-					<div
-						style="
-							text-align: center;
-							justify-content: center;
-							padding-bottom: 10px;
-						"
-					>
-						<p>
-							Alternatively, you can directly paste this link into
-							your browser:
-						</p>
-						<a
-							href="{actionUrl}"
-							target="_blank"
-							style="word-wrap: break-word"
-							>{actionUrl}</a
-						>
-					</div>
+		<div class="container">
+			<div class="card">
+				<div class="logo-container">
+					<img class="logo" src="{logoUrl}" alt="{instanceName}" style="max-width: 140px; height: auto; display: block; margin: 0 auto; border: 0;" />
 				</div>
+				<h1>Hey {userUsername},</h1>
+				<p>
+					It looks like someone tried to log into your {instanceName} account from a new location. If this is you, follow the link below to authorize logging in from this location on your account. If this isn't you, we suggest changing your password as soon as possible.
+				</p>
+				<div class="location-box">
+					<p>
+						<strong>IP Address:</strong> {ipAddress}<br />
+						<strong>Location:</strong> {locationCity}, {locationRegion}, {locationCountryName}
+					</p>
+				</div>
+				<div class="btn-container">
+					<a class="btn" href="{actionUrl}" target="_blank">Verify Login</a>
+				</div>
+				<hr />
+				<p style="font-size: 13px; color: #747f8d; margin-bottom: 0;">
+					Alternatively, you can directly paste this link into your browser:<br />
+					<a href="{actionUrl}" target="_blank" style="color: #00aff4; word-break: break-all;">{actionUrl}</a>
+				</p>
+			</div>
+			<div style="padding-top: 20px;">
+				<p class="footer-text">
+					Sent by {instanceName} • Security Notification
+				</p>
 			</div>
 		</div>
 	</body>

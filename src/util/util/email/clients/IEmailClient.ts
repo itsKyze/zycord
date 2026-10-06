@@ -16,12 +16,21 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+export interface IEmailAttachment {
+    filename: string;
+    path?: string;
+    content?: string | Buffer;
+    contentType?: string;
+    cid?: string;
+}
+
 export interface IEmail {
     from: string;
     to: string;
     subject: string;
     text: string;
     html: string;
+    attachments?: IEmailAttachment[];
 }
 export interface IEmailClient {
     init: () => Promise<void>;

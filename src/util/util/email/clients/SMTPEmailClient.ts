@@ -96,6 +96,7 @@ export class SMTPEmailClient extends BaseEmailClient {
             subject: email.subject,
             text: email.text,
             html: email.html,
+            attachments: email.attachments,
         });
     }
 }
