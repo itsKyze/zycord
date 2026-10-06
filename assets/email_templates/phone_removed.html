@@ -20,20 +20,36 @@
 				margin: 0 auto;
 				padding: 40px 20px;
 			}
+			.header-logo {
+				text-align: center;
+				margin-bottom: 30px;
+			}
+			.brand-table {
+				margin: 0 auto;
+				border-collapse: collapse;
+			}
+			.brand-table td {
+				vertical-align: middle;
+			}
+			.brand-icon {
+				width: 38px;
+				height: 38px;
+				border-radius: 9px;
+				display: block;
+			}
+			.brand-name {
+				font-size: 26px;
+				font-weight: 800;
+				color: #5865f2;
+				letter-spacing: -0.5px;
+				padding-left: 10px;
+				text-decoration: none;
+			}
 			.card {
 				background-color: #ffffff;
 				border-radius: 8px;
 				padding: 40px 50px;
 				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-			}
-			.logo-container {
-				text-align: center;
-				padding-bottom: 30px;
-			}
-			.logo {
-				width: 80px;
-				height: 80px;
-				border-radius: 18px;
 			}
 			h1 {
 				font-size: 20px;
@@ -53,20 +69,36 @@
 				border-top: 1px solid #e3e5e8;
 				margin: 24px 0;
 			}
+			.help-text {
+				font-size: 13px;
+				line-height: 20px;
+				color: #747f8d;
+				margin-bottom: 0;
+			}
 			.footer-text {
 				font-size: 12px;
 				line-height: 18px;
 				color: #747f8d;
 				text-align: center;
+				margin-top: 24px;
 			}
 		</style>
 	</head>
 	<body>
 		<div class="container">
+			<div class="header-logo">
+				<table class="brand-table" align="center" border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td>
+							<img class="brand-icon" src="{logoUrl}" alt="{instanceName}" width="38" height="38" />
+						</td>
+						<td>
+							<span class="brand-name">{instanceName}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
 			<div class="card">
-				<div class="logo-container">
-					<img class="logo" src="{logoUrl}" alt="{instanceName}" width="80" height="80" style="width: 80px; height: 80px; border-radius: 18px; display: block; margin: 0 auto; border: 0;" />
-				</div>
 				<h1>Hey {userUsername},</h1>
 				<p>
 					Your phone number ending in <strong>{phoneNumber}</strong> was recently removed from this account and added to a different {instanceName} account.
@@ -75,15 +107,14 @@
 					Please note that your phone number can only be linked to one {instanceName} account at a time.
 				</p>
 				<hr />
-				<p style="font-size: 13px; color: #747f8d; margin-bottom: 0;">
+				<p class="help-text">
 					If you did not make this change, please immediately secure your account and contact your server administrators.
 				</p>
 			</div>
-			<div style="padding-top: 20px;">
-				<p class="footer-text">
-					Sent by {instanceName} • Security Notification
-				</p>
-			</div>
+			<p class="footer-text">
+				Sent by {instanceName} • Security Notification<br />
+				444 De Haro Street, Suite 200, San Francisco, CA 94107
+			</p>
 		</div>
 	</body>
 </html>

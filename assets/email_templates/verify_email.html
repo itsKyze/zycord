@@ -20,20 +20,36 @@
 				margin: 0 auto;
 				padding: 40px 20px;
 			}
+			.header-logo {
+				text-align: center;
+				margin-bottom: 30px;
+			}
+			.brand-table {
+				margin: 0 auto;
+				border-collapse: collapse;
+			}
+			.brand-table td {
+				vertical-align: middle;
+			}
+			.brand-icon {
+				width: 38px;
+				height: 38px;
+				border-radius: 9px;
+				display: block;
+			}
+			.brand-name {
+				font-size: 26px;
+				font-weight: 800;
+				color: #5865f2;
+				letter-spacing: -0.5px;
+				padding-left: 10px;
+				text-decoration: none;
+			}
 			.card {
 				background-color: #ffffff;
 				border-radius: 8px;
 				padding: 40px 50px;
 				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-			}
-			.logo-container {
-				text-align: center;
-				padding-bottom: 30px;
-			}
-			.logo {
-				width: 80px;
-				height: 80px;
-				border-radius: 18px;
 			}
 			h1 {
 				font-size: 20px;
@@ -50,7 +66,7 @@
 			}
 			.btn-container {
 				text-align: center;
-				padding: 24px 0 32px;
+				padding: 20px 0 28px;
 			}
 			.btn {
 				background-color: #5865f2;
@@ -70,11 +86,22 @@
 				border-top: 1px solid #e3e5e8;
 				margin: 24px 0;
 			}
+			.help-text {
+				font-size: 13px;
+				line-height: 20px;
+				color: #747f8d;
+				margin-bottom: 8px;
+			}
+			.help-text a {
+				color: #00aff4;
+				text-decoration: none;
+			}
 			.footer-text {
 				font-size: 12px;
 				line-height: 18px;
 				color: #747f8d;
 				text-align: center;
+				margin-top: 24px;
 			}
 			.footer-text a {
 				color: #00aff4;
@@ -84,10 +111,19 @@
 	</head>
 	<body>
 		<div class="container">
+			<div class="header-logo">
+				<table class="brand-table" align="center" border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td>
+							<img class="brand-icon" src="{logoUrl}" alt="{instanceName}" width="38" height="38" />
+						</td>
+						<td>
+							<span class="brand-name">{instanceName}</span>
+						</td>
+					</tr>
+				</table>
+			</div>
 			<div class="card">
-				<div class="logo-container">
-					<img class="logo" src="{logoUrl}" alt="{instanceName}" width="80" height="80" style="width: 80px; height: 80px; border-radius: 18px; display: block; margin: 0 auto; border: 0;" />
-				</div>
 				<h1>Hey {userUsername},</h1>
 				<p>
 					Thanks for registering for an account on {instanceName}! Before we get started, we just need to confirm that this is you. Click below to verify your email address:
@@ -96,17 +132,17 @@
 					<a class="btn" href="{actionUrl}" target="_blank">Verify Email</a>
 				</div>
 				<hr />
-				<p style="font-size: 13px; color: #747f8d; margin-bottom: 0;">
-					Need help? Visit our support page or contact your server administrators.<br />
-					If you didn't create an account, you can safely ignore this email.
+				<p class="help-text">
+					Need help? <a href="#">Contact our support team</a> or hit us up on X <a href="#">@{instanceName}</a>!
+				</p>
+				<p class="help-text" style="margin-bottom: 0;">
+					Want to give us feedback? Let us know what you think on our <a href="#">feedback site</a>.
 				</p>
 			</div>
-			<div style="padding-top: 20px;">
-				<p class="footer-text">
-					Sent by {instanceName} • <a href="{actionUrl}">Verify Link</a><br />
-					Keep your account safe and never share your verification link with anyone.
-				</p>
-			</div>
+			<p class="footer-text">
+				Sent by {instanceName} • <a href="#">Check Our Blog</a> • <a href="#">@{instanceName}</a><br />
+				444 De Haro Street, Suite 200, San Francisco, CA 94107
+			</p>
 		</div>
 	</body>
 </html>

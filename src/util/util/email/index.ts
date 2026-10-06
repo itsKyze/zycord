@@ -289,31 +289,43 @@ export const Email: {
         <style>
             body { margin: 0; padding: 0; background-color: #f2f3f5; font-family: 'gg sans', 'Noto Sans', Helvetica, Arial, sans-serif; color: #2e3338; -webkit-font-smoothing: antialiased; }
             .container { max-width: 640px; margin: 0 auto; padding: 40px 20px; }
+            .header-logo { text-align: center; margin-bottom: 30px; }
+            .brand-table { margin: 0 auto; border-collapse: collapse; }
+            .brand-table td { vertical-align: middle; }
+            .brand-icon { width: 38px; height: 38px; border-radius: 9px; display: block; }
+            .brand-name { font-size: 26px; font-weight: 800; color: #5865f2; letter-spacing: -0.5px; padding-left: 10px; text-decoration: none; }
             .card { background-color: #ffffff; border-radius: 8px; padding: 40px 50px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
-            .logo-container { text-align: center; padding-bottom: 30px; }
-            .logo { width: 140px; height: auto; display: block; margin: 0 auto; border: 0; }
             h1 { font-size: 20px; font-weight: 700; line-height: 24px; color: #2e3338; margin: 0 0 16px; }
             p { font-size: 15px; line-height: 22px; color: #4f545c; margin: 0 0 20px; }
             .code-box { background-color: #f2f3f5; border-radius: 6px; padding: 16px 20px; margin: 24px 0; text-align: center; font-size: 26px; font-weight: 700; letter-spacing: 4px; color: #5865f2; }
-            .btn-container { text-align: center; padding: 24px 0 32px; }
+            .btn-container { text-align: center; padding: 20px 0 28px; }
             .btn { background-color: #5865f2; color: #ffffff !important; text-decoration: none; font-size: 15px; font-weight: 600; padding: 14px 32px; border-radius: 4px; display: inline-block; }
             .btn:hover { background-color: #4752c4; }
             hr { border: none; border-top: 1px solid #e3e5e8; margin: 24px 0; }
-            .footer-text { font-size: 12px; line-height: 18px; color: #747f8d; text-align: center; }
-            .footer-text a { color: #00aff4; text-decoration: none; }
+            .footer-text { font-size: 12px; line-height: 18px; color: #747f8d; text-align: center; margin-top: 24px; }
         </style>
     </head>
     <body>
         <div class="container">
+            <div class="header-logo">
+                <table class="brand-table" align="center" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td>
+                            <img class="brand-icon" src="${finalLogoUrl}" alt="${instanceName}" width="38" height="38" />
+                        </td>
+                        <td>
+                            <span class="brand-name">${instanceName}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <div class="card">
-                <div class="logo-container">
-                    <img class="logo" src="${finalLogoUrl}" alt="${instanceName}" width="80" height="80" style="width: 80px; height: 80px; border-radius: 18px; display: block; margin: 0 auto; border: 0;" />
-                </div>
                 ${contentHtml}
             </div>
-            <div style="padding-top: 20px;">
-                <p class="footer-text">Sent by ${instanceName} • Security Notification</p>
-            </div>
+            <p class="footer-text">
+                Sent by ${instanceName} • Security Notification<br />
+                444 De Haro Street, Suite 200, San Francisco, CA 94107
+            </p>
         </div>
     </body>
 </html>`;
