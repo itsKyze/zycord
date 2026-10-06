@@ -21,7 +21,7 @@ import { Request, Response, Router } from "express";
 import { HTTPError } from "lambert-server/HTTPError";
 import crypto from "node:crypto";
 import { ILike, MoreThan } from "typeorm";
-import { checkRegistrationCaptcha, registrationCapEndpoint, extractCaptchaToken } from "@spacebar/api/util";
+import { checkRegistrationCaptcha, registrationCapEndpoint, extractCaptchaToken, sendSystemDM } from "@spacebar/api/util";
 import { route } from "@spacebar/api/middlewares";
 import { Invite, User, ValidRegistrationToken } from "@spacebar/database";
 import { Config, FieldErrors, generateToken, IpDataClient, AbuseIpDbClient } from "@spacebar/util";
@@ -366,6 +366,11 @@ router.post(
 
         const user = await User.register({ ...body, username: body.username, req });
         logTrace("Register user");
+
+        // Send official welcome DM to the new user
+        sendSystemDM("official", user.id, {
+            content: `Hey **${user.username}**! Welcome to **${Config.get().general.instanceName || "Discord"}**! 🎉\n\nWe're excited to have you here. Please check your inbox to verify your email address to keep your username and secure your account.\n\nEnjoy chatting, finding communities, and connecting with friends!`,
+        }).catch((err) => console.error("[Welcome DM] Failed to send welcome DM:", err));
 
         if (body.invite) {
             // await to fail if the invite doesn't exist (necessary for requireInvite to work properly) (username only signups are possible)
