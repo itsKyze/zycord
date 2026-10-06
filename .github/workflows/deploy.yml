@@ -201,28 +201,29 @@ jobs:
             #    - client must complete FIRST (compresses Discord client assets + applies patches)
             #    - server depends on client completing successfully
             echo "🔧 Rebuilding client assets (applies new patches)..."
-            # Run client service to rebuild/recompress assets (force refresh if image changed)
             docker compose up --no-deps -d client
-            echo "⏳ Waiting for client service to finish..."
-            # Wait up to 10 minutes for client to finish
-            timeout 600 bash -c '
-              while true; do
-                STATUS=$(docker compose ps client --format json 2>/dev/null | python3 -c "import sys,json; d=json.loads(sys.stdin.read().strip() or \"[]\"); print(d[0][\"State\"] if isinstance(d,list) and d else \"unknown\")" 2>/dev/null || echo "unknown")
-                if [ "$STATUS" = "exited" ]; then
-                  EXIT_CODE=$(docker compose ps client --format json 2>/dev/null | python3 -c "import sys,json; d=json.loads(sys.stdin.read().strip() or \"[]\"); print(d[0].get(\"ExitCode\",1) if isinstance(d,list) and d else 1)" 2>/dev/null || echo "1")
-                  if [ "$EXIT_CODE" = "0" ]; then
-                    echo "✅ Client service completed successfully"
-                    break
-                  else
-                    echo "❌ Client service failed with exit code $EXIT_CODE"
-                    docker compose logs --tail=30 client
-                    exit 1
-                  fi
-                fi
-                echo "   client status: $STATUS — waiting..."
-                sleep 10
-              done
-            '
+
+            echo "⏳ Waiting for client service to finish (up to 10 min)..."
+            # Get the actual container ID for the client service
+            CLIENT_ID=$(docker compose ps -q client)
+            if [ -z "$CLIENT_ID" ]; then
+              echo "❌ Could not find client container"
+              exit 1
+            fi
+            # docker wait blocks until container exits, then prints exit code
+            EXIT_CODE=$(timeout 600 docker wait "$CLIENT_ID" || echo "timeout")
+            if [ "$EXIT_CODE" = "0" ]; then
+              echo "✅ Client service completed successfully"
+            elif [ "$EXIT_CODE" = "timeout" ]; then
+              echo "❌ Client service timed out after 10 minutes"
+              docker compose logs --tail=30 client
+              exit 1
+            else
+              echo "❌ Client service failed with exit code $EXIT_CODE"
+              docker compose logs --tail=30 client
+              exit 1
+            fi
+
 
             # 8. Restart the server with the new image
             echo "🚀 Restarting Zycord server..."
@@ -230,17 +231,19 @@ jobs:
 
             # 9. Wait for server to become healthy
             echo "⏳ Waiting for server to be healthy (up to 3 min)..."
-            timeout 180 bash -c '
-              while true; do
-                HEALTH=$(docker compose ps server --format json 2>/dev/null | python3 -c "import sys,json; d=json.loads(sys.stdin.read().strip() or \"[]\"); print(d[0].get(\"Health\",\"unknown\") if isinstance(d,list) and d else \"unknown\")" 2>/dev/null || echo "unknown")
-                if [ "$HEALTH" = "healthy" ]; then
-                  echo "✅ Server is healthy!"
-                  break
-                fi
-                echo "   server health: $HEALTH — waiting..."
-                sleep 10
-              done
-            ' || echo "⚠️ Health check timed out — check logs manually"
+            for i in $(seq 1 18); do
+              HEALTH=$(docker inspect --format '{{.State.Health.Status}}' "$(docker compose ps -q server)" 2>/dev/null || echo "unknown")
+              if [ "$HEALTH" = "healthy" ]; then
+                echo "✅ Server is healthy!"
+                break
+              fi
+              echo "   server health: $HEALTH — waiting... ($i/18)"
+              sleep 10
+            done
+            if [ "$HEALTH" != "healthy" ]; then
+              echo "⚠️ Server health check timed out — check logs manually"
+            fi
+
 
             # 10. Final status
             echo "📋 Final container status:"
