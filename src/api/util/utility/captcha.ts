@@ -109,8 +109,12 @@ export function registrationCapEndpoint() {
     return capEndpoint()!;
 }
 
-export async function checkRegistrationCaptcha(response: string | null | undefined, consume = true): Promise<CaptchaRequiredResponse | null> {
+export async function checkRegistrationCaptcha(response: string | null | undefined, consume = true, ip?: string): Promise<CaptchaRequiredResponse | null> {
     if (!Config.get().register.requireCaptcha) return null;
+    const { security } = Config.get();
+    if (security.captcha.enabled && (security.captcha.service === "hcaptcha" || security.captcha.service === "recaptcha")) {
+        return checkCaptcha(true, response, ip);
+    }
     const endpoint = registrationCapEndpoint();
     const local = endpoint === "/api/v9/auth/cap/";
     const sitekey = local ? "zycord" : Config.get().security.captcha.sitekey!;
