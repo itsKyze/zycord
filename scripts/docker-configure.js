@@ -65,10 +65,17 @@ if (instanceName && instanceName !== appliedName) {
     section("client").instanceName = instanceName;
 }
 
-const cap = { instance: env("CAP_INSTANCE_URL"), sitekey: env("CAP_SITE_KEY"), secret: env("CAP_SECRET_KEY") };
-if (cap.instance && cap.sitekey && cap.secret) Object.assign(section("security", "captcha"), { enabled: true, service: "cap", ...cap });
-else if (cap.instance || cap.sitekey || cap.secret)
-    console.warn("[configure] Cap needs CAP_INSTANCE_URL, CAP_SITE_KEY and CAP_SECRET_KEY together, leaving the captcha settings alone");
+const hcaptchaSitekey = env("HCAPTCHA_SITE_KEY");
+const hcaptchaSecret = env("HCAPTCHA_SECRET_KEY");
+if (hcaptchaSitekey && hcaptchaSecret) {
+    Object.assign(section("security", "captcha"), {
+        enabled: true,
+        service: "hcaptcha",
+        sitekey: hcaptchaSitekey,
+        secret: hcaptchaSecret,
+    });
+}
+
 
 const smtpHost = env("SMTP_HOST");
 if (smtpHost) {
