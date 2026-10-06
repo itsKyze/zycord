@@ -30,7 +30,7 @@ COPY tsconfig.json ./
 COPY src src
 COPY scripts/default-avatars.js scripts/default-avatars.js
 COPY scripts/generate-collectibles.mjs scripts/generate-collectibles.mjs
-COPY assets/icon.png assets/icon.png
+COPY assets assets
 RUN npm run build:src && npm prune --omit=dev --no-audit --no-fund
 
 FROM node:26-slim AS server

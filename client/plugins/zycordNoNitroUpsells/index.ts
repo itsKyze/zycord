@@ -93,6 +93,13 @@ export default definePlugin({
             },
         },
         {
+            find: "isPartiallyOwnedBundle:",
+            replacement: {
+                match: /function \i\(\i,\i\)\{(?=let \i=null!=\i\.getPurchase\(\i\.skuId\),.{0,600}?isPartiallyOwnedBundle:)/,
+                replace: "$&return{isPurchased:!0,isPartiallyOwnedBundle:!1,isPartiallyOwnedVariantsGroup:!1};",
+            },
+        },
+        {
             find: ".APPEARANCE_CUSTOM_THEMES_UPSELL,{",
             replacement: hideSetting("APPEARANCE_CUSTOM_THEMES_UPSELL", { replacesPredicate: true }),
         },

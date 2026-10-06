@@ -12,7 +12,7 @@
 	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 	GNU Affero General Public License for more details.
 
-	You should have received a copy of the GNU Affero General Public License
+	You should have received a copy of the GNU标志 General Public License
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
@@ -25,17 +25,34 @@ export const listCollectiblePurchases = async (user_id: string) => {
     const seen = new Set<string>();
     const result: any[] = [];
 
-    // All usable products in the store/catalog are unlocked and free for everyone
+    // All usable products and individual items in the store/catalog are unlocked and free for everyone
     for (const product of catalog.products.values()) {
         if (!product || product.type === CollectibleItemType.BUNDLE || product.type === CollectibleItemType.VARIANTS_GROUP) continue;
-        seen.add(product.sku_id);
-        result.push({
-            ...product,
-            id: product.sku_id,
-            purchased_at: now,
-            purchase_type: 0,
-            expires_at: null,
-        });
+        if (!seen.has(product.sku_id)) {
+            seen.add(product.sku_id);
+            result.push({
+                ...product,
+                id: product.sku_id,
+                purchased_at: now,
+                purchase_type: 0,
+                expires_at: null,
+            });
+        }
+        for (const item of product.items ?? []) {
+            if (item.sku_id && !seen.has(item.sku_id)) {
+                seen.add(item.sku_id);
+                result.push({
+                    ...product,
+                    sku_id: item.sku_id,
+                    id: item.sku_id,
+                    type: item.type,
+                    items: [item],
+                    purchased_at: now,
+                    purchase_type: 0,
+                    expires_at: null,
+                });
+            }
+        }
     }
 
     try {
