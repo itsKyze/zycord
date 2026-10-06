@@ -7,8 +7,9 @@
                 if (!mod) continue;
                 const targets = [mod, mod.default, mod.A, mod.Z].filter(Boolean);
                 for (const item of targets) {
-                    if (item && typeof item === "object" && item.purchases instanceof Map) {
-                        if (!item.__zycordPatched) {
+                    if (item && typeof item === "object") {
+                        const hasPurchaseMethods = typeof item.isPurchased === "function" || typeof item.hasPurchase === "function" || typeof item.getPurchase === "function";
+                        if (hasPurchaseMethods && !item.__zycordPatched) {
                             item.__zycordPatched = true;
                             if (typeof item.getPurchase === "function") {
                                 const origGetPurchase = item.getPurchase.bind(item);

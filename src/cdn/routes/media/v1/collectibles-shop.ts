@@ -55,7 +55,7 @@ function getThemeColors(label: string): [string, string, string] {
     return PALETTE_COLORS.violet;
 }
 
-function generateNameplateSvg(label: string, paletteName: string = "violet"): Buffer {
+export function generateNameplateSvg(label: string, paletteName: string = "violet"): Buffer {
     const safeLabel = (label || "Nameplate").replace(/[<>&"]/g, "");
     const [cLight, cMain, cDark] = PALETTE_COLORS[paletteName] ?? getThemeColors(safeLabel);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="72" viewBox="0 0 300 72">
@@ -111,7 +111,7 @@ function generateNameplateSvg(label: string, paletteName: string = "violet"): Bu
     return Buffer.from(svg, "utf8");
 }
 
-function generateFrameLayerSvg(label: string): Buffer {
+export function generateFrameLayerSvg(label: string): Buffer {
     const safeLabel = (label || "Profile Frame").replace(/[<>&"]/g, "");
     const [cLight, cMain, cDark] = getThemeColors(safeLabel);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1312" height="1200" viewBox="0 0 1312 1200">
@@ -190,7 +190,7 @@ function generateFrameLayerSvg(label: string): Buffer {
     return Buffer.from(svg, "utf8");
 }
 
-function generateFrameThumbnailSvg(label: string): Buffer {
+export function generateFrameThumbnailSvg(label: string): Buffer {
     const safeLabel = (label || "Profile Frame").replace(/[<>&"]/g, "");
     const [cLight, cMain, cDark] = getThemeColors(safeLabel);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
@@ -338,9 +338,9 @@ router.get("/*path", setCacheControl, async (req: Request, res: Response) => {
     return sendAsset(res, file, asset);
 });
 
-const validAssetPath = (asset: string) => {
+export const validAssetPath = (asset: string) => {
     const segments = asset.split("/");
-    return segments.length <= 4 && segments.every((x) => /^[a-z0-9_-]{1,64}$/i.test(x));
+    return segments.length <= 5 && segments.every((x) => /^[a-z0-9_\-\.]{1,64}$/i.test(x));
 };
 
 async function sendUpstream(req: Request, res: Response, asset: string, slot: "static" | "animated" = "static") {
@@ -350,7 +350,8 @@ async function sendUpstream(req: Request, res: Response, asset: string, slot: "s
 
     if (!file) {
         // Fallback: look up sku_id in catalog
-        const skuId = asset.split("/")[0];
+        const cleanAsset = asset.replace(/\.[a-z0-9]+$/i, "");
+        const skuId = cleanAsset.split("/")[0];
         try {
             const product = await Collectibles.product(skuId);
             const item = (await Collectibles.item(skuId)) ?? product?.items?.[0];
@@ -371,7 +372,8 @@ async function sendUpstream(req: Request, res: Response, asset: string, slot: "s
                     file = svgBuffer;
                     await storage.set(`collectibles-shop/${asset}`, svgBuffer);
                 } else if (item.type === CollectibleItemType.PROFILE_FRAME) {
-                    const isLayer = asset.split("/").length >= 2 && asset.split("/")[1] !== "static" && asset.split("/")[1] !== "animated";
+                    const segments = cleanAsset.split("/");
+                    const isLayer = segments.length >= 2 && segments[1] !== "static" && segments[1] !== "animated" && segments[1] !== "thumbnail";
                     const svgBuffer = isLayer
                         ? generateFrameLayerSvg(item.label || product?.name || "Profile Frame")
                         : generateFrameThumbnailSvg(item.label || product?.name || "Profile Frame");
