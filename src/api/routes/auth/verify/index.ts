@@ -17,10 +17,10 @@
 */
 
 import { Request, Response, Router } from "express";
-import { emitUserUpdate, readTicket, checkCaptcha, extractCaptchaToken } from "@spacebar/api/util";
+import { emitUserUpdate, readTicket } from "@spacebar/api/util";
 import { route } from "@spacebar/api/middlewares";
 import { User } from "@spacebar/database";
-import { Config, FieldErrors, generateToken } from "@spacebar/util";
+import { FieldErrors, generateToken } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
 
@@ -38,12 +38,7 @@ router.post(
         authentication: "optional",
     }),
     async (req: Request, res: Response) => {
-        const { captcha_key, token } = req.body as { captcha_key?: string; token?: string };
-
-        const config = Config.get();
-
-        const captcha = await checkCaptcha(config.register.requireCaptcha, extractCaptchaToken(req), req.ip);
-        if (captcha) return res.status(400).json(captcha);
+        const { token } = req.body as { token?: string };
 
         const invalid = () =>
             FieldErrors({
