@@ -73,7 +73,7 @@ router.post("/", route({ responses: { 200: {}, 400: { body: "APIErrorResponse" }
     if (!domain) throw FieldErrors({ domain: { code: "DOMAIN_INVALID", message: "Enter a valid domain, like example.com." } });
 
     const existing = await ConnectedAccount.findOne({ where: { user_id: req.user_id, type: "domain", external_id: domain } });
-    if (existing) return res.json(existing.toJSON());
+    if (existing) return res.json({ ...existing.toJSON(), id: existing.external_id || existing.name });
 
     const proof = DomainConnection.proof(req.user_id, domain);
     if (!(await DomainConnection.verify(domain, proof)))
@@ -86,8 +86,8 @@ router.post("/", route({ responses: { 200: {}, 400: { body: "APIErrorResponse" }
 
     const account = ConnectedAccount.create({ user_id: req.user_id, type: "domain", external_id: domain, name: domain, verified: true, visibility: 1, metadata_visibility: 1 });
     await account.save();
-    await emitEvent({ event: "USER_CONNECTIONS_UPDATE", data: { ...account, token_data: undefined }, user_id: req.user_id });
-    res.json(account.toJSON());
+    await emitEvent({ event: "USER_CONNECTIONS_UPDATE", data: { ...account, id: account.external_id || account.name, token_data: undefined }, user_id: req.user_id });
+    res.json({ ...account.toJSON(), id: account.external_id || account.name });
 });
 
 router.delete("/", route({}), async (req: Request, res: Response) => {

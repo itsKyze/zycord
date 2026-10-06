@@ -77,7 +77,7 @@
         }
     } catch (_) {}
 
-    // Rebrand domain verification instructions in the UI (text nodes + inputs)
+    // Rebrand domain verification instructions in the UI (text nodes + inputs + anchor links)
     const brandDomainInstructions = () => {
         if (!document.body) return;
         const brandName = getBrandName();
@@ -114,7 +114,58 @@
                     .replace(/\/\.well-known\/discord/gi, `/.well-known/${brandName}`);
             }
         }
+
+        // Fix any connection links that have numeric snowflake hrefs (e.g. https://1556977716765426788/)
+        document.querySelectorAll("a[href]").forEach((a) => {
+            const href = a.getAttribute("href") || "";
+            if (/^https?:\/\/\d{15,22}\/?$/i.test(href)) {
+                const text = (a.textContent || "").trim().replace(/[↗\s]/g, "");
+                if (text && text.includes(".")) {
+                    a.setAttribute("href", `https://${text}`);
+                    a.setAttribute("target", "_blank");
+                    a.setAttribute("rel", "noopener noreferrer");
+                }
+            }
+        });
     };
+
+    // Global capture listener to ensure clicking domain connections opens directly in browser
+    document.addEventListener(
+        "click",
+        (e) => {
+            const target = e.target;
+            if (!target) return;
+            const link = target.closest("a, [role='link'], [role='button']");
+            if (!link) return;
+
+            const href = link.getAttribute("href") || link.href || "";
+            const text = (link.textContent || "").trim().replace(/[↗\s]/g, "");
+
+            // 1. If href is a numeric snowflake like https://1556977716765426788/
+            if (/^https?:\/\/\d{15,22}\/?$/i.test(href)) {
+                e.preventDefault();
+                e.stopPropagation();
+                const domain = (text && text.includes(".")) ? text : null;
+                if (domain) {
+                    window.open(`https://${domain}`, "_blank", "noopener,noreferrer");
+                }
+                return;
+            }
+
+            // 2. If it is a domain connection badge on a profile
+            const isConnectionElement =
+                link.closest("[class*='connectedAccount']") ||
+                link.closest("[class*='connection_']") ||
+                (link.classList && Array.from(link.classList).some((c) => c.includes("connectedAccount") || c.includes("connection")));
+
+            if (isConnectionElement && text && text.includes(".") && !text.includes(" ")) {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(`https://${text}`, "_blank", "noopener,noreferrer");
+            }
+        },
+        true
+    );
 
     if (typeof MutationObserver !== "undefined") {
         const observer = new MutationObserver(() => brandDomainInstructions());

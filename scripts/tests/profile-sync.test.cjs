@@ -101,6 +101,7 @@ const harness = () => {
                                     }
                                     assert.deepEqual(Array.from(columns), [
                                         "connected_accounts.id",
+                                        "connected_accounts.external_id",
                                         "connected_accounts.type",
                                         "connected_accounts.name",
                                         "connected_accounts.verified",
