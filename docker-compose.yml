@@ -73,10 +73,8 @@ services:
             TRUSTED_PROXIES: ${TRUSTED_PROXIES:-}
             WRTC_PUBLIC_IP: ${WRTC_PUBLIC_IP}
             WRTC_PORT_MIN: ${WRTC_PORT:-50000}
-            WRTC_PORT_MAX: ${WRTC_PORT:-50000}
-            CAP_INSTANCE_URL: ${CAP_INSTANCE_URL:-}
-            CAP_SITE_KEY: ${CAP_SITE_KEY:-}
-            CAP_SECRET_KEY: ${CAP_SECRET_KEY:-}
+            HCAPTCHA_SITE_KEY: ${HCAPTCHA_SITE_KEY:-}
+            HCAPTCHA_SECRET_KEY: ${HCAPTCHA_SECRET_KEY:-}
             SMTP_HOST: ${SMTP_HOST:-}
             SMTP_PORT: ${SMTP_PORT:-}
             SMTP_SECURE: ${SMTP_SECURE:-}
