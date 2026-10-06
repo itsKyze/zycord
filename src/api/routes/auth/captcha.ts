@@ -35,6 +35,16 @@ router.get(
     }),
     (req: Request, res: Response) => {
         const { security, register, login, passwordReset } = Config.get();
+        if (security.captcha.enabled && (security.captcha.service === "hcaptcha" || security.captcha.service === "recaptcha")) {
+            return res.json({
+                service: security.captcha.service,
+                sitekey: security.captcha.sitekey,
+                endpoint: null,
+                register: register.requireCaptcha,
+                login: login.requireCaptcha && captchaEnabled(),
+                password_reset: passwordReset.requireCaptcha && captchaEnabled(),
+            });
+        }
         if (register.requireCaptcha)
             return res.json({
                 service: "cap",

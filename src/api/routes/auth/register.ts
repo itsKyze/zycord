@@ -62,7 +62,7 @@ router.post(
         const { register, limits } = Config.get();
         const ip = req.ip!;
 
-        const captcha = await checkRegistrationCaptcha(body.captcha_key, false);
+        const captcha = await checkRegistrationCaptcha(body.captcha_key, false, ip);
         if (captcha) return res.status(400).json(captcha);
 
         // Reg tokens
@@ -356,7 +356,8 @@ router.post(
                 },
             });
 
-        if (register.requireCaptcha && registrationCapEndpoint() === "/api/v9/auth/cap/") {
+        const { security } = Config.get();
+        if (register.requireCaptcha && security.captcha.service === "cap" && registrationCapEndpoint() === "/api/v9/auth/cap/") {
             const claimed = await checkRegistrationCaptcha(body.captcha_key);
             if (claimed) return res.status(400).json(claimed);
         }
