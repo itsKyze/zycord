@@ -32,8 +32,35 @@ router.get(
         },
     }),
     (req: Request, res: Response) => {
-        const config = ConnectionConfig.get() as Record<string, { enabled?: boolean }>;
-        res.json({ ...Object.fromEntries(Object.entries(config).map(([key, value]) => [key, { enabled: !!value?.enabled }])), domain: { enabled: true } });
+        const config = (ConnectionConfig.get() ?? {}) as Record<string, { enabled?: boolean }>;
+        const allTypes = [
+            "battlenet",
+            "discord",
+            "epicgames",
+            "facebook",
+            "github",
+            "reddit",
+            "spotify",
+            "twitch",
+            "twitter",
+            "xbox",
+            "youtube",
+            "steam",
+            "playstation_network",
+            "tiktok",
+            "crunchyroll",
+            "domain",
+        ];
+        const result: Record<string, { enabled: boolean }> = {};
+        for (const type of allTypes) {
+            result[type] = { enabled: true };
+        }
+        for (const [key, value] of Object.entries(config)) {
+            if (value?.enabled !== undefined) {
+                result[key] = { enabled: !!value.enabled };
+            }
+        }
+        res.json(result);
     },
 );
 

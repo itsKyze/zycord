@@ -42,8 +42,15 @@ router.get("/", route({}), async (req: Request, res: Response) => {
             },
         });
 
-    res.json({
-        url: connection.getAuthorizationUrl(req.user_id),
+    if (connection.isConfigured) {
+        return res.json({
+            url: connection.getAuthorizationUrl(req.user_id),
+        });
+    }
+
+    const state = connection.createState(req.user_id);
+    return res.json({
+        url: `/connections/${connection.id}/prompt?state=${state}`,
     });
 });
 

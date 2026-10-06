@@ -26,11 +26,15 @@ const CANDIDATE = /discord|discrod|zycord|zycord|nitr|premium|ディスコード
 const brandText = (text: string, name: string) => {
     if (!CANDIDATE.test(text)) return text;
     const host = location.host;
+    const lower = name.toLowerCase();
     return text
         .replace(/https?:\/\/discord\.gg\//g, () => `${location.origin}/invite/`)
         .replace(/(?<![\w@.-])discord\.gg\//g, () => `${host}/invite/`)
         .replace(/https?:\/\/(?:www\.)?discord\.com(?![\w.-])/g, () => location.origin)
         .replace(/(?<![\w@./-])discord\.com(?![\w.-])/g, () => host)
+        .replace(/_discord/gi, `_${lower}`)
+        .replace(/\/\.well-known\/discord/gi, `/.well-known/${lower}`)
+        .replace(/discord=/gi, `${lower}=`)
         .replace(/DISCORD/g, (match) => (/741741/.test(text) ? match : name.toUpperCase()))
         .replace(/ZYCORD/g, () => name.toUpperCase())
         .replace(/Discord|Discrod|Zycord|ディスコード/g, () => name)

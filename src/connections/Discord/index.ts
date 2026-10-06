@@ -44,8 +44,6 @@ export default class DiscordConnection extends Connection {
 
     init(): void {
         this.settings = ConnectionLoader.getConnectionConfig<DiscordSettings>(this.id, this.settings);
-
-        if (this.settings.enabled && (!this.settings.clientId || !this.settings.clientSecret)) throw new Error(`Invalid settings for connection ${this.id}`);
     }
 
     public get isConfigured(): boolean {

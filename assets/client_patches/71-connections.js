@@ -26,8 +26,39 @@
         const enabled = await config;
         if (!platforms || !enabled) return;
         platforms.map((platform) => {
-            if (platform.enabled && !enabled[platform.type]?.enabled) platform.enabled = false;
+            if (enabled[platform.type]?.enabled) {
+                platform.enabled = true;
+            } else if (enabled[platform.type] && enabled[platform.type].enabled === false) {
+                platform.enabled = false;
+            }
             return platform;
         });
     }, 500);
+
+    // Rebrand domain verification instructions in the UI
+    const brandDomainInstructions = () => {
+        if (!document.body) return;
+        const brandName = (window.GLOBAL_ENV?.INSTANCE_NAME || "zycord").toLowerCase();
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        let node;
+        while ((node = walker.nextNode())) {
+            if (node.nodeValue && (node.nodeValue.includes("_discord") || node.nodeValue.includes("/.well-known/discord") || node.nodeValue.includes("discord="))) {
+                node.nodeValue = node.nodeValue
+                    .replace(/_discord/gi, `_${brandName}`)
+                    .replace(/\/\.well-known\/discord/gi, `/.well-known/${brandName}`)
+                    .replace(/discord=/gi, `${brandName}=`);
+            }
+        }
+    };
+
+    if (typeof MutationObserver !== "undefined") {
+        const observer = new MutationObserver(() => brandDomainInstructions());
+        if (document.body) {
+            observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+        } else {
+            document.addEventListener("DOMContentLoaded", () => {
+                observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+            });
+        }
+    }
 })();

@@ -43,12 +43,21 @@ export const DomainConnection = {
     },
 
     async verify(domain: string, proof: string) {
-        const records = await dns.resolveTxt(`_discord.${domain}`).catch(() => [] as string[][]);
-        if (records.some((parts) => parts.join("").trim() === proof)) return true;
+        // Check Zycord TXT record first, then Discord fallback
+        const zycordRecords = await dns.resolveTxt(`_zycord.${domain}`).catch(() => [] as string[][]);
+        if (zycordRecords.some((parts) => parts.join("").trim() === proof)) return true;
+
+        const discordRecords = await dns.resolveTxt(`_discord.${domain}`).catch(() => [] as string[][]);
+        if (discordRecords.some((parts) => parts.join("").trim() === proof)) return true;
 
         const addresses = await dns.lookup(domain, { all: true }).catch(() => []);
         if (!addresses.length || addresses.some((x) => isPrivateAddress(x.address))) return false;
-        const res = await fetch(`https://${domain}/.well-known/discord`, { redirect: "error", signal: AbortSignal.timeout(5000) }).catch(() => undefined);
+
+        // Check Zycord well-known first, then Discord fallback
+        let res = await fetch(`https://${domain}/.well-known/zycord`, { redirect: "error", signal: AbortSignal.timeout(5000) }).catch(() => undefined);
+        if (res?.ok && (await res.text().catch(() => "")).slice(0, 1024).trim() === proof) return true;
+
+        res = await fetch(`https://${domain}/.well-known/discord`, { redirect: "error", signal: AbortSignal.timeout(5000) }).catch(() => undefined);
         if (!res?.ok) return false;
         return (await res.text().catch(() => "")).slice(0, 1024).trim() === proof;
     },
