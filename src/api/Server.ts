@@ -142,6 +142,13 @@ export class SpacebarServer extends Server {
         app.use("/api/v10", api); // https://discord.com/developers/docs/change-log#api-v10
         app.use("/api", api); // allow unversioned requests
 
+        app.use("/connections", (req, res, next) => {
+            if (!req.url.startsWith("/connections")) {
+                req.url = "/connections" + (req.url === "/" ? "" : req.url);
+            }
+            api(req, res, next);
+        });
+
         app.use("/imageproxy/:hash/:size/:url", ImageProxy);
         app.get("/external/:hash/{*path}", ExternalProxy);
 

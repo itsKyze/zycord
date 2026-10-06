@@ -419,7 +419,7 @@ export default function TestClient(app: Application) {
     });
 
     app.get("/{*splat}", (req, res, next) => {
-        if (/^\/(api|cdn|attachments|avatars|icons|banners|emojis|stickers|imageproxy)\b/.test(req.path)) return next();
+        if (/^\/(api|cdn|attachments|avatars|icons|banners|emojis|stickers|imageproxy|connections)\b/.test(req.path)) return next();
         const sourceChanged = DEVELOPMENT && stamp !== (stamp = sourceStamp());
         if (sourceChanged) roots = clientRoots();
         if (sourceChanged || brand !== (brand = brandStamp())) page = renderPage();

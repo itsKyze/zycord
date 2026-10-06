@@ -167,6 +167,10 @@ const harness = () => {
                     profileMetadata: (source) => source.toPublicUser(),
                     authenticatorTypes: async () => ["totp"],
                     resolveProfileCollectibles: async (_current, ids) => ids ?? [],
+                    BOOST_MILESTONES: [],
+                    calculateMonthsElapsed: () => 0,
+                    isSubscriptionBadge: () => false,
+                    NITRO_MILESTONES: [],
                 };
             if (name === "@spacebar/util")
                 return {
