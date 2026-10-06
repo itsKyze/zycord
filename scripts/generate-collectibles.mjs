@@ -196,20 +196,30 @@ for (const np of nameplatesList) {
 const framesList = [
     { name: "Cherry Blossom Crest", catIdx: 0 },
     { name: "Katana Blade Border", catIdx: 0 },
+    { name: "Samurai Gold Dragon", catIdx: 0 },
     { name: "Cyber Neural Frame", catIdx: 1 },
     { name: "Holo Terminal Border", catIdx: 1 },
+    { name: "Neon Matrix Grid", catIdx: 1 },
     { name: "Golden Royalty Crest", catIdx: 2 },
     { name: "Arcane Runestone Frame", catIdx: 2 },
+    { name: "Mystic Archmage Halo", catIdx: 2 },
     { name: "Pastel Cloud Ribbon", catIdx: 3 },
     { name: "Heart Blossom Border", catIdx: 3 },
+    { name: "Cozy Kitten Garland", catIdx: 3 },
     { name: "Gothic Spikes Frame", catIdx: 4 },
     { name: "Cursed Skull Obsidian", catIdx: 4 },
+    { name: "Shadow Realm Reaver", catIdx: 4 },
     { name: "Pixel CRT Monitor", catIdx: 5 },
     { name: "Arcade Cabinet Frame", catIdx: 5 },
+    { name: "Synthwave Sunset Rail", catIdx: 5 },
     { name: "Elemental Surge Crest", catIdx: 6 },
     { name: "Glacial Ice Shield", catIdx: 6 },
+    { name: "Inferno Flame Corona", catIdx: 6 },
     { name: "Celestial Star Halo", catIdx: 7 },
     { name: "Galaxy Orbit Ring", catIdx: 7 },
+    { name: "Solar Eclipse Corona", catIdx: 7 },
+    { name: "Imperial Diamond Crest", catIdx: 8 },
+    { name: "Emerald Sovereign Plinth", catIdx: 8 },
 ];
 
 for (const fr of framesList) {
@@ -375,8 +385,8 @@ for (const bucket of categoryBuckets) {
                 { id: "1", type: "staple", order: "front", anchor: "top", responsive: false },
             ],
             inner_width: 1200,
-            overflow_top: 0,
-            overflow_bottom: 0,
+            overflow_top: 40,
+            overflow_bottom: 40,
             overflow_horizontal: 56,
         };
 

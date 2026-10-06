@@ -26,6 +26,7 @@ import { ProcessLifecycle, SystemdLifecycle } from "../util/util/ProcessLifecycl
 import { Monitoring } from "../util/monitoring/Monitoring";
 import guildProfilesRoute from "./routes/guild-profiles";
 import profileEffectsRoute from "./routes/assets/profile_effects";
+import collectiblesAssetsRoute from "./routes/assets/collectibles";
 import { storage } from "./util";
 import { ErrorHandler } from "@spacebar/cdn/util/ErrorHandler";
 
@@ -84,6 +85,9 @@ export class CDNServer extends Server {
         this.app.use("/assets/profile_effects", profileEffectsRoute);
         this.app.use("/profile-effects", profileEffectsRoute);
         if (process.env.LOG_ROUTES !== "false") console.log("[Server] Route /assets/profile_effects registered");
+
+        this.app.use("/assets/collectibles", collectiblesAssetsRoute);
+        if (process.env.LOG_ROUTES !== "false") console.log("[Server] Route /assets/collectibles registered");
 
         await super.start();
         await SystemdLifecycle.setStatus(`Listening on ${this.options.host}:${this.options.port}...`);

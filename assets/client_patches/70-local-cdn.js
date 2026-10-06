@@ -23,6 +23,7 @@
     const rules = [
         [/^https:\/\/cdn\.discordapp\.com\/assets\/content\//, () => `${cdn()}/content-assets/`],
         [/^https:\/\/cdn\.discordapp\.com\/assets\/profile_effects\//, () => `${cdn()}/assets/profile_effects/`],
+        [/^https:\/\/cdn\.discordapp\.com\/assets\/collectibles\//, () => `${cdn()}/assets/collectibles/`],
         [/^https:\/\/cdn\.discordapp\.com\/assets\/krisp_browser_models\//, () => `${cdn()}/krisp_browser_models/`],
         [/^https:\/\/cdn\.discordapp\.com\/(media\/v1\/collectibles-shop|badge-icons|avatar-decoration-presets|app-icons|bad-domains)\//, (match, prefix) => `${cdn()}/${prefix}/`],
     ];
