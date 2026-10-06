@@ -4,289 +4,240 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Spacebar Server</title>
-
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
-			rel="stylesheet"
-		/>
-
+		<title>Zycord</title>
+		<link rel="icon" href="/static/logo.png" type="image/png" />
 		<style>
-			body {
-				font-family: "Montserrat", sans-serif;
-				background-color: rgb(10, 10, 10);
-				color: white;
-				font-size: 1.1rem;
-				height: 100vh;
-			}
-
 			* {
-				padding: 0;
 				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
 			}
-
-			p {
-				margin-top: 10px;
-			}
-
-			#wordmark {
-				width: min(200px, 50%);
-				margin: 20px;
-				position: absolute;
-				top: 20px;
-				left: 20px;
-			}
-
-			.title {
-				font-size: 1.5rem;
-				font-weight: 600;
-			}
-
-			.subtitle {
-				font-size: 1.1rem;
-				font-weight: 400;
-			}
-
-			.container {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				height: 100%;
-			}
-
-			.box {
-				min-width: 350px;
-				width: max(22vw, 350px);
-				padding: 32px;
-				border-radius: 8px;
-				background-color: rgb(32, 32, 32);
-				align-items: center;
+			body {
+				background-color: #000000;
+				color: #ffffff;
+				font-family: 'gg sans', 'Noto Sans', Helvetica, Arial, sans-serif;
+				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
-				text-align: center;
+				overflow: hidden;
+				-webkit-font-smoothing: antialiased;
 			}
-
-			#captcha-container {
-				margin: 20px 0;
+			.header {
+				padding: 24px 32px;
+				display: flex;
+				align-items: center;
 			}
-
-			.retry-button {
-				margin-top: 15px;
-				padding: 10px 20px;
-				background-color: #5865f2;
-				color: white;
-				border: none;
-				border-radius: 4px;
+			.brand {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				text-decoration: none;
+				color: #ffffff;
 				cursor: pointer;
-				font-family: "Montserrat", sans-serif;
 			}
-
-			.retry-button:hover {
-				background-color: #4752c4;
+			.brand img {
+				width: 32px;
+				height: 32px;
+				border-radius: 8px;
+				display: block;
 			}
-
-			.retry-button:disabled {
-				background-color: #666;
-				cursor: not-allowed;
+			.brand-text {
+				font-size: 20px;
+				font-weight: 800;
+				letter-spacing: -0.2px;
+				color: #ffffff;
+			}
+			.main-content {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				text-align: center;
+				padding: 20px;
+				margin-top: -60px;
+			}
+			.illustration {
+				width: 140px;
+				height: 140px;
+				margin-bottom: 24px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			}
+			@keyframes popIn {
+				0% {
+					transform: scale(0.7);
+					opacity: 0;
+				}
+				100% {
+					transform: scale(1);
+					opacity: 1;
+				}
+			}
+			.title {
+				font-size: 24px;
+				font-weight: 700;
+				line-height: 30px;
+				margin-bottom: 24px;
+				color: #ffffff;
+			}
+			.subtitle {
+				font-size: 15px;
+				color: #949ba4;
+				max-width: 400px;
+				line-height: 20px;
+				margin-bottom: 24px;
+			}
+			.btn {
+				background-color: #ffffff;
+				color: #000000;
+				font-size: 14px;
+				font-weight: 600;
+				padding: 11px 24px;
+				border-radius: 4px;
+				border: none;
+				cursor: pointer;
+				text-decoration: none;
+				display: inline-block;
+				transition: background-color 0.15s ease, transform 0.1s ease;
+			}
+			.btn:hover {
+				background-color: #e3e5e8;
+			}
+			.btn:active {
+				transform: scale(0.98);
+			}
+			.spinner {
+				width: 36px;
+				height: 36px;
+				border: 3px solid rgba(255, 255, 255, 0.2);
+				border-top-color: #ffffff;
+				border-radius: 50%;
+				animation: spin 0.8s linear infinite;
+				margin-bottom: 20px;
+			}
+			@keyframes spin {
+				to {
+					transform: rotate(360deg);
+				}
 			}
 		</style>
 	</head>
-
 	<body>
-		<div class="container">
-			<img
-				alt="Spacebar Logo"
-				id="wordmark"
-				src="https://raw.githubusercontent.com/spacebarchat/spacebarchat/master/branding/svg/Spacebar__Logo-Blue.svg"
-			/>
+		<header class="header">
+			<a class="brand" href="/channels/@me">
+				<img src="/static/logo.png" alt="Zycord" />
+				<span class="brand-text">Zycord</span>
+			</a>
+		</header>
 
-			<div class="box">
-				<p id="title" class="title">Verifying your email</p>
-				<p id="subtitle" class="subtitle">Please wait...</p>
-			</div>
-		</div>
+		<main class="main-content" id="stage">
+			<div class="spinner" id="spinner"></div>
+			<h1 class="title" id="title">Verifying email…</h1>
+			<p class="subtitle" id="subtitle">Please wait while we confirm your email address.</p>
+			<div id="actionContainer" style="display: none;"></div>
+		</main>
 
 		<script>
-			window.onload = verify;
-
-			let captchaConfig = null;
-			let currentToken = null;
-
-			function verify() {
+			(async () => {
 				const title = document.getElementById("title");
 				const subtitle = document.getElementById("subtitle");
+				const spinner = document.getElementById("spinner");
+				const actionContainer = document.getElementById("actionContainer");
+				const stage = document.getElementById("stage");
 
-				// if no fragment identifier in URL, error
-				if (!window.location.hash) {
-					title.innerText = "Invalid Link";
-					subtitle.innerText = "Please check the link and try again.";
+				const hashParams = new URLSearchParams(location.hash.replace(/^#/, ""));
+				const searchParams = new URLSearchParams(location.search);
+				const verifyToken = hashParams.get("token") || searchParams.get("token");
+
+				const showSuccess = () => {
+					spinner.style.display = "none";
+					subtitle.style.display = "none";
+
+					const envelopeHtml = `
+						<div class="illustration">
+							<svg width="140" height="130" viewBox="0 0 140 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+								<g filter="drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.4))">
+									<rect x="18" y="32" width="104" height="76" rx="10" transform="rotate(-3 70 70)" fill="#1e1f22" stroke="#2b2d31" stroke-width="2"/>
+									<!-- Envelope back body -->
+									<path d="M22 42C22 36.4772 26.4772 32 32 32H108C113.523 32 118 36.4772 118 42V98C118 103.523 113.523 108 108 108H32C26.4772 108 22 103.523 22 98V42Z" fill="url(#envGradient)"/>
+									<!-- Envelope flap fold lines -->
+									<path d="M24 38L70 74L116 38" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
+									<path d="M24 104L58 70" stroke="#7289da" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+									<path d="M116 104L82 70" stroke="#7289da" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+									<!-- Wax Seal Circle -->
+									<circle cx="70" cy="74" r="19" fill="#5865f2" stroke="#4752c4" stroke-width="2"/>
+									<circle cx="70" cy="74" r="15" fill="#4752c4"/>
+									<!-- Checkmark inside seal -->
+									<path d="M64 74.5L68 78.5L76 69.5" stroke="#57f287" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+								</g>
+								<defs>
+									<linearGradient id="envGradient" x1="22" y1="32" x2="118" y2="108" gradientUnits="userSpaceOnUse">
+										<stop stop-color="#e3e8f8"/>
+										<stop offset="1" stop-color="#c1cbf5"/>
+									</linearGradient>
+								</defs>
+							</svg>
+						</div>
+					`;
+
+					stage.innerHTML = `
+						${envelopeHtml}
+						<h1 class="title">Email Verified!</h1>
+						<div>
+							<button class="btn" id="continueBtn">Continue to Zycord</button>
+						</div>
+					`;
+
+					document.getElementById("continueBtn").onclick = () => {
+						location.href = "/channels/@me";
+					};
+				};
+
+				const showError = (message) => {
+					spinner.style.display = "none";
+					title.innerText = "Email Verification Failed";
+					subtitle.innerText = message || "This link is invalid or has expired. Request a new verification email from your account settings.";
+					actionContainer.style.display = "block";
+					actionContainer.innerHTML = `<button class="btn" onclick="location.href='/channels/@me'">Continue to Zycord</button>`;
+				};
+
+				if (!verifyToken) {
+					showError("No verification token was provided in the link.");
 					return;
 				}
 
-				// convert fragment to a key-value pair
-				const fragment = window.location.hash.substring(1);
-				const pairs = fragment.split("&");
-				const values = {};
-				pairs.forEach((pair) => {
-					const [key, value] = pair.split("=");
-					values[key] = value;
-				});
+				try {
+					let localAuthToken = null;
+					try {
+						localAuthToken = JSON.parse(localStorage.getItem("token") ?? "null");
+					} catch {}
 
-				// ensure token key is present
-				if (!values.token) {
-					title.innerText = "Invalid Link";
-					subtitle.innerText = "Please check the link and try again.";
-					return;
-				}
-
-				currentToken = values.token;
-				performVerification();
-			}
-
-			function performVerification(captchaResponse = null) {
-				const title = document.getElementById("title");
-				const subtitle = document.getElementById("subtitle");
-
-				const requestBody = { token: currentToken };
-				if (captchaResponse) {
-					requestBody.captcha_key = captchaResponse;
-				}
-
-				// make request to server
-				fetch("/api/auth/verify", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify(requestBody),
-				})
-					.then((response) => response.json())
-					.then((data) => {
-						// check for captcha requirement
-						if (data.captcha_key && data.captcha_key.includes("captcha-required")) {
-							captchaConfig = {
-								sitekey: data.captcha_sitekey,
-								service: data.captcha_service
-							};
-							showCaptcha();
-							return;
-						}
-
-						// check for other error responses
-						if ("message" in data) {
-							title.innerText = "Email Verification Link Expired";
-							subtitle.innerText = "Please request a new verification link.";
-							return;
-						}
-
-						title.innerText = "Email Verified";
-						subtitle.innerText = "You can now login.";
-					})
-					.catch((error) => {
-						title.innerText = "Email Verification Failed";
-						subtitle.innerText = error;
+					const response = await fetch("/api/v9/auth/verify", {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+							...(localAuthToken ? { Authorization: localAuthToken } : {})
+						},
+						body: JSON.stringify({ token: verifyToken }),
 					});
-			}
 
-			function showCaptcha() {
-				const title = document.getElementById("title");
-				const subtitle = document.getElementById("subtitle");
-				const box = document.querySelector(".box");
+					const data = await response.json().catch(() => ({}));
 
-				title.innerText = "Please complete the captcha";
-				subtitle.innerText = "We need to verify that you're human.";
-
-				// Create captcha container if it doesn't exist
-				let captchaContainer = document.getElementById("captcha-container");
-				if (!captchaContainer) {
-					captchaContainer = document.createElement("div");
-					captchaContainer.id = "captcha-container";
-					box.appendChild(captchaContainer);
-				}
-
-				// Load and render captcha based on service
-				if (captchaConfig.service === "hcaptcha") {
-					loadHCaptcha();
-				} else if (captchaConfig.service === "recaptcha") {
-					loadReCaptcha();
-				}
-			}
-
-			function loadHCaptcha() {
-				if (window.hcaptcha) {
-					renderHCaptcha();
-					return;
-				}
-
-				const script = document.createElement("script");
-				script.src = "https://js.hcaptcha.com/1/api.js";
-				script.onload = renderHCaptcha;
-				document.head.appendChild(script);
-			}
-
-			function renderHCaptcha() {
-				const captchaContainer = document.getElementById("captcha-container");
-				captchaContainer.innerHTML = "";
-
-				window.hcaptcha.render(captchaContainer, {
-					sitekey: captchaConfig.sitekey,
-					theme: "dark",
-					callback: function(response) {
-						performVerification(response);
-					},
-					"expired-callback": function() {
-						const title = document.getElementById("title");
-						const subtitle = document.getElementById("subtitle");
-						title.innerText = "Captcha Expired";
-						subtitle.innerText = "Please refresh the page and try again.";
-					},
-					"error-callback": function() {
-						const title = document.getElementById("title");
-						const subtitle = document.getElementById("subtitle");
-						title.innerText = "Captcha Error";
-						subtitle.innerText = "Please refresh the page and try again.";
+					if (response.ok) {
+						if (data.token && !localAuthToken) {
+							localStorage.setItem("token", JSON.stringify(data.token));
+						}
+						showSuccess();
+					} else {
+						showError(data?.token?.message || data?.message);
 					}
-				});
-			}
-
-			function loadReCaptcha() {
-				if (window.grecaptcha) {
-					renderReCaptcha();
-					return;
+				} catch (err) {
+					showError("Network error occurred while verifying. Please try again.");
 				}
-
-				const script = document.createElement("script");
-				script.src = "https://www.google.com/recaptcha/api.js";
-				script.onload = renderReCaptcha;
-				document.head.appendChild(script);
-			}
-
-			function renderReCaptcha() {
-				const captchaContainer = document.getElementById("captcha-container");
-				captchaContainer.innerHTML = "";
-
-				window.grecaptcha.render(captchaContainer, {
-					sitekey: captchaConfig.sitekey,
-					theme: "dark",
-					callback: function(response) {
-						performVerification(response);
-					},
-					"expired-callback": function() {
-						const title = document.getElementById("title");
-						const subtitle = document.getElementById("subtitle");
-						title.innerText = "Captcha Expired";
-						subtitle.innerText = "Please refresh the page and try again.";
-					},
-					"error-callback": function() {
-						const title = document.getElementById("title");
-						const subtitle = document.getElementById("subtitle");
-						title.innerText = "Captcha Error";
-						subtitle.innerText = "Please refresh the page and try again.";
-					}
-				});
-			}
+			})();
 		</script>
 	</body>
 </html>
