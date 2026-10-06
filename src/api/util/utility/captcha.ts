@@ -18,6 +18,7 @@
 
 import { Config } from "@spacebar/util";
 import { CaptchaRequiredResponse } from "@spacebar/schemas";
+import { Request } from "express";
 
 export interface CaptchaVerifyResult {
     success: boolean;
@@ -81,6 +82,7 @@ export async function verifyCaptcha(response: string, ip?: string): Promise<Capt
     }
 
     try {
+        console.log(`[CAPTCHA] Verifying ${service} token (length: ${response?.length}, prefix: ${response?.slice(0, 10)}...)`);
         const bodyParams = new URLSearchParams({
             response,
             secret: secret!,
@@ -110,6 +112,18 @@ export async function verifyCaptcha(response: string, ip?: string): Promise<Capt
     }
 }
 
+export function extractCaptchaToken(req: Request): string | string[] | undefined {
+    const fromHeaders = req.get("x-captcha-key") || req.get("x-captcha-response") || req.get("x-hcaptcha-response") || req.get("h-captcha-response");
+    if (fromHeaders) return fromHeaders;
+    const body = req.body as Record<string, unknown> | undefined;
+    if (body) {
+        if (body.captcha_key) return body.captcha_key as string | string[];
+        if (body["h-captcha-response"]) return body["h-captcha-response"] as string;
+        if (body["g-recaptcha-response"]) return body["g-recaptcha-response"] as string;
+    }
+    return undefined;
+}
+
 export async function checkCaptcha(required: boolean, response: string | string[] | null | undefined, ip?: string): Promise<CaptchaRequiredResponse | null> {
     if (!required || !captchaEnabled()) return null;
     const { sitekey, service } = Config.get().security.captcha;
@@ -118,10 +132,25 @@ export async function checkCaptcha(required: boolean, response: string | string[
         captcha_sitekey: service === "cap" && Config.get().security.captcha.capMode !== "standalone" ? "zycord" : sitekey!,
         captcha_service: service!,
     });
-    // Discord native client sends captcha_key as an array ["token"], normalize to string
-    const token = Array.isArray(response) ? response[0] : response;
-    if (!token) return challenge(["captcha-required"]);
+    // Discord native client sends captcha_key as an array ["token"] or string, normalize to string
+    let token = Array.isArray(response) ? response[0] : response;
+    if (typeof token === "string") {
+        token = token.trim();
+        if (token.startsWith("[") && token.endsWith("]")) {
+            try {
+                const parsed = JSON.parse(token);
+                if (Array.isArray(parsed) && parsed.length > 0) token = parsed[0];
+            } catch {}
+        }
+    }
+    if (!token) {
+        console.log(`[CAPTCHA] No token provided in header or body, returning challenge`);
+        return challenge(["captcha-required"]);
+    }
     const verify = await verifyCaptcha(token, ip);
+    if (!verify.success) {
+        console.warn(`[CAPTCHA] Verification failed:`, verify["error-codes"]);
+    }
     return verify.success ? null : challenge(verify["error-codes"] ?? ["invalid-input-response"]);
 }
 
@@ -136,8 +165,17 @@ export function registrationCapEndpoint() {
 export async function checkRegistrationCaptcha(response: string | string[] | null | undefined, consume = true, ip?: string): Promise<CaptchaRequiredResponse | null> {
     if (!Config.get().register.requireCaptcha) return null;
     const { security } = Config.get();
-    // Discord native client sends captcha_key as an array ["token"], normalize to string
-    const normalized = Array.isArray(response) ? response[0] : response;
+    // Discord native client sends captcha_key as an array ["token"] or string, normalize to string
+    let normalized = Array.isArray(response) ? response[0] : response;
+    if (typeof normalized === "string") {
+        normalized = normalized.trim();
+        if (normalized.startsWith("[") && normalized.endsWith("]")) {
+            try {
+                const parsed = JSON.parse(normalized);
+                if (Array.isArray(parsed) && parsed.length > 0) normalized = parsed[0];
+            } catch {}
+        }
+    }
     if (security.captcha.enabled && (security.captcha.service === "hcaptcha" || security.captcha.service === "recaptcha")) {
         return checkCaptcha(true, normalized, ip);
     }

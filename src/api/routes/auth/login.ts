@@ -18,7 +18,7 @@
 
 import bcrypt from "bcrypt";
 import { Request, Response, Router } from "express";
-import { loginMfaResponse, checkCaptcha } from "@spacebar/api/util";
+import { loginMfaResponse, checkCaptcha, extractCaptchaToken } from "@spacebar/api/util";
 import { route } from "@spacebar/api/middlewares";
 import { User } from "@spacebar/database";
 import { Config, FieldErrors, generateToken } from "@spacebar/util";
@@ -45,7 +45,7 @@ router.post(
 
         const config = Config.get();
 
-        const captcha = await checkCaptcha(config.login.requireCaptcha, captcha_key, req.ip);
+        const captcha = await checkCaptcha(config.login.requireCaptcha, extractCaptchaToken(req), req.ip);
         if (captcha) return res.status(400).json(captcha);
 
         const user = await User.findOneOrFail({
