@@ -93,6 +93,7 @@ if (smtpHost) {
         username: env("SMTP_USERNAME") ?? null,
         password: env("SMTP_PASSWORD") ?? null,
     });
+    section("defaults", "user").verified = false;
 }
 
 fs.mkdirSync(path.dirname(file), { recursive: true });
