@@ -59,8 +59,6 @@ export default class SpotifyConnection extends RefreshableConnection {
         this.refreshEnabled = false;
 
         this.settings = ConnectionLoader.getConnectionConfig<SpotifySettings>(this.id, this.settings);
-
-        if (this.settings.enabled && (!this.settings.clientId || !this.settings.clientSecret)) throw new Error(`Invalid settings for connection ${this.id}`);
     }
 
     public get isConfigured(): boolean {

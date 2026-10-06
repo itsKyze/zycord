@@ -178,7 +178,7 @@ index 5d25b17..b40f27c 100644
 +
 +export const brand = <T,>(text: T): T =>
 +    typeof text === "string"
-+        ? text.replace(/\bDiscord\b/g, instanceName()).replace(/\bDISCORD\b/g, instanceName().toUpperCase()).replace(/\b(?:Nitro|Premium)\b/gi, "Features") as T
++        ? text.replace(/\bDiscord\b/g, instanceName()).replace(/\bDISCORD\b/g, instanceName().toUpperCase()).replace(/_discord/gi, `_${instanceName().toLowerCase()}`).replace(/\/\.well-known\/discord/gi, `/.well-known/${instanceName().toLowerCase()}`).replace(/\b(?:Nitro|Premium)\b/gi, "Features") as T
 +        : text;
 +
  // exists to export default definePlugin({...})

@@ -17,7 +17,7 @@
 */
 
 export class GenericOAuthSettings {
-    enabled: boolean = false;
+    enabled: boolean = true;
     clientId: string | null = null;
     clientSecret: string | null = null;
 }
