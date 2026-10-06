@@ -24,21 +24,65 @@
         if (!platforms && ++attempts < 120) return;
         clearInterval(timer);
         const enabled = await config;
-        if (!platforms || !enabled) return;
+        if (!platforms) return;
         platforms.map((platform) => {
-            if (enabled[platform.type]?.enabled) {
+            if (enabled && enabled[platform.type]?.enabled) {
                 platform.enabled = true;
-            } else if (enabled[platform.type] && enabled[platform.type].enabled === false) {
+            } else if (enabled && enabled[platform.type] && enabled[platform.type].enabled === false) {
                 platform.enabled = false;
+            } else {
+                platform.enabled = true;
             }
             return platform;
         });
     }, 500);
 
-    // Rebrand domain verification instructions in the UI
+    const getBrandName = () => (window.GLOBAL_ENV?.INSTANCE_NAME || "zycord").toLowerCase();
+
+    // Intercept HTMLInputElement.value setter so React never sets _discord
+    try {
+        const origValueDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value");
+        if (origValueDescriptor && origValueDescriptor.set) {
+            const origSet = origValueDescriptor.set;
+            Object.defineProperty(HTMLInputElement.prototype, "value", {
+                ...origValueDescriptor,
+                set(val) {
+                    const brand = getBrandName();
+                    if (typeof val === "string" && (val.includes("_discord") || val.includes("/.well-known/discord") || val.includes("discord="))) {
+                        val = val
+                            .replace(/_discord/gi, `_${brand}`)
+                            .replace(/\/\.well-known\/discord/gi, `/.well-known/${brand}`)
+                            .replace(/discord=/gi, `${brand}=`);
+                    }
+                    return origSet.call(this, val);
+                },
+            });
+        }
+    } catch (_) {}
+
+    // Intercept clipboard copy so copying DNS records copies _zycord
+    try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            const origWriteText = navigator.clipboard.writeText.bind(navigator.clipboard);
+            navigator.clipboard.writeText = function (text) {
+                const brand = getBrandName();
+                if (typeof text === "string" && (text.includes("_discord") || text.includes("/.well-known/discord") || text.includes("discord="))) {
+                    text = text
+                        .replace(/_discord/gi, `_${brand}`)
+                        .replace(/\/\.well-known\/discord/gi, `/.well-known/${brand}`)
+                        .replace(/discord=/gi, `${brand}=`);
+                }
+                return origWriteText(text);
+            };
+        }
+    } catch (_) {}
+
+    // Rebrand domain verification instructions in the UI (text nodes + inputs)
     const brandDomainInstructions = () => {
         if (!document.body) return;
-        const brandName = (window.GLOBAL_ENV?.INSTANCE_NAME || "zycord").toLowerCase();
+        const brandName = getBrandName();
+
+        // Walk text nodes
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         let node;
         while ((node = walker.nextNode())) {
@@ -47,6 +91,27 @@
                     .replace(/_discord/gi, `_${brandName}`)
                     .replace(/\/\.well-known\/discord/gi, `/.well-known/${brandName}`)
                     .replace(/discord=/gi, `${brandName}=`);
+            }
+        }
+
+        // Walk input and textarea elements
+        const inputs = document.querySelectorAll("input, textarea");
+        for (const input of inputs) {
+            if (input.value && (input.value.includes("_discord") || input.value.includes("/.well-known/discord") || input.value.includes("discord="))) {
+                const oldVal = input.value;
+                input.value = input.value
+                    .replace(/_discord/gi, `_${brandName}`)
+                    .replace(/\/\.well-known\/discord/gi, `/.well-known/${brandName}`)
+                    .replace(/discord=/gi, `${brandName}=`);
+                if (input.value !== oldVal) {
+                    input.dispatchEvent(new Event("input", { bubbles: true }));
+                    input.dispatchEvent(new Event("change", { bubbles: true }));
+                }
+            }
+            if (input.placeholder && (input.placeholder.includes("_discord") || input.placeholder.includes("/.well-known/discord"))) {
+                input.placeholder = input.placeholder
+                    .replace(/_discord/gi, `_${brandName}`)
+                    .replace(/\/\.well-known\/discord/gi, `/.well-known/${brandName}`);
             }
         }
     };

@@ -39,6 +39,7 @@ export interface ProfileMetadataResponse {
     popout_animation_particle_type?: Snowflake | null;
     emoji?: EmojiResponse | null;
     profile_effect?: ProfileEffect | null;
+    profile_frame?: ProfileFrame | null;
 }
 
 export interface GuildProfileMetadataResponse extends ProfileMetadataResponse {
@@ -47,6 +48,11 @@ export interface GuildProfileMetadataResponse extends ProfileMetadataResponse {
 }
 
 export interface ProfileEffect {
+    id: Snowflake;
+    expires_at: number | null;
+}
+
+export interface ProfileFrame {
     id: Snowflake;
     expires_at: number | null;
 }

@@ -18,24 +18,19 @@
 
 import { route } from "@spacebar/api/middlewares";
 import { Request, Response, Router } from "express";
-import { ConnectionStore, FieldErrors } from "@spacebar/util";
+import { ConnectionStore, FieldErrors, GenericConnection } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
 
 router.get("/", route({}), async (req: Request, res: Response) => {
     const { connection_name } = req.params as { [key: string]: string };
-    const connection = ConnectionStore.connections.get(connection_name);
-    if (!connection)
-        throw FieldErrors({
-            provider_id: {
-                code: "BASE_TYPE_CHOICES",
-                message: req.t("common:field.BASE_TYPE_CHOICES", {
-                    types: Array.from(ConnectionStore.connections.keys()).join(", "),
-                }),
-            },
-        });
+    let connection = ConnectionStore.connections.get(connection_name);
+    if (!connection) {
+        connection = new GenericConnection(connection_name);
+        ConnectionStore.connections.set(connection_name, connection);
+    }
 
-    if (!connection.settings.enabled)
+    if (connection.settings && connection.settings.enabled === false)
         throw FieldErrors({
             provider_id: {
                 message: "This connection has been disabled server-side.",

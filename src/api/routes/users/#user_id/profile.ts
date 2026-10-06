@@ -19,15 +19,12 @@
 import { Request, Response, Router } from "express";
 import { In } from "typeorm";
 import { route } from "@spacebar/api/middlewares";
-import { authenticatorTypes, profileMetadata, resolveProfileCollectibles } from "@spacebar/api/util";
+import { authenticatorTypes, profileMetadata, resolveProfileCollectibles, BOOST_MILESTONES, calculateMonthsElapsed, isSubscriptionBadge, NITRO_MILESTONES } from "@spacebar/api/util";
 import { Badge, Member, Relationship, User } from "@spacebar/database";
 import { broadcastUserUpdate, Config, DiscordApiErrors, emitEvent, FieldErrors, handleFile, UserUpdateEvent } from "@spacebar/util";
 import { PartialConnectedAccountResponse, PrivateUserProjection, PublicUserProjection, RelationshipType, UserProfileModifySchema } from "@spacebar/schemas";
 
 import { prideBadges } from "@spacebar/api/util/utility/prideBadges";
-
-import { BOOST_MILESTONES, calculateMonthsElapsed, isSubscriptionBadge, NITRO_MILESTONES } from "@spacebar/api/util/utility/profile";
-
 import { profileApplication } from "@spacebar/api/util/handlers/Application";
 
 const router: Router = Router({ mergeParams: true });

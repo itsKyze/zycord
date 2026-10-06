@@ -35,33 +35,43 @@ const VARS = ["--zycord-frame-top", "--zycord-frame-bottom"];
 // the profile frame across the whole side profile, like the profile popout, instead of only its top layers in the footer.
 // Like discord's own side profile, the card keeps the full width and only moves down to make room for the art above it;
 // the art reaching past its sides just hangs over the edges
-function SidebarFrame({ Frame, frame }: { Frame: (props: { frame: ProfileFrame }) => JSX.Element; frame: ProfileFrame }) {
+function SidebarFrame({ Frame, frame }: { Frame?: (props: { frame: ProfileFrame }) => JSX.Element; frame?: ProfileFrame }) {
     const ref = useRef<HTMLDivElement>(null);
     useEffect(() => {
+        if (!frame || !frame.innerWidth) return;
         const sidebar = ref.current?.closest<HTMLElement>(".user-profile-sidebar");
         const space = sidebar?.parentElement;
         if (!sidebar || !space) return;
         const apply = () => {
-            // the frame is drawn at the card's width
-            const scale = space.clientWidth / frame.innerWidth;
-            sidebar.style.setProperty(VARS[0], `${Math.round(frame.overflowTop * scale)}px`);
-            sidebar.style.setProperty(VARS[1], `${Math.round(frame.overflowBottom * scale)}px`);
+            try {
+                if (!frame || !frame.innerWidth || !space) return;
+                const scale = space.clientWidth / frame.innerWidth;
+                sidebar.style.setProperty(VARS[0], `${Math.round((frame.overflowTop || 0) * scale)}px`);
+                sidebar.style.setProperty(VARS[1], `${Math.round((frame.overflowBottom || 0) * scale)}px`);
+            } catch (_) {}
         };
-        apply();
-        sidebar.classList.add(FRAMED);
-        const observer = new ResizeObserver(apply);
-        observer.observe(space);
-        return () => {
-            observer.disconnect();
-            sidebar.classList.remove(FRAMED);
-            for (const name of VARS) sidebar.style.removeProperty(name);
-        };
+        try {
+            apply();
+            sidebar.classList.add(FRAMED);
+            const observer = new ResizeObserver(apply);
+            observer.observe(space);
+            return () => {
+                observer.disconnect();
+                sidebar.classList.remove(FRAMED);
+                for (const name of VARS) sidebar.style.removeProperty(name);
+            };
+        } catch (_) {}
     }, [frame]);
-    return (
-        <div ref={ref} style={{ display: "contents" }}>
-            <Frame frame={frame} />
-        </div>
-    );
+    if (!Frame) return null;
+    try {
+        return (
+            <div ref={ref} style={{ display: "contents" }}>
+                <Frame frame={frame!} />
+            </div>
+        );
+    } catch (_) {
+        return null;
+    }
 }
 
 export default definePlugin({

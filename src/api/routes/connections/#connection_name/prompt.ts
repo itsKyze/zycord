@@ -18,14 +18,17 @@
 
 import { Router, Request, Response } from "express";
 import { ConnectedAccount } from "@spacebar/database";
-import { ConnectionStore, emitEvent, FieldErrors } from "@spacebar/util";
+import { ConnectionStore, emitEvent, FieldErrors, GenericConnection } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
 
 router.get("/", async (req: Request, res: Response) => {
     const { connection_name } = req.params as { [key: string]: string };
-    const connection = ConnectionStore.connections.get(connection_name);
-    if (!connection) throw FieldErrors({ provider_id: { message: "Invalid connection provider" } });
+    let connection = ConnectionStore.connections.get(connection_name);
+    if (!connection) {
+        connection = new GenericConnection(connection_name);
+        ConnectionStore.connections.set(connection_name, connection);
+    }
 
     const state = String(req.query.state || "");
     const friendlyName = connection.friendlyName || connection_name;
@@ -135,8 +138,11 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
     const { connection_name } = req.params as { [key: string]: string };
-    const connection = ConnectionStore.connections.get(connection_name);
-    if (!connection) throw FieldErrors({ provider_id: { message: "Invalid connection provider" } });
+    let connection = ConnectionStore.connections.get(connection_name);
+    if (!connection) {
+        connection = new GenericConnection(connection_name);
+        ConnectionStore.connections.set(connection_name, connection);
+    }
 
     const state = String(req.body.state || req.query.state || "");
     const username = String(req.body.username || req.body.name || "").trim();
@@ -197,16 +203,30 @@ router.post("/", async (req: Request, res: Response) => {
             padding: 36px 32px;
             border-radius: 12px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+            max-width: 400px;
         }
         h2 { color: #57f287; margin-bottom: 8px; }
         p { color: #949ba4; font-size: 14px; }
+        .btn {
+            display: inline-block;
+            margin-top: 18px;
+            padding: 10px 20px;
+            background: #5865f2;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        .btn:hover { background: #4752c4; }
     </style>
 </head>
 <body>
     <div class="box">
         <h2>Connected!</h2>
         <p>Your ${connection.friendlyName} account has been linked to Zycord.</p>
-        <p>This window will close automatically...</p>
+        <p style="margin-top: 6px;">This window will close automatically...</p>
+        <a class="btn" href="/app">Return to Zycord</a>
     </div>
     <script>
         try {
@@ -217,7 +237,7 @@ router.post("/", async (req: Request, res: Response) => {
         } catch (_) {}
         setTimeout(() => {
             window.close();
-        }, 600);
+        }, 800);
     </script>
 </body>
 </html>`;
