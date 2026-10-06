@@ -134,7 +134,7 @@ jobs:
           passphrase: ${{ secrets.SERVER_SSH_PASSPHRASE }}
           port: ${{ secrets.SERVER_PORT || 22 }}
           timeout: 60s
-          command_timeout: 15m
+          command_timeout: 20m
           script: |
             set -e
             echo "🚀 Deploying Zycord on $(hostname)..."
@@ -142,87 +142,125 @@ jobs:
             mkdir -p /opt/zycord/docker
             cd /opt/zycord
 
-            # 1. Update config files directly from repository payloads
+            # 1. Update docker-compose.yml from repo
             echo "${{ steps.payloads.outputs.compose }}" | base64 -d > docker-compose.yml
-            echo "${{ steps.payloads.outputs.caddy }}" | base64 -d > docker/Caddyfile
 
-            # 2. Check/initialize .env file
+            # 2. Check/initialize .env file (NEVER overwrite existing .env to avoid data loss)
             if [ ! -f .env ]; then
               echo "⚠️ .env file not found, creating default .env..."
-              echo "DOMAIN=app.zyron.site" > .env
-              echo "INSTANCE_NAME=Zycord" >> .env
-              echo "POSTGRES_PASSWORD=zycord_secure_pass_$(openssl rand -hex 12)" >> .env
-              echo "WRTC_PUBLIC_IP=5.175.223.58" >> .env
-              echo "WRTC_PORT=50000" >> .env
-              echo "COMPOSE_PROFILES=caddy" >> .env
+              cat > .env << 'ENVEOF'
+            DOMAIN=app.zyron.site
+            INSTANCE_NAME=Zycord
+            POSTGRES_PASSWORD=zycord_secure_pass_$(openssl rand -hex 12)
+            WRTC_PUBLIC_IP=5.175.223.58
+            WRTC_PORT=50000
+            COMPOSE_PROFILES=
+            SERVER_PORT=3001
+            TRUSTED_PROXIES=uniquelocal
+            ENVEOF
+            else
+              echo "✅ Using existing .env file (no overwrite)"
             fi
 
-            # Ensure domain and name are synced
-            sed -i 's/^DOMAIN=.*/DOMAIN=app.zyron.site/' .env
-            sed -i 's/^INSTANCE_NAME=.*/INSTANCE_NAME=Zycord/' .env
-
-            # 3. Handle Port 80 and Reverse Proxy (Caddy vs Host Nginx)
-            # Stop any lingering legacy containers from other folders in /opt
-            for dir in /opt/*; do
-              if [ -d "$dir" ] && [ "$dir" != "/opt/zycord" ] && [ -f "$dir/docker-compose.yml" ]; then
-                echo "🛑 Stopping outdated containers in $dir..."
-                (cd "$dir" && docker compose down) 2>/dev/null || true
-              fi
-            done
-
-            # Check if port 80 is in use
-            if ss -tlpn | grep -q ":80 "; then
-              echo "ℹ️ Port 80 is currently in use:"
-              ss -tlpn | grep ":80 " || true
-
-              # Stop any docker container holding port 80 from other projects
-              DOCKER_PORT_80=$(docker ps --filter "publish=80" -q)
-              if [ -n "$DOCKER_PORT_80" ]; then
-                echo "🛑 Stopping old docker container holding port 80: $DOCKER_PORT_80"
-                docker stop $DOCKER_PORT_80 || true
-              fi
-
-              # If host Nginx is active, use it as reverse proxy and disable Caddy container
-              if systemctl is-active --quiet nginx; then
-                echo "🌐 Host Nginx is active. Configuring app.zyron.site reverse proxy via Nginx..."
-                mkdir -p /etc/nginx/conf.d
-                echo "${{ steps.payloads.outputs.nginx }}" | base64 -d > /etc/nginx/conf.d/zycord.conf
-
-                if [ -d /etc/nginx/sites-available ]; then
-                  cp -f /etc/nginx/conf.d/zycord.conf /etc/nginx/sites-available/zycord 2>/dev/null || true
-                  ln -sf /etc/nginx/sites-available/zycord /etc/nginx/sites-enabled/zycord 2>/dev/null || true
-                fi
-                nginx -t && systemctl reload nginx || true
-                echo "✅ Nginx configured for app.zyron.site -> 127.0.0.1:3002"
-
-                # Disable bundled caddy profile so docker compose won't try to bind port 80
+            # 3. Always disable Caddy when host Nginx is running (avoid port 80/443 conflict)
+            if systemctl is-active --quiet nginx 2>/dev/null; then
+              echo "🌐 Host Nginx detected — disabling Caddy profile in .env"
+              # Set COMPOSE_PROFILES to empty (no caddy) safely
+              if grep -q '^COMPOSE_PROFILES=' .env; then
                 sed -i 's/^COMPOSE_PROFILES=.*/COMPOSE_PROFILES=/' .env
+              else
+                echo "COMPOSE_PROFILES=" >> .env
+              fi
+
+              # 4. Write the correct Nginx config for app.zyron.site
+              echo "📝 Updating Nginx config for app.zyron.site..."
+              mkdir -p /etc/nginx/conf.d
+              echo "${{ steps.payloads.outputs.nginx }}" | base64 -d > /etc/nginx/conf.d/zycord.conf
+
+              # Remove old conflicting sites-available/sites-enabled entries
+              rm -f /etc/nginx/sites-enabled/zycord /etc/nginx/sites-available/zycord 2>/dev/null || true
+
+              # Validate and reload Nginx
+              if nginx -t; then
+                systemctl reload nginx
+                echo "✅ Nginx reloaded for app.zyron.site → 127.0.0.1:3002 (SSL)"
+              else
+                echo "❌ Nginx config test failed — keeping old config"
+                nginx -T 2>/dev/null | tail -20 || true
               fi
             fi
 
-            # 4. Login to GitHub Container Registry on VPS
-            echo ${{ secrets.GITHUB_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            # 5. Login to GitHub Container Registry on VPS
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
 
-            # 5. Pull pre-built images from GHCR
-            echo "📥 Pulling latest pre-built Zycord images from GHCR..."
+            # 6. Pull latest pre-built images from GHCR
+            echo "📥 Pulling latest Zycord images from GHCR..."
             docker compose pull server sfu
 
-            # 6. Restart services
-            echo "🚀 Starting Zycord containers..."
-            docker compose up -d --remove-orphans
+            # 7. Restart services properly:
+            #    - client must complete FIRST (compresses Discord client assets + applies patches)
+            #    - server depends on client completing successfully
+            echo "🔧 Rebuilding client assets (applies new patches)..."
+            # Run client service to rebuild/recompress assets (force refresh if image changed)
+            docker compose up --no-deps -d client
+            echo "⏳ Waiting for client service to finish..."
+            # Wait up to 10 minutes for client to finish
+            timeout 600 bash -c '
+              while true; do
+                STATUS=$(docker compose ps client --format json 2>/dev/null | python3 -c "import sys,json; d=json.loads(sys.stdin.read().strip() or \"[]\"); print(d[0][\"State\"] if isinstance(d,list) and d else \"unknown\")" 2>/dev/null || echo "unknown")
+                if [ "$STATUS" = "exited" ]; then
+                  EXIT_CODE=$(docker compose ps client --format json 2>/dev/null | python3 -c "import sys,json; d=json.loads(sys.stdin.read().strip() or \"[]\"); print(d[0].get(\"ExitCode\",1) if isinstance(d,list) and d else 1)" 2>/dev/null || echo "1")
+                  if [ "$EXIT_CODE" = "0" ]; then
+                    echo "✅ Client service completed successfully"
+                    break
+                  else
+                    echo "❌ Client service failed with exit code $EXIT_CODE"
+                    docker compose logs --tail=30 client
+                    exit 1
+                  fi
+                fi
+                echo "   client status: $STATUS — waiting..."
+                sleep 10
+              done
+            '
 
-            # 7. Health verification
-            echo "🔍 Verifying running containers..."
-            sleep 10
+            # 8. Restart the server with the new image
+            echo "🚀 Restarting Zycord server..."
+            docker compose up --no-deps -d server
+
+            # 9. Wait for server to become healthy
+            echo "⏳ Waiting for server to be healthy (up to 3 min)..."
+            timeout 180 bash -c '
+              while true; do
+                HEALTH=$(docker compose ps server --format json 2>/dev/null | python3 -c "import sys,json; d=json.loads(sys.stdin.read().strip() or \"[]\"); print(d[0].get(\"Health\",\"unknown\") if isinstance(d,list) and d else \"unknown\")" 2>/dev/null || echo "unknown")
+                if [ "$HEALTH" = "healthy" ]; then
+                  echo "✅ Server is healthy!"
+                  break
+                fi
+                echo "   server health: $HEALTH — waiting..."
+                sleep 10
+              done
+            ' || echo "⚠️ Health check timed out — check logs manually"
+
+            # 10. Final status
+            echo "📋 Final container status:"
             docker compose ps
 
-            echo "🚀 Deployment and verification completed successfully!"
+            # 11. Quick API smoke test
+            if curl -sf http://127.0.0.1:3002/api/ping > /dev/null 2>&1; then
+              echo "✅ API smoke test passed: http://127.0.0.1:3002/api/ping"
+            else
+              echo "⚠️ API smoke test failed — server may still be starting"
+              docker compose logs --tail=20 server
+            fi
+
+            echo "🎉 Deployment completed successfully!"
 
       - name: Deployment Summary
         run: |
           echo "📋 Deployment Summary:"
           echo "Server Changed: ${{ needs.detect-changes.outputs.server-changed }}"
-          echo "SFU Changed: ${{ needs.detect-changes.outputs.sfu-changed }}"
-          echo "Force Build: ${{ needs.detect-changes.outputs.force-build }}"
+          echo "SFU Changed:    ${{ needs.detect-changes.outputs.sfu-changed }}"
+          echo "Force Build:    ${{ needs.detect-changes.outputs.force-build }}"
           echo ""
           echo "🌐 Zycord is available at: https://app.zyron.site"
