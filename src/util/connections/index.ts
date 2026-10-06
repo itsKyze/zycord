@@ -22,3 +22,4 @@ export * from "./ConnectionLoader";
 export * from "./ConnectionStore";
 export * from "./GenericConnection";
 export * from "./RefreshableConnection";
+export * from "./ConnectionTemplates";

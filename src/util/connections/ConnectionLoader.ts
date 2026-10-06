@@ -59,13 +59,37 @@ export class ConnectionLoader {
     }
 
     public static getConnectionConfig<T>(id: string, defaults?: unknown): T {
-        let cfg = ConnectionConfig.get()[id];
+        let cfg = ConnectionConfig.get()[id] || {};
         if (defaults) {
-            if (cfg) cfg = Object.assign({}, defaults, cfg);
+            if (cfg && Object.keys(cfg).length > 0) cfg = Object.assign({}, defaults, cfg);
             else {
-                cfg = defaults;
+                cfg = Object.assign({}, defaults);
                 this.setConnectionConfig(id, cfg).catch((e) => console.error(`[Connections/ERROR] Failed to set default config for '${id}'!`, e));
             }
+        }
+
+        // Check general config.json connections map if present
+        const generalCfg = (Config.get() as Record<string, any>)?.connections?.[id];
+        if (generalCfg && typeof generalCfg === "object") {
+            cfg = Object.assign({}, cfg, generalCfg);
+        }
+
+        // Check environment variables (e.g. GITHUB_CLIENT_ID, CONNECTION_GITHUB_CLIENT_ID)
+        const idUpper = id.toUpperCase();
+        const envClientId =
+            process.env[`CONNECTION_${idUpper}_CLIENT_ID`] ||
+            process.env[`${idUpper}_CLIENT_ID`] ||
+            process.env[`CONNECTION_${idUpper}_ID`];
+        const envClientSecret =
+            process.env[`CONNECTION_${idUpper}_CLIENT_SECRET`] ||
+            process.env[`${idUpper}_CLIENT_SECRET`] ||
+            process.env[`CONNECTION_${idUpper}_SECRET`];
+
+        if (envClientId || envClientSecret) {
+            cfg = Object.assign({}, cfg, {
+                ...(envClientId ? { clientId: envClientId } : {}),
+                ...(envClientSecret ? { clientSecret: envClientSecret } : {}),
+            });
         }
 
         // if (!cfg)

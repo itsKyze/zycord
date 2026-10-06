@@ -51,8 +51,22 @@ export abstract class Connection {
      * Returns the redirect_uri for a connection type
      * @returns redirect_uri for this connection
      */
-    getRedirectUri() {
-        return `${Config.get().general.frontPage}/connections/${this.id}/callback`;
+    getRedirectUri(): string {
+        const configuredUri = (this.settings as { redirectUri?: string })?.redirectUri;
+        if (configuredUri) return configuredUri;
+
+        let base = Config.get().general.frontPage;
+        if (!base) {
+            base = Config.get().client.activityApplicationHost || "";
+        }
+        if (base && !/^https?:\/\//i.test(base)) {
+            base = `https://${base.replace(/^\/+/, "")}`;
+        }
+        if (!base) {
+            base = "https://app.zyron.site";
+        }
+        base = base.replace(/\/+$/, "");
+        return `${base}/connections/${this.id}`;
     }
 
     /**

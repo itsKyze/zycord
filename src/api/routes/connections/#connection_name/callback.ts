@@ -17,11 +17,23 @@
 */
 
 import { route } from "@spacebar/api/middlewares";
-import { ConnectionStore, emitEvent, FieldErrors } from "@spacebar/util";
+import { ConnectionStore, emitEvent, FieldErrors, GenericConnection, renderConnectingHtml } from "@spacebar/util";
 import { Request, Response, Router } from "express";
 import { ConnectionCallbackSchema } from "@spacebar/schemas";
 
 const router = Router({ mergeParams: true });
+
+router.get("/", async (req: Request, res: Response) => {
+    const { connection_name } = req.params as { [key: string]: string };
+    let connection = ConnectionStore.connections.get(connection_name);
+    if (!connection) {
+        connection = new GenericConnection(connection_name);
+        ConnectionStore.connections.set(connection_name, connection);
+    }
+
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    return res.send(renderConnectingHtml(connection.id));
+});
 
 router.post(
     "/",
@@ -31,18 +43,13 @@ router.post(
     }),
     async (req: Request, res: Response) => {
         const { connection_name } = req.params as { [key: string]: string };
-        const connection = ConnectionStore.connections.get(connection_name);
-        if (!connection)
-            throw FieldErrors({
-                provider_id: {
-                    code: "BASE_TYPE_CHOICES",
-                    message: req.t("common:field.BASE_TYPE_CHOICES", {
-                        types: Array.from(ConnectionStore.connections.keys()).join(", "),
-                    }),
-                },
-            });
+        let connection = ConnectionStore.connections.get(connection_name);
+        if (!connection) {
+            connection = new GenericConnection(connection_name);
+            ConnectionStore.connections.set(connection_name, connection);
+        }
 
-        if (!connection.settings.enabled)
+        if (connection.settings && connection.settings.enabled === false)
             throw FieldErrors({
                 provider_id: {
                     message: "This connection has been disabled server-side.",
