@@ -59,6 +59,14 @@ const verifyCap = async (response: string, secret: string): Promise<CaptchaVerif
     return { success: false, "error-codes": body["error-codes"] ?? [body.error ?? "invalid-input-response"] };
 };
 
+function isLocalOrPrivateIp(ip: string): boolean {
+    const clean = ip.replace(/^::ffff:/, "");
+    if (clean === "127.0.0.1" || clean === "::1" || clean === "localhost") return true;
+    if (/^(10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[01])\.)/.test(clean)) return true;
+    if (/^(fc00|fe80)/i.test(clean)) return true;
+    return false;
+}
+
 export async function verifyCaptcha(response: string, ip?: string): Promise<CaptchaVerifyResult> {
     const { service, secret, sitekey } = Config.get().security.captcha;
 
@@ -72,20 +80,34 @@ export async function verifyCaptcha(response: string, ip?: string): Promise<Capt
         return verifyCap(response, secret!);
     }
 
-    const res = await fetch(verifyEndpoints[service], {
-        method: "POST",
-        signal: AbortSignal.timeout(10_000),
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body:
-            `response=${encodeURIComponent(response)}` +
-            `&secret=${encodeURIComponent(secret!)}` +
-            `&sitekey=${encodeURIComponent(sitekey!)}` +
-            (ip ? `&remoteip=${encodeURIComponent(ip)}` : ""),
-    });
+    try {
+        const bodyParams = new URLSearchParams({
+            response,
+            secret: secret!,
+            sitekey: sitekey!,
+        });
 
-    return (await res.json()) as CaptchaVerifyResult;
+        if (ip && !isLocalOrPrivateIp(ip)) {
+            bodyParams.append("remoteip", ip);
+        }
+
+        const res = await fetch(verifyEndpoints[service], {
+            method: "POST",
+            signal: AbortSignal.timeout(10_000),
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: bodyParams.toString(),
+        });
+
+        const body = (await res.json().catch(() => ({}))) as CaptchaVerifyResult;
+        console.log(`[CAPTCHA] ${service} siteverify response:`, JSON.stringify(body));
+        if (body.success === true) return { success: true };
+        return { success: false, "error-codes": body["error-codes"] ?? ["invalid-input-response"] };
+    } catch (err) {
+        console.error(`[CAPTCHA] Error contacting ${service} siteverify:`, err);
+        return { success: false, "error-codes": ["captcha-unreachable"] };
+    }
 }
 
 export async function checkCaptcha(required: boolean, response: string | string[] | null | undefined, ip?: string): Promise<CaptchaRequiredResponse | null> {

@@ -1,17 +1,4 @@
 {
-    "CreateFingerprintResponse": {
-        "type": "object",
-        "properties": {
-            "fingerprint": {
-                "type": "string"
-            }
-        },
-        "additionalProperties": false,
-        "required": [
-            "fingerprint"
-        ],
-        "$schema": "http://json-schema.org/draft-07/schema#"
-    },
     "ApplicationCommandSchema": {
         "type": "object",
         "properties": {
@@ -198,7 +185,7 @@
             "length": {
                 "type": "integer"
             },
-            "__@unscopables@751": {
+            "__@unscopables@744": {
                 "type": "object",
                 "additionalProperties": false,
                 "patternProperties": {
@@ -324,17 +311,17 @@
                     "with": {
                         "type": "boolean"
                     },
-                    "__@iterator@749": {
+                    "__@iterator@742": {
                         "type": "boolean"
                     },
-                    "__@unscopables@751": {
+                    "__@unscopables@744": {
                         "type": "boolean"
                     }
                 }
             }
         },
         "required": [
-            "__@unscopables@751",
+            "__@unscopables@744",
             "length"
         ],
         "$schema": "http://json-schema.org/draft-07/schema#"
@@ -1233,7 +1220,17 @@
                 "additionalProperties": true
             },
             "captcha_key": {
-                "type": "string"
+                "anyOf": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "type": "string"
+                    }
+                ]
             },
             "connected_account_provider": {
                 "type": [
@@ -2138,7 +2135,17 @@
                 "type": "string"
             },
             "captcha_key": {
-                "type": "string"
+                "anyOf": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "type": "string"
+                    }
+                ]
             }
         },
         "additionalProperties": false,
@@ -4441,9 +4448,6 @@
             "newToken": {
                 "type": "string"
             },
-            "email": {
-                "type": "string"
-            },
             "id": {
                 "description": "A Twitter-like snowflake, except the epoch is 2015-01-01T00:00:00.000Z\n```\nIf we have a snowflake '266241948824764416' we can represent it as binary:\n\n64                                          22     17     12          0\n 000000111011000111100001101001000101000000  00001  00000  000000000000\n      number of ms since Discord epoch       worker  pid    increment\n```",
                 "type": "string"
@@ -4520,6 +4524,9 @@
             },
             "mfa_enabled": {
                 "type": "boolean"
+            },
+            "email": {
+                "type": "string"
             },
             "phone": {
                 "type": "string"
@@ -5072,6 +5079,16 @@
                         "type": "null"
                     }
                 ]
+            },
+            "profile_frame": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/ProfileFrame"
+                    },
+                    {
+                        "type": "null"
+                    }
+                ]
             }
         },
         "additionalProperties": false,
@@ -5142,6 +5159,16 @@
                 "anyOf": [
                     {
                         "$ref": "#/definitions/ProfileEffect"
+                    },
+                    {
+                        "type": "null"
+                    }
+                ]
+            },
+            "profile_frame": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/ProfileFrame"
                     },
                     {
                         "type": "null"
@@ -5317,7 +5344,17 @@
                 "type": "boolean"
             },
             "captcha_key": {
-                "type": "string"
+                "anyOf": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "type": "string"
+                    }
+                ]
             },
             "login_source": {
                 "type": "string"
@@ -6312,7 +6349,17 @@
                 "type": "string"
             },
             "captcha_key": {
-                "type": "string"
+                "anyOf": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "type": "string"
+                    }
+                ]
             },
             "promotional_email_opt_in": {
                 "type": "boolean"
@@ -6325,9 +6372,6 @@
             }
         },
         "additionalProperties": false,
-        "required": [
-            "consent"
-        ],
         "$schema": "http://json-schema.org/draft-07/schema#"
     },
     "RequestGuildMembersSchema": {
@@ -7063,9 +7107,19 @@
         "type": "object",
         "properties": {
             "captcha_key": {
-                "type": [
-                    "null",
-                    "string"
+                "anyOf": [
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "type": [
+                            "null",
+                            "string"
+                        ]
+                    }
                 ]
             },
             "token": {
@@ -12828,6 +12882,19 @@
         ],
         "$schema": "http://json-schema.org/draft-07/schema#"
     },
+    "CreateFingerprintResponse": {
+        "type": "object",
+        "properties": {
+            "fingerprint": {
+                "type": "string"
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+            "fingerprint"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+    },
     "ApplicationCommandOption": {
         "type": "object",
         "properties": {
@@ -13098,7 +13165,7 @@
                     "length": {
                         "type": "integer"
                     },
-                    "__@unscopables@751": {
+                    "__@unscopables@744": {
                         "type": "object",
                         "additionalProperties": false,
                         "patternProperties": {
@@ -13224,17 +13291,17 @@
                             "with": {
                                 "type": "boolean"
                             },
-                            "__@iterator@749": {
+                            "__@iterator@742": {
                                 "type": "boolean"
                             },
-                            "__@unscopables@751": {
+                            "__@unscopables@744": {
                                 "type": "boolean"
                             }
                         }
                     }
                 },
                 "required": [
-                    "__@unscopables@751",
+                    "__@unscopables@744",
                     "length"
                 ]
             },
@@ -23299,6 +23366,27 @@
         "$schema": "http://json-schema.org/draft-07/schema#"
     },
     "ProfileEffect": {
+        "type": "object",
+        "properties": {
+            "id": {
+                "description": "A Twitter-like snowflake, except the epoch is 2015-01-01T00:00:00.000Z\n```\nIf we have a snowflake '266241948824764416' we can represent it as binary:\n\n64                                          22     17     12          0\n 000000111011000111100001101001000101000000  00001  00000  000000000000\n      number of ms since Discord epoch       worker  pid    increment\n```",
+                "type": "string"
+            },
+            "expires_at": {
+                "type": [
+                    "null",
+                    "integer"
+                ]
+            }
+        },
+        "additionalProperties": false,
+        "required": [
+            "expires_at",
+            "id"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+    },
+    "ProfileFrame": {
         "type": "object",
         "properties": {
             "id": {
