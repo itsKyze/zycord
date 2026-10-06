@@ -18,6 +18,8 @@
 
 import { Request, Response, Router } from "express";
 import { storage, setCacheControl, setCacheControlNotFound, fetchUpstreamAsset, sendAsset } from "../../util";
+import { Collectibles } from "@spacebar/util";
+import { generateNameplateSvg } from "../media/v1/collectibles-shop";
 
 const router = Router({ mergeParams: true });
 
@@ -32,6 +34,21 @@ router.get("/*path", setCacheControl, async (req: Request, res: Response) => {
     if (!file) {
         const upstreamUrl = `https://cdn.discordapp.com/assets/collectibles/${rawPath}`;
         file = await fetchUpstreamAsset(storageKey, upstreamUrl);
+    }
+
+    if (!file && rawPath.startsWith("nameplates/custom/")) {
+        const parts = rawPath.split("/");
+        const skuId = parts[2];
+        if (skuId) {
+            try {
+                const product = await Collectibles.product(skuId);
+                const item = (await Collectibles.item(skuId)) ?? product?.items?.[0];
+                const label = item?.label || product?.name || "Nameplate";
+                const palette = ((item as any)?.palette as string) || "violet";
+                file = generateNameplateSvg(label, palette);
+                await storage.set(storageKey, file);
+            } catch (_) {}
+        }
     }
 
     if (!file) {

@@ -86,7 +86,6 @@ export function calculateMonthsElapsed(since: Date, now: Date = new Date()): num
 export const profileMetadata = (source: User | Member) => {
     const collectibles = source.profile_collectibles ?? [];
     const effect = collectibles.find((x) => x.type === CollectibleItemType.PROFILE_EFFECT);
-    const frame = collectibles.find((x) => x.type === CollectibleItemType.PROFILE_FRAME);
     return {
         ...(source instanceof Member ? { guild_id: source.guild_id } : {}),
         bio: source.bio ?? "",
@@ -97,7 +96,6 @@ export const profileMetadata = (source: User | Member) => {
         popout_animation_particle_type: null,
         emoji: null,
         profile_effect: effect ? { id: effect.sku_id, expires_at: null } : null,
-        profile_frame: frame ? { id: frame.sku_id, expires_at: null } : null,
         collectibles,
     };
 };

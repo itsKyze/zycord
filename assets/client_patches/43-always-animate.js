@@ -7,15 +7,11 @@
                 if (!mod) continue;
                 const targets = [mod, mod.default, mod.A, mod.Z].filter(Boolean);
                 for (const item of targets) {
-                    if (item && typeof item === "object") {
-                        // Patch AccessibilityStore
-                        if (typeof item.useReducedMotion === "function" && !item.__zycordAnimPatched) {
-                            item.__zycordAnimPatched = true;
-                            item.useReducedMotion = () => false;
+                        if (item && typeof item === "object") {
+                            // Safely enable animations without breaking React hooks
                             if (typeof item.isAnimationEnabled === "function") item.isAnimationEnabled = () => true;
                             if (typeof item.rawPrefersReducedMotion === "function") item.rawPrefersReducedMotion = () => "no-preference";
                         }
-                    }
                 }
             }
         } catch (_) {}
