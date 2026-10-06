@@ -21,7 +21,7 @@ import { Request, Response, Router } from "express";
 import { HTTPError } from "lambert-server/HTTPError";
 import crypto from "node:crypto";
 import { ILike, MoreThan } from "typeorm";
-import { checkRegistrationCaptcha, registrationCapEndpoint } from "@spacebar/api/util";
+import { checkRegistrationCaptcha, registrationCapEndpoint, extractCaptchaToken } from "@spacebar/api/util";
 import { route } from "@spacebar/api/middlewares";
 import { Invite, User, ValidRegistrationToken } from "@spacebar/database";
 import { Config, FieldErrors, generateToken, IpDataClient, AbuseIpDbClient } from "@spacebar/util";
@@ -62,7 +62,8 @@ router.post(
         const { register, limits } = Config.get();
         const ip = req.ip!;
 
-        const captcha = await checkRegistrationCaptcha(body.captcha_key, false, ip);
+        const captchaToken = extractCaptchaToken(req);
+        const captcha = await checkRegistrationCaptcha(captchaToken, false, ip);
         if (captcha) return res.status(400).json(captcha);
 
         // Reg tokens
@@ -359,7 +360,7 @@ router.post(
 
         const { security } = Config.get();
         if (register.requireCaptcha && security.captcha.service === "cap" && registrationCapEndpoint() === "/api/v9/auth/cap/") {
-            const claimed = await checkRegistrationCaptcha(body.captcha_key);
+            const claimed = await checkRegistrationCaptcha(extractCaptchaToken(req));
             if (claimed) return res.status(400).json(claimed);
         }
 
