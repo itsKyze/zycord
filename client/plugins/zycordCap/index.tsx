@@ -59,7 +59,8 @@ function SignupVerification() {
     useEffect(() => {
         let active = true;
         let token: string | undefined;
-        let required = true;
+        // Start false — will be set true only if Cap (not hcaptcha/recaptcha) is the service
+        let required = false;
         let ready = false;
         let widget: CapElement | undefined;
         const form = container.current?.closest("form");
@@ -88,6 +89,7 @@ function SignupVerification() {
         RestAPI.get({ url: "/auth/captcha" })
             .then(async ({ body }: { body: CapConfiguration }) => {
                 if (!active) return;
+                // Only show Cap widget for Cap service — hcaptcha/recaptcha are handled natively by Discord client
                 required = body.register === true && body.service === "cap";
                 setEnabled(required);
                 if (!required) return;
@@ -195,10 +197,12 @@ export default definePlugin({
             find: "REGISTER_PROMO_EMAIL_CHECKBOX_WEB",
             replacement: [
                 {
+                    // Wrap the consent component to inject the Cap widget only for Cap service
                     match: /function (\i)\((\i)\)\{let\{consent:(\i),consentRequired:(\i),onConsentChange:(\i)\}=\2;/,
                     replace: "function $1($2){return $self.withWidget($1CapConsent($2))}function $1CapConsent($2){let{consent:$3,consentRequired:$4,onConsentChange:$5}=$2;",
                 },
                 {
+                    // Only inject captcha_key from Cap token (not for hcaptcha — native client handles that)
                     match: /(url:\i\.\i\.REGISTER,body:\{)/,
                     replace: "$1...($self.takeToken()?{captcha_key:$self.takeToken()}:{}),",
                 },

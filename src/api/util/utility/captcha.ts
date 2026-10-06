@@ -88,7 +88,7 @@ export async function verifyCaptcha(response: string, ip?: string): Promise<Capt
     return (await res.json()) as CaptchaVerifyResult;
 }
 
-export async function checkCaptcha(required: boolean, response: string | null | undefined, ip?: string): Promise<CaptchaRequiredResponse | null> {
+export async function checkCaptcha(required: boolean, response: string | string[] | null | undefined, ip?: string): Promise<CaptchaRequiredResponse | null> {
     if (!required || !captchaEnabled()) return null;
     const { sitekey, service } = Config.get().security.captcha;
     const challenge = (codes: string[]) => ({
@@ -96,8 +96,10 @@ export async function checkCaptcha(required: boolean, response: string | null | 
         captcha_sitekey: service === "cap" && Config.get().security.captcha.capMode !== "standalone" ? "zycord" : sitekey!,
         captcha_service: service!,
     });
-    if (!response) return challenge(["captcha-required"]);
-    const verify = await verifyCaptcha(response, ip);
+    // Discord native client sends captcha_key as an array ["token"], normalize to string
+    const token = Array.isArray(response) ? response[0] : response;
+    if (!token) return challenge(["captcha-required"]);
+    const verify = await verifyCaptcha(token, ip);
     return verify.success ? null : challenge(verify["error-codes"] ?? ["invalid-input-response"]);
 }
 
@@ -109,21 +111,23 @@ export function registrationCapEndpoint() {
     return capEndpoint()!;
 }
 
-export async function checkRegistrationCaptcha(response: string | null | undefined, consume = true, ip?: string): Promise<CaptchaRequiredResponse | null> {
+export async function checkRegistrationCaptcha(response: string | string[] | null | undefined, consume = true, ip?: string): Promise<CaptchaRequiredResponse | null> {
     if (!Config.get().register.requireCaptcha) return null;
     const { security } = Config.get();
+    // Discord native client sends captcha_key as an array ["token"], normalize to string
+    const normalized = Array.isArray(response) ? response[0] : response;
     if (security.captcha.enabled && (security.captcha.service === "hcaptcha" || security.captcha.service === "recaptcha")) {
-        return checkCaptcha(true, response, ip);
+        return checkCaptcha(true, normalized, ip);
     }
     const endpoint = registrationCapEndpoint();
     const local = endpoint === "/api/v9/auth/cap/";
     const sitekey = local ? "zycord" : Config.get().security.captcha.sitekey!;
     const challenge = (codes: string[]): CaptchaRequiredResponse => ({ captcha_key: codes, captcha_sitekey: sitekey, captcha_service: "cap" });
-    if (!response || typeof response !== "string" || response.length > 512) return challenge(["captcha-required"]);
+    if (!normalized || typeof normalized !== "string" || normalized.length > 512) return challenge(["captcha-required"]);
     if (local) {
         const { consumeRegistrationToken, registrationTokenAvailable } = await import("./localCap.js");
-        return (await (consume ? consumeRegistrationToken(response) : registrationTokenAvailable(response))) ? null : challenge(["invalid-input-response"]);
+        return (await (consume ? consumeRegistrationToken(normalized) : registrationTokenAvailable(normalized))) ? null : challenge(["invalid-input-response"]);
     }
-    const verified = await verifyCap(response, Config.get().security.captcha.secret!);
+    const verified = await verifyCap(normalized, Config.get().security.captcha.secret!);
     return verified.success ? null : challenge(verified["error-codes"] ?? ["invalid-input-response"]);
 }
