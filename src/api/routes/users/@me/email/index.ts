@@ -34,13 +34,15 @@ router.put("/", route({ responses: { 204: {} } }), async (req: Request, res: Res
     }
 
     const text = `Your ${Config.get().general.instanceName} verification code is ${code}. It expires in 10 minutes.`;
-    await Email.transporter.sendMail({
-        from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
-        to: user.email,
-        subject: `Your verification code is ${code}`,
+    await Email.sendCustomMail(
+        user.email,
+        `Your verification code is ${code}`,
         text,
-        html: `<p>${text}</p>`,
-    });
+        `<h1>Hey ${user.username},</h1>
+        <p>Use the following verification code to change your email address on ${Config.get().general.instanceName}:</p>
+        <div class="code-box">${code}</div>
+        <p style="font-size: 13px; color: #747f8d; margin-bottom: 0;">This code will expire in 10 minutes. If you did not request this, please ignore this email.</p>`,
+    );
     res.sendStatus(204);
 });
 

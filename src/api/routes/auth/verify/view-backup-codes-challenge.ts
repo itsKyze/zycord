@@ -57,13 +57,15 @@ router.post(
         if (!Email.transporter || !user.email) console.log(`[Email] Skipped backup codes verification delivery for user ${user.id}: email delivery is unavailable`);
         else {
             const { instanceName } = Config.get().general;
-            await Email.transporter.sendMail({
-                from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
-                to: user.email,
-                subject: `Your ${instanceName} backup codes verification key`,
-                text: `Hey ${user.username},\n\nUse this key to view or regenerate your backup codes: ${key}\n\nThis key expires in 30 minutes.`,
-                html: `<p>Hey ${user.username},</p><p>Use this key to view or regenerate your backup codes:</p><p style="font-size:24px;font-weight:bold;letter-spacing:2px">${key}</p><p>This key expires in 30 minutes.</p>`,
-            });
+            await Email.sendCustomMail(
+                user.email,
+                `Your ${instanceName} backup codes verification key`,
+                `Hey ${user.username},\n\nUse this key to view or regenerate your backup codes: ${key}\n\nThis key expires in 30 minutes.`,
+                `<h1>Hey ${user.username},</h1>
+                <p>Use this verification key to view or regenerate your backup codes for ${instanceName}:</p>
+                <div class="code-box">${key}</div>
+                <p style="font-size: 13px; color: #747f8d; margin-bottom: 0;">This key will expire in 30 minutes. Keep your backup codes in a safe place.</p>`,
+            );
         }
 
         res.json({
