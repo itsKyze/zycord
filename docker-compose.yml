@@ -64,6 +64,8 @@ services:
                 condition: service_healthy
             client:
                 condition: service_completed_successfully
+        env_file:
+            - .env
         environment:
             DATABASE: postgres://zycord:${POSTGRES_PASSWORD}@postgres:5432/zycord
             DOMAIN: ${DOMAIN:?set DOMAIN in .env}
