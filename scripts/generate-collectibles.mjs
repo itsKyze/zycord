@@ -42,46 +42,46 @@ const categoriesDefinitions = [
     {
         name: "Anime & Manga",
         summary: "Energetic auras, blossoms, and legendary hero items.",
-        keywords: ["sakura", "ninja", "katana", "sword", "anime", "ramen", "fox", "warrior", "fanlight", "cat ears"],
+        keywords: ["sakura", "ninja", "katana", "sword", "anime", "ramen", "fox", "warrior", "fanlight", "cat ears", "jujutsu", "dragon ball", "dharma", "shuriken", "dojo", "spirit", "hero"],
     },
     {
         name: "Cyberpunk & Tech",
         summary: "Neon glitches, high-tech visors, and neural interfaces.",
-        keywords: ["cyber", "glitch", "neon", "hacker", "circuit", "terminal", "grid", "ufo", "steampunk", "mech"],
+        keywords: ["cyber", "glitch", "neon", "hacker", "circuit", "terminal", "grid", "ufo", "steampunk", "mech", "tron", "robot", "laser", "protocol", "matrix", "flux"],
     },
     {
         name: "Fantasy & Magic",
         summary: "Mystical runes, dragon crowns, and enchanted spells.",
-        keywords: ["wizard", "dragon", "halo", "phoenix", "rune", "magic", "mystic", "spell", "fairy", "crown", "relic"],
+        keywords: ["wizard", "dragon", "halo", "phoenix", "rune", "magic", "mystic", "spell", "fairy", "crown", "relic", "tarot", "zodiac", "potion", "dungeons", "gathering", "orb"],
     },
     {
         name: "Cute & Cozy",
         summary: "Adorable companions, froggy hats, and pastel dreams.",
-        keywords: ["frog", "cat", "puppy", "duck", "heart", "hug", "love", "cute", "bear", "bunny", "cloud", "cozy"],
+        keywords: ["frog", "cat", "puppy", "duck", "heart", "hug", "love", "cute", "bear", "bunny", "cloud", "cozy", "chibi", "kawaii", "smol", "fruit", "kitten", "bugs", "lofi"],
     },
     {
         name: "Dark & Gothic",
         summary: "Shadow realm reapers, cursed flames, and gothic spines.",
-        keywords: ["reaper", "fangs", "ghost", "demon", "skull", "crossbones", "shadow", "goth", "cursed", "dark", "void"],
+        keywords: ["reaper", "fangs", "ghost", "demon", "skull", "crossbones", "shadow", "goth", "cursed", "dark", "void", "terror", "spooky", "insomnia", "horror", "watching", "stalker"],
     },
     {
         name: "Retro Arcade & Gaming",
         summary: "8-bit nostalgia, pixel hearts, and synthwave beats.",
-        keywords: ["pixel", "arcade", "game", "controller", "retro", "8-bit", "crt", "joystick", "glider", "synth"],
+        keywords: ["pixel", "arcade", "game", "controller", "retro", "8-bit", "crt", "joystick", "glider", "synth", "ggez", "play", "borderlands", "call of duty", "valorant", "fighter"],
     },
     {
         name: "Elements & Nature",
         summary: "Raw elemental powers: fire, ice, storm, earth, and ocean.",
-        keywords: ["inferno", "frost", "lightning", "storm", "fire", "ice", "water", "earth", "leaf", "blossom", "nature", "tide"],
+        keywords: ["inferno", "frost", "lightning", "storm", "fire", "ice", "water", "earth", "leaf", "blossom", "nature", "tide", "woodland", "sea", "ocean", "autumn", "fall", "equinox"],
     },
     {
         name: "Celestial & Stars",
         summary: "Cosmic galaxies, starry constellations, and celestial bodies.",
-        keywords: ["star", "nebula", "galaxy", "cosmic", "moon", "sun", "space", "astral", "planet", "comet"],
+        keywords: ["star", "nebula", "galaxy", "cosmic", "moon", "sun", "space", "astral", "planet", "comet", "eclipse", "solar", "lunar", "starlight", "cosmos"],
     },
     {
-        name: "Celebrations & Vault",
-        summary: "Festive treasures, fireworks, envelopes, and exclusive collectibles.",
+        name: "Celebrations & Special Editions",
+        summary: "Festive treasures, special collaborations, and exclusive collectibles.",
         keywords: [], // Catch-all for remaining items
     },
 ];
@@ -100,10 +100,10 @@ const categoryBuckets = categoriesDefinitions.map((c) => ({
 if (discordDecorations.length > 0) {
     for (const deco of discordDecorations) {
         const match = deco.url?.match(/avatar-decoration-presets\/([^.?]+)/);
-        const assetHash = match ? match[1] : null;
+        const assetHash = deco.asset || (match ? match[1] : null);
         if (!assetHash) continue;
 
-        const label = deco.label || "Avatar Decoration";
+        const label = deco.label || deco.name || "Avatar Decoration";
         const labelLower = label.toLowerCase();
 
         let assigned = false;
@@ -111,7 +111,7 @@ if (discordDecorations.length > 0) {
             const bucket = categoryBuckets[i];
             if (bucket.keywords.some((k) => labelLower.includes(k))) {
                 bucket.decorations.push({
-                    id: deco.id || nextSku(),
+                    id: deco.id || deco.sku_id || nextSku(),
                     asset: assetHash,
                     label: label,
                 });
@@ -121,7 +121,7 @@ if (discordDecorations.length > 0) {
         }
         if (!assigned) {
             categoryBuckets[categoryBuckets.length - 1].decorations.push({
-                id: deco.id || nextSku(),
+                id: deco.id || deco.sku_id || nextSku(),
                 asset: assetHash,
                 label: label,
             });
@@ -183,6 +183,13 @@ const nameplatesList = [
     { name: "Emerald Clover", palette: "clover", catIdx: 8 },
     { name: "Sky Glider", palette: "sky", catIdx: 8 },
     { name: "Violet Sovereign", palette: "violet", catIdx: 8 },
+    { name: "Spider-Man vs. Venom", palette: "crimson", catIdx: 8 },
+    { name: "Woody's Badge", palette: "lemon", catIdx: 8 },
+    { name: "The Clawww", palette: "cobalt", catIdx: 8 },
+    { name: "Andy's Room Clouds", palette: "sky", catIdx: 8 },
+    { name: "Always Watching", palette: "black", catIdx: 4 },
+    { name: "Water Stalker", palette: "black", catIdx: 4 },
+    { name: "Trapped Souls", palette: "black", catIdx: 4 },
 ];
 
 for (const np of nameplatesList) {
