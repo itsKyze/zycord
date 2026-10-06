@@ -25,6 +25,7 @@ import { Config, JwtKeypairManager, registerRoutes } from "@spacebar/util";
 import { ProcessLifecycle, SystemdLifecycle } from "../util/util/ProcessLifecycle";
 import { Monitoring } from "../util/monitoring/Monitoring";
 import guildProfilesRoute from "./routes/guild-profiles";
+import profileEffectsRoute from "./routes/assets/profile_effects";
 import { storage } from "./util";
 import { ErrorHandler } from "@spacebar/cdn/util/ErrorHandler";
 
@@ -79,6 +80,10 @@ export class CDNServer extends Server {
 
         this.app.use("/guilds/:guild_id/users/:user_id/banners", guildProfilesRoute);
         if (process.env.LOG_ROUTES !== "false") console.log("[Server] Route /guilds/:guild_id/users/:user_id/banners registered");
+
+        this.app.use("/assets/profile_effects", profileEffectsRoute);
+        this.app.use("/profile-effects", profileEffectsRoute);
+        if (process.env.LOG_ROUTES !== "false") console.log("[Server] Route /assets/profile_effects registered");
 
         await super.start();
         await SystemdLifecycle.setStatus(`Listening on ${this.options.host}:${this.options.port}...`);

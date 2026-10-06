@@ -7,16 +7,24 @@
                 if (!mod) continue;
                 const targets = [mod, mod.default, mod.A, mod.Z].filter(Boolean);
                 for (const item of targets) {
-                    if (item && typeof item === "object" && item.purchases instanceof Map && typeof item.getPurchase === "function") {
+                    if (item && typeof item === "object" && item.purchases instanceof Map) {
                         if (!item.__zycordPatched) {
                             item.__zycordPatched = true;
-                            const origGetPurchase = item.getPurchase.bind(item);
-                            item.getPurchase = function (skuId) {
-                                if (!skuId) return undefined;
-                                const existing = origGetPurchase(skuId);
-                                if (existing != null) return existing;
-                                return { skuId, id: skuId, purchasedAt: new Date().toISOString() };
-                            };
+                            if (typeof item.getPurchase === "function") {
+                                const origGetPurchase = item.getPurchase.bind(item);
+                                item.getPurchase = function (skuId) {
+                                    if (!skuId) return undefined;
+                                    const existing = origGetPurchase(skuId);
+                                    if (existing != null) return existing;
+                                    return { skuId, id: skuId, purchasedAt: new Date().toISOString() };
+                                };
+                            }
+                            if (typeof item.isPurchased === "function") {
+                                item.isPurchased = function () { return true; };
+                            }
+                            if (typeof item.hasPurchase === "function") {
+                                item.hasPurchase = function () { return true; };
+                            }
                         }
                     }
                 }

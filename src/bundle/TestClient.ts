@@ -370,6 +370,54 @@ export default function TestClient(app: Application) {
 
     app.get("/gift/:code", (req, res) => res.redirect(`/gifts/${encodeURIComponent(req.params.code)}`));
 
+    app.get("/oauth2/authorized", (req, res) => {
+        res.set({ "Cache-Control": "no-cache", "Content-Type": "text/html; charset=utf-8" });
+        res.send(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Authorized - Zycord</title>
+  <style>
+    body { background: #1e1f22; color: #fff; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
+    .card { text-align: center; background: #2b2d31; padding: 32px 40px; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.4); max-width: 360px; width: 90%; }
+    .icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(35, 165, 90, 0.15); color: #23a55a; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; }
+    h2 { font-size: 20px; font-weight: 600; margin: 0 0 8px; }
+    p { font-size: 14px; color: #949ba4; margin: 0; }
+  </style>
+  <script>
+    try {
+      if (window.opener) {
+        window.opener.postMessage({ type: "OAUTH2_AUTHORIZED", status: "success" }, "*");
+        window.close();
+      }
+    } catch (_) {}
+    setTimeout(() => {
+      try {
+        if (window.opener) {
+          window.close();
+        } else {
+          window.location.replace("/app");
+        }
+      } catch (_) {
+        window.location.replace("/app");
+      }
+    }, 300);
+  </script>
+</head>
+<body>
+  <div class="card">
+    <div class="icon">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"/>
+      </svg>
+    </div>
+    <h2>Success!</h2>
+    <p>Application authorized. Closing...</p>
+  </div>
+</body>
+</html>`);
+    });
+
     app.get("/{*splat}", (req, res, next) => {
         if (/^\/(api|cdn|attachments|avatars|icons|banners|emojis|stickers|imageproxy)\b/.test(req.path)) return next();
         const sourceChanged = DEVELOPMENT && stamp !== (stamp = sourceStamp());
