@@ -39,6 +39,9 @@ export async function sendAsset(res: Response, data: Buffer, name: string) {
         (await fileTypeFromBuffer(data))?.mime ??
         EXTENSION_TYPES[extension] ??
         (data.subarray(0, 256).toString("utf8").includes("<svg") ? "image/svg+xml" : "application/octet-stream");
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "GET, HEAD, OPTIONS");
+    res.set("Cross-Origin-Resource-Policy", "cross-origin");
     res.set("Content-Type", type);
     return res.send(data);
 }

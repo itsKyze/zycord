@@ -26,114 +26,259 @@ import crypto from "node:crypto";
 const ANIMATED_MIME_TYPES = ["image/apng", "image/gif", "image/gifv"];
 const STATIC_MIME_TYPES = ["image/png", "image/jpeg", "image/webp", "image/avif", "image/svg+xml", "image/svg"];
 
-const PALETTE_COLORS: Record<string, [string, string]> = {
-    crimson: ["#e11d48", "#881337"],
-    berry: ["#c026d3", "#701a75"],
-    sky: ["#0284c7", "#0369a1"],
-    teal: ["#0d9488", "#115e59"],
-    forest: ["#16a34a", "#14532d"],
-    bubble_gum: ["#ec4899", "#9d174d"],
-    violet: ["#8b5cf6", "#5b21b6"],
-    cobalt: ["#3b82f6", "#1d4ed8"],
-    clover: ["#22c55e", "#15803d"],
-    lemon: ["#eab308", "#a16207"],
-    white: ["#f1f5f9", "#94a3b8"],
-    black: ["#334155", "#0f172a"],
+const PALETTE_COLORS: Record<string, [string, string, string]> = {
+    crimson: ["#fb7185", "#e11d48", "#4c0519"],
+    berry: ["#f0abfc", "#c026d3", "#581c87"],
+    sky: ["#7dd3fc", "#0284c7", "#0c4a6e"],
+    teal: ["#5eead4", "#0d9488", "#134e4a"],
+    forest: ["#86efac", "#16a34a", "#14532d"],
+    bubble_gum: ["#f472b6", "#ec4899", "#831843"],
+    violet: ["#c084fc", "#8b5cf6", "#4c1d95"],
+    cobalt: ["#93c5fd", "#3b82f6", "#1e3a8a"],
+    clover: ["#86efac", "#22c55e", "#14532d"],
+    lemon: ["#fde047", "#eab308", "#713f12"],
+    white: ["#ffffff", "#cbd5e1", "#475569"],
+    black: ["#94a3b8", "#334155", "#090d16"],
 };
 
+function getThemeColors(label: string): [string, string, string] {
+    const l = (label || "").toLowerCase();
+    if (l.includes("sakura") || l.includes("blossom") || l.includes("pink") || l.includes("bunny") || l.includes("cloud")) return PALETTE_COLORS.bubble_gum;
+    if (l.includes("katana") || l.includes("ninja") || l.includes("crimson") || l.includes("blood") || l.includes("fire") || l.includes("inferno")) return PALETTE_COLORS.crimson;
+    if (l.includes("cyber") || l.includes("matrix") || l.includes("tech") || l.includes("holo")) return PALETTE_COLORS.teal;
+    if (l.includes("gold") || l.includes("royal") || l.includes("sun") || l.includes("lemon")) return PALETTE_COLORS.lemon;
+    if (l.includes("arcane") || l.includes("runestone") || l.includes("magic") || l.includes("mystic") || l.includes("violet")) return PALETTE_COLORS.violet;
+    if (l.includes("frost") || l.includes("ice") || l.includes("glacial") || l.includes("sky")) return PALETTE_COLORS.sky;
+    if (l.includes("goth") || l.includes("skull") || l.includes("dark") || l.includes("cursed") || l.includes("void")) return PALETTE_COLORS.black;
+    if (l.includes("pixel") || l.includes("arcade") || l.includes("synth") || l.includes("clover")) return PALETTE_COLORS.clover;
+    if (l.includes("star") || l.includes("galaxy") || l.includes("celestial") || l.includes("cosmic") || l.includes("cobalt")) return PALETTE_COLORS.cobalt;
+    return PALETTE_COLORS.violet;
+}
+
 function generateNameplateSvg(label: string, paletteName: string = "violet"): Buffer {
-    const [c1, c2] = PALETTE_COLORS[paletteName] ?? PALETTE_COLORS.violet;
     const safeLabel = (label || "Nameplate").replace(/[<>&"]/g, "");
+    const [cLight, cMain, cDark] = PALETTE_COLORS[paletteName] ?? getThemeColors(safeLabel);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="72" viewBox="0 0 300 72">
   <defs>
-    <linearGradient id="npgrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="${c1}" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="${c2}" stop-opacity="0.95"/>
+    <linearGradient id="npPlateBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="${cDark}" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="${cMain}" stop-opacity="0.88"/>
+      <stop offset="100%" stop-color="${cDark}" stop-opacity="0.95"/>
     </linearGradient>
-    <linearGradient id="npborder" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7">
-        <animate attributeName="stop-opacity" values="0.7;0.2;0.7" dur="2.5s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="50%" stop-color="${c1}" stop-opacity="0.3"/>
-      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.7">
-        <animate attributeName="stop-opacity" values="0.2;0.7;0.2" dur="2.5s" repeatCount="indefinite"/>
-      </stop>
+    <linearGradient id="npBorderGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="${cLight}" stop-opacity="0.8"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="${cLight}" stop-opacity="0.8"/>
     </linearGradient>
-    <linearGradient id="shimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+    <linearGradient id="npShimmer" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
-      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="55%" stop-color="#ffffff" stop-opacity="0.5"/>
       <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
     </linearGradient>
-    <clipPath id="rectclip">
+    <clipPath id="npClip">
       <rect x="2" y="2" width="296" height="68" rx="14"/>
     </clipPath>
   </defs>
-  <rect x="2" y="2" width="296" height="68" rx="14" fill="url(#npgrad)" stroke="url(#npborder)" stroke-width="2"/>
-  <g clip-path="url(#rectclip)">
-    <rect x="-100" y="0" width="80" height="72" fill="url(#shimmer)">
-      <animateTransform attributeName="transform" type="translate" from="-120 0" to="420 0" dur="2.8s" repeatCount="indefinite"/>
+
+  <!-- Background Plaque -->
+  <rect x="2" y="2" width="296" height="68" rx="14" fill="url(#npPlateBg)" stroke="url(#npBorderGrad)" stroke-width="1.8"/>
+
+  <!-- Left Thematic Crest Insignia -->
+  <g transform="translate(14, 18)">
+    <circle cx="18" cy="18" r="15" fill="${cDark}" stroke="${cLight}" stroke-width="1.5" opacity="0.85"/>
+    <path d="M18 7 L21 14 L29 18 L21 22 L18 29 L15 22 L7 18 L15 14 Z" fill="${cLight}" opacity="0.95">
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+    </path>
+    <circle cx="18" cy="18" r="3" fill="#ffffff"/>
+  </g>
+
+  <!-- Right Decorative Speed Lines -->
+  <line x1="260" y1="20" x2="280" y2="20" stroke="${cLight}" stroke-width="1.5" opacity="0.4"/>
+  <line x1="250" y1="28" x2="280" y2="28" stroke="${cLight}" stroke-width="1.5" opacity="0.6"/>
+  <line x1="264" y1="36" x2="280" y2="36" stroke="${cLight}" stroke-width="1.5" opacity="0.4"/>
+
+  <!-- Typography -->
+  <text x="58" y="42" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="15" font-weight="700" letter-spacing="0.4">${safeLabel}</text>
+
+  <!-- Animated Shimmer Sweep -->
+  <g clip-path="url(#npClip)">
+    <rect x="-120" y="0" width="90" height="72" fill="url(#npShimmer)">
+      <animateTransform attributeName="transform" type="translate" from="-140 0" to="440 0" dur="2.6s" repeatCount="indefinite"/>
     </rect>
   </g>
-  <circle cx="36" cy="36" r="16" fill="#ffffff" fill-opacity="0.2"/>
-  <path d="M30 36 L34 40 L42 32" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-  <text x="64" y="42" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="16" font-weight="600" letter-spacing="0.5">${safeLabel}</text>
 </svg>`;
     return Buffer.from(svg, "utf8");
 }
 
-function generateFrameSvg(label: string): Buffer {
+function generateFrameLayerSvg(label: string): Buffer {
     const safeLabel = (label || "Profile Frame").replace(/[<>&"]/g, "");
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
+    const [cLight, cMain, cDark] = getThemeColors(safeLabel);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1312" height="1200" viewBox="0 0 1312 1200">
   <defs>
-    <linearGradient id="fgrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#8b5cf6">
-        <animate attributeName="stop-color" values="#8b5cf6;#ec4899;#3b82f6;#8b5cf6" dur="4s" repeatCount="indefinite"/>
+    <linearGradient id="fCrownGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="${cDark}"/>
+      <stop offset="30%" stop-color="${cMain}"/>
+      <stop offset="50%" stop-color="${cLight}">
+        <animate attributeName="stop-color" values="${cLight};#ffffff;${cLight}" dur="2.5s" repeatCount="indefinite"/>
       </stop>
-      <stop offset="50%" stop-color="#ec4899">
-        <animate attributeName="stop-color" values="#ec4899;#3b82f6;#8b5cf6;#ec4899" dur="4s" repeatCount="indefinite"/>
-      </stop>
-      <stop offset="100%" stop-color="#3b82f6">
-        <animate attributeName="stop-color" values="#3b82f6;#8b5cf6;#ec4899;#3b82f6" dur="4s" repeatCount="indefinite"/>
+      <stop offset="70%" stop-color="${cMain}"/>
+      <stop offset="100%" stop-color="${cDark}"/>
+    </linearGradient>
+    <linearGradient id="fRailGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="${cLight}" stop-opacity="0.9"/>
+      <stop offset="50%" stop-color="${cMain}" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="${cLight}" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="fGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Side Rails (Left & Right hugging inner card x=56 to 1256) -->
+  <line x1="56" y1="70" x2="56" y2="1130" stroke="url(#fRailGrad)" stroke-width="4" filter="url(#fGlow)"/>
+  <line x1="1256" y1="70" x2="1256" y2="1130" stroke="url(#fRailGrad)" stroke-width="4" filter="url(#fGlow)"/>
+
+  <!-- Top Border Bar -->
+  <line x1="100" y1="40" x2="1212" y2="40" stroke="${cMain}" stroke-width="3" opacity="0.8"/>
+
+  <!-- Bottom Border Bar -->
+  <line x1="100" y1="1160" x2="1212" y2="1160" stroke="${cMain}" stroke-width="3" opacity="0.8"/>
+
+  <!-- Top Center Ornamental Crown / Crest -->
+  <g transform="translate(656, 40)" filter="url(#fGlow)">
+    <path d="M-180 0 C-110 -25 -50 -38 0 -48 C50 -38 110 -25 180 0 L150 18 C100 -2 50 -14 0 -22 C-50 -14 -100 -2 -150 18 Z" fill="url(#fCrownGrad)"/>
+    <circle cx="0" cy="-48" r="14" fill="${cLight}" stroke="#ffffff" stroke-width="3">
+      <animate attributeName="r" values="13;16;13" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    <path d="M-12 0 L0 -14 L12 0 L0 14 Z" fill="#ffffff" transform="translate(0, -48)"/>
+    <circle cx="-120" cy="-14" r="7" fill="${cLight}"/>
+    <circle cx="120" cy="-14" r="7" fill="${cLight}"/>
+  </g>
+
+  <!-- Top-Left Corner Bracket -->
+  <g transform="translate(56, 40)" filter="url(#fGlow)">
+    <path d="M0 60 L0 0 L60 0 L40 18 L18 18 L18 40 Z" fill="${cLight}"/>
+    <circle cx="28" cy="28" r="5" fill="#ffffff"/>
+  </g>
+
+  <!-- Top-Right Corner Bracket -->
+  <g transform="translate(1256, 40)" filter="url(#fGlow)">
+    <path d="M0 60 L0 0 L-60 0 L-40 18 L-18 18 L-18 40 Z" fill="${cLight}"/>
+    <circle cx="-28" cy="28" r="5" fill="#ffffff"/>
+  </g>
+
+  <!-- Bottom-Left Corner Bracket -->
+  <g transform="translate(56, 1160)" filter="url(#fGlow)">
+    <path d="M0 -60 L0 0 L60 0 L40 -18 L18 -18 L18 -40 Z" fill="${cLight}"/>
+    <circle cx="28" cy="-28" r="5" fill="#ffffff"/>
+  </g>
+
+  <!-- Bottom-Right Corner Bracket -->
+  <g transform="translate(1256, 1160)" filter="url(#fGlow)">
+    <path d="M0 -60 L0 0 L-60 0 L-40 -18 L-18 -18 L-18 -40 Z" fill="${cLight}"/>
+    <circle cx="-28" cy="-28" r="5" fill="#ffffff"/>
+  </g>
+
+  <!-- Bottom Center Plinth / Ribbon -->
+  <g transform="translate(656, 1160)" filter="url(#fGlow)">
+    <path d="M-130 0 C-70 18 -30 25 0 28 C30 25 70 18 130 0 L110 -12 C60 4 25 10 0 12 C-25 10 -60 4 -110 -12 Z" fill="url(#fCrownGrad)"/>
+    <circle cx="0" cy="22" r="8" fill="${cLight}"/>
+  </g>
+</svg>`;
+    return Buffer.from(svg, "utf8");
+}
+
+function generateFrameThumbnailSvg(label: string): Buffer {
+    const safeLabel = (label || "Profile Frame").replace(/[<>&"]/g, "");
+    const [cLight, cMain, cDark] = getThemeColors(safeLabel);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="320" viewBox="0 0 320 320">
+  <defs>
+    <linearGradient id="thBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#18191c"/>
+      <stop offset="50%" stop-color="#232428"/>
+      <stop offset="100%" stop-color="#111214"/>
+    </linearGradient>
+    <linearGradient id="thBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="${cLight}"/>
+      <stop offset="50%" stop-color="${cMain}"/>
+      <stop offset="100%" stop-color="${cLight}">
+        <animate attributeName="stop-color" values="${cLight};#ffffff;${cMain};${cLight}" dur="3.5s" repeatCount="indefinite"/>
       </stop>
     </linearGradient>
+    <radialGradient id="thAvatarGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="${cMain}" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="${cDark}" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="thShimmer" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#ffffff" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="thClip">
+      <rect x="28" y="20" width="264" height="280" rx="20"/>
+    </clipPath>
   </defs>
-  <rect x="12" y="12" width="216" height="216" rx="32" fill="none" stroke="url(#fgrad)" stroke-width="8" stroke-dasharray="24 12">
-    <animate attributeName="stroke-dashoffset" values="0;72" dur="3s" repeatCount="indefinite"/>
-  </rect>
-  <rect x="24" y="24" width="192" height="192" rx="24" fill="#0f172a" fill-opacity="0.35" stroke="url(#fgrad)" stroke-width="2"/>
-  <circle cx="120" cy="120" r="48" fill="url(#fgrad)" fill-opacity="0.18" stroke="url(#fgrad)" stroke-width="3">
-    <animate attributeName="r" values="46;50;46" dur="2s" repeatCount="indefinite"/>
-  </circle>
-  <path d="M110 120 L117 127 L132 112" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
-  <text x="120" y="195" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12" font-weight="600" text-anchor="middle">${safeLabel}</text>
+
+  <!-- Outer Card Frame Mockup -->
+  <rect x="28" y="20" width="264" height="280" rx="20" fill="url(#thBgGrad)" stroke="url(#thBorder)" stroke-width="2.5"/>
+
+  <!-- Top Crown Accent -->
+  <path d="M110 20 C135 12 150 7 160 5 C170 7 185 12 210 20 Z" fill="${cLight}"/>
+  <circle cx="160" cy="10" r="4.5" fill="#ffffff"/>
+
+  <!-- Four Framed Corners -->
+  <path d="M28 45 L28 20 L53 20" stroke="${cLight}" stroke-width="3.5" fill="none"/>
+  <path d="M292 45 L292 20 L267 20" stroke="${cLight}" stroke-width="3.5" fill="none"/>
+  <path d="M28 275 L28 300 L53 300" stroke="${cLight}" stroke-width="3.5" fill="none"/>
+  <path d="M292 275 L292 300 L267 300" stroke="${cLight}" stroke-width="3.5" fill="none"/>
+
+  <!-- Center Avatar Circle Preview -->
+  <circle cx="160" cy="120" r="48" fill="url(#thAvatarGlow)"/>
+  <circle cx="160" cy="120" r="38" fill="#1e1f24" stroke="${cLight}" stroke-width="2.5"/>
+  <circle cx="160" cy="106" r="14" fill="${cMain}" opacity="0.85"/>
+  <path d="M136 138 C136 126 147 122 160 122 C173 122 184 126 184 138 Z" fill="${cMain}" opacity="0.85"/>
+
+  <!-- Label Badge -->
+  <rect x="48" y="228" width="224" height="34" rx="10" fill="#121316" stroke="${cMain}" stroke-width="1.2" opacity="0.95"/>
+  <text x="160" y="250" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" text-anchor="middle" letter-spacing="0.4">${safeLabel}</text>
+
+  <!-- Animated Shimmer -->
+  <g clip-path="url(#thClip)">
+    <rect x="-100" y="0" width="80" height="320" fill="url(#thShimmer)">
+      <animateTransform attributeName="transform" type="translate" from="-120 0" to="440 0" dur="3s" repeatCount="indefinite"/>
+    </rect>
+  </g>
 </svg>`;
     return Buffer.from(svg, "utf8");
 }
 
 function generateEffectSvg(label: string): Buffer {
     const safeLabel = (label || "Profile Effect").replace(/[<>&"]/g, "");
+    const [cLight, cMain, cDark] = getThemeColors(safeLabel);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240">
   <defs>
     <radialGradient id="eglow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#60a5fa" stop-opacity="0.9">
-        <animate attributeName="stop-color" values="#60a5fa;#c084fc;#f472b6;#60a5fa" dur="4s" repeatCount="indefinite"/>
+      <stop offset="0%" stop-color="${cLight}" stop-opacity="0.9">
+        <animate attributeName="stop-color" values="${cLight};${cMain};#ffffff;${cLight}" dur="3.5s" repeatCount="indefinite"/>
       </stop>
-      <stop offset="60%" stop-color="#8b5cf6" stop-opacity="0.45"/>
+      <stop offset="60%" stop-color="${cMain}" stop-opacity="0.45"/>
       <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
     </radialGradient>
   </defs>
-  <rect width="240" height="240" fill="#0f172a" fill-opacity="0.55" rx="20"/>
+  <rect width="240" height="240" fill="#0f172a" fill-opacity="0.65" rx="20"/>
   <circle cx="120" cy="120" r="80" fill="url(#eglow)">
-    <animate attributeName="r" values="75;85;75" dur="2.5s" repeatCount="indefinite"/>
+    <animate attributeName="r" values="75;88;75" dur="2.5s" repeatCount="indefinite"/>
   </circle>
-  <circle cx="120" cy="120" r="40" fill="none" stroke="#67e8f9" stroke-width="2" stroke-dasharray="8 6">
+  <circle cx="120" cy="120" r="42" fill="none" stroke="${cLight}" stroke-width="2" stroke-dasharray="8 6">
     <animateTransform attributeName="transform" type="rotate" from="0 120 120" to="360 120 120" dur="6s" repeatCount="indefinite"/>
   </circle>
   <g>
     <animateTransform attributeName="transform" type="rotate" from="0 120 120" to="-360 120 120" dur="10s" repeatCount="indefinite"/>
     <polygon points="120,70 125,115 170,120 125,125 120,170 115,125 70,120 115,115" fill="#ffffff" opacity="0.95"/>
   </g>
-  <text x="120" y="200" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="600" text-anchor="middle">${safeLabel}</text>
+  <text x="120" y="200" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" font-weight="700" text-anchor="middle">${safeLabel}</text>
 </svg>`;
     return Buffer.from(svg, "utf8");
 }
@@ -226,7 +371,10 @@ async function sendUpstream(req: Request, res: Response, asset: string, slot: "s
                     file = svgBuffer;
                     await storage.set(`collectibles-shop/${asset}`, svgBuffer);
                 } else if (item.type === CollectibleItemType.PROFILE_FRAME) {
-                    const svgBuffer = generateFrameSvg(item.label || product?.name || "Profile Frame");
+                    const isLayer = asset.split("/").length >= 2 && asset.split("/")[1] !== "static" && asset.split("/")[1] !== "animated";
+                    const svgBuffer = isLayer
+                        ? generateFrameLayerSvg(item.label || product?.name || "Profile Frame")
+                        : generateFrameThumbnailSvg(item.label || product?.name || "Profile Frame");
                     file = svgBuffer;
                     await storage.set(`collectibles-shop/${asset}`, svgBuffer);
                 } else if (item.type === CollectibleItemType.PROFILE_EFFECT) {

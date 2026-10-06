@@ -144,6 +144,7 @@ const localize = (raw: string) => {
     return branded
         .replaceAll("https://cdn.discordapp.com/assets/content/", `${cdn}/content-assets/`)
         .replaceAll("https://cdn.discordapp.com/assets/profile_effects/", `${cdn}/assets/profile_effects/`)
+        .replaceAll("https://cdn.discordapp.com/assets/collectibles/", `${cdn}/assets/collectibles/`)
         .replaceAll("https://cdn.discordapp.com/avatar-decoration-presets/", `${cdn}/avatar-decoration-presets/`)
         .replaceAll("https://cdn.discordapp.com/media/v1/", `${cdn}/media/v1/`);
 };
