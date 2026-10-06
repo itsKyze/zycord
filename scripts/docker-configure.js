@@ -74,7 +74,11 @@ if (hcaptchaSitekey && hcaptchaSecret) {
         sitekey: hcaptchaSitekey,
         secret: hcaptchaSecret,
     });
+    section("register").requireCaptcha = true;
+    section("login").requireCaptcha = true;
 }
+
+section("register", "email").required = true;
 
 
 const smtpHost = env("SMTP_HOST");

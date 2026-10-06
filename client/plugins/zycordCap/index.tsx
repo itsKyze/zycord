@@ -200,7 +200,7 @@ export default definePlugin({
                 },
                 {
                     match: /(url:\i\.\i\.REGISTER,body:\{)/,
-                    replace: "$1captcha_key:$self.takeToken(),",
+                    replace: "$1...($self.takeToken()?{captcha_key:$self.takeToken()}:{}),",
                 },
             ],
         },

@@ -17,7 +17,7 @@
 */
 
 export class RegistrationEmailConfiguration {
-    required: boolean = false;
+    required: boolean = true;
     allowlist: boolean = false;
     blocklist: boolean = true;
     domains: string[] = []; // TODO: efficiently save domain blocklist in database
