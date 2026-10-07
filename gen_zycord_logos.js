@@ -39,9 +39,11 @@ async function run() {
         .png()
         .toFile('assets/public/branding/zycord_logo_white.png');
 
-    // Copy to flat public dir for /static/* serving
+    // Copy to flat public dir for /static/* serving and root assets
     fs.copyFileSync('assets/public/branding/zycord_logo.png',       'assets/public/zycord_logo.png');
     fs.copyFileSync('assets/public/branding/zycord_logo_white.png',  'assets/public/zycord_logo_white.png');
+    fs.copyFileSync('assets/public/branding/zycord_logo.png',       'assets/logo.png');
+    fs.copyFileSync('assets/public/branding/zycord_logo.png',       'assets/public/logo.png');
 
     console.log('Done — all logos now have transparent backgrounds!');
 }
