@@ -18,10 +18,9 @@
 
 import definePlugin from "@utils/types";
 
-import { ZycordAuthor, hideSetting, redirectTo } from "../zycordCore/shared";
+import { ZycordAuthor, redirectTo } from "../zycordCore/shared";
 
 const INCLUDED_IN_BOOSTING = "#{intl::hUgjyP::raw}";
-const SHOW_BOOST_PROGRESS_BAR = "#{intl::Dl4mJS::raw}";
 
 export default definePlugin({
     name: "ZycordNoBoostUpsells",
@@ -32,6 +31,7 @@ export default definePlugin({
     redirectTo,
 
     patches: [
+        // Hide the "boost" entry in the server download prompt row.
         {
             find: 'key:"download",iconUrl:',
             replacement: {
@@ -39,19 +39,7 @@ export default definePlugin({
                 replace: "=!1?",
             },
         },
-        {
-            find: /\.push\(\i\.\i\.GUILD_PREMIUM_PROGRESS_BAR\)/,
-            replacement: [
-                {
-                    match: /\i(?=&&\i\.push\(\i\.\i\.GUILD_BOOSTS\))/,
-                    replace: "!1",
-                },
-                {
-                    match: /\i\.premiumProgressBarEnabled(?=&&\i>0&&\i\.push\(\i\.\i\.GUILD_PREMIUM_PROGRESS_BAR\))/,
-                    replace: "!1",
-                },
-            ],
-        },
+        // Hide the "Server Boost" purchase upsell modal (the full-screen buy modal).
         {
             find: 'id:"premium-subscribe",',
             replacement: {
@@ -59,6 +47,7 @@ export default definePlugin({
                 replace: "null&&$&",
             },
         },
+        // Hide "Included in Boosting" feature-gate labels inside settings pages.
         {
             find: INCLUDED_IN_BOOSTING,
             replacement: {
@@ -66,13 +55,8 @@ export default definePlugin({
                 replace: "$&return null;",
             },
         },
-        {
-            find: SHOW_BOOST_PROGRESS_BAR,
-            replacement: {
-                match: /\(0,\i\.jsx\)\(\i,\{canManageGuild:\i,premiumProgressBarEnabled:\i\.premiumProgressBarEnabled\}\),\(0,\i\.jsx\)\("div",\{className:\i\.\i\}\),/,
-                replace: "",
-            },
-        },
+        // In the boost tier component: skip renderTierNone / renderSubscribers
+        // (the "buy level" cards shown when tier is 0).
         {
             find: "renderTierNone(){",
             replacement: [
@@ -86,6 +70,8 @@ export default definePlugin({
                 },
             ],
         },
+        // Skip the boost-banner "Boost this server" CTA that appears in the
+        // channel list when premium_tier is NONE.
         {
             find: /isBannerVisible:\i,disableBoostClick:\i\}=\i/,
             replacement: {
@@ -93,6 +79,8 @@ export default definePlugin({
                 replace: "return null;",
             },
         },
+        // Hide "Send a message when someone boosts this server" toggle
+        // in Engagement settings (it is meaningless when boosting is free).
         {
             find: /\.SUPPRESS_PREMIUM_SUBSCRIPTIONS\),onChange:/,
             replacement: {
@@ -100,24 +88,13 @@ export default definePlugin({
                 replace: "null&&$&",
             },
         },
+        // Redirect the GUILD_BOOSTS powerup listing page to the channel list
+        // instead of opening the boost purchase flow.
         {
             find: /case \i\.\i\.GUILD_BOOSTS:return\(0,\i\.jsx\)\(\i,\{guildId:\i,powerupListingId:/,
             replacement: {
                 match: /(case \i\.\i\.GUILD_BOOSTS:return)\(0,\i\.jsx\)\(\i,\{guildId:(\i),powerupListingId:[^}]+\}\)/,
                 replace: '$1 $self.redirectTo("/channels/"+$2)',
-            },
-        },
-        // Hide the "Boost Perks" tab from the Server Settings sidebar.
-        {
-            find: ".GUILD_SUBSCRIPTIONS,{",
-            replacement: hideSetting("GUILD_SUBSCRIPTIONS"),
-        },
-        // Hide the "Show Boost progress bar" toggle in Server Settings > Boost Perks.
-        {
-            find: /premiumProgressBarEnabled:\i,canManageGuild:\i/,
-            replacement: {
-                match: /function \i\(\i\)\{(?=let\{premiumProgressBarEnabled:\i,canManageGuild:\i)/,
-                replace: "$&return null;",
             },
         },
     ],
