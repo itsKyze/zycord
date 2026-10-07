@@ -535,34 +535,61 @@ setInterval(ensureWindowControls, 1000);
     let isTogglingMute = false;
     let isTogglingDeafen = false;
 
-    // Helper: Render crisp 16x16 red notification badge for Taskbar overlay
+    // Helper: Render authentic Discord Taskbar notification badge (crisp 32x32 HiDPI)
+    // - When text === "•" (general unread messages): solid white circle dot inside red badge (matching Discord desktop)
+    // - When text is a number (mentions count): crisp white bold number inside red badge
+    // - When empty/null: returns null to clear the badge
     function renderBadgeDataURL(text) {
         if (!text) return null;
         try {
             const canvas = document.createElement("canvas");
-            canvas.width = 16;
-            canvas.height = 16;
+            canvas.width = 32;
+            canvas.height = 32;
             const ctx = canvas.getContext("2d");
 
-            // Red circle background
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = "high";
+
+            // 1. Dark outer border/stroke for clean contrast on any taskbar color
+            ctx.strokeStyle = "#1e1f22";
+            ctx.lineWidth = 2.5;
+
+            // 2. Discord signature Red circle (#f23f43)
             ctx.fillStyle = "#f23f43";
             ctx.beginPath();
-            ctx.arc(8, 8, 7.5, 0, Math.PI * 2);
+            ctx.arc(16, 16, 13.5, 0, Math.PI * 2);
             ctx.fill();
-
-            // Dark outline
-            ctx.strokeStyle = "#1e1f22";
-            ctx.lineWidth = 1.5;
             ctx.stroke();
 
-            // White text
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 9px sans-serif";
-            ctx.textAlign = "center";
-            ctx.textBaseline = "middle";
+            if (text === "•") {
+                // Discord Unread Indicator: Solid white circular dot centered (matching user screenshot)
+                ctx.fillStyle = "#ffffff";
+                ctx.beginPath();
+                ctx.arc(16, 16, 5.5, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                // Mention Count: Clean white bold text, centered
+                ctx.fillStyle = "#ffffff";
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
 
-            const display = text.length > 2 ? "9+" : text;
-            ctx.fillText(display, 8, 8.5);
+                const num = parseInt(text, 10);
+                let displayText = text;
+                if (!isNaN(num) && num > 99) {
+                    displayText = "99+";
+                }
+
+                if (displayText.length === 1) {
+                    ctx.font = 'bold 18px "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif';
+                    ctx.fillText(displayText, 16, 16.5);
+                } else if (displayText.length === 2) {
+                    ctx.font = 'bold 15px "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif';
+                    ctx.fillText(displayText, 16, 16.5);
+                } else {
+                    ctx.font = 'bold 12px "Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, sans-serif';
+                    ctx.fillText(displayText, 16, 16.5);
+                }
+            }
 
             return canvas.toDataURL("image/png");
         } catch (e) {
@@ -754,9 +781,39 @@ setInterval(ensureWindowControls, 1000);
                 isVideoOn = label.includes("turn off") || label.includes("désactiver") || label.includes("إيقاف");
             }
 
-            // Unread badge from document.title
-            const titleMatch = /^\((\d+\+?)\)/.exec(document.title);
-            const badgeText = titleMatch ? titleMatch[1] : (document.title.startsWith("•") ? "•" : "");
+            // Unread badge from document.title and DOM elements
+            const cleanTitle = (document.title || "").trim();
+            const titleMatch = /^\((\d+\+?)\)/.exec(cleanTitle);
+
+            let badgeText = "";
+            if (titleMatch) {
+                // Numbered mention count from title: e.g. "(1) • Discord" -> "1"
+                badgeText = titleMatch[1];
+            } else if (cleanTitle.startsWith("•") || cleanTitle.includes("•")) {
+                // General unread messages indicator (bullet dot) -> "•" (white dot icon)
+                badgeText = "•";
+            } else {
+                // DOM fallback detection
+                let totalMentions = 0;
+                const numberBadges = document.querySelectorAll('[class*="numberBadge_"], [class*="badge_"]');
+                for (const badge of numberBadges) {
+                    const count = parseInt(badge.textContent || "", 10);
+                    if (!isNaN(count) && count > 0) {
+                        totalMentions += count;
+                    }
+                }
+
+                if (totalMentions > 0) {
+                    badgeText = totalMentions > 99 ? "99+" : String(totalMentions);
+                } else {
+                    const hasUnreads = Boolean(
+                        document.querySelector('[class*="unread_"], [class*="unreadMentionsIndicator_"]')
+                    );
+                    if (hasUnreads) {
+                        badgeText = "•";
+                    }
+                }
+            }
 
             if (badgeText !== lastBadgeText) {
                 lastBadgeText = badgeText;
@@ -781,6 +838,17 @@ setInterval(ensureWindowControls, 1000);
 
     // High frequency interval (200ms) for instant responsiveness
     setInterval(checkState, 200);
+
+    // Instant reaction to title mutations (when messages arrive or are read)
+    try {
+        const titleEl = document.querySelector("title");
+        if (titleEl) {
+            const titleObserver = new MutationObserver(() => {
+                checkState();
+            });
+            titleObserver.observe(titleEl, { childList: true, characterData: true, subtree: true });
+        }
+    } catch (_) {}
 
     // Instant reaction to user clicks anywhere in the interface
     document.addEventListener("click", () => {
