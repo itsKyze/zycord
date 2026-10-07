@@ -16,30 +16,45 @@
 				height: 100%;
 			}
 			body {
-				/* Matches real Discord verify page gradient exactly */
-				background-color: #1a1f4b;
-				background-image:
-					radial-gradient(ellipse 80% 70% at 85% 100%, #5865f2 0%, #3a44c0 15%, #232966 35%, #131734 60%, #0b0d1e 100%);
 				color: #ffffff;
 				font-family: 'gg sans', 'Noto Sans', Helvetica, Arial, sans-serif;
 				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
 				-webkit-font-smoothing: antialiased;
+				transition: background 0.3s ease;
 			}
-			/* Top-left logo header */
+
+			/* Blue/purple gradient theme for Gmail email verification (Matches real Discord exactly) */
+			body.theme-email {
+				background-color: #111432;
+				background-image: radial-gradient(circle at 65% 75%, #3849b2 0%, #252e75 35%, #141842 70%, #0a0b1c 100%);
+			}
+
+			/* Pitch black theme for login / account access verification (Matches real Discord exactly) */
+			body.theme-login {
+				background-color: #000000 !important;
+				background-image: none !important;
+			}
+
+			/* Top-left Zycord logo header */
 			.header {
 				padding: 20px 24px;
 				display: flex;
 				align-items: center;
 				flex-shrink: 0;
 			}
+			.brand {
+				display: inline-block;
+				text-decoration: none;
+			}
 			.brand img {
 				height: 22px;
 				width: auto;
 				display: block;
 			}
-			/* Centered main content */
+
+			/* Centered main stage */
 			.main-content {
 				flex: 1;
 				display: flex;
@@ -47,59 +62,65 @@
 				align-items: center;
 				justify-content: center;
 				text-align: center;
-				padding: 40px 20px 120px;
+				padding: 20px 20px 80px;
 			}
-			/* Envelope illustration */
+
+			/* Envelope 3D illustration */
 			.illustration {
-				width: 128px;
-				height: 128px;
-				margin-bottom: 16px;
+				width: 130px;
+				height: 130px;
+				margin-bottom: 20px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+				animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 			}
 			.illustration img {
-				width: 128px;
+				width: 130px;
 				height: auto;
 				display: block;
-				filter: drop-shadow(0 8px 24px rgba(88, 101, 242, 0.5));
+				filter: drop-shadow(0 8px 24px rgba(88, 101, 242, 0.4));
 			}
+
 			@keyframes popIn {
-				from { transform: scale(0.6); opacity: 0; }
+				from { transform: scale(0.7); opacity: 0; }
 				to   { transform: scale(1);   opacity: 1; }
 			}
-			/* "Email Verified!" */
+
+			/* Headings */
 			.title {
 				font-size: 20px;
 				font-weight: 600;
 				line-height: 24px;
 				color: #ffffff;
-				margin-bottom: 16px;
+				margin-bottom: 8px;
 			}
 			.subtitle {
 				font-size: 14px;
 				color: #b5bac1;
-				max-width: 380px;
+				max-width: 420px;
 				line-height: 20px;
-				margin-bottom: 20px;
+				margin-bottom: 24px;
 			}
-			/* Button — matches real Discord: white bg, dark text, small radius */
+
+			/* Button — matches Discord standard: pure white, dark text, subtle border-radius */
 			.btn {
 				background-color: #ffffff;
 				color: #060607;
 				font-size: 14px;
 				font-weight: 500;
 				line-height: 16px;
-				padding: 8px 16px;
+				padding: 8px 20px;
 				border-radius: 3px;
 				border: none;
 				cursor: pointer;
 				text-decoration: none;
-				display: inline-block;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
 				font-family: inherit;
-				transition: background-color 0.15s ease, box-shadow 0.15s ease;
-				min-width: 130px;
+				transition: background-color 0.15s ease, opacity 0.15s ease;
+				min-width: 90px;
 			}
 			.btn:hover {
 				background-color: #e3e5e8;
@@ -107,51 +128,82 @@
 			.btn:active {
 				background-color: #c7c8ce;
 			}
-			/* Loading spinner */
+
+			/* Subtle circular spinner matching Discord's loading state */
 			.spinner {
-				width: 40px;
-				height: 40px;
-				border: 3px solid rgba(255, 255, 255, 0.12);
-				border-top-color: #ffffff;
+				width: 24px;
+				height: 24px;
+				border: 2.5px solid rgba(88, 101, 242, 0.25);
+				border-top-color: #5865f2;
 				border-radius: 50%;
 				animation: spin 0.8s linear infinite;
-				margin-bottom: 20px;
+				margin-bottom: 18px;
 			}
 			@keyframes spin {
 				to { transform: rotate(360deg); }
 			}
 		</style>
 	</head>
-	<body>
+	<body class="theme-email">
 		<header class="header">
-			<a href="/channels/@me">
-				<img src="/static/branding/zycord_logo_white.png" alt="Zycord" />
+			<a class="brand" href="/channels/@me">
+				<img src="/static/branding/zycord_logo_white.png" onerror="this.onerror=null;this.src='/static/zycord_logo_white.png'" alt="Zycord" />
 			</a>
 		</header>
 
 		<main class="main-content" id="stage">
 			<div class="spinner" id="spinner"></div>
-			<h1 class="title" id="title">Verifying email…</h1>
-			<p class="subtitle" id="subtitle">Please wait while we confirm your email address.</p>
+			<h1 class="title" id="title">Verifying your email</h1>
+			<p class="subtitle" id="subtitle">This may take a moment.</p>
 			<div id="actionContainer" style="display:none;"></div>
 		</main>
 
 		<script>
 			(async () => {
+				const stage           = document.getElementById("stage");
 				const title           = document.getElementById("title");
 				const subtitle        = document.getElementById("subtitle");
 				const spinner         = document.getElementById("spinner");
 				const actionContainer = document.getElementById("actionContainer");
-				const stage           = document.getElementById("stage");
 
+				// Extract query and hash parameters
 				const hashParams  = new URLSearchParams(location.hash.replace(/^#/, ""));
 				const searchParams = new URLSearchParams(location.search);
 				const verifyToken = hashParams.get("token") || searchParams.get("token");
+				const urlType     = hashParams.get("type") || searchParams.get("type");
 
+				// Detect token payload to determine theme (login vs email)
+				let tokenPayload = null;
+				if (verifyToken) {
+					try {
+						const parts = verifyToken.split(".");
+						if (parts.length >= 2) {
+							const jsonStr = atob(parts[1].replace(/-/g, "+").replace(/_/g, "/"));
+							tokenPayload = JSON.parse(jsonStr);
+						}
+					} catch (e) {}
+				}
+
+				const isLogin = urlType === "login" || tokenPayload?.typ === "login_verify" || tokenPayload?.typ === "login";
+
+				// Apply appropriate theme based on verification type
+				if (isLogin) {
+					document.body.classList.remove("theme-email");
+					document.body.classList.add("theme-login");
+					title.textContent = "Verifying your login";
+					subtitle.textContent = "This may take a moment.";
+				} else {
+					document.body.classList.remove("theme-login");
+					document.body.classList.add("theme-email");
+					title.textContent = "Verifying your email";
+					subtitle.textContent = "This may take a moment.";
+				}
+
+				// Helper functions for rendering states
 				const showSuccess = () => {
 					stage.innerHTML = `
 						<div class="illustration">
-							<img src="/static/branding/zycord_envelope.png" alt="Email Verified" />
+							<img src="/static/branding/zycord_envelope.png" onerror="this.onerror=null;this.src='/static/zycord_envelope.png'" alt="Verified" />
 						</div>
 						<h1 class="title">Email Verified!</h1>
 						<button class="btn" id="continueBtn">Continue to Zycord</button>
@@ -161,24 +213,32 @@
 					});
 				};
 
-				const showError = (message) => {
-					spinner.style.display = "none";
-					title.textContent    = "Email Verification Failed";
-					subtitle.textContent = message || "This link is invalid or has expired. Please request a new verification email from your account settings.";
-					actionContainer.style.display = "block";
-					actionContainer.innerHTML     = `<button class="btn" onclick="location.href='/channels/@me'">Continue to Zycord</button>`;
+				const showExpired = (message) => {
+					stage.innerHTML = `
+						<h1 class="title">${isLogin ? "Login verification link has expired." : "Email verification link has expired."}</h1>
+						<p class="subtitle">${message || (isLogin ? "Please try logging in again to receive a new link." : "Please log in and resend the link.")}</p>
+						<button class="btn" id="loginBtn">Log In</button>
+					`;
+					document.getElementById("loginBtn").addEventListener("click", () => {
+						location.href = "/login";
+					});
 				};
 
 				if (!verifyToken) {
-					showError("No verification token was provided in the link.");
+					// No token provided in URL
+					await new Promise((r) => setTimeout(r, 600));
+					showExpired("No verification token was provided.");
 					return;
 				}
+
+				// Enforce minimum loading time (1200ms) so user sees the authentic "Verifying your email" state first
+				const minDelay = new Promise((resolve) => setTimeout(resolve, 1200));
 
 				try {
 					let localAuthToken = null;
 					try { localAuthToken = JSON.parse(localStorage.getItem("token") ?? "null"); } catch {}
 
-					const response = await fetch("/api/v9/auth/verify", {
+					const fetchPromise = fetch("/api/v9/auth/verify", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
@@ -187,6 +247,7 @@
 						body: JSON.stringify({ token: verifyToken }),
 					});
 
+					const [response] = await Promise.all([fetchPromise, minDelay]);
 					const data = await response.json().catch(() => ({}));
 
 					if (response.ok) {
@@ -195,10 +256,11 @@
 						}
 						showSuccess();
 					} else {
-						showError(data?.token?.message || data?.message);
+						showExpired(data?.message || data?.token?.message);
 					}
-				} catch {
-					showError("A network error occurred while verifying. Please try again.");
+				} catch (err) {
+					await minDelay;
+					showExpired("A network error occurred. Please try again.");
 				}
 			})();
 		</script>

@@ -48,7 +48,7 @@ router.post(
                 },
             });
 
-        const decoded = readTicket<{ typ: string; uid?: string; email?: string }>(token, "email_verify");
+        const decoded = readTicket<{ typ: string; uid?: string; email?: string }>(token, "email_verify") ?? readTicket<{ typ: string; uid?: string; email?: string }>(token, "login_verify");
         if (!decoded?.uid) throw invalid();
 
         const user = await User.findOne({ where: { id: decoded.uid }, select: { id: true, email: true, verified: true, disabled: true, deleted: true } });

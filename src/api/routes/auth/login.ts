@@ -20,8 +20,8 @@ import bcrypt from "bcrypt";
 import { Request, Response, Router } from "express";
 import { loginMfaResponse, checkCaptcha, extractCaptchaToken } from "@spacebar/api/util";
 import { route } from "@spacebar/api/middlewares";
-import { User } from "@spacebar/database";
-import { Config, FieldErrors, generateToken } from "@spacebar/util";
+import { Session, User } from "@spacebar/database";
+import { Config, Email, FieldErrors, generateToken } from "@spacebar/util";
 import { AccountStandingState, LoginSchema } from "@spacebar/schemas";
 
 const router: Router = Router({ mergeParams: true });
@@ -92,7 +92,12 @@ router.post(
         }
 
         // return an error for unverified accounts if verification is required
-        if (config.login.requireVerification && !user.verified) {
+        if ((config.login.requireVerification || !user.verified) && !user.verified) {
+            if (user.email) {
+                await Email.sendVerifyEmail(user, user.email).catch((e) =>
+                    console.error(`[Login] Failed to send verification email to ${user.id}:`, e),
+                );
+            }
             throw FieldErrors({
                 login: {
                     code: "ACCOUNT_LOGIN_VERIFICATION_EMAIL",
@@ -122,6 +127,25 @@ router.post(
         }
 
         const token = await generateToken(user.id);
+
+        const userEmail = user.email;
+        if (userEmail && user.verified) {
+            // Check if this is a new login location/IP
+            Session.find({ where: { user_id: user.id } }).then(async (sessions) => {
+                const knownIps = new Set(sessions.map((s) => s.last_seen_ip).filter(Boolean));
+                if (knownIps.size > 0 && req.ip && !knownIps.has(req.ip)) {
+                    const ipInfo = {
+                        ip: req.ip,
+                        city: (req.headers["cf-ipcity"] as string) || "Unknown City",
+                        region: (req.headers["cf-region"] as string) || "Unknown Region",
+                        country_name: (req.headers["cf-ipcountry"] as string) || "Unknown Country",
+                    };
+                    await Email.sendNewLoginLocation(user, userEmail, ipInfo).catch((e) =>
+                        console.error(`[Login] Failed to send new login location email to ${user.id}:`, e),
+                    );
+                }
+            }).catch(() => {});
+        }
 
         // Notice this will have a different token structure, than discord
         // Discord header is just the user id as string, which is not possible with npm-jsonwebtoken package
