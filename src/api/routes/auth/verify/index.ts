@@ -55,7 +55,18 @@ router.post(
         const user = await User.findOne({ where: { id: decoded.uid }, select: { id: true, email: true, verified: true, disabled: true, deleted: true } });
         if (!user || user.disabled || user.deleted || !user.email || user.email !== decoded.email) throw invalid();
 
-        if (!user.verified) {
+        if (decoded.typ === "email_verify") {
+            if (user.verified) {
+                throw FieldErrors({
+                    token: {
+                        message: "Email verification link has expired.",
+                        code: "TOKEN_EXPIRED",
+                    },
+                });
+            }
+            await User.update({ id: user.id }, { verified: true });
+            await emitUserUpdate(user.id);
+        } else if (!user.verified) {
             await User.update({ id: user.id }, { verified: true });
             await emitUserUpdate(user.id);
         }

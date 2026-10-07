@@ -176,7 +176,7 @@ export const Email: {
                     .slice(0, 16),
             },
             JwtKeypairManager.keypair.privateKey,
-            { algorithm: "ES512", expiresIn: reset ? "1h" : isLogin ? "1h" : "7d" },
+            { algorithm: "ES512", expiresIn: reset ? "1h" : isLogin ? "1h" : "24h" },
         );
         const { frontPage, serverName } = Config.get().general;
         const endpoint = Config.get().api.endpointPublic;

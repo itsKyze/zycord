@@ -32,8 +32,8 @@
 
 			/* Blue/purple gradient theme for Gmail email verification (Matches real Discord verify page) */
 			body.theme-email {
-				background-color: #0b0e22;
-				background-image: radial-gradient(circle 800px at 68% 68%, #3648b7 0%, #233082 28%, #141b4f 55%, #0c1032 75%, #060818 100%);
+				background-color: #0b0e26;
+				background-image: radial-gradient(circle 850px at 66% 66%, #3346be 0%, #212c7d 28%, #141b4e 55%, #0c1032 75%, #06081a 100%);
 			}
 
 			/* Pitch black theme for login authorization (Matches real Discord verify page) */
@@ -169,11 +169,11 @@
 		</main>
 
 		<script>
-			// Smooth slow mouse-follow / parallax interaction matching Discord
-			let targetBgX = 68;
-			let targetBgY = 68;
-			let currentBgX = 68;
-			let currentBgY = 68;
+			// Subtle slow mouse-follow / parallax interaction matching Discord (تتحرك الالوان بسيطة جدا)
+			let targetBgX = 66;
+			let targetBgY = 66;
+			let currentBgX = 66;
+			let currentBgY = 66;
 
 			let targetTiltX = 0;
 			let targetTiltY = 0;
@@ -184,41 +184,41 @@
 				const normX = e.clientX / window.innerWidth;
 				const normY = e.clientY / window.innerHeight;
 
-				// Background radial light target shifts slowly around cursor
-				targetBgX = 68 + (normX - 0.5) * 22;
-				targetBgY = 68 + (normY - 0.5) * 22;
+				// Background radial light target shifts very subtly (بسيطة جدا)
+				targetBgX = 66 + (normX - 0.5) * 5;
+				targetBgY = 66 + (normY - 0.5) * 5;
 
-				// 3D illustration tilt angles
+				// 3D illustration gentle tilt angles
 				const centerX = window.innerWidth / 2;
 				const centerY = window.innerHeight / 2;
 				const deltaX = (e.clientX - centerX) / centerX;
 				const deltaY = (e.clientY - centerY) / centerY;
 
-				targetTiltX = deltaX * 12;  // rotateY degrees
-				targetTiltY = -deltaY * 12; // rotateX degrees
+				targetTiltX = deltaX * 6;  // rotateY degrees max 6
+				targetTiltY = -deltaY * 6; // rotateX degrees max 6
 			});
 
 			window.addEventListener("mouseleave", () => {
-				targetBgX = 68;
-				targetBgY = 68;
+				targetBgX = 66;
+				targetBgY = 66;
 				targetTiltX = 0;
 				targetTiltY = 0;
 			});
 
 			function renderParallax() {
-				// Gentle smooth lerp (factor 0.045 for that slow, luxurious Discord fluid motion)
-				currentBgX += (targetBgX - currentBgX) * 0.045;
-				currentBgY += (targetBgY - currentBgY) * 0.045;
-				currentTiltX += (targetTiltX - currentTiltX) * 0.055;
-				currentTiltY += (targetTiltY - currentTiltY) * 0.055;
+				// Gentle smooth lerp (factor 0.035 for very smooth, subtle, slow drift)
+				currentBgX += (targetBgX - currentBgX) * 0.035;
+				currentBgY += (targetBgY - currentBgY) * 0.035;
+				currentTiltX += (targetTiltX - currentTiltX) * 0.045;
+				currentTiltY += (targetTiltY - currentTiltY) * 0.045;
 
 				if (document.body.classList.contains("theme-email")) {
-					document.body.style.backgroundImage = `radial-gradient(circle 800px at ${currentBgX.toFixed(2)}% ${currentBgY.toFixed(2)}%, #3648b7 0%, #233082 28%, #141b4f 55%, #0c1032 75%, #060818 100%)`;
+					document.body.style.backgroundImage = `radial-gradient(circle 850px at ${currentBgX.toFixed(2)}% ${currentBgY.toFixed(2)}%, #3346be 0%, #212c7d 28%, #141b4e 55%, #0c1032 75%, #06081a 100%)`;
 				}
 
 				const img = document.querySelector(".illustration img");
 				if (img) {
-					img.style.transform = `perspective(800px) rotateX(${currentTiltY.toFixed(2)}deg) rotateY(${currentTiltX.toFixed(2)}deg) translate3d(${(currentTiltX * 1.2).toFixed(2)}px, ${(-currentTiltY * 1.2).toFixed(2)}px, 0)`;
+					img.style.transform = `perspective(800px) rotateX(${currentTiltY.toFixed(2)}deg) rotateY(${currentTiltX.toFixed(2)}deg) translate3d(${(currentTiltX * 0.8).toFixed(2)}px, ${(-currentTiltY * 0.8).toFixed(2)}px, 0)`;
 				}
 
 				requestAnimationFrame(renderParallax);
