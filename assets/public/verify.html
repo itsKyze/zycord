@@ -12,32 +12,34 @@
 				padding: 0;
 				box-sizing: border-box;
 			}
+			html, body {
+				height: 100%;
+			}
 			body {
-				background: radial-gradient(ellipse at 85% 90%, #29388a 0%, #151b47 35%, #0c0f24 60%, #05060c 100%);
+				/* Matches real Discord verify page gradient exactly */
+				background-color: #1a1f4b;
+				background-image:
+					radial-gradient(ellipse 80% 70% at 85% 100%, #5865f2 0%, #3a44c0 15%, #232966 35%, #131734 60%, #0b0d1e 100%);
 				color: #ffffff;
 				font-family: 'gg sans', 'Noto Sans', Helvetica, Arial, sans-serif;
 				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
-				overflow: hidden;
 				-webkit-font-smoothing: antialiased;
 			}
+			/* Top-left logo header */
 			.header {
-				padding: 20px 32px;
+				padding: 20px 24px;
 				display: flex;
 				align-items: center;
-			}
-			.brand {
-				display: flex;
-				align-items: center;
-				text-decoration: none;
-				cursor: pointer;
+				flex-shrink: 0;
 			}
 			.brand img {
-				height: 24px;
+				height: 22px;
 				width: auto;
 				display: block;
 			}
+			/* Centered main content */
 			.main-content {
 				flex: 1;
 				display: flex;
@@ -45,90 +47,84 @@
 				align-items: center;
 				justify-content: center;
 				text-align: center;
-				padding: 20px;
-				margin-top: -60px;
+				padding: 40px 20px 120px;
 			}
+			/* Envelope illustration */
 			.illustration {
-				width: 160px;
-				height: 140px;
-				margin-bottom: 20px;
+				width: 128px;
+				height: 128px;
+				margin-bottom: 16px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+				animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 			}
 			.illustration img {
-				width: 150px;
+				width: 128px;
 				height: auto;
 				display: block;
-				filter: drop-shadow(0px 8px 24px rgba(88, 101, 242, 0.35));
+				filter: drop-shadow(0 8px 24px rgba(88, 101, 242, 0.5));
 			}
 			@keyframes popIn {
-				0% {
-					transform: scale(0.7);
-					opacity: 0;
-				}
-				100% {
-					transform: scale(1);
-					opacity: 1;
-				}
+				from { transform: scale(0.6); opacity: 0; }
+				to   { transform: scale(1);   opacity: 1; }
 			}
+			/* "Email Verified!" */
 			.title {
-				font-size: 24px;
-				font-weight: 700;
-				line-height: 30px;
-				margin-bottom: 20px;
+				font-size: 20px;
+				font-weight: 600;
+				line-height: 24px;
 				color: #ffffff;
+				margin-bottom: 16px;
 			}
 			.subtitle {
-				font-size: 15px;
-				color: #949ba4;
-				max-width: 420px;
+				font-size: 14px;
+				color: #b5bac1;
+				max-width: 380px;
 				line-height: 20px;
-				margin-bottom: 24px;
+				margin-bottom: 20px;
 			}
-			/* Button matches real Discord - white, black text, small radius */
+			/* Button — matches real Discord: white bg, dark text, small radius */
 			.btn {
 				background-color: #ffffff;
 				color: #060607;
 				font-size: 14px;
 				font-weight: 500;
-				padding: 10px 32px;
-				border-radius: 28px;
+				line-height: 16px;
+				padding: 8px 16px;
+				border-radius: 3px;
 				border: none;
 				cursor: pointer;
 				text-decoration: none;
 				display: inline-block;
 				font-family: inherit;
-				letter-spacing: 0.02em;
-				transition: background-color 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
+				transition: background-color 0.15s ease, box-shadow 0.15s ease;
+				min-width: 130px;
 			}
 			.btn:hover {
 				background-color: #e3e5e8;
-				opacity: 0.9;
 			}
 			.btn:active {
-				transform: scale(0.97);
+				background-color: #c7c8ce;
 			}
+			/* Loading spinner */
 			.spinner {
-				width: 36px;
-				height: 36px;
-				border: 3px solid rgba(255, 255, 255, 0.15);
+				width: 40px;
+				height: 40px;
+				border: 3px solid rgba(255, 255, 255, 0.12);
 				border-top-color: #ffffff;
 				border-radius: 50%;
 				animation: spin 0.8s linear infinite;
 				margin-bottom: 20px;
 			}
 			@keyframes spin {
-				to {
-					transform: rotate(360deg);
-				}
+				to { transform: rotate(360deg); }
 			}
 		</style>
 	</head>
 	<body>
 		<header class="header">
-			<a class="brand" href="/channels/@me">
+			<a href="/channels/@me">
 				<img src="/static/branding/zycord_logo_white.png" alt="Zycord" />
 			</a>
 		</header>
@@ -137,18 +133,18 @@
 			<div class="spinner" id="spinner"></div>
 			<h1 class="title" id="title">Verifying email…</h1>
 			<p class="subtitle" id="subtitle">Please wait while we confirm your email address.</p>
-			<div id="actionContainer" style="display: none;"></div>
+			<div id="actionContainer" style="display:none;"></div>
 		</main>
 
 		<script>
 			(async () => {
-				const title = document.getElementById("title");
-				const subtitle = document.getElementById("subtitle");
-				const spinner = document.getElementById("spinner");
+				const title           = document.getElementById("title");
+				const subtitle        = document.getElementById("subtitle");
+				const spinner         = document.getElementById("spinner");
 				const actionContainer = document.getElementById("actionContainer");
-				const stage = document.getElementById("stage");
+				const stage           = document.getElementById("stage");
 
-				const hashParams = new URLSearchParams(location.hash.replace(/^#/, ""));
+				const hashParams  = new URLSearchParams(location.hash.replace(/^#/, ""));
 				const searchParams = new URLSearchParams(location.search);
 				const verifyToken = hashParams.get("token") || searchParams.get("token");
 
@@ -158,22 +154,19 @@
 							<img src="/static/branding/zycord_envelope.png" alt="Email Verified" />
 						</div>
 						<h1 class="title">Email Verified!</h1>
-						<div>
-							<button class="btn" id="continueBtn">Continue to Zycord</button>
-						</div>
+						<button class="btn" id="continueBtn">Continue to Zycord</button>
 					`;
-
-					document.getElementById("continueBtn").onclick = () => {
+					document.getElementById("continueBtn").addEventListener("click", () => {
 						location.href = "/channels/@me";
-					};
+					});
 				};
 
 				const showError = (message) => {
 					spinner.style.display = "none";
-					title.innerText = "Email Verification Failed";
-					subtitle.innerText = message || "This link is invalid or has expired. Request a new verification email from your account settings.";
+					title.textContent    = "Email Verification Failed";
+					subtitle.textContent = message || "This link is invalid or has expired. Please request a new verification email from your account settings.";
 					actionContainer.style.display = "block";
-					actionContainer.innerHTML = `<button class="btn" onclick="location.href='/channels/@me'">Continue to Zycord</button>`;
+					actionContainer.innerHTML     = `<button class="btn" onclick="location.href='/channels/@me'">Continue to Zycord</button>`;
 				};
 
 				if (!verifyToken) {
@@ -183,15 +176,13 @@
 
 				try {
 					let localAuthToken = null;
-					try {
-						localAuthToken = JSON.parse(localStorage.getItem("token") ?? "null");
-					} catch {}
+					try { localAuthToken = JSON.parse(localStorage.getItem("token") ?? "null"); } catch {}
 
 					const response = await fetch("/api/v9/auth/verify", {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json",
-							...(localAuthToken ? { Authorization: localAuthToken } : {})
+							...(localAuthToken ? { Authorization: localAuthToken } : {}),
 						},
 						body: JSON.stringify({ token: verifyToken }),
 					});
@@ -206,8 +197,8 @@
 					} else {
 						showError(data?.token?.message || data?.message);
 					}
-				} catch (err) {
-					showError("Network error occurred while verifying. Please try again.");
+				} catch {
+					showError("A network error occurred while verifying. Please try again.");
 				}
 			})();
 		</script>
