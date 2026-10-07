@@ -1,7 +1,7 @@
 {
     "name": "zycord",
     "productName": "Zycord",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Zycord",
     "main": "src/main.js",
     "author": "Zyron Solutions Ltd",
