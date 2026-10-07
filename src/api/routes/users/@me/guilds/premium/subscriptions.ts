@@ -25,4 +25,10 @@ router.get("/", route({}), (req: Request, res: Response) => {
     res.json([]);
 });
 
+// The Discord client calls this endpoint to determine the boost cooldown state.
+// Returning ends_at:null means no cooldown is active, so the UI renders properly.
+router.get("/cooldown", route({}), (req: Request, res: Response) => {
+    res.json({ ends_at: null, limit: 2, remaining: 2 });
+});
+
 export default router;

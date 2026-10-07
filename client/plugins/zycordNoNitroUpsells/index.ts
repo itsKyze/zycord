@@ -83,7 +83,10 @@ export default definePlugin({
         },
         {
             find: ".BILLING_SECTION,{",
-            replacement: [hideSetting("ACCOUNT_FAMILY_CENTER_CATEGORY"), hideSetting("APPEARANCE_IN_APP_ICON_CATEGORY")],
+            replacement: [
+                hideSetting("ACCOUNT_FAMILY_CENTER_CATEGORY"),
+                hideSetting("APPEARANCE_IN_APP_ICON_CATEGORY"),
+            ],
         },
         {
             find: ".COLLECTIBLES_PROFILE_SETTINGS_UPSELL),",
