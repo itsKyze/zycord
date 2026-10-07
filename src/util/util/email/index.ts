@@ -31,6 +31,16 @@ import { MailJetEmailClient } from "./clients/MailJetEmailClient";
 
 const ASSET_FOLDER_PATH = path.join(__dirname, "..", "..", "..", "..", "assets");
 
+export function getFromAddress(): string {
+    const { instanceName } = Config.get().general;
+    const rawSender = Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost";
+    if (rawSender.includes("<") && rawSender.includes(">")) {
+        return rawSender;
+    }
+    const name = instanceName || "Zycord";
+    return `"${name}" <${rawSender}>`;
+}
+
 export enum MailTypes {
     verifyEmail = "verifyEmail",
     resetPassword = "resetPassword",
@@ -233,7 +243,7 @@ export const Email: {
         const subject = html.match(/<title>(.*)<\/title>/)?.[1] || "";
 
         const message: IEmail = {
-            from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
+            from: getFromAddress(),
             to: email,
             subject,
             text,
@@ -289,7 +299,7 @@ export const Email: {
         const subject = html.match(/<title>(.*)<\/title>/)?.[1] || "New Login Location";
 
         const message: IEmail = {
-            from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
+            from: getFromAddress(),
             to: email,
             subject,
             text,
@@ -375,7 +385,7 @@ export const Email: {
         if (!this.transporter) return;
         const html = this.renderHtml(subject, contentHtml);
         return this.transporter.sendMail({
-            from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
+            from: getFromAddress(),
             to,
             subject,
             text,
