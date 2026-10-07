@@ -18,7 +18,7 @@
 
 import definePlugin from "@utils/types";
 
-import { ZycordAuthor, redirectTo } from "../zycordCore/shared";
+import { ZycordAuthor, hideSetting, redirectTo } from "../zycordCore/shared";
 
 const INCLUDED_IN_BOOSTING = "#{intl::hUgjyP::raw}";
 const SHOW_BOOST_PROGRESS_BAR = "#{intl::Dl4mJS::raw}";
@@ -105,6 +105,19 @@ export default definePlugin({
             replacement: {
                 match: /(case \i\.\i\.GUILD_BOOSTS:return)\(0,\i\.jsx\)\(\i,\{guildId:(\i),powerupListingId:[^}]+\}\)/,
                 replace: '$1 $self.redirectTo("/channels/"+$2)',
+            },
+        },
+        // Hide the "Boost Perks" tab from the Server Settings sidebar.
+        {
+            find: ".GUILD_SUBSCRIPTIONS,{",
+            replacement: hideSetting("GUILD_SUBSCRIPTIONS"),
+        },
+        // Hide the "Show Boost progress bar" toggle in Server Settings > Boost Perks.
+        {
+            find: /premiumProgressBarEnabled:\i,canManageGuild:\i/,
+            replacement: {
+                match: /function \i\(\i\)\{(?=let\{premiumProgressBarEnabled:\i,canManageGuild:\i)/,
+                replace: "$&return null;",
             },
         },
     ],
