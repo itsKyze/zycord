@@ -28,47 +28,7 @@ function initWindowControls() {
     try {
         if (!document.documentElement) return;
 
-        // Persistent top draggable titlebar across the whole app
-        if (!document.getElementById("zycord-titlebar")) {
-            const titlebar = document.createElement("div");
-            titlebar.id = "zycord-titlebar";
-            (document.body || document.documentElement).appendChild(titlebar);
-        }
-
-        if (document.getElementById("zycord-win-controls")) {
-            const titlebarEl = document.getElementById("zycord-titlebar");
-            if (titlebarEl && !titlebarEl.__zycordBound) {
-                titlebarEl.__zycordBound = true;
-                titlebarEl.addEventListener("dblclick", (e) => {
-                    e.preventDefault();
-                    ipcRenderer.send("window-maximize");
-                });
-            }
-            return;
-        }
-
-        // Top bar controls: Update Badge, Separator, Minimize, Maximize, Close
-        const winControls = document.createElement("div");
-        winControls.id = "zycord-win-controls";
-        winControls.innerHTML = `
-            <button class="zycord-update-btn" id="zycord-btn-update" title="تحديث جديد جاهز! اضغط لإعادة التشغيل والتثبيت" aria-label="Update Ready" style="display: none;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="10" fill="#23A55A" />
-                    <path d="M12 7V13.5M12 13.5L9 10.5M12 13.5L15 10.5M8 16.5H16" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
-            </button>
-            <div class="zycord-win-separator"></div>
-            <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
-                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1.4" x="0" y="5"></rect></svg>
-            </button>
-            <button class="zycord-win-btn" id="zycord-btn-max" title="Maximize" aria-label="Maximize">
-                <svg id="zycord-icon-max" width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1.2"></rect></svg>
-            </button>
-            <button class="zycord-win-btn close" id="zycord-btn-close" title="Close" aria-label="Close">
-                <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
-            </button>
-        `;
-
+        // Ensure App Styles are ALWAYS injected first
         if (!document.getElementById("zycord-app-styles")) {
             const style = document.createElement("style");
             style.id = "zycord-app-styles";
@@ -100,14 +60,14 @@ function initWindowControls() {
                     user-select: none !important;
                 }
 
-                /* Dedicated Top Draggable Bar (stops 145px before right edge so inbox & window controls are 100% non-drag and clickable) */
+                /* Dedicated Top Draggable Bar (stops 145px before right edge) */
                 #zycord-titlebar {
                     position: fixed !important;
                     top: 0 !important;
                     left: 0 !important;
                     width: calc(100% - 145px) !important;
-                    height: 24px !important;
-                    z-index: 2147483646 !important;
+                    height: 28px !important;
+                    z-index: 999 !important;
                     -webkit-app-region: drag !important;
                     pointer-events: auto !important;
                     background: transparent !important;
@@ -231,7 +191,7 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
-                /* Stop draggable top bar 145px before right edge so both original inbox and window controls are 100% non-drag */
+                /* Stop draggable top bar 145px before right edge */
                 [class*="typeWindows_"],
                 [class*="titleBar_"],
                 [class*="withFrame_"] {
@@ -258,15 +218,18 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
-                /* Auth / Login / Register Page: ONLY decorative artwork background and wordmark are draggable (NEVER parent wrappers!) */
+                /* Auth / Login / Register Page: Background space is draggable */
                 [class*="characterBackground_"],
                 [class*="splashBackground_"],
                 [class*="artwork_"],
-                [class*="wordmark_"] {
+                [class*="wordmark_"],
+                [class*="centeringWrapper_"],
+                [class*="authWrapper_"],
+                [class*="pageContainer_"] {
                     -webkit-app-region: drag !important;
                 }
 
-                /* Ensure auth box / login card, form inputs, buttons, qr code are non-drag and fully interactive */
+                /* Auth Card, Form, Inputs, Buttons: Strictly NON-DRAG, fully interactive and typable */
                 [class*="authBox_"],
                 [class*="authBoxExpanded_"],
                 [class*="authBox_"] *,
@@ -279,29 +242,33 @@ function initWindowControls() {
                 form *,
                 input,
                 input *,
+                textarea,
+                textarea *,
                 button,
                 button *,
                 a,
                 a *,
                 [role="button"],
-                [role="button"] * {
+                [role="button"] *,
+                [role="textbox"],
+                [role="textbox"] *,
+                [class*="input_"],
+                [class*="input_"] * {
                     -webkit-app-region: no-drag !important;
+                    pointer-events: auto !important;
+                    user-select: text !important;
+                    -webkit-user-select: text !important;
                 }
 
-                /* CRITICAL: Ensure ALL iframes, hCaptcha, Cloudflare, reCAPTCHA, modals, layers, and dialogs are 100% NON-DRAG and fully clickable/draggable */
+                /* Modals, Dialogs, Iframes, and hCaptcha: Strictly NON-DRAG and fully interactive */
                 iframe,
                 iframe *,
                 div:has(> iframe),
                 div:has(iframe),
                 [class*="modal_"],
                 [class*="modal_"] *,
-                [class*="layer_"],
-                [class*="layer_"] *,
-                [class*="layerContainer_"],
-                [class*="layerContainer_"] *,
                 [class*="focusLock_"],
                 [class*="focusLock_"] *,
-                [class*="backdrop_"],
                 [role="dialog"],
                 [role="dialog"] *,
                 [aria-modal="true"],
@@ -318,15 +285,6 @@ function initWindowControls() {
                     pointer-events: auto !important;
                 }
 
-                /* When a modal or captcha is open, temporarily disable top titlebar drag so it never captures clicks */
-                body:has([class*="modal_"]) #zycord-titlebar,
-                body:has(iframe) #zycord-titlebar,
-                body:has([role="dialog"]) #zycord-titlebar,
-                body:has([class*="layerContainer_"] > div) #zycord-titlebar {
-                    pointer-events: none !important;
-                    -webkit-app-region: no-drag !important;
-                }
-
                 /* Center Zycord logo above login form */
                 .discordLogo__921c5,
                 .authBoxExpanded__921c5 .discordLogo__921c5 {
@@ -340,6 +298,46 @@ function initWindowControls() {
             `;
             (document.head || document.documentElement).appendChild(style);
         }
+
+        // Persistent top draggable titlebar
+        if (!document.getElementById("zycord-titlebar")) {
+            const titlebar = document.createElement("div");
+            titlebar.id = "zycord-titlebar";
+            (document.body || document.documentElement).appendChild(titlebar);
+        }
+
+        const titlebarEl = document.getElementById("zycord-titlebar");
+        if (titlebarEl && !titlebarEl.__zycordBound) {
+            titlebarEl.__zycordBound = true;
+            titlebarEl.addEventListener("dblclick", (e) => {
+                e.preventDefault();
+                ipcRenderer.send("window-maximize");
+            });
+        }
+
+        if (document.getElementById("zycord-win-controls")) return;
+
+        // Top bar controls: Update Badge, Separator, Minimize, Maximize, Close
+        const winControls = document.createElement("div");
+        winControls.id = "zycord-win-controls";
+        winControls.innerHTML = `
+            <button class="zycord-update-btn" id="zycord-btn-update" title="تحديث جديد جاهز! اضغط لإعادة التشغيل والتثبيت" aria-label="Update Ready" style="display: none;">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" fill="#23A55A" />
+                    <path d="M12 7V13.5M12 13.5L9 10.5M12 13.5L15 10.5M8 16.5H16" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+            </button>
+            <div class="zycord-win-separator"></div>
+            <button class="zycord-win-btn" id="zycord-btn-min" title="Minimize" aria-label="Minimize">
+                <svg width="10" height="10" viewBox="0 0 10 10"><rect fill="currentColor" width="10" height="1.4" x="0" y="5"></rect></svg>
+            </button>
+            <button class="zycord-win-btn" id="zycord-btn-max" title="Maximize" aria-label="Maximize">
+                <svg id="zycord-icon-max" width="10" height="10" viewBox="0 0 10 10"><rect fill="none" stroke="currentColor" width="8" height="8" x="1" y="1" stroke-width="1.2"></rect></svg>
+            </button>
+            <button class="zycord-win-btn close" id="zycord-btn-close" title="Close" aria-label="Close">
+                <svg width="10" height="10" viewBox="0 0 10 10"><polygon fill="currentColor" fill-rule="evenodd" points="10 1 9 0 5 4 1 0 0 1 4 5 0 9 1 10 5 6 9 10 10 9 6 5"></polygon></svg>
+            </button>
+        `;
 
         (document.body || document.documentElement).appendChild(winControls);
 
@@ -371,7 +369,6 @@ function initWindowControls() {
             ipcRenderer.send("window-close");
         };
 
-        const titlebarEl = document.getElementById("zycord-titlebar");
         if (titlebarEl && !titlebarEl.__zycordBound) {
             titlebarEl.__zycordBound = true;
             titlebarEl.addEventListener("dblclick", handleMaximize);
