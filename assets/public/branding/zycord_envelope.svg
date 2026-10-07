@@ -1,0 +1,44 @@
+<svg width="180" height="150" viewBox="0 0 180 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(90, 75) rotate(-11) translate(-90, -75)">
+    <!-- 3D drop depth / shadow -->
+    <rect x="23" y="27" width="134" height="96" rx="9" fill="#1b1d3d" opacity="0.6"/>
+    <rect x="22" y="25" width="134" height="96" rx="9" fill="#2d337d"/>
+    <rect x="21" y="24" width="134" height="96" rx="9" fill="#4752c4"/>
+    <!-- Magenta/violet accent on left side of envelope -->
+    <path d="M22 25L21 34V112L25 119L27 25H22Z" fill="#a452fc" opacity="0.6"/>
+
+    <!-- Main envelope surface -->
+    <rect x="24" y="22" width="132" height="94" rx="8" fill="#dce2fb"/>
+
+    <!-- Back flap / interior shadow -->
+    <path d="M24 22H156L90 76L24 22Z" fill="#cfd7f8"/>
+
+    <!-- Bottom fold flaps -->
+    <path d="M24 116L74 74L24 34V116Z" fill="#d2daf9"/>
+    <path d="M156 116L106 74L156 34V116Z" fill="#d2daf9"/>
+    <path d="M24 116H156L90 68L24 116Z" fill="#e7ebfd"/>
+
+    <!-- Top flap folded over -->
+    <path d="M24 22H156L90 74L24 22Z" fill="#edf1ff"/>
+
+    <!-- Crisp crease fold strokes -->
+    <path d="M24 22L90 74L156 22" stroke="#b5c0f2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M24 116L70 77" stroke="#9aa8ea" stroke-width="2" stroke-linecap="round"/>
+    <path d="M156 116L110 77" stroke="#9aa8ea" stroke-width="2" stroke-linecap="round"/>
+
+    <!-- Top highlight on upper rim -->
+    <path d="M26 23H154" stroke="#ffffff" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+
+    <!-- Purple wax seal -->
+    <g transform="translate(90, 72)">
+      <!-- Outer wavy seal wax glow/body -->
+      <path d="M0 -22C5 -22 8 -19 12 -20C16 -21 19 -17 22 -14C25 -11 25 -7 27 -3C29 1 29 5 28 9C27 13 28 17 25 20C22 23 18 22 14 24C10 26 7 28 3 28C-1 28 -5 26 -9 24C-13 22 -17 23 -20 20C-23 17 -22 13 -23 9C-24 5 -24 1 -22 -3C-20 -7 -20 -11 -17 -14C-14 -17 -11 -21 -7 -20C-3 -19 0 -22 0 -22Z" fill="#5865f2"/>
+      <circle cx="0" cy="0" r="19" fill="#5865f2" stroke="#4752c4" stroke-width="2"/>
+      <circle cx="0" cy="0" r="15" fill="#4752c4"/>
+      <!-- Inner seal rim highlight -->
+      <circle cx="0" cy="0" r="14" fill="#3c45a5"/>
+      <!-- Green checkmark -->
+      <path d="M-6 0.5L-1.5 5L7 -4" stroke="#57f287" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  </g>
+</svg>

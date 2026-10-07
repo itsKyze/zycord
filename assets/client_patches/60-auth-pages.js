@@ -227,7 +227,7 @@
                 title("Email Verified!"),
                 text(["Thanks for verifying your email address."]),
                 actions([
-                    button(`Continue to ${instanceName}`, "primary", () => {
+                    button("Continue to Discord", "primary", () => {
                         if (loggedIn) return close();
                         localStorage.setItem("token", JSON.stringify(result.token));
                         location.replace("/channels/@me");
