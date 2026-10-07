@@ -1,8 +1,8 @@
-version: 1.0.3
+version: 1.0.4
 files:
   - url: ZycordSetup.exe
-    sha512: Hh8MKPmqGydDrhNN1LLDNJYP7ZaOqpOeylBDKmaXzpk2vz1dpPucIb7fTzvzhRg2nOxoC87mBWhFyeNTZd0kQg==
-    size: 80466004
+    sha512: ad2xuc4ag1Vr7UCXHYW1d2U/KOM+xUka/iCkxWnBtWSBfi9VyJJuQxJ1Hjz8F+jKXwNEisqmOYPrrwbXPJ1Ilg==
+    size: 80467811
 path: ZycordSetup.exe
-sha512: Hh8MKPmqGydDrhNN1LLDNJYP7ZaOqpOeylBDKmaXzpk2vz1dpPucIb7fTzvzhRg2nOxoC87mBWhFyeNTZd0kQg==
-releaseDate: '2026-10-07T23:24:31.685Z'
+sha512: ad2xuc4ag1Vr7UCXHYW1d2U/KOM+xUka/iCkxWnBtWSBfi9VyJJuQxJ1Hjz8F+jKXwNEisqmOYPrrwbXPJ1Ilg==
+releaseDate: '2026-10-07T23:53:55.866Z'

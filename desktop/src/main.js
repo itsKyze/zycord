@@ -447,6 +447,13 @@ ipcMain.on("window-set-always-on-top", (event, enabled) => {
     const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
     win?.setAlwaysOnTop(Boolean(enabled));
 });
+ipcMain.on("window-focus", () => {
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.show();
+        mainWindow.focus();
+    }
+});
 ipcMain.on("get-app-version", (event) => {
     event.returnValue = app.getVersion();
 });
