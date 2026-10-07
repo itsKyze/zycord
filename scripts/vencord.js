@@ -31,12 +31,12 @@ const OUTPUT = path.join(ROOT, "assets", "vencord");
 const reporter = process.argv.includes("--reporter");
 
 const run = (command, args, options = {}) => {
-    const result = spawnSync(command, args, { cwd: SOURCE, stdio: "inherit", ...options });
+    const result = spawnSync(command, args, { cwd: SOURCE, stdio: "inherit", shell: process.platform === "win32", ...options });
     if (result.error) throw result.error;
     if (result.status !== 0) throw new Error(`${command} ${args.join(" ")} exited with ${result.status}`);
 };
 
-const succeeds = (command, args) => spawnSync(command, args, { cwd: SOURCE, stdio: "ignore" }).status === 0;
+const succeeds = (command, args) => spawnSync(command, args, { cwd: SOURCE, stdio: "ignore", shell: process.platform === "win32" }).status === 0;
 
 const checkout = () => {
     fs.mkdirSync(SOURCE, { recursive: true });
@@ -63,7 +63,7 @@ const pnpm = () => {
     // a lockfile from another pnpm major fails --frozen-lockfile, so only take a pnpm matching vencord's pinned major
     const pinned = JSON.parse(fs.readFileSync(path.join(SOURCE, "package.json"), "utf8")).packageManager?.match(/^pnpm@(\d+)/)?.[1] ?? "11";
     const major = (candidate) =>
-        spawnSync(candidate[0], [...candidate.slice(1), "--version"], { cwd: SOURCE, encoding: "utf8" })
+        spawnSync(candidate[0], [...candidate.slice(1), "--version"], { cwd: SOURCE, encoding: "utf8", shell: process.platform === "win32" })
             .stdout?.trim()
             .split(".")[0];
     for (const candidate of [["pnpm"], ["corepack", "pnpm"], ["npx", "-y", `pnpm@${pinned}`]]) {
