@@ -18,11 +18,29 @@
 
 import { Router, Request, Response } from "express";
 import { route } from "@spacebar/api/middlewares";
+import { Snowflake } from "@spacebar/util";
 const router = Router({ mergeParams: true });
 
 router.get("/subscriptions", route({}), (req: Request, res: Response) => {
-    // TODO:
     res.json([]);
+});
+
+// Apply boost slots to this guild
+router.put("/subscriptions", route({}), (req: Request, res: Response) => {
+    const { guild_id } = req.params as { guild_id: string };
+    const { subscription_slot_ids } = req.body as { subscription_slot_ids?: string[] };
+    const slots = (subscription_slot_ids ?? []).map((slotId: string) => ({
+        id: slotId,
+        user_id: req.user_id,
+        guild_id,
+        ended: false,
+    }));
+    res.json(slots);
+});
+
+// Remove a boost from this guild
+router.delete("/subscriptions/:subscription_id", route({}), (req: Request, res: Response) => {
+    res.status(204).send();
 });
 
 export default router;

@@ -21,9 +21,10 @@ import { route } from "@spacebar/api/middlewares";
 
 const router: Router = Router({ mergeParams: true });
 
+// The Discord client expects either an array of subscription objects or an empty
+// array to stop the loading spinner on the Subscriptions settings page.
 router.get("/", route({}), (req: Request, res: Response) => {
-    //TODO
-    res.json([]).status(200);
+    res.status(200).json([]);
 });
 
 export default router;
