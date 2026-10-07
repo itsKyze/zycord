@@ -50,7 +50,7 @@ export class ConnectionLoader {
                 console.log(`[Connections/${mod.id}] Connection is enabled, but not configured! Users will not be able to successfully link with ${mod.friendlyName}!`);
                 if (mod.requiredScopes.length > 0) {
                     console.log(`[Connections/${mod.id}] Configuring this connection requires setting scopes, or has additional requirements:`);
-                    for (const scope in mod.requiredScopes) console.log(`[Connections/${mod.id}]   - ${scope}`);
+                    for (const scope of mod.requiredScopes) console.log(`[Connections/${mod.id}]   - ${scope}`);
                     console.log(`[Connections/${mod.id}] You can obtain the required credentials here: ${mod.setupUrl}`);
                 }
             }
