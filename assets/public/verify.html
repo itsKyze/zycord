@@ -14,72 +14,77 @@
 			}
 			html, body {
 				height: 100%;
+				width: 100%;
 			}
 			body {
 				color: #ffffff;
-				font-family: 'gg sans', 'Noto Sans', Helvetica, Arial, sans-serif;
+				font-family: 'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 				min-height: 100vh;
 				display: flex;
 				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+				overflow: hidden;
 				-webkit-font-smoothing: antialiased;
 				transition: background 0.3s ease;
 			}
 
-			/* Blue/purple gradient theme for Gmail email verification (Matches real Discord exactly) */
+			/* Blue/purple gradient theme for Gmail email verification (Matches real Discord verify page exactly) */
 			body.theme-email {
-				background-color: #111432;
-				background-image: radial-gradient(circle at 65% 75%, #3849b2 0%, #252e75 35%, #141842 70%, #0a0b1c 100%);
+				background-color: #0b0e22;
+				background-image: radial-gradient(circle at 68% 68%, #3648b7 0%, #233082 28%, #141b4f 55%, #0c1032 75%, #060818 100%);
 			}
 
-			/* Pitch black theme for login / account access verification (Matches real Discord exactly) */
+			/* Pitch black theme for login authorization (Matches real Discord verify page exactly) */
 			body.theme-login {
 				background-color: #000000 !important;
 				background-image: none !important;
 			}
 
-			/* Top-left Zycord logo header */
+			/* Top-left Zycord logo header — positioned fixed so content stays dead-center */
 			.header {
-				padding: 20px 24px;
-				display: flex;
-				align-items: center;
-				flex-shrink: 0;
+				position: absolute;
+				top: 24px;
+				left: 24px;
+				z-index: 10;
 			}
 			.brand {
 				display: inline-block;
 				text-decoration: none;
 			}
 			.brand img {
-				height: 22px;
+				height: 24px;
 				width: auto;
 				display: block;
 			}
 
 			/* Centered main stage */
 			.main-content {
-				flex: 1;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
 				justify-content: center;
 				text-align: center;
-				padding: 20px 20px 80px;
+				padding: 20px;
+				z-index: 2;
 			}
 
 			/* Envelope 3D illustration */
 			.illustration {
-				width: 130px;
-				height: 130px;
-				margin-bottom: 20px;
+				width: 140px;
+				height: 116px;
+				margin-bottom: 24px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 			}
 			.illustration img {
-				width: 130px;
+				width: 140px;
 				height: auto;
 				display: block;
-				filter: drop-shadow(0 8px 24px rgba(88, 101, 242, 0.4));
+				filter: drop-shadow(0 10px 30px rgba(88, 101, 242, 0.45));
 			}
 
 			@keyframes popIn {
@@ -92,12 +97,13 @@
 				font-size: 20px;
 				font-weight: 600;
 				line-height: 24px;
-				color: #ffffff;
+				color: #f2f3f5;
 				margin-bottom: 8px;
 			}
 			.subtitle {
 				font-size: 14px;
-				color: #b5bac1;
+				font-weight: 400;
+				color: #949ba4;
 				max-width: 420px;
 				line-height: 20px;
 				margin-bottom: 24px;
@@ -110,7 +116,9 @@
 				font-size: 14px;
 				font-weight: 500;
 				line-height: 16px;
-				padding: 8px 20px;
+				padding: 2px 20px;
+				min-height: 38px;
+				min-width: 96px;
 				border-radius: 3px;
 				border: none;
 				cursor: pointer;
@@ -119,8 +127,7 @@
 				align-items: center;
 				justify-content: center;
 				font-family: inherit;
-				transition: background-color 0.15s ease, opacity 0.15s ease;
-				min-width: 90px;
+				transition: background-color 0.17s ease, color 0.17s ease;
 			}
 			.btn:hover {
 				background-color: #e3e5e8;
@@ -137,7 +144,7 @@
 				border-top-color: #5865f2;
 				border-radius: 50%;
 				animation: spin 0.8s linear infinite;
-				margin-bottom: 18px;
+				margin-bottom: 20px;
 			}
 			@keyframes spin {
 				to { transform: rotate(360deg); }
@@ -147,7 +154,7 @@
 	<body class="theme-email">
 		<header class="header">
 			<a class="brand" href="/channels/@me">
-				<img src="/static/branding/zycord_logo_white.png" onerror="this.onerror=null;this.src='/static/zycord_logo_white.png'" alt="Zycord" />
+				<img src="/static/branding/zycord_logo_white.svg" onerror="this.onerror=null;this.src='/static/branding/zycord_logo_white.png'" alt="Zycord" />
 			</a>
 		</header>
 
@@ -155,7 +162,6 @@
 			<div class="spinner" id="spinner"></div>
 			<h1 class="title" id="title">Verifying your email</h1>
 			<p class="subtitle" id="subtitle">This may take a moment.</p>
-			<div id="actionContainer" style="display:none;"></div>
 		</main>
 
 		<script>
@@ -163,8 +169,6 @@
 				const stage           = document.getElementById("stage");
 				const title           = document.getElementById("title");
 				const subtitle        = document.getElementById("subtitle");
-				const spinner         = document.getElementById("spinner");
-				const actionContainer = document.getElementById("actionContainer");
 
 				// Extract query and hash parameters
 				const hashParams  = new URLSearchParams(location.hash.replace(/^#/, ""));
