@@ -219,17 +219,34 @@ function initWindowControls() {
                 }
 
                 /* Auth / Login / Register Page: Background space is draggable */
+                /* NOTE: authWrapper_ and pageContainer_ are intentionally EXCLUDED to prevent
+                   scroll and click events from being swallowed by the drag region in the main app */
                 [class*="characterBackground_"],
                 [class*="splashBackground_"],
                 [class*="artwork_"],
                 [class*="wordmark_"],
-                [class*="centeringWrapper_"],
-                [class*="authWrapper_"],
-                [class*="pageContainer_"] {
+                [class*="centeringWrapper_"] {
                     -webkit-app-region: drag !important;
                 }
 
-                /* Auth Card, Form, Inputs, Buttons: Strictly NON-DRAG, fully interactive and typable */
+                /* Ensure main app content is NEVER draggable so scroll + click always work */
+                [class*="pageContainer_"],
+                [class*="authWrapper_"],
+                [class*="app_"],
+                [class*="layers_"],
+                [class*="layer_"],
+                [class*="chat_"],
+                [class*="content_"],
+                [class*="scroller_"],
+                [class*="scrollerBase_"],
+                [class*="scrollerContent_"],
+                [class*="messagesWrapper_"],
+                [class*="messages_"] {
+                    -webkit-app-region: no-drag !important;
+                    pointer-events: auto !important;
+                }
+
+                /* Auth Card, Form, Inputs, Buttons, Scrollable areas: Strictly NON-DRAG, fully interactive and typable */
                 [class*="authBox_"],
                 [class*="authBoxExpanded_"],
                 [class*="authBox_"] *,
@@ -253,11 +270,123 @@ function initWindowControls() {
                 [role="textbox"],
                 [role="textbox"] *,
                 [class*="input_"],
-                [class*="input_"] * {
+                [class*="input_"] *,
+                [class*="scroller_"],
+                [class*="scroller_"] *,
+                [class*="scrollerBase_"],
+                [class*="scrollerBase_"] *,
+                [class*="sidebar_"],
+                [class*="sidebar_"] *,
+                [class*="panels_"],
+                [class*="panels_"] * {
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
                     user-select: text !important;
                     -webkit-user-select: text !important;
+                }
+
+                /* Discord-style Toast Notification (bottom-left) */
+                #zycord-toast-container {
+                    position: fixed !important;
+                    bottom: 24px !important;
+                    left: 16px !important;
+                    z-index: 2147483646 !important;
+                    display: flex !important;
+                    flex-direction: column-reverse !important;
+                    gap: 8px !important;
+                    pointer-events: none !important;
+                    -webkit-app-region: no-drag !important;
+                }
+
+                .zycord-toast {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 12px !important;
+                    background: #111214 !important;
+                    border: 1px solid rgba(255,255,255,0.06) !important;
+                    border-radius: 8px !important;
+                    padding: 12px 14px !important;
+                    min-width: 280px !important;
+                    max-width: 360px !important;
+                    box-shadow: 0 8px 32px rgba(0,0,0,0.6), 0 2px 8px rgba(0,0,0,0.4) !important;
+                    pointer-events: auto !important;
+                    cursor: pointer !important;
+                    -webkit-app-region: no-drag !important;
+                    animation: zycord-toast-in 0.25s cubic-bezier(0.34,1.56,0.64,1) both !important;
+                    transition: opacity 0.2s ease, transform 0.2s ease !important;
+                    user-select: none !important;
+                    -webkit-user-select: none !important;
+                }
+
+                .zycord-toast.hiding {
+                    animation: zycord-toast-out 0.2s ease forwards !important;
+                }
+
+                @keyframes zycord-toast-in {
+                    from { opacity: 0; transform: translateX(-20px) scale(0.95); }
+                    to   { opacity: 1; transform: translateX(0)   scale(1); }
+                }
+
+                @keyframes zycord-toast-out {
+                    from { opacity: 1; transform: translateX(0)   scale(1); }
+                    to   { opacity: 0; transform: translateX(-12px) scale(0.96); }
+                }
+
+                .zycord-toast:hover {
+                    background: #18191c !important;
+                }
+
+                .zycord-toast-avatar {
+                    width: 36px !important;
+                    height: 36px !important;
+                    border-radius: 50% !important;
+                    flex-shrink: 0 !important;
+                    object-fit: cover !important;
+                    background: #5865f2 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    font-size: 16px !important;
+                    color: #fff !important;
+                    font-weight: 700 !important;
+                }
+
+                .zycord-toast-body {
+                    flex: 1 !important;
+                    min-width: 0 !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    gap: 2px !important;
+                }
+
+                .zycord-toast-title {
+                    font-size: 13px !important;
+                    font-weight: 600 !important;
+                    color: #f2f3f5 !important;
+                    white-space: nowrap !important;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
+                    font-family: "gg sans", "Noto Sans", Whitney, Helvetica Neue, Helvetica, Arial, sans-serif !important;
+                }
+
+                .zycord-toast-text {
+                    font-size: 12px !important;
+                    color: #b5bac1 !important;
+                    white-space: nowrap !important;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis !important;
+                    font-family: "gg sans", "Noto Sans", Whitney, Helvetica Neue, Helvetica, Arial, sans-serif !important;
+                }
+
+                .zycord-toast-app-icon {
+                    flex-shrink: 0 !important;
+                    width: 20px !important;
+                    height: 20px !important;
+                    border-radius: 4px !important;
+                    background: #5865f2 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
                 }
 
                 /* Modals, Dialogs, Iframes, and hCaptcha: Strictly NON-DRAG and fully interactive */
@@ -940,3 +1069,135 @@ setInterval(ensureWindowControls, 1000);
         setTimeout(checkState, 120);
     });
 })();
+
+// 3. Discord-Style Toast Notification System (bottom-left)
+(function setupToastNotifications() {
+    let toastContainer = null;
+    const activeToasts = new Set();
+
+    function ensureContainer() {
+        if (toastContainer && document.body?.contains(toastContainer)) return toastContainer;
+        toastContainer = document.createElement("div");
+        toastContainer.id = "zycord-toast-container";
+        (document.body || document.documentElement).appendChild(toastContainer);
+        return toastContainer;
+    }
+
+    function showToast({ title, body, icon, tag, onClick } = {}) {
+        try {
+            const container = ensureContainer();
+
+            // Deduplicate by tag
+            if (tag) {
+                const existing = container.querySelector(`[data-tag="${CSS.escape(tag)}"]`);
+                if (existing) existing.remove();
+            }
+
+            // Limit to 5 toasts max
+            while (container.children.length >= 5) {
+                container.lastChild?.remove();
+            }
+
+            const toast = document.createElement("div");
+            toast.className = "zycord-toast";
+            if (tag) toast.dataset.tag = tag;
+
+            // Avatar / Icon
+            let avatarHtml = "";
+            if (icon) {
+                avatarHtml = `<img class="zycord-toast-avatar" src="${icon}" alt="" onerror="this.style.display='none'">`;
+            } else {
+                const initial = (title || "Z").charAt(0).toUpperCase();
+                avatarHtml = `<div class="zycord-toast-avatar">${initial}</div>`;
+            }
+
+            const safeTitle = String(title || "Zycord").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+            const safeBody = String(body || "").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+            toast.innerHTML = `
+                ${avatarHtml}
+                <div class="zycord-toast-body">
+                    <div class="zycord-toast-title">${safeTitle}</div>
+                    ${safeBody ? `<div class="zycord-toast-text">${safeBody}</div>` : ""}
+                </div>
+            `;
+
+            // Click to focus app and navigate
+            toast.addEventListener("click", () => {
+                ipcRenderer.send("window-focus");
+                dismissToast(toast);
+                if (typeof onClick === "function") onClick();
+            });
+
+            container.prepend(toast);
+            activeToasts.add(toast);
+
+            // Auto-dismiss after 4 seconds
+            const dismissTimer = setTimeout(() => dismissToast(toast), 4000);
+            toast._dismissTimer = dismissTimer;
+
+        } catch (e) {
+            console.warn("[Zycord] Toast error:", e);
+        }
+    }
+
+    function dismissToast(toast) {
+        if (!toast || !document.body?.contains(toast)) return;
+        clearTimeout(toast._dismissTimer);
+        toast.classList.add("hiding");
+        setTimeout(() => {
+            toast.remove();
+            activeToasts.delete(toast);
+        }, 220);
+    }
+
+    // Intercept the native Web Notification API so Discord's own notification
+    // calls get rendered as our custom bottom-left toasts instead of Windows toasts
+    try {
+        const OriginalNotification = window.Notification;
+
+        function ZycordNotification(title, options = {}) {
+            showToast({
+                title,
+                body: options.body,
+                icon: options.icon,
+                tag: options.tag,
+            });
+
+            // Return a fake Notification object that satisfies Discord's checks
+            const fake = Object.create(ZycordNotification.prototype);
+            fake.close = () => {};
+            fake.addEventListener = () => {};
+            fake.removeEventListener = () => {};
+            Object.defineProperty(fake, "onclick", { set: (fn) => { fake._onclick = fn; }, get: () => fake._onclick, configurable: true });
+            Object.defineProperty(fake, "onclose", { set: () => {}, get: () => null, configurable: true });
+            Object.defineProperty(fake, "onerror", { set: () => {}, get: () => null, configurable: true });
+            return fake;
+        }
+
+        ZycordNotification.permission = "granted";
+        ZycordNotification.requestPermission = () => Promise.resolve("granted");
+        ZycordNotification.prototype = OriginalNotification.prototype;
+
+        Object.defineProperty(window, "Notification", {
+            value: ZycordNotification,
+            writable: true,
+            configurable: true,
+        });
+    } catch (e) {
+        console.warn("[Zycord] Notification override error:", e);
+    }
+
+    // Expose to main process for manual toast triggers
+    ipcRenderer.on("show-toast", (event, data) => {
+        showToast(data || {});
+    });
+
+    // Ensure container exists once DOM is ready
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", ensureContainer);
+    } else {
+        setTimeout(ensureContainer, 100);
+    }
+})();
+
