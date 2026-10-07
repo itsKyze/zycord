@@ -27,22 +27,22 @@
 				position: relative;
 				overflow: hidden;
 				-webkit-font-smoothing: antialiased;
-				transition: background 0.3s ease;
+				perspective: 1000px;
 			}
 
-			/* Blue/purple gradient theme for Gmail email verification (Matches real Discord verify page exactly) */
+			/* Blue/purple gradient theme for Gmail email verification (Matches real Discord verify page) */
 			body.theme-email {
 				background-color: #0b0e22;
-				background-image: radial-gradient(circle at 68% 68%, #3648b7 0%, #233082 28%, #141b4f 55%, #0c1032 75%, #060818 100%);
+				background-image: radial-gradient(circle 800px at 68% 68%, #3648b7 0%, #233082 28%, #141b4f 55%, #0c1032 75%, #060818 100%);
 			}
 
-			/* Pitch black theme for login authorization (Matches real Discord verify page exactly) */
+			/* Pitch black theme for login authorization (Matches real Discord verify page) */
 			body.theme-login {
 				background-color: #000000 !important;
 				background-image: none !important;
 			}
 
-			/* Top-left Zycord logo header — positioned fixed so content stays dead-center */
+			/* Top-left Zycord logo header — positioned fixed so stage stays dead-center */
 			.header {
 				position: absolute;
 				top: 24px;
@@ -68,9 +68,10 @@
 				text-align: center;
 				padding: 20px;
 				z-index: 2;
+				pointer-events: auto;
 			}
 
-			/* Envelope 3D illustration */
+			/* Envelope 3D illustration container */
 			.illustration {
 				width: 140px;
 				height: 116px;
@@ -79,12 +80,15 @@
 				align-items: center;
 				justify-content: center;
 				animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+				perspective: 800px;
 			}
 			.illustration img {
 				width: 140px;
 				height: auto;
 				display: block;
-				filter: drop-shadow(0 10px 30px rgba(88, 101, 242, 0.45));
+				filter: drop-shadow(0 14px 34px rgba(88, 101, 242, 0.45));
+				transform-style: preserve-3d;
+				will-change: transform;
 			}
 
 			@keyframes popIn {
@@ -109,7 +113,7 @@
 				margin-bottom: 24px;
 			}
 
-			/* Button — matches Discord standard: pure white, dark text, subtle border-radius */
+			/* Button — matches Discord standard: pure white, dark text, subtle 3px radius */
 			.btn {
 				background-color: #ffffff;
 				color: #060607;
@@ -165,16 +169,72 @@
 		</main>
 
 		<script>
+			// Smooth slow mouse-follow / parallax interaction matching Discord
+			let targetBgX = 68;
+			let targetBgY = 68;
+			let currentBgX = 68;
+			let currentBgY = 68;
+
+			let targetTiltX = 0;
+			let targetTiltY = 0;
+			let currentTiltX = 0;
+			let currentTiltY = 0;
+
+			window.addEventListener("mousemove", (e) => {
+				const normX = e.clientX / window.innerWidth;
+				const normY = e.clientY / window.innerHeight;
+
+				// Background radial light target shifts slowly around cursor
+				targetBgX = 68 + (normX - 0.5) * 22;
+				targetBgY = 68 + (normY - 0.5) * 22;
+
+				// 3D illustration tilt angles
+				const centerX = window.innerWidth / 2;
+				const centerY = window.innerHeight / 2;
+				const deltaX = (e.clientX - centerX) / centerX;
+				const deltaY = (e.clientY - centerY) / centerY;
+
+				targetTiltX = deltaX * 12;  // rotateY degrees
+				targetTiltY = -deltaY * 12; // rotateX degrees
+			});
+
+			window.addEventListener("mouseleave", () => {
+				targetBgX = 68;
+				targetBgY = 68;
+				targetTiltX = 0;
+				targetTiltY = 0;
+			});
+
+			function renderParallax() {
+				// Gentle smooth lerp (factor 0.045 for that slow, luxurious Discord fluid motion)
+				currentBgX += (targetBgX - currentBgX) * 0.045;
+				currentBgY += (targetBgY - currentBgY) * 0.045;
+				currentTiltX += (targetTiltX - currentTiltX) * 0.055;
+				currentTiltY += (targetTiltY - currentTiltY) * 0.055;
+
+				if (document.body.classList.contains("theme-email")) {
+					document.body.style.backgroundImage = `radial-gradient(circle 800px at ${currentBgX.toFixed(2)}% ${currentBgY.toFixed(2)}%, #3648b7 0%, #233082 28%, #141b4f 55%, #0c1032 75%, #060818 100%)`;
+				}
+
+				const img = document.querySelector(".illustration img");
+				if (img) {
+					img.style.transform = `perspective(800px) rotateX(${currentTiltY.toFixed(2)}deg) rotateY(${currentTiltX.toFixed(2)}deg) translate3d(${(currentTiltX * 1.2).toFixed(2)}px, ${(-currentTiltY * 1.2).toFixed(2)}px, 0)`;
+				}
+
+				requestAnimationFrame(renderParallax);
+			}
+			requestAnimationFrame(renderParallax);
+
 			(async () => {
-				const stage           = document.getElementById("stage");
-				const title           = document.getElementById("title");
-				const subtitle        = document.getElementById("subtitle");
+				const stage    = document.getElementById("stage");
+				const title    = document.getElementById("title");
+				const subtitle = document.getElementById("subtitle");
 
 				// Extract query and hash parameters
-				const hashParams  = new URLSearchParams(location.hash.replace(/^#/, ""));
+				const hashParams   = new URLSearchParams(location.hash.replace(/^#/, ""));
 				const searchParams = new URLSearchParams(location.search);
-				const verifyToken = hashParams.get("token") || searchParams.get("token");
-				const urlType     = hashParams.get("type") || searchParams.get("type");
+				const verifyToken  = hashParams.get("token") || searchParams.get("token");
+				const urlType      = hashParams.get("type") || searchParams.get("type");
 
 				// Detect token payload to determine theme (login vs email)
 				let tokenPayload = null;
