@@ -30,4 +30,8 @@ router.get("/gifts", route({}), (req: Request, res: Response) => {
     res.json([]).status(200);
 });
 
+router.get("/gift-codes", route({}), (req: Request, res: Response) => {
+    res.json([]);
+});
+
 export default router;
