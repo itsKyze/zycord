@@ -35,6 +35,7 @@ export enum MailTypes {
     verifyEmail = "verifyEmail",
     resetPassword = "resetPassword",
     changePassword = "changePassword",
+    newLoginLocation = "newLoginLocation",
 }
 
 export const Email: {
@@ -45,6 +46,16 @@ export const Email: {
     sendVerifyEmail: (user: User, email: string) => Promise<void>;
     sendResetPassword: (user: User, email: string) => Promise<void>;
     sendPasswordChanged: (user: User, email: string) => Promise<void>;
+    sendNewLoginLocation: (
+        user: User,
+        email: string,
+        ipInfo?: {
+            ip: string;
+            city: string;
+            region: string;
+            country_name: string;
+        },
+    ) => Promise<void>;
     doReplacements: (
         template: string,
         user: User,
@@ -142,9 +153,10 @@ export const Email: {
     generateLink: async function (type, id) {
         const user = await User.findOne({ where: { id }, select: { id: true, email: true, data: true } });
         const reset = type === MailTypes.resetPassword;
+        const isLogin = type === MailTypes.newLoginLocation;
         const token = jwt.sign(
             {
-                typ: reset ? "password_reset" : "email_verify",
+                typ: reset ? "password_reset" : isLogin ? "login_verify" : "email_verify",
                 uid: id,
                 email: user?.email,
                 ph: crypto
@@ -154,12 +166,14 @@ export const Email: {
                     .slice(0, 16),
             },
             JwtKeypairManager.keypair.privateKey,
-            { algorithm: "ES512", expiresIn: reset ? "1h" : "7d" },
+            { algorithm: "ES512", expiresIn: reset ? "1h" : isLogin ? "1h" : "7d" },
         );
         const { frontPage, serverName } = Config.get().general;
         const endpoint = Config.get().api.endpointPublic;
         const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
-        return `${origin}/${reset ? "reset" : "verify"}#token=${token}`;
+        if (reset) return `${origin}/reset#token=${token}`;
+        if (isLogin) return `${origin}/verify?type=login#token=${token}`;
+        return `${origin}/verify#token=${token}`;
     },
 
     /**
@@ -179,12 +193,14 @@ export const Email: {
             verifyEmail: "verify_email.html",
             resetPassword: "password_reset_request.html",
             changePassword: "password_changed.html",
+            newLoginLocation: "new_login_location.html",
         };
 
         const textTemplateNames: { [key in MailTypes]: string } = {
             verifyEmail: "verify_email.txt",
             resetPassword: "password_reset_request.txt",
             changePassword: "password_changed.txt",
+            newLoginLocation: "new_login_location.txt",
         };
 
         const htmlTemplate = await fs.readFile(path.join(ASSET_FOLDER_PATH, "email_templates", htmlTemplateNames[type]), { encoding: "utf-8" });
@@ -246,6 +262,41 @@ export const Email: {
      */
     sendPasswordChanged: async function (user, email) {
         return this.sendMail(MailTypes.changePassword, user, email);
+    },
+
+    /**
+     * Sends an email to the user notifying them of a new login location with a link to authorize
+     */
+    sendNewLoginLocation: async function (user, email, ipInfo) {
+        if (!this.transporter) {
+            console.log(`[Email] Skipped newLoginLocation delivery for user ${user.id}: no email provider configured`);
+            return;
+        }
+
+        const htmlTemplate = await fs.readFile(path.join(ASSET_FOLDER_PATH, "email_templates", "new_login_location.html"), { encoding: "utf-8" });
+        const textTemplate = await fs.readFile(path.join(ASSET_FOLDER_PATH, "email_templates", "new_login_location.txt"), { encoding: "utf-8" });
+
+        const { frontPage, serverName } = Config.get().general;
+        const endpoint = Config.get().api.endpointPublic;
+        const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
+        const logoUrl = `${origin}/static/zycord_logo.png`;
+
+        const actionUrl = await this.generateLink(MailTypes.newLoginLocation, user.id);
+
+        const html = this.doReplacements(htmlTemplate, user, actionUrl, ipInfo, logoUrl);
+        const text = this.doReplacements(textTemplate, user, actionUrl, ipInfo);
+
+        const subject = html.match(/<title>(.*)<\/title>/)?.[1] || "New Login Location";
+
+        const message: IEmail = {
+            from: Config.get().email.senderAddress || Config.get().general.correspondenceEmail || "noreply@localhost",
+            to: email,
+            subject,
+            text,
+            html,
+        };
+
+        return this.transporter.sendMail(message);
     },
 
     /**
