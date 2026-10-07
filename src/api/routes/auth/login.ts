@@ -126,26 +126,44 @@ router.post(
             if (user.deleted) await User.update({ id: user.id }, { deleted: false });
         }
 
-        const token = await generateToken(user.id);
-
         const userEmail = user.email;
         if (userEmail && user.verified) {
-            // Check if this is a new login location/IP
-            Session.find({ where: { user_id: user.id } }).then(async (sessions) => {
-                const knownIps = new Set(sessions.map((s) => s.last_seen_ip).filter(Boolean));
-                if (knownIps.size > 0 && req.ip && !knownIps.has(req.ip)) {
-                    const ipInfo = {
-                        ip: req.ip,
-                        city: (req.headers["cf-ipcity"] as string) || "Unknown City",
-                        region: (req.headers["cf-region"] as string) || "Unknown Region",
-                        country_name: (req.headers["cf-ipcountry"] as string) || "Unknown Country",
-                    };
-                    await Email.sendNewLoginLocation(user, userEmail, ipInfo).catch((e) =>
-                        console.error(`[Login] Failed to send new login location email to ${user.id}:`, e),
-                    );
+            const sessions = await Session.find({ where: { user_id: user.id } });
+            const knownIps = new Set(sessions.map((s) => s.last_seen_ip).filter(Boolean));
+
+            const mostRecentActivity = sessions.reduce((max, s) => {
+                const t = s.last_seen?.getTime() ?? 0;
+                return t > max ? t : max;
+            }, 0);
+            const daysSinceActivity = mostRecentActivity > 0 ? (Date.now() - mostRecentActivity) / (1000 * 60 * 60 * 24) : 999;
+
+            const isUnknownIp = knownIps.size > 0 && !!req.ip && !knownIps.has(req.ip);
+            const isStaleLogin = sessions.length > 0 && daysSinceActivity > 7;
+
+            if (isUnknownIp || isStaleLogin) {
+                const ipInfo = {
+                    ip: req.ip || "127.0.0.1",
+                    city: (req.headers["cf-ipcity"] as string) || "Unknown City",
+                    region: (req.headers["cf-region"] as string) || "Unknown Region",
+                    country_name: (req.headers["cf-ipcountry"] as string) || "Unknown Country",
+                };
+
+                await Email.sendNewLoginLocation(user, userEmail, ipInfo).catch((e) =>
+                    console.error(`[Login] Failed to send new login location email to ${user.id}:`, e),
+                );
+
+                if (isUnknownIp) {
+                    throw FieldErrors({
+                        login: {
+                            code: "ACCOUNT_LOGIN_VERIFICATION_EMAIL",
+                            message: "We've detected a login attempt from a new location. Please check your email to authorize this login.",
+                        },
+                    });
                 }
-            }).catch(() => {});
+            }
         }
+
+        const token = await generateToken(user.id);
 
         // Notice this will have a different token structure, than discord
         // Discord header is just the user id as string, which is not possible with npm-jsonwebtoken package

@@ -16,10 +16,11 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import crypto from "node:crypto";
 import { Request, Response, Router } from "express";
 import { emitUserUpdate, readTicket } from "@spacebar/api/util";
 import { route } from "@spacebar/api/middlewares";
-import { User } from "@spacebar/database";
+import { Session, User } from "@spacebar/database";
 import { FieldErrors, generateToken } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
@@ -57,6 +58,15 @@ router.post(
         if (!user.verified) {
             await User.update({ id: user.id }, { verified: true });
             await emitUserUpdate(user.id);
+        }
+
+        if (decoded.typ === "login_verify" && req.ip) {
+            await Session.create({
+                user_id: user.id,
+                session_id: crypto.randomBytes(16).toString("hex"),
+                last_seen_ip: req.ip,
+                last_seen: new Date(),
+            }).save().catch(() => {});
         }
 
         res.json({
