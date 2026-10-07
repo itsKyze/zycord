@@ -258,17 +258,10 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
-                /* Auth / Login / Register Page: Allow dragging from background space and top branding */
+                /* Auth / Login / Register Page: ONLY decorative artwork background and wordmark are draggable (NEVER parent wrappers!) */
                 [class*="characterBackground_"],
                 [class*="splashBackground_"],
-                [class*="centeringWrapper_"],
                 [class*="artwork_"],
-                [class*="authWrapper_"],
-                [class*="pageContainer_"],
-                [class*="content_"]:has(> [class*="authBox_"]),
-                [class*="content_"]:has(> [class*="authBoxExpanded_"]),
-                div:has(> [class*="authBox_"]),
-                div:has(> [class*="authBoxExpanded_"]),
                 [class*="wordmark_"] {
                     -webkit-app-region: drag !important;
                 }
@@ -292,6 +285,45 @@ function initWindowControls() {
                 a *,
                 [role="button"],
                 [role="button"] * {
+                    -webkit-app-region: no-drag !important;
+                }
+
+                /* CRITICAL: Ensure ALL iframes, hCaptcha, Cloudflare, reCAPTCHA, modals, layers, and dialogs are 100% NON-DRAG and fully clickable/draggable */
+                iframe,
+                iframe *,
+                div:has(> iframe),
+                div:has(iframe),
+                [class*="modal_"],
+                [class*="modal_"] *,
+                [class*="layer_"],
+                [class*="layer_"] *,
+                [class*="layerContainer_"],
+                [class*="layerContainer_"] *,
+                [class*="focusLock_"],
+                [class*="focusLock_"] *,
+                [class*="backdrop_"],
+                [role="dialog"],
+                [role="dialog"] *,
+                [aria-modal="true"],
+                [aria-modal="true"] *,
+                [id*="hcaptcha" i],
+                [id*="hcaptcha" i] *,
+                [class*="hcaptcha" i],
+                [class*="hcaptcha" i] *,
+                [data-hcaptcha-widget-id],
+                [data-hcaptcha-widget-id] *,
+                [class*="captcha" i],
+                [class*="captcha" i] * {
+                    -webkit-app-region: no-drag !important;
+                    pointer-events: auto !important;
+                }
+
+                /* When a modal or captcha is open, temporarily disable top titlebar drag so it never captures clicks */
+                body:has([class*="modal_"]) #zycord-titlebar,
+                body:has(iframe) #zycord-titlebar,
+                body:has([role="dialog"]) #zycord-titlebar,
+                body:has([class*="layerContainer_"] > div) #zycord-titlebar {
+                    pointer-events: none !important;
                     -webkit-app-region: no-drag !important;
                 }
 
