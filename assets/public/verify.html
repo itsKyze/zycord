@@ -4,8 +4,8 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Zycord</title>
-		<link rel="icon" href="/static/logo.png" type="image/png" />
+		<title>Discord</title>
+		<link rel="icon" href="/static/branding/favicon.svg" type="image/svg+xml" />
 		<style>
 			* {
 				margin: 0;
@@ -13,7 +13,7 @@
 				box-sizing: border-box;
 			}
 			body {
-				background-color: #000000;
+				background: radial-gradient(ellipse at 85% 90%, #29388a 0%, #151b47 35%, #0c0f24 60%, #05060c 100%);
 				color: #ffffff;
 				font-family: 'gg sans', 'Noto Sans', Helvetica, Arial, sans-serif;
 				min-height: 100vh;
@@ -30,22 +30,13 @@
 			.brand {
 				display: flex;
 				align-items: center;
-				gap: 10px;
 				text-decoration: none;
-				color: #ffffff;
 				cursor: pointer;
 			}
 			.brand img {
-				width: 32px;
-				height: 32px;
-				border-radius: 8px;
+				height: 26px;
+				width: auto;
 				display: block;
-			}
-			.brand-text {
-				font-size: 20px;
-				font-weight: 800;
-				letter-spacing: -0.2px;
-				color: #ffffff;
 			}
 			.main-content {
 				flex: 1;
@@ -59,12 +50,18 @@
 			}
 			.illustration {
 				width: 140px;
-				height: 140px;
+				height: 120px;
 				margin-bottom: 24px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
 				animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+			}
+			.illustration img {
+				width: 130px;
+				height: auto;
+				display: block;
+				filter: drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.4));
 			}
 			@keyframes popIn {
 				0% {
@@ -86,7 +83,7 @@
 			.subtitle {
 				font-size: 15px;
 				color: #949ba4;
-				max-width: 400px;
+				max-width: 420px;
 				line-height: 20px;
 				margin-bottom: 24px;
 			}
@@ -95,12 +92,13 @@
 				color: #000000;
 				font-size: 14px;
 				font-weight: 600;
-				padding: 11px 24px;
-				border-radius: 4px;
+				padding: 10px 24px;
+				border-radius: 3px;
 				border: none;
 				cursor: pointer;
 				text-decoration: none;
 				display: inline-block;
+				font-family: inherit;
 				transition: background-color 0.15s ease, transform 0.1s ease;
 			}
 			.btn:hover {
@@ -128,8 +126,7 @@
 	<body>
 		<header class="header">
 			<a class="brand" href="/channels/@me">
-				<img src="/static/logo.png" alt="Zycord" />
-				<span class="brand-text">Zycord</span>
+				<img src="/static/discord_logo_white.png" alt="Discord" />
 			</a>
 		</header>
 
@@ -153,41 +150,13 @@
 				const verifyToken = hashParams.get("token") || searchParams.get("token");
 
 				const showSuccess = () => {
-					spinner.style.display = "none";
-					subtitle.style.display = "none";
-
-					const envelopeHtml = `
-						<div class="illustration">
-							<svg width="140" height="130" viewBox="0 0 140 130" fill="none" xmlns="http://www.w3.org/2000/svg">
-								<g filter="drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.4))">
-									<rect x="18" y="32" width="104" height="76" rx="10" transform="rotate(-3 70 70)" fill="#1e1f22" stroke="#2b2d31" stroke-width="2"/>
-									<!-- Envelope back body -->
-									<path d="M22 42C22 36.4772 26.4772 32 32 32H108C113.523 32 118 36.4772 118 42V98C118 103.523 113.523 108 108 108H32C26.4772 108 22 103.523 22 98V42Z" fill="url(#envGradient)"/>
-									<!-- Envelope flap fold lines -->
-									<path d="M24 38L70 74L116 38" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.6"/>
-									<path d="M24 104L58 70" stroke="#7289da" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-									<path d="M116 104L82 70" stroke="#7289da" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-									<!-- Wax Seal Circle -->
-									<circle cx="70" cy="74" r="19" fill="#5865f2" stroke="#4752c4" stroke-width="2"/>
-									<circle cx="70" cy="74" r="15" fill="#4752c4"/>
-									<!-- Checkmark inside seal -->
-									<path d="M64 74.5L68 78.5L76 69.5" stroke="#57f287" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-								</g>
-								<defs>
-									<linearGradient id="envGradient" x1="22" y1="32" x2="118" y2="108" gradientUnits="userSpaceOnUse">
-										<stop stop-color="#e3e8f8"/>
-										<stop offset="1" stop-color="#c1cbf5"/>
-									</linearGradient>
-								</defs>
-							</svg>
-						</div>
-					`;
-
 					stage.innerHTML = `
-						${envelopeHtml}
+						<div class="illustration">
+							<img src="/static/discord_envelope.png" alt="Email Verified" />
+						</div>
 						<h1 class="title">Email Verified!</h1>
 						<div>
-							<button class="btn" id="continueBtn">Continue to Zycord</button>
+							<button class="btn" id="continueBtn">Continue to Discord</button>
 						</div>
 					`;
 
@@ -201,7 +170,7 @@
 					title.innerText = "Email Verification Failed";
 					subtitle.innerText = message || "This link is invalid or has expired. Request a new verification email from your account settings.";
 					actionContainer.style.display = "block";
-					actionContainer.innerHTML = `<button class="btn" onclick="location.href='/channels/@me'">Continue to Zycord</button>`;
+					actionContainer.innerHTML = `<button class="btn" onclick="location.href='/channels/@me'">Continue to Discord</button>`;
 				};
 
 				if (!verifyToken) {
