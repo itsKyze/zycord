@@ -27,7 +27,25 @@ try {
 function initWindowControls() {
     try {
         if (!document.documentElement) return;
-        if (document.getElementById("zycord-win-controls")) return;
+
+        // Persistent top draggable titlebar across the whole app
+        if (!document.getElementById("zycord-titlebar")) {
+            const titlebar = document.createElement("div");
+            titlebar.id = "zycord-titlebar";
+            (document.body || document.documentElement).appendChild(titlebar);
+        }
+
+        if (document.getElementById("zycord-win-controls")) {
+            const titlebarEl = document.getElementById("zycord-titlebar");
+            if (titlebarEl && !titlebarEl.__zycordBound) {
+                titlebarEl.__zycordBound = true;
+                titlebarEl.addEventListener("dblclick", (e) => {
+                    e.preventDefault();
+                    ipcRenderer.send("window-maximize");
+                });
+            }
+            return;
+        }
 
         // Top bar controls: Update Badge, Separator, Minimize, Maximize, Close
         const winControls = document.createElement("div");
@@ -80,6 +98,21 @@ function initWindowControls() {
                     pointer-events: auto !important;
                     cursor: pointer !important;
                     user-select: none !important;
+                }
+
+                /* Dedicated Top Draggable Bar (stops 145px before right edge so inbox & window controls are 100% non-drag and clickable) */
+                #zycord-titlebar {
+                    position: fixed !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    width: calc(100% - 145px) !important;
+                    height: 24px !important;
+                    z-index: 2147483646 !important;
+                    -webkit-app-region: drag !important;
+                    pointer-events: auto !important;
+                    background: transparent !important;
+                    user-select: none !important;
+                    -webkit-user-select: none !important;
                 }
 
                 /* Discord-style Emerald Green Update Button */
@@ -225,6 +258,43 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
+                /* Auth / Login / Register Page: Allow dragging from background space and top branding */
+                [class*="characterBackground_"],
+                [class*="splashBackground_"],
+                [class*="centeringWrapper_"],
+                [class*="artwork_"],
+                [class*="authWrapper_"],
+                [class*="pageContainer_"],
+                [class*="content_"]:has(> [class*="authBox_"]),
+                [class*="content_"]:has(> [class*="authBoxExpanded_"]),
+                div:has(> [class*="authBox_"]),
+                div:has(> [class*="authBoxExpanded_"]),
+                [class*="wordmark_"] {
+                    -webkit-app-region: drag !important;
+                }
+
+                /* Ensure auth box / login card, form inputs, buttons, qr code are non-drag and fully interactive */
+                [class*="authBox_"],
+                [class*="authBoxExpanded_"],
+                [class*="authBox_"] *,
+                [class*="authBoxExpanded_"] *,
+                [class*="qrCode_"],
+                [class*="qrCode_"] *,
+                [class*="form_"],
+                [class*="form_"] *,
+                form,
+                form *,
+                input,
+                input *,
+                button,
+                button *,
+                a,
+                a *,
+                [role="button"],
+                [role="button"] * {
+                    -webkit-app-region: no-drag !important;
+                }
+
                 /* Center Zycord logo above login form */
                 .discordLogo__921c5,
                 .authBoxExpanded__921c5 .discordLogo__921c5 {
@@ -268,6 +338,12 @@ function initWindowControls() {
             }
             ipcRenderer.send("window-close");
         };
+
+        const titlebarEl = document.getElementById("zycord-titlebar");
+        if (titlebarEl && !titlebarEl.__zycordBound) {
+            titlebarEl.__zycordBound = true;
+            titlebarEl.addEventListener("dblclick", handleMaximize);
+        }
 
         const minBtn = document.getElementById("zycord-btn-min");
         if (minBtn) minBtn.addEventListener("click", handleMinimize);
@@ -360,7 +436,8 @@ ipcRenderer.on("window-maximized-state", (event, isMaximized) => {
 });
 
 function ensureWindowControls() {
-    if (!document.getElementById("zycord-win-controls")) {
+    if (!document.documentElement) return;
+    if (!document.getElementById("zycord-win-controls") || !document.getElementById("zycord-titlebar")) {
         initWindowControls();
     }
 }
