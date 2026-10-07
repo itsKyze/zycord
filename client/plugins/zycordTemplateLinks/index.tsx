@@ -57,7 +57,7 @@ function TemplateLink({ Button, onClose }: { Button: ClientButton; onClose?: () 
 
     const load = async () => {
         const code = templateCode(link);
-        if (!code) return setError("Paste a template link, like https://discord.new/abc123");
+        if (!code) return setError("Paste a template link, like https://app.zyron.site/template/abc123 or https://discord.new/abc123");
         setBusy(true);
         setError(null);
         try {
@@ -124,7 +124,7 @@ function TemplateLink({ Button, onClose }: { Button: ClientButton; onClose?: () 
                 </>
             ) : (
                 <div className="zycord-template-actions">
-                    <TextInput value={link} onChange={(value: string) => (setLink(value), setError(null))} placeholder="https://discord.new/..." />
+                    <TextInput value={link} onChange={(value: string) => (setLink(value), setError(null))} placeholder="https://app.zyron.site/template/... or discord.new/..." />
                     <Button variant="secondary" text="Load" onClick={load} loading={busy} disabled={busy || !link.trim()} />
                 </div>
             )}
