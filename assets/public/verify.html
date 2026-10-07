@@ -4,7 +4,7 @@
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Discord</title>
+		<title>Zycord</title>
 		<link rel="icon" href="/static/branding/favicon.svg" type="image/svg+xml" />
 		<style>
 			* {
@@ -23,7 +23,7 @@
 				-webkit-font-smoothing: antialiased;
 			}
 			.header {
-				padding: 24px 32px;
+				padding: 20px 32px;
 				display: flex;
 				align-items: center;
 			}
@@ -34,7 +34,7 @@
 				cursor: pointer;
 			}
 			.brand img {
-				height: 26px;
+				height: 24px;
 				width: auto;
 				display: block;
 			}
@@ -49,19 +49,19 @@
 				margin-top: -60px;
 			}
 			.illustration {
-				width: 140px;
-				height: 120px;
-				margin-bottom: 24px;
+				width: 160px;
+				height: 140px;
+				margin-bottom: 20px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+				animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 			}
 			.illustration img {
-				width: 130px;
+				width: 150px;
 				height: auto;
 				display: block;
-				filter: drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.4));
+				filter: drop-shadow(0px 8px 24px rgba(88, 101, 242, 0.35));
 			}
 			@keyframes popIn {
 				0% {
@@ -77,7 +77,7 @@
 				font-size: 24px;
 				font-weight: 700;
 				line-height: 30px;
-				margin-bottom: 24px;
+				margin-bottom: 20px;
 				color: #ffffff;
 			}
 			.subtitle {
@@ -87,30 +87,33 @@
 				line-height: 20px;
 				margin-bottom: 24px;
 			}
+			/* Button matches real Discord - white, black text, small radius */
 			.btn {
 				background-color: #ffffff;
-				color: #000000;
+				color: #060607;
 				font-size: 14px;
-				font-weight: 600;
-				padding: 10px 24px;
-				border-radius: 3px;
+				font-weight: 500;
+				padding: 10px 32px;
+				border-radius: 28px;
 				border: none;
 				cursor: pointer;
 				text-decoration: none;
 				display: inline-block;
 				font-family: inherit;
-				transition: background-color 0.15s ease, transform 0.1s ease;
+				letter-spacing: 0.02em;
+				transition: background-color 0.15s ease, transform 0.1s ease, opacity 0.15s ease;
 			}
 			.btn:hover {
 				background-color: #e3e5e8;
+				opacity: 0.9;
 			}
 			.btn:active {
-				transform: scale(0.98);
+				transform: scale(0.97);
 			}
 			.spinner {
 				width: 36px;
 				height: 36px;
-				border: 3px solid rgba(255, 255, 255, 0.2);
+				border: 3px solid rgba(255, 255, 255, 0.15);
 				border-top-color: #ffffff;
 				border-radius: 50%;
 				animation: spin 0.8s linear infinite;
@@ -126,7 +129,7 @@
 	<body>
 		<header class="header">
 			<a class="brand" href="/channels/@me">
-				<img src="/static/discord_logo_white.png" alt="Discord" />
+				<img src="/static/branding/zycord_logo_white.png" alt="Zycord" />
 			</a>
 		</header>
 
@@ -152,11 +155,11 @@
 				const showSuccess = () => {
 					stage.innerHTML = `
 						<div class="illustration">
-							<img src="/static/discord_envelope.png" alt="Email Verified" />
+							<img src="/static/branding/zycord_envelope.png" alt="Email Verified" />
 						</div>
 						<h1 class="title">Email Verified!</h1>
 						<div>
-							<button class="btn" id="continueBtn">Continue to Discord</button>
+							<button class="btn" id="continueBtn">Continue to Zycord</button>
 						</div>
 					`;
 
@@ -170,7 +173,7 @@
 					title.innerText = "Email Verification Failed";
 					subtitle.innerText = message || "This link is invalid or has expired. Request a new verification email from your account settings.";
 					actionContainer.style.display = "block";
-					actionContainer.innerHTML = `<button class="btn" onclick="location.href='/channels/@me'">Continue to Discord</button>`;
+					actionContainer.innerHTML = `<button class="btn" onclick="location.href='/channels/@me'">Continue to Zycord</button>`;
 				};
 
 				if (!verifyToken) {
