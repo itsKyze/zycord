@@ -89,6 +89,26 @@ export default definePlugin({
             ],
         },
         {
+            // Make the Nitro/Features settings panel always show the non-premium (upsell) branch
+            // instead of the premium branch (cJ) that crashes with "Something went wrong"
+            // when there is no real subscription on the Spacebar backend.
+            find: /NITRO_SETTING,\{Component:function\(\)\{/,
+            replacement: {
+                match: /return\(0,\i\.YE\)\(\i,\i\.PremiumTypes\.TIER_2\)\?\(0,\i\.jsx\)\(\i,\{\}\):/,
+                replace: "return!1?null:",
+            },
+        },
+        {
+            // Suppress the "Something went wrong" error state inside the Nitro settings panel.
+            // When there is no subscription and no premium the component returns an error card;
+            // replace the whole conditional with a no-op so the panel shows empty cleanly.
+            find: "BILLING_SETTINGS_NITRO_GIFT_BANNER",
+            replacement: {
+                match: /if\(!\i&&!\i&&!\i&&!\i\)return\(0,\i\.jsx\)\(\i\.A,\{title:\i\.intl\.string\(\i\.t\.dyq9TR\),note:null\}\)/,
+                replace: "if(false)return null",
+            },
+        },
+        {
             find: ".COLLECTIBLES_PROFILE_SETTINGS_UPSELL),",
             replacement: {
                 match: /=function\(\)\{(?=let [^;]{0,80}?=\(0,\i\.\i\)\(\i\.\i\.COLLECTIBLES_PROFILE_SETTINGS_UPSELL\))/,
