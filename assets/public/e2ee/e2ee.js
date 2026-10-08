@@ -6874,7 +6874,7 @@ ${approver}`;
     nativeChannels ??= findStore(loader.reqs, ["getChannel", "getDMFromUserId"]);
     const channel = nativeChannels?.getChannel(channelId);
     if (channel?.e2ee_enabled) return true;
-    return channel ? channel.type === 1 || channel.type === 3 : location.pathname === `/channels/@me/${channelId}`;
+    return false;
   };
   var trustsServer = () => window.GLOBAL_ENV?.E2EE_TRUST_SERVER !== false && browserStorage?.getItem("zycord-e2ee-strict-safety") !== "true";
   var engine = new Engine(api, classifyChannel, trustsServer);

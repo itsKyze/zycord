@@ -82,7 +82,9 @@ const classifyChannel = (channelId: string) => {
     nativeChannels ??= findStore<NativeChannelStore>(loader.reqs, ["getChannel", "getDMFromUserId"]);
     const channel = nativeChannels?.getChannel(channelId);
     if (channel?.e2ee_enabled) return true;
-    return channel ? channel.type === 1 || channel.type === 3 : location.pathname === `/channels/@me/${channelId}`;
+    // Only treat a channel as encrypted if the server explicitly marks it so.
+    // Do NOT fall back to type=1/type=3 — that caused all DMs to show as "🔒 Encrypted message".
+    return false;
 };
 const trustsServer = () =>
     (window as unknown as { GLOBAL_ENV?: { E2EE_TRUST_SERVER?: boolean } }).GLOBAL_ENV?.E2EE_TRUST_SERVER !== false &&
