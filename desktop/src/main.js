@@ -4,6 +4,11 @@ const path = require("path");
 const UpdaterService = require("./updater/UpdaterService");
 const UpdaterConfig = require("./updater/UpdaterConfig");
 
+app.name = "Zycord";
+if (process.platform === "win32") {
+    app.setAppUserModelId("com.zyron.zycord");
+}
+
 // Thumbar and Tray Mascot Icons
 const thumbarIcons = {
     cameraOn: nativeImage.createFromPath(path.join(__dirname, "../assets/thumbar/camera_on.png")),
@@ -45,6 +50,7 @@ const ZYCORD_USER_AGENT = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit
 // Create Minimal Centered Desktop Updater Window (360x300)
 function createUpdaterWindow() {
     updaterWindow = new BrowserWindow({
+        title: "Zycord",
         width: UpdaterConfig.window.width || 360,
         height: UpdaterConfig.window.height || 300,
         resizable: false,
@@ -108,6 +114,7 @@ function createMainWindow() {
     if (mainWindow) return;
 
     mainWindow = new BrowserWindow({
+        title: "Zycord",
         width: 1280,
         height: 720,
         minWidth: 940,
