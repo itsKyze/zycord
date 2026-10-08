@@ -37,6 +37,17 @@ const defaults: Record<string, { variant: number; config?: object }> = {
     "2024-06_screen_share_improvements": { variant: 1 },
     "2024-08_go_live_stream_settings": { variant: 1 },
     "2024-04_screen_share_audio": { variant: 1 },
+    "2026-06-user-profile-sidebar-redesign": { variant: 1 },
+    "2026-07-personal-widget": { variant: 1 },
+    "2026-09-profile-widget-empty-state-suggestions": { variant: 1 },
+    "2026-08-badge-management": { variant: 1 },
+    "2026-08-nitro-tenure-badge-total-progress": { variant: 1 },
+    "2026-05-badge-discovery-milestone-2": { variant: 1 },
+    "2026-09-edit-profile-collectibles-ordering": { variant: 1 },
+    "2026-07-clips-on-profile-setter": { variant: 1 },
+    "2026-07-clips-on-profile-viewer": { variant: 1 },
+    "2026-07-orbchievements": { variant: 1 },
+    "2026-08-profile-embed-share-button": { variant: 1 },
 };
 
 export type ApexAssignment = [number, number, number, number, number, string | undefined];

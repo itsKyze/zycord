@@ -1,7 +1,7 @@
 {
     "name": "zycord",
     "productName": "Zycord",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "Zycord",
     "main": "src/main.js",
     "author": "Zyron Solutions Ltd",
@@ -22,6 +22,12 @@
             "output": "dist",
             "buildResources": "assets"
         },
+        "extraFiles": [
+            {
+                "from": "assets/Update.exe",
+                "to": "Update.exe"
+            }
+        ],
         "files": [
             "src/**/*",
             "assets/**/*"
