@@ -1,6 +1,7 @@
 const { app, BrowserWindow, Tray, Menu, ipcMain, shell, session, desktopCapturer, clipboard, nativeImage } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const path = require("path");
+const fs = require("fs");
 const UpdaterService = require("./updater/UpdaterService");
 const UpdaterConfig = require("./updater/UpdaterConfig");
 
@@ -35,8 +36,32 @@ let clientState = {
 };
 
 // Single Instance Lock
+// Clean up stale lockfile before requesting lock (handles crashes / dev sessions that didn't exit cleanly)
+try {
+    const lockFilePath = path.join(app.getPath("userData"), "lockfile");
+    if (fs.existsSync(lockFilePath)) {
+        // Check if any Zycord/electron process other than us is running
+        const { execSync } = require("child_process");
+        let zycordRunning = false;
+        try {
+            if (process.platform === "win32") {
+                const taskList = execSync("tasklist /FI \"IMAGENAME eq Zycord.exe\" /NH", { encoding: "utf8", timeout: 2000 });
+                zycordRunning = taskList.toLowerCase().includes("zycord.exe");
+            }
+        } catch (_) {}
+
+        if (!zycordRunning) {
+            fs.unlinkSync(lockFilePath);
+            console.log("[Zycord] Removed stale lockfile");
+        }
+    }
+} catch (e) {
+    console.warn("[Zycord] Lockfile cleanup error:", e.message);
+}
+
 const gotTheLock = app.requestSingleInstanceLock();
 if (!gotTheLock) {
+    // Another real instance is running — bring it to front
     app.quit();
     process.exit(0);
 }
