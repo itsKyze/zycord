@@ -48,8 +48,8 @@ const example = {
 };
 
 router.get("/", route({}), (req: Request, res: Response) => {
-    // TODO: schema
-    res.json([example]).status(200);
+    // Return empty list of payment sources so client renders clean empty state without crashing
+    res.json([]).status(200);
 });
 
 router.post("/", route({}), (req: Request, res: Response) => {
