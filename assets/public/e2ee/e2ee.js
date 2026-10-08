@@ -6841,7 +6841,7 @@ ${approver}`;
   };
 
   // client/e2ee/src/index.ts
-  var HOOK_TIMEOUT_MS = 2e4;
+  var HOOK_TIMEOUT_MS = 45e3;
   var loader = window.__zycordE2ee ??= { reqs: [] };
   var states = /* @__PURE__ */ new Map();
   var targets = {};
@@ -7172,6 +7172,10 @@ ${approver}`;
       if (!started && Date.now() - startedAt > 8e3) startWhenReady();
     } else if (Date.now() - startedAt > HOOK_TIMEOUT_MS) {
       const missing = Object.entries(installed).filter(([, ok]) => !ok).map(([name]) => name);
+      if (missing.every((m) => m === "gateway")) {
+        setTimeout(tick, 500);
+        return;
+      }
       return fail(`Couldn't find ${missing.join(", ")} in this client build`);
     }
     setTimeout(tick, installed.http && installed.dispatcher ? 100 : 20);
