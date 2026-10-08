@@ -11,10 +11,61 @@ const ZycordNative = {
     },
 };
 
+let cachedDesktopSources = [];
+
+const desktopCapture = {
+    getDesktopCaptureSources: async (options) => {
+        const sources = await ipcRenderer.invoke("desktop-capture-get-sources", options);
+        cachedDesktopSources = sources || [];
+        return sources;
+    },
+    selectSource: (sourceId) => {
+        ipcRenderer.send("desktop-capture-set-selected-source", sourceId);
+    },
+};
+
+const DiscordNative = {
+    isDesktop: true,
+    desktopCapture,
+    window: {
+        getMediaSourceId: () => Promise.resolve(""),
+        minimize: () => ipcRenderer.send("window-minimize"),
+        maximize: () => ipcRenderer.send("window-maximize"),
+        close: () => ipcRenderer.send("window-close"),
+    },
+    processUtils: {
+        getMemoryUsage: () => Promise.resolve({}),
+        getCurrentCPUUsagePercent: () => Promise.resolve(0),
+    },
+    os: {
+        arch: process.arch,
+        release: "10.0.22631",
+    },
+};
+
+// Track clicks on source items in Go Live modal to ensure chosen source is selected
+if (typeof document !== "undefined") {
+    document.addEventListener("click", (e) => {
+        if (!cachedDesktopSources.length || !e.target) return;
+        const target = e.target;
+        for (const s of cachedDesktopSources) {
+            if (
+                (s.name && (target.textContent?.includes(s.name) || target.title === s.name || target.getAttribute?.("aria-label")?.includes(s.name))) ||
+                (s.url && (target.src === s.url || target.querySelector?.(`img[src="${s.url}"]`)))
+            ) {
+                ipcRenderer.send("desktop-capture-set-selected-source", s.id);
+                break;
+            }
+        }
+    }, true);
+}
+
 try {
     contextBridge.exposeInMainWorld("ZycordNative", ZycordNative);
+    contextBridge.exposeInMainWorld("DiscordNative", DiscordNative);
 } catch (e) {
     window.ZycordNative = ZycordNative;
+    window.DiscordNative = DiscordNative;
 }
 
 try {
