@@ -373,13 +373,48 @@ function createTray() {
     }
 }
 
-// Handle Screen Sharing Permission
+// Handle Screen Sharing Permission & Desktop Capturer
+let currentSelectedSourceId = null;
+
+ipcMain.on("desktop-capture-set-selected-source", (event, sourceId) => {
+    currentSelectedSourceId = sourceId;
+});
+
+ipcMain.handle("desktop-capture-get-sources", async (event, options) => {
+    try {
+        const types = options?.types || ["screen", "window"];
+        const thumbnailSize = options?.thumbnailSize || { width: 447, height: 251 };
+        const sources = await desktopCapturer.getSources({
+            types,
+            thumbnailSize,
+            fetchWindowIcons: true,
+        });
+        return sources.map((s) => ({
+            id: s.id,
+            name: s.name,
+            url: s.thumbnail ? s.thumbnail.toDataURL() : "",
+            appIcon: s.appIcon ? s.appIcon.toDataURL() : null,
+        }));
+    } catch (e) {
+        console.error("[Zycord] desktopCapturer.getSources error:", e);
+        return [];
+    }
+});
+
 function setupScreenShareHandler() {
     session.defaultSession.setDisplayMediaRequestHandler((request, callback) => {
         desktopCapturer.getSources({ types: ["screen", "window"] }).then((sources) => {
-            if (sources.length > 0) {
-                callback({ video: sources[0] });
+            if (sources.length === 0) return callback({});
+            if (currentSelectedSourceId) {
+                const matched = sources.find((s) => s.id === currentSelectedSourceId);
+                if (matched) {
+                    return callback({ video: matched });
+                }
             }
+            callback({ video: sources[0] });
+        }).catch((e) => {
+            console.error("[Zycord] setDisplayMediaRequestHandler error:", e);
+            callback({});
         });
     });
 }

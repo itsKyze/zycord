@@ -1,11 +1,13 @@
 (() => {
     const params = new URLSearchParams(location.search);
-    const applicationId = location.hostname.split(".")[0];
+    const pathMatch = location.pathname.match(/\/(?:activities|\.activity)\/(\d{15,21})/);
+    const applicationId = pathMatch ? pathMatch[1] : (params.get("application_id") || location.hostname.split(".")[0]);
     const instanceId = params.get("instance_id") ?? "";
     const ticket = params.get("discord_proxy_ticket") ?? "";
     const frameId = params.get("frame_id");
     const clientId = crypto.randomUUID();
-    const api = `/.proxy/api/instances/${encodeURIComponent(instanceId)}`;
+    const proxyBase = pathMatch ? `/activities/${applicationId}/.proxy` : "/.proxy";
+    const api = `${proxyBase}/api/instances/${encodeURIComponent(instanceId)}`;
 
     const COLORS = [
         ["Ink", "#1e1f22"],

@@ -116,12 +116,33 @@ async function serve(applicationId: string, req: Request, res: Response) {
 export function ActivityHost(req: Request, res: Response, next: NextFunction) {
     const hostname = (req.headers.host ?? "").replace(/:\d+$/, "").toLowerCase();
     const match = /^(\d{15,21})\.([a-z0-9.-]+)$/.exec(hostname);
-    if (!match) return next();
-    const base = activityHostBase();
-    if (base && match[2] !== base) return next();
-    serve(match[1], req, res).catch((error) => {
-        console.error(`[Activities] ${req.method} ${hostname}${req.url} failed:`, error?.message ?? error);
-        if (!res.headersSent) res.status(502).type("text/plain").send("Bad gateway");
-        else res.end();
-    });
+    if (match) {
+        const base = activityHostBase();
+        if (!base || match[2] === base) {
+            return serve(match[1], req, res).catch((error) => {
+                console.error(`[Activities] ${req.method} ${hostname}${req.url} failed:`, error?.message ?? error);
+                if (!res.headersSent) res.status(502).type("text/plain").send("Bad gateway");
+                else res.end();
+            });
+        }
+    }
+
+    // Path-based activity support on the main host without requiring wildcard DNS
+    const pathMatch = /^\/(?:activities|\.activity)\/(\d{15,21})((?:\/|\?).*)?$/.exec(req.url);
+    if (pathMatch) {
+        const applicationId = pathMatch[1];
+        const restWithQuery = pathMatch[2] || "/";
+        // If requesting the directory without trailing slash, redirect with 302 to include trailing slash
+        if (restWithQuery.startsWith("?")) {
+            return res.redirect(302, `/activities/${applicationId}/${restWithQuery}`);
+        }
+        req.url = restWithQuery;
+        return serve(applicationId, req, res).catch((error) => {
+            console.error(`[Activities] ${req.method} ${applicationId} ${req.url} failed:`, error?.message ?? error);
+            if (!res.headersSent) res.status(502).type("text/plain").send("Bad gateway");
+            else res.end();
+        });
+    }
+
+    return next();
 }
