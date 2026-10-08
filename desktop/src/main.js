@@ -4,6 +4,11 @@ const path = require("path");
 const UpdaterService = require("./updater/UpdaterService");
 const UpdaterConfig = require("./updater/UpdaterConfig");
 
+// Configure background updater: download silently, notify via badge, user decides when to install
+autoUpdater.autoDownload = true;
+autoUpdater.autoInstallOnAppQuit = false; // Don't silently quit+install; user triggers via green badge
+autoUpdater.logger = null; // Suppress verbose updater logs
+
 app.name = "Zycord";
 if (process.platform === "win32") {
     app.setAppUserModelId("com.zyron.zycord");

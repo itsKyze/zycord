@@ -242,10 +242,9 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
-                /* Stop draggable top bar 145px before right edge */
+                /* Draggable top bar — only the narrow Discord titlebar strip, NOT withFrame_ which is a full-page wrapper */
                 [class*="typeWindows_"],
-                [class*="titleBar_"],
-                [class*="withFrame_"] {
+                [class*="titleBar_"] {
                     height: 22px !important;
                     -webkit-app-region: drag !important;
                     max-width: calc(100% - 145px) !important;
@@ -267,6 +266,12 @@ function initWindowControls() {
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
                     cursor: pointer !important;
+                }
+
+                /* withFrame_ is a full-page wrapper — must NEVER be a drag region */
+                [class*="withFrame_"],
+                [class*="withFrame_"] * {
+                    -webkit-app-region: no-drag !important;
                 }
 
                 /* Auth / Login / Register Page: Background space is draggable */
@@ -296,7 +301,7 @@ function initWindowControls() {
                     pointer-events: auto !important;
                 }
 
-                /* Auth Card, Form, Inputs, Buttons, Scrollable areas: Strictly NON-DRAG, fully interactive and typable */
+                /* Auth Card, Form, Inputs: Strictly NON-DRAG, fully interactive and typable */
                 [class*="authBox_"],
                 [class*="authBoxExpanded_"],
                 [class*="authBox_"] *,
@@ -307,20 +312,6 @@ function initWindowControls() {
                 [class*="form_"] *,
                 form,
                 form *,
-                input,
-                input *,
-                textarea,
-                textarea *,
-                button,
-                button *,
-                a,
-                a *,
-                [role="button"],
-                [role="button"] *,
-                [role="textbox"],
-                [role="textbox"] *,
-                [class*="input_"],
-                [class*="input_"] *,
                 [class*="scroller_"],
                 [class*="scroller_"] *,
                 [class*="scrollerBase_"],
@@ -331,8 +322,30 @@ function initWindowControls() {
                 [class*="panels_"] * {
                     -webkit-app-region: no-drag !important;
                     pointer-events: auto !important;
+                }
+
+                /* Text inputs: allow text selection */
+                input,
+                textarea,
+                [role="textbox"],
+                [class*="input_"] {
+                    -webkit-app-region: no-drag !important;
+                    pointer-events: auto !important;
                     user-select: text !important;
                     -webkit-user-select: text !important;
+                }
+
+                /* Buttons and links: pointer events but NOT text-selectable (prevents event interference) */
+                button,
+                button *,
+                a,
+                a *,
+                [role="button"],
+                [role="button"] * {
+                    -webkit-app-region: no-drag !important;
+                    pointer-events: auto !important;
+                    user-select: none !important;
+                    -webkit-user-select: none !important;
                 }
 
                 /* Discord-style Toast Notification (bottom-left) */
@@ -485,16 +498,18 @@ function initWindowControls() {
             (document.body || document.documentElement).appendChild(titlebar);
         }
 
-        const titlebarEl = document.getElementById("zycord-titlebar");
-        if (titlebarEl && !titlebarEl.__zycordBound) {
-            titlebarEl.__zycordBound = true;
-            titlebarEl.addEventListener("dblclick", (e) => {
-                e.preventDefault();
-                ipcRenderer.send("window-maximize");
-            });
+        if (document.getElementById("zycord-win-controls")) {
+            // Already injected — just re-bind titlebar dblclick if needed
+            const tb = document.getElementById("zycord-titlebar");
+            if (tb && !tb.__zycordBound) {
+                tb.__zycordBound = true;
+                tb.addEventListener("dblclick", (e) => {
+                    e.preventDefault();
+                    ipcRenderer.send("window-maximize");
+                });
+            }
+            return;
         }
-
-        if (document.getElementById("zycord-win-controls")) return;
 
         // Top bar controls: Update Badge, Separator, Minimize, Maximize, Close
         const winControls = document.createElement("div");
@@ -548,6 +563,8 @@ function initWindowControls() {
             ipcRenderer.send("window-close");
         };
 
+        // Bind titlebar double-click to maximize (single registration)
+        const titlebarEl = document.getElementById("zycord-titlebar");
         if (titlebarEl && !titlebarEl.__zycordBound) {
             titlebarEl.__zycordBound = true;
             titlebarEl.addEventListener("dblclick", handleMaximize);

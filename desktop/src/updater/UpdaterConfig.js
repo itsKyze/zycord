@@ -18,8 +18,8 @@ const UpdaterConfig = {
     // Close updater window and launch main app when up to date
     closeWhenUpToDate: true,
 
-    // Install immediately once update download is complete
-    installAutomatically: true,
+    // Do NOT install automatically — show the green badge and let the user click to restart
+    installAutomatically: false,
 
     // Timeout in milliseconds for update check
     checkTimeoutMs: 6000,
