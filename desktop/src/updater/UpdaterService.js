@@ -98,6 +98,14 @@ class UpdaterService extends EventEmitter {
                         this._setState(UpdaterState.COMPLETED);
                         autoUpdater.quitAndInstall(false, true);
                     }, 1200);
+                } else {
+                    setTimeout(() => {
+                        if (this.isDisposed) return;
+                        this._setState(UpdaterState.STARTING, { message: "Starting..." });
+                        setTimeout(() => {
+                            if (!this.isDisposed) this.emit("ready-to-launch");
+                        }, 500);
+                    }, 800);
                 }
             }, 1000);
         });
