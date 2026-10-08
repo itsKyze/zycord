@@ -18,6 +18,7 @@
 
 import { Router, Response, Request } from "express";
 import { route } from "@spacebar/api/middlewares";
+import { User } from "@spacebar/database";
 
 const router = Router({ mergeParams: true });
 
@@ -47,9 +48,31 @@ const example = {
     default: false,
 };
 
-router.get("/", route({}), (req: Request, res: Response) => {
-    // Return empty list of payment sources so client renders clean empty state without crashing
-    res.json([]).status(200);
+router.get("/", route({}), async (req: Request, res: Response) => {
+    const user = await User.findOne({
+        where: { id: req.user_id },
+        select: {
+            id: true,
+            username: true,
+            premium: true,
+            premium_type: true,
+        },
+    });
+
+    if (!user || (!user.premium && !user.premium_type)) {
+        return res.json([]).status(200);
+    }
+
+    const source = {
+        ...example,
+        default: true,
+        billing_address: {
+            ...example.billing_address,
+            name: user.username,
+        },
+    };
+
+    return res.json([source]).status(200);
 });
 
 router.post("/", route({}), (req: Request, res: Response) => {
