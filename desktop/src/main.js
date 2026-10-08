@@ -192,8 +192,12 @@ function createMainWindow() {
     // Safety fallback: ensure window shows within 6.5s even on slow network
     setTimeout(showMainWindowSafely, 6500);
 
-    mainWindow.webContents.on("did-fail-load", (event, errorCode, errorDescription) => {
-        console.warn("[Zycord] Page load notice:", errorCode, errorDescription);
+    mainWindow.webContents.on("console-message", (event, level, message, line, sourceId) => {
+        console.log(`[Renderer Console ${level}] ${message} (${sourceId}:${line})`);
+    });
+
+    mainWindow.webContents.on("did-fail-load", (event, errorCode, errorDescription, validatedURL) => {
+        console.warn("[Zycord] Page load failed:", errorCode, errorDescription, validatedURL);
         showMainWindowSafely();
     });
 
@@ -530,9 +534,6 @@ ipcMain.on("set-badge-count", (event, count) => {
 });
 
 // IPC Handlers for Updater Window
-ipcMain.on("updater:retry-now", () => {
-    updaterService?.retryNow();
-});
 ipcMain.on("updater:close", () => {
     if (updaterWindow && !updaterWindow.isDestroyed()) {
         updaterWindow.close();
