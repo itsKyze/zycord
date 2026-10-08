@@ -1,5 +1,22 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
+// Cache of desktop capture sources for source tracking
+let cachedDesktopSources = [];
+
+// Desktop Capture API bridge
+const desktopCapture = {
+    getSources: async (options) => {
+        try {
+            const sources = await ipcRenderer.invoke("desktop-capture-get-sources", options);
+            cachedDesktopSources = Array.isArray(sources) ? sources : [];
+            return cachedDesktopSources;
+        } catch (e) {
+            console.warn("[Zycord] desktopCapture.getSources error:", e);
+            return [];
+        }
+    },
+};
+
 const ZycordNative = {
     isElectron: true,
     window: {
@@ -9,38 +26,7 @@ const ZycordNative = {
         isMaximized: () => ipcRenderer.sendSync("window-is-maximized"),
         setAlwaysOnTop: (enabled) => ipcRenderer.send("window-set-always-on-top", enabled),
     },
-};
-
-let cachedDesktopSources = [];
-
-const desktopCapture = {
-    getDesktopCaptureSources: async (options) => {
-        const sources = await ipcRenderer.invoke("desktop-capture-get-sources", options);
-        cachedDesktopSources = sources || [];
-        return sources;
-    },
-    selectSource: (sourceId) => {
-        ipcRenderer.send("desktop-capture-set-selected-source", sourceId);
-    },
-};
-
-const DiscordNative = {
-    isDesktop: true,
     desktopCapture,
-    window: {
-        getMediaSourceId: () => Promise.resolve(""),
-        minimize: () => ipcRenderer.send("window-minimize"),
-        maximize: () => ipcRenderer.send("window-maximize"),
-        close: () => ipcRenderer.send("window-close"),
-    },
-    processUtils: {
-        getMemoryUsage: () => Promise.resolve({}),
-        getCurrentCPUUsagePercent: () => Promise.resolve(0),
-    },
-    os: {
-        arch: process.arch,
-        release: "10.0.22631",
-    },
 };
 
 // Track clicks on source items in Go Live modal to ensure chosen source is selected
@@ -62,10 +48,8 @@ if (typeof document !== "undefined") {
 
 try {
     contextBridge.exposeInMainWorld("ZycordNative", ZycordNative);
-    contextBridge.exposeInMainWorld("DiscordNative", DiscordNative);
 } catch (e) {
     window.ZycordNative = ZycordNative;
-    window.DiscordNative = DiscordNative;
 }
 
 try {
