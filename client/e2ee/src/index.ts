@@ -44,7 +44,7 @@ declare global {
     }
 }
 
-const HOOK_TIMEOUT_MS = 20000;
+const HOOK_TIMEOUT_MS = 45000;
 
 const loader: LoaderState = (window.__zycordE2ee ??= { reqs: [] });
 const states = new Map<string, { state: MessageState; reason?: string }>();
@@ -406,6 +406,12 @@ const tick = () => {
         const missing = Object.entries(installed)
             .filter(([, ok]) => !ok)
             .map(([name]) => name);
+        // If only gateway is missing, keep retrying silently — it initialises later
+        // on slow connections. Only hard-fail when core hooks (http / dispatcher) are absent.
+        if (missing.every((m) => m === "gateway")) {
+            setTimeout(tick, 500);
+            return;
+        }
         return fail(`Couldn't find ${missing.join(", ")} in this client build`);
     }
     setTimeout(tick, installed.http && installed.dispatcher ? 100 : 20);
