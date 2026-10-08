@@ -46,7 +46,6 @@ const defaults: Record<string, { variant: number; config?: object }> = {
     "2026-09-edit-profile-collectibles-ordering": { variant: 1 },
     "2026-07-clips-on-profile-setter": { variant: 1 },
     "2026-07-clips-on-profile-viewer": { variant: 1 },
-    "2026-07-orbchievements": { variant: 1 },
     "2026-08-profile-embed-share-button": { variant: 1 },
 };
 
