@@ -32,7 +32,7 @@ const ZycordNative = {
 // Track clicks on source items in Go Live modal to ensure chosen source is selected
 if (typeof document !== "undefined") {
     document.addEventListener("click", (e) => {
-        if (!cachedDesktopSources.length || !e.target) return;
+        if (!cachedDesktopSources.length || !e.target || typeof e.target.getAttribute !== "function") return;
         const target = e.target;
         for (const s of cachedDesktopSources) {
             if (
@@ -43,7 +43,7 @@ if (typeof document !== "undefined") {
                 break;
             }
         }
-    }, true);
+    }, { passive: true });
 }
 
 try {
@@ -102,12 +102,19 @@ function initWindowControls() {
                     left: 0 !important;
                     width: calc(100% - 145px) !important;
                     height: 20px !important;
-                    z-index: 15 !important;
+                    z-index: 1 !important;
                     -webkit-app-region: drag !important;
                     pointer-events: auto !important;
                     background: transparent !important;
                     user-select: none !important;
                     -webkit-user-select: none !important;
+                }
+
+                /* When native Discord titlebar exists, hide the injected fallback so it never covers Discord buttons */
+                body:has([data-window-chrome="true"]) #zycord-titlebar,
+                body:has(.bar_c38106) #zycord-titlebar,
+                body:has([class*="typeWindows_"]) #zycord-titlebar {
+                    display: none !important;
                 }
 
                 /* Discord-style Emerald Green Update Button */
@@ -226,10 +233,12 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
-                /* Draggable top bar — only the narrow Discord titlebar strip, NOT withFrame_ which is a full-page wrapper */
+                /* Draggable top bar — narrow Discord titlebar strip, stopping 145px before right edge for window controls */
+                .bar_c38106,
+                [data-window-chrome="true"],
                 [class*="typeWindows_"],
                 [class*="titleBar_"] {
-                    height: 22px !important;
+                    height: 24px !important;
                     -webkit-app-region: drag !important;
                     max-width: calc(100% - 145px) !important;
                     width: calc(100% - 145px) !important;
@@ -237,6 +246,11 @@ function initWindowControls() {
                     box-sizing: border-box !important;
                 }
 
+                .bar_c38106 *,
+                [data-window-chrome="true"] button,
+                [data-window-chrome="true"] [role="button"],
+                [data-window-chrome="true"] a,
+                [data-window-chrome="true"] svg,
                 [class*="typeWindows_"] button,
                 [class*="typeWindows_"] [role="button"],
                 [class*="typeWindows_"] a,
@@ -258,17 +272,14 @@ function initWindowControls() {
                     -webkit-app-region: no-drag !important;
                 }
 
-                /* Auth / Login / Register Page: Background space is draggable */
-                /* NOTE: authWrapper_, centeringWrapper_ and pageContainer_ are intentionally EXCLUDED to prevent
-                   scroll and click events from being swallowed by the drag region in the main app */
-                [class*="characterBackground_"],
-                [class*="splashBackground_"],
-                [class*="artwork_"],
-                [class*="wordmark_"] {
+                /* Auth / Login / Register Page: ONLY the outer auth background is draggable, NEVER cards or artwork */
+                [class*="authWrapper_"] [class*="characterBackground_"],
+                [class*="authWrapper_"] [class*="splashBackground_"],
+                [class*="authWrapper_"] [class*="wordmark_"] {
                     -webkit-app-region: drag !important;
                 }
 
-                /* Ensure main app content is NEVER draggable so scroll + click always work */
+                /* Ensure all main app content, modals, cards, popouts, backdrops, and widgets are NEVER draggable */
                 [class*="pageContainer_"],
                 [class*="authWrapper_"],
                 [class*="app_"],
@@ -280,9 +291,32 @@ function initWindowControls() {
                 [class*="scrollerBase_"],
                 [class*="scrollerContent_"],
                 [class*="messagesWrapper_"],
-                [class*="messages_"] {
+                [class*="messages_"],
+                [class*="modal_"],
+                [class*="modal_"] *,
+                [class*="root_"],
+                [class*="root_"] *,
+                [role="dialog"],
+                [role="dialog"] *,
+                [aria-modal="true"],
+                [aria-modal="true"] *,
+                [class*="popout_"],
+                [class*="popout_"] *,
+                [class*="backdrop_"],
+                [class*="backdrop_"] *,
+                [class*="clickTrap_"],
+                [class*="clickTrap_"] *,
+                [class*="trapClicks_"],
+                [class*="trapClicks_"] *,
+                [class*="card_"],
+                [class*="card_"] *,
+                [class*="widget_"],
+                [class*="widget_"] *,
+                [class*="artwork_"],
+                [class*="artwork_"] *,
+                [class*="activity_"],
+                [class*="activity_"] * {
                     -webkit-app-region: no-drag !important;
-                    pointer-events: auto !important;
                 }
 
                 /* Auth Card, Form, Inputs: Strictly NON-DRAG, fully interactive and typable */
@@ -296,16 +330,11 @@ function initWindowControls() {
                 [class*="form_"] *,
                 form,
                 form *,
-                [class*="scroller_"],
-                [class*="scroller_"] *,
-                [class*="scrollerBase_"],
-                [class*="scrollerBase_"] *,
                 [class*="sidebar_"],
                 [class*="sidebar_"] *,
                 [class*="panels_"],
                 [class*="panels_"] * {
                     -webkit-app-region: no-drag !important;
-                    pointer-events: auto !important;
                 }
 
                 /* Text inputs: allow text selection */
@@ -314,20 +343,19 @@ function initWindowControls() {
                 [role="textbox"],
                 [class*="input_"] {
                     -webkit-app-region: no-drag !important;
-                    pointer-events: auto !important;
                     user-select: text !important;
                     -webkit-user-select: text !important;
                 }
 
-                /* Buttons and links: pointer events but NOT text-selectable (prevents event interference) */
+                /* Buttons and interactive elements */
                 button,
                 button *,
                 a,
                 a *,
                 [role="button"],
-                [role="button"] * {
+                [role="button"] *,
+                [class*="clickable_"] {
                     -webkit-app-region: no-drag !important;
-                    pointer-events: auto !important;
                     user-select: none !important;
                     -webkit-user-select: none !important;
                 }
@@ -608,6 +636,7 @@ setInterval(ensureNativeInboxPosition, 300);
 // Global capture fallback for window controls & native winButtons (click only with debounce)
 let globalMaxClickTime = 0;
 document.addEventListener("click", (e) => {
+    if (!e.target || typeof e.target.closest !== "function") return;
     const closeEl = e.target.closest('#zycord-btn-close, [class*="winButtonClose_"]');
     if (closeEl) {
         e.preventDefault();
@@ -715,6 +744,7 @@ setInterval(ensureWindowControls, 1000);
     document.addEventListener(
         "click",
         (e) => {
+            if (!e.target || typeof e.target.closest !== "function") return;
             const btn = e.target.closest("#zycord-btn-update");
             if (!btn) return;
             e.preventDefault();
@@ -1059,13 +1089,10 @@ setInterval(ensureWindowControls, 1000);
         }
     } catch (_) {}
 
-    // Instant reaction to user clicks anywhere in the interface
+    // Reaction to user clicks anywhere in the interface (passive, non-blocking)
     document.addEventListener("click", () => {
-        checkState();
-        setTimeout(checkState, 40);
-        setTimeout(checkState, 120);
-        setTimeout(checkState, 300);
-    }, true);
+        setTimeout(checkState, 60);
+    }, { passive: true });
 
     // IPC Action Handlers from Tray & Taskbar Thumbar
     ipcRenderer.on("action-toggle-mute", () => {

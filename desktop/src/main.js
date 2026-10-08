@@ -36,6 +36,10 @@ let clientState = {
 };
 
 // Single Instance Lock
+// Optimize touch and pointer event handling for Windows touchscreens & 2-in-1s
+app.commandLine.appendSwitch("touch-events", "enabled");
+app.commandLine.appendSwitch("enable-touch-drag-drop");
+
 // Clean up stale lockfile before requesting lock (handles crashes / dev sessions that didn't exit cleanly)
 try {
     const lockFilePath = path.join(app.getPath("userData"), "lockfile");
@@ -161,6 +165,7 @@ function createMainWindow() {
         minWidth: 940,
         minHeight: 500,
         frame: false,
+        thickFrame: true,
         backgroundColor: "#1e1f22",
         show: false,
         icon: ICON_PATH,
@@ -556,13 +561,6 @@ ipcMain.on("clipboard-read", (event) => {
 });
 ipcMain.on("set-badge-count", (event, count) => {
     app.setBadgeCount(Number(count) || 0);
-});
-
-// IPC Handlers for Updater Window
-ipcMain.on("updater:close", () => {
-    if (updaterWindow && !updaterWindow.isDestroyed()) {
-        updaterWindow.close();
-    }
 });
 
 // IPC Handlers for Discord Client State (Tray & Taskbar Thumbar)
