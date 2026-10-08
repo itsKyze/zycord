@@ -54,16 +54,21 @@ const ZYCORD_USER_AGENT = `Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit
 
 // Create Minimal Centered Desktop Updater Window (360x300)
 function createUpdaterWindow() {
+    if (updaterWindow && !updaterWindow.isDestroyed()) {
+        updaterWindow.focus();
+        return;
+    }
+
     updaterWindow = new BrowserWindow({
         title: "Zycord",
-        width: UpdaterConfig.window.width || 360,
-        height: UpdaterConfig.window.height || 300,
+        width: UpdaterConfig.window?.width || 360,
+        height: UpdaterConfig.window?.height || 300,
         resizable: false,
         frame: false,
-        backgroundColor: "#282b30",
+        backgroundColor: UpdaterConfig.window?.backgroundColor || "#282b30",
         center: true,
         show: true,
-        alwaysOnTop: true,
+        alwaysOnTop: false,
         icon: ICON_PATH,
         webPreferences: {
             preload: path.join(__dirname, "updater/preload-updater.js"),
@@ -75,23 +80,25 @@ function createUpdaterWindow() {
 
     updaterWindow.loadFile(path.join(__dirname, "updater/updater.html"));
 
-    updaterService = new UpdaterService(UpdaterConfig);
+    if (!updaterService) {
+        updaterService = new UpdaterService(UpdaterConfig);
 
-    updaterService.on("state", (payload) => {
-        if (updaterWindow && !updaterWindow.isDestroyed()) {
-            updaterWindow.webContents.send("updater:state", payload);
-        }
-    });
+        updaterService.on("state", (payload) => {
+            if (updaterWindow && !updaterWindow.isDestroyed()) {
+                updaterWindow.webContents.send("updater:state", payload);
+            }
+        });
 
-    updaterService.on("retry-tick", (payload) => {
-        if (updaterWindow && !updaterWindow.isDestroyed()) {
-            updaterWindow.webContents.send("updater:retry-tick", payload);
-        }
-    });
+        updaterService.on("retry-tick", (payload) => {
+            if (updaterWindow && !updaterWindow.isDestroyed()) {
+                updaterWindow.webContents.send("updater:retry-tick", payload);
+            }
+        });
 
-    updaterService.on("ready-to-launch", () => {
-        launchMainWindow();
-    });
+        updaterService.on("ready-to-launch", () => {
+            launchMainWindow();
+        });
+    }
 
     updaterWindow.webContents.once("did-finish-load", () => {
         updaterService.start();
@@ -103,10 +110,14 @@ function createUpdaterWindow() {
 }
 
 function launchMainWindow() {
-    if (mainWindow) {
+    if (mainWindow && !mainWindow.isDestroyed()) {
         if (!mainWindow.isVisible()) {
             mainWindow.show();
             mainWindow.focus();
+        }
+        if (updaterWindow && !updaterWindow.isDestroyed()) {
+            updaterWindow.destroy();
+            updaterWindow = null;
         }
         return;
     }
@@ -178,8 +189,8 @@ function createMainWindow() {
         showMainWindowSafely();
     });
 
-    // Safety fallback: ensure window shows within 2.5s even on slow network
-    setTimeout(showMainWindowSafely, 2500);
+    // Safety fallback: ensure window shows within 6.5s even on slow network
+    setTimeout(showMainWindowSafely, 6500);
 
     mainWindow.webContents.on("did-fail-load", (event, errorCode, errorDescription) => {
         console.warn("[Zycord] Page load notice:", errorCode, errorDescription);
@@ -518,6 +529,16 @@ ipcMain.on("set-badge-count", (event, count) => {
     app.setBadgeCount(Number(count) || 0);
 });
 
+// IPC Handlers for Updater Window
+ipcMain.on("updater:retry-now", () => {
+    updaterService?.retryNow();
+});
+ipcMain.on("updater:close", () => {
+    if (updaterWindow && !updaterWindow.isDestroyed()) {
+        updaterWindow.close();
+    }
+});
+
 // IPC Handlers for Discord Client State (Tray & Taskbar Thumbar)
 ipcMain.on("discord-state-change", (event, state) => {
     clientState = { ...clientState, ...state };
@@ -566,7 +587,7 @@ app.whenReady().then(() => {
         }
     }
 
-    createMainWindow();
+    createUpdaterWindow();
 
     app.on("second-instance", (event, commandLine) => {
         if (Array.isArray(commandLine)) {
@@ -579,17 +600,25 @@ app.whenReady().then(() => {
                 return;
             }
         }
-        if (mainWindow) {
+        if (mainWindow && !mainWindow.isDestroyed()) {
             if (mainWindow.isMinimized()) mainWindow.restore();
             mainWindow.show();
             mainWindow.focus();
+        } else if (updaterWindow && !updaterWindow.isDestroyed()) {
+            if (updaterWindow.isMinimized()) updaterWindow.restore();
+            updaterWindow.show();
+            updaterWindow.focus();
         }
     });
 });
 
 app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-        createMainWindow();
+        if (mainWindow) {
+            createMainWindow();
+        } else {
+            createUpdaterWindow();
+        }
     }
 });
 
