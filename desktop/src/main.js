@@ -526,7 +526,7 @@ app.whenReady().then(() => {
         }
     }
 
-    createUpdaterWindow();
+    createMainWindow();
 
     app.on("second-instance", (event, commandLine) => {
         if (Array.isArray(commandLine)) {
@@ -543,16 +543,13 @@ app.whenReady().then(() => {
             if (mainWindow.isMinimized()) mainWindow.restore();
             mainWindow.show();
             mainWindow.focus();
-        } else if (updaterWindow) {
-            updaterWindow.show();
-            updaterWindow.focus();
         }
     });
 });
 
 app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
-        createUpdaterWindow();
+        createMainWindow();
     }
 });
 

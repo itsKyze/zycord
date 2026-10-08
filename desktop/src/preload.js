@@ -66,8 +66,8 @@ function initWindowControls() {
                     top: 0 !important;
                     left: 0 !important;
                     width: calc(100% - 145px) !important;
-                    height: 28px !important;
-                    z-index: 999 !important;
+                    height: 20px !important;
+                    z-index: 15 !important;
                     -webkit-app-region: drag !important;
                     pointer-events: auto !important;
                     background: transparent !important;
@@ -219,13 +219,12 @@ function initWindowControls() {
                 }
 
                 /* Auth / Login / Register Page: Background space is draggable */
-                /* NOTE: authWrapper_ and pageContainer_ are intentionally EXCLUDED to prevent
+                /* NOTE: authWrapper_, centeringWrapper_ and pageContainer_ are intentionally EXCLUDED to prevent
                    scroll and click events from being swallowed by the drag region in the main app */
                 [class*="characterBackground_"],
                 [class*="splashBackground_"],
                 [class*="artwork_"],
-                [class*="wordmark_"],
-                [class*="centeringWrapper_"] {
+                [class*="wordmark_"] {
                     -webkit-app-region: drag !important;
                 }
 
