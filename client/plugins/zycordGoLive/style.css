@@ -1,219 +1,23 @@
-/* Modernized Discord Screen Share & Go Live Experience */
+/* Modernized Screen Share & Go Live Picker Modal */
 
-/* 1. Vencord WebScreenShare Modal (.vc-screen-picker-modal) Overhaul */
-
-.vc-screen-picker-modal [class*="root_"],
-div[class*="root_"]:has(.vc-screen-picker-option-radios) {
-    border-radius: 16px !important;
-    background: var(--background-floating, #2b2d31) !important;
+/* Modal Container */
+[class*="modal_"]:has([class*="source_"]),
+[class*="modal_"]:has([class*="tile_"]),
+[class*="root_"]:has([class*="source_"]) {
+    border-radius: 18px !important;
     border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(255, 255, 255, 0.05) !important;
     overflow: hidden !important;
-    max-width: 540px !important;
-    width: 100% !important;
 }
 
-/* Modal Top Header */
-.vc-screen-picker-modal [class*="content_"] > div:first-child::before,
-.vc-screen-picker-modal [class*="scroller_"] > div:first-child::before {
-    content: "SHARE YOUR SCREEN" !important;
-    display: block !important;
-    font-family: var(--font-display, "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
-    font-size: 20px !important;
-    font-weight: 800 !important;
-    letter-spacing: 0.3px !important;
-    color: var(--header-primary, #f2f3f5) !important;
-    margin-bottom: 4px !important;
-    padding-top: 4px !important;
-}
-
-.vc-screen-picker-modal [class*="content_"] > div:first-child::after,
-.vc-screen-picker-modal [class*="scroller_"] > div:first-child::after {
-    content: "Select stream resolution and frame rate to broadcast." !important;
-    display: block !important;
-    font-size: 13.5px !important;
-    color: var(--header-secondary, #949ba4) !important;
-    margin-bottom: 20px !important;
-}
-
-/* Section Headings */
-.vc-screen-picker-modal section h2,
-.vc-screen-picker-modal section [class*="heading-"] {
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    color: var(--header-secondary, #b5bac1) !important;
-    margin-bottom: 8px !important;
-}
-
-/* Segmented Pill Selector Bars */
-.vc-screen-picker-option-radios {
-    background: rgba(0, 0, 0, 0.32) !important;
-    border: 1px solid rgba(255, 255, 255, 0.06) !important;
-    border-radius: 12px !important;
+/* Modern Tab Pill Bar */
+[class*="topPill_"]:has([class*="item_"]),
+[class*="tabBar_"]:has([class*="tabBarItem_"]) {
+    background: rgba(0, 0, 0, 0.28) !important;
     padding: 4px !important;
-    gap: 4px !important;
-    display: flex !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-}
-
-.vc-screen-picker-option-radio {
-    flex: 1 1 0 !important;
-    text-align: center !important;
-    border-radius: 8px !important;
-    border: none !important;
-    padding: 7px 12px !important;
-    background: transparent !important;
-    color: var(--interactive-normal, #949ba4) !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
-    cursor: pointer !important;
-    transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1) !important;
-    user-select: none !important;
-}
-
-.vc-screen-picker-option-radio:hover {
-    background: rgba(255, 255, 255, 0.06) !important;
-    color: var(--interactive-hover, #dbdee1) !important;
-}
-
-.vc-screen-picker-option-radio[data-checked="true"] {
-    background: var(--brand-500, #5865f2) !important;
-    color: #ffffff !important;
-    font-weight: 700 !important;
-    box-shadow: 0 2px 10px rgba(88, 101, 242, 0.45) !important;
-    transform: scale(1.01) !important;
-}
-
-.vc-screen-picker-option-radio[data-checked="true"]:hover {
-    background: var(--brand-560, #4752c4) !important;
-    color: #ffffff !important;
-}
-
-.vc-screen-picker-option-radio input {
-    display: none !important;
-}
-
-/* Stream Mode Section */
-.vc-screen-picker-modal > div > div > div:nth-child(2) h2 {
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.05em !important;
-    color: var(--header-secondary, #b5bac1) !important;
-    margin-top: 14px !important;
-    margin-bottom: 8px !important;
-}
-
-/* Toggle Checkbox Cards */
-.vc-screen-picker-pointer {
-    background: rgba(0, 0, 0, 0.18) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05) !important;
     border-radius: 12px !important;
-    padding: 12px 16px !important;
-    margin-top: 10px !important;
-    transition: background 0.15s ease, border-color 0.15s ease !important;
-}
-
-.vc-screen-picker-pointer:hover {
-    background: rgba(0, 0, 0, 0.28) !important;
-    border-color: rgba(255, 255, 255, 0.09) !important;
-}
-
-.vc-screen-picker-control-content h2 {
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    color: var(--header-primary, #f2f3f5) !important;
-}
-
-/* Footer / Action Bar */
-.vc-screen-picker-modal [class*="footer_"],
-.vc-screen-picker-modal [class*="modalFooter_"],
-div[class*="root_"]:has(.vc-screen-picker-option-radios) [class*="footer_"] {
-    background: rgba(0, 0, 0, 0.28) !important;
-    backdrop-filter: blur(16px) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.07) !important;
-    padding: 16px 20px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-}
-
-/* Footer Summary Info */
-.vc-screen-picker-summary {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 3px !important;
-    background: rgba(88, 101, 242, 0.1) !important;
-    border: 1px solid rgba(88, 101, 242, 0.25) !important;
-    border-radius: 10px !important;
-    padding: 6px 14px !important;
-}
-
-.vc-screen-picker-source-or-preset-name {
-    font-size: 13.5px !important;
-    font-weight: 700 !important;
-    color: #ffffff !important;
-}
-
-.vc-screen-picker-summary-detail {
-    font-size: 11.5px !important;
-    color: #b5bac1 !important;
-}
-
-/* Primary "Go Live" Button */
-.vc-screen-picker-modal button[class*="lookFilled_"][class*="colorBrand_"],
-div[class*="root_"]:has(.vc-screen-picker-option-radios) button[class*="lookFilled_"][class*="colorBrand_"] {
-    border-radius: 10px !important;
-    background: linear-gradient(135deg, var(--brand-500, #5865f2) 0%, #4752c4 100%) !important;
-    font-size: 0 !important; /* Hide original "Stream" label */
-    padding: 10px 28px !important;
-    box-shadow: 0 4px 16px rgba(88, 101, 242, 0.5) !important;
-    border: none !important;
-    position: relative !important;
-    cursor: pointer !important;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease !important;
-}
-
-.vc-screen-picker-modal button[class*="lookFilled_"][class*="colorBrand_"]::after,
-div[class*="root_"]:has(.vc-screen-picker-option-radios) button[class*="lookFilled_"][class*="colorBrand_"]::after {
-    content: "Go Live" !important;
-    font-family: var(--font-display, "gg sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif) !important;
-    font-size: 14.5px !important;
-    font-weight: 700 !important;
-    color: #ffffff !important;
-    letter-spacing: 0.3px !important;
-}
-
-.vc-screen-picker-modal button[class*="lookFilled_"][class*="colorBrand_"]:hover,
-div[class*="root_"]:has(.vc-screen-picker-option-radios) button[class*="lookFilled_"][class*="colorBrand_"]:hover {
-    transform: translateY(-1.5px) scale(1.02) !important;
-    box-shadow: 0 6px 22px rgba(88, 101, 242, 0.65) !important;
-    filter: brightness(1.08) !important;
-}
-
-.vc-screen-picker-modal button[class*="lookFilled_"][class*="colorBrand_"]:active,
-div[class*="root_"]:has(.vc-screen-picker-option-radios) button[class*="lookFilled_"][class*="colorBrand_"]:active {
-    transform: translateY(0) scale(0.99) !important;
-}
-
-/* 2. Generic Screen / Window Tile Picker (when source grid is present) */
-[class*="tile_"],
-[class*="source_"] {
-    border-radius: 14px !important;
-    border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
-    background: rgba(0, 0, 0, 0.22) !important;
-    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, box-shadow 0.2s ease !important;
-    overflow: hidden !important;
-}
-
-[class*="tile_"]:hover,
-[class*="source_"]:hover {
-    transform: translateY(-3px) !important;
-    border-color: var(--brand-500, #5865f2) !important;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 16px rgba(88, 101, 242, 0.25) !important;
+    gap: 4px !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
 }
 
 [class*="topPill_"] [class*="item_"],
@@ -230,4 +34,76 @@ div[class*="root_"]:has(.vc-screen-picker-option-radios) button[class*="lookFill
     background: var(--brand-500, #5865f2) !important;
     color: #ffffff !important;
     box-shadow: 0 2px 10px rgba(88, 101, 242, 0.4) !important;
+}
+
+/* Screen / Window Tiles */
+[class*="tile_"],
+[class*="source_"] {
+    border-radius: 14px !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+    background: rgba(0, 0, 0, 0.2) !important;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s ease, box-shadow 0.2s ease !important;
+    overflow: hidden !important;
+}
+
+[class*="tile_"]:hover,
+[class*="source_"]:hover {
+    transform: translateY(-3px) !important;
+    border-color: var(--brand-500, #5865f2) !important;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 0 16px rgba(88, 101, 242, 0.25) !important;
+}
+
+/* Tile Preview Container */
+[class*="tile_"] [class*="preview_"],
+[class*="source_"] [class*="preview_"],
+[class*="tile_"] > div:first-child {
+    border-radius: 10px 10px 0 0 !important;
+}
+
+/* Center Share Screen Hover Button */
+[class*="tile_"] button,
+[class*="source_"] button:not([class*="action_"]) {
+    border-radius: 10px !important;
+    background: var(--brand-500, #5865f2) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    padding: 8px 20px !important;
+    box-shadow: 0 4px 16px rgba(88, 101, 242, 0.5) !important;
+    border: none !important;
+    transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+[class*="tile_"] button:hover,
+[class*="source_"] button:not([class*="action_"]):hover {
+    background: var(--brand-560, #4752c4) !important;
+    transform: scale(1.04) !important;
+    box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6) !important;
+}
+
+/* Bottom Bar / Footer */
+[class*="modalFooter_"],
+[class*="footer_"]:has(button) {
+    background: rgba(0, 0, 0, 0.25) !important;
+    backdrop-filter: blur(16px) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
+    padding: 16px 20px !important;
+}
+
+/* Modern Primary Stream Button */
+[class*="modalFooter_"] button[type="submit"],
+[class*="footer_"] button[class*="lookFilled_"][class*="colorBrand_"],
+button:has-text("Stream") {
+    border-radius: 10px !important;
+    background: linear-gradient(135deg, var(--brand-500, #5865f2) 0%, #4752c4 100%) !important;
+    font-weight: 600 !important;
+    padding: 10px 24px !important;
+    box-shadow: 0 4px 14px rgba(88, 101, 242, 0.4) !important;
+    transition: all 0.2s ease !important;
+}
+
+[class*="modalFooter_"] button[type="submit"]:hover,
+[class*="footer_"] button[class*="lookFilled_"][class*="colorBrand_"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 20px rgba(88, 101, 242, 0.55) !important;
 }
