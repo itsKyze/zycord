@@ -1,4 +1,5 @@
 import { h } from "../runtime.jsx";
+import { ZycordMark } from "../Icons.jsx";
 
 export function HomePage() {
 	return (
@@ -33,13 +34,27 @@ export function HomePage() {
 						<div className="hero-art-stage">
 							<div className="hero-art-glow"></div>
 
-							{/* Floating 3D Clyde Robot top-left */}
+							{/* Floating 3D Clyde Robot top-left + Shadow */}
 							<img
 								src="/site/media/discord/hero-clyde.webp"
 								alt=""
 								aria-hidden="true"
 								className="zy-float-prop tilt"
 								style={{ width: "118px", top: "-36px", left: "-18px", zIndex: 5 }}
+							/>
+							<img
+								src="/site/media/discord/hero-clyde-shadow.webp"
+								alt=""
+								aria-hidden="true"
+								style={{
+									position: "absolute",
+									width: "92px",
+									top: "44px",
+									left: "-6px",
+									opacity: "0.55",
+									zIndex: 1,
+									pointerEvents: "none"
+								}}
 							/>
 
 							{/* Main 3D Devices + Characters Stage */}
@@ -65,6 +80,20 @@ export function HomePage() {
 									className="hero-char-girl"
 								/>
 								{/* 3D Wumpus & Leaf bottom-left */}
+								<img
+									src="/site/media/discord/hero-wumpus-leaf.webp"
+									alt=""
+									aria-hidden="true"
+									style={{
+										position: "absolute",
+										left: "18%",
+										bottom: "-4%",
+										width: "16%",
+										height: "auto",
+										zIndex: 4,
+										pointerEvents: "none"
+									}}
+								/>
 								<img
 									src="/site/media/discord/hero-wumpus.webp"
 									alt=""
@@ -254,13 +283,13 @@ export function HomePage() {
 					{[0, 1, 2, 3].map(() => (
 						<div className="zy-marquee-item">
 							<span>TALK</span>
-							<img src="/favicon.svg" alt="" />
+							<span className="zy-marquee-icon"><ZycordMark size={38} color="#ffffff" /></span>
 							<span>PLAY</span>
-							<img src="/favicon.svg" alt="" />
+							<span className="zy-marquee-icon"><ZycordMark size={38} color="#ffffff" /></span>
 							<span>CHAT</span>
-							<img src="/favicon.svg" alt="" />
+							<span className="zy-marquee-icon"><ZycordMark size={38} color="#ffffff" /></span>
 							<span>HANG OUT</span>
-							<img src="/favicon.svg" alt="" />
+							<span className="zy-marquee-icon"><ZycordMark size={38} color="#ffffff" /></span>
 						</div>
 					))}
 				</div>
@@ -326,6 +355,20 @@ export function HomePage() {
 						aria-hidden="true"
 						className="zy-float-prop"
 						style={{ width: "152px", top: "-68px", right: "10%" }}
+					/>
+					<img
+						src="/site/media/discord/sec5-card-characters.png"
+						alt=""
+						aria-hidden="true"
+						className="zy-float-prop tilt"
+						style={{ width: "124px", top: "-52px", left: "6%" }}
+					/>
+					<img
+						src="/site/media/discord/sec5-woman-bottom.webp"
+						alt=""
+						aria-hidden="true"
+						className="zy-float-prop"
+						style={{ width: "136px", bottom: "-48px", right: "5%" }}
 					/>
 
 					<div className="zy-showcase-card">
@@ -442,6 +485,23 @@ export function HomePage() {
 						src="/site/media/discord/footer-horizon.webp"
 						alt="Zycord Cosmic Horizon Banner"
 						className="final-horizon-bg"
+						loading="lazy"
+					/>
+					<img
+						src="/site/media/discord/footer-smoke.gif"
+						alt=""
+						aria-hidden="true"
+						style={{
+							position: "absolute",
+							left: "52%",
+							bottom: "24%",
+							transform: "translateX(-50%)",
+							width: "clamp(110px, 14vw, 210px)",
+							height: "auto",
+							zIndex: 2,
+							pointerEvents: "none",
+							opacity: "0.85"
+						}}
 						loading="lazy"
 					/>
 					<img

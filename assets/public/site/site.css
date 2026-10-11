@@ -792,7 +792,11 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	white-space: nowrap;
 }
 
-.zy-marquee-item img {
+.zy-marquee-item img,
+.zy-marquee-icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
 	width: 40px;
 	height: 40px;
 	filter: drop-shadow(0 6px 16px rgba(88, 101, 242, 0.6));

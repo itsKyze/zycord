@@ -12,6 +12,8 @@ export function DownloadPage() {
 
 				<div className="zy-container" style={{ position: "relative" }}>
 					<img src="/site/media/discord/download-clyde-point.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "128px", top: "-46px", right: "5%" }} />
+					<img src="/site/media/discord/download-wumpus-point.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", bottom: "-44px", left: "4%" }} />
+					<img src="/site/media/discord/download-trophy.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "96px", top: "-42px", left: "6%" }} />
 
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">

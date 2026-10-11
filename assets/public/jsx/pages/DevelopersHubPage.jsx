@@ -10,9 +10,11 @@ export function DevelopersHubPage() {
 				<img src="/site/media/discord/dev-fire-extinguisher.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "92px", top: "6%", left: "3%" }} />
 				<img src="/site/media/discord/dev-cog.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "86px", top: "10%", right: "4%" }} />
 				<img src="/site/media/discord/dev-magnet.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "84px", bottom: "12%", left: "4%" }} />
+				<img src="/site/media/discord/dev-hammer.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "94px", bottom: "10%", right: "4%" }} />
 
 				<div className="zy-container" style={{ position: "relative" }}>
 					<img src="/site/media/discord/dev-rubber-duck.png" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "96px", top: "-42px", right: "8%" }} />
+					<img src="/site/media/discord/dev-spider.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "88px", top: "-38px", left: "7%" }} />
 
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
