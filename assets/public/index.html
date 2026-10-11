@@ -1,65 +1,961 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Spacebar Server</title>
-
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>__INSTANCE_NAME__ — Group Chat That's All Fun &amp; Games</title>
+	<meta name="description" content="__INSTANCE_NAME__ is your cosmic home for low-latency voice channels, HD screen sharing, end-to-end encrypted DMs, custom profile collectibles, and thriving gaming communities." />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="stylesheet" href="/site/site.css" />
 	<style>
-		body {
-			font-family: 'Montserrat', sans-serif;
-			background-color: rgb(10, 10, 10);
-			color: white;
-			font-size: 1.1rem;
-			height: 100vh;
+		/* Hero Section & Cosmic Stage */
+		.hero-section {
+			padding: 56px 0 88px;
+			position: relative;
+			overflow: hidden;
 		}
-
-		* {
-			padding: 0;
-			margin: 0;
+		.hero-grid {
+			display: grid;
+			grid-template-columns: 1.05fr 1.15fr;
+			gap: 48px;
+			align-items: center;
 		}
-
-		p {
-			margin-top: 10px;
-		}
-
-		.container {
+		.hero-copy {
 			display: flex;
 			flex-direction: column;
-			justify-content: center;
+			gap: 24px;
+			z-index: 2;
+		}
+		.hero-cta-row {
+			display: flex;
+			flex-wrap: wrap;
 			align-items: center;
-			margin: 0 40px 0 40px;
-			height: 100%;
+			gap: 16px;
+			margin-top: 8px;
+		}
+		.hero-QuickLinks {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: center;
+			gap: 18px;
+			padding-top: 8px;
+			font-size: 14px;
+			color: var(--color-fog);
+		}
+		.hero-QuickLinks a {
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			color: var(--color-snow);
+			font-weight: 600;
+			border-bottom: 1px dashed rgba(255, 255, 255, 0.35);
+		}
+		.hero-QuickLinks a:hover {
+			color: var(--color-hover-blurple);
+			border-bottom-color: var(--color-hover-blurple);
 		}
 
-		#wordmark {
-			width: min(500px, 50%);
-			margin-bottom: 20px;
+		/* Hero Composite Stage */
+		.hero-stage {
+			position: relative;
+			padding: 18px;
+		}
+		.hero-glow-orb {
+			position: absolute;
+			inset: -24px;
+			background:
+				radial-gradient(circle at 30% 25%, rgba(88, 101, 242, 0.5) 0%, transparent 58%),
+				radial-gradient(circle at 80% 75%, rgba(235, 69, 158, 0.32) 0%, transparent 55%);
+			filter: blur(28px);
+			z-index: 0;
+			pointer-events: none;
+		}
+		.hero-floating-badge {
+			position: absolute;
+			z-index: 4;
+			background: rgba(19, 21, 52, 0.94);
+			backdrop-filter: blur(14px);
+			border: 1px solid rgba(255, 255, 255, 0.18);
+			border-radius: 14px;
+			padding: 10px 14px;
+			box-shadow: 0 18px 38px rgba(0, 0, 0, 0.52);
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			font-size: 13px;
+			font-weight: 600;
+		}
+		.hero-floating-badge.top-left {
+			top: -8px;
+			left: -10px;
+		}
+		.hero-floating-badge.bottom-right {
+			bottom: -12px;
+			right: -6px;
 		}
 
-		a, a:visited {
-			color: #0185ff;
+		/* Mockup Internal Shells */
+		.mock-shell {
+			display: grid;
+			grid-template-columns: 62px 190px 1fr;
+			min-height: 390px;
+		}
+		.mock-rail {
+			background: #141619;
+			padding: 12px 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 10px;
+			border-right: 1px solid rgba(255, 255, 255, 0.06);
+		}
+		.mock-server-icon {
+			width: 42px;
+			height: 42px;
+			border-radius: 14px;
+			background: #2c2f33;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 800;
+			font-size: 14px;
+			color: #fff;
+			cursor: pointer;
+			transition: border-radius 0.16s ease, background 0.16s ease;
+		}
+		.mock-server-icon.is-active,
+		.mock-server-icon:hover {
+			background: var(--color-blurple);
+			border-radius: 12px;
+		}
+		.mock-sidebar {
+			background: #1e2124;
+			padding: 14px 10px;
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			border-right: 1px solid rgba(255, 255, 255, 0.06);
+		}
+		.mock-sidebar-header {
+			font-weight: 800;
+			font-size: 14px;
+			padding: 4px 8px 10px;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+			margin-bottom: 4px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+		.mock-chan {
+			padding: 6px 10px;
+			border-radius: 6px;
+			color: var(--color-greyple);
+			font-size: 13px;
+			font-weight: 600;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			cursor: pointer;
+			border: none;
+			background: transparent;
+			width: 100%;
+			text-align: left;
+		}
+		.mock-chan.is-active,
+		.mock-chan:hover {
+			background: rgba(255, 255, 255, 0.08);
+			color: #fff;
+		}
+		.mock-chat-area {
+			background: #282b30;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			padding: 16px;
+			gap: 14px;
+		}
+		.mock-msg {
+			display: flex;
+			gap: 12px;
+			align-items: flex-start;
+		}
+		.mock-avatar {
+			width: 38px;
+			height: 38px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 800;
+			font-size: 14px;
+			flex-shrink: 0;
+			position: relative;
+		}
+		.mock-avatar.has-ring::after {
+			content: "";
+			position: absolute;
+			inset: -3px;
+			border-radius: 50%;
+			border: 2px solid var(--color-spring-green);
+			box-shadow: 0 0 8px rgba(87, 242, 135, 0.6);
+		}
+		.mock-msg-author {
+			font-weight: 700;
+			font-size: 14px;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
+		}
+		.mock-role-tag {
+			font-size: 10px;
+			font-weight: 800;
+			padding: 2px 6px;
+			border-radius: 4px;
+			text-transform: uppercase;
+			background: rgba(88, 101, 242, 0.25);
+			color: #b9c0ff;
+		}
+		.mock-msg-text {
+			color: #dcddde;
+			font-size: 14px;
+			margin-top: 2px;
+		}
+		.mock-composer {
+			background: #36393f;
+			border-radius: 8px;
+			padding: 10px 14px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 10px;
+			color: var(--color-greyple);
+			font-size: 13px;
+		}
+
+		/* Voice & Video Stage Tiles */
+		.voice-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 12px;
+			padding: 16px;
+			background: #1b1d21;
+		}
+		.voice-tile {
+			border-radius: 12px;
+			background: linear-gradient(145deg, #272b34, #1e2128);
+			border: 2px solid rgba(255, 255, 255, 0.08);
+			padding: 20px 16px;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			position: relative;
+			transition: border-color 0.2s ease, transform 0.2s ease;
+		}
+		.voice-tile.is-speaking {
+			border-color: var(--color-spring-green);
+			box-shadow: 0 0 22px rgba(87, 242, 135, 0.18);
+		}
+		.voice-controls-bar {
+			background: #141619;
+			padding: 12px 16px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			border-top: 1px solid rgba(255, 255, 255, 0.07);
+		}
+		.voice-ctrl-btn {
+			padding: 8px 14px;
+			border-radius: 8px;
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			background: #282b30;
+			color: #fff;
+			font-size: 12px;
+			font-weight: 700;
+			cursor: pointer;
+		}
+		.voice-ctrl-btn.is-active {
+			background: var(--color-spring-green);
+			color: #091b0e;
+			border-color: var(--color-spring-green);
+		}
+		.voice-ctrl-btn.danger {
+			background: var(--color-ekko-red);
+			border-color: var(--color-ekko-red);
+		}
+
+		/* Collectibles & Profile Cosmetics Grid */
+		.collectibles-preview-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 14px;
+		}
+		.collectible-card {
+			border-radius: 14px;
+			background: rgba(16, 18, 45, 0.88);
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			padding: 16px;
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			position: relative;
+			overflow: hidden;
+		}
+		.collectible-badge {
+			align-self: flex-start;
+			font-size: 11px;
+			font-weight: 800;
+			text-transform: uppercase;
+			padding: 3px 8px;
+			border-radius: 99px;
+			background: linear-gradient(90deg, var(--color-blurple), var(--color-fuchsia));
+			color: #fff;
+		}
+
+		/* Stats Bar */
+		.stats-strip {
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 20px;
+			margin-top: 48px;
+		}
+		.stat-box {
+			border-radius: 16px;
+			background: rgba(25, 28, 68, 0.68);
+			border: 1px solid rgba(255, 255, 255, 0.12);
+			padding: 24px;
+			text-align: center;
+		}
+		.stat-value {
+			font-family: var(--font-abc-ginto-nord-discord);
+			font-weight: 800;
+			font-size: clamp(28px, 3.2vw, 40px);
+			color: var(--color-snow);
+			line-height: 1;
+		}
+		.stat-label {
+			color: var(--color-fog);
+			font-size: 14px;
+			margin-top: 8px;
+		}
+
+		@media (max-width: 980px) {
+			.hero-grid {
+				grid-template-columns: 1fr;
+			}
+			.mock-shell {
+				grid-template-columns: 54px 1fr;
+			}
+			.mock-sidebar {
+				display: none;
+			}
+			.stats-strip {
+				grid-template-columns: repeat(2, 1fr);
+			}
+		}
+		@media (max-width: 580px) {
+			.voice-grid,
+			.collectibles-preview-grid,
+			.stats-strip {
+				grid-template-columns: 1fr;
+			}
 		}
 	</style>
 </head>
-
 <body>
-	<div class="container">
-		<img alt="Spacebar Logo"
-			id="wordmark"
-			src="https://raw.githubusercontent.com/spacebarchat/spacebarchat/master/branding/svg/Spacebar__Logo-Blue.svg" />
+	<!-- 1 & 2. Global Navbar + Mobile Drawer -->
+	<header data-zy-navbar></header>
 
-		<h1>Welcome!</h1>
-		<p>If you're viewing this page, that means you've successfully set up your very own Spacebar instance!</p>
-		<p>For information on how to configure your shiny new setup, you should visit <a href="https://docs.spacebar.chat">our documentation</a></p>
-		<p>For information on how to connect and use your instance, <a href="https://docs.spacebar.chat/setup/clients">click here</a></p>
-	</div>
+	<main>
+		<!-- 3. HERO SECTION -->
+		<section class="hero-section">
+			<div class="zy-container">
+				<div class="hero-grid">
+					<div class="hero-copy">
+						<div>
+							<span class="zy-eyebrow">
+								<span class="zy-eyebrow-dot" data-zy-status-dot></span>
+								<span>__INSTANCE_NAME__ 4.0 · Voice, Video, E2EE &amp; Collectibles</span>
+							</span>
+						</div>
+						<h1 class="zy-display">GROUP CHAT THAT'S ALL FUN &amp; GAMES</h1>
+						<p class="zy-body-lg">
+							__INSTANCE_NAME__ is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, stream in 1080p 60fps, and hang out with zero compromise on speed or privacy.
+						</p>
+						<div class="hero-cta-row">
+							<a class="zy-btn zy-btn-primary" data-zy-open-app data-zy-open-label-authed="Launch __INSTANCE_NAME__ App" href="/app">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+								<span>Open __INSTANCE_NAME__ in Your Browser</span>
+							</a>
+							<a class="zy-btn zy-btn-secondary" href="/download/windows">
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+								<span>Download for Windows</span>
+							</a>
+						</div>
+						<div class="hero-QuickLinks">
+							<span>Explore:</span>
+							<a href="/discover">Community Directory →</a>
+							<a href="/nitro">Avatar Decorations &amp; Frames →</a>
+							<a href="/developers">Developer Portal →</a>
+						</div>
+					</div>
+
+					<!-- Interactive Hero Product Stage -->
+					<div class="hero-stage">
+						<div class="hero-glow-orb"></div>
+
+						<div class="hero-floating-badge top-left">
+							<span class="zy-eyebrow-dot"></span>
+							<span>Voice: <strong>Squad Lobby (4 connected)</strong> · 14ms RTC</span>
+						</div>
+
+						<div class="zy-app-window" aria-label="Zycord Live App Preview">
+							<div class="zy-app-titlebar">
+								<div class="zy-window-dots">
+									<span class="zy-window-dot red"></span>
+									<span class="zy-window-dot amber"></span>
+									<span class="zy-window-dot green"></span>
+								</div>
+								<span>__INSTANCE_NAME__ — Cosmic Raiders HQ</span>
+								<span style="color:var(--color-spring-green);font-weight:700;">● E2EE Ready</span>
+							</div>
+							<div class="mock-shell">
+								<div class="mock-rail">
+									<div class="mock-server-icon is-active" title="Cosmic Raiders HQ">CR</div>
+									<div class="mock-server-icon" title="Zycord Devs">ZD</div>
+									<div class="mock-server-icon" title="Esports Arena">EA</div>
+									<div class="mock-server-icon" style="color:var(--color-spring-green);" title="Discover Servers">+</div>
+								</div>
+								<div class="mock-sidebar">
+									<div class="mock-sidebar-header">
+										<span>Cosmic Raiders</span>
+										<span style="color:var(--color-fuchsia);font-size:11px;">★ LVL 3</span>
+									</div>
+									<div style="font-size:11px;font-weight:800;color:var(--color-greyple);padding:4px 8px;">TEXT CHANNELS</div>
+									<div class="mock-chan is-active"># general-lounge</div>
+									<div class="mock-chan"># raid-strategy</div>
+									<div class="mock-chan"># clips-and-highlights</div>
+									<div style="font-size:11px;font-weight:800;color:var(--color-greyple);padding:10px 8px 4px;">VOICE CHANNELS</div>
+									<div class="mock-chan" style="color:var(--color-spring-green);">🔊 Squad Lobby (4)</div>
+									<div class="mock-chan">🔊 Watch Party HD</div>
+								</div>
+								<div class="mock-chat-area">
+									<div style="display:flex;flex-direction:column;gap:14px;">
+										<div class="mock-msg">
+											<div class="mock-avatar has-ring" style="background:linear-gradient(135deg,#5865f2,#eb459e);">KZ</div>
+											<div>
+												<div>
+													<span class="mock-msg-author">Kyze</span>
+													<span class="mock-role-tag">FOUNDER</span>
+													<span style="font-size:11px;color:var(--color-greyple);margin-left:6px;">Today at 21:14</span>
+												</div>
+												<p class="mock-msg-text">New Profile Frames, Nameplates, and 60fps WebRTC screen share are live across __INSTANCE_NAME__! Hop in Squad Lobby 🚀</p>
+												<div style="display:flex;gap:6px;margin-top:8px;">
+													<button type="button" class="zy-reaction-pill" data-zy-reaction>🔥 <span data-zy-reaction-count>24</span></button>
+													<button type="button" class="zy-reaction-pill" data-zy-reaction>⚡ <span data-zy-reaction-count>18</span></button>
+													<button type="button" class="zy-reaction-pill is-inactive" data-zy-reaction>🎮 <span data-zy-reaction-count>9</span></button>
+												</div>
+											</div>
+										</div>
+										<div class="mock-msg">
+											<div class="mock-avatar" style="background:#00b0f4;color:#061a23;">NV</div>
+											<div>
+												<div>
+													<span class="mock-msg-author">Nova</span>
+													<span class="mock-role-tag" style="background:rgba(87,242,135,0.2);color:#57f287;">MOD</span>
+													<span style="font-size:11px;color:var(--color-greyple);margin-left:6px;">Today at 21:15</span>
+												</div>
+												<p class="mock-msg-text">Screen share latency is sub-20ms! Streaming the finals right now in Watch Party HD.</p>
+											</div>
+										</div>
+									</div>
+									<div class="mock-composer">
+										<span>Message #general-lounge</span>
+										<a href="/app" style="color:var(--color-hover-blurple);font-weight:700;">Jump In →</a>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="hero-floating-badge bottom-right">
+							<span style="color:var(--color-fuchsia);font-size:16px;">✦</span>
+							<span>Collectibles: <strong>Avatar Decorations, Nameplates &amp; Frames</strong></span>
+						</div>
+					</div>
+				</div>
+
+				<!-- 4. COMMUNITY & PLATFORM METRICS INTRO -->
+				<div class="stats-strip" id="about">
+					<div class="stat-box">
+						<div class="stat-value">Sub-20ms</div>
+						<div class="stat-label">WebRTC Voice &amp; Video Routing</div>
+					</div>
+					<div class="stat-box">
+						<div class="stat-value">1080p 60fps</div>
+						<div class="stat-label">Low-Latency Screen Share</div>
+					</div>
+					<div class="stat-box">
+						<div class="stat-value">E2EE</div>
+						<div class="stat-label">Encrypted Direct Messages</div>
+					</div>
+					<div class="stat-box">
+						<div class="stat-value">100%</div>
+						<div class="stat-label">Self-Hosted &amp; Bot API Compatible</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 5. TEXT CHAT & RICH EXPRESSION SHOWCASE (ZycordChatPreview) -->
+		<section class="zy-section" id="chat">
+			<div class="zy-container">
+				<div class="zy-showcase-card">
+					<div class="zy-showcase-grid">
+						<div class="zy-showcase-copy">
+							<div><span class="zy-eyebrow">Rich Text Channels</span></div>
+							<h2 class="zy-heading">MAKE YOUR GROUP CHATS MORE FUN</h2>
+							<p class="zy-body-lg">
+								Use custom emoji, stickers, soundboard effects, markdown code blocks, and threaded conversations to give your community its own unmistakable personality.
+							</p>
+							<ul class="zy-feature-bullets">
+								<li>Interactive channels with instant search, pins, and threads</li>
+								<li>Custom server emojis, animated stickers &amp; rich link embeds</li>
+								<li>Switch channels below to preview live __INSTANCE_NAME__ conversations</li>
+							</ul>
+							<div class="zy-tab-strip" data-zy-tabs="chat-preview-panels">
+								<button type="button" class="zy-tab-btn is-active" data-zy-tab="lounge"># general-lounge</button>
+								<button type="button" class="zy-tab-btn" data-zy-tab="builds"># dev-releases</button>
+								<button type="button" class="zy-tab-btn" data-zy-tab="clips"># highlight-clips</button>
+							</div>
+						</div>
+
+						<!-- Interactive ZycordChatPreview Component -->
+						<div class="zy-app-window" id="chat-preview-panels">
+							<div class="zy-app-titlebar">
+								<div class="zy-window-dots">
+									<span class="zy-window-dot red"></span>
+									<span class="zy-window-dot amber"></span>
+									<span class="zy-window-dot green"></span>
+								</div>
+								<span>ZycordChatPreview — Interactive Channel View</span>
+								<span>3,420 Online</span>
+							</div>
+
+							<!-- Panel 1: Lounge -->
+							<div class="mock-chat-area" data-zy-panel="lounge" style="min-height:310px;">
+								<div style="display:flex;flex-direction:column;gap:16px;">
+									<div class="mock-msg">
+										<div class="mock-avatar" style="background:#5865f2;">AX</div>
+										<div>
+											<div><span class="mock-msg-author">Astra</span> <span class="mock-role-tag">NITRO</span></div>
+											<p class="mock-msg-text">Just equipped the Cyber Kitsune Avatar Decoration + Neon Horizon Profile Frame! Check my profile popout ✨</p>
+											<div style="display:flex;gap:8px;margin-top:8px;">
+												<button type="button" class="zy-reaction-pill" data-zy-reaction>🦊 <span data-zy-reaction-count>14</span></button>
+												<button type="button" class="zy-reaction-pill" data-zy-reaction>💜 <span data-zy-reaction-count>11</span></button>
+											</div>
+										</div>
+									</div>
+									<div class="mock-msg">
+										<div class="mock-avatar" style="background:#57f287;color:#07210f;">RY</div>
+										<div>
+											<div><span class="mock-msg-author">Rylan</span> <span class="mock-role-tag">CAPTAIN</span></div>
+											<p class="mock-msg-text">Five-stack tournament starts in 10 minutes. React below if you need an invite link!</p>
+											<div style="display:flex;gap:8px;margin-top:8px;">
+												<button type="button" class="zy-reaction-pill" data-zy-reaction>✋ <span data-zy-reaction-count>7</span></button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mock-composer">
+									<span>Send a message in #general-lounge...</span>
+									<a href="/app" style="color:var(--color-hover-blurple);font-weight:700;">Open App →</a>
+								</div>
+							</div>
+
+							<!-- Panel 2: Dev Releases -->
+							<div class="mock-chat-area" data-zy-panel="builds" style="min-height:310px;display:none;">
+								<div style="display:flex;flex-direction:column;gap:16px;">
+									<div class="mock-msg">
+										<div class="mock-avatar" style="background:#fda220;color:#1d1202;">BOT</div>
+										<div>
+											<div><span class="mock-msg-author">Zycord Release Bot</span> <span class="mock-role-tag">WEBHOOK</span></div>
+											<p class="mock-msg-text"><strong>v4.0 Production Deploy:</strong> Added full E2EE DM handshakes, 64-bit role permissions, and full profile cosmetics synchronization.</p>
+											<div style="margin-top:8px;padding:10px;border-radius:8px;background:#1e2124;border-left:3px solid var(--color-spring-green);font-family:var(--font-mono);font-size:12px;">
+												GET /api/v9/users/@me/settings · 200 OK (6.4ms)
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mock-composer">
+									<span>Send a message in #dev-releases...</span>
+									<a href="/developers" style="color:var(--color-hover-blurple);font-weight:700;">View Docs →</a>
+								</div>
+							</div>
+
+							<!-- Panel 3: Clips -->
+							<div class="mock-chat-area" data-zy-panel="clips" style="min-height:310px;display:none;">
+								<div style="display:flex;flex-direction:column;gap:14px;">
+									<div class="mock-msg">
+										<div class="mock-avatar" style="background:#eb459e;">VX</div>
+										<div style="width:100%;">
+											<div><span class="mock-msg-author">Vex</span> <span class="mock-role-tag">STREAMER</span></div>
+											<p class="mock-msg-text">1v5 overtime clutch captured straight from __INSTANCE_NAME__ 60fps screen share:</p>
+											<div style="margin-top:8px;padding:18px;border-radius:10px;background:linear-gradient(135deg,#1d2258,#341b4e);border:1px solid rgba(255,255,255,0.14);display:flex;align-items:center;justify-content:space-between;">
+												<span>🎬 <strong>overtime_clutch_1080p60.mp4</strong> (42.8 MB)</span>
+												<a href="/app" class="zy-btn zy-btn-primary zy-btn-sm">Watch in App</a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="mock-composer">
+									<span>Drop clips &amp; media up to 500MB...</span>
+									<a href="/app" style="color:var(--color-hover-blurple);font-weight:700;">Upload →</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 6. VOICE CHANNEL SHOWCASE (ZycordVoicePreview) -->
+		<section class="zy-section" id="voice">
+			<div class="zy-container">
+				<div class="zy-showcase-card">
+					<div class="zy-showcase-grid is-reversed">
+						<!-- Interactive ZycordVoicePreview Component -->
+						<div class="zy-app-window">
+							<div class="zy-app-titlebar">
+								<div class="zy-window-dots">
+									<span class="zy-window-dot red"></span>
+									<span class="zy-window-dot amber"></span>
+									<span class="zy-window-dot green"></span>
+								</div>
+								<span>🔊 Squad Lobby — Voice Connected (Opus 96kbps)</span>
+								<span id="voice-status-readout" style="color:var(--color-spring-green);">● 14ms</span>
+							</div>
+							<div class="voice-grid">
+								<div class="voice-tile is-speaking" id="voice-tile-1">
+									<div class="mock-avatar has-ring" style="width:52px;height:52px;background:var(--color-blurple);font-size:18px;">KZ</div>
+									<div style="font-weight:700;">Kyze</div>
+									<div style="font-size:12px;color:var(--color-spring-green);">Speaking · Host</div>
+								</div>
+								<div class="voice-tile is-speaking" id="voice-tile-2">
+									<div class="mock-avatar has-ring" style="width:52px;height:52px;background:#00b0f4;color:#051921;font-size:18px;">NV</div>
+									<div style="font-weight:700;">Nova</div>
+									<div style="font-size:12px;color:var(--color-vivid-cerulean);">LIVE 1080p60</div>
+								</div>
+								<div class="voice-tile">
+									<div class="mock-avatar" style="width:52px;height:52px;background:#eb459e;font-size:18px;">AX</div>
+									<div style="font-weight:700;">Astra</div>
+									<div style="font-size:12px;color:var(--color-greyple);">Listening</div>
+								</div>
+								<div class="voice-tile">
+									<div class="mock-avatar" style="width:52px;height:52px;background:#fda220;color:#1e1303;font-size:18px;">RY</div>
+									<div style="font-weight:700;">Rylan</div>
+									<div style="font-size:12px;color:var(--color-greyple);">In Game · Valorant</div>
+								</div>
+							</div>
+							<div class="voice-controls-bar">
+								<button type="button" class="voice-ctrl-btn is-active" id="toggle-mic-btn">🎙️ Mic Active</button>
+								<button type="button" class="voice-ctrl-btn is-active" id="toggle-nc-btn">✨ Noise Suppression</button>
+								<a href="/app" class="voice-ctrl-btn">🖥️ Share Screen</a>
+								<a href="/app" class="voice-ctrl-btn danger">Join Channel</a>
+							</div>
+						</div>
+
+						<div class="zy-showcase-copy">
+							<div><span class="zy-eyebrow">Always-On Voice Channels</span></div>
+							<h2 class="zy-heading">HOP IN WHEN YOU'RE FREE, NO NEED TO CALL</h2>
+							<p class="zy-body-lg">
+								Easily hop in and out of voice or text chats without having to call or invite anyone, so your party chat lasts before, during, and after your game session.
+							</p>
+							<ul class="zy-feature-bullets">
+								<li>Instant drop-in voice channels with zero ringing friction</li>
+								<li>Per-user volume sliders, spatial speaking indicators &amp; mute controls</li>
+								<li>Built-in WebRTC SFU for crystal-clear Opus audio &amp; ultra-low jitter</li>
+							</ul>
+							<div style="display:flex;gap:12px;flex-wrap:wrap;">
+								<a class="zy-btn zy-btn-primary" data-zy-open-app href="/app">Join a Voice Channel</a>
+								<a class="zy-btn zy-btn-ghost" href="/status">Check Voice Latency</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 7. VIDEO & HD SCREEN SHARE SHOWCASE (ZycordVideoPreview) -->
+		<section class="zy-section" id="video">
+			<div class="zy-container">
+				<div class="zy-showcase-card">
+					<div class="zy-showcase-grid">
+						<div class="zy-showcase-copy">
+							<div><span class="zy-eyebrow">HD Streaming &amp; Stage</span></div>
+							<h2 class="zy-heading">STREAM LIKE YOU'RE IN THE SAME ROOM</h2>
+							<p class="zy-body-lg">
+								High quality and low latency streaming makes it feel like you're hanging out on the couch with friends while playing a game, watching shows, looking at photos, or coding together.
+							</p>
+							<ul class="zy-feature-bullets">
+								<li>Multi-stream capability — watch multiple friends share screens simultaneously</li>
+								<li>Picture-in-Picture overlay and instant quality switching (720p / 1080p 60fps)</li>
+								<li>Hardware-accelerated WebRTC media transport</li>
+							</ul>
+							<div class="zy-tab-strip" data-zy-tabs="video-preview-stage">
+								<button type="button" class="zy-tab-btn is-active" data-zy-tab="game">🎮 Gameplay 1080p60</button>
+								<button type="button" class="zy-tab-btn" data-zy-tab="code">💻 Pair Programming</button>
+								<button type="button" class="zy-tab-btn" data-zy-tab="watch">🍿 Watch Party</button>
+							</div>
+						</div>
+
+						<!-- Interactive ZycordVideoPreview Component -->
+						<div class="zy-app-window" id="video-preview-stage">
+							<div class="zy-app-titlebar">
+								<div class="zy-window-dots">
+									<span class="zy-window-dot red"></span>
+									<span class="zy-window-dot amber"></span>
+									<span class="zy-window-dot green"></span>
+								</div>
+								<span>ZycordVideoPreview — Live Screen Share</span>
+								<span style="background:#de2761;color:#fff;padding:2px 8px;border-radius:4px;font-weight:800;font-size:11px;">LIVE · 60 FPS</span>
+							</div>
+
+							<div data-zy-panel="game" style="padding:18px;background:linear-gradient(135deg,#13183f 0%,#2b1644 100%);min-height:290px;display:flex;flex-direction:column;justify-content:space-between;">
+								<div style="display:flex;justify-content:space-between;align-items:center;">
+									<span class="zy-eyebrow" style="background:rgba(0,0,0,0.45);">Nova's Screen · Cyber Arena Finals</span>
+									<span style="font-size:12px;color:var(--color-spring-green);font-weight:700;">1080p · 60 FPS · 12 Viewers</span>
+								</div>
+								<div style="margin:24px 0;padding:24px;border-radius:12px;background:rgba(0,0,0,0.38);border:1px solid rgba(255,255,255,0.12);text-align:center;">
+									<div style="font-family:var(--font-abc-ginto-nord-discord);font-size:24px;font-weight:800;letter-spacing:0.02em;">VICTORY ROYALE — ROUND 13</div>
+									<p style="color:var(--color-fog);font-size:14px;margin-top:6px;">Zero-buffer WebRTC video stream with synchronized game audio</p>
+								</div>
+								<div style="display:flex;gap:10px;justify-content:space-between;align-items:center;">
+									<div style="display:flex;gap:8px;">
+										<span class="zy-reaction-pill">🔥 32</span>
+										<span class="zy-reaction-pill">🏆 19</span>
+									</div>
+									<a href="/app" class="zy-btn zy-btn-primary zy-btn-sm">Start Streaming</a>
+								</div>
+							</div>
+
+							<div data-zy-panel="code" style="padding:18px;background:#141726;min-height:290px;display:none;flex-direction:column;justify-content:space-between;">
+								<div style="display:flex;justify-content:space-between;align-items:center;">
+									<span class="zy-eyebrow">Kyze's IDE · Zycord Gateway Engine</span>
+									<span style="font-size:12px;color:var(--color-vivid-cerulean);font-weight:700;">Sharp Text Mode · 4K Ready</span>
+								</div>
+								<pre style="margin:16px 0;padding:16px;border-radius:10px;background:#0b0d17;border:1px solid rgba(255,255,255,0.1);font-family:var(--font-mono);font-size:12px;color:#a5b4fc;overflow-x:auto;"><code>// Crisp sub-pixel screen share for code reviews
+gateway.on("VOICE_STATE_UPDATE", (pkt) =&gt; {
+  rtcEngine.optimizeBitrate({ targetFps: 60, hdr: true });
+});</code></pre>
+								<div style="text-align:right;">
+									<a href="/developers" class="zy-btn zy-btn-primary zy-btn-sm">Explore Developer Tools</a>
+								</div>
+							</div>
+
+							<div data-zy-panel="watch" style="padding:18px;background:linear-gradient(135deg,#1f1137,#0f2042);min-height:290px;display:none;flex-direction:column;justify-content:space-between;">
+								<div style="display:flex;justify-content:space-between;align-items:center;">
+									<span class="zy-eyebrow">Community Cinema Night</span>
+									<span style="font-size:12px;color:var(--color-fuchsia);font-weight:700;">Synchronized Audio</span>
+								</div>
+								<div style="margin:24px 0;padding:24px;border-radius:12px;background:rgba(0,0,0,0.4);text-align:center;">
+									<div style="font-weight:800;font-size:20px;">🍿 Friday Anime &amp; Sci-Fi Marathon</div>
+									<p style="color:var(--color-fog);font-size:14px;margin-top:6px;">28 members watching together with live text-in-voice chat</p>
+								</div>
+								<div style="text-align:right;">
+									<a href="/discover" class="zy-btn zy-btn-primary zy-btn-sm">Browse Watch Parties</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 8. NITRO, COLLECTIBLES & SERVER CUSTOMIZATION SHOWCASE -->
+		<section class="zy-section" id="collectibles">
+			<div class="zy-container">
+				<div class="zy-showcase-card">
+					<div class="zy-showcase-grid is-reversed">
+						<div class="collectibles-preview-grid">
+							<div class="collectible-card">
+								<span class="collectible-badge">Avatar Decoration</span>
+								<div style="display:flex;align-items:center;gap:12px;margin-top:4px;">
+									<div class="mock-avatar has-ring" style="width:48px;height:48px;background:linear-gradient(135deg,#5865f2,#eb459e);">KZ</div>
+									<div>
+										<div style="font-weight:800;">Astral Aura &amp; Cyber Rings</div>
+										<div style="font-size:13px;color:var(--color-fog);">Animated APNG/WebP overlays around your avatar</div>
+									</div>
+								</div>
+							</div>
+							<div class="collectible-card">
+								<span class="collectible-badge">Nameplate</span>
+								<div style="margin-top:4px;padding:10px 12px;border-radius:10px;background:linear-gradient(90deg,rgba(88,101,242,0.35),rgba(235,69,158,0.35));border:1px solid rgba(255,255,255,0.2);font-weight:800;">
+									✦ Kyze · Twilight Nebula Plate
+								</div>
+								<div style="font-size:13px;color:var(--color-fog);">Custom member list &amp; DM list nameplate banners</div>
+							</div>
+							<div class="collectible-card">
+								<span class="collectible-badge">Profile Effect</span>
+								<div style="font-weight:800;margin-top:4px;">Full-Height Animated Layers</div>
+								<div style="font-size:13px;color:var(--color-fog);">Multi-layer entrance &amp; loop animations across your profile popout and modal</div>
+							</div>
+							<div class="collectible-card">
+								<span class="collectible-badge">Profile Frame</span>
+								<div style="font-weight:800;margin-top:4px;">Precision Perimeter Borders</div>
+								<div style="font-size:13px;color:var(--color-fog);">Custom metallic, neon, and holographic frames that wrap cleanly around your card</div>
+							</div>
+						</div>
+
+						<div class="zy-showcase-copy">
+							<div><span class="zy-eyebrow">Profile Cosmetics &amp; Server Identity</span></div>
+							<h2 class="zy-heading">EXPRESS EVERY PIXEL OF YOUR IDENTITY</h2>
+							<p class="zy-body-lg">
+								Stand out in every server and DM with __INSTANCE_NAME__'s complete cosmetics suite: Avatar Decorations, custom Nameplates, full-card Profile Effects, and non-obscuring Profile Frames.
+							</p>
+							<ul class="zy-feature-bullets">
+								<li>Equip Avatar Decorations, Nameplates, Profile Effects &amp; Profile Frames simultaneously</li>
+								<li>Per-guild server profiles, custom banners, pronouns, and animated status badges</li>
+								<li>Granular 64-bit role permissions, custom role icons, and vanity invite links</li>
+							</ul>
+							<div style="display:flex;gap:12px;flex-wrap:wrap;">
+								<a class="zy-btn zy-btn-primary" href="/nitro">Explore Nitro &amp; Collectibles</a>
+								<a class="zy-btn zy-btn-ghost" data-zy-open-app href="/app">Customize Your Profile</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 9, 10, 11. FRIENDS/PRESENCE, SAFETY/E2EE, DEVELOPER ECOSYSTEM (3-CARD STAGE) -->
+		<section class="zy-section">
+			<div class="zy-container">
+				<div style="text-align:center;max-width:760px;margin:0 auto 48px;">
+					<span class="zy-eyebrow">Built For Power Users, Mods &amp; Developers</span>
+					<h2 class="zy-heading" style="margin-top:16px;">EVERYTHING YOUR COMMUNITY NEEDS UNDER ONE ROOF</h2>
+					<p class="zy-body-lg" style="margin-top:14px;">
+						From cryptographic End-to-End Encrypted DMs to full Rich Presence game detection and a self-hosted Developer Portal.
+					</p>
+				</div>
+
+				<div class="zy-grid-3">
+					<!-- 9. Friends & Rich Presence -->
+					<article class="zy-card">
+						<div class="zy-card-icon">🎮</div>
+						<h3 class="zy-heading-sm" style="font-size:24px;">ALWAYS HAVE SOMETHING TO DO TOGETHER</h3>
+						<p class="zy-body">
+							See what your friends are playing, listen along on Spotify, launch Connected Accounts (Steam, GitHub, Twitch, YouTube, Epic, PlayStation, Xbox), and jump straight into their party.
+						</p>
+						<div style="margin-top:auto;padding-top:12px;">
+							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/discover">Explore Communities →</a>
+						</div>
+					</article>
+
+					<!-- 10. Safety, Moderation & E2EE -->
+					<article class="zy-card">
+						<div class="zy-card-icon">🛡️</div>
+						<h3 class="zy-heading-sm" style="font-size:24px;">END-TO-END ENCRYPTION &amp; AUTOMOD</h3>
+						<p class="zy-body">
+							Protect private conversations with client-side End-to-End Encrypted (E2EE) DMs and recovery keys, backed by WebAuthn Passkeys, 2FA, AutoMod raid filters, and granular audit logs.
+						</p>
+						<div style="margin-top:auto;padding-top:12px;">
+							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/safety">Visit Safety Center →</a>
+						</div>
+					</article>
+
+					<!-- 11. Developer & Bot Ecosystem -->
+					<article class="zy-card">
+						<div class="zy-card-icon">⚡</div>
+						<h3 class="zy-heading-sm" style="font-size:24px;">FULL BOT, OAUTH2 &amp; GATEWAY API</h3>
+						<p class="zy-body">
+							Build custom bots, webhooks, slash commands, and OAuth2 integrations using __INSTANCE_NAME__'s Developer Portal and live OpenAPI specification.
+						</p>
+						<div style="margin-top:auto;padding-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/developers">Developer Hub →</a>
+							<a class="zy-btn zy-btn-primary zy-btn-sm" href="/developers/applications">Manage Apps</a>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- 12. CROSS-PLATFORM DESKTOP & WEB SHOWCASE -->
+		<section class="zy-section">
+			<div class="zy-container">
+				<div class="zy-showcase-card" style="text-align:center;">
+					<span class="zy-eyebrow">Desktop + Browser + PWA</span>
+					<h2 class="zy-heading" style="margin-top:16px;">WHEREVER YOU GAME, HANG OUT HERE</h2>
+					<p class="zy-body-lg" style="max-width:700px;margin:16px auto 32px;">
+						Switch seamlessly between the native __INSTANCE_NAME__ Windows Desktop App (with global push-to-talk, system tray, and rich presence detection) and the zero-install Web Client.
+					</p>
+					<div class="zy-grid-3" style="text-align:left;">
+						<div class="zy-card">
+							<div style="font-weight:800;font-size:18px;">🪟 Windows Desktop App</div>
+							<p class="zy-body" style="font-size:14px;">Native installer (<code>ZycordSetup.exe</code>) with system tray integration, hardware video encoding, and automatic updates.</p>
+							<a class="zy-btn zy-btn-secondary zy-btn-sm" href="/download/windows" style="margin-top:auto;">Download ZycordSetup.exe</a>
+						</div>
+						<div class="zy-card">
+							<div style="font-weight:800;font-size:18px;">🌐 Instant Browser App</div>
+							<p class="zy-body" style="font-size:14px;">Full feature parity right in Chrome, Edge, Firefox, or Safari. No downloads required — sign in and start talking immediately.</p>
+							<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app" style="margin-top:auto;">Open in Browser</a>
+						</div>
+						<div class="zy-card">
+							<div style="font-weight:800;font-size:18px;">📲 Installable Web App (PWA)</div>
+							<p class="zy-body" style="font-size:14px;">Install __INSTANCE_NAME__ to your dock or home screen on macOS, Linux, iOS, and Android with push notifications.</p>
+							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/download" style="margin-top:auto;">All Platform Options</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 13. FINAL CALL TO ACTION -->
+		<section class="zy-section" style="padding-top:24px;">
+			<div class="zy-container">
+				<div class="zy-showcase-card" style="text-align:center;padding:56px 28px;background:radial-gradient(circle at 50% 0%, rgba(88,101,242,0.42), rgba(18,20,54,0.95) 70%);">
+					<h2 class="zy-display" style="font-size:clamp(32px,4.8vw,56px);">YOU CAN'T SCROLL ANYMORE. BETTER GO CHAT.</h2>
+					<p class="zy-body-lg" style="max-width:620px;margin:18px auto 32px;">
+						Launch __INSTANCE_NAME__ right in your browser or grab the Windows desktop installer to join your friends.
+					</p>
+					<div style="display:flex;justify-content:center;flex-wrap:wrap;gap:16px;">
+						<a class="zy-btn zy-btn-primary" data-zy-open-app data-zy-open-label-authed="Launch __INSTANCE_NAME__ App" href="/app">
+							Open __INSTANCE_NAME__ in Your Browser
+						</a>
+						<a class="zy-btn zy-btn-secondary" href="/download/windows">
+							Download for Windows
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<!-- 14. Global 5-Column Footer -->
+	<footer data-zy-footer></footer>
+
+	<script src="/site/site.js"></script>
+	<script>
+		// Interactive Voice Preview Controls on Homepage
+		(function () {
+			var micBtn = document.getElementById("toggle-mic-btn");
+			var ncBtn = document.getElementById("toggle-nc-btn");
+			var tile1 = document.getElementById("voice-tile-1");
+			if (micBtn && tile1) {
+				micBtn.addEventListener("click", function () {
+					var active = micBtn.classList.toggle("is-active");
+					tile1.classList.toggle("is-speaking", active);
+					micBtn.textContent = active ? "🎙️ Mic Active" : "🔇 Mic Muted";
+				});
+			}
+			if (ncBtn) {
+				ncBtn.addEventListener("click", function () {
+					var active = ncBtn.classList.toggle("is-active");
+					ncBtn.textContent = active ? "✨ Noise Suppression" : "✨ Noise Suppression (Off)";
+				});
+			}
+		})();
+	</script>
 </body>
-
 </html>

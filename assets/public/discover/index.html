@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Discover Communities — __INSTANCE_NAME__</title>
+	<meta name="description" content="Explore gaming, technology, development, music, art, anime, and esports communities on __INSTANCE_NAME__." />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="stylesheet" href="/site/site.css" />
+	<style>
+		.discover-search-bar {
+			display: flex;
+			gap: 12px;
+			max-width: 680px;
+			margin: 28px auto 0;
+			background: rgba(14, 15, 45, 0.85);
+			border: 1px solid rgba(255, 255, 255, 0.22);
+			border-radius: 16px;
+			padding: 8px 12px;
+			box-shadow: 0 18px 42px rgba(0, 0, 0, 0.45);
+		}
+		.discover-search-input {
+			flex: 1;
+			background: transparent;
+			border: none;
+			color: var(--color-snow);
+			font-size: 16px;
+			padding: 8px 12px;
+			outline: none;
+		}
+		.discover-search-input::placeholder {
+			color: var(--color-greyple);
+		}
+		.discover-cats {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 10px;
+			margin: 28px 0 40px;
+		}
+		.discover-cat-btn {
+			padding: 10px 18px;
+			border-radius: var(--radius-pills);
+			border: 1px solid rgba(255, 255, 255, 0.16);
+			background: rgba(28, 31, 68, 0.7);
+			color: var(--color-fog);
+			font-size: 14px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: all 0.16s ease;
+		}
+		.discover-cat-btn:hover,
+		.discover-cat-btn.is-active {
+			background: var(--color-blurple);
+			border-color: var(--color-blurple);
+			color: var(--color-snow);
+		}
+		.server-banner {
+			height: 92px;
+			border-radius: 12px;
+			margin-bottom: 12px;
+			display: flex;
+			align-items: flex-end;
+			padding: 12px;
+			position: relative;
+		}
+		.server-badge-icon {
+			width: 52px;
+			height: 52px;
+			border-radius: 14px;
+			background: #14163b;
+			border: 3px solid #181b44;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 800;
+			font-size: 18px;
+		}
+		.server-metrics {
+			display: flex;
+			align-items: center;
+			gap: 16px;
+			font-size: 13px;
+			color: var(--color-greyple);
+			margin-top: auto;
+			padding-top: 8px;
+		}
+	</style>
+</head>
+<body>
+	<header data-zy-navbar></header>
+
+	<main>
+		<section class="zy-section" style="padding-top:56px;padding-bottom:32px;text-align:center;">
+			<div class="zy-container">
+				<span class="zy-eyebrow">Community Directory</span>
+				<h1 class="zy-display" style="margin-top:16px;">FIND YOUR COMMUNITY ON __INSTANCE_NAME__</h1>
+				<p class="zy-body-lg" style="max-width:680px;margin:16px auto 0;">
+					From competitive esports squads and open-source developer hubs to digital art collectives and late-night music lounges.
+				</p>
+
+				<div class="discover-search-bar">
+					<input
+						type="search"
+						id="discover-search"
+						class="discover-search-input"
+						placeholder="Search communities by name, game, or topic..."
+						aria-label="Search communities"
+					/>
+					<button type="button" class="zy-btn zy-btn-primary zy-btn-sm" id="discover-clear-btn">Search</button>
+				</div>
+
+				<div class="discover-cats" id="discover-categories" role="tablist" aria-label="Community Categories">
+					<button type="button" class="discover-cat-btn is-active" data-cat="all">All Communities</button>
+					<button type="button" class="discover-cat-btn" data-cat="gaming">🎮 Gaming</button>
+					<button type="button" class="discover-cat-btn" data-cat="esports">🏆 Esports</button>
+					<button type="button" class="discover-cat-btn" data-cat="development">💻 Development</button>
+					<button type="button" class="discover-cat-btn" data-cat="technology">⚡ Technology</button>
+					<button type="button" class="discover-cat-btn" data-cat="music">🎵 Music</button>
+					<button type="button" class="discover-cat-btn" data-cat="art">🎨 Art &amp; Design</button>
+					<button type="button" class="discover-cat-btn" data-cat="anime">✨ Anime</button>
+				</div>
+			</div>
+		</section>
+
+		<section class="zy-section" style="padding-top:0;">
+			<div class="zy-container">
+				<div class="zy-grid-3" id="discover-grid">
+					<!-- Card 1 -->
+					<article class="zy-card" data-server-card data-cat="gaming" data-title="cosmic raiders hq">
+						<div class="server-banner" style="background:linear-gradient(135deg,#5865f2,#eb459e);">
+							<div class="server-badge-icon">CR</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">Cosmic Raiders HQ</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Verified</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							Daily co-op raids, LFG voice lobbies, 60fps clip sharing, and weekend community tournaments.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 1,420</strong> Online</span>
+							<span>• 8,940 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Join in __INSTANCE_NAME__</a>
+					</article>
+
+					<!-- Card 2 -->
+					<article class="zy-card" data-server-card data-cat="development" data-title="zycord developers & bots">
+						<div class="server-banner" style="background:linear-gradient(135deg,#00b0f4,#3442d9);">
+							<div class="server-badge-icon">ZD</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">__INSTANCE_NAME__ Developers</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Official</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							Build bots, slash commands, OAuth2 apps, WebRTC integrations, and custom client plugins with core engineers.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 680</strong> Online</span>
+							<span>• 4,120 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" href="/developers">Explore Dev Hub</a>
+					</article>
+
+					<!-- Card 3 -->
+					<article class="zy-card" data-server-card data-cat="esports" data-title="apex & valorant arena">
+						<div class="server-banner" style="background:linear-gradient(135deg,#de2761,#fda220);">
+							<div class="server-badge-icon">EA</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">Valorant &amp; FPS Scrims</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Esports</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							Ten-man custom lobbies, low-latency team comms, coach VOD reviews, and seasonal leaderboard brackets.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 2,150</strong> Online</span>
+							<span>• 14,300 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Join in __INSTANCE_NAME__</a>
+					</article>
+
+					<!-- Card 4 -->
+					<article class="zy-card" data-server-card data-cat="music" data-title="midnight synth & lo-fi lounge">
+						<div class="server-banner" style="background:linear-gradient(135deg,#3442d9,#57f287);">
+							<div class="server-badge-icon">MS</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">Midnight Synth &amp; Lo-Fi</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Music</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							24/7 high-bitrate Opus listening stages, producer beat battles, stem exchanges, and live synthesizer jams.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 540</strong> Online</span>
+							<span>• 5,200 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Join in __INSTANCE_NAME__</a>
+					</article>
+
+					<!-- Card 5 -->
+					<article class="zy-card" data-server-card data-cat="art" data-title="pixel & 3d studio">
+						<div class="server-banner" style="background:linear-gradient(135deg,#eb459e,#fda220);">
+							<div class="server-badge-icon">3D</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">Blender &amp; Concept Art Lab</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Art</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							Live 1080p sculpting streams, custom Avatar Decoration design workshops, and portfolio critiques.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 410</strong> Online</span>
+							<span>• 3,780 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Join in __INSTANCE_NAME__</a>
+					</article>
+
+					<!-- Card 6 -->
+					<article class="zy-card" data-server-card data-cat="anime" data-title="neo tokyo watch club">
+						<div class="server-banner" style="background:linear-gradient(135deg,#5865f2,#00b0f4);">
+							<div class="server-badge-icon">NT</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">Neo Tokyo Watch Club</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Anime</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							Weekly simulcast watch parties, manga spoiler threads, custom anime stickers, and themed profile frames.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 990</strong> Online</span>
+							<span>• 7,650 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Join in __INSTANCE_NAME__</a>
+					</article>
+
+					<!-- Card 7 -->
+					<article class="zy-card" data-server-card data-cat="technology" data-title="self-hosted & linux systems">
+						<div class="server-banner" style="background:linear-gradient(135deg,#1f225a,#57f287);">
+							<div class="server-badge-icon">SH</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">Self-Hosted &amp; Cloud Ops</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Tech</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							Homelab architecture, WebRTC SFU tuning, cryptography discussions, and Linux kernel optimization.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 730</strong> Online</span>
+							<span>• 6,110 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Join in __INSTANCE_NAME__</a>
+					</article>
+
+					<!-- Card 8 -->
+					<article class="zy-card" data-server-card data-cat="gaming" data-title="gta roleplay & nopixel 4.0">
+						<div class="server-banner" style="background:linear-gradient(135deg,#fda220,#5865f2);">
+							<div class="server-badge-icon">RP</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">FiveM &amp; Roleplay Network</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Gaming</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							Dedicated faction dispatch channels, character rosters, clip highlights, and low-latency radio rooms.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 1,890</strong> Online</span>
+							<span>• 11,400 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Join in __INSTANCE_NAME__</a>
+					</article>
+
+					<!-- Card 9 -->
+					<article class="zy-card" data-server-card data-cat="development" data-title="open source ai & webgpu">
+						<div class="server-banner" style="background:linear-gradient(135deg,#3442d9,#de2761);">
+							<div class="server-badge-icon">AI</div>
+						</div>
+						<div style="display:flex;align-items:center;justify-content:space-between;">
+							<h2 class="zy-heading-sm" style="font-size:20px;">WebGPU &amp; Real-Time Graphics</h2>
+							<span class="zy-eyebrow" style="font-size:10px;padding:3px 8px;">Dev</span>
+						</div>
+						<p class="zy-body" style="font-size:14px;">
+							Shader showcases, Three.js / WebGL demos, engine profiling, and collaborative code reviews.
+						</p>
+						<div class="server-metrics">
+							<span><strong style="color:var(--color-spring-green);">● 460</strong> Online</span>
+							<span>• 3,290 Members</span>
+						</div>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Join in __INSTANCE_NAME__</a>
+					</article>
+				</div>
+
+				<!-- Start Your Own Server CTA -->
+				<div class="zy-showcase-card" style="margin-top:56px;text-align:center;">
+					<h2 class="zy-heading-sm">WANT TO BUILD YOUR OWN COMMUNITY?</h2>
+					<p class="zy-body-lg" style="max-width:640px;margin:12px auto 24px;">
+						Create a free __INSTANCE_NAME__ server in seconds with custom roles, voice stages, AutoMod protection, and vanity invites.
+					</p>
+					<a class="zy-btn zy-btn-primary" data-zy-open-app href="/app">Create a Server in __INSTANCE_NAME__</a>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer data-zy-footer></footer>
+	<script src="/site/site.js"></script>
+	<script>
+		(function () {
+			var searchInput = document.getElementById("discover-search");
+			var catButtons = document.querySelectorAll("#discover-categories [data-cat]");
+			var cards = document.querySelectorAll("[data-server-card]");
+			var activeCat = "all";
+
+			function filterCards() {
+				var q = ((searchInput && searchInput.value) || "").toLowerCase().trim();
+				for (var i = 0; i < cards.length; i++) {
+					var card = cards[i];
+					var cat = card.getAttribute("data-cat");
+					var text = (card.textContent || "").toLowerCase();
+					var catMatch = activeCat === "all" || cat === activeCat;
+					var qMatch = !q || text.indexOf(q) !== -1;
+					card.style.display = catMatch && qMatch ? "" : "none";
+				}
+			}
+
+			for (var b = 0; b < catButtons.length; b++) {
+				catButtons[b].addEventListener("click", function () {
+					activeCat = this.getAttribute("data-cat") || "all";
+					for (var k = 0; k < catButtons.length; k++) {
+						catButtons[k].classList.toggle("is-active", catButtons[k] === this);
+					}
+					filterCards();
+				});
+			}
+
+			if (searchInput) {
+				searchInput.addEventListener("input", filterCards);
+			}
+		})();
+	</script>
+</body>
+</html>

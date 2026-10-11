@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Help &amp; Support Center — __INSTANCE_NAME__</title>
+	<meta name="description" content="Get help with __INSTANCE_NAME__ accounts, voice and video troubleshooting, profile collectibles, server administration, and developer tools." />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="stylesheet" href="/site/site.css" />
+	<style>
+		.support-search-wrap {
+			max-width: 680px;
+			margin: 28px auto 0;
+			background: rgba(14, 15, 45, 0.88);
+			border: 1px solid rgba(255, 255, 255, 0.22);
+			border-radius: 16px;
+			padding: 10px 16px;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+		}
+		.support-search-input {
+			flex: 1;
+			background: transparent;
+			border: none;
+			color: var(--color-snow);
+			font-size: 16px;
+			outline: none;
+			padding: 6px 4px;
+		}
+		.support-search-input::placeholder {
+			color: var(--color-greyple);
+		}
+	</style>
+</head>
+<body>
+	<header data-zy-navbar></header>
+
+	<main>
+		<section class="zy-section" style="padding-top:56px;padding-bottom:32px;text-align:center;">
+			<div class="zy-container">
+				<a href="/status" class="zy-status-pill" style="margin-bottom:16px;">
+					<span class="zy-eyebrow-dot" data-zy-status-dot></span>
+					<span data-zy-status-label>All Systems Operational</span>
+					<span style="opacity:0.8;">· View Status →</span>
+				</a>
+				<h1 class="zy-display">HOW CAN WE HELP YOU?</h1>
+				<p class="zy-body-lg" style="max-width:660px;margin:14px auto 0;">
+					Search guides, troubleshoot voice and screen share, manage E2EE recovery keys, or jump into our support channels.
+				</p>
+
+				<div class="support-search-wrap">
+					<span aria-hidden="true">🔍</span>
+					<input
+						type="search"
+						id="support-search-input"
+						class="support-search-input"
+						placeholder="Search help topics (e.g., E2EE recovery, screen share, profile frames, 2FA)..."
+						aria-label="Search help topics"
+					/>
+				</div>
+			</div>
+		</section>
+
+		<!-- Topic Cards -->
+		<section class="zy-section" style="padding-top:12px;">
+			<div class="zy-container">
+				<div class="zy-grid-3" id="support-topics-grid">
+					<article class="zy-card" data-support-item>
+						<div class="zy-card-icon">👤</div>
+						<h2 class="zy-heading-sm" style="font-size:20px;">ACCOUNT &amp; SECURITY</h2>
+						<p class="zy-body" style="font-size:14px;">
+							Configure TOTP Two-Factor Authentication, register WebAuthn Passkeys, link Connected Accounts (Steam, GitHub, Twitch, YouTube), and manage sessions.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" data-zy-open-app href="/app" style="margin-top:auto;">Open User Settings →</a>
+					</article>
+
+					<article class="zy-card" data-support-item>
+						<div class="zy-card-icon">🎙️</div>
+						<h2 class="zy-heading-sm" style="font-size:20px;">VOICE, VIDEO &amp; SCREEN SHARE</h2>
+						<p class="zy-body" style="font-size:14px;">
+							Select input/output audio devices, tune noise suppression, stream games in 1080p 60fps, and verify WebRTC UDP connectivity.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/status" style="margin-top:auto;">Check Voice Telemetry →</a>
+					</article>
+
+					<article class="zy-card" data-support-item>
+						<div class="zy-card-icon">✦</div>
+						<h2 class="zy-heading-sm" style="font-size:20px;">COSMETICS &amp; COLLECTIBLES</h2>
+						<p class="zy-body" style="font-size:14px;">
+							Equip Avatar Decorations, custom Nameplates, full-height Profile Effects, and perimeter Profile Frames in Profiles settings.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/nitro" style="margin-top:auto;">Preview Collectibles →</a>
+					</article>
+
+					<article class="zy-card" data-support-item>
+						<div class="zy-card-icon">🔐</div>
+						<h2 class="zy-heading-sm" style="font-size:20px;">END-TO-END ENCRYPTED DMS</h2>
+						<p class="zy-body" style="font-size:14px;">
+							Understand how client-side ECDH + AES-GCM encryption works in Direct Messages and how to save or restore your recovery key.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/safety#e2ee" style="margin-top:auto;">E2EE Security Guide →</a>
+					</article>
+
+					<article class="zy-card" data-support-item>
+						<div class="zy-card-icon">🛡️</div>
+						<h2 class="zy-heading-sm" style="font-size:20px;">SERVER SETUP &amp; AUTOMOD</h2>
+						<p class="zy-body" style="font-size:14px;">
+							Set up 64-bit role hierarchies, channel permission overwrites, AutoMod keyword filters, vanity URLs, and custom emojis.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/safety#moderation" style="margin-top:auto;">Moderation Docs →</a>
+					</article>
+
+					<article class="zy-card" data-support-item>
+						<div class="zy-card-icon">💻</div>
+						<h2 class="zy-heading-sm" style="font-size:20px;">BOTS, WEBHOOKS &amp; API</h2>
+						<p class="zy-body" style="font-size:14px;">
+							Create bot applications, generate OAuth2 client secrets, register slash commands, and inspect the OpenAPI specification.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/developers" style="margin-top:auto;">Developer Hub →</a>
+					</article>
+				</div>
+
+				<!-- Troubleshooting FAQ Accordion -->
+				<div style="margin-top:56px;">
+					<h2 class="zy-heading" style="text-align:center;margin-bottom:28px;">FREQUENTLY ASKED QUESTIONS</h2>
+					<div class="zy-accordion" id="support-faq-list">
+						<div class="zy-accordion-item is-open" data-support-item>
+							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="true">
+								<span>How do I equip Avatar Decorations, Nameplates, Profile Effects, and Profile Frames?</span>
+								<span class="zy-accordion-icon">▾</span>
+							</button>
+							<div class="zy-accordion-content">
+								Open <a href="/app" style="color:var(--color-hover-blurple);text-decoration:underline;">__INSTANCE_NAME__</a>, click the gear icon next to your username to open <strong>User Settings → Profiles</strong>, and choose your Avatar Decoration, Nameplate, Profile Effect, or Profile Frame. Changes sync in real time across all servers and DMs.
+							</div>
+						</div>
+
+						<div class="zy-accordion-item" data-support-item>
+							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+								<span>Why can't my friends hear my game audio during Screen Share?</span>
+								<span class="zy-accordion-icon">▾</span>
+							</button>
+							<div class="zy-accordion-content">
+								When sharing in the browser, make sure to check <strong>"Also share system/tab audio"</strong> in the browser picker dialog. For full application audio capture on Windows 10/11, we recommend installing the native <a href="/download/windows" style="color:var(--color-hover-blurple);text-decoration:underline;">Windows Desktop App</a>.
+							</div>
+						</div>
+
+						<div class="zy-accordion-item" data-support-item>
+							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+								<span>What happens if I switch browsers or clear storage with E2EE DMs enabled?</span>
+								<span class="zy-accordion-icon">▾</span>
+							</button>
+							<div class="zy-accordion-content">
+								Because End-to-End Encrypted keys never leave your device unencrypted, you can restore your private key vault on any new device using your saved <strong>E2EE Recovery Key</strong> or passphrase in User Settings → Privacy &amp; Safety.
+							</div>
+						</div>
+
+						<div class="zy-accordion-item" data-support-item>
+							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+								<span>How do I create a Bot or OAuth2 Application on __INSTANCE_NAME__?</span>
+								<span class="zy-accordion-icon">▾</span>
+							</button>
+							<div class="zy-accordion-content">
+								Visit the <a href="/developers" style="color:var(--color-hover-blurple);text-decoration:underline;">Developer Hub</a> or open the <a href="/developers/applications" style="color:var(--color-hover-blurple);text-decoration:underline;">Developer Portal</a> while signed in to create applications, add bot users, configure OAuth2 redirect URIs, and copy bot tokens.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer data-zy-footer></footer>
+	<script src="/site/site.js"></script>
+	<script>
+		(function () {
+			var input = document.getElementById("support-search-input");
+			var items = document.querySelectorAll("[data-support-item]");
+			if (!input) return;
+			input.addEventListener("input", function () {
+				var q = (input.value || "").toLowerCase().trim();
+				for (var i = 0; i < items.length; i++) {
+					var text = (items[i].textContent || "").toLowerCase();
+					items[i].style.display = !q || text.indexOf(q) !== -1 ? "" : "none";
+				}
+			});
+		})();
+	</script>
+</body>
+</html>

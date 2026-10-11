@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>__INSTANCE_NAME__ Nitro &amp; Collectibles — Avatar Decorations, Nameplates, Effects &amp; Frames</title>
+	<meta name="description" content="Unlock custom Avatar Decorations, Nameplates, full-height Profile Effects, Profile Frames, 1080p 60fps streaming, and Server Boost perks on __INSTANCE_NAME__." />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="stylesheet" href="/site/site.css" />
+	<style>
+		.profile-preview-card {
+			width: 100%;
+			max-width: 390px;
+			margin: 0 auto;
+			border-radius: 20px;
+			background: #181a20;
+			border: 2px solid rgba(88, 101, 242, 0.75);
+			box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 28px rgba(88, 101, 242, 0.35);
+			overflow: hidden;
+			position: relative;
+			transition: border-color 0.25s ease, box-shadow 0.25s ease;
+		}
+		.profile-preview-card.frame-neon {
+			border-color: #eb459e;
+			box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 32px rgba(235, 69, 158, 0.48);
+		}
+		.profile-preview-card.frame-gold {
+			border-color: #fda220;
+			box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 32px rgba(253, 162, 32, 0.45);
+		}
+		.profile-banner {
+			height: 118px;
+			background: linear-gradient(135deg, #5865f2 0%, #eb459e 55%, #00b0f4 100%);
+			position: relative;
+		}
+		.profile-effect-overlay {
+			position: absolute;
+			inset: 0;
+			pointer-events: none;
+			background: radial-gradient(circle at 75% 20%, rgba(255, 255, 255, 0.22), transparent 55%);
+		}
+		.profile-avatar-wrap {
+			width: 82px;
+			height: 82px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #5865f2, #3442d9);
+			border: 5px solid #181a20;
+			margin-top: -42px;
+			margin-left: 20px;
+			position: relative;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: 900;
+			font-size: 24px;
+		}
+		.profile-avatar-ring {
+			position: absolute;
+			inset: -6px;
+			border-radius: 50%;
+			border: 3px dashed #57f287;
+			box-shadow: 0 0 14px rgba(87, 242, 135, 0.7);
+		}
+		.profile-body {
+			padding: 16px 20px 22px;
+			display: flex;
+			flex-direction: column;
+			gap: 12px;
+		}
+		.nameplate-preview {
+			padding: 10px 14px;
+			border-radius: 10px;
+			background: linear-gradient(90deg, rgba(88, 101, 242, 0.42), rgba(235, 69, 158, 0.42));
+			border: 1px solid rgba(255, 255, 255, 0.22);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			font-weight: 800;
+			font-size: 14px;
+		}
+	</style>
+</head>
+<body>
+	<header data-zy-navbar></header>
+
+	<main>
+		<section class="zy-section" style="padding-top:56px;">
+			<div class="zy-container">
+				<div class="zy-showcase-card" style="background:radial-gradient(circle at 80% 20%, rgba(235,69,158,0.28), rgba(21,23,66,0.94) 65%);">
+					<div class="zy-showcase-grid">
+						<div class="zy-showcase-copy">
+							<div>
+								<span class="zy-eyebrow" style="background:rgba(235,69,158,0.22);border-color:rgba(235,69,158,0.5);">
+									<span>✦ __INSTANCE_NAME__ Collectibles &amp; Perks</span>
+								</span>
+							</div>
+							<h1 class="zy-display">UNLEASH MORE FUN WITH NITRO &amp; COLLECTIBLES</h1>
+							<p class="zy-body-lg">
+								Personalize every corner of your __INSTANCE_NAME__ presence with animated Avatar Decorations, custom Nameplates, full-height Profile Effects, and perimeter Profile Frames — plus 1080p 60fps streaming and 500MB file uploads.
+							</p>
+							<div class="zy-tab-strip" id="cosmetic-theme-switcher">
+								<button type="button" class="zy-tab-btn is-active" data-theme="cosmic">🌌 Cosmic Blurple</button>
+								<button type="button" class="zy-tab-btn" data-theme="neon">🌸 Cyber Fuchsia</button>
+								<button type="button" class="zy-tab-btn" data-theme="gold">⚡ Solar Gold</button>
+							</div>
+							<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;">
+								<a class="zy-btn zy-btn-primary" data-zy-open-app href="/app">Equip in User Settings</a>
+								<a class="zy-btn zy-btn-secondary" href="/download">Download Desktop App</a>
+							</div>
+						</div>
+
+						<!-- Live Interactive Profile Cosmetics Card -->
+						<div>
+							<div class="profile-preview-card" id="live-profile-card">
+								<div class="profile-effect-overlay"></div>
+								<div class="profile-banner" id="live-profile-banner"></div>
+								<div class="profile-avatar-wrap">
+									<span>KZ</span>
+									<span class="profile-avatar-ring" id="live-avatar-ring"></span>
+								</div>
+								<div class="profile-body">
+									<div>
+										<div style="font-size:20px;font-weight:800;display:flex;align-items:center;gap:8px;">
+											<span>Kyze</span>
+											<span style="font-size:11px;padding:2px 8px;border-radius:99px;background:var(--color-blurple);">NITRO</span>
+										</div>
+										<div style="font-size:13px;color:var(--color-greyple);">@kyze · Full Profile Cosmetics Active</div>
+									</div>
+
+									<div class="nameplate-preview" id="live-nameplate">
+										<span>✦ Active Nameplate</span>
+										<span id="live-nameplate-label">Twilight Nebula</span>
+									</div>
+
+									<div style="padding:12px;border-radius:10px;background:#111317;border:1px solid rgba(255,255,255,0.08);font-size:13px;color:var(--color-fog);">
+										<div style="font-weight:700;color:#fff;margin-bottom:4px;">EQUIPPED COLLECTIBLES</div>
+										<div>• Avatar Decoration: <strong id="label-deco">Astral Pulse Ring</strong></div>
+										<div>• Profile Effect: <strong id="label-effect">Starfall Cascade (Full Height)</strong></div>
+										<div>• Profile Frame: <strong id="label-frame">Precision Perimeter Glow</strong></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 4 Core Collectibles Breakdown -->
+		<section class="zy-section" style="padding-top:16px;">
+			<div class="zy-container">
+				<div style="text-align:center;max-width:740px;margin:0 auto 44px;">
+					<span class="zy-eyebrow">4-Layer Profile Customization</span>
+					<h2 class="zy-heading" style="margin-top:14px;">EVERY COSMETIC TYPE, ENGINEERED TO PERFECTION</h2>
+				</div>
+
+				<div class="zy-grid-2">
+					<article class="zy-card">
+						<div class="zy-card-icon">🪐</div>
+						<h3 class="zy-heading-sm" style="font-size:22px;">AVATAR DECORATIONS</h3>
+						<p class="zy-body">
+							Animated rings, seasonal companions, and cybernetic auras rendered crisp around your avatar in chat messages, voice channels, DM lists, and profile modals.
+						</p>
+					</article>
+
+					<article class="zy-card">
+						<div class="zy-card-icon">🏷️</div>
+						<h3 class="zy-heading-sm" style="font-size:22px;">CUSTOM NAMEPLATES</h3>
+						<p class="zy-body">
+							Transform your row in the Server Member List and Direct Message sidebar with animated gradient and illustrated Nameplates that highlight your status.
+						</p>
+					</article>
+
+					<article class="zy-card">
+						<div class="zy-card-icon">✨</div>
+						<h3 class="zy-heading-sm" style="font-size:22px;">FULL-CARD PROFILE EFFECTS</h3>
+						<p class="zy-body">
+							Multi-layer entrance bursts and continuous ambient loop animations that span your entire profile popout and full profile modal without clipping early.
+						</p>
+					</article>
+
+					<article class="zy-card">
+						<div class="zy-card-icon">🖼️</div>
+						<h3 class="zy-heading-sm" style="font-size:22px;">PERIMETER PROFILE FRAMES</h3>
+						<p class="zy-body">
+							Precision-engineered decorative frames that hug the outer border of your profile card with transparent centers so your bio, roles, and activity stay 100% readable.
+						</p>
+					</article>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer data-zy-footer></footer>
+	<script src="/site/site.js"></script>
+	<script>
+		(function () {
+			var card = document.getElementById("live-profile-card");
+			var banner = document.getElementById("live-profile-banner");
+			var ring = document.getElementById("live-avatar-ring");
+			var plateLabel = document.getElementById("live-nameplate-label");
+			var deco = document.getElementById("label-deco");
+			var effect = document.getElementById("label-effect");
+			var frame = document.getElementById("label-frame");
+			var btns = document.querySelectorAll("#cosmetic-theme-switcher [data-theme]");
+
+			var themes = {
+				cosmic: {
+					cls: "",
+					banner: "linear-gradient(135deg, #5865f2 0%, #eb459e 55%, #00b0f4 100%)",
+					ring: "#57f287",
+					plate: "Twilight Nebula",
+					deco: "Astral Pulse Ring",
+					effect: "Starfall Cascade (Full Height)",
+					frame: "Cosmic Indigo Perimeter"
+				},
+				neon: {
+					cls: "frame-neon",
+					banner: "linear-gradient(135deg, #eb459e 0%, #de2761 55%, #5865f2 100%)",
+					ring: "#eb459e",
+					plate: "Cyber Kitsune Horizon",
+					deco: "Neon Sakura Halo",
+					effect: "Synthwave Lightning Loop",
+					frame: "Fuchsia Neon Border"
+				},
+				gold: {
+					cls: "frame-gold",
+					banner: "linear-gradient(135deg, #fda220 0%, #de2761 60%, #3442d9 100%)",
+					ring: "#fda220",
+					plate: "Solar Eclipse Crest",
+					deco: "Celestial Crown Aura",
+					effect: "Golden Supernova Burst",
+					frame: "Solar Gold Filigree"
+				}
+			};
+
+			for (var i = 0; i < btns.length; i++) {
+				btns[i].addEventListener("click", function () {
+					var key = this.getAttribute("data-theme") || "cosmic";
+					var t = themes[key] || themes.cosmic;
+					for (var k = 0; k < btns.length; k++) {
+						btns[k].classList.toggle("is-active", btns[k] === this);
+					}
+					if (card) card.className = "profile-preview-card " + t.cls;
+					if (banner) banner.style.background = t.banner;
+					if (ring) {
+						ring.style.borderColor = t.ring;
+						ring.style.boxShadow = "0 0 14px " + t.ring;
+					}
+					if (plateLabel) plateLabel.textContent = t.plate;
+					if (deco) deco.textContent = t.deco;
+					if (effect) effect.textContent = t.effect;
+					if (frame) frame.textContent = t.frame;
+				});
+			}
+		})();
+	</script>
+</body>
+</html>
