@@ -2,7 +2,20 @@ import { h, mountJSX, replaceJSX } from "./runtime.jsx";
 import { ZycordNavbar, NAVIGATION_ITEMS, hasActiveSession } from "./Navbar.jsx";
 import { ZycordFooter, FOOTER_COLUMNS } from "./Footer.jsx";
 import { HomePage } from "./pages/HomePage.jsx";
-import { DownloadPage, QuestsPage, BlogPage } from "./pages/SubPages.jsx";
+import {
+	DownloadPage,
+	QuestsPage,
+	BlogPage,
+	AppDirectoryPage,
+	GiftCardsPage,
+	CompanyPage,
+	BrandingPage,
+	NewsroomPage,
+	CreatorsPage,
+	CommunityPage,
+	MerchPage,
+	FeedbackPage
+} from "./pages/SubPages.jsx";
 import { DevelopersHubPage } from "./pages/DevelopersHubPage.jsx";
 
 const PAGE_COMPONENTS = {
@@ -10,7 +23,16 @@ const PAGE_COMPONENTS = {
 	download: DownloadPage,
 	quests: QuestsPage,
 	blog: BlogPage,
-	developers: DevelopersHubPage
+	developers: DevelopersHubPage,
+	"application-directory": AppDirectoryPage,
+	"gift-cards": GiftCardsPage,
+	company: CompanyPage,
+	branding: BrandingPage,
+	newsroom: NewsroomPage,
+	creators: CreatorsPage,
+	community: CommunityPage,
+	merch: MerchPage,
+	feedback: FeedbackPage
 };
 
 function bindScrollNavbar() {
