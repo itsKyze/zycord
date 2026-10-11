@@ -661,7 +661,31 @@
         onClick: l.isCookieSettings ? openCookieSettingsModal : void 0
       },
       l.label
-    ))))))), /* @__PURE__ */ h("div", { className: "zy-wordmark-banner", "aria-hidden": "true" }, "Zycord")), /* @__PURE__ */ h(
+    )))))))), /* @__PURE__ */ h("div", { className: "zy-wordmark-container", "aria-hidden": "true" }, /* @__PURE__ */ h(
+      "svg",
+      {
+        className: "zy-wordmark-svg",
+        viewBox: "0 0 1765 280",
+        fill: "none",
+        xmlns: "http://www.w3.org/2000/svg"
+      },
+      /* @__PURE__ */ h(
+        "text",
+        {
+          x: "882.5",
+          y: "258",
+          "text-anchor": "middle",
+          fill: "#E0E3FF",
+          "font-family": "Poppins, 'Inter', system-ui, sans-serif",
+          "font-weight": "900",
+          "font-size": "338",
+          "letter-spacing": "-14",
+          textLength: "1720",
+          lengthAdjust: "spacingAndGlyphs"
+        },
+        "Zycord"
+      )
+    )), /* @__PURE__ */ h(
       "div",
       {
         className: "zy-cookie-modal-backdrop",
@@ -708,8 +732,8 @@
     ), /* @__PURE__ */ h("div", { className: "hero-3d-composite" }, /* @__PURE__ */ h(
       "img",
       {
-        src: "/site/media/discord/hero-devices-2026.webp",
-        alt: "Zycord 3D Desktop and Mobile Interface with Characters",
+        src: "/site/media/discord/hero-base-clean-2026.webp",
+        alt: "Zycord 3D Desktop and Mobile Interface",
         className: "hero-main-devices-img",
         fetchpriority: "high"
       }
@@ -721,7 +745,7 @@
         "aria-hidden": "true",
         className: "hero-char-girl"
       }
-    ), /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "hero-char-clyde-wrap" }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/hero-clyde.webp",
@@ -730,6 +754,14 @@
         className: "hero-char-clyde"
       }
     ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/hero-clyde-shadow.webp",
+        alt: "",
+        "aria-hidden": "true",
+        className: "hero-char-clyde-shadow"
+      }
+    )), /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/hero-wumpus-leaf.webp",
