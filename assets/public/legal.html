@@ -1,93 +1,154 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>__TITLE__ | __INSTANCE_NAME__</title>
-        <link rel="icon" href="/favicon.svg" />
-        <style>
-            @font-face {
-                font-display: swap;
-                font-family: "gg sans";
-                font-weight: 400;
-                src: url(/assets/66d715454104d24e.woff2) format("woff2");
-            }
-            @font-face {
-                font-display: swap;
-                font-family: "gg sans";
-                font-weight: 700;
-                src: url(/assets/189422196a4f8b53.woff2) format("woff2");
-            }
-            :root {
-                color-scheme: dark;
-                --color-bg: #313338;
-                --color-panel: #2b2d31;
-                --color-text: #dbdee1;
-                --color-text-strong: #f2f3f5;
-                --color-text-muted: #949ba4;
-                --color-link: #00a8fc;
-            }
-            * {
-                box-sizing: border-box;
-                margin: 0;
-            }
-            body {
-                display: grid;
-                min-height: 100vh;
-                place-items: center;
-                padding: 24px 16px;
-                background: var(--color-bg);
-                color: var(--color-text);
-                font-family: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-                font-size: 16px;
-                line-height: 1.5;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-            main {
-                width: min(100%, 520px);
-                padding: 32px;
-                border-radius: 8px;
-                background: var(--color-panel);
-            }
-            .wordmark {
-                display: block;
-                height: 28px;
-                margin-bottom: 24px;
-            }
-            h1 {
-                margin-bottom: 8px;
-                color: var(--color-text-strong);
-                font-size: 24px;
-                font-weight: 700;
-                text-wrap: balance;
-            }
-            p {
-                color: var(--color-text-muted);
-                text-wrap: pretty;
-                overflow-wrap: break-word;
-            }
-            p + p {
-                margin-top: 12px;
-            }
-            a {
-                color: var(--color-link);
-                text-underline-position: from-font;
-            }
-            .home {
-                display: inline-block;
-                margin-top: 24px;
-                font-weight: 700;
-            }
-        </style>
-    </head>
-    <body>
-        <main>
-            <img class="wordmark" src="/static/wordmark" alt="__INSTANCE_NAME__" />
-            <h1>__TITLE__</h1>
-            <p>The operators of __INSTANCE_NAME__ have not published this document yet.</p>
-            __CONTACT__
-            <a class="home" href="__HOME__">Go to __INSTANCE_NAME__</a>
-        </main>
-    </body>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>__TITLE__ | __INSTANCE_NAME__</title>
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="stylesheet" href="/site/site.css" />
+	<style>
+		.legal-layout {
+			display: grid;
+			grid-template-columns: 270px 1fr;
+			gap: 32px;
+			align-items: start;
+		}
+		.legal-nav-card {
+			position: sticky;
+			top: 100px;
+			border-radius: 16px;
+			background: rgba(24, 27, 68, 0.85);
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			padding: 20px;
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
+		.legal-nav-link {
+			padding: 10px 14px;
+			border-radius: 10px;
+			color: var(--color-fog);
+			font-weight: 600;
+			font-size: 14px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			transition: background 0.16s ease, color 0.16s ease;
+		}
+		.legal-nav-link:hover,
+		.legal-nav-link.is-active {
+			background: var(--color-blurple);
+			color: var(--color-snow);
+		}
+		.legal-doc-card {
+			border-radius: 24px;
+			background: rgba(20, 23, 58, 0.88);
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			padding: clamp(24px, 4vw, 48px);
+			display: flex;
+			flex-direction: column;
+			gap: 24px;
+		}
+		.legal-section {
+			padding-top: 20px;
+			border-top: 1px solid rgba(255, 255, 255, 0.1);
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+		}
+		.legal-section h2 {
+			font-family: var(--font-abc-ginto-nord-discord);
+			font-size: 20px;
+			font-weight: 800;
+			text-transform: uppercase;
+			color: var(--color-snow);
+		}
+		.legal-section p,
+		.legal-section li {
+			color: var(--color-fog);
+			font-size: 15px;
+			line-height: 1.65;
+		}
+		.legal-section ul {
+			padding-left: 20px;
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+		}
+		@media (max-width: 900px) {
+			.legal-layout {
+				grid-template-columns: 1fr;
+			}
+			.legal-nav-card {
+				position: static;
+			}
+		}
+	</style>
+</head>
+<body>
+	<header data-zy-navbar></header>
+
+	<main>
+		<section class="zy-section" style="padding-top:48px;">
+			<div class="zy-container">
+				<div class="legal-layout">
+					<aside class="legal-nav-card" aria-label="Legal Documents">
+						<div style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--color-blurple);padding:4px 8px;">
+							Policies &amp; Terms
+						</div>
+						<a class="legal-nav-link" data-legal-link="/terms" href="/terms">
+							<span>Terms of Service</span><span>→</span>
+						</a>
+						<a class="legal-nav-link" data-legal-link="/privacy" href="/privacy">
+							<span>Privacy Policy</span><span>→</span>
+						</a>
+						<a class="legal-nav-link" data-legal-link="/guidelines" href="/guidelines">
+							<span>Community Guidelines</span><span>→</span>
+						</a>
+						<a class="legal-nav-link" data-legal-link="/legal" href="/legal">
+							<span>Legal &amp; License Hub</span><span>→</span>
+						</a>
+						<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);">
+							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="__HOME__" style="width:100%;">← Back to __INSTANCE_NAME__</a>
+						</div>
+					</aside>
+
+					<article class="legal-doc-card">
+						<div>
+							<span class="zy-eyebrow">Official Policy Document</span>
+							<h1 class="zy-heading" style="margin-top:14px;">__TITLE__</h1>
+							<p style="font-size:13px;color:var(--color-greyple);margin-top:8px;">
+								Effective &amp; Updated for __INSTANCE_NAME__ Platform
+							</p>
+						</div>
+
+						__LEGAL_BODY__
+
+						__CONTACT__
+
+						<div style="padding-top:16px;border-top:1px solid rgba(255,255,255,0.1);display:flex;gap:12px;flex-wrap:wrap;">
+							<a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Open __INSTANCE_NAME__</a>
+							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/safety">Safety &amp; Security Center</a>
+						</div>
+					</article>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer data-zy-footer></footer>
+	<script src="/site/site.js"></script>
+	<script>
+		(function () {
+			var p = (window.location.pathname || "/terms").toLowerCase();
+			var links = document.querySelectorAll("[data-legal-link]");
+			for (var i = 0; i < links.length; i++) {
+				var href = links[i].getAttribute("data-legal-link");
+				if (p === href || (p === "/tos" && href === "/terms") || (p === "/legal.html" && href === "/legal")) {
+					links[i].classList.add("is-active");
+				}
+			}
+		})();
+	</script>
+</body>
 </html>

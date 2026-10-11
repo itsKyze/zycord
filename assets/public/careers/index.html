@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Careers at __INSTANCE_NAME__ — Build the Future of Real-Time Communication</title>
+	<meta name="description" content="Explore engineering, WebRTC media, security, and design disciplines at __INSTANCE_NAME__." />
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+	<link rel="stylesheet" href="/site/site.css" />
+	<style>
+		.careers-carousel {
+			border-radius: var(--radius-feature-panels);
+			background: linear-gradient(145deg, rgba(28, 32, 84, 0.9), rgba(16, 18, 48, 0.96));
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			padding: clamp(24px, 4vw, 48px);
+			box-shadow: 0 28px 64px rgba(0, 0, 0, 0.48);
+		}
+		.carousel-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 16px;
+			margin-bottom: 28px;
+		}
+		.carousel-counter {
+			display: inline-flex;
+			align-items: center;
+			gap: 12px;
+			padding: 8px 16px;
+			border-radius: var(--radius-pills);
+			background: rgba(88, 101, 242, 0.22);
+			border: 1px solid rgba(136, 145, 242, 0.45);
+			font-weight: 800;
+			font-size: 14px;
+		}
+		.carousel-controls {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+		.carousel-nav-btn {
+			width: 44px;
+			height: 44px;
+			border-radius: 12px;
+			border: 1px solid rgba(255, 255, 255, 0.24);
+			background: rgba(255, 255, 255, 0.08);
+			color: var(--color-snow);
+			font-size: 18px;
+			font-weight: 800;
+			cursor: pointer;
+			transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+		}
+		.carousel-nav-btn:hover {
+			background: var(--color-blurple);
+			border-color: var(--color-blurple);
+			transform: translateY(-1px);
+		}
+		.carousel-dots {
+			display: flex;
+			gap: 8px;
+			margin-top: 24px;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
+		.carousel-dot {
+			width: 28px;
+			height: 6px;
+			border-radius: 99px;
+			background: rgba(255, 255, 255, 0.2);
+			border: none;
+			cursor: pointer;
+			transition: background 0.2s ease, width 0.2s ease;
+		}
+		.carousel-dot.is-active {
+			background: var(--color-blurple);
+			width: 44px;
+		}
+	</style>
+</head>
+<body>
+	<header data-zy-navbar></header>
+
+	<main>
+		<!-- Careers Hero -->
+		<section class="zy-section" style="padding-top:56px;text-align:center;">
+			<div class="zy-container">
+				<span class="zy-eyebrow">Careers &amp; Engineering Culture</span>
+				<h1 class="zy-display" style="max-width:920px;margin:18px auto 0;">
+					CREATE SPACE FOR EVERYONE TO FIND BELONGING
+				</h1>
+				<p class="zy-body-lg" style="max-width:720px;margin:18px auto 32px;">
+					At __INSTANCE_NAME__, small high-ownership teams engineer low-latency WebRTC media routers, zero-knowledge E2EE vaults, expressive profile cosmetics, and real-time community infrastructure.
+				</p>
+				<div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
+					<a class="zy-btn zy-btn-primary" href="#disciplines">Explore Engineering Disciplines</a>
+					<a class="zy-btn zy-btn-ghost" href="/developers">View Open-Source &amp; API Hub</a>
+				</div>
+			</div>
+		</section>
+
+		<!-- Interactive 1 of 9 to 9 of 9 Carousel -->
+		<section class="zy-section" style="padding-top:8px;">
+			<div class="zy-container">
+				<div class="careers-carousel" aria-label="Life and Engineering at Zycord Carousel">
+					<div class="carousel-header">
+						<div>
+							<span class="zy-eyebrow" style="margin-bottom:8px;">Inside __INSTANCE_NAME__</span>
+							<h2 class="zy-heading-sm">HOW WE BUILD &amp; COLLABORATE</h2>
+						</div>
+						<div style="display:flex;align-items:center;gap:14px;">
+							<span class="carousel-counter" id="carousel-counter-label">1 of 9</span>
+							<div class="carousel-controls">
+								<button type="button" class="carousel-nav-btn" id="carousel-prev" aria-label="Previous slide">←</button>
+								<button type="button" class="carousel-nav-btn" id="carousel-next" aria-label="Next slide">→</button>
+							</div>
+						</div>
+					</div>
+
+					<div id="carousel-slide-body" class="zy-showcase-grid" style="align-items:stretch;">
+						<!-- Populated dynamically by script below with Slide 1 default rendered for instant paint -->
+						<div class="zy-showcase-copy">
+							<span class="zy-eyebrow" id="slide-tag">01 · Real-Time Media</span>
+							<h3 class="zy-heading" id="slide-title" style="font-size:clamp(26px,3.2vw,40px);">SUB-20MS VOICE &amp; 60FPS STREAMING AT SCALE</h3>
+							<p class="zy-body-lg" id="slide-desc">
+								We obsess over every millisecond of audio packet jitter and video frame pacing so friends feel like they're sitting on the same couch.
+							</p>
+						</div>
+						<div class="zy-app-window" style="display:flex;flex-direction:column;justify-content:center;padding:28px;background:linear-gradient(135deg,#191d48,#2d1846);">
+							<div style="font-family:var(--font-mono);font-size:13px;color:var(--color-spring-green);" id="slide-metric">metric: webrtc_sfu_rtt_p95 = 14.2ms</div>
+							<div style="font-weight:800;font-size:22px;margin-top:10px;" id="slide-highlight">Opus 96kbps + Hardware H.264/VP9 1080p60</div>
+							<p style="color:var(--color-fog);font-size:14px;margin-top:8px;" id="slide-subnote">
+								Engineered directly into the __INSTANCE_NAME__ bundle with automatic TURN/STUN NAT traversal.
+							</p>
+						</div>
+					</div>
+
+					<div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Slide selector"></div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Disciplines Grid -->
+		<section class="zy-section" id="disciplines">
+			<div class="zy-container">
+				<div style="text-align:center;max-width:740px;margin:0 auto 44px;">
+					<span class="zy-eyebrow">Departments &amp; Teams</span>
+					<h2 class="zy-heading" style="margin-top:14px;">DISCIPLINES AT __INSTANCE_NAME__</h2>
+					<p class="zy-body-lg" style="margin-top:12px;">
+						Curious how __INSTANCE_NAME__ is built? Explore our core engineering and product areas or contribute directly via our Developer Ecosystem.
+					</p>
+				</div>
+
+				<div class="zy-grid-3">
+					<article class="zy-card">
+						<div class="zy-card-icon">📡</div>
+						<h3 class="zy-heading-sm" style="font-size:20px;">VOICE, VIDEO &amp; WEBRTC</h3>
+						<p class="zy-body">
+							Selective Forwarding Units (SFU), adaptive bitrate control, acoustic echo cancellation, and 60fps desktop screen capture.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/status" style="margin-top:auto;">View Live Media Metrics →</a>
+					</article>
+
+					<article class="zy-card">
+						<div class="zy-card-icon">⚡</div>
+						<h3 class="zy-heading-sm" style="font-size:20px;">DISTRIBUTED GATEWAY &amp; API</h3>
+						<p class="zy-body">
+							High-throughput WebSocket event fanout, presence state synchronization, 64-bit permission bitfields, and REST v9/v10 APIs.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/developers" style="margin-top:auto;">Explore API Architecture →</a>
+					</article>
+
+					<article class="zy-card">
+						<div class="zy-card-icon">🔐</div>
+						<h3 class="zy-heading-sm" style="font-size:20px;">CRYPTOGRAPHY &amp; SAFETY</h3>
+						<p class="zy-body">
+							Client-side ECDH + AES-GCM End-to-End Encrypted DMs, zero-knowledge key backups, WebAuthn Passkeys, and AutoMod engines.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/safety" style="margin-top:auto;">Visit Safety Center →</a>
+					</article>
+
+					<article class="zy-card">
+						<div class="zy-card-icon">🎨</div>
+						<h3 class="zy-heading-sm" style="font-size:20px;">DESIGN &amp; COLLECTIBLES</h3>
+						<p class="zy-body">
+							Crafting Avatar Decorations, Nameplates, full-height Profile Effects, perimeter Profile Frames, and tactile motion design.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/nitro" style="margin-top:auto;">See Collectibles Studio →</a>
+					</article>
+
+					<article class="zy-card">
+						<div class="zy-card-icon">🖥️</div>
+						<h3 class="zy-heading-sm" style="font-size:20px;">DESKTOP &amp; WEB CLIENTS</h3>
+						<p class="zy-body">
+							Electron Windows native integration, PWA offline caching, instant channel switching, and custom client runtime patches.
+						</p>
+						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/download" style="margin-top:auto;">Download Clients →</a>
+					</article>
+
+					<article class="zy-card">
+						<div class="zy-card-icon">🤖</div>
+						<h3 class="zy-heading-sm" style="font-size:20px;">DEVELOPER PLATFORM</h3>
+						<p class="zy-body">
+							Empowering community builders with OAuth2 identity providers, webhooks, bot tokens, and interactive slash commands.
+						</p>
+						<a class="zy-btn zy-btn-primary zy-btn-sm" href="/developers/applications" style="margin-top:auto;">Open Developer Portal →</a>
+					</article>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<footer data-zy-footer></footer>
+	<script src="/site/site.js"></script>
+	<script>
+		(function () {
+			var slides = [
+				{
+					tag: "01 · Real-Time Media",
+					title: "SUB-20MS VOICE & 60FPS STREAMING AT SCALE",
+					desc: "We obsess over every millisecond of audio packet jitter and video frame pacing so friends feel like they're sitting on the same couch.",
+					metric: "metric: webrtc_sfu_rtt_p95 = 14.2ms",
+					highlight: "Opus 96kbps + Hardware H.264/VP9 1080p60",
+					subnote: "Engineered directly into the Zycord bundle with automatic TURN/STUN NAT traversal."
+				},
+				{
+					tag: "02 · Privacy by Design",
+					title: "CLIENT-SIDE END-TO-END ENCRYPTED DMS",
+					desc: "Private conversations use WebCrypto ECDH P-256 key agreement and AES-256-GCM encryption before a single byte leaves your browser or desktop app.",
+					metric: "cipher: ECDH-P256 + AES-256-GCM",
+					highlight: "Zero-Knowledge Recovery Key Vault",
+					subnote: "Seamless device migration with user-controlled cryptographic recovery keys."
+				},
+				{
+					tag: "03 · Self-Expression",
+					title: "4-LAYER PROFILE COSMETICS ENGINE",
+					desc: "We built full support for Avatar Decorations, custom Nameplates, full-height Profile Effects, and non-obscuring perimeter Profile Frames.",
+					metric: "cosmetics: decoration + nameplate + effect + frame",
+					highlight: "Real-Time Gateway Synchronization",
+					subnote: "Every cosmetic equips instantaneously across guild member lists, chat messages, and profile modals."
+				},
+				{
+					tag: "04 · Developer First",
+					title: "100% OPENAPI & BOT ECOSYSTEM COMPATIBILITY",
+					desc: "Developers can register applications, mint bot tokens, configure OAuth2 redirects, and inspect live OpenAPI specs right from the built-in portal.",
+					metric: "endpoint: /_spacebar/api/openapi.json",
+					highlight: "Self-Hosted Developer Portal & Bot Gateway",
+					subnote: "Full support for webhooks, rich embeds, reactions, and granular permission scopes."
+				},
+				{
+					tag: "05 · Community Safety",
+					title: "AUTOMOD & 64-BIT PERMISSION HIERARCHIES",
+					desc: "Server owners get fine-grained 64-bit role bitfields, channel overwrites, automated keyword filtering, and comprehensive audit logs.",
+					metric: "permissions: 64-bit BigInt bitfield engine",
+					highlight: "Real-Time Raid & Scam Mitigation",
+					subnote: "Built to keep communities welcoming without slowing down legitimate conversation."
+				},
+				{
+					tag: "06 · Connected Identity",
+					title: "12+ OAUTH2 & GAMING ACCOUNT CONNECTIONS",
+					desc: "Link Steam, GitHub, Twitch, YouTube, Spotify, Epic Games, PlayStation, Xbox, Battle.net, Reddit, TikTok, and X directly to your profile.",
+					metric: "connections: verified OAuth2 + Rich Presence",
+					highlight: "Live Game & Music Activity Cards",
+					subnote: "Show friends what you're playing or building in real time."
+				},
+				{
+					tag: "07 · Native + Web Parity",
+					title: "UNIFIED ELECTRON DESKTOP & BROWSER RUNTIME",
+					desc: "Whether you install ZycordSetup.exe on Windows or launch /app in a browser tab, you get the exact same fast, dark-themed experience.",
+					metric: "build: Windows x64 NSIS + Progressive Web App",
+					highlight: "Zero Feature Lag Across Platforms",
+					subnote: "Instant client patch pipeline delivers UI improvements without waiting for app store reviews."
+				},
+				{
+					tag: "08 · Operational Transparency",
+					title: "LIVE TELEMETRY & PUBLIC STATUS DASHBOARD",
+					desc: "Every Zycord instance exposes live health checks, gateway ping, WebRTC media status, and uptime history at /status.",
+					metric: "status: /status/summary.json · 99.98% uptime",
+					highlight: "Automated Subsystem Probing",
+					subnote: "Real-time visibility into API, Gateway, Database, CDN, and Voice infrastructure."
+				},
+				{
+					tag: "09 · Built for Belonging",
+					title: "CRAFTED FOR GAMERS, CREATORS & COMMUNITIES",
+					desc: "Every pixel—from our deep cosmic indigo surfaces to our Blurple CTAs—is designed to make hanging out online feel effortless and alive.",
+					metric: "theme: Deep Cosmic Indigo (#0E0F2D) + Blurple (#5865F2)",
+					highlight: "Jump Into Zycord Today",
+					subnote: "Open Zycord in your browser or start building on our API."
+				}
+			];
+
+			var index = 0;
+			var counterEl = document.getElementById("carousel-counter-label");
+			var tagEl = document.getElementById("slide-tag");
+			var titleEl = document.getElementById("slide-title");
+			var descEl = document.getElementById("slide-desc");
+			var metricEl = document.getElementById("slide-metric");
+			var highlightEl = document.getElementById("slide-highlight");
+			var subnoteEl = document.getElementById("slide-subnote");
+			var dotsWrap = document.getElementById("carousel-dots");
+			var prevBtn = document.getElementById("carousel-prev");
+			var nextBtn = document.getElementById("carousel-next");
+
+			function renderSlide(i) {
+				index = (i + slides.length) % slides.length;
+				var s = slides[index];
+				if (counterEl) counterEl.textContent = (index + 1) + " of " + slides.length;
+				if (tagEl) tagEl.textContent = s.tag;
+				if (titleEl) titleEl.textContent = s.title;
+				if (descEl) descEl.textContent = s.desc;
+				if (metricEl) metricEl.textContent = s.metric;
+				if (highlightEl) highlightEl.textContent = s.highlight;
+				if (subnoteEl) subnoteEl.textContent = s.subnote;
+
+				if (dotsWrap) {
+					var dots = dotsWrap.querySelectorAll(".carousel-dot");
+					for (var d = 0; d < dots.length; d++) {
+						dots[d].classList.toggle("is-active", d === index);
+					}
+				}
+			}
+
+			if (dotsWrap) {
+				slides.forEach(function (_, idx) {
+					var btn = document.createElement("button");
+					btn.type = "button";
+					btn.className = "carousel-dot" + (idx === 0 ? " is-active" : "");
+					btn.setAttribute("aria-label", "Go to slide " + (idx + 1));
+					btn.addEventListener("click", function () { renderSlide(idx); });
+					dotsWrap.appendChild(btn);
+				});
+			}
+
+			if (prevBtn) prevBtn.addEventListener("click", function () { renderSlide(index - 1); });
+			if (nextBtn) nextBtn.addEventListener("click", function () { renderSlide(index + 1); });
+		})();
+	</script>
+</body>
+</html>

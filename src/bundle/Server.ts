@@ -83,8 +83,6 @@ async function main() {
         );
     }
 
-    if (Config.get().client.useTestClient) app.get("/", (req, res) => res.redirect("/app"));
-
     // before the port opens, since the gateway and voice sockets are served from the moment it does
     await clearCallStateOnStartup();
     await new Promise((resolve) => void server.listen({ port }, () => resolve(undefined)));
