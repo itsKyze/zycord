@@ -16,33 +16,21 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import fs from "node:fs";
 import path from "node:path";
-import { Router, Request, Response } from "express";
-import { route } from "@spacebar/api/middlewares";
+import express, { Router } from "express";
 import { PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
+const SITE_FOLDER = path.join(PUBLIC_ASSETS_FOLDER, "site");
 
-const siteCss = fs.readFileSync(path.join(PUBLIC_ASSETS_FOLDER, "site", "site.css"), "utf8");
-const siteJs = fs.readFileSync(path.join(PUBLIC_ASSETS_FOLDER, "site", "site.js"), "utf8");
-
-router.get(
-	"/site.css",
-	route({ spacebarOnly: true, authentication: "never" }),
-	(_req: Request, res: Response) => {
-		res.set("Cache-Control", "public, max-age=3600");
-		return res.type("css").send(siteCss);
-	},
-);
-
-router.get(
-	"/site.js",
-	route({ spacebarOnly: true, authentication: "never" }),
-	(_req: Request, res: Response) => {
-		res.set("Cache-Control", "public, max-age=3600");
-		return res.type("application/javascript").send(siteJs);
-	},
+router.use(
+	express.static(SITE_FOLDER, {
+		index: false,
+		maxAge: "1h",
+		setHeaders: (res) => {
+			res.set("Cache-Control", "public, max-age=3600");
+		},
+	}),
 );
 
 export default router;

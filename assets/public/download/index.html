@@ -12,15 +12,20 @@
 	<header data-zy-navbar></header>
 
 	<main>
-		<!-- Download Hero -->
-		<section class="zy-section" style="padding-top:56px;">
-			<div class="zy-container">
+		<!-- Download Hero with 3D Illustration & Floating Props -->
+		<section class="zy-section" style="padding-top:48px;position:relative;overflow:hidden;">
+			<img src="/site/media/star-lg.svg" alt="" aria-hidden="true" class="zy-star d1" style="width:28px;top:8%;left:6%;" />
+			<img src="/site/media/star-m.svg" alt="" aria-hidden="true" class="zy-star d2" style="width:22px;top:14%;right:9%;" />
+
+			<div class="zy-container" style="position:relative;">
+				<img src="/site/media/clyde-cube-3d.svg" alt="" aria-hidden="true" class="zy-float-prop" style="width:112px;top:-42px;right:6%;" />
+
 				<div class="zy-showcase-card">
 					<div class="zy-showcase-grid">
 						<div class="zy-showcase-copy">
 							<div>
 								<span class="zy-eyebrow">
-									<span class="zy-eyebrow-dot"></span>
+									<span class="zy-eyebrow-dot" data-zy-status-dot></span>
 									<span>Latest Release v4.0 · 64-bit Desktop &amp; Web</span>
 								</span>
 							</div>
@@ -29,53 +34,28 @@
 								Experience native system tray integration, global push-to-talk keybinds, hardware-accelerated 60fps screen share, and Rich Presence game detection with the Windows Desktop client — or jump in immediately from your browser.
 							</p>
 							<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:8px;">
-								<a class="zy-btn zy-btn-primary" href="/download/windows">
+								<a class="zy-btn zy-btn-secondary" href="/download/windows">
 									<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
 									<span>Download for Windows (ZycordSetup.exe)</span>
 								</a>
-								<a class="zy-btn zy-btn-secondary" data-zy-open-app href="/app">
+								<a class="zy-btn zy-btn-primary" data-zy-open-app href="/app">
 									<span>Open __INSTANCE_NAME__ in Browser</span>
 								</a>
 							</div>
-							<div style="font-size:13px;color:var(--color-greyple);">
+							<div style="font-size:13px;color:var(--color-fog);">
 								Windows 10 / 11 (64-bit) · Signed NSIS Installer · Auto-Updater Built-In
 							</div>
 						</div>
 
-						<!-- Desktop Client Preview Window -->
-						<div class="zy-app-window">
-							<div class="zy-app-titlebar">
-								<div class="zy-window-dots">
-									<span class="zy-window-dot red"></span>
-									<span class="zy-window-dot amber"></span>
-									<span class="zy-window-dot green"></span>
-								</div>
-								<span>Zycord Desktop — Native Windows Shell</span>
-								<span style="color:var(--color-spring-green);font-weight:700;">v4.0 Stable</span>
-							</div>
-							<div style="padding:24px;display:flex;flex-direction:column;gap:16px;background:#1e2124;">
-								<div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border-radius:12px;background:#282b30;border:1px solid rgba(255,255,255,0.08);">
-									<div>
-										<div style="font-weight:800;font-size:15px;">🪟 Windows Native Features</div>
-										<div style="font-size:13px;color:var(--color-fog);">System tray minimize, startup launch &amp; hardware video capture</div>
-									</div>
-									<span class="zy-status-pill">Included</span>
-								</div>
-								<div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border-radius:12px;background:#282b30;border:1px solid rgba(255,255,255,0.08);">
-									<div>
-										<div style="font-weight:800;font-size:15px;">🎙️ Global Push-to-Talk &amp; Keybinds</div>
-										<div style="font-size:13px;color:var(--color-fog);">Talk while tabbed into fullscreen DirectX / Vulkan games</div>
-									</div>
-									<span class="zy-status-pill">Included</span>
-								</div>
-								<div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border-radius:12px;background:#282b30;border:1px solid rgba(255,255,255,0.08);">
-									<div>
-										<div style="font-weight:800;font-size:15px;">🔐 End-to-End Encrypted DMs</div>
-										<div style="font-size:13px;color:var(--color-fog);">Local WebCrypto key vault &amp; recovery key backup</div>
-									</div>
-									<span class="zy-status-pill">Included</span>
-								</div>
-							</div>
+						<!-- 3D Cross-Platform Scene Stage -->
+						<div class="zy-scene-stage stage-cerulean" style="flex-direction:column;gap:16px;">
+							<img
+								src="/site/media/platforms-3d.webp"
+								alt="Zycord 3D Desktop Monitor, Smartphone, and Gaming Controller"
+								style="width:100%;height:auto;border-radius:18px;border:1px solid rgba(255,255,255,0.22);box-shadow:0 22px 54px rgba(0,0,0,0.55);"
+								width="1280"
+								height="720"
+							/>
 						</div>
 					</div>
 				</div>
@@ -145,7 +125,7 @@
 		<section class="zy-section" style="padding-top:16px;">
 			<div class="zy-container">
 				<div class="zy-grid-2">
-					<div class="zy-showcase-card">
+					<div class="zy-showcase-card" style="padding:36px;">
 						<h2 class="zy-heading-sm">SYSTEM REQUIREMENTS</h2>
 						<ul class="zy-feature-bullets" style="margin-top:20px;">
 							<li><strong>Windows Desktop:</strong> Windows 10 version 1903+ or Windows 11 (64-bit), 4 GB RAM, DirectX 11 compatible GPU</li>
