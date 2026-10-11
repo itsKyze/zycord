@@ -664,6 +664,22 @@
         className: "zy-float-prop tilt",
         style: { width: "118px", top: "-36px", left: "-18px", zIndex: 5 }
       }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/hero-clyde-shadow.webp",
+        alt: "",
+        "aria-hidden": "true",
+        style: {
+          position: "absolute",
+          width: "92px",
+          top: "44px",
+          left: "-6px",
+          opacity: "0.55",
+          zIndex: 1,
+          pointerEvents: "none"
+        }
+      }
     ), /* @__PURE__ */ h("div", { className: "hero-3d-composite" }, /* @__PURE__ */ h(
       "img",
       {
@@ -687,6 +703,22 @@
         alt: "",
         "aria-hidden": "true",
         className: "hero-char-girl"
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/hero-wumpus-leaf.webp",
+        alt: "",
+        "aria-hidden": "true",
+        style: {
+          position: "absolute",
+          left: "18%",
+          bottom: "-4%",
+          width: "16%",
+          height: "auto",
+          zIndex: 4,
+          pointerEvents: "none"
+        }
       }
     ), /* @__PURE__ */ h(
       "img",
@@ -811,7 +843,7 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec3-hop-in.mp4", type: "video/mp4" })
       )
-    ))))), /* @__PURE__ */ h("div", { className: "zy-marquee-band", "aria-hidden": "true" }, /* @__PURE__ */ h("div", { className: "zy-marquee-track" }, [0, 1, 2, 3].map(() => /* @__PURE__ */ h("div", { className: "zy-marquee-item" }, /* @__PURE__ */ h("span", null, "TALK"), /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "" }), /* @__PURE__ */ h("span", null, "PLAY"), /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "" }), /* @__PURE__ */ h("span", null, "CHAT"), /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "" }), /* @__PURE__ */ h("span", null, "HANG OUT"), /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "" }))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "presence" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
+    ))))), /* @__PURE__ */ h("div", { className: "zy-marquee-band", "aria-hidden": "true" }, /* @__PURE__ */ h("div", { className: "zy-marquee-track" }, [0, 1, 2, 3].map(() => /* @__PURE__ */ h("div", { className: "zy-marquee-item" }, /* @__PURE__ */ h("span", null, "TALK"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 38, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "PLAY"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 38, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "CHAT"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 38, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "HANG OUT"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 38, color: "#ffffff" })))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "presence" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/prop-coin.webp",
@@ -855,6 +887,24 @@
         "aria-hidden": "true",
         className: "zy-float-prop",
         style: { width: "152px", top: "-68px", right: "10%" }
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/sec5-card-characters.png",
+        alt: "",
+        "aria-hidden": "true",
+        className: "zy-float-prop tilt",
+        style: { width: "124px", top: "-52px", left: "6%" }
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/sec5-woman-bottom.webp",
+        alt: "",
+        "aria-hidden": "true",
+        className: "zy-float-prop",
+        style: { width: "136px", bottom: "-48px", right: "5%" }
       }
     ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "ALWAYS HAVE SOMETHING TO DO TOGETHER"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat.")), /* @__PURE__ */ h(
       "div",
@@ -932,6 +982,25 @@
     ), /* @__PURE__ */ h(
       "img",
       {
+        src: "/site/media/discord/footer-smoke.gif",
+        alt: "",
+        "aria-hidden": "true",
+        style: {
+          position: "absolute",
+          left: "52%",
+          bottom: "24%",
+          transform: "translateX(-50%)",
+          width: "clamp(110px, 14vw, 210px)",
+          height: "auto",
+          zIndex: 2,
+          pointerEvents: "none",
+          opacity: "0.85"
+        },
+        loading: "lazy"
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
         src: "/site/media/discord/footer-wumpus-sitting.webp",
         alt: "Wumpus sitting on the cosmic horizon",
         className: "final-horizon-wumpus",
@@ -951,7 +1020,7 @@
 
   // assets/public/jsx/pages/SubPages.jsx
   function DownloadPage() {
-    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/star-lg.svg", alt: "", "aria-hidden": "true", className: "zy-star d1", style: { width: "28px", top: "8%", left: "6%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/star-m.svg", alt: "", "aria-hidden": "true", className: "zy-star d2", style: { width: "22px", top: "14%", right: "9%" } }), /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/download-clyde-point.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "128px", top: "-46px", right: "5%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, /* @__PURE__ */ h("span", { className: "zy-eyebrow-dot", "data-zy-status-dot": true }), /* @__PURE__ */ h("span", null, "Latest Release v4.0 · 64-bit Desktop & Web"))), /* @__PURE__ */ h("h1", { className: "zy-display" }, "GET ZYCORD FOR ANY DEVICE"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "An adventure awaits. Hang out with your friends on our desktop app and keep the conversation going on mobile and web."), /* @__PURE__ */ h("div", { style: { display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "8px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/download/windows" }, /* @__PURE__ */ h("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }), /* @__PURE__ */ h("polyline", { points: "7 10 12 15 17 10" }), /* @__PURE__ */ h("line", { x1: "12", y1: "15", x2: "12", y2: "3" })), /* @__PURE__ */ h("span", null, "Download for Windows")), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", "data-zy-open-app": true, href: "/app" }, /* @__PURE__ */ h("span", null, "Open Zycord in Browser"))), /* @__PURE__ */ h("div", { style: { fontSize: "13px", color: "var(--color-fog)" } }, "Windows 10 / 11 (64-bit) · Signed NSIS Installer (ZycordSetup.exe)")), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-cerulean", style: { position: "relative" } }, /* @__PURE__ */ h(
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/star-lg.svg", alt: "", "aria-hidden": "true", className: "zy-star d1", style: { width: "28px", top: "8%", left: "6%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/star-m.svg", alt: "", "aria-hidden": "true", className: "zy-star d2", style: { width: "22px", top: "14%", right: "9%" } }), /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/download-clyde-point.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "128px", top: "-46px", right: "5%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/download-wumpus-point.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "136px", bottom: "-44px", left: "4%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/download-trophy.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "96px", top: "-42px", left: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, /* @__PURE__ */ h("span", { className: "zy-eyebrow-dot", "data-zy-status-dot": true }), /* @__PURE__ */ h("span", null, "Latest Release v4.0 · 64-bit Desktop & Web"))), /* @__PURE__ */ h("h1", { className: "zy-display" }, "GET ZYCORD FOR ANY DEVICE"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "An adventure awaits. Hang out with your friends on our desktop app and keep the conversation going on mobile and web."), /* @__PURE__ */ h("div", { style: { display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "8px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/download/windows" }, /* @__PURE__ */ h("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }), /* @__PURE__ */ h("polyline", { points: "7 10 12 15 17 10" }), /* @__PURE__ */ h("line", { x1: "12", y1: "15", x2: "12", y2: "3" })), /* @__PURE__ */ h("span", null, "Download for Windows")), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", "data-zy-open-app": true, href: "/app" }, /* @__PURE__ */ h("span", null, "Open Zycord in Browser"))), /* @__PURE__ */ h("div", { style: { fontSize: "13px", color: "var(--color-fog)" } }, "Windows 10 / 11 (64-bit) · Signed NSIS Installer (ZycordSetup.exe)")), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-cerulean", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/download-hero.webp",
@@ -1031,7 +1100,7 @@
 
   // assets/public/jsx/pages/DevelopersHubPage.jsx
   function DevelopersHubPage() {
-    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-fire-extinguisher.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "92px", top: "6%", left: "3%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-cog.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "86px", top: "10%", right: "4%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-magnet.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "84px", bottom: "12%", left: "4%" } }), /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-rubber-duck.png", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "96px", top: "-42px", right: "8%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, /* @__PURE__ */ h("span", { className: "zy-eyebrow-dot", "data-zy-status-dot": true }), /* @__PURE__ */ h("span", null, "Zycord Developer Platform · Social SDK, Bots & Activities"))), /* @__PURE__ */ h("h1", { className: "zy-display" }, "BUILD GAMES, APPS & BOTS WHERE THE WORLD PLAYS"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Integrate Zycord's Social SDK, build automated Gateway bots, launch multiplayer embedded Activities, and power Rich Presence across desktop and web."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "8px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/developers/applications" }, /* @__PURE__ */ h("span", null, "Open Developer Portal (Applications)")), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/_spacebar/api/openapi.json", target: "_blank", rel: "noopener" }, /* @__PURE__ */ h("span", null, "OpenAPI JSON Spec ↗")))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-blurple" }, /* @__PURE__ */ h(
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-fire-extinguisher.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "92px", top: "6%", left: "3%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-cog.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "86px", top: "10%", right: "4%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-magnet.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "84px", bottom: "12%", left: "4%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-hammer.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "94px", bottom: "10%", right: "4%" } }), /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-rubber-duck.png", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "96px", top: "-42px", right: "8%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-spider.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "88px", top: "-38px", left: "7%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, /* @__PURE__ */ h("span", { className: "zy-eyebrow-dot", "data-zy-status-dot": true }), /* @__PURE__ */ h("span", null, "Zycord Developer Platform · Social SDK, Bots & Activities"))), /* @__PURE__ */ h("h1", { className: "zy-display" }, "BUILD GAMES, APPS & BOTS WHERE THE WORLD PLAYS"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Integrate Zycord's Social SDK, build automated Gateway bots, launch multiplayer embedded Activities, and power Rich Presence across desktop and web."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "8px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/developers/applications" }, /* @__PURE__ */ h("span", null, "Open Developer Portal (Applications)")), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/_spacebar/api/openapi.json", target: "_blank", rel: "noopener" }, /* @__PURE__ */ h("span", null, "OpenAPI JSON Spec ↗")))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-blurple" }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/dev-hero-16x9.webp",
