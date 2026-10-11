@@ -28,7 +28,7 @@ router.use(
 		index: false,
 		maxAge: "1h",
 		setHeaders: (res) => {
-			res.set("Cache-Control", "public, max-age=3600");
+			res.set("Cache-Control", "no-cache");
 		},
 	}),
 );

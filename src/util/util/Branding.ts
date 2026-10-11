@@ -71,7 +71,42 @@ export const instanceIconTile = () => {
     return `<svg class="brand-icon" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="15" fill="${BRAND_COLOR}"/><g transform="translate(6 6) scale(1.5)" fill="#fff"><path fill-rule="evenodd" d="${INSTANCE_ICON_PATH}"/><path d="${INSTANCE_WHISKERS_PATH}"/></g></svg>`;
 };
 
-export const brandPage = (html: string) => html.replaceAll("__INSTANCE_NAME__", escapeXml(instanceName())).replaceAll("__INSTANCE_ICON__", instanceIconTile());
+const computeAssetBundleVersion = (): string => {
+    try {
+        const h = createHash("sha1");
+        for (const rel of [
+            ["public", "site", "site.js"],
+            ["public", "site", "site.css"],
+            ["public", "developers", "portal-shell.js"],
+            ["public", "admin", "admin-shell.js"],
+            ["public", "status", "status.js"],
+        ]) {
+            const p = path.join(ASSETS_FOLDER, ...rel);
+            const buf = fs.existsSync(p) ? fs.readFileSync(p) : null;
+            if (buf) h.update(buf);
+        }
+        return h.digest("hex").slice(0, 10);
+    } catch {
+        return Date.now().toString(36);
+    }
+};
+
+export const ASSET_BUNDLE_VERSION = computeAssetBundleVersion();
+
+export const brandPage = (html: string) =>
+    html
+        .replaceAll("__INSTANCE_NAME__", escapeXml(instanceName()))
+        .replaceAll("__INSTANCE_ICON__", instanceIconTile())
+        .replaceAll('"/site/site.css"', `"/site/site.css?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/site/site.js"', `"/site/site.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/developers/portal.css"', `"/developers/portal.css?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/developers/portal.js"', `"/developers/portal.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/developers/portal-shell.js"', `"/developers/portal-shell.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/admin/admin.css"', `"/admin/admin.css?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/admin/admin.js"', `"/admin/admin.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/admin/admin-shell.js"', `"/admin/admin-shell.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/status/status.css"', `"/status/status.css?v=${ASSET_BUNDLE_VERSION}"`)
+        .replaceAll('"/status/status.js"', `"/status/status.js?v=${ASSET_BUNDLE_VERSION}"`);
 
 export const sendBrandImage = (res: Response, image: BrandImage, cacheControl = "public, max-age=21600") => {
     res.set("Cache-Control", cacheControl);

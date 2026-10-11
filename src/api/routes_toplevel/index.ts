@@ -106,7 +106,7 @@ router.get(
 		authentication: "never",
 	}),
 	(_req: Request, res: Response) => {
-		res.set("Cache-Control", "public, max-age=3600");
+		res.set("Cache-Control", "no-cache");
 		return res.type("html").send(brandPage(page));
 	},
 );
@@ -120,7 +120,7 @@ for (const [routePath, meta] of Object.entries(JSX_MARKETING_PAGES)) {
 			authentication: "never",
 		}),
 		(_req: Request, res: Response) => {
-			res.set("Cache-Control", "public, max-age=3600");
+			res.set("Cache-Control", "no-cache");
 			return res.type("html").send(brandPage(htmlTemplate));
 		},
 	);

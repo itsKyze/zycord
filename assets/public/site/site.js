@@ -915,7 +915,7 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec4-chill.mp4", type: "video/mp4" })
       )
-    ))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "activities", style: { paddingTop: "84px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
+    ))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "activities", style: { paddingTop: "96px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/sec5-woman-bottom.webp",
@@ -923,11 +923,12 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "-114px",
-          right: "28%",
-          width: "172px",
+          top: "4px",
+          right: "27.5%",
+          width: "148px",
           height: "auto",
-          zIndex: 7,
+          zIndex: 0,
+          opacity: "0.42",
           pointerEvents: "none"
         }
       }
@@ -939,11 +940,28 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "-126px",
-          right: "11%",
-          width: "194px",
+          top: "-86px",
+          right: "25.5%",
+          width: "188px",
           height: "auto",
           zIndex: 6,
+          pointerEvents: "none"
+        }
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/sec5-garfield-simon.webp",
+        alt: "",
+        "aria-hidden": "true",
+        style: {
+          position: "absolute",
+          top: "-116px",
+          right: "9.5%",
+          width: "174px",
+          height: "auto",
+          zIndex: 1,
+          clipPath: "inset(0 0 43.5% 0)",
           pointerEvents: "none"
         }
       }
@@ -955,9 +973,9 @@
         "aria-hidden": "true",
         className: "zy-float-prop tilt",
         style: {
-          width: "138px",
-          bottom: "-34px",
-          left: "-28px",
+          width: "146px",
+          bottom: "-36px",
+          left: "-32px",
           zIndex: 8
         }
       }
@@ -1023,6 +1041,15 @@
         src: "/site/media/discord/footer-horizon.webp",
         alt: "Zycord Cosmic Horizon Lineup",
         className: "final-horizon-bg",
+        loading: "lazy"
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/dev-clyde-3d.webp",
+        alt: "",
+        "aria-hidden": "true",
+        className: "final-horizon-clyde",
         loading: "lazy"
       }
     ), /* @__PURE__ */ h(

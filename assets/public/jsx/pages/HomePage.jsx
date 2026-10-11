@@ -347,54 +347,73 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 5: ALWAYS HAVE SOMETHING TO DO TOGETHER
-			    (Exact Match to User Screenshot 1:
+			    (Exact Match to Discord.com Screenshot 1:
 			     - Green stage with Vibin/YouTube video on LEFT
 			     - Copy on RIGHT
-			     - Woman + 2 Friends sitting on TOP-RIGHT edge of the card
-			     - 3D Radish/Turnip on BOTTOM-LEFT corner of the card)
+			     - Woman upper body (sec5-card-characters.png) leaning hands OVER top edge of card
+			     - Woman legs (sec5-woman-bottom.webp) behind the translucent glass card
+			     - Two friends hugging (sec5-garfield-simon.webp) next to her along top-right edge
+			     - 3D Radish/Turnip (prop-turnip.webp) on BOTTOM-LEFT corner of the card)
 			    ===================================================================== */}
-			<section className="zy-section" id="activities" style={{ paddingTop: "84px" }}>
+			<section className="zy-section" id="activities" style={{ paddingTop: "96px" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					{/* Woman in pink jacket leaning on top edge of card (Matches Screenshot 1) */}
+					{/* Woman's legs behind the frosted glass card */}
 					<img
 						src="/site/media/discord/sec5-woman-bottom.webp"
 						alt=""
 						aria-hidden="true"
 						style={{
 							position: "absolute",
-							top: "-114px",
-							right: "28%",
-							width: "172px",
+							top: "4px",
+							right: "27.5%",
+							width: "148px",
 							height: "auto",
-							zIndex: 7,
+							zIndex: 0,
+							opacity: "0.42",
 							pointerEvents: "none"
 						}}
 					/>
-					{/* Two friends hugging sitting on top-right edge of card (Matches Screenshot 1) */}
+					{/* Woman in pink jacket with green headphones leaning hands on top border of card */}
 					<img
 						src="/site/media/discord/sec5-card-characters.png"
 						alt=""
 						aria-hidden="true"
 						style={{
 							position: "absolute",
-							top: "-126px",
-							right: "11%",
-							width: "194px",
+							top: "-86px",
+							right: "25.5%",
+							width: "188px",
 							height: "auto",
 							zIndex: 6,
 							pointerEvents: "none"
 						}}
 					/>
-					{/* 3D Radish/Turnip overlapping bottom-left corner of the card (Matches Screenshot 1) */}
+					{/* Two friends hugging (Garfield & Simon) sitting along top-right edge of card */}
+					<img
+						src="/site/media/discord/sec5-garfield-simon.webp"
+						alt=""
+						aria-hidden="true"
+						style={{
+							position: "absolute",
+							top: "-116px",
+							right: "9.5%",
+							width: "174px",
+							height: "auto",
+							zIndex: 1,
+							clipPath: "inset(0 0 43.5% 0)",
+							pointerEvents: "none"
+						}}
+					/>
+					{/* 3D Radish/Turnip overlapping bottom-left corner of the card */}
 					<img
 						src="/site/media/discord/prop-turnip.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop tilt"
 						style={{
-							width: "138px",
-							bottom: "-34px",
-							left: "-28px",
+							width: "146px",
+							bottom: "-36px",
+							left: "-32px",
 							zIndex: 8
 						}}
 					/>
@@ -472,9 +491,9 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    FINAL CALL TO ACTION + OFFICIAL DISCORD 2026 HORIZON & WUMPUS SCENE
-			    (Exact Match to User Screenshot 2:
+			    (Exact Match to Discord.com Screenshot 2:
 			     - Single centered white button "Download for Windows"
-			     - Full character lineup + Wumpus sitting OVER the footer horizon edge)
+			     - Full character lineup + 3D Clyde Robot + Wumpus sitting OVER the footer horizon edge)
 			    ===================================================================== */}
 			<section className="final-horizon-section" id="about">
 				<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "30px", top: "10%", left: "14%" }} />
@@ -508,6 +527,13 @@ export function HomePage() {
 						src="/site/media/discord/footer-horizon.webp"
 						alt="Zycord Cosmic Horizon Lineup"
 						className="final-horizon-bg"
+						loading="lazy"
+					/>
+					<img
+						src="/site/media/discord/dev-clyde-3d.webp"
+						alt=""
+						aria-hidden="true"
+						className="final-horizon-clyde"
 						loading="lazy"
 					/>
 					<img
