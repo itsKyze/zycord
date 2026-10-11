@@ -169,6 +169,7 @@
     },
     "allowScripts": {
         "bcrypt@6.0.0": true,
-        "cbor-extract@2.2.2": true
+        "cbor-extract@2.2.2": true,
+        "esbuild@0.28.2": true
     }
 }
