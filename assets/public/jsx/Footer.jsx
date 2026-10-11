@@ -49,75 +49,158 @@ export const FOOTER_COLUMNS = [
 	}
 ];
 
-const LANGUAGES = [
-	"English (US)",
-	"العربية (Arabic)",
-	"Français (FR)",
-	"Español (ES)",
-	"Deutsch (DE)",
-	"日本語 (JA)"
+export const LANGUAGES = [
+	{ code: "en-US", label: "English (US)" },
+	{ code: "en-GB", label: "English (UK)" },
+	{ code: "ar", label: "العربية" },
+	{ code: "fr", label: "Français" },
+	{ code: "es-ES", label: "Español" },
+	{ code: "de", label: "Deutsch" },
+	{ code: "it", label: "Italiano" },
+	{ code: "pt-BR", label: "Português do Brasil" },
+	{ code: "ru", label: "Русский" },
+	{ code: "tr", label: "Türkçe" },
+	{ code: "nl", label: "Nederlands" },
+	{ code: "pl", label: "Polski" },
+	{ code: "ja", label: "日本語" },
+	{ code: "ko", label: "한국어" },
+	{ code: "zh-CN", label: "中文 (简体)" }
 ];
 
 export function ZycordFooter() {
-	const year = new Date().getFullYear();
-	let langIdx = 0;
+	let currentLang = "English (US)";
+	try {
+		const saved = window.localStorage.getItem("zy_site_lang");
+		if (saved) currentLang = saved;
+	} catch (_e) {}
 
-	const cycleLanguage = (e) => {
-		langIdx = (langIdx + 1) % LANGUAGES.length;
-		const span = e.currentTarget.querySelector("[data-lang-label]");
-		if (span) span.textContent = LANGUAGES[langIdx];
+	const toggleLangMenu = (e) => {
+		e.stopPropagation();
+		const wrap = document.getElementById("zy-lang-dropdown-wrap");
+		const btn = document.getElementById("zy-lang-picker");
+		if (!wrap) return;
+		const open = !wrap.classList.contains("is-open");
+		wrap.classList.toggle("is-open", open);
+		if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
 	};
+
+	const selectLanguage = (langObj, e) => {
+		e.stopPropagation();
+		currentLang = langObj.label;
+		try {
+			window.localStorage.setItem("zy_site_lang", langObj.label);
+		} catch (_e) {}
+		const labelNode = document.querySelector("[data-lang-label]");
+		if (labelNode) labelNode.textContent = langObj.label;
+
+		const items = document.querySelectorAll("[data-lang-option]");
+		for (let i = 0; i < items.length; i++) {
+			const isSelected = items[i].getAttribute("data-lang-option") === langObj.code;
+			items[i].classList.toggle("is-selected", isSelected);
+			items[i].setAttribute("aria-selected", isSelected ? "true" : "false");
+		}
+
+		const wrap = document.getElementById("zy-lang-dropdown-wrap");
+		const btn = document.getElementById("zy-lang-picker");
+		if (wrap) wrap.classList.remove("is-open");
+		if (btn) btn.setAttribute("aria-expanded", "false");
+	};
+
+	if (typeof document !== "undefined" && !window.__zyLangOutsideBound) {
+		window.__zyLangOutsideBound = true;
+		document.addEventListener("click", (ev) => {
+			const wrap = document.getElementById("zy-lang-dropdown-wrap");
+			const btn = document.getElementById("zy-lang-picker");
+			if (wrap && wrap.classList.contains("is-open") && !wrap.contains(ev.target)) {
+				wrap.classList.remove("is-open");
+				if (btn) btn.setAttribute("aria-expanded", "false");
+			}
+		});
+		document.addEventListener("keydown", (ev) => {
+			if (ev.key === "Escape") {
+				const wrap = document.getElementById("zy-lang-dropdown-wrap");
+				const btn = document.getElementById("zy-lang-picker");
+				if (wrap && wrap.classList.contains("is-open")) {
+					wrap.classList.remove("is-open");
+					if (btn) btn.setAttribute("aria-expanded", "false");
+				}
+			}
+		});
+	}
 
 	return (
 		<footer className="zy-footer">
 			<div className="zy-container">
 				<div className="zy-footer-grid">
 					<div className="zy-footer-brand-col">
-						<a className="zy-brand" href="/" aria-label="Zycord Home">
-							<span
-								className="zy-brand-mark"
-								style={{
-									width: "48px",
-									height: "48px",
-									borderRadius: "14px",
-									background: "#ffffff",
-									color: "#5865F2"
-								}}
-							>
-								<ZycordMark size={30} color="#5865F2" />
-							</span>
+						<a className="zy-footer-logo-link" href="/" aria-label="Zycord Home">
+							<ZycordMark size={46} color="#ffffff" />
 						</a>
 
 						<div>
 							<div className="zy-footer-col-title" style={{ marginBottom: "8px" }}>
 								Language
 							</div>
-							<div
-								className="zy-lang-picker"
-								id="zy-lang-picker"
-								role="button"
-								tabIndex="0"
-								aria-label="Select Language"
-								onClick={cycleLanguage}
-							>
-								<span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
-									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-										<circle cx="12" cy="12" r="10" />
-										<line x1="2" y1="12" x2="22" y2="12" />
-										<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-									</svg>
-									<span data-lang-label>English (US)</span>
-								</span>
-								<svg
-									width="14"
-									height="14"
-									viewBox="0 0 16 16"
-									fill="none"
-									stroke="currentColor"
-									stroke-width="2"
+							<div className="zy-lang-dropdown-wrap" id="zy-lang-dropdown-wrap">
+								<button
+									type="button"
+									className="zy-lang-picker"
+									id="zy-lang-picker"
+									aria-haspopup="listbox"
+									aria-expanded="false"
+									aria-label="Select Language"
+									onClick={toggleLangMenu}
 								>
-									<polyline points="4 6 8 10 12 6" />
-								</svg>
+									<span data-lang-label>{currentLang}</span>
+									<svg
+										className="zy-lang-chevron"
+										width="16"
+										height="16"
+										viewBox="0 0 16 16"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									>
+										<polyline points="4 6 8 10 12 6" />
+									</svg>
+								</button>
+
+								<ul
+									className="zy-lang-menu"
+									id="zy-lang-menu"
+									role="listbox"
+									aria-label="Languages"
+								>
+									{LANGUAGES.map((l) => {
+										const selected = l.label === currentLang;
+										return (
+											<li
+												role="option"
+												aria-selected={selected ? "true" : "false"}
+												data-lang-option={l.code}
+												className={`zy-lang-option${selected ? " is-selected" : ""}`}
+												onClick={(e) => selectLanguage(l, e)}
+											>
+												<span>{l.label}</span>
+												<svg
+													className="zy-lang-check"
+													width="15"
+													height="15"
+													viewBox="0 0 24 24"
+													fill="none"
+													stroke="currentColor"
+													stroke-width="2.5"
+													stroke-linecap="round"
+													stroke-linejoin="round"
+												>
+													<polyline points="20 6 9 17 4 12" />
+												</svg>
+											</li>
+										);
+									})}
+								</ul>
 							</div>
 						</div>
 
@@ -148,6 +231,16 @@ export function ZycordFooter() {
 								</a>
 								<a
 									className="zy-social-btn"
+									href="/discover"
+									aria-label="TikTok"
+									title="Short Clips"
+								>
+									<svg viewBox="0 0 24 24" fill="currentColor">
+										<path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+									</svg>
+								</a>
+								<a
+									className="zy-social-btn"
 									href="/developers"
 									aria-label="Developer GitHub"
 									title="Developer Platform"
@@ -168,21 +261,6 @@ export function ZycordFooter() {
 								</a>
 							</div>
 						</div>
-
-						<div>
-							<a
-								href="/status"
-								className="zy-status-pill"
-								data-zy-status-pill
-								style={{
-									background: "rgba(0,0,0,0.22)",
-									borderColor: "rgba(255,255,255,0.2)"
-								}}
-							>
-								<span className="zy-eyebrow-dot" data-zy-status-dot></span>
-								<span data-zy-status-label>All Systems Operational</span>
-							</a>
-						</div>
 					</div>
 
 					{FOOTER_COLUMNS.map((col) => (
@@ -197,20 +275,6 @@ export function ZycordFooter() {
 							</ul>
 						</div>
 					))}
-				</div>
-
-				<div className="zy-footer-bottom">
-					<div className="zy-footer-meta">
-						© {year} Zycord Platform. Built for gamers, friends, and communities everywhere.
-					</div>
-					<div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-						<a className="zy-btn zy-btn-secondary zy-btn-sm" href="/download">
-							Download Zycord
-						</a>
-						<a className="zy-btn zy-btn-login zy-btn-sm" data-zy-open-app href="/app">
-							Open Zycord
-						</a>
-					</div>
 				</div>
 
 				<div className="zy-wordmark-banner" aria-hidden="true">
