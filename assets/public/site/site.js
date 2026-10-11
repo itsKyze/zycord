@@ -1,6 +1,6 @@
 /* ============================================================================
-   ZYCORD PUBLIC WEBSITE & APPLICATION ECOSYSTEM — RUNTIME & CONFIG
-   Centralized Navigation, Footer, Smart Auth CTAs, Live Status & Interactive UI
+   ZYCORD PUBLIC WEBSITE & APPLICATION ECOSYSTEM — RUNTIME & CONFIG (DISCORD 2026 EDITION)
+   Centralized Mega-Dropdown Navbar, Footer, Smart Auth CTAs, Live Status & Interactive UI
    ============================================================================ */
 
 (function () {
@@ -37,11 +37,127 @@
 	var navigationConfig = [
 		{ label: "Download", href: "/download", key: "download" },
 		{ label: "Nitro", href: "/nitro", key: "nitro" },
-		{ label: "Discover", href: "/discover", key: "discover" },
-		{ label: "Safety", href: "/safety", key: "safety" },
-		{ label: "Support", href: "/support", key: "support" },
-		{ label: "Careers", href: "/careers", key: "careers" },
-		{ label: "Developers", href: "/developers", key: "developers" }
+		{
+			label: "Discover",
+			href: "/discover",
+			key: "discover",
+			decor: "/site/media/cosmic-egg-3d.svg",
+			columns: [
+				{
+					links: [
+						{ label: "Servers", href: "/discover#directory" },
+						{ label: "Quests", href: "/discover#quests" },
+						{ label: "Apps & Bots", href: "/developers/applications" },
+						{ label: "Collectibles Shop", href: "/nitro#collectibles" }
+					]
+				}
+			]
+		},
+		{
+			label: "Safety",
+			href: "/safety",
+			key: "safety",
+			is2Col: true,
+			decor: "/site/media/emerald-gem-3d.svg",
+			columns: [
+				{
+					title: "Resources",
+					links: [
+						{ label: "Safety News", href: "/safety" },
+						{ label: "Safety Library", href: "/safety#moderation" },
+						{ label: "Community Guidelines", href: "/guidelines", external: true }
+					]
+				},
+				{
+					title: "Hubs",
+					links: [
+						{ label: "Parent Hub", href: "/safety#moderation" },
+						{ label: "Policy Hub", href: "/legal" },
+						{ label: "Privacy Hub", href: "/privacy" },
+						{ label: "Transparency Hub", href: "/safety#e2ee" },
+						{ label: "Wellbeing Hub", href: "/safety#checklist" }
+					]
+				}
+			]
+		},
+		{
+			label: "Quests",
+			href: "/nitro#collectibles",
+			key: "quests",
+			decor: "/site/media/crown-3d.svg",
+			columns: [
+				{
+					title: "Resources",
+					links: [
+						{ label: "Rewards & Collectibles", href: "/nitro#collectibles" },
+						{ label: "Avatar Decorations", href: "/nitro#collectibles" },
+						{ label: "Profile Effects & Frames", href: "/nitro#collectibles" },
+						{ label: "Quests FAQ", href: "/support#faq" }
+					]
+				}
+			]
+		},
+		{
+			label: "Support",
+			href: "/support",
+			key: "support",
+			decor: "/site/media/clyde-cube-3d.svg",
+			columns: [
+				{
+					title: "Resources",
+					links: [
+						{ label: "Help Center", href: "/support" },
+						{ label: "Feedback & Diagnostics", href: "/support#diagnostics" },
+						{ label: "Submit a Request", href: "/support#faq" },
+						{ label: "System Status", href: "/status", external: true }
+					]
+				}
+			]
+		},
+		{
+			label: "Blog",
+			href: "/discover",
+			key: "blog",
+			decor: "/site/media/cosmic-egg-3d.svg",
+			columns: [
+				{
+					title: "Collections",
+					links: [
+						{ label: "Featured Updates", href: "/discover" },
+						{ label: "Community Spotlights", href: "/discover#directory" },
+						{ label: "Zycord HQ", href: "/careers" },
+						{ label: "Engineering & Developers", href: "/developers" },
+						{ label: "Product & Features", href: "/nitro" }
+					]
+				}
+			]
+		},
+		{
+			label: "Developers",
+			href: "/developers",
+			key: "developers",
+			is2Col: true,
+			decor: "/site/media/clyde-cube-3d.svg",
+			columns: [
+				{
+					title: "Featured",
+					links: [
+						{ label: "Zycord Social SDK", href: "/developers#rich-presence" },
+						{ label: "Apps and Activities", href: "/developers/applications" }
+					],
+					subSection: {
+						title: "Documentation",
+						links: [
+							{ label: "Developer Home", href: "/developers" },
+							{ label: "Developer Documentation", href: "/developers/docs", external: true },
+							{ label: "Developer Applications", href: "/developers/applications", external: true },
+							{ label: "OpenAPI Specification", href: "/_spacebar/api/openapi.json", external: true }
+						]
+					}
+				}
+			]
+		},
+		{ label: "Careers", href: "/careers", key: "careers" }
 	];
 
 	var footerConfig = [
@@ -49,48 +165,44 @@
 			title: "Product",
 			links: [
 				{ label: "Download", href: "/download" },
-				{ label: "Nitro & Collectibles", href: "/nitro" },
-				{ label: "System Status", href: "/status" },
-				{ label: "Open Web App", href: "/app" },
-				{ label: "Community Directory", href: "/discover" }
+				{ label: "Nitro", href: "/nitro" },
+				{ label: "Status", href: "/status" },
+				{ label: "App Directory", href: "/discover" },
+				{ label: "Web Browser Client", href: "/app" }
 			]
 		},
 		{
 			title: "Company",
 			links: [
-				{ label: "About Zycord", href: "/#about" },
-				{ label: "Careers & Jobs", href: "/careers" },
-				{ label: "Brand & Identity", href: "/#collectibles" },
-				{ label: "Platform Architecture", href: "/developers" }
+				{ label: "About", href: "/#about" },
+				{ label: "Jobs", href: "/careers" },
+				{ label: "Brand & Collectibles", href: "/nitro#collectibles" },
+				{ label: "Newsroom", href: "/discover" }
 			]
 		},
 		{
 			title: "Resources",
 			links: [
-				{ label: "Help & Support", href: "/support" },
-				{ label: "Safety Center", href: "/safety" },
-				{ label: "Community Guidelines", href: "/guidelines" },
-				{ label: "Server Moderation", href: "/safety#moderation" },
-				{ label: "E2EE Security", href: "/safety#e2ee" }
-			]
-		},
-		{
-			title: "Developers",
-			links: [
-				{ label: "Developer Hub", href: "/developers" },
-				{ label: "Applications & Bots", href: "/developers/applications" },
-				{ label: "API Documentation", href: "/developers/docs" },
-				{ label: "OpenAPI Specification", href: "/_spacebar/api/openapi.json" },
-				{ label: "Rich Presence SDK", href: "/developers#rich-presence" }
+				{ label: "Support", href: "/support" },
+				{ label: "Safety", href: "/safety" },
+				{ label: "Blog", href: "/discover" },
+				{ label: "StreamKit", href: "/developers" },
+				{ label: "Creators", href: "/discover#directory" },
+				{ label: "Community", href: "/guidelines" },
+				{ label: "Developers", href: "/developers" },
+				{ label: "Quests", href: "/nitro#collectibles" }
 			]
 		},
 		{
 			title: "Policies",
 			links: [
-				{ label: "Terms of Service", href: "/terms" },
-				{ label: "Privacy Policy", href: "/privacy" },
-				{ label: "Community Guidelines", href: "/guidelines" },
-				{ label: "Legal Center", href: "/legal" },
+				{ label: "Terms", href: "/terms" },
+				{ label: "Privacy", href: "/privacy" },
+				{ label: "Cookie Settings", href: "/privacy#cookies" },
+				{ label: "Guidelines", href: "/guidelines" },
+				{ label: "Acknowledgements", href: "/legal" },
+				{ label: "Licenses", href: "/legal" },
+				{ label: "Company Information", href: "/legal" },
 				{ label: "Admin Console", href: "/admin" }
 			]
 		}
@@ -121,6 +233,72 @@
 		return "";
 	}
 
+	function renderDropdownColumns(item) {
+		if (!item.columns || !item.columns.length) return "";
+		var colsHtml = item.columns
+			.map(function (col) {
+				var titleHtml = col.title ? '<div class="zy-dd-col-title">' + col.title + "</div>" : "";
+				var linksHtml = (col.links || [])
+					.map(function (lnk) {
+						var arrow = lnk.external ? '<span class="zy-dd-ext" aria-hidden="true">↗</span>' : "";
+						return (
+							'<li><a class="zy-dd-link" href="' +
+							lnk.href +
+							'"><span>' +
+							lnk.label +
+							"</span>" +
+							arrow +
+							"</a></li>"
+						);
+					})
+					.join("");
+
+				var subHtml = "";
+				if (col.subSection) {
+					var subLinks = (col.subSection.links || [])
+						.map(function (sl) {
+							var arrow = sl.external ? '<span class="zy-dd-ext" aria-hidden="true">↗</span>' : "";
+							return (
+								'<li><a class="zy-dd-link" href="' +
+								sl.href +
+								'"><span>' +
+								sl.label +
+								"</span>" +
+								arrow +
+								"</a></li>"
+							);
+						})
+						.join("");
+					subHtml =
+						'<div class="zy-dd-divider"></div>' +
+						'<div class="zy-dd-col-title">' +
+						col.subSection.title +
+						"</div>" +
+						'<ul class="zy-dd-list">' +
+						subLinks +
+						"</ul>";
+				}
+
+				return '<div class="zy-dd-col">' + titleHtml + '<ul class="zy-dd-list">' + linksHtml + "</ul>" + subHtml + "</div>";
+			})
+			.join("");
+
+		var decorHtml = item.decor
+			? '<img class="zy-dd-decor" src="' + item.decor + '" alt="" aria-hidden="true" loading="lazy" />'
+			: "";
+
+		return (
+			'<div class="zy-nav-dropdown' +
+			(item.is2Col ? " is-2col" : "") +
+			'" role="menu">' +
+			'  <div class="zy-dd-cols">' +
+			colsHtml +
+			"  </div>" +
+			decorHtml +
+			"</div>"
+		);
+	}
+
 	function renderNavbar() {
 		var mount = document.querySelector("[data-zy-navbar]");
 		if (!mount) return;
@@ -133,14 +311,27 @@
 		var navItemsHtml = navigationConfig
 			.map(function (item) {
 				var activeClass = item.key === activeKey ? " is-active" : "";
+				var hasDropdown = Boolean(item.columns && item.columns.length);
+				var chevron = hasDropdown
+					? '<svg class="zy-nav-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3.5 6 8 10.5 12.5 6"/></svg>'
+					: "";
+				var ddHtml = hasDropdown ? renderDropdownColumns(item) : "";
 				return (
-					'<li><a class="zy-nav-link' +
+					'<li class="zy-nav-item' +
+					(hasDropdown ? " has-dropdown" : "") +
+					'">' +
+					'  <a class="zy-nav-link' +
 					activeClass +
 					'" href="' +
 					item.href +
 					'">' +
+					"    <span>" +
 					item.label +
-					"</a></li>"
+					"</span>" +
+					chevron +
+					"  </a>" +
+					ddHtml +
+					"</li>"
 				);
 			})
 			.join("");
@@ -161,6 +352,7 @@
 			.join("");
 
 		mount.outerHTML =
+			'<div class="zy-nav-page-blur" id="zy-nav-page-blur" aria-hidden="true"></div>' +
 			'<header class="zy-navbar" id="zy-navbar">' +
 			'  <div class="zy-navbar-inner">' +
 			'    <a class="zy-brand" href="/" aria-label="Zycord Home">' +
@@ -173,10 +365,6 @@
 			"      </ul>" +
 			"    </nav>" +
 			'    <div class="zy-nav-actions">' +
-			'      <a class="zy-btn zy-btn-ghost zy-btn-sm" href="/status" title="Live System Status">' +
-			'        <span class="zy-eyebrow-dot" data-zy-status-dot></span>' +
-			'        <span data-zy-status-short>Status</span>' +
-			"      </a>" +
 			'      <a class="zy-btn zy-btn-login" data-zy-login-cta href="' +
 			authHref +
 			'">' +
@@ -190,7 +378,7 @@
 			"</header>" +
 			'<div class="zy-drawer-backdrop" id="zy-drawer-backdrop"></div>' +
 			'<aside class="zy-mobile-drawer" id="zy-mobile-drawer" aria-label="Mobile Navigation">' +
-			'  <div>' +
+			"  <div>" +
 			'    <div class="zy-drawer-header">' +
 			'      <a class="zy-brand" href="/">' +
 			'        <span class="zy-brand-mark"><img src="/favicon.svg" alt="" /></span>' +
@@ -220,6 +408,16 @@
 		var closeBtn = document.getElementById("zy-mobile-close");
 		var drawer = document.getElementById("zy-mobile-drawer");
 		var backdrop = document.getElementById("zy-drawer-backdrop");
+		var dropdownItems = document.querySelectorAll(".zy-nav-item.has-dropdown");
+
+		for (var i = 0; i < dropdownItems.length; i++) {
+			dropdownItems[i].addEventListener("mouseenter", function () {
+				document.body.classList.add("has-nav-dd-open");
+			});
+			dropdownItems[i].addEventListener("mouseleave", function () {
+				document.body.classList.remove("has-nav-dd-open");
+			});
+		}
 
 		function setDrawer(open) {
 			if (!drawer || !backdrop || !openBtn) return;
@@ -272,15 +470,27 @@
 			'  <div class="zy-container">' +
 			'    <div class="zy-footer-grid">' +
 			'      <div class="zy-footer-brand-col">' +
-			'        <a class="zy-brand" href="/">' +
-			'          <span class="zy-brand-mark"><img src="/favicon.svg" alt="" /></span>' +
-			'          <span>Zycord</span>' +
+			'        <a class="zy-brand" href="/" aria-label="Zycord Home">' +
+			'          <span class="zy-brand-mark" style="width:48px;height:48px;border-radius:14px;background:#ffffff;"><img src="/favicon.svg" alt="" style="width:30px;height:30px;" /></span>' +
 			"        </a>" +
-			'        <p class="zy-body" style="font-size:14px;max-width:260px;">' +
-			"          Real-time voice, HD screen share, end-to-end encrypted DMs, custom collectibles, and community servers built for gamers and builders." +
-			"        </p>" +
-			'        <div>' +
-			'          <a href="/status" class="zy-status-pill" data-zy-status-pill>' +
+			"        <div>" +
+			'          <div class="zy-footer-col-title" style="margin-bottom:8px;">Language</div>' +
+			'          <div class="zy-lang-picker" id="zy-lang-picker" role="button" tabindex="0" aria-label="Select Language">' +
+			'            <span>🌐 English (US)</span>' +
+			'            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 6 8 10 12 6"/></svg>' +
+			"          </div>" +
+			"        </div>" +
+			"        <div>" +
+			'          <div class="zy-footer-col-title" style="margin-bottom:10px;">Social</div>' +
+			'          <div class="zy-social-row">' +
+			'            <a class="zy-social-btn" href="/discover" aria-label="X / Twitter" title="Community Feed"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>' +
+			'            <a class="zy-social-btn" href="/discover" aria-label="Instagram" title="Visual Highlights"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>' +
+			'            <a class="zy-social-btn" href="/developers" aria-label="Developer GitHub" title="Developer Platform"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg></a>' +
+			'            <a class="zy-social-btn" href="/discover" aria-label="YouTube" title="Streams & Videos"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>' +
+			"          </div>" +
+			"        </div>" +
+			"        <div>" +
+			'          <a href="/status" class="zy-status-pill" data-zy-status-pill style="background:rgba(0,0,0,0.22);border-color:rgba(255,255,255,0.2);">' +
 			'            <span class="zy-eyebrow-dot" data-zy-status-dot></span>' +
 			'            <span data-zy-status-label>All Systems Operational</span>' +
 			"          </a>" +
@@ -291,15 +501,26 @@
 			'    <div class="zy-footer-bottom">' +
 			'      <div class="zy-footer-meta">© ' +
 			year +
-			" Zycord Platform. All rights reserved.</div>" +
+			" Zycord Platform. Built for gamers, friends, and communities everywhere.</div>" +
 			'      <div style="display:flex;gap:12px;flex-wrap:wrap;">' +
-			'        <a class="zy-btn zy-btn-ghost zy-btn-sm" href="/download">Download App</a>' +
-			'        <a class="zy-btn zy-btn-primary zy-btn-sm" data-zy-open-app href="/app">Open Zycord</a>' +
+			'        <a class="zy-btn zy-btn-secondary zy-btn-sm" href="/download">Download Zycord</a>' +
+			'        <a class="zy-btn zy-btn-login zy-btn-sm" data-zy-open-app href="/app">Open Zycord</a>' +
 			"      </div>" +
 			"    </div>" +
 			'    <div class="zy-wordmark-banner" aria-hidden="true">ZYCORD</div>' +
 			"  </div>" +
 			"</footer>";
+
+		var langPicker = document.getElementById("zy-lang-picker");
+		if (langPicker) {
+			var langs = ["🌐 English (US)", "🌐 العربية (Arabic)", "🌐 Français (FR)", "🌐 Español (ES)", "🌐 Deutsch (DE)", "🌐 日本語 (JA)"];
+			var idx = 0;
+			langPicker.addEventListener("click", function () {
+				idx = (idx + 1) % langs.length;
+				var span = langPicker.querySelector("span");
+				if (span) span.textContent = langs[idx];
+			});
+		}
 	}
 
 	function upgradeAuthLinks() {

@@ -1,6 +1,6 @@
 /* ============================================================================
-   ZYCORD PUBLIC WEBSITE & APPLICATION ECOSYSTEM — DESIGN SYSTEM
-   Discord-Inspired Deep Cosmic Indigo & Blurple Token System
+   ZYCORD 2026 — OFFICIAL DISCORD.COM VISUAL & INTERACTION ARCHITECTURE
+   Deep Cosmic Indigo Environment, Frosted 3D Stages, Mega-Dropdowns & Marquee
    ============================================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Poppins:wght@700;800;900&display=swap");
@@ -42,7 +42,7 @@
 }
 
 :root {
-	/* --- Color Tokens (Discord Style Reference) --- */
+	/* --- Discord Style Reference Tokens --- */
 	--color-blurple: #5865f2;
 	--color-dark-blurple: #3442d9;
 	--color-hover-blurple: #8891f2;
@@ -61,24 +61,23 @@
 	--color-dim-grey: #50555f;
 	--color-off-white: #f6f6f6;
 
-	/* --- Cosmic Surface & Atmospheric Tokens --- */
-	--surface-cosmic-void: #08091d;
+	/* --- Cosmic Surface Tokens --- */
+	--surface-cosmic-void: #07081c;
 	--surface-cosmic-page: #0e0f2d;
-	--surface-cosmic-deep: #151742;
+	--surface-cosmic-deep: #15184a;
 	--surface-cosmic-glow: #1f225a;
-	--surface-card-glass: rgba(28, 31, 68, 0.72);
-	--surface-card-elevated: rgba(36, 40, 88, 0.78);
-	--surface-border-subtle: rgba(255, 255, 255, 0.12);
-	--surface-border-bright: rgba(136, 145, 242, 0.36);
+	--surface-card-glass: rgba(255, 255, 255, 0.07);
+	--surface-card-elevated: rgba(36, 40, 96, 0.72);
+	--surface-border-subtle: rgba(255, 255, 255, 0.16);
+	--surface-border-bright: rgba(136, 145, 242, 0.44);
 
-	/* --- Typography Tokens --- */
+	/* --- Typography --- */
 	--font-abc-ginto-nord-discord: "Poppins", "gg sans", "Inter", system-ui, -apple-system, sans-serif;
 	--font-abc-ginto-discord: "gg sans", "Inter", system-ui, -apple-system, sans-serif;
 	--font-gg-sans: "gg sans", "Inter", system-ui, -apple-system, sans-serif;
 	--font-abc-ginto-normal: "Inter", "gg sans", system-ui, -apple-system, sans-serif;
 	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
-	/* --- Type Scale --- */
 	--text-body: 16px;
 	--text-body-lg: 20px;
 	--text-heading-sm: 36px;
@@ -86,7 +85,7 @@
 	--text-heading-lg: 56px;
 	--text-display: 61px;
 
-	/* --- Spacing Scale (4px Base) --- */
+	/* --- Spacing --- */
 	--spacing-4: 4px;
 	--spacing-8: 8px;
 	--spacing-12: 12px;
@@ -104,19 +103,16 @@
 	--spacing-136: 136px;
 	--spacing-176: 176px;
 
-	/* --- Border Radius Scale --- */
+	/* --- Radii --- */
 	--radius-cards: 16px;
 	--radius-pills: 104px;
 	--radius-buttons: 12px;
 	--radius-buttons-lg: 16px;
-	--radius-feature-panels: 24px;
+	--radius-feature-panels: 44px;
 
-	/* --- Layout Metrics --- */
-	--layout-max-width: 1200px;
-	--section-gap: 104px;
+	--layout-max-width: 1260px;
 }
 
-/* --- Base Reset --- */
 *,
 *::before,
 *::after {
@@ -134,40 +130,43 @@ html {
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
 }
 
 body {
 	min-height: 100vh;
 	background-color: var(--surface-cosmic-page);
 	background-image:
-		radial-gradient(circle at 15% 8%, rgba(88, 101, 242, 0.28) 0%, transparent 42%),
-		radial-gradient(circle at 85% 18%, rgba(235, 69, 158, 0.14) 0%, transparent 38%),
-		radial-gradient(circle at 50% 52%, rgba(52, 66, 217, 0.2) 0%, transparent 55%),
-		linear-gradient(180deg, #0b0c26 0%, #0e0f2d 35%, #111338 70%, #090a20 100%);
+		radial-gradient(ellipse 80% 50% at 50% 0%, rgba(52, 66, 217, 0.45) 0%, transparent 65%),
+		radial-gradient(circle at 12% 22%, rgba(88, 101, 242, 0.32) 0%, transparent 42%),
+		radial-gradient(circle at 88% 30%, rgba(162, 54, 219, 0.22) 0%, transparent 40%),
+		radial-gradient(circle at 50% 65%, rgba(52, 66, 217, 0.28) 0%, transparent 55%),
+		linear-gradient(180deg, #0b0c28 0%, #0e0f2d 30%, #141748 68%, #1d2372 92%, #29329c 100%);
 	color: var(--color-snow);
 	overflow-x: hidden;
 	position: relative;
 }
 
-/* Starfield ambient layer */
+/* Cosmic Starfield Canvas */
 body::before {
 	content: "";
 	position: fixed;
 	inset: 0;
 	pointer-events: none;
 	z-index: 0;
-	opacity: 0.42;
+	opacity: 0.55;
 	background-image:
-		radial-gradient(1.5px 1.5px at 12% 18%, rgba(255, 255, 255, 0.8), transparent),
-		radial-gradient(1px 1px at 28% 42%, rgba(186, 188, 217, 0.7), transparent),
-		radial-gradient(2px 2px at 46% 11%, rgba(136, 145, 242, 0.85), transparent),
-		radial-gradient(1.5px 1.5px at 67% 29%, rgba(255, 255, 255, 0.75), transparent),
-		radial-gradient(1px 1px at 83% 14%, rgba(186, 188, 217, 0.8), transparent),
-		radial-gradient(1.5px 1.5px at 91% 54%, rgba(255, 255, 255, 0.7), transparent),
-		radial-gradient(1px 1px at 19% 77%, rgba(186, 188, 217, 0.65), transparent),
-		radial-gradient(2px 2px at 58% 82%, rgba(88, 101, 242, 0.75), transparent),
-		radial-gradient(1.5px 1.5px at 76% 68%, rgba(255, 255, 255, 0.6), transparent);
-	background-size: 640px 640px;
+		radial-gradient(1.5px 1.5px at 8% 14%, #fff, transparent),
+		radial-gradient(1px 1px at 23% 38%, #babcd9, transparent),
+		radial-gradient(2px 2px at 41% 9%, #8891f2, transparent),
+		radial-gradient(1.5px 1.5px at 64% 27%, #fff, transparent),
+		radial-gradient(1px 1px at 79% 12%, #babcd9, transparent),
+		radial-gradient(2px 2px at 92% 48%, #fff, transparent),
+		radial-gradient(1.5px 1.5px at 16% 74%, #babcd9, transparent),
+		radial-gradient(2px 2px at 54% 81%, #8891f2, transparent),
+		radial-gradient(1.5px 1.5px at 78% 69%, #fff, transparent),
+		radial-gradient(1px 1px at 35% 62%, #fff, transparent);
+	background-size: 560px 560px;
 }
 
 a {
@@ -182,13 +181,49 @@ textarea {
 	font-family: inherit;
 }
 
+/* --- Twinkling Floating Stars & 3D Props --- */
+@keyframes zyFloatSlow {
+	0%, 100% { transform: translateY(0px) rotate(0deg); }
+	50% { transform: translateY(-12px) rotate(3deg); }
+}
+
+@keyframes zyTwinkle {
+	0%, 100% { opacity: 0.35; transform: scale(0.88); }
+	50% { opacity: 1; transform: scale(1.12); }
+}
+
+@keyframes zyMarquee {
+	0% { transform: translate3d(0, 0, 0); }
+	100% { transform: translate3d(-50%, 0, 0); }
+}
+
+.zy-star {
+	position: absolute;
+	pointer-events: none;
+	user-select: none;
+	z-index: 1;
+	animation: zyTwinkle 4.2s ease-in-out infinite;
+}
+
+.zy-star.delay-1 { animation-delay: 1.1s; }
+.zy-star.delay-2 { animation-delay: 2.3s; }
+.zy-star.delay-3 { animation-delay: 3.1s; }
+
+.zy-float-prop {
+	position: absolute;
+	pointer-events: none;
+	user-select: none;
+	z-index: 4;
+	animation: zyFloatSlow 6s ease-in-out infinite;
+}
+
 /* --- Typography Classes --- */
 .zy-display {
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 800;
-	font-size: clamp(36px, 5.4vw, var(--text-display));
+	font-size: clamp(38px, 5.2vw, var(--text-display));
 	line-height: 0.88;
-	letter-spacing: -0.01em;
+	letter-spacing: -0.015em;
 	text-transform: uppercase;
 	color: var(--color-snow);
 }
@@ -196,9 +231,9 @@ textarea {
 .zy-heading-lg {
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 800;
-	font-size: clamp(32px, 4.6vw, var(--text-heading-lg));
-	line-height: 0.9;
-	letter-spacing: -0.01em;
+	font-size: clamp(32px, 4.4vw, var(--text-heading-lg));
+	line-height: 0.92;
+	letter-spacing: -0.012em;
 	text-transform: uppercase;
 	color: var(--color-snow);
 }
@@ -206,8 +241,8 @@ textarea {
 .zy-heading {
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 800;
-	font-size: clamp(28px, 3.9vw, var(--text-heading));
-	line-height: 0.94;
+	font-size: clamp(28px, 3.8vw, var(--text-heading));
+	line-height: 0.95;
 	letter-spacing: -0.01em;
 	text-transform: uppercase;
 	color: var(--color-snow);
@@ -216,8 +251,8 @@ textarea {
 .zy-heading-sm {
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 800;
-	font-size: clamp(22px, 2.8vw, var(--text-heading-sm));
-	line-height: 1.12;
+	font-size: clamp(22px, 2.6vw, var(--text-heading-sm));
+	line-height: 1.1;
 	letter-spacing: -0.01em;
 	text-transform: uppercase;
 	color: var(--color-snow);
@@ -226,17 +261,18 @@ textarea {
 .zy-body-lg {
 	font-family: var(--font-abc-ginto-discord);
 	font-weight: 400;
-	font-size: clamp(17px, 1.5vw, var(--text-body-lg));
-	line-height: 1.42;
-	letter-spacing: 0.013em;
-	color: var(--color-fog);
+	font-size: clamp(17px, 1.45vw, var(--text-body-lg));
+	line-height: 1.45;
+	letter-spacing: 0.01em;
+	color: var(--color-snow);
+	opacity: 0.92;
 }
 
 .zy-body {
 	font-family: var(--font-abc-ginto-normal);
 	font-weight: 400;
 	font-size: var(--text-body);
-	line-height: 1.5;
+	line-height: 1.55;
 	color: var(--color-fog);
 }
 
@@ -246,8 +282,8 @@ textarea {
 	gap: 8px;
 	padding: 6px 14px;
 	border-radius: var(--radius-pills);
-	background: rgba(88, 101, 242, 0.18);
-	border: 1px solid rgba(136, 145, 242, 0.36);
+	background: rgba(88, 101, 242, 0.22);
+	border: 1px solid rgba(136, 145, 242, 0.42);
 	color: var(--color-snow);
 	font-size: 12px;
 	font-weight: 700;
@@ -270,16 +306,16 @@ textarea {
 	margin: 0 auto;
 	padding: 0 var(--spacing-24);
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 }
 
 .zy-section {
-	padding: var(--spacing-80) 0;
+	padding: 76px 0;
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 }
 
-/* --- Buttons (Strict Token Compliance) --- */
+/* --- Buttons (Exact Discord 2025/2026 Token Specs) --- */
 .zy-btn {
 	display: inline-flex;
 	align-items: center;
@@ -292,119 +328,115 @@ textarea {
 	letter-spacing: 0.014em;
 	cursor: pointer;
 	transition:
-		background-color 0.18s ease,
-		color 0.18s ease,
-		border-color 0.18s ease,
-		transform 0.18s ease,
-		box-shadow 0.18s ease;
+		background-color 0.2s ease,
+		color 0.2s ease,
+		border-color 0.2s ease,
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
 	text-decoration: none;
 	white-space: nowrap;
 	user-select: none;
 }
 
 .zy-btn:focus-visible {
-	outline: 2px solid var(--color-hover-blurple);
+	outline: 2px solid var(--color-snow);
 	outline-offset: 3px;
 }
 
-/* Primary CTA Button (Blurple Filled) — padding 19.5px 24px, radius 12px */
+/* Primary CTA Button (Blurple Filled) — padding 19.5px 28px, radius 16px */
 .zy-btn-primary {
 	background-color: var(--color-blurple);
 	color: var(--color-snow);
 	border: none;
-	border-radius: var(--radius-buttons);
-	padding: 19.5px 24px;
-	box-shadow: 0 10px 28px rgba(88, 101, 242, 0.36);
+	border-radius: 16px;
+	padding: 19.5px 28px;
+	box-shadow: 0 12px 32px rgba(88, 101, 242, 0.42);
 }
 
 .zy-btn-primary:hover {
 	background-color: var(--color-dark-blurple);
 	transform: translateY(-2px);
-	box-shadow: 0 14px 32px rgba(52, 66, 217, 0.52);
+	box-shadow: 0 16px 38px rgba(52, 66, 217, 0.58);
 }
 
-.zy-btn-primary:active {
-	transform: translateY(0);
-}
-
-/* Secondary CTA Button (White Filled) — padding 15px 24px, radius 12px, border #23272A */
+/* Secondary CTA Button (White Filled) — padding 19.5px 28px, radius 16px */
 .zy-btn-secondary {
 	background-color: var(--color-snow);
 	color: var(--color-not-quite-black);
-	border: 1px solid var(--color-not-quite-black);
-	border-radius: var(--radius-buttons);
-	padding: 15px 24px;
-	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+	border: 1px solid rgba(35, 39, 42, 0.15);
+	border-radius: 16px;
+	padding: 19.5px 28px;
+	box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
 }
 
 .zy-btn-secondary:hover {
 	color: var(--color-blurple);
+	background-color: #f6f6f6;
 	transform: translateY(-2px);
-	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.34);
+	box-shadow: 0 14px 34px rgba(0, 0, 0, 0.38);
 }
 
-/* Ghost Navigation Button (Transparent Outlined) — padding 10px 16px, radius 12px */
 .zy-btn-ghost {
-	background-color: transparent;
+	background-color: rgba(255, 255, 255, 0.06);
 	color: var(--color-snow);
-	border: 1px solid rgba(255, 255, 255, 0.38);
-	border-radius: var(--radius-buttons);
-	padding: 10px 16px;
+	border: 1px solid rgba(255, 255, 255, 0.32);
+	border-radius: 14px;
+	padding: 11px 18px;
 }
 
 .zy-btn-ghost:hover {
 	border-color: var(--color-snow);
-	background-color: rgba(255, 255, 255, 0.08);
+	background-color: rgba(255, 255, 255, 0.14);
 }
 
-/* Log In Button (White Outlined) — backgroundColor #FFFFFF, color #000000, border 1px solid #000000, radius 16px, padding 10px 16px */
+/* Log In Button (Exact Discord Top-Right White Pill) */
 .zy-btn-login {
 	background-color: var(--color-snow);
 	color: var(--color-void);
-	border: 1px solid var(--color-void);
-	border-radius: var(--radius-buttons-lg);
-	padding: 10px 16px;
+	border: 1px solid var(--color-snow);
+	border-radius: 16px;
+	padding: 10px 18px;
 	font-size: 14px;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .zy-btn-login:hover {
 	color: var(--color-blurple);
-	box-shadow: 0 6px 18px rgba(255, 255, 255, 0.2);
+	box-shadow: 0 8px 22px rgba(255, 255, 255, 0.25);
 	transform: translateY(-1px);
 }
 
 .zy-btn-sm {
-	padding: 10px 16px;
+	padding: 10px 18px;
 	font-size: 14px;
-	border-radius: var(--radius-buttons);
+	border-radius: 12px;
 }
 
 /* ============================================================================
-   GLOBAL NAVBAR & MOBILE DRAWER
+   DISCORD.COM 2026 NAVBAR + MEGA-DROPDOWNS + PAGE BLUR OVERLAY
    ============================================================================ */
 .zy-navbar {
 	position: sticky;
 	top: 0;
-	z-index: 100;
+	z-index: 120;
 	width: 100%;
 	height: 80px;
 	display: flex;
 	align-items: center;
-	transition: background-color 0.22s ease, backdrop-filter 0.22s ease, border-color 0.22s ease;
+	transition: background-color 0.24s ease, backdrop-filter 0.24s ease, border-color 0.24s ease;
 	border-bottom: 1px solid transparent;
 }
 
 .zy-navbar.is-scrolled {
-	background-color: rgba(14, 15, 45, 0.86);
-	backdrop-filter: blur(16px);
-	-webkit-backdrop-filter: blur(16px);
+	background-color: rgba(14, 15, 45, 0.84);
+	backdrop-filter: blur(18px);
+	-webkit-backdrop-filter: blur(18px);
 	border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
 .zy-navbar-inner {
 	width: 100%;
-	max-width: var(--layout-max-width);
+	max-width: 1320px;
 	margin: 0 auto;
 	padding: 0 var(--spacing-24);
 	display: flex;
@@ -416,13 +448,14 @@ textarea {
 .zy-brand {
 	display: inline-flex;
 	align-items: center;
-	gap: 12px;
+	gap: 11px;
 	font-family: var(--font-abc-ginto-nord-discord);
-	font-weight: 800;
-	font-size: 20px;
-	letter-spacing: 0.02em;
+	font-weight: 900;
+	font-size: 21px;
+	letter-spacing: 0.01em;
 	color: var(--color-snow);
 	text-transform: uppercase;
+	flex-shrink: 0;
 }
 
 .zy-brand-mark {
@@ -433,7 +466,7 @@ textarea {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	box-shadow: 0 6px 18px rgba(88, 101, 242, 0.45);
+	box-shadow: 0 6px 18px rgba(88, 101, 242, 0.5);
 	overflow: hidden;
 	flex-shrink: 0;
 }
@@ -447,38 +480,182 @@ textarea {
 .zy-nav-links {
 	display: flex;
 	align-items: center;
-	gap: 6px;
+	gap: 4px;
 	list-style: none;
+}
+
+.zy-nav-item {
+	position: relative;
 }
 
 .zy-nav-link {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	padding: 8px 14px;
-	border-radius: var(--radius-buttons);
+	padding: 10px 14px;
+	border-radius: 12px;
 	color: var(--color-snow);
 	font-family: var(--font-abc-ginto-discord);
 	font-size: 15px;
 	font-weight: 600;
-	letter-spacing: 0.013em;
-	transition: background-color 0.16s ease, color 0.16s ease;
+	letter-spacing: 0.01em;
+	border: 1px solid transparent;
+	transition: background-color 0.18s ease, border-color 0.18s ease;
+	cursor: pointer;
+	background: transparent;
 }
 
 .zy-nav-link:hover,
-.zy-nav-link.is-active {
+.zy-nav-link.is-active,
+.zy-nav-item:hover > .zy-nav-link,
+.zy-nav-item.is-open > .zy-nav-link {
 	background-color: rgba(255, 255, 255, 0.1);
-	color: var(--color-snow);
+	border-color: rgba(255, 255, 255, 0.26);
 }
 
-.zy-nav-link.is-active {
-	box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.24);
+.zy-nav-chevron {
+	width: 14px;
+	height: 14px;
+	opacity: 0.65;
+	transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.zy-nav-item:hover .zy-nav-chevron,
+.zy-nav-item.is-open .zy-nav-chevron {
+	transform: rotate(180deg);
+	opacity: 1;
+}
+
+/* Discord-style Mega Dropdown Panel */
+.zy-nav-dropdown {
+	position: absolute;
+	top: calc(100% + 12px);
+	left: 50%;
+	transform: translateX(-50%) translateY(8px);
+	min-width: 320px;
+	background: rgba(24, 27, 74, 0.96);
+	backdrop-filter: blur(24px);
+	-webkit-backdrop-filter: blur(24px);
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	border-radius: 24px;
+	padding: 26px 28px;
+	box-shadow: 0 28px 68px rgba(0, 0, 0, 0.62);
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+	overflow: hidden;
+	z-index: 140;
+}
+
+.zy-nav-dropdown.is-2col {
+	min-width: 520px;
+}
+
+.zy-nav-item:hover .zy-nav-dropdown,
+.zy-nav-item:focus-within .zy-nav-dropdown,
+.zy-nav-item.is-open .zy-nav-dropdown {
+	opacity: 1;
+	visibility: visible;
+	pointer-events: auto;
+	transform: translateX(-50%) translateY(0);
+}
+
+.zy-dd-cols {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 24px;
+	position: relative;
+	z-index: 2;
+}
+
+.zy-nav-dropdown.is-2col .zy-dd-cols {
+	grid-template-columns: 1fr 1fr;
+}
+
+.zy-dd-group-title {
+	font-size: 12px;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--color-fog);
+	opacity: 0.72;
+	margin-bottom: 10px;
+}
+
+.zy-dd-list {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.zy-dd-link {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px;
+	padding: 8px 10px;
+	margin-left: -10px;
+	border-radius: 10px;
+	color: var(--color-snow);
+	font-size: 15px;
+	font-weight: 600;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.zy-dd-link:hover {
+	background-color: rgba(88, 101, 242, 0.28);
+	color: #fff;
+}
+
+.zy-dd-arrow {
+	font-size: 13px;
+	opacity: 0.6;
+	transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.zy-dd-link:hover .zy-dd-arrow {
+	transform: translate(2px, -2px);
+	opacity: 1;
+}
+
+.zy-dd-decor {
+	position: absolute;
+	right: -14px;
+	bottom: -16px;
+	width: 112px;
+	height: 112px;
+	object-fit: contain;
+	opacity: 0.92;
+	pointer-events: none;
+	z-index: 1;
+}
+
+/* Page Blur Backdrop when Navbar Dropdown is hovered */
+.zy-nav-page-blur {
+	position: fixed;
+	inset: 0;
+	background: rgba(6, 7, 24, 0.42);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
+	z-index: 90;
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+	transition: opacity 0.28s ease, visibility 0.28s ease;
+}
+
+body.has-nav-dd-open .zy-nav-page-blur {
+	opacity: 1;
+	visibility: visible;
 }
 
 .zy-nav-actions {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+	gap: 12px;
+	flex-shrink: 0;
 }
 
 .zy-mobile-toggle {
@@ -487,9 +664,9 @@ textarea {
 	justify-content: center;
 	width: 42px;
 	height: 42px;
-	border-radius: var(--radius-buttons);
+	border-radius: 12px;
 	border: 1px solid rgba(255, 255, 255, 0.28);
-	background: rgba(255, 255, 255, 0.06);
+	background: rgba(255, 255, 255, 0.08);
 	color: var(--color-snow);
 	cursor: pointer;
 }
@@ -498,12 +675,12 @@ textarea {
 .zy-drawer-backdrop {
 	position: fixed;
 	inset: 0;
-	background: rgba(0, 0, 0, 0.65);
-	backdrop-filter: blur(4px);
+	background: rgba(0, 0, 0, 0.68);
+	backdrop-filter: blur(6px);
 	z-index: 190;
 	opacity: 0;
 	pointer-events: none;
-	transition: opacity 0.22s ease;
+	transition: opacity 0.24s ease;
 }
 
 .zy-drawer-backdrop.is-open {
@@ -515,17 +692,17 @@ textarea {
 	position: fixed;
 	top: 0;
 	right: 0;
-	width: min(340px, 88vw);
-	height: 100vh;
-	background: #14163b;
-	border-left: 1px solid rgba(255, 255, 255, 0.14);
+	width: min(360px, 90vw);
+	height: 100dvh;
+	background: #12153a;
+	border-left: 1px solid rgba(255, 255, 255, 0.16);
 	z-index: 200;
 	padding: var(--spacing-24);
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	transform: translateX(100%);
-	transition: transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+	transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .zy-mobile-drawer.is-open {
@@ -544,8 +721,8 @@ textarea {
 	list-style: none;
 	display: flex;
 	flex-direction: column;
-	gap: 6px;
-	margin: var(--spacing-20) 0;
+	gap: 4px;
+	margin: var(--spacing-16) 0;
 	overflow-y: auto;
 }
 
@@ -553,16 +730,18 @@ textarea {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding: 12px 14px;
-	border-radius: var(--radius-buttons);
-	font-weight: 600;
+	padding: 13px 14px;
+	border-radius: 12px;
+	font-weight: 700;
+	font-size: 16px;
 	color: var(--color-snow);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 	transition: background 0.16s ease;
 }
 
 .zy-drawer-links a:hover,
 .zy-drawer-links a.is-active {
-	background: rgba(88, 101, 242, 0.24);
+	background: rgba(88, 101, 242, 0.28);
 }
 
 .zy-drawer-footer {
@@ -574,41 +753,28 @@ textarea {
 }
 
 /* ============================================================================
-   FEATURE SHOWCASE CARDS (24px Radius, Frosted Cosmic Stage)
+   DISCORD.COM FROSTED GLASS SHOWCASE CONTAINERS & THEMED STAGES
    ============================================================================ */
 .zy-showcase-card {
 	border-radius: var(--radius-feature-panels);
-	background: linear-gradient(145deg, rgba(29, 33, 82, 0.85) 0%, rgba(18, 20, 54, 0.92) 100%);
-	border: 1px solid rgba(255, 255, 255, 0.12);
-	padding: clamp(24px, 4vw, 48px);
-	box-shadow:
-		0 28px 64px rgba(0, 0, 0, 0.44),
-		inset 0 1px 0 rgba(255, 255, 255, 0.15);
+	background: linear-gradient(135deg, rgba(255, 255, 255, 0.11) 0%, rgba(255, 255, 255, 0.04) 100%);
+	backdrop-filter: blur(24px);
+	-webkit-backdrop-filter: blur(24px);
+	border: 1.5px solid rgba(255, 255, 255, 0.18);
+	padding: clamp(24px, 4vw, 52px);
+	box-shadow: 0 32px 80px rgba(4, 5, 22, 0.55);
 	position: relative;
-	overflow: hidden;
-}
-
-.zy-showcase-card::before {
-	content: "";
-	position: absolute;
-	width: 420px;
-	height: 420px;
-	border-radius: 50%;
-	background: radial-gradient(circle, rgba(88, 101, 242, 0.24) 0%, transparent 70%);
-	top: -160px;
-	right: -120px;
-	pointer-events: none;
 }
 
 .zy-showcase-grid {
 	display: grid;
-	grid-template-columns: 1fr 1.15fr;
-	gap: clamp(28px, 4vw, 56px);
+	grid-template-columns: 1.15fr 0.95fr;
+	gap: clamp(28px, 4.2vw, 56px);
 	align-items: center;
 }
 
 .zy-showcase-grid.is-reversed {
-	grid-template-columns: 1.15fr 1fr;
+	grid-template-columns: 0.95fr 1.15fr;
 }
 
 .zy-showcase-copy {
@@ -617,6 +783,32 @@ textarea {
 	gap: var(--spacing-20);
 	position: relative;
 	z-index: 2;
+}
+
+/* Vibrant Scene Stage inside Frosted Showcase Cards (like Discord's video/art blocks) */
+.zy-scene-stage {
+	border-radius: 32px;
+	padding: clamp(18px, 2.6vw, 32px);
+	position: relative;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	box-shadow: 0 24px 52px rgba(0, 0, 0, 0.42);
+}
+
+.zy-scene-stage.stage-magenta {
+	background: linear-gradient(135deg, #7928ca 0%, #ff0080 55%, #ff6b6b 100%);
+}
+.zy-scene-stage.stage-cerulean {
+	background: linear-gradient(135deg, #2b32b2 0%, #1488cc 55%, #00d2ff 100%);
+}
+.zy-scene-stage.stage-emerald {
+	background: linear-gradient(135deg, #134e5e 0%, #11998e 50%, #38ef7d 100%);
+}
+.zy-scene-stage.stage-blurple {
+	background: linear-gradient(135deg, #3442d9 0%, #5865f2 50%, #b76cfd 100%);
+}
+.zy-scene-stage.stage-sunset {
+	background: linear-gradient(135deg, #6a11cb 0%, #eb459e 55%, #fda220 100%);
 }
 
 .zy-feature-bullets {
@@ -644,7 +836,7 @@ textarea {
 	width: 22px;
 	height: 22px;
 	border-radius: 50%;
-	background: rgba(87, 242, 135, 0.18);
+	background: rgba(87, 242, 135, 0.22);
 	color: var(--color-spring-green);
 	font-size: 12px;
 	font-weight: 800;
@@ -652,12 +844,60 @@ textarea {
 }
 
 /* ============================================================================
-   PRODUCT UI MOCKUP WINDOWS (Authentic In-App GG Sans Shell)
+   INFINITE MARQUEE RIBBON ("TALK ✦ PLAY ✦ CHAT ✦ HANG OUT")
+   ============================================================================ */
+.zy-marquee-band {
+	width: 100%;
+	overflow: hidden;
+	background: linear-gradient(90deg, #404eed 0%, #5865f2 50%, #404eed 100%);
+	border-top: 1px solid rgba(255, 255, 255, 0.28);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+	padding: 22px 0;
+	margin: 28px 0;
+	position: relative;
+	z-index: 3;
+	box-shadow: 0 18px 48px rgba(0, 0, 0, 0.35);
+}
+
+.zy-marquee-track {
+	display: flex;
+	width: max-content;
+	animation: zyMarquee 26s linear infinite;
+}
+
+.zy-marquee-group {
+	display: flex;
+	align-items: center;
+	gap: 44px;
+	padding-right: 44px;
+}
+
+.zy-marquee-word {
+	font-family: var(--font-abc-ginto-nord-discord);
+	font-weight: 900;
+	font-size: clamp(28px, 3.6vw, 46px);
+	line-height: 1;
+	text-transform: uppercase;
+	letter-spacing: -0.01em;
+	color: var(--color-snow);
+}
+
+.zy-marquee-icon {
+	width: 38px;
+	height: 38px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+/* ============================================================================
+   PRODUCT UI MOCKUP WINDOWS
    ============================================================================ */
 .zy-app-window {
 	background: var(--color-not-quite-black);
-	border-radius: var(--radius-cards);
-	border: 1px solid rgba(255, 255, 255, 0.14);
+	border-radius: 18px;
+	border: 1px solid rgba(255, 255, 255, 0.16);
 	box-shadow: 0 24px 56px rgba(0, 0, 0, 0.55);
 	overflow: hidden;
 	font-family: var(--font-gg-sans);
@@ -671,7 +911,7 @@ textarea {
 .zy-app-titlebar {
 	height: 38px;
 	background: #181a1d;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 	padding: 0 14px;
 	display: flex;
 	align-items: center;
@@ -696,25 +936,24 @@ textarea {
 .zy-window-dot.amber { background: #fda220; }
 .zy-window-dot.green { background: #57f287; }
 
-/* Interactive Tabs inside Showcase Cards */
 .zy-tab-strip {
 	display: inline-flex;
 	flex-wrap: wrap;
 	gap: 8px;
 	padding: 6px;
-	border-radius: var(--radius-buttons);
-	background: rgba(0, 0, 0, 0.35);
-	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 14px;
+	background: rgba(8, 10, 32, 0.48);
+	border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
 .zy-tab-btn {
 	padding: 8px 14px;
-	border-radius: 8px;
+	border-radius: 10px;
 	border: none;
 	background: transparent;
 	color: var(--color-fog);
 	font-size: 13px;
-	font-weight: 600;
+	font-weight: 700;
 	cursor: pointer;
 	transition: background 0.16s ease, color 0.16s ease;
 }
@@ -728,35 +967,34 @@ textarea {
 	color: var(--color-snow);
 }
 
-/* Reaction Pill Buttons */
 .zy-reaction-pill {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
 	padding: 4px 10px;
 	border-radius: 8px;
-	background: rgba(88, 101, 242, 0.16);
-	border: 1px solid rgba(88, 101, 242, 0.45);
+	background: rgba(88, 101, 242, 0.22);
+	border: 1px solid rgba(88, 101, 242, 0.55);
 	color: var(--color-snow);
 	font-size: 13px;
-	font-weight: 600;
+	font-weight: 700;
 	cursor: pointer;
 	transition: transform 0.12s ease, background 0.15s ease;
 }
 
 .zy-reaction-pill:hover {
-	background: rgba(88, 101, 242, 0.28);
-	transform: scale(1.04);
+	background: rgba(88, 101, 242, 0.36);
+	transform: scale(1.05);
 }
 
 .zy-reaction-pill.is-inactive {
-	background: rgba(255, 255, 255, 0.06);
-	border-color: rgba(255, 255, 255, 0.12);
+	background: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.16);
 	color: var(--color-fog);
 }
 
 /* ============================================================================
-   CARDS, GRIDS, ACCORDIONS & CAROUSELS
+   CARDS, GRIDS & ACCORDIONS
    ============================================================================ */
 .zy-grid-3 {
 	display: grid;
@@ -777,11 +1015,13 @@ textarea {
 }
 
 .zy-card {
-	border-radius: var(--radius-cards);
-	background: var(--surface-card-glass);
-	border: 1px solid var(--surface-border-subtle);
+	border-radius: 24px;
+	background: linear-gradient(145deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.04) 100%);
+	backdrop-filter: blur(18px);
+	-webkit-backdrop-filter: blur(18px);
+	border: 1px solid rgba(255, 255, 255, 0.16);
 	padding: var(--spacing-28);
-	transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+	transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 	display: flex;
 	flex-direction: column;
 	gap: var(--spacing-16);
@@ -789,24 +1029,23 @@ textarea {
 
 .zy-card:hover {
 	transform: translateY(-4px);
-	border-color: var(--surface-border-bright);
-	box-shadow: 0 20px 44px rgba(0, 0, 0, 0.38);
+	border-color: rgba(136, 145, 242, 0.5);
+	box-shadow: 0 24px 48px rgba(0, 0, 0, 0.42);
 }
 
 .zy-card-icon {
-	width: 48px;
-	height: 48px;
-	border-radius: 12px;
-	background: rgba(88, 101, 242, 0.2);
-	border: 1px solid rgba(136, 145, 242, 0.35);
+	width: 52px;
+	height: 52px;
+	border-radius: 14px;
+	background: rgba(88, 101, 242, 0.25);
+	border: 1px solid rgba(136, 145, 242, 0.42);
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	color: var(--color-snow);
-	font-size: 22px;
+	font-size: 24px;
 }
 
-/* FAQ / Accordion */
 .zy-accordion {
 	display: flex;
 	flex-direction: column;
@@ -814,15 +1053,15 @@ textarea {
 }
 
 .zy-accordion-item {
-	border-radius: var(--radius-cards);
-	background: rgba(24, 27, 68, 0.78);
-	border: 1px solid rgba(255, 255, 255, 0.12);
+	border-radius: 20px;
+	background: rgba(24, 27, 68, 0.82);
+	border: 1px solid rgba(255, 255, 255, 0.14);
 	overflow: hidden;
 	transition: border-color 0.18s ease;
 }
 
 .zy-accordion-item.is-open {
-	border-color: rgba(136, 145, 242, 0.5);
+	border-color: rgba(136, 145, 242, 0.55);
 }
 
 .zy-accordion-trigger {
@@ -845,7 +1084,7 @@ textarea {
 	width: 28px;
 	height: 28px;
 	border-radius: 50%;
-	background: rgba(255, 255, 255, 0.08);
+	background: rgba(255, 255, 255, 0.1);
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -870,53 +1109,94 @@ textarea {
 	display: block;
 }
 
-/* Status Pill */
 .zy-status-pill {
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	padding: 6px 12px;
+	padding: 6px 14px;
 	border-radius: var(--radius-pills);
-	background: rgba(87, 242, 135, 0.14);
-	border: 1px solid rgba(87, 242, 135, 0.4);
+	background: rgba(87, 242, 135, 0.16);
+	border: 1px solid rgba(87, 242, 135, 0.42);
 	color: var(--color-spring-green);
 	font-size: 13px;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 /* ============================================================================
-   GLOBAL 5-COLUMN FOOTER
+   DISCORD.COM 2026 FOOTER (Language Selector, Social Row, 4 Link Columns, Giant Wordmark)
    ============================================================================ */
 .zy-footer {
 	position: relative;
-	z-index: 1;
-	background: linear-gradient(180deg, rgba(10, 11, 32, 0.85) 0%, #070819 100%);
-	border-top: 1px solid rgba(255, 255, 255, 0.1);
-	padding: var(--spacing-80) 0 var(--spacing-48);
-	margin-top: var(--spacing-80);
+	z-index: 2;
+	background: linear-gradient(180deg, #273099 0%, #3442d9 35%, #4654eb 100%);
+	border-top: 1px solid rgba(255, 255, 255, 0.18);
+	padding: 72px 0 36px;
+	overflow: hidden;
 }
 
 .zy-footer-grid {
 	display: grid;
-	grid-template-columns: 1.5fr repeat(5, 1fr);
+	grid-template-columns: 1.45fr repeat(4, 1fr);
 	gap: var(--spacing-36);
 	padding-bottom: var(--spacing-48);
-	border-bottom: 1px solid rgba(88, 101, 242, 0.35);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .zy-footer-brand-col {
 	display: flex;
 	flex-direction: column;
-	gap: var(--spacing-16);
+	gap: 18px;
+}
+
+.zy-lang-selector {
+	position: relative;
+	max-width: 220px;
+}
+
+.zy-lang-btn {
+	width: 100%;
+	padding: 10px 14px;
+	border-radius: 12px;
+	background: rgba(0, 0, 0, 0.22);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	color: #fff;
+	font-size: 14px;
+	font-weight: 600;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	cursor: pointer;
+}
+
+.zy-social-row {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	margin-top: 4px;
+}
+
+.zy-social-btn {
+	width: 38px;
+	height: 38px;
+	border-radius: 10px;
+	background: rgba(255, 255, 255, 0.12);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	transition: background 0.16s ease, transform 0.16s ease;
+}
+
+.zy-social-btn:hover {
+	background: rgba(255, 255, 255, 0.24);
+	transform: translateY(-2px);
 }
 
 .zy-footer-col-title {
-	color: var(--color-blurple);
+	color: rgba(255, 255, 255, 0.72);
 	font-family: var(--font-abc-ginto-discord);
 	font-size: 14px;
-	font-weight: 700;
-	letter-spacing: 0.04em;
-	text-transform: uppercase;
+	font-weight: 600;
 	margin-bottom: var(--spacing-16);
 }
 
@@ -928,14 +1208,14 @@ textarea {
 }
 
 .zy-footer-links a {
-	color: var(--color-fog);
+	color: var(--color-snow);
 	font-family: var(--font-abc-ginto-normal);
 	font-size: 15px;
-	transition: color 0.15s ease;
+	font-weight: 500;
+	transition: opacity 0.15s ease;
 }
 
 .zy-footer-links a:hover {
-	color: var(--color-snow);
 	text-decoration: underline;
 }
 
@@ -949,31 +1229,28 @@ textarea {
 }
 
 .zy-footer-meta {
-	color: var(--color-greyple);
+	color: rgba(255, 255, 255, 0.85);
 	font-size: 13px;
 }
 
 .zy-wordmark-banner {
-	margin-top: var(--spacing-40);
+	margin-top: 28px;
 	text-align: center;
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 900;
-	font-size: clamp(54px, 13vw, 168px);
-	line-height: 0.82;
+	font-size: clamp(64px, 16.5vw, 224px);
+	line-height: 0.8;
 	letter-spacing: -0.03em;
 	text-transform: uppercase;
-	background: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(88, 101, 242, 0.03) 100%);
-	-webkit-background-clip: text;
-	background-clip: text;
-	color: transparent;
+	color: rgba(255, 255, 255, 0.96);
 	user-select: none;
 	pointer-events: none;
 }
 
 /* ============================================================================
-   RESPONSIVE BREAKPOINTS (320px -> 1920px) & REDUCED MOTION
+   RESPONSIVE BREAKPOINTS
    ============================================================================ */
-@media (max-width: 1024px) {
+@media (max-width: 1080px) {
 	.zy-nav-links {
 		display: none;
 	}
@@ -991,7 +1268,7 @@ textarea {
 		grid-template-columns: repeat(2, 1fr);
 	}
 	.zy-footer-grid {
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 	}
 	.zy-footer-brand-col {
 		grid-column: 1 / -1;
@@ -1000,7 +1277,14 @@ textarea {
 
 @media (max-width: 680px) {
 	.zy-section {
-		padding: var(--spacing-56) 0;
+		padding: 48px 0;
+	}
+	.zy-showcase-card {
+		border-radius: 28px;
+		padding: 24px 18px;
+	}
+	.zy-scene-stage {
+		border-radius: 20px;
 	}
 	.zy-grid-3,
 	.zy-grid-2,
