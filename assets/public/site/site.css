@@ -1056,30 +1056,140 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	display: grid;
 	grid-template-columns: 1.4fr repeat(4, 1fr);
 	gap: 32px;
-	padding-bottom: 48px;
+	padding-bottom: 56px;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .zy-footer-brand-col {
 	display: flex;
 	flex-direction: column;
-	gap: 22px;
+	gap: 24px;
+}
+
+.zy-footer-logo-link {
+	display: inline-flex;
+	align-items: center;
+	color: #ffffff;
+	width: fit-content;
+	transition: transform 0.16s ease, opacity 0.16s ease;
+}
+
+.zy-footer-logo-link:hover {
+	transform: scale(1.04);
+	opacity: 0.92;
+}
+
+.zy-lang-dropdown-wrap {
+	position: relative;
+	width: 100%;
+	max-width: 240px;
 }
 
 .zy-lang-picker {
-	display: inline-flex;
+	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	width: 100%;
 	gap: 12px;
-	padding: 12px 16px;
+	padding: 13px 16px;
 	border-radius: 14px;
-	background: rgba(10, 12, 34, 0.28);
+	background: rgba(255, 255, 255, 0.12);
 	border: 1px solid rgba(255, 255, 255, 0.24);
 	color: #fff;
+	font-family: var(--font-abc-ginto-discord);
 	font-size: 14px;
 	font-weight: 600;
-	max-width: 220px;
 	cursor: pointer;
+	transition: background-color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.zy-lang-picker:hover,
+.zy-lang-dropdown-wrap.is-open .zy-lang-picker {
+	background: rgba(255, 255, 255, 0.18);
+	border-color: rgba(255, 255, 255, 0.42);
+}
+
+.zy-lang-chevron {
+	flex-shrink: 0;
+	transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.zy-lang-dropdown-wrap.is-open .zy-lang-chevron {
+	transform: rotate(180deg);
+}
+
+.zy-lang-menu {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	width: 100%;
+	max-height: 264px;
+	overflow-y: auto;
+	margin: 0;
+	padding: 6px;
+	list-style: none;
+	border-radius: 16px;
+	background: #23272a;
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	box-shadow: 0 18px 48px rgba(0, 0, 0, 0.52);
+	z-index: 60;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(-6px) scale(0.98);
+	transform-origin: top center;
+	transition:
+		opacity 0.16s ease,
+		transform 0.16s cubic-bezier(0.22, 1, 0.36, 1),
+		visibility 0.16s ease;
+}
+
+.zy-lang-dropdown-wrap.is-open .zy-lang-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0) scale(1);
+}
+
+.zy-lang-menu::-webkit-scrollbar {
+	width: 6px;
+}
+
+.zy-lang-menu::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.22);
+	border-radius: 999px;
+}
+
+.zy-lang-option {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	padding: 10px 12px;
+	border-radius: 10px;
+	color: rgba(255, 255, 255, 0.88);
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.zy-lang-option:hover {
+	background: rgba(88, 101, 242, 0.32);
+	color: #ffffff;
+}
+
+.zy-lang-option.is-selected {
+	background: var(--color-blurple);
+	color: #ffffff;
+}
+
+.zy-lang-check {
+	opacity: 0;
+	flex-shrink: 0;
+	transition: opacity 0.14s ease;
+}
+
+.zy-lang-option.is-selected .zy-lang-check {
+	opacity: 1;
 }
 
 .zy-social-row {
@@ -1153,22 +1263,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	text-decoration: underline;
 }
 
-.zy-footer-bottom {
-	padding-top: 28px;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	flex-wrap: wrap;
-	gap: 16px;
-}
-
-.zy-footer-meta {
-	color: rgba(255, 255, 255, 0.85);
-	font-size: 14px;
-}
-
 .zy-wordmark-banner {
-	margin-top: 28px;
+	margin-top: 40px;
 	text-align: center;
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 900;

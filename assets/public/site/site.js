@@ -460,58 +460,144 @@
     }
   ];
   var LANGUAGES = [
-    "English (US)",
-    "العربية (Arabic)",
-    "Français (FR)",
-    "Español (ES)",
-    "Deutsch (DE)",
-    "日本語 (JA)"
+    { code: "en-US", label: "English (US)" },
+    { code: "en-GB", label: "English (UK)" },
+    { code: "ar", label: "العربية" },
+    { code: "fr", label: "Français" },
+    { code: "es-ES", label: "Español" },
+    { code: "de", label: "Deutsch" },
+    { code: "it", label: "Italiano" },
+    { code: "pt-BR", label: "Português do Brasil" },
+    { code: "ru", label: "Русский" },
+    { code: "tr", label: "Türkçe" },
+    { code: "nl", label: "Nederlands" },
+    { code: "pl", label: "Polski" },
+    { code: "ja", label: "日本語" },
+    { code: "ko", label: "한국어" },
+    { code: "zh-CN", label: "中文 (简体)" }
   ];
   function ZycordFooter() {
-    const year = (/* @__PURE__ */ new Date()).getFullYear();
-    let langIdx = 0;
-    const cycleLanguage = (e) => {
-      langIdx = (langIdx + 1) % LANGUAGES.length;
-      const span = e.currentTarget.querySelector("[data-lang-label]");
-      if (span) span.textContent = LANGUAGES[langIdx];
+    let currentLang = "English (US)";
+    try {
+      const saved = window.localStorage.getItem("zy_site_lang");
+      if (saved) currentLang = saved;
+    } catch (_e) {
+    }
+    const toggleLangMenu = (e) => {
+      e.stopPropagation();
+      const wrap = document.getElementById("zy-lang-dropdown-wrap");
+      const btn = document.getElementById("zy-lang-picker");
+      if (!wrap) return;
+      const open = !wrap.classList.contains("is-open");
+      wrap.classList.toggle("is-open", open);
+      if (btn) btn.setAttribute("aria-expanded", open ? "true" : "false");
     };
-    return /* @__PURE__ */ h("footer", { className: "zy-footer" }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-footer-grid" }, /* @__PURE__ */ h("div", { className: "zy-footer-brand-col" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h(
-      "span",
-      {
-        className: "zy-brand-mark",
-        style: {
-          width: "48px",
-          height: "48px",
-          borderRadius: "14px",
-          background: "#ffffff",
-          color: "#5865F2"
+    const selectLanguage = (langObj, e) => {
+      e.stopPropagation();
+      currentLang = langObj.label;
+      try {
+        window.localStorage.setItem("zy_site_lang", langObj.label);
+      } catch (_e) {
+      }
+      const labelNode = document.querySelector("[data-lang-label]");
+      if (labelNode) labelNode.textContent = langObj.label;
+      const items = document.querySelectorAll("[data-lang-option]");
+      for (let i = 0; i < items.length; i++) {
+        const isSelected = items[i].getAttribute("data-lang-option") === langObj.code;
+        items[i].classList.toggle("is-selected", isSelected);
+        items[i].setAttribute("aria-selected", isSelected ? "true" : "false");
+      }
+      const wrap = document.getElementById("zy-lang-dropdown-wrap");
+      const btn = document.getElementById("zy-lang-picker");
+      if (wrap) wrap.classList.remove("is-open");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    };
+    if (typeof document !== "undefined" && !window.__zyLangOutsideBound) {
+      window.__zyLangOutsideBound = true;
+      document.addEventListener("click", (ev) => {
+        const wrap = document.getElementById("zy-lang-dropdown-wrap");
+        const btn = document.getElementById("zy-lang-picker");
+        if (wrap && wrap.classList.contains("is-open") && !wrap.contains(ev.target)) {
+          wrap.classList.remove("is-open");
+          if (btn) btn.setAttribute("aria-expanded", "false");
         }
-      },
-      /* @__PURE__ */ h(ZycordMark, { size: 30, color: "#5865F2" })
-    )), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-footer-col-title", style: { marginBottom: "8px" } }, "Language"), /* @__PURE__ */ h(
-      "div",
+      });
+      document.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape") {
+          const wrap = document.getElementById("zy-lang-dropdown-wrap");
+          const btn = document.getElementById("zy-lang-picker");
+          if (wrap && wrap.classList.contains("is-open")) {
+            wrap.classList.remove("is-open");
+            if (btn) btn.setAttribute("aria-expanded", "false");
+          }
+        }
+      });
+    }
+    return /* @__PURE__ */ h("footer", { className: "zy-footer" }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-footer-grid" }, /* @__PURE__ */ h("div", { className: "zy-footer-brand-col" }, /* @__PURE__ */ h("a", { className: "zy-footer-logo-link", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h(ZycordMark, { size: 46, color: "#ffffff" })), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-footer-col-title", style: { marginBottom: "8px" } }, "Language"), /* @__PURE__ */ h("div", { className: "zy-lang-dropdown-wrap", id: "zy-lang-dropdown-wrap" }, /* @__PURE__ */ h(
+      "button",
       {
+        type: "button",
         className: "zy-lang-picker",
         id: "zy-lang-picker",
-        role: "button",
-        tabIndex: "0",
+        "aria-haspopup": "listbox",
+        "aria-expanded": "false",
         "aria-label": "Select Language",
-        onClick: cycleLanguage
+        onClick: toggleLangMenu
       },
-      /* @__PURE__ */ h("span", { style: { display: "inline-flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ h("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("circle", { cx: "12", cy: "12", r: "10" }), /* @__PURE__ */ h("line", { x1: "2", y1: "12", x2: "22", y2: "12" }), /* @__PURE__ */ h("path", { d: "M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" })), /* @__PURE__ */ h("span", { "data-lang-label": true }, "English (US)")),
+      /* @__PURE__ */ h("span", { "data-lang-label": true }, currentLang),
       /* @__PURE__ */ h(
         "svg",
         {
-          width: "14",
-          height: "14",
+          className: "zy-lang-chevron",
+          width: "16",
+          height: "16",
           viewBox: "0 0 16 16",
           fill: "none",
           stroke: "currentColor",
-          "stroke-width": "2"
+          "stroke-width": "2",
+          "stroke-linecap": "round",
+          "stroke-linejoin": "round"
         },
         /* @__PURE__ */ h("polyline", { points: "4 6 8 10 12 6" })
       )
-    )), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-footer-col-title", style: { marginBottom: "10px" } }, "Social"), /* @__PURE__ */ h("div", { className: "zy-social-row" }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h(
+      "ul",
+      {
+        className: "zy-lang-menu",
+        id: "zy-lang-menu",
+        role: "listbox",
+        "aria-label": "Languages"
+      },
+      LANGUAGES.map((l) => {
+        const selected = l.label === currentLang;
+        return /* @__PURE__ */ h(
+          "li",
+          {
+            role: "option",
+            "aria-selected": selected ? "true" : "false",
+            "data-lang-option": l.code,
+            className: `zy-lang-option${selected ? " is-selected" : ""}`,
+            onClick: (e) => selectLanguage(l, e)
+          },
+          /* @__PURE__ */ h("span", null, l.label),
+          /* @__PURE__ */ h(
+            "svg",
+            {
+              className: "zy-lang-check",
+              width: "15",
+              height: "15",
+              viewBox: "0 0 24 24",
+              fill: "none",
+              stroke: "currentColor",
+              "stroke-width": "2.5",
+              "stroke-linecap": "round",
+              "stroke-linejoin": "round"
+            },
+            /* @__PURE__ */ h("polyline", { points: "20 6 9 17 4 12" })
+          )
+        );
+      })
+    ))), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-footer-col-title", style: { marginBottom: "10px" } }, "Social"), /* @__PURE__ */ h("div", { className: "zy-social-row" }, /* @__PURE__ */ h(
       "a",
       {
         className: "zy-social-btn",
@@ -533,6 +619,15 @@
       "a",
       {
         className: "zy-social-btn",
+        href: "/discover",
+        "aria-label": "TikTok",
+        title: "Short Clips"
+      },
+      /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" }))
+    ), /* @__PURE__ */ h(
+      "a",
+      {
+        className: "zy-social-btn",
         href: "/developers",
         "aria-label": "Developer GitHub",
         title: "Developer Platform"
@@ -547,20 +642,7 @@
         title: "Streams & Videos"
       },
       /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" }))
-    ))), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h(
-      "a",
-      {
-        href: "/status",
-        className: "zy-status-pill",
-        "data-zy-status-pill": true,
-        style: {
-          background: "rgba(0,0,0,0.22)",
-          borderColor: "rgba(255,255,255,0.2)"
-        }
-      },
-      /* @__PURE__ */ h("span", { className: "zy-eyebrow-dot", "data-zy-status-dot": true }),
-      /* @__PURE__ */ h("span", { "data-zy-status-label": true }, "All Systems Operational")
-    ))), FOOTER_COLUMNS.map((col) => /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("h3", { className: "zy-footer-col-title" }, col.title), /* @__PURE__ */ h("ul", { className: "zy-footer-links" }, col.links.map((l) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { href: l.href }, l.label))))))), /* @__PURE__ */ h("div", { className: "zy-footer-bottom" }, /* @__PURE__ */ h("div", { className: "zy-footer-meta" }, "© ", year, " Zycord Platform. Built for gamers, friends, and communities everywhere."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "12px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary zy-btn-sm", href: "/download" }, "Download Zycord"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-login zy-btn-sm", "data-zy-open-app": true, href: "/app" }, "Open Zycord"))), /* @__PURE__ */ h("div", { className: "zy-wordmark-banner", "aria-hidden": "true" }, "ZYCORD")));
+    )))), FOOTER_COLUMNS.map((col) => /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("h3", { className: "zy-footer-col-title" }, col.title), /* @__PURE__ */ h("ul", { className: "zy-footer-links" }, col.links.map((l) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { href: l.href }, l.label))))))), /* @__PURE__ */ h("div", { className: "zy-wordmark-banner", "aria-hidden": "true" }, "ZYCORD")));
   }
 
   // assets/public/jsx/pages/HomePage.jsx
