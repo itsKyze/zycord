@@ -302,20 +302,20 @@ export function ZycordFooter() {
 			<div className="zy-wordmark-container" aria-hidden="true">
 				<svg
 					className="zy-wordmark-svg"
-					viewBox="0 0 1765 280"
+					viewBox="0 0 1765 340"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<text
 						x="882.5"
-						y="258"
+						y="236"
 						text-anchor="middle"
 						fill="#E0E3FF"
 						font-family="Poppins, 'Inter', system-ui, sans-serif"
 						font-weight="900"
-						font-size="338"
-						letter-spacing="-14"
-						textLength="1720"
+						font-size="312"
+						letter-spacing="-12"
+						textLength="1710"
 						lengthAdjust="spacingAndGlyphs"
 					>
 						Zycord
