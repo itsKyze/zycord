@@ -101,7 +101,7 @@ export class GatewayServer extends Server {
 
         this.routes = (await registerRoutes(this, path.join(__dirname, "routes", "/"))).filter((r) => !!r);
 
-        this.app.get("/", (req, res) => res.status(200).send("Online"));
+        if (!this.options.app) this.app.get("/", (req, res) => res.status(200).send("Online"));
 
         this.app.use(ErrorHandler);
         if (logRequests) console.log(red(`Warning: Request logging is enabled! This will spam your console!\nTo disable this, unset the 'LOG_REQUESTS' environment variable!`));
