@@ -691,7 +691,9 @@
         src: "/site/media/discord/careers-crown.webp",
         alt: "",
         "aria-hidden": "true",
-        className: "hero-crown"
+        className: "hero-crown",
+        "data-zy-parallax": "0.14",
+        "data-zy-parallax-rotate": "-8"
       }
     )), /* @__PURE__ */ h("h1", { className: "zy-display" }, "GROUP CHAT THAT'S ALL FUN & GAMES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.")), /* @__PURE__ */ h("div", { className: "hero-art-stage" }, /* @__PURE__ */ h("div", { className: "hero-art-glow" }), /* @__PURE__ */ h(
       "img",
@@ -699,7 +701,9 @@
         src: "/site/media/discord/download-trophy.webp",
         alt: "",
         "aria-hidden": "true",
-        className: "hero-trophy-blur"
+        className: "hero-trophy-blur",
+        "data-zy-parallax": "-0.16",
+        "data-zy-parallax-rotate": "10"
       }
     ), /* @__PURE__ */ h("div", { className: "hero-3d-composite" }, /* @__PURE__ */ h(
       "img",
@@ -766,10 +770,10 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "-72px",
-          right: "22%",
-          width: "160px",
-          zIndex: 5,
+          top: "-98px",
+          right: "224px",
+          width: "172px",
+          zIndex: 0,
           pointerEvents: "none"
         }
       }
@@ -779,13 +783,15 @@
         src: "/site/media/discord/prop-egg.webp",
         alt: "",
         "aria-hidden": "true",
-        className: "zy-float-prop tilt",
+        className: "zy-float-prop",
+        "data-zy-parallax": "0.22",
+        "data-zy-parallax-rotate": "-12",
         style: {
-          width: "185px",
-          bottom: "-145px",
-          left: "-6%",
+          width: "clamp(220px, 18vw, 316px)",
+          bottom: "-250px",
+          left: "-115px",
           zIndex: 1,
-          opacity: "0.88"
+          opacity: "0.94"
         }
       }
     ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
@@ -813,7 +819,14 @@
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop",
-        style: { width: "148px", top: "-64px", right: "4%", zIndex: 1 }
+        "data-zy-parallax": "0.2",
+        "data-zy-parallax-rotate": "14",
+        style: {
+          width: "clamp(185px, 15vw, 224px)",
+          bottom: "-165px",
+          left: "56px",
+          zIndex: 1
+        }
       }
     ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "STREAM LIKE YOU'RE IN THE SAME ROOM"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "High quality and low latency streaming makes it feel like you're hanging out on the couch with friends while playing a game, watching shows, looking at photos, or idk doing homework or something.")), /* @__PURE__ */ h(
       "div",
@@ -839,8 +852,15 @@
         src: "/site/media/discord/prop-box.webp",
         alt: "",
         "aria-hidden": "true",
-        className: "zy-float-prop tilt",
-        style: { width: "134px", top: "-54px", right: "8%" }
+        className: "zy-float-prop",
+        "data-zy-parallax": "0.18",
+        "data-zy-parallax-rotate": "-10",
+        style: {
+          width: "clamp(215px, 16.5vw, 295px)",
+          top: "-132px",
+          right: "-36px",
+          zIndex: 4
+        }
       }
     ), /* @__PURE__ */ h(
       "img",
@@ -849,7 +869,14 @@
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop",
-        style: { width: "102px", bottom: "-38px", left: "4%" }
+        "data-zy-parallax": "-0.15",
+        "data-zy-parallax-rotate": "12",
+        style: {
+          width: "clamp(130px, 10vw, 175px)",
+          bottom: "-72px",
+          left: "2%",
+          zIndex: 2
+        }
       }
     ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
       "div",
@@ -869,19 +896,21 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec3-hop-in.mp4", type: "video/mp4" })
       )
-    ), /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "HOP IN WHEN YOU'RE FREE, NO NEED TO CALL"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Easily hop in and out of voice or text chats without having to call or invite anyone, so your party chat lasts before, during, and after your game session.")))))), /* @__PURE__ */ h("div", { className: "zy-marquee-band", "aria-hidden": "true" }, /* @__PURE__ */ h("div", { className: "zy-marquee-track" }, [0, 1, 2, 3].map(() => /* @__PURE__ */ h("div", { className: "zy-marquee-item" }, /* @__PURE__ */ h("span", null, "TALK"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 38, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "PLAY"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 38, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "CHAT"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 38, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "HANG OUT"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 38, color: "#ffffff" })))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "presence" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "HOP IN WHEN YOU'RE FREE, NO NEED TO CALL"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Easily hop in and out of voice or text chats without having to call or invite anyone, so your party chat lasts before, during, and after your game session.")))))), /* @__PURE__ */ h("div", { className: "zy-marquee-band", "aria-hidden": "true" }, /* @__PURE__ */ h("div", { className: "zy-marquee-track" }, [0, 1, 2, 3].map(() => /* @__PURE__ */ h("div", { className: "zy-marquee-item" }, /* @__PURE__ */ h("span", null, "TALK"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 42, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "PLAY"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 42, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "CHAT"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 42, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "HANG OUT"), /* @__PURE__ */ h("span", { className: "zy-marquee-icon" }, /* @__PURE__ */ h(ZycordMark, { size: 42, color: "#ffffff" })))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "presence" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/prop-coin.webp",
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop",
+        "data-zy-parallax": "0.24",
+        "data-zy-parallax-rotate": "16",
         style: {
-          width: "160px",
-          bottom: "-140px",
-          left: "-6%",
-          filter: "blur(3px) drop-shadow(0 20px 34px rgba(0, 0, 0, 0.45))",
-          opacity: "0.75",
+          width: "clamp(190px, 16vw, 282px)",
+          bottom: "-220px",
+          left: "-105px",
+          filter: "blur(2.5px) drop-shadow(0 22px 38px rgba(0, 0, 0, 0.48))",
+          opacity: "0.86",
           zIndex: 1
         }
       }
@@ -903,7 +932,7 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec4-chill.mp4", type: "video/mp4" })
       )
-    ))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "activities", style: { paddingTop: "96px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
+    ))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "activities", style: { paddingTop: "112px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/sec5-woman-bottom.webp",
@@ -911,12 +940,12 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "4px",
-          right: "27.5%",
-          width: "148px",
+          top: "6px",
+          right: "25.5%",
+          width: "168px",
           height: "auto",
           zIndex: 0,
-          opacity: "0.42",
+          opacity: "0.45",
           pointerEvents: "none"
         }
       }
@@ -928,9 +957,9 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "-86px",
-          right: "25.5%",
-          width: "188px",
+          top: "-96px",
+          right: "23.8%",
+          width: "212px",
           height: "auto",
           zIndex: 6,
           pointerEvents: "none"
@@ -944,9 +973,9 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "-116px",
-          right: "9.5%",
-          width: "174px",
+          top: "-132px",
+          right: "7.5%",
+          width: "198px",
           height: "auto",
           zIndex: 1,
           clipPath: "inset(0 0 43.5% 0)",
@@ -959,11 +988,13 @@
         src: "/site/media/discord/prop-turnip.webp",
         alt: "",
         "aria-hidden": "true",
-        className: "zy-float-prop tilt",
+        className: "zy-float-prop",
+        "data-zy-parallax": "0.18",
+        "data-zy-parallax-rotate": "-10",
         style: {
-          width: "146px",
-          bottom: "-36px",
-          left: "-32px",
+          width: "clamp(185px, 14.5vw, 244px)",
+          bottom: "-96px",
+          left: "-58px",
           zIndex: 8
         }
       }
@@ -991,8 +1022,15 @@
         src: "/site/media/discord/prop-plump.webp",
         alt: "",
         "aria-hidden": "true",
-        className: "zy-float-prop tilt",
-        style: { width: "126px", top: "-52px", right: "6%" }
+        className: "zy-float-prop",
+        "data-zy-parallax": "0.2",
+        "data-zy-parallax-rotate": "12",
+        style: {
+          width: "clamp(175px, 15vw, 276px)",
+          top: "-165px",
+          right: "36px",
+          zIndex: 1
+        }
       }
     ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "WHEREVER YOU GAME, HANG OUT HERE"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "On your PC, phone, or console, you can still hang out on Zycord. Easily switch between devices and use tools to manage multiple group chats with friends.")), /* @__PURE__ */ h(
       "div",
@@ -1435,6 +1473,36 @@ authorizeUrl.searchParams.set("permissions", "8"); // Administrator`)
       });
     }
   }
+  function bindScrollParallax() {
+    const items = document.querySelectorAll("[data-zy-parallax]");
+    if (!items.length) return;
+    let ticking = false;
+    const updateParallax = () => {
+      ticking = false;
+      const vh = window.innerHeight || 900;
+      for (let i = 0; i < items.length; i++) {
+        const el = items[i];
+        const speed = parseFloat(el.getAttribute("data-zy-parallax") || "0.18");
+        const maxRot = parseFloat(el.getAttribute("data-zy-parallax-rotate") || "0");
+        const parent = el.parentElement || el;
+        const rect = parent.getBoundingClientRect();
+        const centerDelta = vh * 0.5 - (rect.top + rect.height * 0.5);
+        const clamped = Math.max(-650, Math.min(650, centerDelta));
+        const translateY = clamped * speed;
+        const rotateDeg = clamped / 500 * maxRot;
+        el.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0) rotate(${rotateDeg.toFixed(2)}deg)`;
+      }
+    };
+    const requestTick = () => {
+      if (!ticking) {
+        ticking = true;
+        window.requestAnimationFrame(updateParallax);
+      }
+    };
+    window.addEventListener("scroll", requestTick, { passive: true });
+    window.addEventListener("resize", requestTick, { passive: true });
+    updateParallax();
+  }
   function initSiteJSX() {
     const navMount = document.querySelector("[data-zy-navbar]");
     if (navMount) {
@@ -1458,6 +1526,7 @@ authorizeUrl.searchParams.set("permissions", "8"); // Administrator`)
     bindAccordions();
     bindTabGroups();
     bindReactions();
+    bindScrollParallax();
   }
   window.ZycordSite = {
     NAVIGATION_ITEMS,

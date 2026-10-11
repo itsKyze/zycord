@@ -47,8 +47,8 @@
 	--radius-pills: 104px;
 	--radius-buttons: 14px;
 	--radius-buttons-large: 16px;
-	--radius-feature-panels: 44px;
-	--page-max-width: 1260px;
+	--radius-feature-panels: 88px;
+	--page-max-width: 1380px;
 }
 
 *,
@@ -99,7 +99,7 @@ svg {
 .zy-display {
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 900;
-	font-size: clamp(38px, 5.2vw, 62px);
+	font-size: clamp(42px, 5.4vw, 68px);
 	line-height: 0.92;
 	letter-spacing: -0.02em;
 	text-transform: uppercase;
@@ -110,8 +110,8 @@ svg {
 .zy-heading-lg {
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 900;
-	font-size: clamp(32px, 4.4vw, 54px);
-	line-height: 0.94;
+	font-size: clamp(36px, 4.6vw, 58px);
+	line-height: 0.93;
 	letter-spacing: -0.015em;
 	text-transform: uppercase;
 	color: var(--color-snow);
@@ -121,8 +121,8 @@ svg {
 .zy-heading {
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 900;
-	font-size: clamp(28px, 3.8vw, 46px);
-	line-height: 0.96;
+	font-size: clamp(32px, 3.6vw, 48px);
+	line-height: 0.93;
 	letter-spacing: -0.015em;
 	text-transform: uppercase;
 	color: var(--color-snow);
@@ -132,8 +132,8 @@ svg {
 .zy-heading-sm {
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 800;
-	font-size: clamp(22px, 2.6vw, 34px);
-	line-height: 1.08;
+	font-size: clamp(24px, 2.8vw, 36px);
+	line-height: 1.06;
 	letter-spacing: -0.01em;
 	text-transform: uppercase;
 	color: var(--color-snow);
@@ -143,9 +143,9 @@ svg {
 .zy-body-lg {
 	font-family: var(--font-abc-ginto-discord);
 	font-weight: 400;
-	font-size: clamp(17px, 1.35vw, 20px);
-	line-height: 1.5;
-	color: rgba(255, 255, 255, 0.9);
+	font-size: clamp(18px, 1.38vw, 20px);
+	line-height: 1.38;
+	color: rgba(255, 255, 255, 0.94);
 	margin: 0;
 }
 
@@ -190,11 +190,11 @@ svg {
 	width: 100%;
 	max-width: var(--page-max-width);
 	margin: 0 auto;
-	padding: 0 24px;
+	padding: 0 28px;
 }
 
 .zy-section {
-	padding: clamp(52px, 7vw, 96px) 0;
+	padding: clamp(64px, 8vw, 118px) 0;
 	position: relative;
 }
 
@@ -695,57 +695,65 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	font-size: 24px;
 }
 
-/* Discord 2026 Frosted Glass Outer Showcase Card */
+/* Discord 2026 Frosted Glass Outer Showcase Card (Matches .home--block-group._2025 on discord.com) */
 .zy-showcase-card {
 	position: relative;
 	z-index: 3;
-	max-width: 1200px;
+	max-width: 1360px;
 	margin: 0 auto;
-	border-radius: 64px;
-	background:
-		radial-gradient(circle at 82% 24%, rgba(162, 136, 255, 0.28) 0%, transparent 48%),
-		linear-gradient(135deg, rgba(255, 255, 255, 0.14) 0%, rgba(18, 20, 58, 0.78) 52%, rgba(14, 16, 48, 0.9) 100%);
-	backdrop-filter: blur(28px);
-	-webkit-backdrop-filter: blur(28px);
-	border: 2px solid rgba(255, 255, 255, 0.18);
-	padding: 18px;
+	border-radius: 88px;
+	background-image: linear-gradient(
+		135deg,
+		rgba(255, 255, 255, 0.2),
+		rgba(255, 255, 255, 0.12) 12%,
+		rgba(255, 255, 255, 0.04) 50%,
+		rgba(255, 255, 255, 0.08) 83%,
+		rgba(255, 255, 255, 0.2)
+	);
+	backdrop-filter: blur(80px);
+	-webkit-backdrop-filter: blur(80px);
+	border: none;
+	padding: 20px;
 	box-shadow:
-		0 34px 90px rgba(0, 0, 0, 0.52),
-		0 1px 0 rgba(255, 255, 255, 0.28) inset;
+		inset 0 0 0 3px rgba(255, 255, 255, 0.2),
+		0 34px 90px rgba(0, 0, 0, 0.48);
 	overflow: visible;
 }
 
 .zy-showcase-grid {
 	display: grid;
-	grid-template-columns: 0.84fr 1.16fr;
-	gap: clamp(20px, 3vw, 36px);
+	grid-template-columns: 0.64fr 1.36fr;
+	gap: clamp(24px, 3vw, 44px);
 	align-items: center;
 }
 
 .zy-showcase-grid.is-reversed {
-	grid-template-columns: 1.16fr 0.84fr;
+	grid-template-columns: 1.36fr 0.64fr;
 }
 
 .zy-showcase-copy {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	padding: clamp(20px, 3vw, 44px);
+	padding: clamp(20px, 2.8vw, 42px);
 }
 
-/* Vibrant Inner Stage Container inside Frosted Showcase Card (Zero extra frame padding) */
+/* Vibrant Inner Stage Container inside Frosted Showcase Card (Matches .home--group-chat-img.video._2025 on discord.com) */
 .zy-scene-stage {
 	position: relative;
-	border-radius: 48px;
+	border-radius: 72px;
 	padding: 0;
 	overflow: hidden;
-	box-shadow: 0 20px 54px rgba(0, 0, 0, 0.38);
+	box-shadow: 0 22px 58px rgba(0, 0, 0, 0.42);
 	border: none;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-size: cover;
 	background-position: center;
+	min-height: clamp(460px, 35vw, 650px);
+	aspect-ratio: 306 / 233;
+	width: 100%;
 }
 
 .zy-scene-stage.stage-magenta {
@@ -770,8 +778,9 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-stage-video {
 	width: 100%;
-	height: auto;
-	border-radius: 48px;
+	height: 100%;
+	object-fit: cover;
+	border-radius: 72px;
 	display: block;
 	box-shadow: none;
 }
@@ -784,8 +793,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
-	padding: 26px 0;
-	margin: 24px 0;
+	padding: 30px 0;
+	margin: 32px 0;
 	background: linear-gradient(90deg, rgba(88, 101, 242, 0.35), rgba(255, 255, 255, 0.14), rgba(88, 101, 242, 0.35));
 	backdrop-filter: blur(20px);
 	border-top: 1px solid rgba(255, 255, 255, 0.24);
@@ -795,7 +804,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-marquee-track {
 	display: flex;
 	align-items: center;
-	gap: 48px;
+	gap: 54px;
 	width: max-content;
 	animation: zy-marquee-scroll 26s linear infinite;
 }
@@ -803,10 +812,10 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-marquee-item {
 	display: inline-flex;
 	align-items: center;
-	gap: 48px;
+	gap: 54px;
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 900;
-	font-size: clamp(28px, 3.8vw, 48px);
+	font-size: clamp(32px, 4.2vw, 56px);
 	letter-spacing: -0.01em;
 	text-transform: uppercase;
 	color: #ffffff;
@@ -818,8 +827,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 40px;
-	height: 40px;
+	width: 44px;
+	height: 44px;
 	filter: drop-shadow(0 6px 16px rgba(88, 101, 242, 0.6));
 }
 
@@ -829,7 +838,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 }
 
 /* ============================================================================
-   FLOATING 3D PROPS & TWINKLING STARS
+   FLOATING 3D PROPS & TWINKLING STARS (WITH SCROLL PARALLAX SUPPORT)
    ============================================================================ */
 
 .zy-float-prop {
@@ -837,11 +846,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	pointer-events: none;
 	z-index: 6;
 	filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.55));
-	animation: zy-float-y 6s ease-in-out infinite;
-}
-
-.zy-float-prop.tilt {
-	animation: zy-float-tilt 7s ease-in-out infinite;
+	will-change: transform;
+	transition: transform 0.08s linear;
 }
 
 .zy-star {

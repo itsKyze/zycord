@@ -148,6 +148,40 @@ function bindReactions() {
 	}
 }
 
+function bindScrollParallax() {
+	const items = document.querySelectorAll("[data-zy-parallax]");
+	if (!items.length) return;
+
+	let ticking = false;
+	const updateParallax = () => {
+		ticking = false;
+		const vh = window.innerHeight || 900;
+		for (let i = 0; i < items.length; i++) {
+			const el = items[i];
+			const speed = parseFloat(el.getAttribute("data-zy-parallax") || "0.18");
+			const maxRot = parseFloat(el.getAttribute("data-zy-parallax-rotate") || "0");
+			const parent = el.parentElement || el;
+			const rect = parent.getBoundingClientRect();
+			const centerDelta = (vh * 0.5) - (rect.top + rect.height * 0.5);
+			const clamped = Math.max(-650, Math.min(650, centerDelta));
+			const translateY = clamped * speed;
+			const rotateDeg = (clamped / 500) * maxRot;
+			el.style.transform = `translate3d(0, ${translateY.toFixed(1)}px, 0) rotate(${rotateDeg.toFixed(2)}deg)`;
+		}
+	};
+
+	const requestTick = () => {
+		if (!ticking) {
+			ticking = true;
+			window.requestAnimationFrame(updateParallax);
+		}
+	};
+
+	window.addEventListener("scroll", requestTick, { passive: true });
+	window.addEventListener("resize", requestTick, { passive: true });
+	updateParallax();
+}
+
 function initSiteJSX() {
 	const navMount = document.querySelector("[data-zy-navbar]");
 	if (navMount) {
@@ -174,6 +208,7 @@ function initSiteJSX() {
 	bindAccordions();
 	bindTabGroups();
 	bindReactions();
+	bindScrollParallax();
 }
 
 window.ZycordSite = {
