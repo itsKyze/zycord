@@ -15,7 +15,9 @@
     "radialGradient",
     "stop",
     "clipPath",
-    "mask"
+    "mask",
+    "text",
+    "tspan"
   ]);
   function Fragment(props) {
     return props.children;
