@@ -399,12 +399,12 @@ export function HomePage() {
 						aria-hidden="true"
 						style={{
 							position: "absolute",
-							top: "6px",
-							right: "25.5%",
-							width: "168px",
+							top: "10px",
+							right: "25.2%",
+							width: "165px",
 							height: "auto",
 							zIndex: 0,
-							opacity: "0.45",
+							opacity: "0.38",
 							pointerEvents: "none"
 						}}
 					/>
@@ -415,9 +415,9 @@ export function HomePage() {
 						aria-hidden="true"
 						style={{
 							position: "absolute",
-							top: "-96px",
-							right: "23.8%",
-							width: "212px",
+							top: "-88px",
+							right: "23.6%",
+							width: "208px",
 							height: "auto",
 							zIndex: 6,
 							pointerEvents: "none"
@@ -430,12 +430,12 @@ export function HomePage() {
 						aria-hidden="true"
 						style={{
 							position: "absolute",
-							top: "-132px",
-							right: "7.5%",
-							width: "198px",
+							top: "-124px",
+							right: "8.2%",
+							width: "194px",
 							height: "auto",
 							zIndex: 1,
-							clipPath: "inset(0 0 43.5% 0)",
+							clipPath: "inset(0 0 45.2% 0)",
 							pointerEvents: "none"
 						}}
 					/>

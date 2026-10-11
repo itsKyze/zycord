@@ -667,7 +667,7 @@
       "svg",
       {
         className: "zy-wordmark-svg",
-        viewBox: "0 0 1765 280",
+        viewBox: "0 0 1765 340",
         fill: "none",
         xmlns: "http://www.w3.org/2000/svg"
       },
@@ -675,14 +675,14 @@
         "text",
         {
           x: "882.5",
-          y: "258",
+          y: "236",
           "text-anchor": "middle",
           fill: "#E0E3FF",
           "font-family": "Poppins, 'Inter', system-ui, sans-serif",
           "font-weight": "900",
-          "font-size": "338",
-          "letter-spacing": "-14",
-          textLength: "1720",
+          "font-size": "312",
+          "letter-spacing": "-12",
+          textLength: "1710",
           lengthAdjust: "spacingAndGlyphs"
         },
         "Zycord"
@@ -974,12 +974,12 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "6px",
-          right: "25.5%",
-          width: "168px",
+          top: "10px",
+          right: "25.2%",
+          width: "165px",
           height: "auto",
           zIndex: 0,
-          opacity: "0.45",
+          opacity: "0.38",
           pointerEvents: "none"
         }
       }
@@ -991,9 +991,9 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "-96px",
-          right: "23.8%",
-          width: "212px",
+          top: "-88px",
+          right: "23.6%",
+          width: "208px",
           height: "auto",
           zIndex: 6,
           pointerEvents: "none"
@@ -1007,12 +1007,12 @@
         "aria-hidden": "true",
         style: {
           position: "absolute",
-          top: "-132px",
-          right: "7.5%",
-          width: "198px",
+          top: "-124px",
+          right: "8.2%",
+          width: "194px",
           height: "auto",
           zIndex: 1,
-          clipPath: "inset(0 0 43.5% 0)",
+          clipPath: "inset(0 0 45.2% 0)",
           pointerEvents: "none"
         }
       }

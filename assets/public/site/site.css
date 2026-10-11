@@ -1302,8 +1302,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-wordmark-container {
 	width: 100%;
 	max-width: 1762px;
-	margin: 36px auto 0;
-	padding: 36px 40px 24px;
+	margin: 24px auto 0;
+	padding: 20px 40px 36px;
 	user-select: none;
 	pointer-events: none;
 }
