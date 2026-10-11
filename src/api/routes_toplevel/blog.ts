@@ -29,7 +29,7 @@ router.get(
 	"/",
 	route({ spacebarOnly: true, authentication: "never" }),
 	(_req: Request, res: Response) => {
-		res.set("Cache-Control", "public, max-age=3600");
+		res.set("Cache-Control", "no-cache");
 		return res.type("html").send(brandPage(page));
 	},
 );
