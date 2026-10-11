@@ -39,6 +39,7 @@ jobs:
               - 'patches/**'
               - 'scripts/**'
               - 'Dockerfile'
+              - '.dockerignore'
               - 'docker-compose.yml'
             sfu:
               - 'extra/pion-sfu/**'
