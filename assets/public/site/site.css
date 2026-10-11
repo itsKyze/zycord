@@ -329,9 +329,10 @@ svg {
 }
 
 .zy-navbar-inner {
-	max-width: 1340px;
+	width: 100%;
+	max-width: 100%;
 	margin: 0 auto;
-	padding: 18px 32px;
+	padding: 20px 40px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
