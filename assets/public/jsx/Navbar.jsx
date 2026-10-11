@@ -1,4 +1,5 @@
 import { h, Fragment } from "./runtime.jsx";
+import { ZycordMark } from "./Icons.jsx";
 
 export const NAVIGATION_ITEMS = [
 	{ label: "Download", href: "/download", key: "download" },
@@ -75,7 +76,7 @@ export const NAVIGATION_ITEMS = [
 				title: "Resources",
 				links: [
 					{ label: "Help Center", href: "/support" },
-					{ label: "Feedback", href: "/support#diagnostics" },
+					{ label: "System Status", href: "/status" },
 					{ label: "Submit a Request", href: "/support#faq" }
 				]
 			}
@@ -187,7 +188,10 @@ function DropdownMenu({ item }) {
 										<span>{lnk.label}</span>
 										{lnk.external ? (
 											<span className="zy-dd-ext" aria-hidden="true">
-												↗
+												<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+													<line x1="7" y1="17" x2="17" y2="7" />
+													<polyline points="7 7 17 7 17 17" />
+												</svg>
 											</span>
 										) : null}
 									</a>
@@ -205,7 +209,10 @@ function DropdownMenu({ item }) {
 												<span>{sl.label}</span>
 												{sl.external ? (
 													<span className="zy-dd-ext" aria-hidden="true">
-														↗
+														<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+															<line x1="7" y1="17" x2="17" y2="7" />
+															<polyline points="7 7 17 7 17 17" />
+														</svg>
 													</span>
 												) : null}
 											</a>
@@ -254,7 +261,7 @@ export function ZycordNavbar() {
 				<div className="zy-navbar-inner">
 					<a className="zy-brand" href="/" aria-label="Zycord Home">
 						<span className="zy-brand-mark">
-							<img src="/favicon.svg" alt="" />
+							<ZycordMark size={22} color="#ffffff" />
 						</span>
 						<span>Zycord</span>
 					</a>
@@ -353,7 +360,7 @@ export function ZycordNavbar() {
 					<div className="zy-drawer-header">
 						<a className="zy-brand" href="/">
 							<span className="zy-brand-mark">
-								<img src="/favicon.svg" alt="" />
+								<ZycordMark size={22} color="#ffffff" />
 							</span>
 							<span>Zycord</span>
 						</a>
@@ -365,7 +372,10 @@ export function ZycordNavbar() {
 							aria-label="Close Menu"
 							onClick={() => setDrawer(false)}
 						>
-							✕
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="18" y1="6" x2="6" y2="18" />
+								<line x1="6" y1="6" x2="18" y2="18" />
+							</svg>
 						</button>
 					</div>
 					<ul className="zy-drawer-links">

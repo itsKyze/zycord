@@ -856,7 +856,7 @@
                 background: var(--info-bg);
             }
 
-            /* Better Stack 90-Day Bars */
+            /* @beui/status-bar Animated Status History Plot & Period Tooltips */
             .bars-container {
                 position: relative;
             }
@@ -868,17 +868,43 @@
                 align-items: stretch;
             }
 
+            @keyframes statusBarReveal {
+                0% {
+                    opacity: 0;
+                    transform: scaleY(0.25);
+                }
+                70% {
+                    opacity: 1;
+                    transform: scaleY(1.06);
+                }
+                100% {
+                    opacity: 1;
+                    transform: scaleY(1);
+                }
+            }
+
             .bars .bar {
                 flex: 1;
-                border-radius: 3px;
+                border-radius: 999px;
                 background: var(--ok);
-                transition: transform 0.15s ease, opacity 0.15s ease;
+                transform-origin: bottom center;
+                animation: statusBarReveal 0.42s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+                animation-delay: calc(var(--bar-idx, 0) * 6ms);
+                transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), filter 0.18s ease, box-shadow 0.18s ease;
                 cursor: pointer;
             }
 
-            .bars .bar:hover {
-                transform: scaleY(1.18);
-                opacity: 0.85;
+            .bars:hover .bar {
+                filter: brightness(0.78);
+            }
+
+            .bars .bar:hover,
+            .bars .bar:focus-visible {
+                transform: scaleY(1.2) translateY(-1px);
+                filter: brightness(1.15);
+                box-shadow: 0 0 12px rgba(16, 185, 129, 0.45);
+                outline: none;
+                z-index: 2;
             }
 
             .bars .bar.d-null {
@@ -888,21 +914,57 @@
             .bars .bar.d-minor {
                 background: var(--warn);
             }
+            .bars .bar.d-minor:hover {
+                box-shadow: 0 0 12px rgba(245, 158, 11, 0.55);
+            }
             .bars .bar.d-major {
                 background: var(--orange);
             }
+            .bars .bar.d-major:hover {
+                box-shadow: 0 0 12px rgba(249, 115, 22, 0.55);
+            }
             .bars .bar.d-critical {
                 background: var(--danger);
+            }
+            .bars .bar.d-critical:hover {
+                box-shadow: 0 0 12px rgba(239, 68, 68, 0.55);
             }
 
             .bars-legend {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin-top: 8px;
+                margin-top: 10px;
                 font-size: 12px;
                 color: var(--text-muted);
+                gap: 12px;
             }
+
+            .bars-legend-meta {
+                display: inline-flex;
+                align-items: center;
+                gap: 14px;
+                flex-wrap: wrap;
+            }
+
+            .status-legend-chip {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                font-size: 11.5px;
+                font-weight: 500;
+                color: var(--text-secondary);
+            }
+
+            .status-legend-dot {
+                width: 8px;
+                height: 8px;
+                border-radius: 999px;
+                display: inline-block;
+            }
+            .status-legend-dot.operational { background: var(--ok); box-shadow: 0 0 6px rgba(16, 185, 129, 0.45); }
+            .status-legend-dot.degraded { background: var(--warn); }
+            .status-legend-dot.outage { background: var(--danger); }
 
             .bars-legend .uptime-percent {
                 font-weight: 600;
@@ -910,24 +972,30 @@
                 font-variant-numeric: tabular-nums;
             }
 
-            /* Floating Bar Tooltip */
+            /* Floating Bar Tooltip (@beui/status-bar style) */
             #bar-tooltip {
                 position: fixed;
                 pointer-events: none;
-                background: #0b0f19;
+                background: rgba(11, 15, 25, 0.96);
+                backdrop-filter: blur(10px);
                 color: #ffffff;
-                padding: 8px 12px;
-                border-radius: 8px;
+                padding: 10px 14px;
+                border-radius: 10px;
                 font-size: 12px;
-                line-height: 1.4;
-                border: 1px solid rgba(255, 255, 255, 0.15);
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+                line-height: 1.45;
+                border: 1px solid rgba(255, 255, 255, 0.14);
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.65);
                 z-index: 1000;
-                transform: translate(-50%, -100%);
-                margin-top: -10px;
+                transform: translate(-50%, -100%) scale(0.96);
+                margin-top: -12px;
                 opacity: 0;
-                transition: opacity 0.15s ease;
-                white-space: nowrap;
+                transition: opacity 0.14s ease, transform 0.14s cubic-bezier(0.22, 1, 0.36, 1);
+                min-width: 210px;
+            }
+
+            #bar-tooltip.is-visible {
+                opacity: 1;
+                transform: translate(-50%, -100%) scale(1);
             }
 
             #bar-tooltip::after {
@@ -938,18 +1006,41 @@
                 transform: translateX(-50%);
                 border-width: 5px;
                 border-style: solid;
-                border-color: #0b0f19 transparent transparent transparent;
+                border-color: rgba(11, 15, 25, 0.96) transparent transparent transparent;
+            }
+
+            #bar-tooltip .tt-head {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 12px;
+                margin-bottom: 4px;
             }
 
             #bar-tooltip strong {
-                display: block;
                 font-size: 12px;
+                font-weight: 700;
                 color: #f8fafc;
             }
 
+            #bar-tooltip .tt-badge {
+                display: inline-flex;
+                align-items: center;
+                gap: 5px;
+                font-size: 11px;
+                font-weight: 600;
+                padding: 2px 7px;
+                border-radius: 999px;
+            }
+            #bar-tooltip .tt-badge.none { color: var(--ok); background: var(--ok-bg); }
+            #bar-tooltip .tt-badge.minor { color: var(--warn); background: var(--warn-bg); }
+            #bar-tooltip .tt-badge.major { color: var(--orange); background: rgba(249, 115, 22, 0.14); }
+            #bar-tooltip .tt-badge.critical { color: var(--danger); background: var(--danger-bg); }
+            #bar-tooltip .tt-badge.null { color: var(--text-muted); background: rgba(255, 255, 255, 0.06); }
+
             #bar-tooltip .tt-sub {
                 color: #94a3b8;
-                font-size: 11px;
+                font-size: 11.5px;
             }
 
             @media (max-width: 600px) {
@@ -1148,7 +1239,7 @@
                 <div class="kpi-card">
                     <div class="kpi-title">
                         <span>Global Uptime</span>
-                        <span>📈</span>
+                        <span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></span>
                     </div>
                     <div class="kpi-value">
                         <span id="kpi-uptime">99.99</span><span class="unit">%</span>
@@ -1162,7 +1253,7 @@
                 <div class="kpi-card">
                     <div class="kpi-title">
                         <span>Live Edge Latency</span>
-                        <span>⚡</span>
+                        <span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
                     </div>
                     <div class="kpi-value">
                         <span id="kpi-latency">--</span><span class="unit">ms</span>
@@ -1176,7 +1267,7 @@
                 <div class="kpi-card">
                     <div class="kpi-title">
                         <span>Active Probes</span>
-                        <span>🛡️</span>
+                        <span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
                     </div>
                     <div class="kpi-value">
                         <span id="kpi-services">-- / --</span>
@@ -1190,7 +1281,7 @@
                 <div class="kpi-card">
                     <div class="kpi-title">
                         <span>Incident Streak</span>
-                        <span>⏱️</span>
+                        <span aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></span>
                     </div>
                     <div class="kpi-value">
                         <span id="kpi-incident-days">14+</span><span class="unit">Days</span>
@@ -1257,7 +1348,7 @@
             <!-- Active Incidents Callout -->
             <section id="active-section" hidden>
                 <div class="alert-box active-incident">
-                    <h3 style="margin: 0 0 14px; font-size: 17px; color: var(--danger)">🚨 Active Incidents</h3>
+                    <h3 style="margin: 0 0 14px; font-size: 17px; color: var(--danger); display:flex; align-items:center; gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Active Incidents</h3>
                     <div id="active-incidents-list"></div>
                 </div>
             </section>
@@ -1265,7 +1356,7 @@
             <!-- Scheduled Maintenance Callout -->
             <section id="maintenance-section" hidden>
                 <div class="alert-box maintenance">
-                    <h3 style="margin: 0 0 14px; font-size: 17px; color: var(--info)">🔧 Scheduled Maintenance</h3>
+                    <h3 style="margin: 0 0 14px; font-size: 17px; color: var(--info); display:flex; align-items:center; gap:8px;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg> Scheduled Maintenance</h3>
                     <div id="maintenance-list"></div>
                 </div>
             </section>
@@ -1393,18 +1484,35 @@
             const fmtFull = (d) => (d ? new Date(d).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "");
             const dayKey = (d) => new Date(d).toISOString().slice(0, 10);
 
-            // Floating Tooltip for 90-Day Bars
+            // Floating Tooltip for 90-Day Bars (@beui/status-bar Period Tooltip)
             const barTooltip = document.getElementById("bar-tooltip");
-            function showBarTooltip(e, text, subtext) {
+            const BADGE_LABELS = {
+                none: "Operational",
+                minor: "Degraded",
+                major: "Partial Outage",
+                critical: "Major Outage",
+                null: "No Data",
+            };
+            const BADGE_DESCRIPTIONS = {
+                none: "All checks passed. 100.0% availability.",
+                minor: "Elevated response times or degraded performance.",
+                major: "Partial service disruption detected.",
+                critical: "Major service outage recorded.",
+                null: "No telemetry observations recorded for this period.",
+            };
+            function showBarTooltip(e, dateStr, indicator, customSub) {
                 const rect = e.target.getBoundingClientRect();
-                barTooltip.innerHTML = `<strong>${text}</strong><div class="tt-sub">${subtext}</div>`;
-                barTooltip.style.opacity = "1";
+                const ind = indicator || "none";
+                const badgeText = BADGE_LABELS[ind] ?? ind;
+                const descText = customSub || BADGE_DESCRIPTIONS[ind] || (DAY_LABELS[ind] ?? ind);
+                barTooltip.innerHTML = `<div class="tt-head"><strong>${dateStr}</strong><span class="tt-badge ${ind}">● ${badgeText}</span></div><div class="tt-sub">${descText}</div>`;
+                barTooltip.classList.add("is-visible");
                 barTooltip.style.left = `${rect.left + rect.width / 2}px`;
                 barTooltip.style.top = `${rect.top}px`;
             }
 
             function hideBarTooltip() {
-                barTooltip.style.opacity = "0";
+                barTooltip.classList.remove("is-visible");
             }
 
             // CONTINUOUS MOVING OSCILLOSCOPE WAVEFORM RENDERER
@@ -1467,7 +1575,7 @@
                 }
             }
 
-            // Render Component with Real Dedicated SVG Icons
+            // Render Component with Real Dedicated SVG Icons & Animated @beui/status-bar Plot
             const renderComponent = (c) => {
                 const liveLatency = componentLatencies[c.name] ?? componentLatencies["API"] ?? null;
                 const pingBadge = liveLatency != null
@@ -1480,12 +1588,17 @@
                 const iconInfo = getComponentIconInfo(c.name);
                 const iconEl = el("div", { class: `component-icon ${iconInfo.type}`, html: iconInfo.svg });
 
-                const bars = c.uptime_days ? c.uptime_days.map((d) => {
-                    const bar = el("span", { class: `bar d-${d.indicator}` });
-                    const dateStr = new Date(d.date).toLocaleDateString(undefined, { weekday: "long", month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
-                    const labelStr = DAY_LABELS[d.indicator] ?? d.indicator;
-                    bar.addEventListener("mouseenter", (e) => showBarTooltip(e, dateStr, labelStr));
+                const bars = c.uptime_days ? c.uptime_days.map((d, idx) => {
+                    const bar = el("span", {
+                        class: `bar d-${d.indicator}`,
+                        style: `--bar-idx: ${idx}`,
+                        tabindex: "0",
+                    });
+                    const dateStr = new Date(d.date).toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+                    bar.addEventListener("mouseenter", (e) => showBarTooltip(e, dateStr, d.indicator, d.description));
+                    bar.addEventListener("focus", (e) => showBarTooltip(e, dateStr, d.indicator, d.description));
                     bar.addEventListener("mouseleave", hideBarTooltip);
+                    bar.addEventListener("blur", hideBarTooltip);
                     return bar;
                 }) : [];
 
@@ -1518,7 +1631,14 @@
                                   { class: "bars-legend" },
                                   el("span", { class: "desktop-only" }, "90 days ago"),
                                   el("span", { class: "mobile-only" }, "30 days ago"),
-                                  el("span", { class: "uptime-percent" }, `${c.uptime}% uptime`),
+                                  el(
+                                      "div",
+                                      { class: "bars-legend-meta" },
+                                      el("span", { class: "status-legend-chip" }, el("span", { class: "status-legend-dot operational" }), "Operational"),
+                                      el("span", { class: "status-legend-chip" }, el("span", { class: "status-legend-dot degraded" }), "Degraded"),
+                                      el("span", { class: "status-legend-chip" }, el("span", { class: "status-legend-dot outage" }), "Outage"),
+                                      el("span", { class: "uptime-percent" }, `· ${c.uptime}% uptime`),
+                                  ),
                                   el("span", {}, "Today"),
                               ),
                           )

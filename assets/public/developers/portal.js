@@ -2088,7 +2088,7 @@
                 "div",
                 { class: "fields" },
                 radios("widget-top-layout", "Image style", [["hero", "Large, cut out"], ["contained", "Square"]], () => state.top.layout, (v) => (state.top.layout = v)),
-                text("widget-title", "Title", () => state.top.title, (v) => (state.top.title = v), { placeholder: "Hello! 👋" }),
+                text("widget-title", "Title", () => state.top.title, (v) => (state.top.title = v), { placeholder: "Hello!" }),
                 state.top.subtitles.map((_, i) => text(`widget-subtitle-${i}`, `Line ${i + 1}`, () => state.top.subtitles[i], (v) => (state.top.subtitles[i] = v), i === 0 ? { placeholder: "Welcome to my profile!" } : {})),
                 imagePicker("widget-top-image", "Image", () => state.top.image, (v) => (state.top.image = v), "PNGs with a transparent background work best for the large style."),
             ),

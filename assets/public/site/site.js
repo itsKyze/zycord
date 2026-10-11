@@ -96,6 +96,22 @@
     return node;
   }
 
+  // assets/public/jsx/Icons.jsx
+  var ZYCORD_MASCOT_PATH = "M6.25 4.42L6.8 4.51L6.8 4.6L7.16 4.7L7.25 4.88L7.43 4.88L7.62 5.15L7.8 5.15L9.08 6.61L9.53 6.52L9.53 6.43L9.9 6.43L9.9 6.34L10.27 6.34L10.27 6.25L10.81 6.25L10.81 6.16L13.19 6.16L13.19 6.25L13.73 6.25L13.73 6.34L14.1 6.34L14.1 6.43L14.47 6.43L14.47 6.52L14.92 6.61L16.11 5.24L16.29 5.24L16.57 4.88L16.75 4.88L16.84 4.7L17.02 4.7L17.2 4.51L17.48 4.51L17.48 4.42L18.03 4.51L18.39 4.88L18.39 5.06L18.57 5.15L18.57 5.43L18.76 5.61L18.94 6.52L19.21 6.52L19.21 6.43L19.4 6.43L19.76 6.16L20.03 6.16L20.13 5.97L20.67 5.79L21.04 5.43L21.22 5.43L22.13 4.51L22.5 4.6L22.5 5.43L22.41 5.43L22.41 5.79L22.32 5.79L22.32 6.07L22.23 6.07L22.13 6.43L21.95 6.52L21.77 6.98L21.22 7.53L20.95 7.62L20.95 7.71L21.22 7.71L21.22 7.62L21.5 7.62L21.5 7.53L21.68 7.53L21.68 7.43L22.32 7.16L22.41 7.25L22.32 7.98L22.23 7.98L22.04 8.53L21.13 9.44L20.77 9.53L20.67 9.72L20.4 9.72L20.4 9.9L20.49 9.81L21.22 9.81L21.22 9.72L21.59 9.72L21.68 9.9L21.59 9.9L21.5 10.27L21.31 10.36L21.31 10.54L20.77 11.09L20.58 11.09L20.22 11.45L19.85 11.54L19.94 12.09L20.03 12.09L20.03 12.37L20.13 12.37L20.13 12.73L20.22 12.73L20.22 13.1L20.31 13.1L20.31 13.46L20.4 13.46L20.4 13.92L20.49 13.92L20.49 14.37L20.58 14.37L20.58 15.01L20.67 15.01L20.67 15.65L20.77 15.65L20.77 17.75L20.67 17.75L20.67 18.12L20.58 18.12L20.49 18.57L20.31 18.67L20.31 18.85L19.94 19.21L19.76 19.21L19.4 19.49L18.94 19.49L18.94 19.58L18.57 19.58L18.57 19.49L17.84 19.3L16.57 18.03L16.57 17.84L16.11 17.39L16.11 17.2L15.83 17.02L15.83 16.84L15.56 16.75L15.47 16.57L15.1 16.47L15.1 16.38L8.9 16.38L8.9 16.47L8.71 16.47L8.44 16.75L8.17 16.84L8.17 17.02L7.71 17.48L7.71 17.66L7.43 17.84L7.43 18.03L7.07 18.3L7.07 18.48L6.52 19.03L6.34 19.03L5.97 19.4L5.06 19.58L5.06 19.49L4.7 19.49L4.7 19.4L4.42 19.4L4.15 19.12L3.97 19.12L3.69 18.85L3.69 18.67L3.51 18.57L3.42 18.03L3.33 18.03L3.33 17.75L3.23 17.75L3.23 15.74L3.33 15.74L3.42 14.37L3.51 14.37L3.6 13.46L3.69 13.46L3.69 13.1L3.78 13.1L3.78 12.73L3.87 12.73L3.87 12.37L3.97 12.37L3.97 12.09L4.06 12.09L4.15 11.54L3.97 11.54L3.69 11.27L3.51 11.27L3.42 11.09L3.23 11.09L2.69 10.54L2.69 10.36L2.5 10.27L2.5 10.08L2.32 9.9L2.41 9.72L2.87 9.72L2.87 9.81L3.6 9.81L3.6 9.72L3.33 9.72L3.23 9.53L2.78 9.35L2.05 8.62L2.05 8.44L1.77 8.17L1.68 7.62L1.59 7.62L1.68 7.16L2.32 7.43L2.32 7.53L2.5 7.53L2.5 7.62L3.05 7.71L3.05 7.8L3.14 7.71L2.96 7.53L2.78 7.53L2.23 6.98L2.05 6.52L1.87 6.43L1.77 5.97L1.59 5.79L1.59 5.33L1.5 5.33L1.5 4.6L1.87 4.51L2.32 5.06L2.5 5.06L2.69 5.33L2.87 5.33L3.33 5.79L3.51 5.79L3.51 5.88L3.87 5.97L3.97 6.16L4.24 6.16L4.24 6.25L4.42 6.25L4.79 6.52L5.06 6.52L5.15 5.88L5.24 5.88L5.24 5.61L5.43 5.43L5.43 5.15L5.61 5.06L5.61 4.88L5.97 4.51L6.25 4.51ZM8.17 10.17L8.07 10.17L8.07 10.27L7.89 10.27L7.89 10.36L7.71 10.36L7.71 10.45L7.53 10.45L7.53 10.54L7.43 10.54L7.43 10.63L7.34 10.63L7.25 10.81L7.16 10.81L7.16 11.0L6.98 11.09L6.98 11.27L6.89 11.27L6.89 11.54L6.8 11.54L6.8 12.46L6.89 12.46L6.89 12.73L6.98 12.73L6.98 12.91L7.16 13.0L7.16 13.19L7.25 13.19L7.25 13.28L7.34 13.28L7.43 13.46L7.62 13.46L7.71 13.64L7.89 13.64L7.89 13.73L8.17 13.73L8.17 13.83L9.17 13.83L9.17 13.73L9.44 13.73L9.44 13.64L9.63 13.64L9.63 13.55L9.72 13.55L9.72 13.46L9.9 13.46L9.9 13.37L10.08 13.28L10.08 13.1L10.27 13.0L10.27 12.82L10.36 12.82L10.36 12.64L10.45 12.64L10.45 12.27L10.54 12.27L10.54 11.73L10.45 11.73L10.45 11.36L10.36 11.36L10.36 11.09L10.17 11.0L10.17 10.81L10.08 10.81L10.08 10.72L9.99 10.72L9.9 10.54L9.72 10.54L9.63 10.36L9.44 10.36L9.44 10.27L9.17 10.27L9.17 10.17L8.26 10.17ZM14.92 10.17L14.83 10.17L14.83 10.27L14.56 10.27L14.56 10.36L14.37 10.36L14.28 10.54L14.1 10.54L14.1 10.63L14.01 10.63L14.01 10.72L13.83 10.81L13.83 11.0L13.73 11.0L13.73 11.18L13.64 11.18L13.64 11.36L13.55 11.36L13.55 11.73L13.46 11.73L13.46 12.27L13.55 12.27L13.55 12.64L13.64 12.64L13.73 13.0L13.92 13.1L13.92 13.28L14.01 13.28L14.1 13.46L14.28 13.46L14.37 13.64L14.56 13.64L14.56 13.73L14.83 13.73L14.83 13.83L15.83 13.83L15.83 13.73L16.11 13.73L16.11 13.64L16.29 13.64L16.38 13.46L16.57 13.46L16.57 13.37L16.66 13.37L16.66 13.28L16.84 13.19L16.84 13.0L17.02 12.91L17.02 12.73L17.11 12.73L17.11 12.46L17.2 12.46L17.2 11.54L17.11 11.54L17.11 11.27L17.02 11.27L16.93 10.9L16.84 10.9L16.84 10.81L16.75 10.81L16.75 10.72L16.66 10.72L16.66 10.63L16.47 10.54L16.47 10.45L16.29 10.45L16.29 10.36L16.11 10.36L16.11 10.27L15.93 10.27L15.93 10.17L15.01 10.17Z";
+  function ZycordMark({ size = 28, color = "currentColor" }) {
+    return /* @__PURE__ */ h(
+      "svg",
+      {
+        width: size,
+        height: size,
+        viewBox: "0 0 24 24",
+        fill: "none",
+        "aria-hidden": "true"
+      },
+      /* @__PURE__ */ h("path", { fill: color, "fill-rule": "evenodd", d: ZYCORD_MASCOT_PATH })
+    );
+  }
+
   // assets/public/jsx/Navbar.jsx
   var NAVIGATION_ITEMS = [
     { label: "Download", href: "/download", key: "download" },
@@ -172,7 +188,7 @@
           title: "Resources",
           links: [
             { label: "Help Center", href: "/support" },
-            { label: "Feedback", href: "/support#diagnostics" },
+            { label: "System Status", href: "/status" },
             { label: "Submit a Request", href: "/support#faq" }
           ]
         }
@@ -264,7 +280,7 @@
       item.is2Col ? "is-2col" : "",
       item.isWide ? "is-wide" : ""
     ].filter(Boolean).join(" ");
-    return /* @__PURE__ */ h("div", { className: ddClass, role: "menu" }, /* @__PURE__ */ h("div", { className: "zy-dd-cols" }, item.columns.map((col) => /* @__PURE__ */ h("div", { className: "zy-dd-col" }, col.title ? /* @__PURE__ */ h("div", { className: "zy-dd-col-title" }, col.title) : null, /* @__PURE__ */ h("ul", { className: "zy-dd-list" }, (col.links || []).map((lnk) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { className: "zy-dd-link", href: lnk.href }, /* @__PURE__ */ h("span", null, lnk.label), lnk.external ? /* @__PURE__ */ h("span", { className: "zy-dd-ext", "aria-hidden": "true" }, "↗") : null)))), col.subSection ? /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("div", { className: "zy-dd-divider" }), /* @__PURE__ */ h("div", { className: "zy-dd-col-title" }, col.subSection.title), /* @__PURE__ */ h("ul", { className: "zy-dd-list" }, (col.subSection.links || []).map((sl) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { className: "zy-dd-link", href: sl.href }, /* @__PURE__ */ h("span", null, sl.label), sl.external ? /* @__PURE__ */ h("span", { className: "zy-dd-ext", "aria-hidden": "true" }, "↗") : null))))) : null))), item.decor ? /* @__PURE__ */ h(
+    return /* @__PURE__ */ h("div", { className: ddClass, role: "menu" }, /* @__PURE__ */ h("div", { className: "zy-dd-cols" }, item.columns.map((col) => /* @__PURE__ */ h("div", { className: "zy-dd-col" }, col.title ? /* @__PURE__ */ h("div", { className: "zy-dd-col-title" }, col.title) : null, /* @__PURE__ */ h("ul", { className: "zy-dd-list" }, (col.links || []).map((lnk) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { className: "zy-dd-link", href: lnk.href }, /* @__PURE__ */ h("span", null, lnk.label), lnk.external ? /* @__PURE__ */ h("span", { className: "zy-dd-ext", "aria-hidden": "true" }, /* @__PURE__ */ h("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.5", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("line", { x1: "7", y1: "17", x2: "17", y2: "7" }), /* @__PURE__ */ h("polyline", { points: "7 7 17 7 17 17" }))) : null)))), col.subSection ? /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("div", { className: "zy-dd-divider" }), /* @__PURE__ */ h("div", { className: "zy-dd-col-title" }, col.subSection.title), /* @__PURE__ */ h("ul", { className: "zy-dd-list" }, (col.subSection.links || []).map((sl) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { className: "zy-dd-link", href: sl.href }, /* @__PURE__ */ h("span", null, sl.label), sl.external ? /* @__PURE__ */ h("span", { className: "zy-dd-ext", "aria-hidden": "true" }, /* @__PURE__ */ h("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.5", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("line", { x1: "7", y1: "17", x2: "17", y2: "7" }), /* @__PURE__ */ h("polyline", { points: "7 7 17 7 17 17" }))) : null))))) : null))), item.decor ? /* @__PURE__ */ h(
       "img",
       {
         className: "zy-dd-decor",
@@ -290,7 +306,7 @@
       openBtn.setAttribute("aria-expanded", open ? "true" : "false");
       document.body.style.overflow = open ? "hidden" : "";
     };
-    return /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("div", { className: "zy-nav-page-blur", id: "zy-nav-page-blur", "aria-hidden": "true" }), /* @__PURE__ */ h("header", { className: "zy-navbar", id: "zy-navbar" }, /* @__PURE__ */ h("div", { className: "zy-navbar-inner" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "" })), /* @__PURE__ */ h("span", null, "Zycord")), /* @__PURE__ */ h("nav", { "aria-label": "Primary Navigation" }, /* @__PURE__ */ h("ul", { className: "zy-nav-links" }, NAVIGATION_ITEMS.map((item) => {
+    return /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("div", { className: "zy-nav-page-blur", id: "zy-nav-page-blur", "aria-hidden": "true" }), /* @__PURE__ */ h("header", { className: "zy-navbar", id: "zy-navbar" }, /* @__PURE__ */ h("div", { className: "zy-navbar-inner" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h(ZycordMark, { size: 22, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "Zycord")), /* @__PURE__ */ h("nav", { "aria-label": "Primary Navigation" }, /* @__PURE__ */ h("ul", { className: "zy-nav-links" }, NAVIGATION_ITEMS.map((item) => {
       const hasDropdown = Boolean(item.columns && item.columns.length);
       const isActive = item.key === activeKey;
       return /* @__PURE__ */ h(
@@ -371,7 +387,7 @@
         id: "zy-mobile-drawer",
         "aria-label": "Mobile Navigation"
       },
-      /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-drawer-header" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "" })), /* @__PURE__ */ h("span", null, "Zycord")), /* @__PURE__ */ h(
+      /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-drawer-header" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h(ZycordMark, { size: 22, color: "#ffffff" })), /* @__PURE__ */ h("span", null, "Zycord")), /* @__PURE__ */ h(
         "button",
         {
           type: "button",
@@ -381,7 +397,7 @@
           "aria-label": "Close Menu",
           onClick: () => setDrawer(false)
         },
-        "✕"
+        /* @__PURE__ */ h("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), /* @__PURE__ */ h("line", { x1: "6", y1: "6", x2: "18", y2: "18" }))
       )), /* @__PURE__ */ h("ul", { className: "zy-drawer-links" }, /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { href: "/" }, /* @__PURE__ */ h("span", null, "Home"), /* @__PURE__ */ h("span", { "aria-hidden": "true" }, "→"))), NAVIGATION_ITEMS.map((item) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h(
         "a",
         {
@@ -444,19 +460,19 @@
     }
   ];
   var LANGUAGES = [
-    "🌐 English (US)",
-    "🌐 العربية (Arabic)",
-    "🌐 Français (FR)",
-    "🌐 Español (ES)",
-    "🌐 Deutsch (DE)",
-    "🌐 日本語 (JA)"
+    "English (US)",
+    "العربية (Arabic)",
+    "Français (FR)",
+    "Español (ES)",
+    "Deutsch (DE)",
+    "日本語 (JA)"
   ];
   function ZycordFooter() {
     const year = (/* @__PURE__ */ new Date()).getFullYear();
     let langIdx = 0;
     const cycleLanguage = (e) => {
       langIdx = (langIdx + 1) % LANGUAGES.length;
-      const span = e.currentTarget.querySelector("span");
+      const span = e.currentTarget.querySelector("[data-lang-label]");
       if (span) span.textContent = LANGUAGES[langIdx];
     };
     return /* @__PURE__ */ h("footer", { className: "zy-footer" }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-footer-grid" }, /* @__PURE__ */ h("div", { className: "zy-footer-brand-col" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h(
@@ -467,17 +483,11 @@
           width: "48px",
           height: "48px",
           borderRadius: "14px",
-          background: "#ffffff"
+          background: "#ffffff",
+          color: "#5865F2"
         }
       },
-      /* @__PURE__ */ h(
-        "img",
-        {
-          src: "/favicon.svg",
-          alt: "",
-          style: { width: "30px", height: "30px" }
-        }
-      )
+      /* @__PURE__ */ h(ZycordMark, { size: 30, color: "#5865F2" })
     )), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-footer-col-title", style: { marginBottom: "8px" } }, "Language"), /* @__PURE__ */ h(
       "div",
       {
@@ -488,7 +498,7 @@
         "aria-label": "Select Language",
         onClick: cycleLanguage
       },
-      /* @__PURE__ */ h("span", null, "🌐 English (US)"),
+      /* @__PURE__ */ h("span", { style: { display: "inline-flex", alignItems: "center", gap: "8px" } }, /* @__PURE__ */ h("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("circle", { cx: "12", cy: "12", r: "10" }), /* @__PURE__ */ h("line", { x1: "2", y1: "12", x2: "22", y2: "12" }), /* @__PURE__ */ h("path", { d: "M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" })), /* @__PURE__ */ h("span", { "data-lang-label": true }, "English (US)")),
       /* @__PURE__ */ h(
         "svg",
         {
@@ -879,7 +889,7 @@
           backgroundPosition: "center"
         }
       },
-      /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "✦ Zycord Quests & Rewards")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "PLAY GAMES. COMPLETE QUESTS. EARN REWARDS."), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Stream your favorite games to friends on Zycord, discover new titles, and unlock exclusive Avatar Decorations, Nameplates, Profile Effects, and Profile Frames."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "8px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", "data-zy-open-app": true, href: "/app" }, "Explore Quests in App"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/nitro" }, "View Collectibles Shop"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-blurple" }, /* @__PURE__ */ h(
+      /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("path", { d: "M6 9H4.5a2.5 2.5 0 0 1 0-5H6" }), /* @__PURE__ */ h("path", { d: "M18 9h1.5a2.5 2.5 0 0 0 0-5H18" }), /* @__PURE__ */ h("path", { d: "M4 22h16" }), /* @__PURE__ */ h("path", { d: "M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" }), /* @__PURE__ */ h("path", { d: "M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" }), /* @__PURE__ */ h("path", { d: "M18 2H6v7a6 6 0 0 0 12 0V2Z" })), /* @__PURE__ */ h("span", null, "Zycord Quests & Rewards"))), /* @__PURE__ */ h("h1", { className: "zy-display" }, "PLAY GAMES. COMPLETE QUESTS. EARN REWARDS."), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Stream your favorite games to friends on Zycord, discover new titles, and unlock exclusive Avatar Decorations, Nameplates, Profile Effects, and Profile Frames."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "8px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", "data-zy-open-app": true, href: "/app" }, "Explore Quests in App"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/nitro" }, "View Collectibles Shop"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-blurple" }, /* @__PURE__ */ h(
         "img",
         {
           src: "/site/media/discord/quests-wumpus-banner.webp",
@@ -946,7 +956,7 @@
         alt: "Zycord Developer Ecosystem — Chat, Playtime, Rich Presence & Apps",
         style: { width: "100%", height: "auto", borderRadius: "20px", display: "block" }
       }
-    )))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "rich-presence", style: { paddingTop: "16px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { style: { textAlign: "center", maxWidth: "780px", margin: "0 auto 40px" } }, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Everything You Need To Ship"), /* @__PURE__ */ h("h2", { className: "zy-heading", style: { marginTop: "14px" } }, "EXPLORE THE ZYCORD DEVELOPER SUITE")), /* @__PURE__ */ h("div", { className: "zy-grid-3" }, /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-portal-card.png", alt: "Developer Portal", style: { width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "24px", marginTop: "8px" } }, "DEVELOPER PORTAL"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Create applications, generate Bot tokens, configure OAuth2 redirect URIs, upload Rich Presence assets, and build Profile Widgets."), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "12px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary zy-btn-sm", href: "/developers/applications" }, "Manage Applications →"))), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-docs-card.png", alt: "API Documentation", style: { width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "24px", marginTop: "8px" } }, "API & GATEWAY DOCS"), /* @__PURE__ */ h("p", { className: "zy-body" }, "100% compatible with Discord REST API v9/v10 and WebSocket Gateway opcodes, intents, slash commands, and webhooks."), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "12px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary zy-btn-sm", href: "#sdk-quickstart" }, "Read Quickstart ↓"))), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-help-card.png", alt: "Social SDK & Activities", style: { width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "24px", marginTop: "8px" } }, "SOCIAL SDK & ACTIVITIES"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Embed multiplayer HTML5/WebGL games directly inside Zycord voice channels or sync unified friend lists and party invites."), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "12px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-ghost zy-btn-sm", href: "/developers/applications" }, "Create an Activity →")))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "sdk-quickstart", style: { paddingTop: "16px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-clyde-3d.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "124px", top: "-46px", left: "5%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card", id: "commerce" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "DROP-IN API & GATEWAY COMPATIBILITY"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Point your existing ", /* @__PURE__ */ h("code", null, "discord.js"), ", ", /* @__PURE__ */ h("code", null, "hikari"), ", ", /* @__PURE__ */ h("code", null, "serenity"), ", or custom HTTP/WebSocket client to Zycord's REST and Gateway endpoints."), /* @__PURE__ */ h("div", { className: "zy-tab-strip", "data-zy-tabs": "dev-code-panels" }, /* @__PURE__ */ h("button", { type: "button", className: "zy-tab-btn is-active", "data-zy-tab": "bot" }, "🤖 Gateway Bot"), /* @__PURE__ */ h("button", { type: "button", className: "zy-tab-btn", "data-zy-tab": "rest" }, "📨 REST v9 Message"), /* @__PURE__ */ h("button", { type: "button", className: "zy-tab-btn", "data-zy-tab": "oauth" }, "🔑 OAuth2 Flow"))), /* @__PURE__ */ h("div", { className: "zy-app-window", id: "dev-code-panels" }, /* @__PURE__ */ h("div", { className: "zy-app-titlebar" }, /* @__PURE__ */ h("div", { className: "zy-window-dots" }, /* @__PURE__ */ h("span", { className: "zy-window-dot red" }), /* @__PURE__ */ h("span", { className: "zy-window-dot amber" }), /* @__PURE__ */ h("span", { className: "zy-window-dot green" })), /* @__PURE__ */ h("span", null, "zycord-sdk-quickstart.ts"), /* @__PURE__ */ h("span", { style: { color: "var(--color-spring-green)" } }, "v9 / v10 Ready")), /* @__PURE__ */ h(
+    )))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "rich-presence", style: { paddingTop: "16px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { style: { textAlign: "center", maxWidth: "780px", margin: "0 auto 40px" } }, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Everything You Need To Ship"), /* @__PURE__ */ h("h2", { className: "zy-heading", style: { marginTop: "14px" } }, "EXPLORE THE ZYCORD DEVELOPER SUITE")), /* @__PURE__ */ h("div", { className: "zy-grid-3" }, /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-portal-card.png", alt: "Developer Portal", style: { width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "24px", marginTop: "8px" } }, "DEVELOPER PORTAL"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Create applications, generate Bot tokens, configure OAuth2 redirect URIs, upload Rich Presence assets, and build Profile Widgets."), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "12px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary zy-btn-sm", href: "/developers/applications" }, "Manage Applications →"))), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-docs-card.png", alt: "API Documentation", style: { width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "24px", marginTop: "8px" } }, "API & GATEWAY DOCS"), /* @__PURE__ */ h("p", { className: "zy-body" }, "100% compatible with Zycord REST API v9/v10 and WebSocket Gateway opcodes, intents, slash commands, and webhooks."), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "12px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary zy-btn-sm", href: "#sdk-quickstart" }, "Read Quickstart ↓"))), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-help-card.png", alt: "Social SDK & Activities", style: { width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "24px", marginTop: "8px" } }, "SOCIAL SDK & ACTIVITIES"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Embed multiplayer HTML5/WebGL games directly inside Zycord voice channels or sync unified friend lists and party invites."), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "12px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-ghost zy-btn-sm", href: "/developers/applications" }, "Create an Activity →")))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "sdk-quickstart", style: { paddingTop: "16px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-clyde-3d.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "124px", top: "-46px", left: "5%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card", id: "commerce" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "DROP-IN API & GATEWAY COMPATIBILITY"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Connect your automated bots, slash command services, or custom HTTP/WebSocket clients directly to Zycord's REST and Gateway endpoints."), /* @__PURE__ */ h("div", { className: "zy-tab-strip", "data-zy-tabs": "dev-code-panels" }, /* @__PURE__ */ h("button", { type: "button", className: "zy-tab-btn is-active", "data-zy-tab": "bot", style: { display: "inline-flex", alignItems: "center", gap: "7px" } }, /* @__PURE__ */ h("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("rect", { x: "3", y: "11", width: "18", height: "10", rx: "2" }), /* @__PURE__ */ h("circle", { cx: "12", cy: "5", r: "2" }), /* @__PURE__ */ h("path", { d: "M12 7v4" }), /* @__PURE__ */ h("line", { x1: "8", y1: "16", x2: "8.01", y2: "16" }), /* @__PURE__ */ h("line", { x1: "16", y1: "16", x2: "16.01", y2: "16" })), /* @__PURE__ */ h("span", null, "Gateway Bot")), /* @__PURE__ */ h("button", { type: "button", className: "zy-tab-btn", "data-zy-tab": "rest", style: { display: "inline-flex", alignItems: "center", gap: "7px" } }, /* @__PURE__ */ h("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("line", { x1: "22", y1: "2", x2: "11", y2: "13" }), /* @__PURE__ */ h("polygon", { points: "22 2 15 22 11 13 2 9 22 2" })), /* @__PURE__ */ h("span", null, "REST v9 Message")), /* @__PURE__ */ h("button", { type: "button", className: "zy-tab-btn", "data-zy-tab": "oauth", style: { display: "inline-flex", alignItems: "center", gap: "7px" } }, /* @__PURE__ */ h("svg", { width: "15", height: "15", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("path", { d: "m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4" })), /* @__PURE__ */ h("span", null, "OAuth2 Flow")))), /* @__PURE__ */ h("div", { className: "zy-app-window", id: "dev-code-panels" }, /* @__PURE__ */ h("div", { className: "zy-app-titlebar" }, /* @__PURE__ */ h("div", { className: "zy-window-dots" }, /* @__PURE__ */ h("span", { className: "zy-window-dot red" }), /* @__PURE__ */ h("span", { className: "zy-window-dot amber" }), /* @__PURE__ */ h("span", { className: "zy-window-dot green" })), /* @__PURE__ */ h("span", null, "zycord-sdk-quickstart.ts"), /* @__PURE__ */ h("span", { style: { color: "var(--color-spring-green)" } }, "v9 / v10 Ready")), /* @__PURE__ */ h(
       "pre",
       {
         "data-zy-panel": "bot",
@@ -998,7 +1008,7 @@ await fetch("/api/v9/channels/CHANNEL_ID/messages", {
     "Content-Type": "application/json"
   },
   body: JSON.stringify({
-    content: "🚀 Tournament Match Ready!",
+    content: "[READY] Tournament Match Lobby Open!",
     embeds: [{ title: "Squad Lobby #4", color: 0x5865f2 }]
   })
 });`)
