@@ -46,11 +46,11 @@ export function HomePage() {
 								data-zy-parallax-rotate="10"
 							/>
 
-							{/* Main 3D Devices + Characters Stage */}
+							{/* Main 3D Devices + Characters Stage (Clean Base + Animated Individual Characters) */}
 							<div className="hero-3d-composite">
 								<img
-									src="/site/media/discord/hero-devices-2026.webp"
-									alt="Zycord 3D Desktop and Mobile Interface with Characters"
+									src="/site/media/discord/hero-base-clean-2026.webp"
+									alt="Zycord 3D Desktop and Mobile Interface"
 									className="hero-main-devices-img"
 									fetchpriority="high"
 								/>
@@ -61,14 +61,22 @@ export function HomePage() {
 									aria-hidden="true"
 									className="hero-char-girl"
 								/>
-								{/* 3D Clyde Robot standing next to Girl at bottom-left */}
-								<img
-									src="/site/media/discord/hero-clyde.webp"
-									alt=""
-									aria-hidden="true"
-									className="hero-char-clyde"
-								/>
-								{/* 3D Wumpus & Leaf in front of monitor stand */}
+								{/* 3D Clyde Robot hovering with shadow next to controller */}
+								<div className="hero-char-clyde-wrap">
+									<img
+										src="/site/media/discord/hero-clyde.webp"
+										alt=""
+										aria-hidden="true"
+										className="hero-char-clyde"
+									/>
+									<img
+										src="/site/media/discord/hero-clyde-shadow.webp"
+										alt=""
+										aria-hidden="true"
+										className="hero-char-clyde-shadow"
+									/>
+								</div>
+								{/* 3D Wumpus & Floating Leaf in front of monitor stand */}
 								<img
 									src="/site/media/discord/hero-wumpus-leaf.webp"
 									alt=""

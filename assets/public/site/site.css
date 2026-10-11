@@ -59,7 +59,7 @@
 
 html {
 	scroll-behavior: smooth;
-	background-color: var(--surface-cosmic-deep);
+	background-color: #5865f2;
 	color: var(--color-snow);
 	font-family: var(--font-abc-ginto-discord);
 	font-size: 16px;
@@ -1076,11 +1076,11 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-footer {
 	margin-top: 0;
-	padding: 88px 0 24px;
-	background: linear-gradient(180deg, #131542 0%, #1c226b 38%, #3440b5 76%, #4752c4 100%);
+	padding: 88px 0 0;
+	background: linear-gradient(180deg, #131542 0%, #1c226b 34%, #3c48c9 72%, #5865f2 100%);
 	border-top: none;
 	position: relative;
-	overflow: visible;
+	overflow: hidden;
 	z-index: 4;
 }
 
@@ -1295,18 +1295,20 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	text-decoration: underline;
 }
 
-.zy-wordmark-banner {
-	margin-top: 28px;
-	text-align: center;
-	font-family: var(--font-abc-ginto-nord-discord);
-	font-weight: 900;
-	font-size: clamp(82px, 19.5vw, 272px);
-	line-height: 0.82;
-	letter-spacing: -0.04em;
-	text-transform: none;
-	color: rgba(255, 255, 255, 0.88);
+.zy-wordmark-container {
+	width: 100%;
+	max-width: 1762px;
+	margin: 40px auto 0;
+	padding: 40px 40px 28px;
 	user-select: none;
 	pointer-events: none;
+}
+
+.zy-wordmark-svg {
+	width: 100%;
+	height: auto;
+	display: block;
+	overflow: visible;
 }
 
 /* Cookie Settings Modal */
