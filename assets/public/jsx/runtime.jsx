@@ -16,7 +16,9 @@ const SVG_TAGS = new Set([
 	"radialGradient",
 	"stop",
 	"clipPath",
-	"mask"
+	"mask",
+	"text",
+	"tspan"
 ]);
 
 export function Fragment(props) {

@@ -15,7 +15,9 @@
     "radialGradient",
     "stop",
     "clipPath",
-    "mask"
+    "mask",
+    "text",
+    "tspan"
   ]);
   function h(tag, props, ...children) {
     if (typeof tag === "function") {
