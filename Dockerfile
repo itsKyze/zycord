@@ -30,6 +30,7 @@ COPY tsconfig.json ./
 COPY src src
 COPY scripts/default-avatars.js scripts/default-avatars.js
 COPY scripts/generate-collectibles.mjs scripts/generate-collectibles.mjs
+COPY scripts/build-jsx-site.mjs scripts/build-jsx-site.mjs
 COPY assets assets
 RUN npm run build:src && npm prune --omit=dev --no-audit --no-fund
 
@@ -47,8 +48,7 @@ ENV NODE_ENV=production \
 COPY package.json ./
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/dist dist
-COPY --chown=node:node assets assets
-COPY --from=build --chown=node:node /app/assets/vencord assets/vencord
+COPY --from=build --chown=node:node /app/assets assets
 COPY scripts/client.js scripts/e2ee-anchors.js scripts/clan-badges.js scripts/compress-client.js scripts/docker-configure.js scripts/
 COPY --chmod=755 docker/entrypoint.sh docker/
 ARG REVISION=""
