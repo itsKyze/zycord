@@ -75,7 +75,7 @@ export function DevelopersHubPage() {
 							<img src="/site/media/discord/dev-docs-card.png" alt="API Documentation" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "24px", marginTop: "8px" }}>API &amp; GATEWAY DOCS</h3>
 							<p className="zy-body">
-								100% compatible with Discord REST API v9/v10 and WebSocket Gateway opcodes, intents, slash commands, and webhooks.
+								100% compatible with Zycord REST API v9/v10 and WebSocket Gateway opcodes, intents, slash commands, and webhooks.
 							</p>
 							<div style={{ marginTop: "auto", paddingTop: "12px" }}>
 								<a className="zy-btn zy-btn-secondary zy-btn-sm" href="#sdk-quickstart">Read Quickstart ↓</a>
@@ -108,12 +108,21 @@ export function DevelopersHubPage() {
 							<div className="zy-showcase-copy">
 								<h2 className="zy-heading">DROP-IN API &amp; GATEWAY COMPATIBILITY</h2>
 								<p className="zy-body-lg">
-									Point your existing <code>discord.js</code>, <code>hikari</code>, <code>serenity</code>, or custom HTTP/WebSocket client to Zycord's REST and Gateway endpoints.
+									Connect your automated bots, slash command services, or custom HTTP/WebSocket clients directly to Zycord's REST and Gateway endpoints.
 								</p>
 								<div className="zy-tab-strip" data-zy-tabs="dev-code-panels">
-									<button type="button" className="zy-tab-btn is-active" data-zy-tab="bot">🤖 Gateway Bot</button>
-									<button type="button" className="zy-tab-btn" data-zy-tab="rest">📨 REST v9 Message</button>
-									<button type="button" className="zy-tab-btn" data-zy-tab="oauth">🔑 OAuth2 Flow</button>
+									<button type="button" className="zy-tab-btn is-active" data-zy-tab="bot" style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+										<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>
+										<span>Gateway Bot</span>
+									</button>
+									<button type="button" className="zy-tab-btn" data-zy-tab="rest" style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+										<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+										<span>REST v9 Message</span>
+									</button>
+									<button type="button" className="zy-tab-btn" data-zy-tab="oauth" style={{ display: "inline-flex", alignItems: "center", gap: "7px" }}>
+										<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+										<span>OAuth2 Flow</span>
+									</button>
 								</div>
 							</div>
 
@@ -178,7 +187,7 @@ await fetch("/api/v9/channels/CHANNEL_ID/messages", {
     "Content-Type": "application/json"
   },
   body: JSON.stringify({
-    content: "🚀 Tournament Match Ready!",
+    content: "[READY] Tournament Match Lobby Open!",
     embeds: [{ title: "Squad Lobby #4", color: 0x5865f2 }]
   })
 });`}</code>

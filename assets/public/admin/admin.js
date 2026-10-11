@@ -276,7 +276,7 @@ const USER_TAGS = [
     ["verified_bot", "Verified Bot", "The blurple ✓ BOT tag. Only shows on bot accounts."],
     ["ai", "AI", "The green AI tag, for any account."],
     ["verified_ai", "Verified AI", "The green ✓ AI tag, for any account."],
-    ["official", "Official", "The blurple ✓ OFFICIAL tag that Discord puts on its own messages, for any account."],
+    ["official", "Official", "The blurple ✓ OFFICIAL tag that Zycord puts on its own messages, for any account."],
     ["system", "System", "The blurple ✓ SYSTEM tag, for any account."],
 ];
 
@@ -739,7 +739,7 @@ const RESOURCE_LIMITS = {
 };
 
 const E2EE_LIMITS = [
-    ["maxEnvelopeBytes", "Largest encrypted message", "Bytes. Discord-sized messages fit in the default 65536.", 1024],
+    ["maxEnvelopeBytes", "Largest encrypted message", "Bytes. Zycord-sized messages fit in the default 65536.", 1024],
     ["maxEnvelopeDevices", "Devices per encrypted message", "How many recipient devices one message can be encrypted for.", 1],
     ["pendingDeviceTtlHours", "Unapproved device lifetime", "Hours before a browser that was never approved is revoked.", 1],
     ["deviceRegistrationsPerHour", "New devices per hour", "Per account. Re-signing a known device doesn't count.", 1],
@@ -801,15 +801,15 @@ async function renderSettings(view) {
                 </div>
                 <div class="card">
                     <h2>External requests</h2>
-                    <p class="muted">Local files and cached assets remain available. By default, only Discord's existing decoration artwork can be downloaded.</p>
+                    <p class="muted">Local files and cached assets remain available. By default, only Zycord's existing decoration artwork can be downloaded.</p>
                     <div class="stack">
-                        ${toggle("externalRequests.discordDecorations", "Download existing Discord decoration artwork", "Avatar decorations, nameplates and profile effects. Shop items remain free.")}
-                        ${toggle("externalRequests.discordAssetFallback", "Download other missing Discord assets")}
-                        ${toggle("externalRequests.discordClientAssets", "Download missing Discord client assets while browsing")}
-                        ${toggle("externalRequests.discordGames", "Refresh the games list from Discord")}
-                        ${toggle("externalRequests.discordTemplates", "Import server templates from Discord")}
-                        ${toggle("externalRequests.discordStickerPacks", "Import standard sticker packs from Discord")}
-                        ${toggle("externalRequests.discordBadDomains", "Download Discord's blocked-domain list")}
+                        ${toggle("externalRequests.discordDecorations", "Download existing Zycord decoration artwork", "Avatar decorations, nameplates and profile effects. Shop items remain free.")}
+                        ${toggle("externalRequests.discordAssetFallback", "Download other missing Zycord assets")}
+                        ${toggle("externalRequests.discordClientAssets", "Download missing Zycord client assets while browsing")}
+                        ${toggle("externalRequests.discordGames", "Refresh the games list from Zycord")}
+                        ${toggle("externalRequests.discordTemplates", "Import server templates from Zycord")}
+                        ${toggle("externalRequests.discordStickerPacks", "Import standard sticker packs from Zycord")}
+                        ${toggle("externalRequests.discordBadDomains", "Download Zycord's blocked-domain list")}
                         ${toggle("externalRequests.thirdParty", "Allow configured third-party integrations", "Also requires configuring each provider. Leave off for local operation.")}
                     </div>
                 </div>
@@ -864,7 +864,7 @@ async function renderSettings(view) {
                     </label>
                     ${toggle("guild.publicThreadsInvitable", "Let members invite others to public threads")}
                     ${toggle("limits.channel.allowSlowmodeBypass", "Allow moderators to bypass slowmode", "Owners and members with Manage Messages, Manage Channels or Bypass Slowmode can send without waiting.")}
-                    ${toggle("guild.discovery.hideJoinedGuilds", "Hide servers people are in from Discovery", "Off is how Discord works. When it's on, whoever adds a server to Discovery never sees it there.")}
+                    ${toggle("guild.discovery.hideJoinedGuilds", "Hide servers people are in from Discovery", "Off is the standard Zycord behavior. When it's on, whoever adds a server to Discovery never sees it there.")}
                 </div>
                 <div class="card">
                     <h2 id="settings-instance">Instance information</h2>
@@ -883,15 +883,15 @@ async function renderSettings(view) {
                 <div class="card">
                     <h2 id="settings-branding">Web client branding</h2>
                     <p class="muted" style="margin:0 0 14px">
-                        What the bundled web client shows instead of Discord's name and artwork. Open clients pick it up on their next reload.
+                        Configure how the Zycord web client displays your instance name and artwork. Open clients pick it up on their next reload.
                     </p>
                     <div class="form-grid">
                         <label
-                            >Name in the client<span class="hint">Replaces "Discord" in titles and text</span
+                            >Name in the client<span class="hint">Displayed across client titles and text</span
                             ><input name="client.instanceName" value="${s.client.instanceName}" required maxlength="100"
                         /></label>
                         ${text("client.icon", "Square icon", "A URL, or a file path relative to the server folder. Used for the favicon, avatars and the app icon.", "text", "assets/icon.png")}
-                        ${text("client.logo", "Wordmark logo", "A URL or file path. Shown where Discord shows its wordmark; empty draws the name next to the icon.", "text")}
+                        ${text("client.logo", "Wordmark logo", "A URL or file path. Shown in the Zycord wordmark header; empty draws the name next to the icon.", "text")}
                         ${text("client.helpUrl", "Help center URL", "Where help links go. Empty hides them.", "url", "https://")}
                         ${text("client.activityApplicationHost", "Activity host", "Host that serves embedded activities. Empty uses this instance.", "text", "activities.example.com")}
                     </div>
@@ -2788,8 +2788,7 @@ async function renderStore(view) {
                 <div>
                     <h1>Store</h1>
                     <p class="muted">
-                        Packs of avatar decorations, nameplates, profile effects and profile frames people can pick up for free in the shop. Your packs come first, then the ones
-                        mirrored from Discord. Edit pack details and artwork, or hide packs from the shop. Your edits affect this instance’s shop.
+                        Packs of avatar decorations, nameplates, profile effects and profile frames people can pick up for free in the shop. Your custom packs come first, followed by built-in Zycord packs. Edit pack details and artwork, or hide packs from the shop. Your edits affect this instance’s shop.
                     </p>
                 </div>
                 <button class="btn primary" id="new-pack" type="button">Add pack</button>
@@ -2838,7 +2837,7 @@ async function renderStore(view) {
                           </div>`
                         : html`<div class="card empty">No packs yet. Add one, then fill it with decorations, nameplates, effects and frames.</div>`
                 }
-                <h2>Packs from Discord</h2>
+                <h2>Built-in Zycord Packs</h2>
                 <p class="muted" style="margin:0">Turn a pack off to take it out of the shop. People who already have its items keep them.</p>
                 <div class="card stack" style="gap:0;padding:0">
                     ${data.builtin.map(
@@ -2917,7 +2916,7 @@ function openBuiltinPack(skuId, refresh) {
             <label>Summary<textarea name="summary" maxlength="500" rows="2">${pack.summary ?? ""}</textarea></label>
             <label
                 >Order<input name="position" type="number" step="1" min="-2147483648" max="2147483647" value="${pack.position ?? 0}" /><span class="hint"
-                    >Lower numbers appear first among packs from Discord.</span
+                    >Lower numbers appear first among built-in Zycord packs.</span
                 ></label
             >
             <label class="toggle"><input name="visible" type="checkbox" ${pack.hidden ? "" : raw("checked")} /><span>Show in the shop</span></label>
@@ -3578,9 +3577,9 @@ async function openGuild(id, reload, resourcesOpen = false) {
     fetch("/clan-badges/preview", { cache: "no-cache" })
         .then((r) => r.json())
         .then((list) => {
-            // grouped by pack, in the order the packs first appear: discord's free badges and packs, then the instance's own
+            // grouped by pack, in the order the packs first appear: Zycord's free badges and packs, then the instance's own
             const packs = new Map();
-            for (const b of list) packs.set(b.pack ?? "Discord", [...(packs.get(b.pack ?? "Discord") ?? []), b]);
+            for (const b of list) packs.set(b.pack ?? "Zycord", [...(packs.get(b.pack ?? "Zycord") ?? []), b]);
             mount(
                 $("#badge-picker"),
                 list.length
@@ -3783,7 +3782,7 @@ function renderClientStatus({ client, vencord, patch_check: check }) {
                                   ${
                                       client.misses.count
                                           ? html`<div>
-                                                <strong>Not in the cache, fetched from Discord when asked for</strong>
+                                                <strong>Not in the cache, fetched from Zycord CDN when asked for</strong>
                                                 <pre class="file-list">${client.misses.items.join("\n")}</pre>
                                                 <span class="muted">Running <code>npm run generate:client</code> again adds them to the cache.</span>
                                             </div>`
@@ -3985,7 +3984,7 @@ function renderCollectiblesStatus(c) {
                 <button class="btn small" id="collectibles-refresh" type="button">Refresh catalogue</button>
             </div>
             <p class="muted" style="margin:0">
-                Decorations, effects, nameplates and bundles in the free Shop come from a public copy of Discord's catalogue, re-downloaded every ${c.refresh_interval_hours} hours.
+                Decorations, effects, nameplates and bundles in the free Shop come from the Zycord collectibles catalogue, refreshed every ${c.refresh_interval_hours} hours.
             </p>
             <div class="list">
                 ${source("Catalogue", c.catalog)} ${source("Profile effects", c.effects)}

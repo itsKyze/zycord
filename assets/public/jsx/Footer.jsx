@@ -1,4 +1,5 @@
 import { h } from "./runtime.jsx";
+import { ZycordMark } from "./Icons.jsx";
 
 export const FOOTER_COLUMNS = [
 	{
@@ -49,12 +50,12 @@ export const FOOTER_COLUMNS = [
 ];
 
 const LANGUAGES = [
-	"🌐 English (US)",
-	"🌐 العربية (Arabic)",
-	"🌐 Français (FR)",
-	"🌐 Español (ES)",
-	"🌐 Deutsch (DE)",
-	"🌐 日本語 (JA)"
+	"English (US)",
+	"العربية (Arabic)",
+	"Français (FR)",
+	"Español (ES)",
+	"Deutsch (DE)",
+	"日本語 (JA)"
 ];
 
 export function ZycordFooter() {
@@ -63,7 +64,7 @@ export function ZycordFooter() {
 
 	const cycleLanguage = (e) => {
 		langIdx = (langIdx + 1) % LANGUAGES.length;
-		const span = e.currentTarget.querySelector("span");
+		const span = e.currentTarget.querySelector("[data-lang-label]");
 		if (span) span.textContent = LANGUAGES[langIdx];
 	};
 
@@ -79,14 +80,11 @@ export function ZycordFooter() {
 									width: "48px",
 									height: "48px",
 									borderRadius: "14px",
-									background: "#ffffff"
+									background: "#ffffff",
+									color: "#5865F2"
 								}}
 							>
-								<img
-									src="/favicon.svg"
-									alt=""
-									style={{ width: "30px", height: "30px" }}
-								/>
+								<ZycordMark size={30} color="#5865F2" />
 							</span>
 						</a>
 
@@ -102,7 +100,14 @@ export function ZycordFooter() {
 								aria-label="Select Language"
 								onClick={cycleLanguage}
 							>
-								<span>🌐 English (US)</span>
+								<span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+									<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+										<circle cx="12" cy="12" r="10" />
+										<line x1="2" y1="12" x2="22" y2="12" />
+										<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+									</svg>
+									<span data-lang-label>English (US)</span>
+								</span>
 								<svg
 									width="14"
 									height="14"
