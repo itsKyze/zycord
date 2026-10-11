@@ -419,17 +419,17 @@
         { label: "Download", href: "/download" },
         { label: "Nitro", href: "/nitro" },
         { label: "Status", href: "/status" },
-        { label: "App Directory", href: "/discover" },
-        { label: "Web Browser Client", href: "/app" }
+        { label: "App Directory", href: "/application-directory" },
+        { label: "Gift Cards", href: "/gift-cards" }
       ]
     },
     {
       title: "Company",
       links: [
-        { label: "About", href: "/#about" },
+        { label: "About", href: "/company" },
         { label: "Jobs", href: "/careers" },
-        { label: "Brand & Collectibles", href: "/nitro#collectibles" },
-        { label: "Newsroom", href: "/blog" }
+        { label: "Brand", href: "/branding" },
+        { label: "Newsroom", href: "/newsroom" }
       ]
     },
     {
@@ -438,11 +438,12 @@
         { label: "Support", href: "/support" },
         { label: "Safety", href: "/safety" },
         { label: "Blog", href: "/blog" },
-        { label: "StreamKit", href: "/developers" },
-        { label: "Creators", href: "/discover#directory" },
-        { label: "Community", href: "/guidelines" },
+        { label: "Creators", href: "/creators" },
+        { label: "Community", href: "/community" },
         { label: "Developers", href: "/developers" },
-        { label: "Quests", href: "/quests" }
+        { label: "Quests", href: "/ads/quests" },
+        { label: "Official 3rd Party Merch", href: "/merch" },
+        { label: "Feedback", href: "/feedback" }
       ]
     },
     {
@@ -450,34 +451,59 @@
       links: [
         { label: "Terms", href: "/terms" },
         { label: "Privacy", href: "/privacy" },
-        { label: "Cookie Settings", href: "/privacy#cookies" },
+        { label: "Cookie Settings", href: "#cookie-settings", isCookieSettings: true },
         { label: "Guidelines", href: "/guidelines" },
-        { label: "Acknowledgements", href: "/legal" },
-        { label: "Licenses", href: "/legal" },
-        { label: "Company Information", href: "/legal" },
-        { label: "Admin Console", href: "/admin" }
+        { label: "Acknowledgements", href: "/acknowledgements" },
+        { label: "Licenses", href: "/licenses" },
+        { label: "Company Information", href: "/company-information" }
       ]
     }
   ];
   var LANGUAGES = [
-    { code: "en-US", label: "English (US)" },
-    { code: "en-GB", label: "English (UK)" },
-    { code: "ar", label: "العربية" },
-    { code: "fr", label: "Français" },
-    { code: "es-ES", label: "Español" },
+    { code: "cs", label: "Čeština" },
+    { code: "da", label: "Dansk" },
     { code: "de", label: "Deutsch" },
+    { code: "en-US", label: "English" },
+    { code: "en-GB", label: "English (UK)" },
+    { code: "es-ES", label: "Español" },
+    { code: "es-419", label: "Español (América Latina)" },
+    { code: "fr", label: "Français" },
+    { code: "hr", label: "Hrvatski" },
     { code: "it", label: "Italiano" },
-    { code: "pt-BR", label: "Português do Brasil" },
-    { code: "ru", label: "Русский" },
-    { code: "tr", label: "Türkçe" },
+    { code: "lt", label: "Lietuviškai" },
+    { code: "hu", label: "Magyar" },
     { code: "nl", label: "Nederlands" },
+    { code: "no", label: "Norsk" },
     { code: "pl", label: "Polski" },
+    { code: "pt-BR", label: "Português do Brasil" },
+    { code: "ro", label: "Română" },
+    { code: "fi", label: "Suomi" },
+    { code: "sv-SE", label: "Svenska" },
+    { code: "vi", label: "Tiếng Việt" },
+    { code: "tr", label: "Türkçe" },
+    { code: "el", label: "Ελληνικά" },
+    { code: "bg", label: "Български" },
+    { code: "ru", label: "Русский" },
+    { code: "uk", label: "Українська" },
+    { code: "hi", label: "हिन्दी" },
+    { code: "th", label: "ไทย" },
+    { code: "zh-CN", label: "中文" },
     { code: "ja", label: "日本語" },
+    { code: "zh-TW", label: "繁體中文" },
     { code: "ko", label: "한국어" },
-    { code: "zh-CN", label: "中文 (简体)" }
+    { code: "ar", label: "العربية" }
   ];
+  function openCookieSettingsModal(e) {
+    if (e) e.preventDefault();
+    const modal = document.getElementById("zy-cookie-modal-backdrop");
+    if (modal) modal.classList.add("is-open");
+  }
+  function closeCookieSettingsModal() {
+    const modal = document.getElementById("zy-cookie-modal-backdrop");
+    if (modal) modal.classList.remove("is-open");
+  }
   function ZycordFooter() {
-    let currentLang = "English (US)";
+    let currentLang = "English";
     try {
       const saved = window.localStorage.getItem("zy_site_lang");
       if (saved) currentLang = saved;
@@ -530,10 +556,11 @@
             wrap.classList.remove("is-open");
             if (btn) btn.setAttribute("aria-expanded", "false");
           }
+          closeCookieSettingsModal();
         }
       });
     }
-    return /* @__PURE__ */ h("footer", { className: "zy-footer" }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-footer-grid" }, /* @__PURE__ */ h("div", { className: "zy-footer-brand-col" }, /* @__PURE__ */ h("a", { className: "zy-footer-logo-link", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h(ZycordMark, { size: 46, color: "#ffffff" })), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-footer-col-title", style: { marginBottom: "8px" } }, "Language"), /* @__PURE__ */ h("div", { className: "zy-lang-dropdown-wrap", id: "zy-lang-dropdown-wrap" }, /* @__PURE__ */ h(
+    return /* @__PURE__ */ h("footer", { className: "zy-footer" }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-footer-grid" }, /* @__PURE__ */ h("div", { className: "zy-footer-brand-col" }, /* @__PURE__ */ h("a", { className: "zy-footer-logo-link", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h(ZycordMark, { size: 44, color: "#ffffff" })), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-footer-col-title", style: { marginBottom: "8px" } }, "Language"), /* @__PURE__ */ h("div", { className: "zy-lang-dropdown-wrap", id: "zy-lang-dropdown-wrap" }, /* @__PURE__ */ h(
       "button",
       {
         type: "button",
@@ -579,70 +606,81 @@
             className: `zy-lang-option${selected ? " is-selected" : ""}`,
             onClick: (e) => selectLanguage(l, e)
           },
-          /* @__PURE__ */ h("span", null, l.label),
-          /* @__PURE__ */ h(
-            "svg",
-            {
-              className: "zy-lang-check",
-              width: "15",
-              height: "15",
-              viewBox: "0 0 24 24",
-              fill: "none",
-              stroke: "currentColor",
-              "stroke-width": "2.5",
-              "stroke-linecap": "round",
-              "stroke-linejoin": "round"
-            },
-            /* @__PURE__ */ h("polyline", { points: "20 6 9 17 4 12" })
-          )
+          /* @__PURE__ */ h("span", null, l.label)
         );
       })
     ))), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-footer-col-title", style: { marginBottom: "10px" } }, "Social"), /* @__PURE__ */ h("div", { className: "zy-social-row" }, /* @__PURE__ */ h(
       "a",
       {
         className: "zy-social-btn",
-        href: "/discover",
+        href: "/community",
         "aria-label": "X / Twitter",
-        title: "Community Feed"
+        title: "X / Twitter"
       },
       /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" }))
     ), /* @__PURE__ */ h(
       "a",
       {
         className: "zy-social-btn",
-        href: "/discover",
+        href: "/community",
         "aria-label": "Instagram",
-        title: "Visual Highlights"
+        title: "Instagram"
       },
       /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" }))
     ), /* @__PURE__ */ h(
       "a",
       {
         className: "zy-social-btn",
-        href: "/discover",
-        "aria-label": "TikTok",
-        title: "Short Clips"
+        href: "/community",
+        "aria-label": "Facebook",
+        title: "Facebook"
       },
-      /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" }))
+      /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z" }))
     ), /* @__PURE__ */ h(
       "a",
       {
         className: "zy-social-btn",
-        href: "/developers",
-        "aria-label": "Developer GitHub",
-        title: "Developer Platform"
-      },
-      /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" }))
-    ), /* @__PURE__ */ h(
-      "a",
-      {
-        className: "zy-social-btn",
-        href: "/discover",
+        href: "/community",
         "aria-label": "YouTube",
-        title: "Streams & Videos"
+        title: "YouTube"
       },
       /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" }))
-    )))), FOOTER_COLUMNS.map((col) => /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("h3", { className: "zy-footer-col-title" }, col.title), /* @__PURE__ */ h("ul", { className: "zy-footer-links" }, col.links.map((l) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { href: l.href }, l.label))))))), /* @__PURE__ */ h("div", { className: "zy-wordmark-banner", "aria-hidden": "true" }, "ZYCORD")));
+    ), /* @__PURE__ */ h(
+      "a",
+      {
+        className: "zy-social-btn",
+        href: "/community",
+        "aria-label": "TikTok",
+        title: "TikTok"
+      },
+      /* @__PURE__ */ h("svg", { viewBox: "0 0 24 24", fill: "currentColor" }, /* @__PURE__ */ h("path", { d: "M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" }))
+    )))), FOOTER_COLUMNS.map((col) => /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("h3", { className: "zy-footer-col-title" }, col.title), /* @__PURE__ */ h("ul", { className: "zy-footer-links" }, col.links.map((l) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h(
+      "a",
+      {
+        href: l.href,
+        onClick: l.isCookieSettings ? openCookieSettingsModal : void 0
+      },
+      l.label
+    ))))))), /* @__PURE__ */ h("div", { className: "zy-wordmark-banner", "aria-hidden": "true" }, "Zycord")), /* @__PURE__ */ h(
+      "div",
+      {
+        className: "zy-cookie-modal-backdrop",
+        id: "zy-cookie-modal-backdrop",
+        onClick: (e) => {
+          if (e.target.id === "zy-cookie-modal-backdrop") closeCookieSettingsModal();
+        }
+      },
+      /* @__PURE__ */ h("div", { className: "zy-cookie-modal", role: "dialog", "aria-modal": "true", "aria-labelledby": "zy-cookie-title" }, /* @__PURE__ */ h("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px" } }, /* @__PURE__ */ h("h3", { id: "zy-cookie-title", className: "zy-heading-sm", style: { fontSize: "22px" } }, "PRIVACY & COOKIE PREFERENCES"), /* @__PURE__ */ h(
+        "button",
+        {
+          type: "button",
+          className: "zy-btn zy-btn-ghost zy-btn-sm",
+          onClick: closeCookieSettingsModal,
+          "aria-label": "Close Cookie Preferences"
+        },
+        "✕"
+      )), /* @__PURE__ */ h("p", { className: "zy-body", style: { fontSize: "14px", marginTop: "10px" } }, "Zycord uses strictly necessary local storage and session cookies to authenticate your account, maintain WebSocket Gateway connections, and store your local End-to-End Encryption (E2EE) key vault. We do not sell personal data or run third-party ad trackers."), /* @__PURE__ */ h("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginTop: "16px" } }, /* @__PURE__ */ h("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 14px", borderRadius: "12px", background: "rgba(255,255,255,0.06)" } }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { style: { fontWeight: "700", fontSize: "14px", color: "#fff" } }, "Strictly Necessary & Authentication"), /* @__PURE__ */ h("div", { style: { fontSize: "12px", color: "var(--color-fog)" } }, "Session tokens, E2EE Key Vault, WebRTC preferences")), /* @__PURE__ */ h("span", { style: { fontSize: "12px", fontWeight: "700", color: "var(--color-spring-green)" } }, "Always Active")), /* @__PURE__ */ h("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 14px", borderRadius: "12px", background: "rgba(255,255,255,0.06)" } }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { style: { fontWeight: "700", fontSize: "14px", color: "#fff" } }, "UI & Language Preferences"), /* @__PURE__ */ h("div", { style: { fontSize: "12px", color: "var(--color-fog)" } }, "Remembers your selected language and theme settings")), /* @__PURE__ */ h("input", { type: "checkbox", checked: true, readOnly: true, style: { width: "18px", height: "18px", accentColor: "#5865f2" } }))), /* @__PURE__ */ h("div", { style: { display: "flex", justifyContent: "flex-end", gap: "10px", marginTop: "20px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-ghost zy-btn-sm", href: "/privacy" }, "Privacy Policy"), /* @__PURE__ */ h("button", { type: "button", className: "zy-btn zy-btn-primary zy-btn-sm", onClick: closeCookieSettingsModal }, "Save Preferences")))
+    ));
   }
 
   // assets/public/jsx/pages/HomePage.jsx
@@ -760,7 +798,7 @@
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop tilt",
-        style: { width: "128px", top: "-52px", right: "6%" }
+        style: { width: "128px", top: "-52px", right: "4%" }
       }
     ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "MAKE YOUR GROUP CHATS MORE FUN"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Use custom emoji, stickers, soundboard effects and more to add your personality to your voice, video, or text chat. Set your avatar and a custom status, and write your own profile to show up in chat your way.")), /* @__PURE__ */ h(
       "div",
@@ -787,7 +825,7 @@
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop",
-        style: { width: "136px", top: "-56px", left: "5%" }
+        style: { width: "136px", top: "-56px", left: "3%" }
       }
     ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
       "div",
@@ -814,7 +852,7 @@
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop tilt",
-        style: { width: "134px", top: "-54px", right: "7%" }
+        style: { width: "134px", top: "-54px", right: "5%" }
       }
     ), /* @__PURE__ */ h(
       "img",
@@ -823,7 +861,7 @@
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop",
-        style: { width: "102px", bottom: "-38px", left: "8%" }
+        style: { width: "102px", bottom: "-38px", left: "6%" }
       }
     ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "HOP IN WHEN YOU'RE FREE, NO NEED TO CALL"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Easily hop in and out of voice or text chats without having to call or invite anyone, so your party chat lasts before, during, and after your game session.")), /* @__PURE__ */ h(
       "div",
@@ -850,21 +888,19 @@
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop",
-        style: { width: "110px", top: "-46px", left: "6%" }
+        style: {
+          width: "160px",
+          bottom: "-140px",
+          left: "-6%",
+          filter: "blur(3px) drop-shadow(0 20px 34px rgba(0, 0, 0, 0.45))",
+          opacity: "0.75",
+          zIndex: 1
+        }
       }
-    ), /* @__PURE__ */ h(
-      "img",
-      {
-        src: "/site/media/discord/prop-turnip.webp",
-        alt: "",
-        "aria-hidden": "true",
-        className: "zy-float-prop tilt",
-        style: { width: "120px", bottom: "-44px", right: "8%" }
-      }
-    ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "SEE WHO'S AROUND TO CHILL"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "See who's around, playing games, or just hanging out. For supported games, you can see what modes or characters your friends are playing and directly join up.")), /* @__PURE__ */ h(
       "div",
       {
-        className: "zy-scene-stage stage-blurple",
+        className: "zy-scene-stage stage-magenta",
         style: { backgroundImage: "url('/site/media/discord/sec4-bkg.svg')" }
       },
       /* @__PURE__ */ h(
@@ -879,14 +915,21 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec4-chill.mp4", type: "video/mp4" })
       )
-    ), /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "SEE WHO'S AROUND TO CHILL"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "See who's around, playing games, or just hanging out. For supported games, you can see what modes or characters your friends are playing and directly join up.")))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "activities" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
+    ))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "activities", style: { paddingTop: "84px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
-        src: "/site/media/discord/sec5-garfield-simon.webp",
+        src: "/site/media/discord/sec5-woman-bottom.webp",
         alt: "",
         "aria-hidden": "true",
-        className: "zy-float-prop",
-        style: { width: "152px", top: "-68px", right: "10%" }
+        style: {
+          position: "absolute",
+          top: "-114px",
+          right: "28%",
+          width: "172px",
+          height: "auto",
+          zIndex: 7,
+          pointerEvents: "none"
+        }
       }
     ), /* @__PURE__ */ h(
       "img",
@@ -894,22 +937,34 @@
         src: "/site/media/discord/sec5-card-characters.png",
         alt: "",
         "aria-hidden": "true",
-        className: "zy-float-prop tilt",
-        style: { width: "124px", top: "-52px", left: "6%" }
+        style: {
+          position: "absolute",
+          top: "-126px",
+          right: "11%",
+          width: "194px",
+          height: "auto",
+          zIndex: 6,
+          pointerEvents: "none"
+        }
       }
     ), /* @__PURE__ */ h(
       "img",
       {
-        src: "/site/media/discord/sec5-woman-bottom.webp",
+        src: "/site/media/discord/prop-turnip.webp",
         alt: "",
         "aria-hidden": "true",
-        className: "zy-float-prop",
-        style: { width: "136px", bottom: "-48px", right: "5%" }
+        className: "zy-float-prop tilt",
+        style: {
+          width: "138px",
+          bottom: "-34px",
+          left: "-28px",
+          zIndex: 8
+        }
       }
-    ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "ALWAYS HAVE SOMETHING TO DO TOGETHER"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat.")), /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
       "div",
       {
-        className: "zy-scene-stage stage-sunset",
+        className: "zy-scene-stage stage-emerald",
         style: { backgroundImage: "url('/site/media/discord/sec5-bkg.webp')" }
       },
       /* @__PURE__ */ h(
@@ -924,16 +979,16 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec5-activities.mp4", type: "video/mp4" })
       )
-    ))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "platforms" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "ALWAYS HAVE SOMETHING TO DO TOGETHER"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat.")))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "platforms" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/prop-plump.webp",
         alt: "",
         "aria-hidden": "true",
         className: "zy-float-prop tilt",
-        style: { width: "126px", top: "-52px", left: "6%" }
+        style: { width: "126px", top: "-52px", right: "6%" }
       }
-    ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "WHEREVER YOU GAME, HANG OUT HERE"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "On your PC, phone, or console, you can still hang out on Zycord. Easily switch between devices and use tools to manage multiple group chats with friends.")), /* @__PURE__ */ h(
       "div",
       {
         className: "zy-scene-stage stage-cerulean",
@@ -951,7 +1006,7 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec6-platforms.mp4", type: "video/mp4" })
       )
-    ), /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "WHEREVER YOU GAME, HANG OUT HERE"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "On your PC, phone, or console, you can still hang out on Zycord. Easily switch between devices and use tools to manage multiple group chats with friends.")))))), /* @__PURE__ */ h("section", { className: "final-horizon-section", id: "about" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/star-lg.svg", alt: "", "aria-hidden": "true", className: "zy-star d1", style: { width: "30px", top: "10%", left: "14%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/star-m.svg", alt: "", "aria-hidden": "true", className: "zy-star d3", style: { width: "22px", top: "16%", right: "16%" } }), /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h(
+    ))))), /* @__PURE__ */ h("section", { className: "final-horizon-section", id: "about" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/star-lg.svg", alt: "", "aria-hidden": "true", className: "zy-star d1", style: { width: "30px", top: "10%", left: "14%" } }), /* @__PURE__ */ h("img", { src: "/site/media/discord/star-m.svg", alt: "", "aria-hidden": "true", className: "zy-star d3", style: { width: "22px", top: "16%", right: "16%" } }), /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h(
       "h2",
       {
         className: "zy-display",
@@ -962,20 +1017,11 @@
         }
       },
       "YOU CAN'T SCROLL ANYMORE. BETTER GO CHAT."
-    ), /* @__PURE__ */ h("div", { className: "hero-bottom-ctas", style: { marginTop: "32px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/download/windows" }, /* @__PURE__ */ h("svg", { width: "22", height: "22", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", "aria-hidden": "true" }, /* @__PURE__ */ h("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }), /* @__PURE__ */ h("polyline", { points: "7 10 12 15 17 10" }), /* @__PURE__ */ h("line", { x1: "12", y1: "15", x2: "12", y2: "3" })), /* @__PURE__ */ h("span", null, "Download for Windows")), /* @__PURE__ */ h(
-      "a",
-      {
-        className: "zy-btn zy-btn-primary",
-        "data-zy-open-app": true,
-        "data-zy-open-label-authed": "Launch Zycord App",
-        href: "/app"
-      },
-      /* @__PURE__ */ h("span", null, "Open Zycord in your browser")
-    ))), /* @__PURE__ */ h("div", { className: "final-horizon-art" }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "hero-bottom-ctas", style: { marginTop: "32px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/download/windows" }, /* @__PURE__ */ h("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", "aria-hidden": "true" }, /* @__PURE__ */ h("path", { d: "M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" }), /* @__PURE__ */ h("polyline", { points: "7 10 12 15 17 10" }), /* @__PURE__ */ h("line", { x1: "12", y1: "15", x2: "12", y2: "3" })), /* @__PURE__ */ h("span", null, "Download for Windows")))), /* @__PURE__ */ h("div", { className: "final-horizon-art" }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/footer-horizon.webp",
-        alt: "Zycord Cosmic Horizon Banner",
+        alt: "Zycord Cosmic Horizon Lineup",
         className: "final-horizon-bg",
         loading: "lazy"
       }
@@ -985,25 +1031,7 @@
         src: "/site/media/discord/footer-smoke.gif",
         alt: "",
         "aria-hidden": "true",
-        style: {
-          position: "absolute",
-          left: "52%",
-          bottom: "24%",
-          transform: "translateX(-50%)",
-          width: "clamp(110px, 14vw, 210px)",
-          height: "auto",
-          zIndex: 2,
-          pointerEvents: "none",
-          opacity: "0.85"
-        },
-        loading: "lazy"
-      }
-    ), /* @__PURE__ */ h(
-      "img",
-      {
-        src: "/site/media/discord/footer-wumpus-sitting.webp",
-        alt: "Wumpus sitting on the cosmic horizon",
-        className: "final-horizon-wumpus",
+        className: "final-horizon-smoke",
         loading: "lazy"
       }
     ), /* @__PURE__ */ h(
@@ -1013,6 +1041,14 @@
         alt: "",
         "aria-hidden": "true",
         className: "final-horizon-leaf",
+        loading: "lazy"
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/footer-wumpus-sitting.webp",
+        alt: "Wumpus sitting on the cosmic horizon",
+        className: "final-horizon-wumpus",
         loading: "lazy"
       }
     ))));
@@ -1096,6 +1132,84 @@
       }
     ];
     return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/nav-blog-cube.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "132px", top: "-42px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Zycord Blog & Newsroom")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "STORIES, UPDATES & ENGINEERING"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "The latest product releases, engineering deep-dives, community spotlights, and safety updates from the Zycord team.")), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-magenta" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/quests-missions.webp", alt: "Zycord Featured Update", style: { width: "100%", height: "auto", borderRadius: "20px" } })))))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-grid-3" }, posts.map((p) => /* @__PURE__ */ h("article", { className: "zy-card", id: p.id }, /* @__PURE__ */ h("img", { src: p.img, alt: p.title, style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("span", { className: "zy-eyebrow", style: { alignSelf: "flex-start", marginTop: "6px" } }, p.cat), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "20px" } }, p.title), /* @__PURE__ */ h("p", { className: "zy-body", style: { fontSize: "14px" } }, p.desc), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "10px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-ghost zy-btn-sm", href: "/app" }, "Try it in Zycord →"))))))));
+  }
+  function AppDirectoryPage() {
+    const apps = [
+      { name: "ZyGuard AutoMod", cat: "Moderation & Security", installs: "42,800+ Servers", img: "/site/media/discord/safety-card-1.png", desc: "Real-time raid protection, regex keyword filters, anti-phishing links, and automated audit logs." },
+      { name: "WatchParty Cinema", cat: "Activities & Watch Together", installs: "68,400+ Servers", img: "/site/media/discord/sec5-activities.webp", desc: "Synchronized YouTube, Twitch, and media playback right inside any Zycord voice channel." },
+      { name: "Tempo Hi-Fi Music", cat: "Music & Soundboard", installs: "91,200+ Servers", img: "/site/media/discord/sec2-stream.webp", desc: "Lossless 384kbps Opus audio streaming, playlists, and live DJ queue management." },
+      { name: "QuestMaster RPG", cat: "Games & Trivia", installs: "54,100+ Servers", img: "/site/media/discord/quests-card-1.webp", desc: "Turn-based multiplayer dungeon raids, leaderboards, and custom server loot drops." },
+      { name: "GitPulse Notifier", cat: "Developer Tools", installs: "31,900+ Servers", img: "/site/media/discord/dev-card-apps.webp", desc: "Instant rich webhook embeds for GitHub commits, PR reviews, CI/CD builds, and releases." },
+      { name: "LevelUp XP & Roles", cat: "Community Engagement", installs: "77,500+ Servers", img: "/site/media/discord/sec6-hangout.webp", desc: "Customizable rank cards, voice activity XP rewards, and automated role promotions." }
+    ];
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/prop-gamepad.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "136px", top: "-44px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Official App Directory")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "SUPERCHARGE YOUR SERVER WITH APPS"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Discover thousands of verified bots, slash-command utilities, multiplayer voice Activities, and automated moderation tools built on the Zycord API."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/app" }, "Browse in Zycord"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/developers/applications" }, "Build Your Own App"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-blurple" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/dev-card-apps.webp", alt: "Zycord App Directory", style: { width: "100%", height: "auto", borderRadius: "20px" } })))))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-grid-3" }, apps.map((a) => /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: a.img, alt: a.name, style: { width: "100%", height: "180px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginTop: "6px" } }, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, a.cat), /* @__PURE__ */ h("span", { style: { fontSize: "12px", color: "var(--color-spring-green)", fontWeight: "700" } }, a.installs)), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px" } }, a.name), /* @__PURE__ */ h("p", { className: "zy-body", style: { fontSize: "14px" } }, a.desc), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "10px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary zy-btn-sm", href: "/app" }, "Add to Server"))))))));
+  }
+  function GiftCardsPage() {
+    const tiers = [
+      { title: "1 Month Zycord Nitro", price: "$9.99", badge: "Popular Gift", img: "/site/media/discord/nitro-perk-1.webp", desc: "Unlock 1080p 60fps HD streaming, 500MB uploads, custom emojis everywhere, and 2 free Server Boosts for 30 days." },
+      { title: "1 Year Zycord Nitro", price: "$99.99", badge: "Best Value · 2 Months Free", img: "/site/media/discord/nitro-perk-2.webp", desc: "A full year of complete profile customization, animated avatars, custom banners, profile effects, and 2 Server Boosts." },
+      { title: "Shop Collectibles Bundle", price: "$14.99", badge: "Exclusive Cosmetics", img: "/site/media/discord/nitro-perk-3.webp", desc: "Gift instant access to 1,099+ avatar decorations, animated nameplates, and full-card profile effects." }
+    ];
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/nitro-wumpus-jetpack.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "148px", top: "-52px", right: "5%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Zycord Nitro Gift Cards")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "GIVE THE GIFT OF NITRO"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Share HD streaming, animated profile themes, custom emojis, and Server Boosts with your favorite squadmates in seconds."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/nitro" }, "Gift Nitro Now"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/app" }, "Redeem a Gift Code"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-magenta" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/nitro-banner-media.webp", alt: "Zycord Nitro Gift Cards", style: { width: "100%", height: "auto", borderRadius: "20px" } })))))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-grid-3" }, tiers.map((t) => /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: t.img, alt: t.title, style: { width: "100%", height: "190px", objectFit: "contain", background: "rgba(255,255,255,0.04)", padding: "16px", borderRadius: "16px" } }), /* @__PURE__ */ h("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" } }, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, t.badge), /* @__PURE__ */ h("span", { className: "zy-heading-sm", style: { fontSize: "22px", color: "var(--color-spring-green)" } }, t.price)), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px" } }, t.title), /* @__PURE__ */ h("p", { className: "zy-body", style: { fontSize: "14px" } }, t.desc), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "10px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary zy-btn-sm", href: "/app" }, "Send Digital Gift"))))))));
+  }
+  function CompanyPage() {
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/hero-wumpus.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "136px", top: "-46px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "About Zycord")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "CREATE SPACE FOR EVERYONE TO FIND BELONGING"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Zycord is the real-time voice, video, and text communication platform where gaming squads, open-source builders, and world-class communities hang out every day."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/careers" }, "Explore Careers"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/newsroom" }, "Visit Newsroom"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-cerulean" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/careers-hero.webp", alt: "About Zycord", style: { width: "100%", height: "auto", borderRadius: "20px" } })))))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-grid-3" }, /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/careers-office-1.webp", alt: "Our Story", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "BUILT FOR REAL FRIENDSHIPS"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Unlike endless social feeds designed for passive scrolling, Zycord is designed for active conversation — jumping into voice channels, streaming games, and building lasting memories.")), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/careers-office-2.webp", alt: "Engineering Excellence", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "SUB-20MS GLOBAL INFRASTRUCTURE"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Powered by ultra-low-latency WebRTC voice, 1080p 60fps screen sharing, and end-to-end encrypted direct messaging with Passkey security.")), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/careers-office-3.webp", alt: "Privacy First", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "SAFETY & TRANSPARENCY"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Your conversations belong to you. We empower communities with granular role permissions, AutoMod filters, and zero-knowledge encrypted DMs."))))));
+  }
+  function BrandingPage() {
+    const colors = [
+      { name: "Zycord Blurple", hex: "#5865F2", rgb: "RGB(88, 101, 242)" },
+      { name: "Deep Space Indigo", hex: "#1B1D68", rgb: "RGB(27, 29, 104)" },
+      { name: "Spring Green", hex: "#57F287", rgb: "RGB(87, 242, 135)" },
+      { name: "Fuchsia Pulse", hex: "#EB459E", rgb: "RGB(235, 69, 158)" },
+      { name: "Solar Amber", hex: "#FEE75C", rgb: "RGB(254, 231, 92)" },
+      { name: "Midnight Onyx", hex: "#0B0C20", rgb: "RGB(11, 12, 32)" }
+    ];
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/hero-crown.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "110px", top: "-40px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Official Brand Guidelines")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "OUR BRAND, LOGOS & DESIGN SYSTEM"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Download official Zycord marks, mascot artwork, color tokens, and typography guidelines for press, creators, and community partners."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/favicon.svg", download: "Zycord-Logo.svg" }, "Download SVG Logo Kit"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/branding/preview.html" }, "Interactive Brand Preview"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-blurple", style: { minHeight: "280px", flexDirection: "column", gap: "16px" } }, /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "Zycord Mark", style: { width: "112px", height: "112px", filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.45))" } }), /* @__PURE__ */ h("div", { className: "zy-display", style: { fontSize: "42px" } }, "Zycord")))))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("h2", { className: "zy-heading", style: { marginBottom: "24px" } }, "OFFICIAL COLOR PALETTE"), /* @__PURE__ */ h("div", { className: "zy-grid-3" }, colors.map((c) => /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("div", { style: { height: "120px", borderRadius: "16px", background: c.hex, border: "1px solid rgba(255,255,255,0.22)" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "20px", marginTop: "8px" } }, c.name), /* @__PURE__ */ h("p", { className: "zy-body", style: { fontFamily: "monospace", fontSize: "14px" } }, c.hex, " · ", c.rgb)))))));
+  }
+  function NewsroomPage() {
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/nav-blog-cube.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "128px", top: "-42px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Press & Media Center")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "ZYCORD NEWSROOM"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Official announcements, company milestones, media resources, and executive briefings from Zycord HQ."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/branding" }, "Download Media Kit"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/blog" }, "Read Engineering Blog"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-sunset" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/careers-office-4.webp", alt: "Zycord Newsroom", style: { width: "100%", height: "auto", borderRadius: "20px" } })))))), /* @__PURE__ */ h(BlogPage, null));
+  }
+  function CreatorsPage() {
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/download-trophy.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "118px", top: "-40px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Zycord for Creators")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "TURN YOUR AUDIENCE INTO A THRIVING COMMUNITY"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Host live Stage events, sync Twitch & YouTube subscriber roles automatically, and reward your biggest supporters with custom collectibles."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/app" }, "Launch Your Creator Server"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/community" }, "Community Guidelines"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-magenta" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/sec2-stream.webp", alt: "Zycord for Creators", style: { width: "100%", height: "auto", borderRadius: "20px" } })))))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-grid-3" }, /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/sec3-reactions.webp", alt: "Subscriber Role Sync", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "TWITCH & YOUTUBE ROLE SYNC"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Automatically grant exclusive VIP channels, custom role icons, and soundboard perks to your Twitch subscribers and YouTube channel members.")), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/sec5-activities.webp", alt: "Stage Channels", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "STAGE CHANNELS & AMAs"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Run moderated town halls, live podcast recordings, and interactive Q&A sessions with raised-hand speaker queues for thousands of listeners.")), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/sec1-chat-fun.webp", alt: "Server Shop & Perks", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "CUSTOM EMOJIS & SOUNDBOARDS"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Upload your channel's iconic memes, animated emotes, and catchphrases so your community can react in voice and text."))))));
+  }
+  function CommunityPage() {
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/sec5-card-characters.png", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "156px", top: "-52px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Zycord Communities")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "WHERE PASSIONATE COMMUNITIES GROW"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "From university study groups and open-source maintainers to global esports organizations, Zycord gives community leaders every tool to welcome and organize members."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/discover" }, "Explore Public Servers"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/app" }, "Create a Community Server"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-emerald" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/sec6-hangout.webp", alt: "Zycord Community", style: { width: "100%", height: "auto", borderRadius: "20px" } })))))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-grid-3" }, /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/safety-card-2.png", alt: "Onboarding", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "GUIDED SERVER ONBOARDING"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Welcome new members with interactive role-picker questions, custom rules screening, and curated default channels.")), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/sec4-chill.webp", alt: "Forum Channels", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "FORUM & THREAD CHANNELS"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Keep busy discussions organized with searchable topic tags, pinned guidelines, and dedicated threads that never clutter main chat.")), /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/safety-card-4.png", alt: "Community Insights", style: { width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px", marginTop: "8px" } }, "AUTO-MODERATION & SAFETY"), /* @__PURE__ */ h("p", { className: "zy-body" }, "Protect your space effortlessly with customizable keyword filters, raid alerts, and granular role-based permission hierarchies."))))));
+  }
+  function MerchPage() {
+    const items = [
+      { name: "Wumpus Plushie Collector Edition", price: "$34.00", tag: "Limited Drop", img: "/site/media/discord/hero-wumpus.webp", desc: "Ultra-soft 12-inch embroidered Wumpus plush with magnetic leaf accessory." },
+      { name: "Blurple Heavyweight Hoodie", price: "$68.00", tag: "Apparel", img: "/site/media/discord/nitro-wumpus-wheel.webp", desc: "450gsm brushed cotton fleece in signature Zycord Blurple with puff-print wordmark." },
+      { name: "3D Keycap & Desk Mat Bundle", price: "$49.00", tag: "Hardware Gear", img: "/site/media/discord/prop-gamepad.webp", desc: "Artisan resin Clyde keycap paired with an XXL stitched-edge midnight desk pad." }
+    ];
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/prop-star.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "110px", top: "-36px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Official Zycord Store")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "OFFICIAL MERCH & COLLECTIBLES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Rep your favorite hangout IRL with limited-edition apparel, plushies, desk gear, and digital profile collectibles."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/app" }, "Open Digital Collectibles Shop"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/gift-cards" }, "Shop Gift Cards"))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-blurple" }, /* @__PURE__ */ h("img", { src: "/site/media/discord/nitro-banner-media.webp", alt: "Zycord Merch", style: { width: "100%", height: "auto", borderRadius: "20px" } })))))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-grid-3" }, items.map((it) => /* @__PURE__ */ h("article", { className: "zy-card" }, /* @__PURE__ */ h("img", { src: it.img, alt: it.name, style: { width: "100%", height: "200px", objectFit: "contain", background: "rgba(255,255,255,0.05)", padding: "18px", borderRadius: "16px" } }), /* @__PURE__ */ h("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" } }, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, it.tag), /* @__PURE__ */ h("span", { className: "zy-heading-sm", style: { fontSize: "20px", color: "var(--color-spring-green)" } }, it.price)), /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px" } }, it.name), /* @__PURE__ */ h("p", { className: "zy-body", style: { fontSize: "14px" } }, it.desc), /* @__PURE__ */ h("div", { style: { marginTop: "auto", paddingTop: "10px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary zy-btn-sm", href: "/app" }, "View in Shop"))))))));
+  }
+  function FeedbackPage() {
+    function handleFeedbackSubmit(e) {
+      e.preventDefault();
+      const statusEl = document.getElementById("zy-feedback-status");
+      if (statusEl) {
+        statusEl.style.display = "block";
+        statusEl.textContent = "Thank you! Your feedback has been submitted to the Zycord Product Team.";
+      }
+      e.target.reset();
+    }
+    return /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "48px", position: "relative", overflow: "hidden" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h("img", { src: "/site/media/discord/download-clyde-point.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "124px", top: "-42px", right: "6%" } }), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, "Product Feedback & Feature Requests")), /* @__PURE__ */ h("h1", { className: "zy-display" }, "HELP SHAPE THE FUTURE OF ZYCORD"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Have an idea for Voice & Video, Collectibles, Server Moderation, or Developer APIs? Submit your feedback directly to our engineering team.")), /* @__PURE__ */ h("div", { className: "zy-card", style: { background: "rgba(13, 15, 44, 0.88)" } }, /* @__PURE__ */ h("h3", { className: "zy-heading-sm", style: { fontSize: "22px" } }, "Submit a Feature Request"), /* @__PURE__ */ h("form", { onSubmit: handleFeedbackSubmit, style: { display: "flex", flexDirection: "column", gap: "14px", marginTop: "8px" } }, /* @__PURE__ */ h("select", { required: true, style: { padding: "12px 14px", borderRadius: "12px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: "15px" } }, /* @__PURE__ */ h("option", { value: "voice", style: { background: "#1b1e4b" } }, "Voice, Video & Screen Share"), /* @__PURE__ */ h("option", { value: "chat", style: { background: "#1b1e4b" } }, "Text Channels, Threads & Polls"), /* @__PURE__ */ h("option", { value: "nitro", style: { background: "#1b1e4b" } }, "Nitro & Profile Collectibles"), /* @__PURE__ */ h("option", { value: "api", style: { background: "#1b1e4b" } }, "Bots, Webhooks & Developer API"), /* @__PURE__ */ h("option", { value: "safety", style: { background: "#1b1e4b" } }, "Safety, Privacy & Moderation")), /* @__PURE__ */ h(
+      "input",
+      {
+        type: "text",
+        required: true,
+        placeholder: "Short title for your suggestion...",
+        style: { padding: "12px 14px", borderRadius: "12px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: "15px" }
+      }
+    ), /* @__PURE__ */ h(
+      "textarea",
+      {
+        rows: "4",
+        required: true,
+        placeholder: "Describe how this feature would help you and your server...",
+        style: { padding: "12px 14px", borderRadius: "12px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: "15px", resize: "vertical" }
+      }
+    ), /* @__PURE__ */ h("button", { type: "submit", className: "zy-btn zy-btn-primary" }, "Submit Feedback"), /* @__PURE__ */ h("div", { id: "zy-feedback-status", style: { display: "none", padding: "12px", borderRadius: "12px", background: "rgba(87, 242, 135, 0.18)", border: "1px solid rgba(87, 242, 135, 0.45)", color: "#57f287", fontWeight: "700", fontSize: "14px" } }))))))));
   }
 
   // assets/public/jsx/pages/DevelopersHubPage.jsx
@@ -1193,7 +1307,16 @@ authorizeUrl.searchParams.set("permissions", "8"); // Administrator`)
     download: DownloadPage,
     quests: QuestsPage,
     blog: BlogPage,
-    developers: DevelopersHubPage
+    developers: DevelopersHubPage,
+    "application-directory": AppDirectoryPage,
+    "gift-cards": GiftCardsPage,
+    company: CompanyPage,
+    branding: BrandingPage,
+    newsroom: NewsroomPage,
+    creators: CreatorsPage,
+    community: CommunityPage,
+    merch: MerchPage,
+    feedback: FeedbackPage
   };
   function bindScrollNavbar() {
     const navbar = document.getElementById("zy-navbar");

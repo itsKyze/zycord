@@ -295,3 +295,520 @@ export function BlogPage() {
 		</div>
 	);
 }
+
+/* ============================================================================
+   4. APP DIRECTORY PAGE (/application-directory)
+   ============================================================================ */
+export function AppDirectoryPage() {
+	const apps = [
+		{ name: "ZyGuard AutoMod", cat: "Moderation & Security", installs: "42,800+ Servers", img: "/site/media/discord/safety-card-1.png", desc: "Real-time raid protection, regex keyword filters, anti-phishing links, and automated audit logs." },
+		{ name: "WatchParty Cinema", cat: "Activities & Watch Together", installs: "68,400+ Servers", img: "/site/media/discord/sec5-activities.webp", desc: "Synchronized YouTube, Twitch, and media playback right inside any Zycord voice channel." },
+		{ name: "Tempo Hi-Fi Music", cat: "Music & Soundboard", installs: "91,200+ Servers", img: "/site/media/discord/sec2-stream.webp", desc: "Lossless 384kbps Opus audio streaming, playlists, and live DJ queue management." },
+		{ name: "QuestMaster RPG", cat: "Games & Trivia", installs: "54,100+ Servers", img: "/site/media/discord/quests-card-1.webp", desc: "Turn-based multiplayer dungeon raids, leaderboards, and custom server loot drops." },
+		{ name: "GitPulse Notifier", cat: "Developer Tools", installs: "31,900+ Servers", img: "/site/media/discord/dev-card-apps.webp", desc: "Instant rich webhook embeds for GitHub commits, PR reviews, CI/CD builds, and releases." },
+		{ name: "LevelUp XP & Roles", cat: "Community Engagement", installs: "77,500+ Servers", img: "/site/media/discord/sec6-hangout.webp", desc: "Customizable rank cards, voice activity XP rewards, and automated role promotions." }
+	];
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/prop-gamepad.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-44px", right: "6%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">Official App Directory</span></div>
+								<h1 className="zy-display">SUPERCHARGE YOUR SERVER WITH APPS</h1>
+								<p className="zy-body-lg">
+									Discover thousands of verified bots, slash-command utilities, multiplayer voice Activities, and automated moderation tools built on the Zycord API.
+								</p>
+								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+									<a className="zy-btn zy-btn-primary" href="/app">Browse in Zycord</a>
+									<a className="zy-btn zy-btn-secondary" href="/developers/applications">Build Your Own App</a>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-blurple">
+								<img src="/site/media/discord/dev-card-apps.webp" alt="Zycord App Directory" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="zy-section" style={{ paddingTop: "12px" }}>
+				<div className="zy-container">
+					<div className="zy-grid-3">
+						{apps.map((a) => (
+							<article className="zy-card">
+								<img src={a.img} alt={a.name} style={{ width: "100%", height: "180px", objectFit: "cover", borderRadius: "16px" }} />
+								<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "8px", marginTop: "6px" }}>
+									<span className="zy-eyebrow">{a.cat}</span>
+									<span style={{ fontSize: "12px", color: "var(--color-spring-green)", fontWeight: "700" }}>{a.installs}</span>
+								</div>
+								<h3 className="zy-heading-sm" style={{ fontSize: "22px" }}>{a.name}</h3>
+								<p className="zy-body" style={{ fontSize: "14px" }}>{a.desc}</p>
+								<div style={{ marginTop: "auto", paddingTop: "10px" }}>
+									<a className="zy-btn zy-btn-primary zy-btn-sm" href="/app">Add to Server</a>
+								</div>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+		</div>
+	);
+}
+
+/* ============================================================================
+   5. GIFT CARDS PAGE (/gift-cards)
+   ============================================================================ */
+export function GiftCardsPage() {
+	const tiers = [
+		{ title: "1 Month Zycord Nitro", price: "$9.99", badge: "Popular Gift", img: "/site/media/discord/nitro-perk-1.webp", desc: "Unlock 1080p 60fps HD streaming, 500MB uploads, custom emojis everywhere, and 2 free Server Boosts for 30 days." },
+		{ title: "1 Year Zycord Nitro", price: "$99.99", badge: "Best Value · 2 Months Free", img: "/site/media/discord/nitro-perk-2.webp", desc: "A full year of complete profile customization, animated avatars, custom banners, profile effects, and 2 Server Boosts." },
+		{ title: "Shop Collectibles Bundle", price: "$14.99", badge: "Exclusive Cosmetics", img: "/site/media/discord/nitro-perk-3.webp", desc: "Gift instant access to 1,099+ avatar decorations, animated nameplates, and full-card profile effects." }
+	];
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/nitro-wumpus-jetpack.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "148px", top: "-52px", right: "5%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">Zycord Nitro Gift Cards</span></div>
+								<h1 className="zy-display">GIVE THE GIFT OF NITRO</h1>
+								<p className="zy-body-lg">
+									Share HD streaming, animated profile themes, custom emojis, and Server Boosts with your favorite squadmates in seconds.
+								</p>
+								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+									<a className="zy-btn zy-btn-primary" href="/nitro">Gift Nitro Now</a>
+									<a className="zy-btn zy-btn-secondary" href="/app">Redeem a Gift Code</a>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-magenta">
+								<img src="/site/media/discord/nitro-banner-media.webp" alt="Zycord Nitro Gift Cards" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="zy-section" style={{ paddingTop: "12px" }}>
+				<div className="zy-container">
+					<div className="zy-grid-3">
+						{tiers.map((t) => (
+							<article className="zy-card">
+								<img src={t.img} alt={t.title} style={{ width: "100%", height: "190px", objectFit: "contain", background: "rgba(255,255,255,0.04)", padding: "16px", borderRadius: "16px" }} />
+								<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+									<span className="zy-eyebrow">{t.badge}</span>
+									<span className="zy-heading-sm" style={{ fontSize: "22px", color: "var(--color-spring-green)" }}>{t.price}</span>
+								</div>
+								<h3 className="zy-heading-sm" style={{ fontSize: "22px" }}>{t.title}</h3>
+								<p className="zy-body" style={{ fontSize: "14px" }}>{t.desc}</p>
+								<div style={{ marginTop: "auto", paddingTop: "10px" }}>
+									<a className="zy-btn zy-btn-primary zy-btn-sm" href="/app">Send Digital Gift</a>
+								</div>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+		</div>
+	);
+}
+
+/* ============================================================================
+   6. COMPANY / ABOUT PAGE (/company)
+   ============================================================================ */
+export function CompanyPage() {
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/hero-wumpus.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-46px", right: "6%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">About Zycord</span></div>
+								<h1 className="zy-display">CREATE SPACE FOR EVERYONE TO FIND BELONGING</h1>
+								<p className="zy-body-lg">
+									Zycord is the real-time voice, video, and text communication platform where gaming squads, open-source builders, and world-class communities hang out every day.
+								</p>
+								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+									<a className="zy-btn zy-btn-primary" href="/careers">Explore Careers</a>
+									<a className="zy-btn zy-btn-secondary" href="/newsroom">Visit Newsroom</a>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-cerulean">
+								<img src="/site/media/discord/careers-hero.webp" alt="About Zycord" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="zy-section" style={{ paddingTop: "12px" }}>
+				<div className="zy-container">
+					<div className="zy-grid-3">
+						<article className="zy-card">
+							<img src="/site/media/discord/careers-office-1.webp" alt="Our Story" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>BUILT FOR REAL FRIENDSHIPS</h3>
+							<p className="zy-body">
+								Unlike endless social feeds designed for passive scrolling, Zycord is designed for active conversation — jumping into voice channels, streaming games, and building lasting memories.
+							</p>
+						</article>
+						<article className="zy-card">
+							<img src="/site/media/discord/careers-office-2.webp" alt="Engineering Excellence" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>SUB-20MS GLOBAL INFRASTRUCTURE</h3>
+							<p className="zy-body">
+								Powered by ultra-low-latency WebRTC voice, 1080p 60fps screen sharing, and end-to-end encrypted direct messaging with Passkey security.
+							</p>
+						</article>
+						<article className="zy-card">
+							<img src="/site/media/discord/careers-office-3.webp" alt="Privacy First" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>SAFETY &amp; TRANSPARENCY</h3>
+							<p className="zy-body">
+								Your conversations belong to you. We empower communities with granular role permissions, AutoMod filters, and zero-knowledge encrypted DMs.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
+		</div>
+	);
+}
+
+/* ============================================================================
+   7. BRANDING PAGE (/branding)
+   ============================================================================ */
+export function BrandingPage() {
+	const colors = [
+		{ name: "Zycord Blurple", hex: "#5865F2", rgb: "RGB(88, 101, 242)" },
+		{ name: "Deep Space Indigo", hex: "#1B1D68", rgb: "RGB(27, 29, 104)" },
+		{ name: "Spring Green", hex: "#57F287", rgb: "RGB(87, 242, 135)" },
+		{ name: "Fuchsia Pulse", hex: "#EB459E", rgb: "RGB(235, 69, 158)" },
+		{ name: "Solar Amber", hex: "#FEE75C", rgb: "RGB(254, 231, 92)" },
+		{ name: "Midnight Onyx", hex: "#0B0C20", rgb: "RGB(11, 12, 32)" }
+	];
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/hero-crown.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-40px", right: "6%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">Official Brand Guidelines</span></div>
+								<h1 className="zy-display">OUR BRAND, LOGOS &amp; DESIGN SYSTEM</h1>
+								<p className="zy-body-lg">
+									Download official Zycord marks, mascot artwork, color tokens, and typography guidelines for press, creators, and community partners.
+								</p>
+								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+									<a className="zy-btn zy-btn-primary" href="/favicon.svg" download="Zycord-Logo.svg">Download SVG Logo Kit</a>
+									<a className="zy-btn zy-btn-secondary" href="/branding/preview.html">Interactive Brand Preview</a>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-blurple" style={{ minHeight: "280px", flexDirection: "column", gap: "16px" }}>
+								<img src="/favicon.svg" alt="Zycord Mark" style={{ width: "112px", height: "112px", filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.45))" }} />
+								<div className="zy-display" style={{ fontSize: "42px" }}>Zycord</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="zy-section" style={{ paddingTop: "12px" }}>
+				<div className="zy-container">
+					<h2 className="zy-heading" style={{ marginBottom: "24px" }}>OFFICIAL COLOR PALETTE</h2>
+					<div className="zy-grid-3">
+						{colors.map((c) => (
+							<article className="zy-card">
+								<div style={{ height: "120px", borderRadius: "16px", background: c.hex, border: "1px solid rgba(255,255,255,0.22)" }} />
+								<h3 className="zy-heading-sm" style={{ fontSize: "20px", marginTop: "8px" }}>{c.name}</h3>
+								<p className="zy-body" style={{ fontFamily: "monospace", fontSize: "14px" }}>{c.hex} · {c.rgb}</p>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+		</div>
+	);
+}
+
+/* ============================================================================
+   8. NEWSROOM PAGE (/newsroom)
+   ============================================================================ */
+export function NewsroomPage() {
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/nav-blog-cube.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "128px", top: "-42px", right: "6%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">Press &amp; Media Center</span></div>
+								<h1 className="zy-display">ZYCORD NEWSROOM</h1>
+								<p className="zy-body-lg">
+									Official announcements, company milestones, media resources, and executive briefings from Zycord HQ.
+								</p>
+								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+									<a className="zy-btn zy-btn-primary" href="/branding">Download Media Kit</a>
+									<a className="zy-btn zy-btn-secondary" href="/blog">Read Engineering Blog</a>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-sunset">
+								<img src="/site/media/discord/careers-office-4.webp" alt="Zycord Newsroom" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<BlogPage />
+		</div>
+	);
+}
+
+/* ============================================================================
+   9. CREATORS PAGE (/creators)
+   ============================================================================ */
+export function CreatorsPage() {
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/download-trophy.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "118px", top: "-40px", right: "6%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">Zycord for Creators</span></div>
+								<h1 className="zy-display">TURN YOUR AUDIENCE INTO A THRIVING COMMUNITY</h1>
+								<p className="zy-body-lg">
+									Host live Stage events, sync Twitch &amp; YouTube subscriber roles automatically, and reward your biggest supporters with custom collectibles.
+								</p>
+								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+									<a className="zy-btn zy-btn-primary" href="/app">Launch Your Creator Server</a>
+									<a className="zy-btn zy-btn-secondary" href="/community">Community Guidelines</a>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-magenta">
+								<img src="/site/media/discord/sec2-stream.webp" alt="Zycord for Creators" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="zy-section" style={{ paddingTop: "12px" }}>
+				<div className="zy-container">
+					<div className="zy-grid-3">
+						<article className="zy-card">
+							<img src="/site/media/discord/sec3-reactions.webp" alt="Subscriber Role Sync" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>TWITCH &amp; YOUTUBE ROLE SYNC</h3>
+							<p className="zy-body">
+								Automatically grant exclusive VIP channels, custom role icons, and soundboard perks to your Twitch subscribers and YouTube channel members.
+							</p>
+						</article>
+						<article className="zy-card">
+							<img src="/site/media/discord/sec5-activities.webp" alt="Stage Channels" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>STAGE CHANNELS &amp; AMAs</h3>
+							<p className="zy-body">
+								Run moderated town halls, live podcast recordings, and interactive Q&amp;A sessions with raised-hand speaker queues for thousands of listeners.
+							</p>
+						</article>
+						<article className="zy-card">
+							<img src="/site/media/discord/sec1-chat-fun.webp" alt="Server Shop & Perks" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>CUSTOM EMOJIS &amp; SOUNDBOARDS</h3>
+							<p className="zy-body">
+								Upload your channel's iconic memes, animated emotes, and catchphrases so your community can react in voice and text.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
+		</div>
+	);
+}
+
+/* ============================================================================
+   10. COMMUNITY PAGE (/community)
+   ============================================================================ */
+export function CommunityPage() {
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/sec5-card-characters.png" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "156px", top: "-52px", right: "6%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">Zycord Communities</span></div>
+								<h1 className="zy-display">WHERE PASSIONATE COMMUNITIES GROW</h1>
+								<p className="zy-body-lg">
+									From university study groups and open-source maintainers to global esports organizations, Zycord gives community leaders every tool to welcome and organize members.
+								</p>
+								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+									<a className="zy-btn zy-btn-primary" href="/discover">Explore Public Servers</a>
+									<a className="zy-btn zy-btn-secondary" href="/app">Create a Community Server</a>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-emerald">
+								<img src="/site/media/discord/sec6-hangout.webp" alt="Zycord Community" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="zy-section" style={{ paddingTop: "12px" }}>
+				<div className="zy-container">
+					<div className="zy-grid-3">
+						<article className="zy-card">
+							<img src="/site/media/discord/safety-card-2.png" alt="Onboarding" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>GUIDED SERVER ONBOARDING</h3>
+							<p className="zy-body">
+								Welcome new members with interactive role-picker questions, custom rules screening, and curated default channels.
+							</p>
+						</article>
+						<article className="zy-card">
+							<img src="/site/media/discord/sec4-chill.webp" alt="Forum Channels" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>FORUM &amp; THREAD CHANNELS</h3>
+							<p className="zy-body">
+								Keep busy discussions organized with searchable topic tags, pinned guidelines, and dedicated threads that never clutter main chat.
+							</p>
+						</article>
+						<article className="zy-card">
+							<img src="/site/media/discord/safety-card-4.png" alt="Community Insights" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>AUTO-MODERATION &amp; SAFETY</h3>
+							<p className="zy-body">
+								Protect your space effortlessly with customizable keyword filters, raid alerts, and granular role-based permission hierarchies.
+							</p>
+						</article>
+					</div>
+				</div>
+			</section>
+		</div>
+	);
+}
+
+/* ============================================================================
+   11. OFFICIAL MERCH PAGE (/merch)
+   ============================================================================ */
+export function MerchPage() {
+	const items = [
+		{ name: "Wumpus Plushie Collector Edition", price: "$34.00", tag: "Limited Drop", img: "/site/media/discord/hero-wumpus.webp", desc: "Ultra-soft 12-inch embroidered Wumpus plush with magnetic leaf accessory." },
+		{ name: "Blurple Heavyweight Hoodie", price: "$68.00", tag: "Apparel", img: "/site/media/discord/nitro-wumpus-wheel.webp", desc: "450gsm brushed cotton fleece in signature Zycord Blurple with puff-print wordmark." },
+		{ name: "3D Keycap & Desk Mat Bundle", price: "$49.00", tag: "Hardware Gear", img: "/site/media/discord/prop-gamepad.webp", desc: "Artisan resin Clyde keycap paired with an XXL stitched-edge midnight desk pad." }
+	];
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/prop-star.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-36px", right: "6%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">Official Zycord Store</span></div>
+								<h1 className="zy-display">OFFICIAL MERCH &amp; COLLECTIBLES</h1>
+								<p className="zy-body-lg">
+									Rep your favorite hangout IRL with limited-edition apparel, plushies, desk gear, and digital profile collectibles.
+								</p>
+								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap" }}>
+									<a className="zy-btn zy-btn-primary" href="/app">Open Digital Collectibles Shop</a>
+									<a className="zy-btn zy-btn-secondary" href="/gift-cards">Shop Gift Cards</a>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-blurple">
+								<img src="/site/media/discord/nitro-banner-media.webp" alt="Zycord Merch" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section className="zy-section" style={{ paddingTop: "12px" }}>
+				<div className="zy-container">
+					<div className="zy-grid-3">
+						{items.map((it) => (
+							<article className="zy-card">
+								<img src={it.img} alt={it.name} style={{ width: "100%", height: "200px", objectFit: "contain", background: "rgba(255,255,255,0.05)", padding: "18px", borderRadius: "16px" }} />
+								<div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "6px" }}>
+									<span className="zy-eyebrow">{it.tag}</span>
+									<span className="zy-heading-sm" style={{ fontSize: "20px", color: "var(--color-spring-green)" }}>{it.price}</span>
+								</div>
+								<h3 className="zy-heading-sm" style={{ fontSize: "22px" }}>{it.name}</h3>
+								<p className="zy-body" style={{ fontSize: "14px" }}>{it.desc}</p>
+								<div style={{ marginTop: "auto", paddingTop: "10px" }}>
+									<a className="zy-btn zy-btn-primary zy-btn-sm" href="/app">View in Shop</a>
+								</div>
+							</article>
+						))}
+					</div>
+				</div>
+			</section>
+		</div>
+	);
+}
+
+/* ============================================================================
+   12. FEEDBACK PAGE (/feedback)
+   ============================================================================ */
+export function FeedbackPage() {
+	function handleFeedbackSubmit(e) {
+		e.preventDefault();
+		const statusEl = document.getElementById("zy-feedback-status");
+		if (statusEl) {
+			statusEl.style.display = "block";
+			statusEl.textContent = "Thank you! Your feedback has been submitted to the Zycord Product Team.";
+		}
+		e.target.reset();
+	}
+
+	return (
+		<div>
+			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
+				<div className="zy-container" style={{ position: "relative" }}>
+					<img src="/site/media/discord/download-clyde-point.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "124px", top: "-42px", right: "6%" }} />
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<div><span className="zy-eyebrow">Product Feedback &amp; Feature Requests</span></div>
+								<h1 className="zy-display">HELP SHAPE THE FUTURE OF ZYCORD</h1>
+								<p className="zy-body-lg">
+									Have an idea for Voice &amp; Video, Collectibles, Server Moderation, or Developer APIs? Submit your feedback directly to our engineering team.
+								</p>
+							</div>
+							<div className="zy-card" style={{ background: "rgba(13, 15, 44, 0.88)" }}>
+								<h3 className="zy-heading-sm" style={{ fontSize: "22px" }}>Submit a Feature Request</h3>
+								<form onSubmit={handleFeedbackSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px", marginTop: "8px" }}>
+									<select required style={{ padding: "12px 14px", borderRadius: "12px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: "15px" }}>
+										<option value="voice" style={{ background: "#1b1e4b" }}>Voice, Video &amp; Screen Share</option>
+										<option value="chat" style={{ background: "#1b1e4b" }}>Text Channels, Threads &amp; Polls</option>
+										<option value="nitro" style={{ background: "#1b1e4b" }}>Nitro &amp; Profile Collectibles</option>
+										<option value="api" style={{ background: "#1b1e4b" }}>Bots, Webhooks &amp; Developer API</option>
+										<option value="safety" style={{ background: "#1b1e4b" }}>Safety, Privacy &amp; Moderation</option>
+									</select>
+									<input
+										type="text"
+										required
+										placeholder="Short title for your suggestion..."
+										style={{ padding: "12px 14px", borderRadius: "12px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: "15px" }}
+									/>
+									<textarea
+										rows="4"
+										required
+										placeholder="Describe how this feature would help you and your server..."
+										style={{ padding: "12px 14px", borderRadius: "12px", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", fontSize: "15px", resize: "vertical" }}
+									/>
+									<button type="submit" className="zy-btn zy-btn-primary">Submit Feedback</button>
+									<div id="zy-feedback-status" style={{ display: "none", padding: "12px", borderRadius: "12px", background: "rgba(87, 242, 135, 0.18)", border: "1px solid rgba(87, 242, 135, 0.45)", color: "#57f287", fontWeight: "700", fontSize: "14px" }} />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	);
+}
+

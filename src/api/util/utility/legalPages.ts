@@ -80,11 +80,53 @@ const LEGAL_BODIES: Record<string, (brand: string) => string> = {
 	legal: (brand: string) => `
 		<div class="legal-section">
 			<h2>1. ${brand} Legal &amp; Policy Overview</h2>
-			<p>Welcome to the ${brand} Legal Center. Use the sidebar links to review our <a href="/terms" style="color:var(--color-hover-blurple);text-decoration:underline;">Terms of Service</a>, <a href="/privacy" style="color:var(--color-hover-blurple);text-decoration:underline;">Privacy Policy</a>, and <a href="/guidelines" style="color:var(--color-hover-blurple);text-decoration:underline;">Community Guidelines</a>.</p>
+			<p>Welcome to the ${brand} Legal Center. Use the sidebar links to review our <a href="/terms" style="color:var(--color-hover-blurple);text-decoration:underline;">Terms of Service</a>, <a href="/privacy" style="color:var(--color-hover-blurple);text-decoration:underline;">Privacy Policy</a>, <a href="/guidelines" style="color:var(--color-hover-blurple);text-decoration:underline;">Community Guidelines</a>, <a href="/acknowledgements" style="color:var(--color-hover-blurple);text-decoration:underline;">Acknowledgements</a>, <a href="/licenses" style="color:var(--color-hover-blurple);text-decoration:underline;">Licenses</a>, and <a href="/company-information" style="color:var(--color-hover-blurple);text-decoration:underline;">Company Information</a>.</p>
 		</div>
 		<div class="legal-section">
 			<h2>2. Open Source &amp; Licensing</h2>
 			<p>The ${brand} server platform is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). Third-party open-source libraries and cryptographic primitives are used in accordance with their respective licenses.</p>
+		</div>
+	`,
+	acknowledgements: (brand: string) => `
+		<div class="legal-section">
+			<h2>1. Open Source Software Acknowledgements</h2>
+			<p>${brand} is made possible by the global open-source community. Our real-time voice, video, messaging, and desktop infrastructure builds upon world-class open-source projects including Node.js, TypeScript, Express, TypeORM, WebRTC, Opus Audio Codec, Electron, and esbuild.</p>
+		</div>
+		<div class="legal-section">
+			<h2>2. Cryptography &amp; Security Libraries</h2>
+			<p>End-to-End Encrypted Direct Messages, Passkey (WebAuthn) authentication, and TOTP Two-Factor Authentication rely on standard W3C WebCrypto primitives (ECDH P-256, AES-256-GCM, SHA-256) and audited open-source security libraries.</p>
+		</div>
+		<div class="legal-section">
+			<h2>3. Community Contributors &amp; Translators</h2>
+			<p>We thank the security researchers, localization translators across 31 languages, and community server administrators who help make ${brand} faster, safer, and more welcoming every day.</p>
+		</div>
+	`,
+	licenses: (brand: string) => `
+		<div class="legal-section">
+			<h2>1. ${brand} Platform License (AGPL-3.0)</h2>
+			<p>The ${brand} core server and web platform are distributed under the GNU Affero General Public License v3.0 (AGPL-3.0). You may inspect, modify, and redistribute the source code in compliance with the terms of the AGPL-3.0 license.</p>
+		</div>
+		<div class="legal-section">
+			<h2>2. Media, Brand Assets &amp; Trademarks</h2>
+			<p>The ${brand} name, wordmark, mascot illustrations, and brand guidelines are trademarks of Zyron Solutions Ltd. Please consult our <a href="/branding" style="color:var(--color-hover-blurple);text-decoration:underline;">Brand Guidelines</a> for approved usage.</p>
+		</div>
+		<div class="legal-section">
+			<h2>3. Third-Party Component Licenses</h2>
+			<p>Included third-party runtime dependencies are licensed under MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, and ISC licenses. Full license texts are distributed alongside the source repository in <code>package-lock.json</code>.</p>
+		</div>
+	`,
+	company_information: (brand: string) => `
+		<div class="legal-section">
+			<h2>1. Corporate Entity &amp; Operator</h2>
+			<p><strong>${brand}</strong> is developed and operated by <strong>Zyron Solutions Ltd</strong>, providing real-time voice, video, text, and developer API services worldwide.</p>
+		</div>
+		<div class="legal-section">
+			<h2>2. Trust, Safety &amp; Legal Inquiries</h2>
+			<p>For law enforcement requests, Digital Services Act (DSA) inquiries, copyright/DMCA notices, or data protection inquiries, please reach out through our <a href="/support" style="color:var(--color-hover-blurple);text-decoration:underline;">Support Center</a> or the instance contact address listed below.</p>
+		</div>
+		<div class="legal-section">
+			<h2>3. Service Availability &amp; Status</h2>
+			<p>Real-time platform uptime, API latency metrics, and incident disclosures are published continuously at <a href="/status" style="color:var(--color-hover-blurple);text-decoration:underline;">${brand} Status</a>.</p>
 		</div>
 	`,
 };
@@ -94,6 +136,9 @@ const PAGES = {
 	privacy: { title: "Privacy Policy", url: () => Config.get().general.privacyPage || Config.get().general.tosPage },
 	guidelines: { title: "Community Guidelines", url: () => Config.get().general.guidelinesPage || Config.get().general.tosPage },
 	legal: { title: "Legal & Policy Center", url: () => Config.get().general.tosPage },
+	acknowledgements: { title: "Acknowledgements", url: () => null },
+	licenses: { title: "Open Source & Platform Licenses", url: () => null },
+	company_information: { title: "Company Information", url: () => null },
 };
 
 const escapeHtml = (text: string) => text.replace(/[<>&"']/g, (c) => `&#${c.charCodeAt(0)};`);

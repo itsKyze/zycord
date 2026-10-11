@@ -152,7 +152,7 @@ export function HomePage() {
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop tilt"
-						style={{ width: "128px", top: "-52px", right: "6%" }}
+						style={{ width: "128px", top: "-52px", right: "4%" }}
 					/>
 
 					<div className="zy-showcase-card">
@@ -194,7 +194,7 @@ export function HomePage() {
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
-						style={{ width: "136px", top: "-56px", left: "5%" }}
+						style={{ width: "136px", top: "-56px", left: "3%" }}
 					/>
 
 					<div className="zy-showcase-card">
@@ -236,14 +236,14 @@ export function HomePage() {
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop tilt"
-						style={{ width: "134px", top: "-54px", right: "7%" }}
+						style={{ width: "134px", top: "-54px", right: "5%" }}
 					/>
 					<img
 						src="/site/media/discord/prop-rupee-gem.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
-						style={{ width: "102px", bottom: "-38px", left: "8%" }}
+						style={{ width: "102px", bottom: "-38px", left: "6%" }}
 					/>
 
 					<div className="zy-showcase-card">
@@ -296,29 +296,37 @@ export function HomePage() {
 			</div>
 
 			{/* =====================================================================
-			    SECTION 4: SEE WHO'S AROUND TO CHILL (3D COIN & TURNIP + VIDEO)
+			    SECTION 4: SEE WHO'S AROUND TO CHILL (VIDEO RIGHT, COPY LEFT)
 			    ===================================================================== */}
 			<section className="zy-section" id="presence">
 				<div className="zy-container" style={{ position: "relative" }}>
+					{/* Soft blurred 3D Discord Coin floating in background top-left (Matches Screenshot 1) */}
 					<img
 						src="/site/media/discord/prop-coin.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
-						style={{ width: "110px", top: "-46px", left: "6%" }}
-					/>
-					<img
-						src="/site/media/discord/prop-turnip.webp"
-						alt=""
-						aria-hidden="true"
-						className="zy-float-prop tilt"
-						style={{ width: "120px", bottom: "-44px", right: "8%" }}
+						style={{
+							width: "160px",
+							bottom: "-140px",
+							left: "-6%",
+							filter: "blur(3px) drop-shadow(0 20px 34px rgba(0, 0, 0, 0.45))",
+							opacity: "0.75",
+							zIndex: 1
+						}}
 					/>
 
 					<div className="zy-showcase-card">
-						<div className="zy-showcase-grid is-reversed">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<h2 className="zy-heading">SEE WHO'S AROUND TO CHILL</h2>
+								<p className="zy-body-lg">
+									See who's around, playing games, or just hanging out. For supported games, you can see what modes or characters your friends are playing and directly join up.
+								</p>
+							</div>
+
 							<div
-								className="zy-scene-stage stage-blurple"
+								className="zy-scene-stage stage-magenta"
 								style={{ backgroundImage: "url('/site/media/discord/sec4-bkg.svg')" }}
 							>
 								<video
@@ -332,56 +340,69 @@ export function HomePage() {
 									<source src="/site/media/discord/sec4-chill.mp4" type="video/mp4" />
 								</video>
 							</div>
-
-							<div className="zy-showcase-copy">
-								<h2 className="zy-heading">SEE WHO'S AROUND TO CHILL</h2>
-								<p className="zy-body-lg">
-									See who's around, playing games, or just hanging out. For supported games, you can see what modes or characters your friends are playing and directly join up.
-								</p>
-							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 
 			{/* =====================================================================
-			    SECTION 5: ALWAYS HAVE SOMETHING TO DO TOGETHER (3D CHARACTERS + VIDEO)
+			    SECTION 5: ALWAYS HAVE SOMETHING TO DO TOGETHER
+			    (Exact Match to User Screenshot 1:
+			     - Green stage with Vibin/YouTube video on LEFT
+			     - Copy on RIGHT
+			     - Woman + 2 Friends sitting on TOP-RIGHT edge of the card
+			     - 3D Radish/Turnip on BOTTOM-LEFT corner of the card)
 			    ===================================================================== */}
-			<section className="zy-section" id="activities">
+			<section className="zy-section" id="activities" style={{ paddingTop: "84px" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img
-						src="/site/media/discord/sec5-garfield-simon.webp"
-						alt=""
-						aria-hidden="true"
-						className="zy-float-prop"
-						style={{ width: "152px", top: "-68px", right: "10%" }}
-					/>
-					<img
-						src="/site/media/discord/sec5-card-characters.png"
-						alt=""
-						aria-hidden="true"
-						className="zy-float-prop tilt"
-						style={{ width: "124px", top: "-52px", left: "6%" }}
-					/>
+					{/* Woman in pink jacket leaning on top edge of card (Matches Screenshot 1) */}
 					<img
 						src="/site/media/discord/sec5-woman-bottom.webp"
 						alt=""
 						aria-hidden="true"
-						className="zy-float-prop"
-						style={{ width: "136px", bottom: "-48px", right: "5%" }}
+						style={{
+							position: "absolute",
+							top: "-114px",
+							right: "28%",
+							width: "172px",
+							height: "auto",
+							zIndex: 7,
+							pointerEvents: "none"
+						}}
+					/>
+					{/* Two friends hugging sitting on top-right edge of card (Matches Screenshot 1) */}
+					<img
+						src="/site/media/discord/sec5-card-characters.png"
+						alt=""
+						aria-hidden="true"
+						style={{
+							position: "absolute",
+							top: "-126px",
+							right: "11%",
+							width: "194px",
+							height: "auto",
+							zIndex: 6,
+							pointerEvents: "none"
+						}}
+					/>
+					{/* 3D Radish/Turnip overlapping bottom-left corner of the card (Matches Screenshot 1) */}
+					<img
+						src="/site/media/discord/prop-turnip.webp"
+						alt=""
+						aria-hidden="true"
+						className="zy-float-prop tilt"
+						style={{
+							width: "138px",
+							bottom: "-34px",
+							left: "-28px",
+							zIndex: 8
+						}}
 					/>
 
 					<div className="zy-showcase-card">
-						<div className="zy-showcase-grid">
-							<div className="zy-showcase-copy">
-								<h2 className="zy-heading">ALWAYS HAVE SOMETHING TO DO TOGETHER</h2>
-								<p className="zy-body-lg">
-									Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat.
-								</p>
-							</div>
-
+						<div className="zy-showcase-grid is-reversed">
 							<div
-								className="zy-scene-stage stage-sunset"
+								className="zy-scene-stage stage-emerald"
 								style={{ backgroundImage: "url('/site/media/discord/sec5-bkg.webp')" }}
 							>
 								<video
@@ -395,13 +416,20 @@ export function HomePage() {
 									<source src="/site/media/discord/sec5-activities.mp4" type="video/mp4" />
 								</video>
 							</div>
+
+							<div className="zy-showcase-copy">
+								<h2 className="zy-heading">ALWAYS HAVE SOMETHING TO DO TOGETHER</h2>
+								<p className="zy-body-lg">
+									Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat.
+								</p>
+							</div>
 						</div>
 					</div>
 				</div>
 			</section>
 
 			{/* =====================================================================
-			    SECTION 6: WHEREVER YOU GAME, HANG OUT HERE (3D PLUMP + PLATFORMS VIDEO)
+			    SECTION 6: WHEREVER YOU GAME, HANG OUT HERE (COPY LEFT, VIDEO RIGHT)
 			    ===================================================================== */}
 			<section className="zy-section" id="platforms">
 				<div className="zy-container" style={{ position: "relative" }}>
@@ -410,11 +438,18 @@ export function HomePage() {
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop tilt"
-						style={{ width: "126px", top: "-52px", left: "6%" }}
+						style={{ width: "126px", top: "-52px", right: "6%" }}
 					/>
 
 					<div className="zy-showcase-card">
-						<div className="zy-showcase-grid is-reversed">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<h2 className="zy-heading">WHEREVER YOU GAME, HANG OUT HERE</h2>
+								<p className="zy-body-lg">
+									On your PC, phone, or console, you can still hang out on Zycord. Easily switch between devices and use tools to manage multiple group chats with friends.
+								</p>
+							</div>
+
 							<div
 								className="zy-scene-stage stage-cerulean"
 								style={{ backgroundImage: "url('/site/media/discord/sec6-bkg.webp')" }}
@@ -430,13 +465,6 @@ export function HomePage() {
 									<source src="/site/media/discord/sec6-platforms.mp4" type="video/mp4" />
 								</video>
 							</div>
-
-							<div className="zy-showcase-copy">
-								<h2 className="zy-heading">WHEREVER YOU GAME, HANG OUT HERE</h2>
-								<p className="zy-body-lg">
-									On your PC, phone, or console, you can still hang out on Zycord. Easily switch between devices and use tools to manage multiple group chats with friends.
-								</p>
-							</div>
 						</div>
 					</div>
 				</div>
@@ -444,6 +472,9 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    FINAL CALL TO ACTION + OFFICIAL DISCORD 2026 HORIZON & WUMPUS SCENE
+			    (Exact Match to User Screenshot 2:
+			     - Single centered white button "Download for Windows"
+			     - Full character lineup + Wumpus sitting OVER the footer horizon edge)
 			    ===================================================================== */}
 			<section className="final-horizon-section" id="about">
 				<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "30px", top: "10%", left: "14%" }} />
@@ -462,20 +493,12 @@ export function HomePage() {
 					</h2>
 					<div className="hero-bottom-ctas" style={{ marginTop: "32px" }}>
 						<a className="zy-btn zy-btn-secondary" href="/download/windows">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
 								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
 								<polyline points="7 10 12 15 17 10" />
 								<line x1="12" y1="15" x2="12" y2="3" />
 							</svg>
 							<span>Download for Windows</span>
-						</a>
-						<a
-							className="zy-btn zy-btn-primary"
-							data-zy-open-app
-							data-zy-open-label-authed="Launch Zycord App"
-							href="/app"
-						>
-							<span>Open Zycord in your browser</span>
 						</a>
 					</div>
 				</div>
@@ -483,7 +506,7 @@ export function HomePage() {
 				<div className="final-horizon-art">
 					<img
 						src="/site/media/discord/footer-horizon.webp"
-						alt="Zycord Cosmic Horizon Banner"
+						alt="Zycord Cosmic Horizon Lineup"
 						className="final-horizon-bg"
 						loading="lazy"
 					/>
@@ -491,23 +514,7 @@ export function HomePage() {
 						src="/site/media/discord/footer-smoke.gif"
 						alt=""
 						aria-hidden="true"
-						style={{
-							position: "absolute",
-							left: "52%",
-							bottom: "24%",
-							transform: "translateX(-50%)",
-							width: "clamp(110px, 14vw, 210px)",
-							height: "auto",
-							zIndex: 2,
-							pointerEvents: "none",
-							opacity: "0.85"
-						}}
-						loading="lazy"
-					/>
-					<img
-						src="/site/media/discord/footer-wumpus-sitting.webp"
-						alt="Wumpus sitting on the cosmic horizon"
-						className="final-horizon-wumpus"
+						className="final-horizon-smoke"
 						loading="lazy"
 					/>
 					<img
@@ -515,6 +522,12 @@ export function HomePage() {
 						alt=""
 						aria-hidden="true"
 						className="final-horizon-leaf"
+						loading="lazy"
+					/>
+					<img
+						src="/site/media/discord/footer-wumpus-sitting.webp"
+						alt="Wumpus sitting on the cosmic horizon"
+						className="final-horizon-wumpus"
 						loading="lazy"
 					/>
 				</div>
