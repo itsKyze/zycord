@@ -13,6 +13,7 @@
     </head>
     <body>
         <a class="skip-link" href="#view">Skip to content</a>
+        <div id="zy-dev-topbar-mount"></div>
         <div class="layout">
             <aside class="sidebar">
                 <a class="brand" href="/developers/applications" data-link>
@@ -23,10 +24,19 @@
                     </span>
                 </a>
                 <nav id="nav" aria-label="Developer Portal"></nav>
-                <a class="sidebar-foot" href="/channels/@me">Back to the app</a>
+                <div class="sidebar-quick-links">
+                    <a href="/developers">🌐 Developer Hub</a>
+                    <a href="/_spacebar/api/openapi.json" target="_blank" rel="noopener">📘 OpenAPI JSON ↗</a>
+                    <a href="/status" target="_blank" rel="noopener">🟢 API Status ↗</a>
+                </div>
+                <a class="sidebar-foot" href="/channels/@me">← Back to Zycord App</a>
             </aside>
-            <main id="view" class="view" tabindex="-1"></main>
+            <div class="portal-main-col">
+                <div id="zy-dev-hero-mount"></div>
+                <main id="view" class="view" tabindex="-1"></main>
+            </div>
         </div>
+        <script src="/developers/portal-shell.js"></script>
         <script src="/developers/portal.js"></script>
     </body>
 </html>

@@ -4,29 +4,32 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="robots" content="noindex" />
-        <title>__INSTANCE_NAME__ Admin</title>
+        <title>__INSTANCE_NAME__ Admin Console</title>
         <link rel="icon" href="/favicon.svg" />
         <link rel="stylesheet" href="/admin/admin.css" />
     </head>
     <body>
         <a class="skip-link" href="#view">Skip to content</a>
         <div id="login" class="login" hidden>
-            <form class="card login-card" id="login-form" autocomplete="on">
-                <div class="brand login-brand">
-                    __INSTANCE_ICON__
-                    <div>
-                        <strong>__INSTANCE_NAME__</strong>
-                        <span class="muted">Admin</span>
+            <div class="zy-admin-login-shell">
+                <div id="zy-admin-login-art-mount"></div>
+                <form class="card login-card" id="login-form" autocomplete="on">
+                    <div class="brand login-brand">
+                        __INSTANCE_ICON__
+                        <div>
+                            <strong>__INSTANCE_NAME__</strong>
+                            <span class="muted">Admin Control Center</span>
+                        </div>
                     </div>
-                </div>
-                <h1>Sign in</h1>
-                <p class="muted">Use an account that has admin rights on this instance.</p>
-                <label>Email or username<input name="login" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required /></label>
-                <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
-                <label id="mfa-field" hidden>Two-factor code<input name="code" inputmode="numeric" autocomplete="one-time-code" /></label>
-                <p class="form-error" id="login-error" hidden></p>
-                <button class="btn primary" type="submit">Sign in</button>
-            </form>
+                    <h1>Welcome back, Administrator</h1>
+                    <p class="muted">Sign in with an account that has administrator permissions on this instance.</p>
+                    <label>Email or username<input name="login" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required /></label>
+                    <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
+                    <label id="mfa-field" hidden>Two-factor code<input name="code" inputmode="numeric" autocomplete="one-time-code" /></label>
+                    <p class="form-error" id="login-error" hidden></p>
+                    <button class="btn primary" type="submit">Sign In to Console</button>
+                </form>
+            </div>
         </div>
 
         <div id="app" class="app" hidden>
@@ -35,7 +38,7 @@
                     __INSTANCE_ICON__
                     <div>
                         <strong id="brand-name">__INSTANCE_NAME__</strong>
-                        <span class="muted">Admin</span>
+                        <span class="muted">Admin Console</span>
                     </div>
                 </div>
                 <label class="nav-search"
@@ -50,14 +53,14 @@
                         <a href="#/announcements" data-tab="announcements" data-access="settings">Announcements</a>
                     </div>
                     <div class="nav-group">
-                        <span class="nav-label">People & servers</span>
-                        <a href="#/users" data-tab="users" data-access="users">Users & profiles</a>
+                        <span class="nav-label">People &amp; servers</span>
+                        <a href="#/users" data-tab="users" data-access="users">Users &amp; profiles</a>
                         <a href="#/guilds" data-tab="guilds" data-access="guilds">Servers</a>
                         <a href="#/reports" data-tab="reports" data-access="reports">Reports</a>
                     </div>
                     <div class="nav-group">
                         <span class="nav-label">Customization</span>
-                        <a href="#/store" data-tab="store" data-access="settings">Shop & collectibles</a>
+                        <a href="#/store" data-tab="store" data-access="settings">Shop &amp; collectibles</a>
                         <a href="#/badges" data-tab="badges" data-access="settings">Profile badges</a>
                         <a href="#/games" data-tab="games" data-access="settings">Games</a>
                     </div>
@@ -65,7 +68,7 @@
                         <span class="nav-label">Operations</span>
                         <a href="#/performance" data-tab="performance" data-access="system">Performance</a>
                         <a href="#/status" data-tab="status" data-access="status">Status page</a>
-                        <a href="#/system" data-tab="system" data-access="system">System & compatibility</a>
+                        <a href="#/system" data-tab="system" data-access="system">System &amp; compatibility</a>
                     </div>
                     <p id="nav-empty" class="muted" hidden>No matching sections. Try another search.</p>
                 </nav>
@@ -76,7 +79,10 @@
                     <button class="btn ghost small" id="logout" type="button">Sign out</button>
                 </div>
             </aside>
-            <main id="view" class="view"></main>
+            <div class="zy-admin-main-col">
+                <div id="zy-admin-topbar-mount"></div>
+                <main id="view" class="view"></main>
+            </div>
         </div>
 
         <div id="drawer" class="drawer" hidden>
@@ -91,6 +97,7 @@
         </div>
 
         <div id="toasts" class="toasts" aria-live="polite"></div>
+        <script src="/admin/admin-shell.js"></script>
         <script src="/admin/admin.js"></script>
     </body>
 </html>

@@ -1219,3 +1219,264 @@ select {
         order: -1;
     }
 }
+
+/* ============================================================================
+   DISCORD DEVELOPER PORTAL 2026 (https://discord.com/developers/home) UPGRADE
+   ============================================================================ */
+
+body {
+    background:
+        radial-gradient(circle at 85% 0%, rgba(88, 101, 242, 0.16) 0%, transparent 45%),
+        #111217;
+}
+
+.zy-dev-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 12px 24px;
+    background: rgba(12, 13, 20, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.zy-dev-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+.zy-dev-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 17px;
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.zy-dev-badge {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 3px 8px;
+    border-radius: 99px;
+    background: rgba(88, 101, 242, 0.25);
+    border: 1px solid rgba(88, 101, 242, 0.55);
+    color: #b8c0ff;
+}
+
+.zy-dev-topnav {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.zy-dev-topnav a {
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #b5b7c4;
+    text-decoration: none;
+    min-height: 0;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+.zy-dev-topnav a:hover,
+.zy-dev-topnav a.is-active {
+    background: rgba(88, 101, 242, 0.22);
+    color: #ffffff;
+}
+
+.zy-dev-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.zy-dev-pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 13px;
+    border-radius: 99px;
+    background: rgba(78, 194, 126, 0.12);
+    border: 1px solid rgba(78, 194, 126, 0.35);
+    color: #e6f9ee;
+    font-size: 12px;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.zy-dev-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #57f287;
+    box-shadow: 0 0 8px #57f287;
+}
+
+.zy-dev-app-btn {
+    padding: 8px 16px;
+    border-radius: 10px;
+    background: #5865f2;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background 0.15s ease;
+}
+
+.zy-dev-app-btn:hover {
+    background: #4752c4;
+}
+
+.portal-main-col {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.zy-dev-hero-banner {
+    margin: 28px 48px 0;
+    max-width: 960px;
+    padding: 24px 28px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, rgba(88, 101, 242, 0.26) 0%, rgba(24, 26, 48, 0.92) 65%);
+    border: 1px solid rgba(138, 149, 255, 0.24);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 24px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.zy-dev-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #a9b2ff;
+    margin-bottom: 8px;
+}
+
+.zy-dev-hero-copy h2 {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 8px;
+}
+
+.zy-dev-hero-copy p {
+    font-size: 14px;
+    color: #c2c4d6;
+    line-height: 1.5;
+}
+
+.zy-dev-hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.zy-dev-hero-pills a {
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.zy-dev-hero-pills a:hover {
+    background: rgba(88, 101, 242, 0.35);
+    border-color: rgba(88, 101, 242, 0.65);
+}
+
+.zy-dev-hero-art {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.zy-dev-hero-img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
+}
+
+.zy-dev-clyde-float {
+    position: absolute;
+    right: -10px;
+    bottom: -14px;
+    width: 72px;
+    height: auto;
+    pointer-events: none;
+    filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.55));
+}
+
+.sidebar {
+    border-right: 1px solid rgba(255, 255, 255, 0.07);
+    background: #0d0e13;
+}
+
+.sidebar-quick-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-quick-links a {
+    padding: 7px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #a3a3ad;
+    text-decoration: none;
+}
+
+.sidebar-quick-links a:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+}
+
+.card,
+.app-card {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+}
+
+.app-card:hover {
+    border-color: rgba(88, 101, 242, 0.55);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 860px) {
+    .zy-dev-hero-banner {
+        grid-template-columns: 1fr;
+        margin: 16px 20px 0;
+    }
+    .zy-dev-topnav {
+        display: none;
+    }
+}
+
