@@ -7,12 +7,12 @@ export function DevelopersHubPage() {
 			    1. DEVELOPER CENTERED HERO — EXACT DISCORD.COM/DEVELOPERS 3D OBJECTS
 			    ===================================================================== */}
 			<section className="zy-subhero" style={{ paddingTop: "76px", paddingBottom: "48px" }}>
-				<img src="/site/media/discord/dev-fire-extinguisher.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "92px", top: "10%", left: "6%" }} />
-				<img src="/site/media/discord/dev-spider.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "86px", top: "14%", right: "8%" }} />
-				<img src="/site/media/discord/dev-magnet.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "84px", bottom: "10%", left: "9%" }} />
-				<img src="/site/media/discord/dev-cog.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "88px", bottom: "12%", right: "10%" }} />
-				<img src="/site/media/discord/dev-rubber-duck.png" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "90px", top: "42%", left: "3%" }} />
-				<img src="/site/media/discord/dev-clyde-3d.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "104px", top: "40%", right: "3%" }} />
+				<img src="/site/media/zycord/dev-fire-extinguisher.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "92px", top: "10%", left: "6%" }} />
+				<img src="/site/media/zycord/dev-spider.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "86px", top: "14%", right: "8%" }} />
+				<img src="/site/media/zycord/dev-magnet.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "84px", bottom: "10%", left: "9%" }} />
+				<img src="/site/media/zycord/dev-cog.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "88px", bottom: "12%", right: "10%" }} />
+				<img src="/site/media/zycord/dev-rubber-duck.png" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "90px", top: "42%", left: "3%" }} />
+				<img src="/site/media/zycord/dev-clyde-3d.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "104px", top: "40%", right: "3%" }} />
 
 				<div className="zy-container">
 					<div className="zy-subhero-inner">
@@ -52,7 +52,7 @@ export function DevelopersHubPage() {
 
 							<div className="zy-scene-stage stage-blurple">
 								<img
-									src="/site/media/discord/dev-hero-16x9.webp"
+									src="/site/media/zycord/dev-hero-16x9.webp"
 									alt="Zycord Developer Ecosystem — Chat, Playtime, Rich Presence & Apps"
 									style={{ width: "100%", height: "auto", borderRadius: "24px", display: "block" }}
 								/>
@@ -77,7 +77,7 @@ export function DevelopersHubPage() {
 							<p className="zy-body">Reach players and communities who gather on Zycord every single day across desktop, web, and mobile.</p>
 						</article>
 						<article className="zy-card" style={{ background: "linear-gradient(155deg, #2432a8 0%, #5865f2 100%)", padding: "32px 28px", position: "relative" }}>
-							<img src="/site/media/discord/nav-blog-cube.webp" alt="" aria-hidden="true" style={{ width: "68px", position: "absolute", top: "18px", right: "18px" }} />
+							<img src="/site/media/zycord/nav-blog-cube.webp" alt="" aria-hidden="true" style={{ width: "68px", position: "absolute", top: "18px", right: "18px" }} />
 							<div className="zy-display" style={{ fontSize: "52px" }}>90%+</div>
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "6px" }}>Play Video Games</h3>
 							<p className="zy-body">Meet players where they connect before, during, and after play with unified Rich Presence and party invites.</p>
@@ -101,21 +101,21 @@ export function DevelopersHubPage() {
 					</div>
 					<div className="zy-grid-3">
 						<article className="zy-card">
-							<img src="/site/media/discord/dev-icon-1.png" alt="" style={{ width: "64px", height: "64px", objectFit: "contain" }} />
+							<img src="/site/media/zycord/dev-icon-1.png" alt="" style={{ width: "64px", height: "64px", objectFit: "contain" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>Connect your game to Zycord</h3>
 							<p className="zy-body">
 								Social Layer integration links in-game accounts with Zycord accounts, so players stay connected beyond the session.
 							</p>
 						</article>
 						<article className="zy-card">
-							<img src="/site/media/discord/dev-icon-2.png" alt="" style={{ width: "64px", height: "64px", objectFit: "contain" }} />
+							<img src="/site/media/zycord/dev-icon-2.png" alt="" style={{ width: "64px", height: "64px", objectFit: "contain" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>Stay top of mind beyond gameplay</h3>
 							<p className="zy-body">
 								Live Rich Presence, custom status badges, and Profile Widgets keep your game present in conversations on Zycord.
 							</p>
 						</article>
 						<article className="zy-card">
-							<img src="/site/media/discord/dev-icon-3.webp" alt="" style={{ width: "64px", height: "64px", objectFit: "contain" }} />
+							<img src="/site/media/zycord/dev-icon-3.webp" alt="" style={{ width: "64px", height: "64px", objectFit: "contain" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>Turn social activity into outcomes</h3>
 							<p className="zy-body">
 								With your game connected to Zycord, you can drive longer playtime, reach new players, and launch embedded Activities.
@@ -137,7 +137,7 @@ export function DevelopersHubPage() {
 
 					<div className="zy-grid-3">
 						<article className="zy-card">
-							<img src="/site/media/discord/dev-portal-card.png" alt="Developer Portal" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/dev-portal-card.png" alt="Developer Portal" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "24px", marginTop: "8px" }}>DEVELOPER PORTAL</h3>
 							<p className="zy-body">
 								Create applications, generate Bot tokens, configure OAuth2 redirect URIs, upload Rich Presence assets, and build Profile Widgets.
@@ -148,7 +148,7 @@ export function DevelopersHubPage() {
 						</article>
 
 						<article className="zy-card">
-							<img src="/site/media/discord/dev-docs-card.png" alt="API Documentation" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/dev-docs-card.png" alt="API Documentation" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "24px", marginTop: "8px" }}>API &amp; GATEWAY DOCS</h3>
 							<p className="zy-body">
 								100% compatible with Zycord REST API v9/v10 and WebSocket Gateway opcodes, intents, slash commands, and webhooks.
@@ -159,7 +159,7 @@ export function DevelopersHubPage() {
 						</article>
 
 						<article className="zy-card">
-							<img src="/site/media/discord/dev-help-card.png" alt="Social SDK & Activities" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/dev-help-card.png" alt="Social SDK & Activities" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "24px", marginTop: "8px" }}>SOCIAL SDK &amp; ACTIVITIES</h3>
 							<p className="zy-body">
 								Embed multiplayer HTML5/WebGL games directly inside Zycord voice channels or sync unified friend lists and party invites.

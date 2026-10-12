@@ -72,12 +72,12 @@ export function DevelopersPortalHeroBanner() {
 			</div>
 			<div className="zy-dev-hero-art">
 				<img
-					src="/site/media/discord/dev-hero-16x9.webp"
+					src="/site/media/zycord/dev-hero-16x9.webp"
 					alt="Zycord Developer Ecosystem"
 					className="zy-dev-hero-img"
 				/>
 				<img
-					src="/site/media/discord/dev-clyde-3d.webp"
+					src="/site/media/zycord/dev-clyde-3d.webp"
 					alt=""
 					aria-hidden="true"
 					className="zy-dev-clyde-float"
