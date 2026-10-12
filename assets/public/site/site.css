@@ -850,6 +850,67 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	transition: transform 0.08s linear;
 }
 
+/* Exact Discord.com Section 5 Characters Structure (.characters-wr.is_2025) */
+.zy-sec5-3d-wrap {
+	position: relative;
+	z-index: 3;
+	overflow: visible;
+}
+
+.zy-sec5-chars-wr {
+	pointer-events: none;
+	display: flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+	max-width: 536px;
+	width: 100%;
+	margin-left: auto;
+	position: relative;
+	left: -32px;
+	z-index: 5;
+}
+
+.zy-sec5-chars-hands {
+	max-width: 50%;
+	width: 100%;
+	margin-top: -162px;
+	margin-left: -90px;
+	position: absolute;
+	z-index: 6;
+}
+
+.zy-sec5-char-bot {
+	position: relative;
+	z-index: 6;
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.zy-sec5-char-top {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: auto;
+	display: block;
+	margin-top: -18px;
+	margin-left: -10px;
+	opacity: 0.45;
+}
+
+.zy-sec5-char-friends {
+	width: 100%;
+	max-width: 54%;
+	height: auto;
+	margin-top: -178px;
+	margin-right: 96px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 1;
+	clip-path: inset(0 0 43.2% 0);
+}
+
 .zy-star {
 	position: absolute;
 	pointer-events: none;
