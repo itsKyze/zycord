@@ -13,7 +13,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
         throw new HTTPError("Missing X-GitHub-Event header", 400);
     }
 
-    const discordPayload: WebhookExecuteSchema = {
+    const zycordPayload: WebhookExecuteSchema = {
         username: "GitHub",
         avatar_url: "https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png",
     };
@@ -24,7 +24,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -40,7 +40,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
             ];
             break;
         case "create":
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -54,7 +54,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
             ];
             break;
         case "delete":
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -68,7 +68,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
             ];
             break;
         case "fork":
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -87,7 +87,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -110,7 +110,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -125,8 +125,8 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
             ];
 
             if (req.body.action === "opened") {
-                discordPayload.embeds[0].color = 15426592;
-                discordPayload.embeds[0].description = req.body.issue.body.length > 500 ? `${req.body.issue.body.slice(0, 497)}...` : req.body.issue.body;
+                zycordPayload.embeds[0].color = 15426592;
+                zycordPayload.embeds[0].description = req.body.issue.body.length > 500 ? `${req.body.issue.body.slice(0, 497)}...` : req.body.issue.body;
             }
             break;
         case "member":
@@ -134,7 +134,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -149,7 +149,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
             ];
             break;
         case "public":
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -167,7 +167,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -183,9 +183,9 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
 
             if (req.body.action === "opened") {
                 if (req.body.pull_request.body != null) {
-                    discordPayload.embeds[0].description = req.body.pull_request.body.length > 500 ? `${req.body.pull_request.body.slice(0, 497)}...` : req.body.pull_request.body;
+                    zycordPayload.embeds[0].description = req.body.pull_request.body.length > 500 ? `${req.body.pull_request.body.slice(0, 497)}...` : req.body.pull_request.body;
                 }
-                discordPayload.embeds[0].color = 38912;
+                zycordPayload.embeds[0].color = 38912;
             }
             break;
         case "pull_request_review": // funfact: for some reason, if a PR's title is over 216 chars in length you won't see any actions taken on the PR on discord
@@ -193,7 +193,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -213,7 +213,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -235,7 +235,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
             }
 
             if (req.body.forced) {
-                discordPayload.embeds = [
+                zycordPayload.embeds = [
                     {
                         type: EmbedType.rich,
                         color: 16525609,
@@ -250,7 +250,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                     },
                 ];
             } else {
-                discordPayload.embeds = [
+                zycordPayload.embeds = [
                     {
                         type: EmbedType.rich,
                         color: 7506394,
@@ -278,7 +278,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -297,7 +297,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -316,7 +316,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     color: req.body.check_run.conclusion == "success" ? 38912 : 16525609,
@@ -330,7 +330,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     color: req.body.check_suite.conclusion == "success" ? 38912 : 16525609,
@@ -344,7 +344,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -365,7 +365,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
                 return;
             }
 
-            discordPayload.embeds = [
+            zycordPayload.embeds = [
                 {
                     type: EmbedType.rich,
                     author: {
@@ -385,7 +385,7 @@ const parseGitHubWebhook = (req: Request, res: Response, next: NextFunction) => 
             return res.status(204).end(); // Yes, discord sends 204 even on invalid event
     }
 
-    req.body = discordPayload;
+    req.body = zycordPayload;
     req.query.wait ||= "true";
 
     next();

@@ -50,9 +50,12 @@ Object.assign(section("externalRequests"), {
 });
 
 const regions = section("regions");
-regions.default ??= "spacebar";
-regions.available = regions.available?.length ? regions.available : [{ id: regions.default, name: regions.default, vip: false, custom: false, deprecated: false }];
-for (const region of regions.available) if (region.id === regions.default) region.endpoint = `${domain}/voice`;
+regions.default ??= "zycord";
+regions.available = regions.available?.length ? regions.available : [{ id: regions.default, name: "Zycord", vip: false, custom: false, deprecated: false }];
+for (const region of regions.available) {
+    if (region.name === "spacebar") region.name = "Zycord";
+    if (region.id === regions.default) region.endpoint = `${domain}/voice`;
+}
 
 // INSTANCE_NAME names a new instance, and changing it in .env renames the instance on the next start. Otherwise the
 // name set in the admin panel stays: the last value taken from .env is remembered next to the config file

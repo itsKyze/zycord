@@ -102,11 +102,11 @@ export async function initEvent() {
         }
     } else await RabbitMQ.init(); // does nothing if rabbitmq is not setup
 
-    // Set up the spacebar event listener (used for config reload, etc.)
-    const setupSpacebarListener = async () => {
-        console.log("[Event] Setting up spacebar event listener");
+    // Set up the Zycord event listener (used for config reload, etc.)
+    const setupZycordListener = async () => {
+        console.log("[Event] Setting up Zycord event listener");
         await listenEvent("spacebar", async (event) => {
-            console.log("[Event] Received spacebar event:", event);
+            console.log("[Event] Received Zycord event:", event);
             if ((event.event as string) === "SB_RELOAD_CONFIG") {
                 console.log("[Event] Reloading config due to RELOAD_CONFIG event");
                 await Config.init(true);
@@ -115,12 +115,12 @@ export async function initEvent() {
     };
 
     // Initial setup
-    await setupSpacebarListener();
+    await setupZycordListener();
 
     // Re-establish listener on reconnection
     RabbitMQ.on("reconnected", async () => {
-        console.log("[Event] RabbitMQ reconnected, re-establishing spacebar listener");
-        await setupSpacebarListener();
+        console.log("[Event] RabbitMQ reconnected, re-establishing Zycord listener");
+        await setupZycordListener();
     });
 }
 

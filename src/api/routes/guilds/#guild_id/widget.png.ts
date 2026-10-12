@@ -87,7 +87,7 @@ router.get(
         };
 
         if (style === "shield") {
-            const label = "Discord";
+            const label = Config.get().general.instanceName || "Zycord";
             const left = measureText(small, label) + 12;
             const right = measureText(small, presence) + 12;
             const image = new Jimp({ width: left + right, height: 20, color: GREY });

@@ -199,7 +199,7 @@ jobs:
             docker compose pull server sfu
 
             # 7. Restart services properly:
-            #    - client must complete FIRST (compresses Discord client assets + applies patches)
+            #    - client must complete FIRST (compresses Zycord client assets + applies patches)
             #    - server depends on client completing successfully
             echo "🔧 Rebuilding client assets (applies new patches)..."
             docker compose up --no-deps -d client

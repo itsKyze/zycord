@@ -37,9 +37,9 @@ The pre-commit hook runs lint-staged. For staged JavaScript and TypeScript files
 - Every new source file starts with the AGPL header. Copy it from any file in `src`.
 - No code comments. Name things so the code reads without them.
 - Migrations go in `src/database/migration/postgres`. Each one has to be idempotent (`IF NOT EXISTS`, `IF EXISTS`, or a check before the change) and have a timestamp later than every existing migration, made unique with a random suffix, such as `1791514025449`. A fresh database runs the migrations in timestamp order, so don't touch a table that a migration with a later timestamp creates. Test a new migration on a fresh database with `worktree-setup.sh`, which drops and recreates it.
-- Client changes go into a Vencord plugin in `client/plugins` whenever possible. [docs/client-patches.md](docs/client-patches.md) has the rules for patches that survive Discord updates.
+- Client changes go into a Vencord plugin in `client/plugins` whenever possible. [docs/client-patches.md](docs/client-patches.md) has the rules for patches that survive client updates.
 - After a change to `client/e2ee`, run `npm run build:e2ee` and commit `assets/public/e2ee` with it. Build from the main checkout or a worktree with its own `node_modules`, because a symlinked `node_modules` changes the path comments esbuild writes into the bundle.
-- Never commit `assets/cache`, `assets/cache_compressed`, `assets/vencord` or `.vencord`. They hold Discord's code or builds made from it.
+- Never commit `assets/cache`, `assets/cache_compressed`, `assets/vencord` or `.vencord`. They hold cached client code or builds made from it.
 - When a feature's status changes, update its row in `docs/parity.md`. Docs use plain sentences and say what happens, with numbers where there are numbers.
 
 ## Before you push
@@ -70,7 +70,7 @@ cd /tmp/zycord-admin-perf
 CHROME_PATH="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" PORT=3290 node scripts/dev/e2ee-test.mjs
 ```
 
-Run the client check when you change `client/plugins`, `client/vencord-patches` or `client/vencord.json`, and after downloading a new Discord build. It exits with code 1 when one of our patches, or an upstream plugin we turn on by default, no longer matches the client:
+Run the client check when you change `client/plugins`, `client/vencord-patches` or `client/vencord.json`, and after downloading a new client build. It exits with code 1 when one of our patches, or an upstream plugin we turn on by default, no longer matches the client:
 
 ```sh
 CHROME_PATH="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" PORT=3001 npm run check:client

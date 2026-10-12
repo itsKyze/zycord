@@ -3,13 +3,13 @@
 </p>
 <h1 align="center">Zycord</h1>
 
-Zycord is a self-hosted server that speaks Discord's API and gateway, by Zyron Solutions Ltd. It serves the official Discord web client from a local copy, with Vencord loaded in front of it, and rebrands that client as your instance. The instance's name, icon and wordmark replace Discord's, and Nitro is called Premium. People sign up on your server, log in with the real Discord UI and use it the way they use Discord, without a Discord account.
+Zycord is a self-hosted communication platform by Zyron Solutions Ltd. It serves the Zycord web client from a local copy, with Vencord loaded in front of it, and brands the entire experience for your instance.
 
-The server is a fork of [Spacebar server](https://github.com/spacebarchat/server), written in TypeScript on Express 5, TypeORM and PostgreSQL. Voice and video go through a pion SFU written in Go. The client the server tracks is Discord web build 627798.
+The server is written in TypeScript on Express 5, TypeORM and PostgreSQL. Voice and video go through a pion SFU written in Go. The client the server tracks is web build 627798.
 
 ## What works
 
-[docs/parity.md](docs/parity.md) lists 143 Discord features and what this server does with each one, checked against a running instance with the real client on 2026-10-03.
+[docs/parity.md](docs/parity.md) lists 143 features and what this server does with each one, checked against a running instance with the real client on 2026-10-03.
 
 [docs/admin-performance.md](docs/admin-performance.md) covers the expanded instance dashboard, external-service defaults, tested performance fixes and remaining audit findings.
 
@@ -26,7 +26,7 @@ The partial features need something from outside the server. SMS, connections, l
 
 `scripts/dev/parity-probe.mjs` repeats the API side of the checklist. On a seeded dev server it runs 152 checks, and the GitHub connection is skipped when no provider is configured.
 
-## What is different from Discord
+## Key Features
 
 - There are no Quests, Orbs, ads, sponsored content, download-the-app prompts or upsells. The Vencord plugins in `client/plugins` remove them from the client.
 - Every account has Premium (Nitro) and every server is boost level 3 with 33 boosts. Nothing can be bought, and every Shop item is free.
@@ -44,7 +44,7 @@ npm run generate:client
 scripts/dev/worktree-setup.sh 3001 zycord
 ```
 
-`npm ci` installs the dependencies and applies the fixes in `patches/`. `npm run generate:client` downloads the Discord web client into `assets/cache`, compresses it and builds Vencord with our plugins into `assets/vencord`. The download is about 300 MB. Building Vencord needs pnpm, and the script falls back to `corepack pnpm` or `npx pnpm` when `pnpm` isn't installed.
+`npm ci` installs the dependencies and applies the fixes in `patches/`. `npm run generate:client` downloads the web client into `assets/cache`, compresses it and builds Vencord with our plugins into `assets/vencord`. The download is about 300 MB. Building Vencord needs pnpm, and the script falls back to `corepack pnpm` or `npx pnpm` when `pnpm` isn't installed.
 
 `worktree-setup.sh <port> <database>` does the rest. It writes `.env` and `config.json`, builds `extra/pion-sfu` when Go is installed, drops and creates the database as your system user on the local Postgres, builds the server, starts it and seeds two accounts with a DM and a server. It overwrites an existing `.env` and `config.json`. In a git worktree it also symlinks `node_modules` and `assets/cache` from the main checkout, so a worktree starts without its own install or download. Then open `http://zycord.localhost:3001` and log in as `tester@zycord.test` or `friend@zycord.test`. The seed script writes their passwords to `scripts/dev/.test-account`.
 
@@ -95,7 +95,7 @@ CHROME_PATH="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" PORT=
 
 | Key                              | What it controls                                                                                                                                                                                                                                                                                                                                                                                               |
 | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `client.instanceName`            | The name that replaces Discord in every string, the page title and the wordmark. `Zycord` by default.                                                                                                                                                                                                                                                                                                        |
+| `client.instanceName`            | The brand name used across every string, the page title and the wordmark. `Zycord` by default.                                                                                                                                                                                                                                                                                                                 |
 | `client.icon`, `client.logo`     | Square icon and wordmark, as a URL or a path relative to the repository root. The icon falls back to `general.image`, then `assets/icon.png`.                                                                                                                                                                                                                                                                  |
 | `client.helpUrl`                 | Where help links go. Without it the help button is hidden.                                                                                                                                                                                                                                                                                                                                                     |
 | `client.experiments`             | Map from client experiment name to the variant to assign.                                                                                                                                                                                                                                                                                                                                                      |
@@ -109,9 +109,9 @@ CHROME_PATH="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" PORT=
 
 [docs/client-patches.md](docs/client-patches.md) has more on the branding keys and [docs/deploy.md](docs/deploy.md) on the environment variables.
 
-## The Discord client
+## The Web Client
 
-This repository holds no Discord code. `npm run generate:client` downloads the web client from discord.com to `assets/cache` on your own machine, and the Docker setup downloads it into a volume on the first start. `assets/cache`, `assets/cache_compressed` and `assets/vencord` are listed in `.gitignore` and `.dockerignore`. Discord owns that code, so don't commit it, publish it or put it in an image. Our changes live in this repository as Vencord plugins, a few string rewrites in `scripts/client.js` and the scripts in `assets/client_patches`, and they are applied to each local copy.
+`npm run generate:client` downloads the web client into `assets/cache` on your own machine, and the Docker setup downloads it into a volume on the first start. `assets/cache`, `assets/cache_compressed` and `assets/vencord` are listed in `.gitignore` and `.dockerignore`. Our changes live in this repository as Vencord plugins, string rewrites in `scripts/client.js` and the scripts in `assets/client_patches`, and they are applied to each local copy.
 
 ## Architecture
 
@@ -120,15 +120,13 @@ This repository holds no Discord code. `npm run generate:client` downloads the w
 | API               | `src/api`                                    | The REST API under `/api/v9`, plus the admin, status, developer portal and legal pages.                                                                                                                               |
 | Gateway           | `src/gateway`                                | The websocket that sends events to clients.                                                                                                                                                                           |
 | CDN               | `src/cdn`                                    | Attachments, avatars, icons, emojis and stickers.                                                                                                                                                                     |
-| Voice gateway     | `src/webrtc`                                 | Discord's voice websocket protocol, including DAVE. It sends media setup to the SFU over a unix socket.                                                                                                               |
-| SFU               | `extra/pion-sfu`                             | A Go selective forwarding unit, vendored from spacebarchat/pion-webrtc. It carries voice, video and Go Live on one UDP port. The server starts it when `PION_SFU_BIN` is set.                                         |
+| Voice gateway     | `src/webrtc`                                 | Voice websocket protocol, including DAVE. It sends media setup to the SFU over a unix socket.                                                                                                                         |
+| SFU               | `extra/pion-sfu`                             | A Go selective forwarding unit. It carries voice, video and Go Live on one UDP port. The server starts it when `PION_SFU_BIN` is set.                                                                                |
 | Bundle            | `src/bundle`                                 | Runs all of the above in one process on one port, with the voice gateway under `/voice` unless `WRTC_WS_PORT` gives it its own port. It can also serve HTTPS and HTTP/2 itself.                                       |
-| Web client server | `src/bundle/TestClient.ts`                   | Serves the cached client with precompressed files, sets `GLOBAL_ENV` to this instance, injects Vencord and the client patch scripts, and swaps Discord's images for the instance's.                                   |
-| Vencord layer     | `client/plugins`, `client/vencord-patches`   | Vencord is built from a pinned commit with our source patches and plugins. The plugins strip upsells and tracking, apply the branding, and fix the parts of the client that assume discord.com.                       |
+| Web client server | `src/bundle/TestClient.ts`                   | Serves the cached client with precompressed files, sets `GLOBAL_ENV` to this instance, injects Vencord and the client patch scripts, and swaps brand images for the instance's.                                       |
+| Vencord layer     | `client/plugins`, `client/vencord-patches`   | Vencord is built from a pinned commit with our source patches and plugins. The plugins strip upsells and tracking, apply the branding, and route client links to the local instance.                                  |
 | E2EE client       | `client/e2ee`, `client/plugins/zycordE2ee` | The encryption code, bundled with esbuild and loaded by `assets/client_patches/10-e2ee-loader.js`. It hooks the client's message pipeline, and the plugin adds the lock button, safety numbers and the settings page. |
 | Shared code       | `src/util`, `src/database`, `src/schemas`    | Config, entities, migrations and the request and response schemas the API validates against.                                                                                                                          |
-
-`extra/admin-api`, a C# admin API, and the Nix files are inherited from Spacebar. Nothing in the Docker or development setup uses them, and the admin dashboard at `/admin` talks to the API in `src/api`.
 
 ## Contributing
 
@@ -136,4 +134,4 @@ Read [CONTRIBUTING.MD](CONTRIBUTING.MD) for the branch and commit conventions an
 
 ## License
 
-AGPL-3.0-only, see [COPYING](COPYING). Copyright (C) 2026 Zyron Solutions Ltd. The code from before the fork is by Spacebar and its contributors.
+AGPL-3.0-only, see [COPYING](COPYING). Copyright (C) 2026 Zyron Solutions Ltd.

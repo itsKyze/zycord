@@ -146,7 +146,7 @@ function calculateHash(request: UrlSignatureData): UrlSignResult {
     if (Config.get().security.cdnSignatureIncludeIp) {
         if (!request.ip)
             console.log(
-                "[Signing] CDN Signature IP is enabled but we couldn't find the IP field in the request. This may cause issues with signature validation. Please report this to the Spacebar team!",
+                "[Signing] CDN Signature IP is enabled but we couldn't find the IP field in the request. This may cause issues with signature validation. Please report this to the Zycord team!",
             );
         else {
             if (process.env["LOG_CDN_SIGNATURES"]) console.log("[Signing] CDN Signature IP is enabled, adding IP to hash:", request.ip);
@@ -159,7 +159,7 @@ function calculateHash(request: UrlSignatureData): UrlSignResult {
     if (Config.get().security.cdnSignatureIncludeUserAgent) {
         if (!request.userAgent)
             console.log(
-                "[Signing] CDN Signature User-Agent is enabled but we couldn't find the user-agent header in the request. This may cause issues with signature validation. Please report this to the Spacebar team!",
+                "[Signing] CDN Signature User-Agent is enabled but we couldn't find the user-agent header in the request. This may cause issues with signature validation. Please report this to the Zycord team!",
             );
         else {
             if (process.env["LOG_CDN_SIGNATURES"]) console.log("[Signing] CDN Signature User-Agent is enabled, adding User-Agent to hash:", request.userAgent);

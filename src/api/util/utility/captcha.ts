@@ -71,7 +71,7 @@ function isLocalOrPrivateIp(ip: string): boolean {
 export async function verifyCaptcha(response: string, ip?: string): Promise<CaptchaVerifyResult> {
     const { service, secret, sitekey } = Config.get().security.captcha;
 
-    if (!captchaEnabled() || !service) throw new Error("CAPTCHA is not configured correctly. https://docs.spacebar.chat/setup/server/security/captcha/");
+    if (!captchaEnabled() || !service) throw new Error("CAPTCHA is not configured correctly. https://app.zyron.site/developers/docs");
 
     if (service === "cap") {
         if (Config.get().security.captcha.capMode !== "standalone") {
