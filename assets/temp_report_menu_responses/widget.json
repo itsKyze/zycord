@@ -11,7 +11,7 @@
       "id": 73,
       "key": "WIDGET_SUCCESS",
       "header": "Report submitted",
-      "subheader": "Thank you for your report. Widgets are an experimental feature, and your report will be used to help us improve this feature. If you believe a user's Widget violates [Zycord's Community Guidelines](https://github.com/spacebarchat/spacebarchat/blob/master/CODE_OF_CONDUCT.md), please report the User Profile.",
+      "subheader": "Thank you for your report. Widgets are an experimental feature, and your report will be used to help us improve this feature. If you believe a user's Widget violates [Zycord's Community Guidelines](https://app.zyron.site/guidelines), please report the User Profile.",
       "info": null,
       "button": {
         "type": "done",

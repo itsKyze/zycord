@@ -56,7 +56,7 @@ export async function ImageProxy(req: Request, res: Response) {
 
     const request = await fetch("https://" + path.slice(2).join("/"), {
         headers: {
-            "User-Agent": "SpacebarImageProxy/1.0.0 (https://spacebar.chat)",
+            "User-Agent": "ZycordImageProxy/1.0.0 (+https://app.zyron.site)",
         },
         signal: abort.signal,
     }).catch((e) => {

@@ -93,7 +93,7 @@
       "id": 8,
       "key": "STAGE_CHANNEL_WELCOME",
       "header": "Report Stage Channel",
-      "subheader": "Is this a stage channel dedicated to content that breaks our [Community Guidelines](https://github.com/spacebarchat/spacebarchat/blob/master/CODE_OF_CONDUCT.md)? Please choose the issue to report to Zycord Trust & Safety.",
+      "subheader": "Is this a stage channel dedicated to content that breaks our [Community Guidelines](https://app.zyron.site/guidelines)? Please choose the issue to report to Zycord Trust & Safety.",
       "info": null,
       "button": {
         "type": "cancel",

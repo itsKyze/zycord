@@ -1260,10 +1260,6 @@ nav a {
 .official-message { padding: 16px; border: 1px solid var(--border); border-radius: 8px; }
 .official-message p { white-space: pre-wrap; overflow-wrap: anywhere; }
 .official-message time { font-size: 0.8rem; color: var(--muted); }
-
-/* ==========================================================================
-   Discord 2026 Admin Portal Design System (JSX Shell + Cosmic Dark Theme)
-   ========================================================================== */
 :root {
     --bg: #0f1017;
     --panel: #171923;

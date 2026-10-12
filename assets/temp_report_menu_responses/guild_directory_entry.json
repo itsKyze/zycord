@@ -134,7 +134,7 @@
       "id": 6,
       "key": "GUILD_DIRECTORY_ENTRY_WELCOME",
       "header": "Report Server",
-      "subheader": "Is this a server dedicated to content that breaks our [Community Guidelines](https://github.com/spacebarchat/spacebarchat/blob/master/CODE_OF_CONDUCT.md)? Please choose the issue to report to Zycord Trust & Safety.",
+      "subheader": "Is this a server dedicated to content that breaks our [Community Guidelines](https://app.zyron.site/guidelines)? Please choose the issue to report to Zycord Trust & Safety.",
       "info": null,
       "button": {
         "type": "cancel",
