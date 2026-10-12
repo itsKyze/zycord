@@ -3,11 +3,11 @@ import { ZycordMark } from "../Icons.jsx";
 
 export function HomePage() {
 	return (
-		<div>
+		<div className="zy-home-wrapper">
 			{/* =====================================================================
 			    HERO SECTION — OFFICIAL ZYCORD 2026 3D CHARACTERS, WUMPUS, CLYDE & UI
 			    ===================================================================== */}
-			<section className="hero-section">
+			<section className="hero-section zy-home-sec-tex-hero">
 				<img src="/site/media/zycord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "32px", top: "8%", left: "5%" }} />
 				<img src="/site/media/zycord/star-m.svg" alt="" aria-hidden="true" className="zy-star d2" style={{ width: "22px", top: "15%", right: "7%" }} />
 				<img src="/site/media/zycord/star-sm.svg" alt="" aria-hidden="true" className="zy-star d3" style={{ width: "16px", bottom: "18%", left: "11%" }} />
@@ -132,7 +132,7 @@ export function HomePage() {
 			     - Party Wumpus peeking from behind the top-right of the card (z-index: 0)
 			     - Blurred 3D Spotted Egg floating behind/below the bottom-left corner)
 			    ===================================================================== */}
-			<section className="zy-section" id="chat">
+			<section className="zy-section zy-home-sec-tex-2" id="chat">
 				<div className="zy-container" style={{ position: "relative" }}>
 					{/* Animated Party Wumpus peeking from behind top-right of the card */}
 					<img
@@ -166,19 +166,25 @@ export function HomePage() {
 						}}
 					/>
 
-					<div className="zy-showcase-card">
+					<div className="zy-showcase-card is-card-1">
 						<div className="zy-showcase-grid is-reversed">
 							<div
-								className="zy-scene-stage stage-magenta"
+								className="zy-scene-stage is-sec1 stage-magenta"
 								style={{ backgroundImage: "url('/site/media/zycord/sec1-bkg.webp')" }}
 							>
+								<img
+									src="/site/media/zycord/sec1-bkg.webp"
+									alt=""
+									aria-hidden="true"
+									className="zy-stage-bg-img"
+								/>
 								<video
 									className="zy-stage-video"
 									autoPlay
 									loop
 									muted
 									playsInline
-									poster="/site/media/zycord/sec1-chat-fun.webp"
+									style={{ backgroundImage: "url('/site/media/zycord/sec1-bkg.webp')" }}
 								>
 									<source src="/site/media/zycord/sec1-chat-fun.mp4" type="video/mp4" />
 								</video>
@@ -200,7 +206,7 @@ export function HomePage() {
 			    (Exact Match to Zycord Screenshot 141358.png:
 			     - Blurred 3D Clyde Cube floating below bottom-left)
 			    ===================================================================== */}
-			<section className="zy-section" id="video">
+			<section className="zy-section zy-home-sec-tex-3" id="video">
 				<div className="zy-container" style={{ position: "relative" }}>
 					<img
 						src="/site/media/zycord/prop-clyde-cube.webp"
@@ -219,7 +225,7 @@ export function HomePage() {
 						}}
 					/>
 
-					<div className="zy-showcase-card">
+					<div className="zy-showcase-card is-card-2 is-copy-left">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
 								<h2 className="zy-heading">STREAM LIKE YOU'RE IN THE SAME ROOM</h2>
@@ -229,16 +235,22 @@ export function HomePage() {
 							</div>
 
 							<div
-								className="zy-scene-stage stage-cerulean"
-								style={{ backgroundImage: "url('/site/media/zycord/sec2-bkg.svg')" }}
+								className="zy-scene-stage is-sec2 stage-cerulean"
+								style={{ backgroundImage: "url('/site/media/zycord/sec2-bkg.png')" }}
 							>
+								<img
+									src="/site/media/zycord/sec2-bkg.png"
+									alt=""
+									aria-hidden="true"
+									className="zy-stage-bg-img"
+								/>
 								<video
 									className="zy-stage-video"
 									autoPlay
 									loop
 									muted
 									playsInline
-									poster="/site/media/zycord/sec2-stream.webp"
+									style={{ backgroundImage: "url('/site/media/zycord/sec2-bkg.png')" }}
 								>
 									<source src="/site/media/zycord/sec2-stream.mp4" type="video/mp4" />
 								</video>
@@ -253,7 +265,7 @@ export function HomePage() {
 			    (Exact Match to Zycord Screenshot 141355.png:
 			     - Sharp 3D Pink/White Box overlapping the top-right border of the card)
 			    ===================================================================== */}
-			<section className="zy-section" id="voice">
+			<section className="zy-section zy-home-sec-tex-4" id="voice">
 				<div className="zy-container" style={{ position: "relative" }}>
 					<img
 						src="/site/media/zycord/prop-box.webp"
@@ -270,19 +282,25 @@ export function HomePage() {
 						}}
 					/>
 
-					<div className="zy-showcase-card">
+					<div className="zy-showcase-card is-card-3">
 						<div className="zy-showcase-grid is-reversed">
 							<div
-								className="zy-scene-stage stage-emerald"
+								className="zy-scene-stage is-sec3 stage-emerald"
 								style={{ backgroundImage: "url('/site/media/zycord/sec3-bkg.webp')" }}
 							>
+								<img
+									src="/site/media/zycord/sec3-bkg.webp"
+									alt=""
+									aria-hidden="true"
+									className="zy-stage-bg-img"
+								/>
 								<video
 									className="zy-stage-video"
 									autoPlay
 									loop
 									muted
 									playsInline
-									poster="/site/media/zycord/sec3-hop-in.webp"
+									style={{ backgroundImage: "url('/site/media/zycord/sec3-bkg.webp')" }}
 								>
 									<source src="/site/media/zycord/sec3-hop-in.mp4" type="video/mp4" />
 								</video>
@@ -324,7 +342,7 @@ export function HomePage() {
 			    (Exact Match to Zycord Screenshot 141350.png:
 			     - Blurred 3D Coin overlapping bottom-left behind the card)
 			    ===================================================================== */}
-			<section className="zy-section" id="presence">
+			<section className="zy-section zy-home-sec-tex-5" id="presence">
 				<div className="zy-container" style={{ position: "relative" }}>
 					<img
 						src="/site/media/zycord/prop-coin.webp"
@@ -343,7 +361,7 @@ export function HomePage() {
 						}}
 					/>
 
-					<div className="zy-showcase-card">
+					<div className="zy-showcase-card is-card-4 is-copy-left">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
 								<h2 className="zy-heading">SEE WHO'S AROUND TO CHILL</h2>
@@ -353,16 +371,22 @@ export function HomePage() {
 							</div>
 
 							<div
-								className="zy-scene-stage stage-magenta"
-								style={{ backgroundImage: "url('/site/media/zycord/sec4-bkg.svg')" }}
+								className="zy-scene-stage is-sec4 stage-magenta"
+								style={{ backgroundImage: "url('/site/media/zycord/sec4-bkg.png')" }}
 							>
+								<img
+									src="/site/media/zycord/sec4-bkg.png"
+									alt=""
+									aria-hidden="true"
+									className="zy-stage-bg-img"
+								/>
 								<video
 									className="zy-stage-video"
 									autoPlay
 									loop
 									muted
 									playsInline
-									poster="/site/media/zycord/sec4-chill.webp"
+									style={{ backgroundImage: "url('/site/media/zycord/sec4-bkg.png')" }}
 								>
 									<source src="/site/media/zycord/sec4-chill.mp4" type="video/mp4" />
 								</video>
@@ -380,7 +404,7 @@ export function HomePage() {
 			     - Sharp 3D Radish/Turnip overlapping bottom-left corner of card
 			     - Blurred 3D Plump/Pot floating below bottom-right)
 			    ===================================================================== */}
-			<section className="zy-section" id="activities" style={{ paddingTop: "136px" }}>
+			<section className="zy-section zy-home-sec-tex-6" id="activities" style={{ paddingTop: "136px" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
 					{/* Sharp 3D Radish/Turnip overlapping bottom-left corner of the card */}
 					<img
@@ -438,19 +462,25 @@ export function HomePage() {
 							className="zy-sec5-char-friends"
 						/>
 
-						<div className="zy-showcase-card is-sec5">
+						<div className="zy-showcase-card is-card-5 is-sec5">
 							<div className="zy-showcase-grid is-reversed">
 								<div
-									className="zy-scene-stage stage-emerald"
+									className="zy-scene-stage is-sec5 stage-emerald"
 									style={{ backgroundImage: "url('/site/media/zycord/sec5-bkg.webp')" }}
 								>
+									<img
+										src="/site/media/zycord/sec5-bkg.webp"
+										alt=""
+										aria-hidden="true"
+										className="zy-stage-bg-img"
+									/>
 									<video
 										className="zy-stage-video"
 										autoPlay
 										loop
 										muted
 										playsInline
-										poster="/site/media/zycord/sec5-activities.webp"
+										style={{ backgroundImage: "url('/site/media/zycord/sec5-bkg.webp')" }}
 									>
 										<source src="/site/media/zycord/sec5-activities.mp4" type="video/mp4" />
 									</video>
@@ -472,9 +502,9 @@ export function HomePage() {
 			    SECTION 6: WHEREVER YOU GAME, HANG OUT HERE (COPY LEFT, VIDEO RIGHT)
 			    (Exact Match to Zycord Screenshot 141340.png & 141338.png)
 			    ===================================================================== */}
-			<section className="zy-section" id="platforms">
+			<section className="zy-section zy-home-sec-tex-7" id="platforms">
 				<div className="zy-container" style={{ position: "relative" }}>
-					<div className="zy-showcase-card">
+					<div className="zy-showcase-card is-card-6 is-copy-left">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
 								<h2 className="zy-heading">WHEREVER YOU GAME, HANG OUT HERE</h2>
@@ -484,16 +514,22 @@ export function HomePage() {
 							</div>
 
 							<div
-								className="zy-scene-stage stage-cerulean"
+								className="zy-scene-stage is-sec6 stage-cerulean"
 								style={{ backgroundImage: "url('/site/media/zycord/sec6-bkg.webp')" }}
 							>
+								<img
+									src="/site/media/zycord/sec6-bkg.webp"
+									alt=""
+									aria-hidden="true"
+									className="zy-stage-bg-img"
+								/>
 								<video
 									className="zy-stage-video"
 									autoPlay
 									loop
 									muted
 									playsInline
-									poster="/site/media/zycord/sec6-platforms.webp"
+									style={{ backgroundImage: "url('/site/media/zycord/sec6-bkg.webp')" }}
 								>
 									<source src="/site/media/zycord/sec6-platforms.mp4" type="video/mp4" />
 								</video>
@@ -509,7 +545,7 @@ export function HomePage() {
 			     - Single centered white button "Download for Windows"
 			     - Full character lineup + 3D Clyde Robot + Wumpus sitting OVER the footer horizon edge)
 			    ===================================================================== */}
-			<section className="final-horizon-section" id="about">
+			<section className="final-horizon-section zy-home-sec-tex-7" id="about">
 				<img src="/site/media/zycord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "30px", top: "10%", left: "14%" }} />
 				<img src="/site/media/zycord/star-m.svg" alt="" aria-hidden="true" className="zy-star d3" style={{ width: "22px", top: "16%", right: "16%" }} />
 
