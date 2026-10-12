@@ -38,9 +38,9 @@ let missingResponseSchemaDeclarationCount = 0;
 let specification = {
     openapi: "3.1.0",
     info: {
-        title: "Spacebar Server",
+        title: "Zycord API",
         description:
-            "Spacebar is a Discord.com server implementation and extension, with the goal of complete feature parity with Discord.com, all while adding some additional goodies, security, privacy, and configuration options.",
+            "Official Zycord REST API & Gateway specification for bots, OAuth2 applications, activities, and webhooks.",
         license: {
             name: "AGPLV3",
             url: "https://www.gnu.org/licenses/agpl-3.0.en.html",
@@ -48,13 +48,13 @@ let specification = {
         version: "1.0.0",
     },
     externalDocs: {
-        description: "Spacebar Docs",
-        url: "https://docs.spacebar.chat",
+        description: "Zycord Developer Documentation",
+        url: "https://app.zyron.site/developers/docs",
     },
     servers: [
         {
-            url: "https://api.rory.server.spacebar.chat/",
-            description: "Official Spacebar Instance",
+            url: "https://app.zyron.site/api/v9",
+            description: "Official Zycord API",
         },
     ],
     components: {
@@ -285,7 +285,7 @@ async function apiRoutes(missingRoutes) {
         if (route.spacebarOnly === true || missingRoutes?.additional.includes(path.replace(/\/$/, ""))) {
             obj["x-badges"] = [
                 {
-                    label: "Spacebar-only",
+                    label: "Zycord-only",
                     color: "red",
                 },
             ];

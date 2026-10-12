@@ -501,7 +501,7 @@ autoUpdater.on("update-downloaded", (info) => {
     }
 });
 
-// IPC Handlers for DiscordNative & Window Controls
+// IPC Handlers for ZycordNative & Window Controls
 let lastMaximizeTime = 0;
 ipcMain.on("window-minimize", (event) => {
     const win = BrowserWindow.fromWebContents(event.sender) || mainWindow;
@@ -563,8 +563,8 @@ ipcMain.on("set-badge-count", (event, count) => {
     app.setBadgeCount(Number(count) || 0);
 });
 
-// IPC Handlers for Discord Client State (Tray & Taskbar Thumbar)
-ipcMain.on("discord-state-change", (event, state) => {
+// IPC Handlers for Zycord Client State (Tray & Taskbar Thumbar)
+for (const ch of ["zycord-state-change", "discord-state-change"]) ipcMain.on(ch, (event, state) => {
     clientState = { ...clientState, ...state };
     updateTrayMenu();
     updateThumbarButtons();

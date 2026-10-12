@@ -42,7 +42,7 @@ html, body {
     text-align: center;
 }
 
-/* Discord Signature Logo Stage */
+/* Zycord Signature Logo Stage */
 .logo-stage {
     position: relative;
     width: 86px;
@@ -58,7 +58,7 @@ html, body {
     inset: 0;
     width: 100%;
     height: 100%;
-    animation: discord-orbit-spin 1.4s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    animation: zycord-orbit-spin 1.4s infinite cubic-bezier(0.45, 0.05, 0.55, 0.95);
     transform-origin: center center;
 }
 
@@ -80,7 +80,7 @@ html, body {
     opacity: 0.5;
 }
 
-@keyframes discord-orbit-spin {
+@keyframes zycord-orbit-spin {
     0% {
         transform: rotate(0deg);
     }
@@ -97,7 +97,7 @@ html, body {
     align-items: center;
     justify-content: center;
     z-index: 2;
-    animation: discord-mascot-wobble 2.4s infinite ease-in-out;
+    animation: zycord-mascot-wobble 2.4s infinite ease-in-out;
     transform-origin: center center;
 }
 
@@ -107,7 +107,7 @@ html, body {
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
 }
 
-@keyframes discord-mascot-wobble {
+@keyframes zycord-mascot-wobble {
     0% {
         transform: rotate(0deg) scale(1);
     }

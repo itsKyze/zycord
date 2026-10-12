@@ -110,14 +110,14 @@ function initWindowControls() {
                     -webkit-user-select: none !important;
                 }
 
-                /* When native Discord titlebar exists, hide the injected fallback so it never covers Discord buttons */
+                /* When native Zycord titlebar exists, hide the injected fallback so it never covers Zycord buttons */
                 body:has([data-window-chrome="true"]) #zycord-titlebar,
                 body:has(.bar_c38106) #zycord-titlebar,
                 body:has([class*="typeWindows_"]) #zycord-titlebar {
                     display: none !important;
                 }
 
-                /* Discord-style Emerald Green Update Button */
+                /* Zycord-style Emerald Green Update Button */
                 .zycord-update-btn {
                     width: 26px !important;
                     height: 20px !important;
@@ -193,7 +193,7 @@ function initWindowControls() {
                     color: #ffffff !important;
                 }
 
-                /* Position the REAL native Discord Inbox button from the website */
+                /* Position the REAL native Zycord Inbox button from the website */
                 [class*="iconWrapper_"]:has([aria-label*="Inbox" i]),
                 [class*="iconWrapper_"]:has([aria-label*="صندوق الوارد" i]),
                 [class*="trailing_"] [class*="iconWrapper_"]:has([aria-label*="Inbox" i]),
@@ -222,7 +222,7 @@ function initWindowControls() {
                     display: none !important;
                 }
 
-                /* Ensure Discord native toolbar / header is clickable */
+                /* Ensure Zycord native toolbar / header is clickable */
                 [class*="trailing_"],
                 [class*="trailing_"] *,
                 [class*="toolbar_"],
@@ -233,7 +233,7 @@ function initWindowControls() {
                     cursor: pointer !important;
                 }
 
-                /* Draggable top bar — narrow Discord titlebar strip, stopping 145px before right edge for window controls */
+                /* Draggable top bar — narrow Zycord titlebar strip, stopping 145px before right edge for window controls */
                 .bar_c38106,
                 [data-window-chrome="true"],
                 [class*="typeWindows_"],
@@ -360,7 +360,7 @@ function initWindowControls() {
                     -webkit-user-select: none !important;
                 }
 
-                /* Discord-style Toast Notification (bottom-left) */
+                /* Zycord-style Toast Notification (bottom-left) */
                 #zycord-toast-container {
                     position: fixed !important;
                     bottom: 24px !important;
@@ -688,7 +688,7 @@ if (document.readyState === "loading") {
 
 setInterval(ensureWindowControls, 1000);
 
-// Discord-Style Dynamic Update System (Web Updates + Desktop Updates)
+// Zycord-Style Dynamic Update System (Web Updates + Desktop Updates)
 (function setupUpdateNotificationSystem() {
     let pendingUpdateType = null; // "desktop" | "web"
 
@@ -760,8 +760,8 @@ setInterval(ensureWindowControls, 1000);
     );
 })();
 
-// 2. Discord Voice, Mute, Deafen, and Taskbar Integration
-(function setupDiscordIntegration() {
+// 2. Zycord Voice, Mute, Deafen, and Taskbar Integration
+(function setupZycordIntegration() {
     let lastState = {
         inVoice: false,
         isMuted: false,
@@ -774,8 +774,8 @@ setInterval(ensureWindowControls, 1000);
     let isTogglingMute = false;
     let isTogglingDeafen = false;
 
-    // Helper: Render authentic Discord Taskbar notification badge (crisp 32x32 HiDPI)
-    // - When text === "•" (general unread messages): solid white circle dot inside red badge (matching Discord desktop)
+    // Helper: Render authentic Zycord Taskbar notification badge (crisp 32x32 HiDPI)
+    // - When text === "•" (general unread messages): solid white circle dot inside red badge (matching Zycord desktop)
     // - When text is a number (mentions count): crisp white bold number inside red badge
     // - When empty/null: returns null to clear the badge
     function renderBadgeDataURL(text) {
@@ -793,7 +793,7 @@ setInterval(ensureWindowControls, 1000);
             ctx.strokeStyle = "#1e1f22";
             ctx.lineWidth = 2.5;
 
-            // 2. Discord signature Red circle (#f23f43)
+            // 2. Zycord signature Red circle (#f23f43)
             ctx.fillStyle = "#f23f43";
             ctx.beginPath();
             ctx.arc(16, 16, 13.5, 0, Math.PI * 2);
@@ -801,7 +801,7 @@ setInterval(ensureWindowControls, 1000);
             ctx.stroke();
 
             if (text === "•") {
-                // Discord Unread Indicator: Solid white circular dot centered (matching user screenshot)
+                // Zycord Unread Indicator: Solid white circular dot centered (matching user screenshot)
                 ctx.fillStyle = "#ffffff";
                 ctx.beginPath();
                 ctx.arc(16, 16, 5.5, 0, Math.PI * 2);
@@ -926,7 +926,7 @@ setInterval(ensureWindowControls, 1000);
     function isButtonActive(btn, type) {
         if (!btn) return false;
 
-        // 1. Red danger styling in class, style or svg (most reliable in Discord)
+        // 1. Red danger styling in class, style or svg (most reliable in Zycord)
         const className = (btn.className || "").toLowerCase();
         const html = btn.innerHTML.toLowerCase();
         if (
@@ -1026,7 +1026,7 @@ setInterval(ensureWindowControls, 1000);
 
             let badgeText = "";
             if (titleMatch) {
-                // Numbered mention count from title: e.g. "(1) • Discord" -> "1"
+                // Numbered mention count from title: e.g. "(1) • Zycord" -> "1"
                 badgeText = titleMatch[1];
             } else if (cleanTitle.startsWith("•") || cleanTitle.includes("•")) {
                 // General unread messages indicator (bullet dot) -> "•" (white dot icon)
@@ -1068,7 +1068,7 @@ setInterval(ensureWindowControls, 1000);
                 lastState.isVideoOn !== isVideoOn
             ) {
                 lastState = { inVoice, isMuted, isDeafened, isVideoOn };
-                ipcRenderer.send("discord-state-change", lastState);
+                ipcRenderer.send("zycord-state-change", lastState);
             }
         } catch (e) {
             // Ignore DOM errors
@@ -1148,7 +1148,7 @@ setInterval(ensureWindowControls, 1000);
     });
 })();
 
-// 3. Discord-Style Toast Notification System (bottom-left)
+// 3. Zycord-Style Toast Notification System (bottom-left)
 (function setupToastNotifications() {
     let toastContainer = null;
     const activeToasts = new Set();
@@ -1229,7 +1229,7 @@ setInterval(ensureWindowControls, 1000);
         }, 220);
     }
 
-    // Intercept the native Web Notification API so Discord's own notification
+    // Intercept the native Web Notification API so Zycord's own notification
     // calls get rendered as our custom bottom-left toasts instead of Windows toasts
     try {
         const OriginalNotification = window.Notification;
@@ -1242,7 +1242,7 @@ setInterval(ensureWindowControls, 1000);
                 tag: options.tag,
             });
 
-            // Return a fake Notification object that satisfies Discord's checks
+            // Return a fake Notification object that satisfies Zycord's checks
             const fake = Object.create(ZycordNotification.prototype);
             fake.close = () => {};
             fake.addEventListener = () => {};

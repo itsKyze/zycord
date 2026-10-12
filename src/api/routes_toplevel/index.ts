@@ -21,7 +21,7 @@ import path from "node:path";
 import { Router, Response, Request } from "express";
 import { route } from "@spacebar/api/middlewares";
 import { legalPageRouter } from "@spacebar/api/util";
-import { brandPage, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
+import { ASSETS_FOLDER, brandPage, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
 const indexPagePath = path.join(PUBLIC_ASSETS_FOLDER, "index.html");
@@ -130,5 +130,15 @@ for (const [routePath, meta] of Object.entries(JSX_MARKETING_PAGES)) {
 router.use("/acknowledgements", legalPageRouter("acknowledgements"));
 router.use("/licenses", legalPageRouter("licenses"));
 router.use("/company-information", legalPageRouter("company_information"));
+
+router.get("/_zycord/api/openapi.json", route({ spacebarOnly: true, authentication: "never" }), (_req: Request, res: Response) => {
+	res.set("Cache-Control", "public, max-age=21600");
+	return res.sendFile(path.join(ASSETS_FOLDER, "openapi.json"), { dotfiles: "allow" });
+});
+
+router.get("/_zycord/api/schemas.json", route({ spacebarOnly: true, authentication: "never" }), (_req: Request, res: Response) => {
+	res.set("Cache-Control", "public, max-age=21600");
+	return res.sendFile(path.join(ASSETS_FOLDER, "schemas.json"), { dotfiles: "allow" });
+});
 
 export default router;

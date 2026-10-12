@@ -5,7 +5,7 @@ export function HomePage() {
 	return (
 		<div>
 			{/* =====================================================================
-			    HERO SECTION — OFFICIAL DISCORD 2026 3D CHARACTERS, WUMPUS, CLYDE & UI
+			    HERO SECTION — OFFICIAL ZYCORD 2026 3D CHARACTERS, WUMPUS, CLYDE & UI
 			    ===================================================================== */}
 			<section className="hero-section">
 				<img src="/site/media/zycord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "32px", top: "8%", left: "5%" }} />
@@ -36,7 +36,7 @@ export function HomePage() {
 							</p>
 						</div>
 
-						{/* Official Discord 2026 3D Composite Stage */}
+						{/* Official Zycord 2026 3D Composite Stage */}
 						<div className="hero-art-stage">
 							<div className="hero-art-glow"></div>
 
@@ -104,7 +104,7 @@ export function HomePage() {
 						</div>
 					</div>
 
-					{/* Centered Hero Bottom Dual CTA Pair (Exact Discord.com layout) */}
+					{/* Centered Hero Bottom Dual CTA Pair (Exact Zycord layout) */}
 					<div className="hero-bottom-ctas">
 						<a className="zy-btn zy-btn-secondary" href="/download/windows">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -127,7 +127,7 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 1: MAKE YOUR GROUP CHATS MORE FUN
-			    (Exact Match to Discord.com Screenshot 141401.png:
+			    (Exact Match to Zycord Screenshot 141401.png:
 			     - Video on LEFT, Copy on RIGHT
 			     - Party Wumpus peeking from behind the top-right of the card (z-index: 0)
 			     - Blurred 3D Spotted Egg floating behind/below the bottom-left corner)
@@ -197,7 +197,7 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 2: STREAM LIKE YOU'RE IN THE SAME ROOM (COPY LEFT, VIDEO RIGHT)
-			    (Exact Match to Discord.com Screenshot 141358.png:
+			    (Exact Match to Zycord Screenshot 141358.png:
 			     - Blurred 3D Clyde Cube floating below bottom-left)
 			    ===================================================================== */}
 			<section className="zy-section" id="video">
@@ -250,7 +250,7 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 3: HOP IN WHEN YOU'RE FREE, NO NEED TO CALL (VIDEO LEFT, COPY RIGHT)
-			    (Exact Match to Discord.com Screenshot 141355.png:
+			    (Exact Match to Zycord Screenshot 141355.png:
 			     - Sharp 3D Pink/White Box overlapping the top-right border of the card)
 			    ===================================================================== */}
 			<section className="zy-section" id="voice">
@@ -321,7 +321,7 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 4: SEE WHO'S AROUND TO CHILL (VIDEO RIGHT, COPY LEFT)
-			    (Exact Match to Discord.com Screenshot 141350.png:
+			    (Exact Match to Zycord Screenshot 141350.png:
 			     - Blurred 3D Coin overlapping bottom-left behind the card)
 			    ===================================================================== */}
 			<section className="zy-section" id="presence">
@@ -374,7 +374,7 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 5: ALWAYS HAVE SOMETHING TO DO TOGETHER
-			    (Exact Match to Discord.com Screenshot 141345.png:
+			    (Exact Match to Zycord Screenshot 141345.png:
 			     - Green stage with Vibin/YouTube video on LEFT, Copy on RIGHT
 			     - Woman & Friends characters sitting along top-right border of card
 			     - Sharp 3D Radish/Turnip overlapping bottom-left corner of card
@@ -470,7 +470,7 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 6: WHEREVER YOU GAME, HANG OUT HERE (COPY LEFT, VIDEO RIGHT)
-			    (Exact Match to Discord.com Screenshot 141340.png & 141338.png)
+			    (Exact Match to Zycord Screenshot 141340.png & 141338.png)
 			    ===================================================================== */}
 			<section className="zy-section" id="platforms">
 				<div className="zy-container" style={{ position: "relative" }}>
@@ -504,8 +504,8 @@ export function HomePage() {
 			</section>
 
 			{/* =====================================================================
-			    FINAL CALL TO ACTION + OFFICIAL DISCORD 2026 HORIZON & WUMPUS SCENE
-			    (Exact Match to Discord.com Screenshot 2:
+			    FINAL CALL TO ACTION + OFFICIAL ZYCORD 2026 HORIZON & WUMPUS SCENE
+			    (Exact Match to Zycord Screenshot 2:
 			     - Single centered white button "Download for Windows"
 			     - Full character lineup + 3D Clyde Robot + Wumpus sitting OVER the footer horizon edge)
 			    ===================================================================== */}

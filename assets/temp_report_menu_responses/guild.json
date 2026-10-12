@@ -1000,7 +1000,7 @@
             "is_header_hidden": true
           },
           "should_submit_data": false,
-          "skip_if_unlocalized": false,
+          "skip_if_unlocalized" : false,
           "is_localized": true
         }
       ],

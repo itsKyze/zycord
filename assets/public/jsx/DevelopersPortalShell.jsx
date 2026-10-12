@@ -17,7 +17,7 @@ export function DevelopersPortalTopbar() {
 					<a href="/developers">Developer Home</a>
 					<a href="/developers#rich-presence">Social SDK</a>
 					<a href="/developers#sdk-quickstart">Documentation</a>
-					<a href="/_spacebar/api/openapi.json" target="_blank" rel="noopener">OpenAPI Spec</a>
+					<a href="/_zycord/api/openapi.json" target="_blank" rel="noopener">OpenAPI Spec</a>
 				</nav>
 			</div>
 			<div className="zy-dev-topbar-right">
@@ -54,7 +54,7 @@ export function DevelopersPortalHeroBanner() {
 						</svg>
 						Quickstart Guide
 					</a>
-					<a href="/_spacebar/api/openapi.json" target="_blank" rel="noopener">
+					<a href="/_zycord/api/openapi.json" target="_blank" rel="noopener">
 						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style={{ marginRight: "6px", verticalAlign: "-2px" }}>
 							<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
 						</svg>
