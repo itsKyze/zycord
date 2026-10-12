@@ -465,7 +465,7 @@ export class Guild extends BaseClass {
 
         const guild = await Guild.create({
             id: guild_id,
-            name: body.name || "Spacebar",
+            name: body.name || "Zycord",
             icon: await handleFile(`/icons/${guild_id}`, body.icon as string),
             owner_id: body.owner_id, // TODO: need to figure out a way for ownerless guilds and multiply-owned guilds
             presence_count: 0,
