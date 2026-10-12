@@ -728,43 +728,7 @@
         ),
         hasDropdown ? /* @__PURE__ */ h(DropdownMenu, { item }) : null
       );
-    }))), /* @__PURE__ */ h("div", { className: "zy-nav-actions" }, /* @__PURE__ */ h("div", { className: "zy-action-dropdown", "data-zy-dropdown": true }, /* @__PURE__ */ h(
-      "button",
-      {
-        type: "button",
-        className: "zy-nav-lang-btn",
-        "data-zy-dropdown-toggle": true,
-        "aria-label": "Select Language",
-        title: "Language"
-      },
-      /* @__PURE__ */ h("svg", { width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.1", "stroke-linecap": "round", "stroke-linejoin": "round", "aria-hidden": "true" }, /* @__PURE__ */ h("circle", { cx: "12", cy: "12", r: "10" }), /* @__PURE__ */ h("line", { x1: "2", y1: "12", x2: "22", y2: "12" }), /* @__PURE__ */ h("path", { d: "M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" })),
-      /* @__PURE__ */ h("span", { id: "zy-nav-lang-code" }, (getSavedLanguage().code || "en-US").split("-")[0].toUpperCase()),
-      /* @__PURE__ */ h("svg", { className: "zy-action-dropdown-arrow", viewBox: "0 0 16 16", fill: "none", stroke: "currentColor", "stroke-width": "2.4", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("polyline", { points: "3.5 6 8 10.5 12.5 6" }))
-    ), /* @__PURE__ */ h("div", { className: "zy-action-dropdown-menu", role: "menu", style: { right: 0, left: "auto", minWidth: "185px" } }, [
-      { code: "en-US", label: "English", short: "EN" },
-      { code: "ar", label: "العربية", short: "AR" },
-      { code: "fr", label: "Français", short: "FR" },
-      { code: "es-ES", label: "Español", short: "ES" },
-      { code: "de", label: "Deutsch", short: "DE" }
-    ].map((lng) => /* @__PURE__ */ h(
-      "button",
-      {
-        type: "button",
-        className: "zy-action-dropdown-item",
-        onClick: (ev) => {
-          ev.stopPropagation();
-          applySiteLanguage(lng.code, lng.label);
-          const codeEl = document.getElementById("zy-nav-lang-code");
-          if (codeEl) codeEl.textContent = lng.short;
-          const fLabel = document.getElementById("zy-lang-current-label");
-          if (fLabel) fLabel.textContent = lng.label;
-          const wrap = ev.currentTarget.closest("[data-zy-dropdown]");
-          if (wrap) wrap.classList.remove("is-open");
-        }
-      },
-      /* @__PURE__ */ h("span", { "data-zy-orig": lng.label }, lng.label),
-      /* @__PURE__ */ h("span", { style: { opacity: 0.65, fontSize: "12px" } }, lng.short)
-    )))), /* @__PURE__ */ h(
+    }))), /* @__PURE__ */ h("div", { className: "zy-nav-actions" }, /* @__PURE__ */ h(
       "a",
       {
         className: "zy-btn zy-btn-login",

@@ -368,52 +368,6 @@ export function ZycordNavbar() {
 					</nav>
 
 					<div className="zy-nav-actions">
-						<div className="zy-action-dropdown" data-zy-dropdown>
-							<button
-								type="button"
-								className="zy-nav-lang-btn"
-								data-zy-dropdown-toggle
-								aria-label="Select Language"
-								title="Language"
-							>
-								<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-									<circle cx="12" cy="12" r="10" />
-									<line x1="2" y1="12" x2="22" y2="12" />
-									<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-								</svg>
-								<span id="zy-nav-lang-code">{(getSavedLanguage().code || "en-US").split("-")[0].toUpperCase()}</span>
-								<svg className="zy-action-dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-									<polyline points="3.5 6 8 10.5 12.5 6" />
-								</svg>
-							</button>
-							<div className="zy-action-dropdown-menu" role="menu" style={{ right: 0, left: "auto", minWidth: "185px" }}>
-								{[
-									{ code: "en-US", label: "English", short: "EN" },
-									{ code: "ar", label: "العربية", short: "AR" },
-									{ code: "fr", label: "Français", short: "FR" },
-									{ code: "es-ES", label: "Español", short: "ES" },
-									{ code: "de", label: "Deutsch", short: "DE" }
-								].map((lng) => (
-									<button
-										type="button"
-										className="zy-action-dropdown-item"
-										onClick={(ev) => {
-											ev.stopPropagation();
-											applySiteLanguage(lng.code, lng.label);
-											const codeEl = document.getElementById("zy-nav-lang-code");
-											if (codeEl) codeEl.textContent = lng.short;
-											const fLabel = document.getElementById("zy-lang-current-label");
-											if (fLabel) fLabel.textContent = lng.label;
-											const wrap = ev.currentTarget.closest("[data-zy-dropdown]");
-											if (wrap) wrap.classList.remove("is-open");
-										}}
-									>
-										<span data-zy-orig={lng.label}>{lng.label}</span>
-										<span style={{ opacity: 0.65, fontSize: "12px" }}>{lng.short}</span>
-									</button>
-								))}
-							</div>
-						</div>
 						<a
 							className="zy-btn zy-btn-login"
 							data-zy-login-cta
