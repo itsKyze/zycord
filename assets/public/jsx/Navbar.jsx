@@ -294,7 +294,7 @@ export function ZycordNavbar() {
 				<div className="zy-navbar-inner">
 					<a className="zy-brand" href="/" aria-label="Zycord Home">
 						<span className="zy-brand-mark">
-							<ZycordMark size={22} color="#ffffff" />
+							<ZycordMark size={22} color="currentColor" />
 						</span>
 						<span>Zycord</span>
 					</a>
