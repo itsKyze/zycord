@@ -3,168 +3,283 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Safety &amp; Security Center — __INSTANCE_NAME__</title>
-	<meta name="description" content="Learn how __INSTANCE_NAME__ protects your conversations and communities with End-to-End Encrypted DMs, AutoMod, WebAuthn Passkeys, 2FA, and 64-bit role permissions." />
+	<title>__INSTANCE_NAME__ Safety Center — Privacy, Security &amp; Community Hubs</title>
+	<meta name="description" content="Explore the __INSTANCE_NAME__ Safety Center: Safety Library, Privacy Hub, Parent Hub, Transparency Hub, Policy Hub, Teen Charter, and End-to-End Encrypted DMs." />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	<link rel="stylesheet" href="/site/site.css" />
+	<style>
+		.checklist-row {
+			display: flex;
+			align-items: center;
+			gap: 14px;
+			padding: 16px 20px;
+			border-radius: 18px;
+			background: rgba(14, 15, 45, 0.78);
+			border: 1px solid rgba(255, 255, 255, 0.14);
+			cursor: pointer;
+			transition: border-color 0.16s ease, background 0.16s ease;
+		}
+		.checklist-row:hover {
+			border-color: rgba(88, 101, 242, 0.65);
+		}
+		.checklist-row input[type="checkbox"] {
+			width: 22px;
+			height: 22px;
+			accent-color: #57f287;
+			cursor: pointer;
+		}
+	</style>
 </head>
 <body>
 	<header data-zy-navbar></header>
 
 	<main>
-		<section class="zy-section" style="padding-top:48px;position:relative;overflow:hidden;">
-			<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" class="zy-star d1" style="width:28px;top:9%;left:6%;" />
-			<img src="/site/media/discord/star-m.svg" alt="" aria-hidden="true" class="zy-star d3" style="width:22px;top:14%;right:8%;" />
+		<!-- =====================================================================
+		     1. CENTERED HERO — EXACT 2026 DISCORD.COM/SAFETY
+		     ===================================================================== -->
+		<section class="zy-subhero" style="padding-top:76px;padding-bottom:56px;">
 			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/discord/safety-shield-3d.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:128px;top:-48px;right:6%;" />
-				<img src="/site/media/discord/safety-egg-3d.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:108px;bottom:-38px;left:5%;" />
-				<div class="zy-showcase-card">
-					<div class="zy-showcase-grid">
-						<div class="zy-showcase-copy">
-							<div>
-								<span class="zy-eyebrow">
-									<span class="zy-eyebrow-dot"></span>
-									<span>__INSTANCE_NAME__ Safety &amp; Trust Center</span>
-								</span>
-							</div>
-							<h1 class="zy-display">BUILT FOR PRIVACY, SAFETY &amp; CONTROL</h1>
-							<p class="zy-body-lg">
-								Whether you're sending private messages with End-to-End Encryption or moderating a 10,000-member gaming community, __INSTANCE_NAME__ gives you cryptographic security and real-time moderation tools by default.
-							</p>
-							<div style="display:flex;gap:14px;flex-wrap:wrap;">
-								<a class="zy-btn zy-btn-primary" href="/guidelines">Read Community Guidelines</a>
-								<a class="zy-btn zy-btn-ghost" href="/privacy">Privacy Policy</a>
-							</div>
-						</div>
+				<img
+					src="/site/media/discord/safety-shield-3d.webp"
+					alt=""
+					aria-hidden="true"
+					class="zy-float-prop tilt"
+					style="width:clamp(110px, 14vw, 188px);top:4%;left:2%;"
+				/>
+				<img
+					src="/site/media/discord/safety-egg-3d.webp"
+					alt=""
+					aria-hidden="true"
+					class="zy-float-prop"
+					style="width:clamp(105px, 13vw, 176px);bottom:0;right:3%;"
+				/>
 
-						<div class="zy-app-window" id="e2ee">
-							<div class="zy-app-titlebar">
-								<div class="zy-window-dots">
-									<span class="zy-window-dot red"></span>
-									<span class="zy-window-dot amber"></span>
-									<span class="zy-window-dot green"></span>
-								</div>
-								<span><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:middle;margin-right:4px;"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>E2EE Direct Message Verification</span>
-								<span style="color:var(--color-spring-green);font-weight:700;">Verified Session</span>
-							</div>
-							<div style="padding:22px;background:#1e2124;display:flex;flex-direction:column;gap:14px;">
-								<div style="padding:14px;border-radius:10px;background:rgba(87,242,135,0.1);border:1px solid rgba(87,242,135,0.35);">
-									<div style="font-weight:800;color:var(--color-spring-green);font-size:14px;">✓ End-to-End Encrypted Channel</div>
-									<p style="font-size:13px;color:var(--color-fog);margin-top:4px;">
-										Messages in this conversation are encrypted on your device before transmission. Only you and the recipient hold the decryption keys.
-									</p>
-								</div>
-								<div style="padding:12px 14px;border-radius:10px;background:#141619;font-family:var(--font-mono);font-size:12px;color:#a5b4fc;">
-									<div>Cipher: ECDH P-256 + AES-256-GCM</div>
-									<div style="margin-top:4px;">Key Recovery Vault: Active (Zero-Knowledge Backup)</div>
-								</div>
-								<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:var(--color-greyple);">
-									<span>WebAuthn Passkeys &amp; TOTP 2FA Supported</span>
-									<a href="/app" style="color:var(--color-hover-blurple);font-weight:700;">Security Settings →</a>
-								</div>
-							</div>
+				<div class="zy-subhero-inner">
+					<span class="zy-eyebrow">Trust, Privacy &amp; Protection</span>
+					<h1 class="zy-subhero-title">__INSTANCE_NAME__ Safety Center</h1>
+					<p class="zy-subhero-sub">
+						__INSTANCE_NAME__ is the place to hang out with your friends and build community around shared interests. We’re committed to creating a safe, inclusive, and welcoming place for everyone — with zero-knowledge E2EE DMs, Passkeys, and granular moderation tools.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- =====================================================================
+		     2. 8 OFFICIAL SAFETY CENTER HUB ROWS — MATCHING ALL DROPDOWN LINKS
+		     ===================================================================== -->
+		<section class="zy-section" style="padding-top:16px;">
+			<div class="zy-container">
+				<!-- 1. Safety Library -->
+				<div class="zy-alt-row" id="safety-library">
+					<div class="zy-alt-copy">
+						<span class="zy-eyebrow">Resources</span>
+						<h2 class="zy-alt-title">Safety Library</h2>
+						<p class="zy-body-lg">
+							Everything you could ever want to know about safety on __INSTANCE_NAME__. Whether you’re a user, a moderator, or a parent, discover all of our tools and resources and how to use them.
+						</p>
+						<div class="zy-pill-btn-row">
+							<a class="zy-white-pill-btn" href="#e2ee">
+								<span>Explore Safety Library</span>
+								<span>→</span>
+							</a>
+						</div>
+					</div>
+					<div class="zy-alt-media-card is-indigo">
+						<img src="/site/media/discord/safety-hub-library.png" alt="Safety Library" />
+					</div>
+				</div>
+
+				<!-- 2. Privacy Hub -->
+				<div class="zy-alt-row is-reversed" id="privacy-hub">
+					<div class="zy-alt-media-card is-blue">
+						<img src="/site/media/discord/safety-hub-privacy.webp" alt="Privacy Hub" />
+					</div>
+					<div class="zy-alt-copy">
+						<span class="zy-eyebrow">Zero-Knowledge &amp; Control</span>
+						<h2 class="zy-alt-title">Privacy Hub</h2>
+						<p class="zy-body-lg">
+							Privacy is an essential part of feeling safe. No matter what, we build privacy into our products — including client-side End-to-End Encrypted DMs (ECDH P-256 + AES-256-GCM) and strict data controls.
+						</p>
+						<div class="zy-pill-btn-row">
+							<a class="zy-white-pill-btn" href="/privacy">
+								<span>Explore Privacy Hub</span>
+								<span>→</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- 3. Parent Hub & Family Center -->
+				<div class="zy-alt-row" id="parent-hub">
+					<div class="zy-alt-copy" id="family-center">
+						<span class="zy-eyebrow">Family Center</span>
+						<h2 class="zy-alt-title">Parent Hub</h2>
+						<p class="zy-body-lg">
+							Learn more about what we’re doing to help your teen stay safer on our platform, including our Family Center tool, DM spam filters, and age-appropriate safety defaults.
+						</p>
+						<div class="zy-pill-btn-row">
+							<a class="zy-white-pill-btn" href="/support">
+								<span>Explore Parent Hub</span>
+								<span>→</span>
+							</a>
+						</div>
+					</div>
+					<div class="zy-alt-media-card is-green">
+						<img src="/site/media/discord/safety-hub-parent.webp" alt="Parent Hub" />
+					</div>
+				</div>
+
+				<!-- 4. Transparency Hub -->
+				<div class="zy-alt-row is-reversed" id="transparency-hub">
+					<div class="zy-alt-media-card is-pink">
+						<img src="/site/media/discord/safety-hub-transparency.webp" alt="Transparency Hub" />
+					</div>
+					<div class="zy-alt-copy">
+						<span class="zy-eyebrow">Open Metrics &amp; Audits</span>
+						<h2 class="zy-alt-title">Transparency Hub</h2>
+						<p class="zy-body-lg">
+							Explore data, trends, and insights into the work done to help keep people on __INSTANCE_NAME__ safe. Transparency reports and real-time system telemetry cover our enforcement and uptime practices.
+						</p>
+						<div class="zy-pill-btn-row">
+							<a class="zy-white-pill-btn" href="/status">
+								<span>Explore Transparency Hub</span>
+								<span>→</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- 5. Safety News Hub -->
+				<div class="zy-alt-row" id="safety-news">
+					<div class="zy-alt-copy">
+						<span class="zy-eyebrow">Latest Updates</span>
+						<h2 class="zy-alt-title">Safety News Hub</h2>
+						<p class="zy-body-lg">
+							The latest news and updates on __INSTANCE_NAME__’s Safety, Privacy, and Policy initiatives — including WebAuthn Passkey support, AutoMod regex engines, and raid protection.
+						</p>
+						<div class="zy-pill-btn-row">
+							<a class="zy-white-pill-btn" href="/blog#safety">
+								<span>Explore Safety News</span>
+								<span>→</span>
+							</a>
+						</div>
+					</div>
+					<div class="zy-alt-media-card is-indigo">
+						<img src="/site/media/discord/safety-hub-news.webp" alt="Safety News Hub" />
+					</div>
+				</div>
+
+				<!-- 6. Policy Hub -->
+				<div class="zy-alt-row is-reversed" id="policy-hub">
+					<div class="zy-alt-media-card is-blue">
+						<img src="/site/media/discord/safety-hub-policy.png" alt="Policy Hub" />
+					</div>
+					<div class="zy-alt-copy">
+						<span class="zy-eyebrow">Community Standards</span>
+						<h2 class="zy-alt-title">Policy Hub</h2>
+						<p class="zy-body-lg">
+							Learn about our Community Guidelines, Terms of Service, and the policies we’ve developed to help keep __INSTANCE_NAME__ fair, welcoming, and safe for every community.
+						</p>
+						<div class="zy-pill-btn-row">
+							<a class="zy-white-pill-btn" href="/guidelines">
+								<span>Explore Policy Hub</span>
+								<span>→</span>
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<!-- 7. Teen Charter & Player's Guide -->
+				<div class="zy-alt-row" id="teen-charter">
+					<div class="zy-alt-copy" id="players-guide">
+						<span class="zy-eyebrow">Youth &amp; Player Guides</span>
+						<h2 class="zy-alt-title">Teen Charter &amp; Player’s Guide</h2>
+						<p class="zy-body-lg">
+							We work to center youth voices in our product design and policies. Read our collaborative Teen Charter and __INSTANCE_NAME__ Player’s Guide for healthy digital hangouts.
+						</p>
+						<div class="zy-pill-btn-row">
+							<a class="zy-white-pill-btn" href="/guidelines">
+								<span>Read the Charter</span>
+								<span>→</span>
+							</a>
+						</div>
+					</div>
+					<div class="zy-alt-media-card is-pink">
+						<img src="/site/media/discord/safety-hub-teen.png" alt="Teen Charter" />
+					</div>
+				</div>
+
+				<!-- 8. Wellbeing Hub -->
+				<div class="zy-alt-row is-reversed" id="wellbeing-hub">
+					<div class="zy-alt-media-card is-green">
+						<img src="/site/media/discord/safety-hub-wellbeing.png" alt="Wellbeing Hub" />
+					</div>
+					<div class="zy-alt-copy">
+						<span class="zy-eyebrow">Digital Balance</span>
+						<h2 class="zy-alt-title">Wellbeing Hub</h2>
+						<p class="zy-body-lg">
+							Supporting your digital wellbeing so you can connect, play, and thrive on __INSTANCE_NAME__. Customize notification schedules, quiet hours, and DM permissions anytime.
+						</p>
+						<div class="zy-pill-btn-row">
+							<a class="zy-white-pill-btn" href="#checklist">
+								<span>Explore Wellbeing Hub</span>
+								<span>→</span>
+							</a>
 						</div>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<!-- Official Safety Hub Cards (Exact Discord.com/safety 3-Card Layout) -->
-		<section class="zy-section" style="padding-top:16px;">
+		<!-- =====================================================================
+		     3. TECHNICAL SECURITY & INTERACTIVE CHECKLIST (#e2ee, #moderation, #checklist)
+		     ===================================================================== -->
+		<section class="zy-section" id="e2ee" style="padding-top:16px;padding-bottom:64px;">
 			<div class="zy-container">
-				<div class="zy-grid-3">
-					<article class="zy-card">
-						<img src="/site/media/discord/safety-card-1.png" alt="Safety Library" style="width:100%;height:200px;object-fit:cover;border-radius:16px;" />
-						<h2 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">SAFETY LIBRARY</h2>
-						<p class="zy-body">
-							Everything you could ever want to know about safety on __INSTANCE_NAME__. Whether you're a user, a moderator, or a parent, discover all of our tools and resources.
-						</p>
-						<div style="margin-top:auto;padding-top:10px;">
-							<a class="zy-btn zy-btn-primary zy-btn-sm" href="#moderation">Explore Safety Library →</a>
+				<div class="zy-showcase-card" id="moderation">
+					<div class="zy-showcase-grid">
+						<div class="zy-showcase-copy" id="checklist">
+							<span class="zy-eyebrow">Interactive Account Security Checklist</span>
+							<h2 class="zy-heading">LOCK DOWN YOUR ACCOUNT IN 4 STEPS</h2>
+							<p class="zy-body-lg">
+								Check off each security layer below to see your real-time protection score on __INSTANCE_NAME__.
+							</p>
+							<div style="padding:14px 18px;border-radius:16px;background:rgba(87,242,135,0.16);border:1px solid rgba(87,242,135,0.45);color:#57f287;font-weight:800;" id="security-score-badge">
+								Security Score: 100% Protected (4 / 4 Active)
+							</div>
 						</div>
-					</article>
 
-					<article class="zy-card">
-						<img src="/site/media/discord/safety-card-2.webp" alt="Privacy Hub" style="width:100%;height:200px;object-fit:cover;border-radius:16px;" />
-						<h2 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">PRIVACY HUB</h2>
-						<p class="zy-body">
-							Privacy is an essential part of feeling safe. No matter what, we build privacy into our products with End-to-End Encrypted DMs and zero-knowledge key vaults.
-						</p>
-						<div style="margin-top:auto;padding-top:10px;">
-							<a class="zy-btn zy-btn-secondary zy-btn-sm" href="/privacy">Explore Privacy Hub →</a>
+						<div style="display:flex;flex-direction:column;gap:12px;">
+							<label class="checklist-row">
+								<input type="checkbox" checked data-sec-check />
+								<div>
+									<div style="font-weight:800;font-size:16px;">Enable WebAuthn Passkeys &amp; TOTP 2FA</div>
+									<div style="font-size:13px;color:var(--color-fog);">Hardware-backed biometric sign-in plus authenticator app backup codes.</div>
+								</div>
+							</label>
+							<label class="checklist-row">
+								<input type="checkbox" checked data-sec-check />
+								<div>
+									<div style="font-weight:800;font-size:16px;">Activate End-to-End Encrypted DMs (ECDH + AES-GCM)</div>
+									<div style="font-size:13px;color:var(--color-fog);">Zero-knowledge client-side encryption keys that never leave your device unencrypted.</div>
+								</div>
+							</label>
+							<label class="checklist-row">
+								<input type="checkbox" checked data-sec-check />
+								<div>
+									<div style="font-weight:800;font-size:16px;">Save Your E2EE Recovery Key</div>
+									<div style="font-size:13px;color:var(--color-fog);">Restore encrypted message history seamlessly when switching browsers or PCs.</div>
+								</div>
+							</label>
+							<label class="checklist-row">
+								<input type="checkbox" checked data-sec-check />
+								<div>
+									<div style="font-weight:800;font-size:16px;">Configure Server AutoMod &amp; Role Hierarchies</div>
+									<div style="font-size:13px;color:var(--color-fog);">Block phishing links, spam raids, and unwanted keywords automatically.</div>
+								</div>
+							</label>
 						</div>
-					</article>
-
-					<article class="zy-card">
-						<img src="/site/media/discord/safety-card-3.webp" alt="Parent & Policy Hub" style="width:100%;height:200px;object-fit:cover;border-radius:16px;" />
-						<h2 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">TRANSPARENCY &amp; POLICY HUB</h2>
-						<p class="zy-body">
-							Explore data, trends, and insights into the work done to help keep people on __INSTANCE_NAME__ safe, alongside our clear Community Guidelines.
-						</p>
-						<div style="margin-top:auto;padding-top:10px;">
-							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/guidelines">Explore Policy Hub →</a>
-						</div>
-					</article>
-				</div>
-			</div>
-		</section>
-
-		<!-- Pillars Grid -->
-		<section class="zy-section" id="moderation" style="padding-top:16px;">
-			<div class="zy-container">
-				<div class="zy-grid-3">
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><rect x="9" y="11" width="6" height="5" rx="1"/><path d="M12 8v3"/></svg></div>
-						<h2 class="zy-heading-sm" style="font-size:22px;">END-TO-END ENCRYPTED DMS</h2>
-						<p class="zy-body">
-							Private direct messages support client-side E2EE with cryptographic key exchange and downloadable recovery keys so your private conversations stay private.
-						</p>
-					</article>
-
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg></div>
-						<h2 class="zy-heading-sm" style="font-size:22px;">AUTOMOD &amp; RAID DEFENSE</h2>
-						<p class="zy-body">
-							Configure automated keyword rules, mention spam limits, phishing link filters, verification levels, and instant member timeouts before trouble hits your channels.
-						</p>
-					</article>
-
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg></div>
-						<h2 class="zy-heading-sm" style="font-size:22px;">PASSKEYS, 2FA &amp; SESSIONS</h2>
-						<p class="zy-body">
-							Lock down your account with hardware WebAuthn Passkeys, Authenticator TOTP apps, emergency backup codes, and active device session management.
-						</p>
-					</article>
-
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="3" x2="12" y2="21"/><path d="M3 10l9-7 9 7"/><path d="M3 14l6 6 6-6"/><path d="M15 14l6 6-6-6"/></svg></div>
-						<h2 class="zy-heading-sm" style="font-size:22px;">64-BIT ROLE PERMISSIONS</h2>
-						<p class="zy-body">
-							Delegate moderation safely with hierarchical roles, per-channel permission overwrites, and complete server audit logs tracking every administrative action.
-						</p>
-					</article>
-
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg></div>
-						<h2 class="zy-heading-sm" style="font-size:22px;">DM &amp; FRIEND CONTROLS</h2>
-						<p class="zy-body">
-							Decide who can send you direct messages or friend requests on a per-server basis, block unwanted users immediately, and filter explicit media automatically.
-						</p>
-					</article>
-
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-						<h2 class="zy-heading-sm" style="font-size:22px;">TRANSPARENT POLICIES</h2>
-						<p class="zy-body">
-							Read our clear, plain-language Terms of Service, Privacy Policy, and Community Guidelines governing behavior and data stewardship on __INSTANCE_NAME__.
-						</p>
-						<div style="margin-top:auto;padding-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
-							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/terms">Terms</a>
-							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/privacy">Privacy</a>
-							<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/guidelines">Guidelines</a>
-						</div>
-					</article>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -172,5 +287,23 @@
 
 	<footer data-zy-footer></footer>
 	<script src="/site/site.js"></script>
+	<script>
+		(function () {
+			var checks = document.querySelectorAll("[data-sec-check]");
+			var badge = document.getElementById("security-score-badge");
+			if (!badge || !checks.length) return;
+			function update() {
+				var count = 0;
+				for (var i = 0; i < checks.length; i++) {
+					if (checks[i].checked) count++;
+				}
+				var pct = Math.round((count / checks.length) * 100);
+				badge.textContent = "Security Score: " + pct + "% Protected (" + count + " / " + checks.length + " Active)";
+			}
+			for (var j = 0; j < checks.length; j++) {
+				checks[j].addEventListener("change", update);
+			}
+		})();
+	</script>
 </body>
 </html>

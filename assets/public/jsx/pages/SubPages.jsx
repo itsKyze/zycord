@@ -1,98 +1,175 @@
 import { h } from "../runtime.jsx";
 
 /* ============================================================================
-   1. DOWNLOAD PAGE (/download) — Official Discord 3D Download Assets
+   1. DOWNLOAD PAGE (/download) — Exact 2026 discord.com/download Layout
    ============================================================================ */
 export function DownloadPage() {
 	return (
 		<div>
-			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
-				<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "28px", top: "8%", left: "6%" }} />
-				<img src="/site/media/discord/star-m.svg" alt="" aria-hidden="true" className="zy-star d2" style={{ width: "22px", top: "14%", right: "9%" }} />
-
-				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/download-clyde-point.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "128px", top: "-46px", right: "5%" }} />
-					<img src="/site/media/discord/download-wumpus-point.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", bottom: "-44px", left: "4%" }} />
-					<img src="/site/media/discord/download-trophy.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "96px", top: "-42px", left: "6%" }} />
-
-					<div className="zy-showcase-card">
-						<div className="zy-showcase-grid">
-							<div className="zy-showcase-copy">
-								<div>
-									<span className="zy-eyebrow">
-										<span className="zy-eyebrow-dot" data-zy-status-dot></span>
-										<span>Latest Release v4.0 · 64-bit Desktop &amp; Web</span>
-									</span>
-								</div>
-								<h1 className="zy-display">GET ZYCORD FOR ANY DEVICE</h1>
-								<p className="zy-body-lg">
-									An adventure awaits. Hang out with your friends on our desktop app and keep the conversation going on mobile and web.
-								</p>
-								<div style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "8px" }}>
-									<a className="zy-btn zy-btn-primary" href="/download/windows">
-										<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-											<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-											<polyline points="7 10 12 15 17 10" />
-											<line x1="12" y1="15" x2="12" y2="3" />
-										</svg>
-										<span>Download for Windows</span>
-									</a>
-									<a className="zy-btn zy-btn-secondary" data-zy-open-app href="/app">
-										<span>Open Zycord in Browser</span>
-									</a>
-								</div>
-								<div style={{ fontSize: "13px", color: "var(--color-fog)" }}>
-									Windows 10 / 11 (64-bit) · Signed NSIS Installer (ZycordSetup.exe)
-								</div>
-							</div>
-
-							<div className="zy-scene-stage stage-cerulean" style={{ position: "relative" }}>
-								<img
-									src="/site/media/discord/download-hero.webp"
-									alt="Zycord on Desktop and Mobile"
-									style={{ width: "100%", height: "auto", borderRadius: "20px", display: "block" }}
-								/>
-							</div>
+			{/* Hero */}
+			<section className="zy-subhero">
+				<div className="zy-container">
+					<div className="zy-subhero-inner">
+						<img
+							src="/site/media/discord/prop-coin.webp"
+							alt=""
+							aria-hidden="true"
+							style={{ width: "86px", height: "auto", marginBottom: "6px", filter: "drop-shadow(0 16px 28px rgba(0,0,0,0.45))" }}
+						/>
+						<h1 className="zy-subhero-title">Download Zycord wherever you hang out</h1>
+						<p className="zy-subhero-sub">
+							Talk, play, and hang out with friends around the world over voice, video, or text. Available on Windows, macOS, Linux, iOS, Android, and consoles.
+						</p>
+						<div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px", marginTop: "10px" }}>
+							<a className="zy-btn zy-btn-primary" href="/download/windows" style={{ padding: "18px 34px", fontSize: "18px" }}>
+								<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+									<polyline points="7 10 12 15 17 10" />
+									<line x1="12" y1="15" x2="12" y2="3" />
+								</svg>
+								<span>Download for Windows</span>
+							</a>
+							<a className="zy-btn zy-btn-secondary" data-zy-open-app href="/app" style={{ padding: "18px 34px", fontSize: "18px" }}>
+								<span>Open Zycord in Browser</span>
+							</a>
 						</div>
+					</div>
+
+					{/* Massive Download Hero Stage with Clyde & Wumpus flanking */}
+					<div className="zy-dl-hero-stage">
+						<img
+							src="/site/media/discord/download-clyde-point.webp"
+							alt=""
+							aria-hidden="true"
+							className="zy-float-prop"
+							style={{ width: "clamp(110px, 14vw, 195px)", left: "-4%", bottom: "12%", zIndex: 4 }}
+						/>
+						<img
+							src="/site/media/discord/download-hero.webp"
+							alt="Zycord Desktop and Mobile Interface"
+							className="zy-dl-hero-img"
+						/>
+						<img
+							src="/site/media/discord/download-leaf.webp"
+							alt=""
+							aria-hidden="true"
+							className="zy-float-prop"
+							style={{ width: "clamp(72px, 8vw, 118px)", right: "8%", bottom: "36%", zIndex: 4 }}
+						/>
+						<img
+							src="/site/media/discord/download-wumpus-point.webp"
+							alt=""
+							aria-hidden="true"
+							className="zy-float-prop"
+							style={{ width: "clamp(130px, 16vw, 230px)", right: "-5%", bottom: "4%", zIndex: 5 }}
+						/>
 					</div>
 				</div>
 			</section>
 
-			<section className="zy-section" style={{ paddingTop: "16px" }}>
+			{/* Alternating Platform Rows */}
+			<section className="zy-section" style={{ paddingTop: "24px" }}>
 				<div className="zy-container">
-					<div className="zy-grid-3">
-						<article className="zy-card">
-							<img src="/site/media/discord/download-desktop-card.webp" alt="Zycord for Desktop" style={{ width: "100%", height: "210px", objectFit: "cover", borderRadius: "16px" }} />
-							<h3 className="zy-heading-sm" style={{ fontSize: "24px", marginTop: "8px" }}>WINDOWS DESKTOP</h3>
-							<p className="zy-body">
-								Native desktop client with system tray integration, global push-to-talk keybinds, and hardware-accelerated 1080p 60fps screen share.
+					{/* 1. Desktop */}
+					<div className="zy-alt-row">
+						<div className="zy-alt-copy">
+							<h2 className="zy-alt-title">Download for desktop</h2>
+							<p className="zy-body-lg">
+								Bring your favorite features to a bigger screen with our desktop app, available on Windows, macOS, and Linux with native system tray and global keybinds.
 							</p>
-							<div style={{ marginTop: "auto", paddingTop: "12px" }}>
-								<a className="zy-btn zy-btn-primary zy-btn-sm" href="/download/windows">Download for Windows</a>
+							<div className="zy-pill-btn-row">
+								<a className="zy-white-pill-btn" href="/download/windows">
+									<span>Windows (64-bit)</span>
+									<span>↓</span>
+								</a>
+								<a className="zy-white-pill-btn" href="/download/windows">
+									<span>macOS</span>
+									<span>↓</span>
+								</a>
+								<a className="zy-white-pill-btn" href="/download/windows">
+									<span>Linux (deb / tar.gz)</span>
+									<span>↓</span>
+								</a>
 							</div>
-						</article>
+						</div>
+						<div className="zy-alt-media-card is-green">
+							<img src="/site/media/discord/download-desktop-card.webp" alt="Download Zycord for Desktop" />
+						</div>
+					</div>
 
-						<article className="zy-card">
-							<img src="/site/media/discord/download-mobile-card.webp" alt="Zycord for Mobile & Web" style={{ width: "100%", height: "210px", objectFit: "cover", borderRadius: "16px" }} />
-							<h3 className="zy-heading-sm" style={{ fontSize: "24px", marginTop: "8px" }}>WEB &amp; MOBILE PWA</h3>
-							<p className="zy-body">
-								Instant browser access on Chrome, Edge, Firefox, and Safari — plus installable PWA for iOS, Android, macOS, and Linux.
+					{/* 2. Mobile */}
+					<div className="zy-alt-row is-reversed">
+						<div className="zy-alt-media-card is-blue">
+							<img src="/site/media/discord/download-mobile-card.webp" alt="Download Zycord for Mobile" />
+						</div>
+						<div className="zy-alt-copy">
+							<h2 className="zy-alt-title">Download for mobile</h2>
+							<p className="zy-body-lg">
+								Keep up with your chats and hop into voice channels wherever you are with our iOS, Android, and instant Web PWA apps.
 							</p>
-							<div style={{ marginTop: "auto", paddingTop: "12px" }}>
-								<a className="zy-btn zy-btn-secondary zy-btn-sm" data-zy-open-app href="/app">Launch Web App</a>
+							<div className="zy-pill-btn-row">
+								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+									<span>App Store (iOS)</span>
+								</a>
+								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+									<span>Google Play (Android)</span>
+								</a>
+								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+									<span>Install Web PWA</span>
+								</a>
 							</div>
-						</article>
+						</div>
+					</div>
 
-						<article className="zy-card">
-							<img src="/site/media/discord/download-console-card.webp" alt="Zycord Rich Presence & Console Sync" style={{ width: "100%", height: "210px", objectFit: "cover", borderRadius: "16px" }} />
-							<h3 className="zy-heading-sm" style={{ fontSize: "24px", marginTop: "8px" }}>CONNECTED ACCOUNTS</h3>
-							<p className="zy-body">
-								Link Steam, PlayStation, Xbox, Epic Games, Spotify, Twitch, YouTube, and GitHub to display live Rich Presence on your profile.
+					{/* 3. Console */}
+					<div className="zy-alt-row">
+						<div className="zy-alt-copy">
+							<h2 className="zy-alt-title">Link your console</h2>
+							<p className="zy-body-lg">
+								Talk with your friends on Zycord while playing your favorite console games on PlayStation and Xbox, and sync live Rich Presence to your profile.
 							</p>
-							<div style={{ marginTop: "auto", paddingTop: "12px" }}>
-								<a className="zy-btn zy-btn-ghost zy-btn-sm" data-zy-open-app href="/app">Connect Accounts →</a>
+							<div className="zy-pill-btn-row">
+								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+									<span>PlayStation</span>
+									<span>↗</span>
+								</a>
+								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+									<span>Xbox</span>
+									<span>↗</span>
+								</a>
 							</div>
-						</article>
+						</div>
+						<div className="zy-alt-media-card is-pink">
+							<img src="/site/media/discord/download-console-card.webp" alt="Link your console to Zycord" />
+						</div>
+					</div>
+
+					{/* Feeling experimental? PTB Card */}
+					<div className="zy-ptb-card">
+						<img
+							src="/site/media/discord/download-ptb-3d.png"
+							alt=""
+							aria-hidden="true"
+							className="zy-float-prop"
+							style={{ width: "118px", top: "-36px", left: "4%" }}
+						/>
+						<img
+							src="/site/media/discord/download-trophy.webp"
+							alt=""
+							aria-hidden="true"
+							className="zy-float-prop"
+							style={{ width: "112px", bottom: "-32px", right: "5%" }}
+						/>
+						<h2 className="zy-alt-title" style={{ textAlign: "center" }}>Feeling experimental?</h2>
+						<p className="zy-body-lg" style={{ maxWidth: "600px", textAlign: "center" }}>
+							Try out the newest features before they launch by using our Public Test Build or jumping directly into the web client.
+						</p>
+						<div className="zy-pill-btn-row" style={{ justifyContent: "center" }}>
+							<a className="zy-white-pill-btn" href="/download/windows">
+								<span>Download Public Test Build</span>
+								<span>↓</span>
+							</a>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -101,76 +178,121 @@ export function DownloadPage() {
 }
 
 /* ============================================================================
-   2. QUESTS PAGE (/quests) — Official Discord 3D Quests Assets & Trophy
+   2. QUESTS PAGE (/quests) — Exact 2026 discord.com/ads/quests Layout
    ============================================================================ */
 export function QuestsPage() {
 	return (
 		<div>
-			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
-				<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "28px", top: "8%", left: "6%" }} />
-				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/nav-quests-trophy.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-46px", right: "6%" }} />
+			{/* Hero with official quests-hero-bg.webp & floating cauldron */}
+			<section
+				className="zy-subhero"
+				style={{
+					backgroundImage: "linear-gradient(180deg, rgba(16,18,56,0.58) 0%, rgba(16,18,56,0.95) 100%), url('/site/media/discord/quests-hero-bg.webp')",
+					backgroundSize: "cover",
+					backgroundPosition: "center",
+					paddingTop: "80px",
+					paddingBottom: "76px"
+				}}
+			>
+				<div className="zy-container">
+					<div className="zy-subhero-inner">
+						<span className="zy-eyebrow">Zycord Quests &amp; Advertising</span>
+						<h1 className="zy-subhero-title">ADVERTISE WHERE THE WORLD PLAYS</h1>
+						<p className="zy-subhero-sub">
+							Break through to some of the most passionate audiences of players with Zycord Quests — where players earn exclusive collectibles for playing and streaming.
+						</p>
+						<div style={{ display: "flex", gap: "16px", flexWrap: "wrap", justifyContent: "center", marginTop: "10px" }}>
+							<a className="zy-btn zy-btn-primary" data-zy-open-app href="/app">Explore Quests in App</a>
+							<a className="zy-btn zy-btn-secondary" href="/nitro">View Collectibles Shop</a>
+						</div>
+						<img
+							src="/site/media/discord/quests-cauldron.avif"
+							alt=""
+							aria-hidden="true"
+							style={{ width: "164px", height: "auto", marginTop: "18px", filter: "drop-shadow(0 20px 36px rgba(0,0,0,0.5))" }}
+						/>
+					</div>
+				</div>
+			</section>
 
-					<div
-						className="zy-showcase-card"
-						style={{
-							backgroundImage: "linear-gradient(135deg, rgba(16,19,62,0.88), rgba(45,56,195,0.78)), url('/site/media/discord/quests-hero-bg.webp')",
-							backgroundSize: "cover",
-							backgroundPosition: "center"
-						}}
-					>
-						<div className="zy-showcase-grid">
-							<div className="zy-showcase-copy">
-								<div>
-									<span className="zy-eyebrow">
-										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
-										<span>Zycord Quests &amp; Rewards</span>
-									</span>
-								</div>
-								<h1 className="zy-display">PLAY GAMES. COMPLETE QUESTS. EARN REWARDS.</h1>
-								<p className="zy-body-lg">
-									Stream your favorite games to friends on Zycord, discover new titles, and unlock exclusive Avatar Decorations, Nameplates, Profile Effects, and Profile Frames.
-								</p>
-								<div style={{ display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "8px" }}>
-									<a className="zy-btn zy-btn-primary" data-zy-open-app href="/app">Explore Quests in App</a>
-									<a className="zy-btn zy-btn-secondary" href="/nitro">View Collectibles Shop</a>
-								</div>
-							</div>
+			{/* Designed for Game Players — 3 Alternating Step Cards */}
+			<section className="zy-section" id="stories" style={{ paddingTop: "36px" }}>
+				<div className="zy-container">
+					<div style={{ textAlign: "center", maxWidth: "740px", margin: "0 auto 40px" }}>
+						<h2 className="zy-heading">DESIGNED FOR GAME PLAYERS</h2>
+						<p className="zy-body-lg" style={{ marginTop: "12px" }}>
+							Players love our Quest format because they are rewarded for engaging. It’s a win-win for players and game studios.
+						</p>
+					</div>
 
-							<div className="zy-scene-stage stage-blurple">
-								<img
-									src="/site/media/discord/quests-wumpus-banner.webp"
-									alt="Zycord Quests Wumpus Spellcraft Reward Banner"
-									style={{ width: "100%", height: "auto", borderRadius: "20px", display: "block" }}
-								/>
-							</div>
+					<div className="zy-alt-row">
+						<div className="zy-alt-copy">
+							<span className="zy-eyebrow">Step 1</span>
+							<h3 className="zy-alt-title">1. THEY ACCEPT YOUR QUEST</h3>
+							<p className="zy-body-lg">
+								Actions include watching a trailer, playing a game, streaming to friends in a voice channel, and more.
+							</p>
+						</div>
+						<div className="zy-alt-media-card is-indigo">
+							<img src="/site/media/discord/quests-step-1.webp" alt="1. They accept your Quest" />
+						</div>
+					</div>
+
+					<div className="zy-alt-row is-reversed">
+						<div className="zy-alt-media-card is-blue">
+							<img src="/site/media/discord/quests-step-2.webp" alt="2. Play or Watch" />
+						</div>
+						<div className="zy-alt-copy">
+							<span className="zy-eyebrow">Step 2</span>
+							<h3 className="zy-alt-title">2. PLAY OR WATCH</h3>
+							<p className="zy-body-lg">
+								Taking the requested action inside Zycord or the connected game automatically progresses and completes the Quest.
+							</p>
+						</div>
+					</div>
+
+					<div className="zy-alt-row">
+						<div className="zy-alt-copy">
+							<span className="zy-eyebrow">Step 3</span>
+							<h3 className="zy-alt-title">3. AND COLLECT REWARDS</h3>
+							<p className="zy-body-lg">
+								Rewards include in-game loot, Orbs, and exclusive Zycord Avatar Decorations, Nameplates, and Profile Effects.
+							</p>
+						</div>
+						<div className="zy-alt-media-card is-pink">
+							<img src="/site/media/discord/quests-step-3.webp" alt="3. And Collect Rewards" />
 						</div>
 					</div>
 				</div>
 			</section>
 
-			<section className="zy-section" id="stories" style={{ paddingTop: "16px" }}>
+			{/* Explore Our Solutions */}
+			<section className="zy-section" style={{ paddingTop: "16px" }}>
 				<div className="zy-container">
-					<div style={{ textAlign: "center", maxWidth: "740px", margin: "0 auto 40px" }}>
-						<span className="zy-eyebrow">How Quests Work</span>
-						<h2 className="zy-heading" style={{ marginTop: "14px" }}>THREE STEPS TO UNLOCK COLLECTIBLES</h2>
-					</div>
-					<div className="zy-grid-3">
-						<article className="zy-card">
-							<img src="/site/media/discord/quests-step-1.webp" alt="Accept a Quest" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
-							<h3 className="zy-heading-sm" style={{ fontSize: "22px" }}>1. ACCEPT YOUR QUEST</h3>
-							<p className="zy-body">Browse active Quests in Zycord User Settings or the Discover tab and enroll with a single click.</p>
-						</article>
-						<article className="zy-card">
-							<img src="/site/media/discord/quests-step-2.webp" alt="Play or Stream" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
-							<h3 className="zy-heading-sm" style={{ fontSize: "22px" }}>2. PLAY OR STREAM TO FRIENDS</h3>
-							<p className="zy-body">Hop into a voice channel and stream 1080p 60fps gameplay to your squad while Rich Presence tracks your progress.</p>
-						</article>
-						<article className="zy-card">
-							<img src="/site/media/discord/quests-step-3.webp" alt="Claim Your Reward" style={{ width: "100%", height: "200px", objectFit: "cover", borderRadius: "16px" }} />
-							<h3 className="zy-heading-sm" style={{ fontSize: "22px" }}>3. EQUIP YOUR REWARD</h3>
-							<p className="zy-body">Claim limited-edition Avatar Decorations, Nameplates, Profile Effects, and Profile Frames immediately.</p>
-						</article>
+					<div className="zy-showcase-card">
+						<div className="zy-showcase-grid">
+							<div className="zy-showcase-copy">
+								<span className="zy-eyebrow">Quest Formats</span>
+								<h2 className="zy-heading">EXPLORE OUR SOLUTIONS</h2>
+								<p className="zy-body-lg">
+									Whether you’re promoting a tentpole game launch, seasonal update, or community tournament, Quests connect with players at scale.
+								</p>
+								<div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "8px" }}>
+									<div className="zy-card" style={{ padding: "18px 22px" }}>
+										<h3 className="zy-heading-sm" style={{ fontSize: "19px" }}>PLAY QUESTS</h3>
+										<p className="zy-body" style={{ fontSize: "14px" }}>Rewards both new and returning players for playing or streaming your game to friends.</p>
+									</div>
+									<div className="zy-card" style={{ padding: "18px 22px" }}>
+										<h3 className="zy-heading-sm" style={{ fontSize: "19px" }}>VIDEO QUESTS &amp; MISSIONS</h3>
+										<p className="zy-body" style={{ fontSize: "14px" }}>Interactive video trailers and native mini-missions that unlock instant profile cosmetics.</p>
+									</div>
+								</div>
+							</div>
+							<div className="zy-scene-stage stage-blurple" style={{ flexDirection: "column", gap: "18px" }}>
+								<img src="/site/media/discord/quests-wumpus-banner.webp" alt="Zycord Quests Hero Banner" style={{ width: "100%", height: "auto", borderRadius: "24px" }} />
+								<img src="/site/media/discord/quests-missions.webp" alt="Zycord Quests Interactive Missions" style={{ width: "100%", height: "auto", borderRadius: "24px" }} />
+							</div>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -306,13 +428,13 @@ export function AppDirectoryPage() {
 		{ name: "Tempo Hi-Fi Music", cat: "Music & Soundboard", installs: "91,200+ Servers", img: "/site/media/discord/sec2-stream.webp", desc: "Lossless 384kbps Opus audio streaming, playlists, and live DJ queue management." },
 		{ name: "QuestMaster RPG", cat: "Games & Trivia", installs: "54,100+ Servers", img: "/site/media/discord/quests-card-1.webp", desc: "Turn-based multiplayer dungeon raids, leaderboards, and custom server loot drops." },
 		{ name: "GitPulse Notifier", cat: "Developer Tools", installs: "31,900+ Servers", img: "/site/media/discord/dev-card-apps.webp", desc: "Instant rich webhook embeds for GitHub commits, PR reviews, CI/CD builds, and releases." },
-		{ name: "LevelUp XP & Roles", cat: "Community Engagement", installs: "77,500+ Servers", img: "/site/media/discord/sec6-hangout.webp", desc: "Customizable rank cards, voice activity XP rewards, and automated role promotions." }
+		{ name: "LevelUp XP & Roles", cat: "Community Engagement", installs: "77,500+ Servers", img: "/site/media/discord/sec6-platforms.webp", desc: "Customizable rank cards, voice activity XP rewards, and automated role promotions." }
 	];
 	return (
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/prop-gamepad.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-44px", right: "6%" }} />
+					<img src="/site/media/discord/prop-rupee-gem.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-44px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -494,7 +616,7 @@ export function BrandingPage() {
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/hero-crown.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-40px", right: "6%" }} />
+					<img src="/site/media/discord/careers-crown.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-40px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -603,7 +725,7 @@ export function CreatorsPage() {
 				<div className="zy-container">
 					<div className="zy-grid-3">
 						<article className="zy-card">
-							<img src="/site/media/discord/sec3-reactions.webp" alt="Subscriber Role Sync" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/discord/sec3-hop-in.webp" alt="Subscriber Role Sync" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>TWITCH &amp; YOUTUBE ROLE SYNC</h3>
 							<p className="zy-body">
 								Automatically grant exclusive VIP channels, custom role icons, and soundboard perks to your Twitch subscribers and YouTube channel members.
@@ -653,7 +775,7 @@ export function CommunityPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-emerald">
-								<img src="/site/media/discord/sec6-hangout.webp" alt="Zycord Community" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/discord/sec6-platforms.webp" alt="Zycord Community" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -664,7 +786,7 @@ export function CommunityPage() {
 				<div className="zy-container">
 					<div className="zy-grid-3">
 						<article className="zy-card">
-							<img src="/site/media/discord/safety-card-2.png" alt="Onboarding" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/discord/safety-card-2.webp" alt="Onboarding" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>GUIDED SERVER ONBOARDING</h3>
 							<p className="zy-body">
 								Welcome new members with interactive role-picker questions, custom rules screening, and curated default channels.
@@ -698,13 +820,13 @@ export function MerchPage() {
 	const items = [
 		{ name: "Wumpus Plushie Collector Edition", price: "$34.00", tag: "Limited Drop", img: "/site/media/discord/hero-wumpus.webp", desc: "Ultra-soft 12-inch embroidered Wumpus plush with magnetic leaf accessory." },
 		{ name: "Blurple Heavyweight Hoodie", price: "$68.00", tag: "Apparel", img: "/site/media/discord/nitro-wumpus-wheel.webp", desc: "450gsm brushed cotton fleece in signature Zycord Blurple with puff-print wordmark." },
-		{ name: "3D Keycap & Desk Mat Bundle", price: "$49.00", tag: "Hardware Gear", img: "/site/media/discord/prop-gamepad.webp", desc: "Artisan resin Clyde keycap paired with an XXL stitched-edge midnight desk pad." }
+		{ name: "3D Keycap & Desk Mat Bundle", price: "$49.00", tag: "Hardware Gear", img: "/site/media/discord/dev-clyde-3d.webp", desc: "Artisan resin Clyde keycap paired with an XXL stitched-edge midnight desk pad." }
 	];
 	return (
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/prop-star.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-36px", right: "6%" }} />
+					<img src="/site/media/discord/nitro-star.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-36px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
