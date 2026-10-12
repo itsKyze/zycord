@@ -385,60 +385,11 @@ export function HomePage() {
 			    SECTION 5: ALWAYS HAVE SOMETHING TO DO TOGETHER
 			    (Exact Match to Discord.com:
 			     - Green stage with Vibin/YouTube video on LEFT, Copy on RIGHT
-			     - Woman upper body (sec5-card-characters.png) leaning hands OVER top edge of card
-			     - Woman legs (sec5-woman-bottom.webp) behind the translucent glass card
-			     - Two friends hugging (sec5-garfield-simon.webp) next to her along top-right edge
+			     - Exact Discord.com .characters-wr -> .characters-hunds (.characters-bot + .characters-top) + .characters
 			     - Large 3D Radish/Turnip (Set 2 4.webp / prop-turnip.webp) on BOTTOM-LEFT corner with scroll parallax)
 			    ===================================================================== */}
-			<section className="zy-section" id="activities" style={{ paddingTop: "112px" }}>
+			<section className="zy-section" id="activities" style={{ paddingTop: "148px" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					{/* Woman's legs behind the frosted glass card */}
-					<img
-						src="/site/media/discord/sec5-woman-bottom.webp"
-						alt=""
-						aria-hidden="true"
-						style={{
-							position: "absolute",
-							top: "10px",
-							right: "25.2%",
-							width: "165px",
-							height: "auto",
-							zIndex: 0,
-							opacity: "0.38",
-							pointerEvents: "none"
-						}}
-					/>
-					{/* Woman in pink jacket with green headphones leaning hands on top border of card */}
-					<img
-						src="/site/media/discord/sec5-card-characters.png"
-						alt=""
-						aria-hidden="true"
-						style={{
-							position: "absolute",
-							top: "-88px",
-							right: "23.6%",
-							width: "208px",
-							height: "auto",
-							zIndex: 6,
-							pointerEvents: "none"
-						}}
-					/>
-					{/* Two friends hugging (Garfield & Simon) sitting along top-right edge of card */}
-					<img
-						src="/site/media/discord/sec5-garfield-simon.webp"
-						alt=""
-						aria-hidden="true"
-						style={{
-							position: "absolute",
-							top: "-124px",
-							right: "8.2%",
-							width: "194px",
-							height: "auto",
-							zIndex: 1,
-							clipPath: "inset(0 0 45.2% 0)",
-							pointerEvents: "none"
-						}}
-					/>
 					{/* Large 3D Radish/Turnip (Set 2 4.webp) overlapping bottom-left corner of the card with scroll parallax */}
 					<img
 						src="/site/media/discord/prop-turnip.webp"
@@ -455,29 +406,52 @@ export function HomePage() {
 						}}
 					/>
 
-					<div className="zy-showcase-card">
-						<div className="zy-showcase-grid is-reversed">
-							<div
-								className="zy-scene-stage stage-emerald"
-								style={{ backgroundImage: "url('/site/media/discord/sec5-bkg.webp')" }}
-							>
-								<video
-									className="zy-stage-video"
-									autoPlay
-									loop
-									muted
-									playsInline
-									poster="/site/media/discord/sec5-activities.webp"
-								>
-									<source src="/site/media/discord/sec5-activities.mp4" type="video/mp4" />
-								</video>
+					<div className="zy-sec5-3d-wrap">
+						{/* Exact Discord.com .characters-wr.is_2025 structure */}
+						<div className="zy-sec5-chars-wr" aria-hidden="true">
+							<div className="zy-sec5-chars-hands">
+								<img
+									src="/site/media/discord/sec5-card-characters.png"
+									alt=""
+									className="zy-sec5-char-bot"
+								/>
+								<img
+									src="/site/media/discord/sec5-woman-bottom.webp"
+									alt=""
+									className="zy-sec5-char-top"
+								/>
 							</div>
+							<img
+								src="/site/media/discord/sec5-garfield-simon.webp"
+								alt=""
+								className="zy-sec5-char-friends"
+							/>
+						</div>
 
-							<div className="zy-showcase-copy">
-								<h2 className="zy-heading">ALWAYS HAVE SOMETHING TO DO TOGETHER</h2>
-								<p className="zy-body-lg">
-									Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat.
-								</p>
+						<div className="zy-showcase-card">
+							<div className="zy-showcase-grid is-reversed">
+								<div
+									className="zy-scene-stage stage-emerald"
+									style={{ backgroundImage: "url('/site/media/discord/sec5-bkg.webp')" }}
+								>
+									<video
+										className="zy-stage-video"
+										autoPlay
+										loop
+										muted
+										playsInline
+										poster="/site/media/discord/sec5-activities.webp"
+									>
+										<source src="/site/media/discord/sec5-activities.mp4" type="video/mp4" />
+									</video>
+								</div>
+
+								<div className="zy-showcase-copy">
+									<h2 className="zy-heading">ALWAYS HAVE SOMETHING TO DO TOGETHER</h2>
+									<p className="zy-body-lg">
+										Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat.
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>

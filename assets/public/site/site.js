@@ -966,57 +966,7 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec4-chill.mp4", type: "video/mp4" })
       )
-    ))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "activities", style: { paddingTop: "112px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
-      "img",
-      {
-        src: "/site/media/discord/sec5-woman-bottom.webp",
-        alt: "",
-        "aria-hidden": "true",
-        style: {
-          position: "absolute",
-          top: "10px",
-          right: "25.2%",
-          width: "165px",
-          height: "auto",
-          zIndex: 0,
-          opacity: "0.38",
-          pointerEvents: "none"
-        }
-      }
-    ), /* @__PURE__ */ h(
-      "img",
-      {
-        src: "/site/media/discord/sec5-card-characters.png",
-        alt: "",
-        "aria-hidden": "true",
-        style: {
-          position: "absolute",
-          top: "-88px",
-          right: "23.6%",
-          width: "208px",
-          height: "auto",
-          zIndex: 6,
-          pointerEvents: "none"
-        }
-      }
-    ), /* @__PURE__ */ h(
-      "img",
-      {
-        src: "/site/media/discord/sec5-garfield-simon.webp",
-        alt: "",
-        "aria-hidden": "true",
-        style: {
-          position: "absolute",
-          top: "-124px",
-          right: "8.2%",
-          width: "194px",
-          height: "auto",
-          zIndex: 1,
-          clipPath: "inset(0 0 45.2% 0)",
-          pointerEvents: "none"
-        }
-      }
-    ), /* @__PURE__ */ h(
+    ))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "activities", style: { paddingTop: "148px" } }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/prop-turnip.webp",
@@ -1032,7 +982,28 @@
           zIndex: 8
         }
       }
-    ), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-sec5-3d-wrap" }, /* @__PURE__ */ h("div", { className: "zy-sec5-chars-wr", "aria-hidden": "true" }, /* @__PURE__ */ h("div", { className: "zy-sec5-chars-hands" }, /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/sec5-card-characters.png",
+        alt: "",
+        className: "zy-sec5-char-bot"
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/sec5-woman-bottom.webp",
+        alt: "",
+        className: "zy-sec5-char-top"
+      }
+    )), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/site/media/discord/sec5-garfield-simon.webp",
+        alt: "",
+        className: "zy-sec5-char-friends"
+      }
+    )), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
       "div",
       {
         className: "zy-scene-stage stage-emerald",
@@ -1050,7 +1021,7 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/discord/sec5-activities.mp4", type: "video/mp4" })
       )
-    ), /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "ALWAYS HAVE SOMETHING TO DO TOGETHER"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat.")))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "platforms" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "ALWAYS HAVE SOMETHING TO DO TOGETHER"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Watch videos, play built-in games, listen to music, or just scroll together and spam memes. Seamlessly text, call, video chat, and play games, all in one group chat."))))))), /* @__PURE__ */ h("section", { className: "zy-section", id: "platforms" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/prop-plump.webp",

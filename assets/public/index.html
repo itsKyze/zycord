@@ -120,9 +120,9 @@
 		}
 		.hero-char-wumpus-leaf {
 			position: absolute;
-			left: 51.8%;
-			bottom: 22.8%;
-			width: 7.8%;
+			left: 47.6%;
+			bottom: 20.4%;
+			width: 17.5%;
 			height: auto;
 			z-index: 6;
 			pointer-events: none;
@@ -159,7 +159,7 @@
 		}
 		@keyframes hero-leaf-float {
 			0%, 100% { transform: translate3d(0, 0px, 0) rotate(-3deg); }
-			50% { transform: translate3d(0, -7px, 0) rotate(4deg); }
+			50% { transform: translate3d(0, -6px, 0) rotate(4deg); }
 		}
 
 		/* Centered Hero Bottom CTA Bar (Exact Discord.com layout) */
@@ -177,6 +177,60 @@
 			font-size: 20px;
 			padding: 20px 36px;
 			border-radius: 18px;
+		}
+
+		/* Exact Discord.com Section 5 Characters Structure (.characters-wr.is_2025) */
+		.zy-sec5-3d-wrap {
+			position: relative;
+			z-index: 3;
+			overflow: visible;
+		}
+		.zy-sec5-chars-wr {
+			pointer-events: none;
+			display: flex;
+			justify-content: flex-start;
+			align-items: flex-start;
+			max-width: 536px;
+			width: 100%;
+			margin-left: auto;
+			position: relative;
+			left: -32px;
+		}
+		.zy-sec5-chars-hands {
+			max-width: 50%;
+			width: 100%;
+			margin-top: -166px;
+			margin-left: -90px;
+			position: absolute;
+			z-index: 6;
+		}
+		.zy-sec5-char-bot {
+			position: relative;
+			z-index: 6;
+			width: 100%;
+			height: auto;
+			display: block;
+		}
+		.zy-sec5-char-top {
+			position: relative;
+			z-index: 1;
+			width: 100%;
+			height: auto;
+			display: block;
+			margin-top: -20px;
+			margin-left: -11px;
+			opacity: 0.42;
+		}
+		.zy-sec5-char-friends {
+			width: 100%;
+			max-width: 54%;
+			height: auto;
+			margin-top: -178px;
+			margin-right: 96px;
+			position: absolute;
+			top: 0;
+			right: 0;
+			z-index: 1;
 		}
 
 		/* Final Bottom Horizon Section */
@@ -226,7 +280,7 @@
 			left: 49.5%;
 			bottom: -9.5%;
 			transform: translateX(-50%);
-			width: clamp(174px, 15vw, 232px);
+			width: clamp(190px, 16.5vw, 256px);
 			height: auto;
 			z-index: 9;
 			pointer-events: none;
@@ -234,9 +288,9 @@
 		}
 		.final-horizon-leaf {
 			position: absolute;
-			left: 49.2%;
-			bottom: 28.5%;
-			width: clamp(96px, 8.6vw, 138px);
+			left: 49.5%;
+			bottom: 21.8%;
+			width: clamp(190px, 16.5vw, 256px);
 			height: auto;
 			z-index: 10;
 			pointer-events: none;
