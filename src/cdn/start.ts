@@ -32,7 +32,7 @@ const server = new CDNServer({ port: Number(process.env.PORT) || 3003 });
 server
     .start()
     .then(() => {
-        if (fs.existsSync("/proc/self/comm")) fs.writeFileSync("/proc/self/comm", `spacebar-cdn-${cluster.worker ? cluster.worker.id : server.options.port}`);
+        if (fs.existsSync("/proc/self/comm")) fs.writeFileSync("/proc/self/comm", `zycord-cdn-${cluster.worker ? cluster.worker.id : server.options.port}`);
         process.title = `sb-cdn-${cluster.worker ? cluster.worker.id : server.options.port}`;
 
         console.log("[Server] started on :" + server.options.port);

@@ -35,7 +35,7 @@ const server = new GatewayServer({
     port,
 });
 
-if (fs.existsSync("/proc/self/comm")) fs.writeFileSync("/proc/self/comm", `spacebar-gw-${cluster.worker ? cluster.worker.id : port}`);
+if (fs.existsSync("/proc/self/comm")) fs.writeFileSync("/proc/self/comm", `zycord-gw-${cluster.worker ? cluster.worker.id : port}`);
 process.title = `sb-gw-${cluster.worker ? cluster.worker.id : port}`;
 
 server.start().then(() => {});
