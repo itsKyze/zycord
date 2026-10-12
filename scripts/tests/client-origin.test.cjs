@@ -21,7 +21,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const vm = require("node:vm");
 const source = fs.readFileSync("assets/client_patches/70-local-cdn.js", "utf8");
-function harness(origin = "https://meowcord.example:8443") {
+function harness(origin = "https://zycord.example:8443") {
     const location = new URL(origin);
     class Element {
         setAttribute(name, value) {
@@ -91,7 +91,7 @@ function harness(origin = "https://meowcord.example:8443") {
     return { window, HTMLImageElement, CSSStyleDeclaration, XMLHttpRequest };
 }
 test("loopback clan badges follow current host, scheme and port at DOM/CSS/network boundaries", () => {
-    for (const origin of ["http://localhost:3290", "http://zycord.localhost:3290", "https://meowcord.example:8443", "http://[::1]:3290"]) {
+    for (const origin of ["http://localhost:3290", "http://zycord.localhost:3290", "https://zycord.example:8443", "http://[::1]:3290"]) {
         const h = harness(origin);
         for (const host of ["localhost:3290", "127.0.0.1:3290", "[::1]:3290", "0.0.0.0:3290", "zycord.localhost:3290"]) {
             const bad = `https://${host}/clan-badges/123/hash.png?size=16#preview`;
@@ -119,9 +119,9 @@ test("loopback clan badges follow current host, scheme and port at DOM/CSS/netwo
     }
 });
 test("same-host wrong scheme and upstream art normalize while unrelated links remain unchanged", () => {
-    const h = harness("http://meowcord.example:8080");
-    assert.equal(h.window.fetch("https://meowcord.example:8080/avatars/123/hash.png").input, "http://meowcord.example:8080/avatars/123/hash.png");
-    assert.equal(h.window.fetch("https://cdn.discordapp.com/badge-icons/hash.png").input, "http://meowcord.example:8080/badge-icons/hash.png");
+    const h = harness("http://zycord.example:8080");
+    assert.equal(h.window.fetch("https://zycord.example:8080/avatars/123/hash.png").input, "http://zycord.example:8080/avatars/123/hash.png");
+    assert.equal(h.window.fetch("https://cdn.discordapp.com/badge-icons/hash.png").input, "http://zycord.example:8080/badge-icons/hash.png");
     for (const value of [
         "https://external.example/avatars/123/hash.png",
         "http://localhost:3000/unrelated-service",

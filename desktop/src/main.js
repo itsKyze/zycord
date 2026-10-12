@@ -564,7 +564,7 @@ ipcMain.on("set-badge-count", (event, count) => {
 });
 
 // IPC Handlers for Zycord Client State (Tray & Taskbar Thumbar)
-for (const ch of ["zycord-state-change", "discord-state-change"]) ipcMain.on(ch, (event, state) => {
+ipcMain.on("zycord-state-change", (event, state) => {
     clientState = { ...clientState, ...state };
     updateTrayMenu();
     updateThumbarButtons();

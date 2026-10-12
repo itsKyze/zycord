@@ -38,12 +38,12 @@ try {
     await p.addInitScript(() => {
         window.nativeBrandSpinnerSeen = false;
         new MutationObserver(() => {
-            if (document.querySelector(".meowcord-spinner")) window.nativeBrandSpinnerSeen = true;
+            if (document.querySelector(".zycord-spinner")) window.nativeBrandSpinnerSeen = true;
         }).observe(document, { childList: true, subtree: true });
     });
     await p.goto(origin + "/login");
     await p.locator('input[name="email"]').waitFor();
-    await p.screenshot({ path: `/tmp/zycord-meowcord-login-${kind}.png` });
+    await p.screenshot({ path: `/tmp/zycord-zycord-login-${kind}.png` });
     assert.equal(await p.locator('link[rel="icon"]').getAttribute("href"), "/favicon.svg");
     let favicon = await p.request.get(origin + "/favicon.svg");
     assert.equal(favicon.status(), 200);
@@ -58,10 +58,10 @@ try {
         assert.equal(metadata.height, size);
         if (size === 512) {
             const actualPixels = await sharp(png).ensureAlpha().raw().toBuffer();
-            const referencePixels = await sharp(path.join(root, "assets/public/branding/meowcord-icon.svg")).ensureAlpha().raw().toBuffer();
+            const referencePixels = await sharp(path.join(root, "assets/public/branding/zycord-icon.svg")).ensureAlpha().raw().toBuffer();
             assert.deepEqual(actualPixels, referencePixels);
         }
-        fs.writeFileSync(path.join(os.tmpdir(), `zycord-meowcord-pwa-${size}.png`), png);
+        fs.writeFileSync(path.join(os.tmpdir(), `zycord-zycord-pwa-${size}.png`), png);
     }
     const nativeSpinnerSeen = await p.evaluate(() => window.nativeBrandSpinnerSeen);
     const avatars = await p.evaluate(() => Vencord.Plugins.plugins.ZycordBranding.defaultAvatars());
@@ -91,7 +91,7 @@ try {
         const original = React.createElement("div", { className: "proof-original" });
         window.brandProofRoot.render(Vencord.Plugins.plugins.ZycordLoading.animation(original, () => window.brandReady++));
     });
-    await p.locator("#brand-proof .meowcord-spinner").waitFor();
+    await p.locator("#brand-proof .zycord-spinner").waitFor();
     const actual = await p.locator("#brand-proof").evaluate((e) => ({
         paths: [...e.querySelectorAll("path")].map((p) => p.getAttribute("d")),
         css: e.querySelector("style").textContent,
@@ -110,7 +110,7 @@ try {
         actual.css,
         ref
             .match(/<style>(.*?)<\/style>/)[1]
-            .replace(".meowcord-spinner>svg,.meowcord-spinner path{animation:none}", ".meowcord-spinner>svg,.meowcord-spinner .wl,.meowcord-spinner .wr{animation:none}"),
+            .replace(".zycord-spinner>svg,.zycord-spinner path{animation:none}", ".zycord-spinner>svg,.zycord-spinner .wl,.zycord-spinner .wr{animation:none}"),
     );
     assert.equal(actual.animations.length, 3);
     assert.ok(actual.animations.every((a) => a.duration === 1100));
@@ -121,7 +121,7 @@ try {
             a.currentTime = 0;
         }
     });
-    await p.screenshot({ path: `/tmp/zycord-meowcord-spinner-${kind}.png` });
+    await p.screenshot({ path: `/tmp/zycord-zycord-spinner-${kind}.png` });
     await p.emulateMedia({ reducedMotion: "reduce" });
     await p.waitForFunction(() => document.querySelector("#brand-proof svg").getAnimations({ subtree: true }).length === 0);
     await p.evaluate(() => {
@@ -130,7 +130,7 @@ try {
         window.brandProofRoot.render(Vencord.Plugins.plugins.ZycordLoading.animation(Vencord.Webpack.Common.React.createElement("div"), () => window.brandReady++));
     });
     await p.locator('#brand-proof img[alt="Loading"]').waitFor();
-    assert.equal(await p.locator("#brand-proof .meowcord-spinner").count(), 0);
+    assert.equal(await p.locator("#brand-proof .zycord-spinner").count(), 0);
     assert.equal(await p.evaluate(() => Vencord.Plugins.plugins.ZycordLoading.tip()), "custom instance tip");
     assert.deepEqual(errors, []);
     console.log(
