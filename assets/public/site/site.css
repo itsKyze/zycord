@@ -400,9 +400,10 @@ svg {
 	transition: background-color 0.16s ease, color 0.16s ease;
 }
 
-/* Solid Blurple Pill Trigger on Hover — Exact match to discord.com (only hovered/focused item shows pill) */
+/* Solid Blurple Pill Trigger on Hover / Click — Exact match to discord.com */
 .zy-nav-item:hover > .zy-nav-link,
 .zy-nav-item:focus-within > .zy-nav-link,
+.zy-nav-item.is-open > .zy-nav-link,
 .zy-nav-link:hover {
 	background-color: var(--color-blurple);
 	color: var(--color-snow);
@@ -416,7 +417,8 @@ svg {
 }
 
 .zy-nav-item:hover .zy-nav-chevron,
-.zy-nav-item:focus-within .zy-nav-chevron {
+.zy-nav-item:focus-within .zy-nav-chevron,
+.zy-nav-item.is-open .zy-nav-chevron {
 	transform: rotate(180deg);
 }
 
@@ -463,7 +465,8 @@ svg {
 }
 
 .zy-nav-item:hover .zy-nav-dropdown,
-.zy-nav-item:focus-within .zy-nav-dropdown {
+.zy-nav-item:focus-within .zy-nav-dropdown,
+.zy-nav-item.is-open .zy-nav-dropdown {
 	opacity: 1;
 	visibility: visible;
 	transform: translateY(0) scale(1);
@@ -2057,4 +2060,64 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
+/* ============================================================================
+   NAVBAR COMPACT LANGUAGE PILL & SITE-WIDE RTL (ARABIC) LAYOUT MIRRORING
+   ============================================================================ */
 
+.zy-nav-lang-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 13px;
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.12);
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	color: #ffffff;
+	font-family: var(--font-abc-ginto-discord);
+	font-size: 13px;
+	font-weight: 700;
+	cursor: pointer;
+	transition: background-color 0.16s ease, border-color 0.16s ease;
+}
+
+.zy-nav-lang-btn:hover,
+.zy-action-dropdown.is-open > .zy-nav-lang-btn {
+	background: var(--color-blurple);
+	border-color: rgba(255, 255, 255, 0.45);
+}
+
+html[dir="rtl"] body {
+	direction: rtl;
+	text-align: right;
+}
+
+html[dir="rtl"] .zy-alt-copy,
+html[dir="rtl"] .zy-showcase-copy,
+html[dir="rtl"] .zy-perk-card,
+html[dir="rtl"] .zy-accordion-trigger,
+html[dir="rtl"] .zy-accordion-content,
+html[dir="rtl"] .zy-action-dropdown-item,
+html[dir="rtl"] .zy-compare-table th:first-child,
+html[dir="rtl"] .zy-compare-table td:first-child {
+	text-align: right;
+}
+
+html[dir="rtl"] .zy-nav-dropdown {
+	left: auto;
+	right: 0;
+	transform-origin: top right;
+}
+
+html[dir="rtl"] .zy-dd-decor {
+	right: auto;
+	left: -44px;
+}
+
+html[dir="rtl"] .zy-dd-link:hover {
+	transform: translateX(-3px);
+}
+
+html[dir="rtl"] .zy-action-dropdown-menu {
+	left: auto;
+	right: 0;
+}

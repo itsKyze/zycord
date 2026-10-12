@@ -1,5 +1,6 @@
 import { h } from "./runtime.jsx";
 import { ZycordMark } from "./Icons.jsx";
+import { applySiteLanguage } from "./i18n.js";
 
 export const FOOTER_COLUMNS = [
 	{
@@ -115,11 +116,9 @@ export function ZycordFooter() {
 	const selectLanguage = (langObj, e) => {
 		e.stopPropagation();
 		currentLang = langObj.label;
-		try {
-			window.localStorage.setItem("zy_site_lang", langObj.label);
-		} catch (_e) {}
-		const labelNode = document.querySelector("[data-lang-label]");
-		if (labelNode) labelNode.textContent = langObj.label;
+		applySiteLanguage(langObj.code, langObj.label);
+		const navCodeEl = document.getElementById("zy-nav-lang-code");
+		if (navCodeEl) navCodeEl.textContent = (langObj.code || "en").split("-")[0].toUpperCase();
 
 		const items = document.querySelectorAll("[data-lang-option]");
 		for (let i = 0; i < items.length; i++) {

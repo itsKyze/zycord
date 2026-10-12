@@ -1,6 +1,7 @@
 import { h, mountJSX, replaceJSX } from "./runtime.jsx";
 import { ZycordNavbar, NAVIGATION_ITEMS, hasActiveSession } from "./Navbar.jsx";
 import { ZycordFooter, FOOTER_COLUMNS } from "./Footer.jsx";
+import { applySiteLanguage, getSavedLanguage } from "./i18n.js";
 import { HomePage } from "./pages/HomePage.jsx";
 import {
 	DownloadPage,
@@ -299,13 +300,18 @@ function initSiteJSX() {
 	bindActionDropdowns();
 	bindCarousels();
 	bindJobFilters();
+
+	const savedLang = getSavedLanguage();
+	applySiteLanguage(savedLang.code, savedLang.label);
 }
 
 window.ZycordSite = {
 	NAVIGATION_ITEMS,
 	FOOTER_COLUMNS,
 	hasActiveSession,
-	PAGE_COMPONENTS
+	PAGE_COMPONENTS,
+	applySiteLanguage,
+	getSavedLanguage
 };
 
 if (document.readyState === "loading") {
@@ -313,4 +319,5 @@ if (document.readyState === "loading") {
 } else {
 	initSiteJSX();
 }
+
 
