@@ -70,7 +70,7 @@ router.post(
         // They're a one time use token that bypasses registration limits ( rates, disabled reg, etc )
         let regTokenUsed = false;
         if (req.get("Referrer") && req.get("Referrer")?.includes("token=")) {
-            // eg theyre on https://staging.spacebar.chat/register?token=whatever
+            // eg theyre on https://app.zyron.site/register?token=whatever
             const token = req.get("Referrer")?.split("token=")[1].split("&")[0];
             if (token) {
                 const regToken = await ValidRegistrationToken.findOneOrFail({
@@ -369,7 +369,7 @@ router.post(
 
         // Send official welcome DM to the new user
         sendSystemDM("official", user.id, {
-            content: `Hey **${user.username}**! Welcome to **${Config.get().general.instanceName || "Discord"}**! 🎉\n\nWe're excited to have you here. Please check your inbox to verify your email address to keep your username and secure your account.\n\nEnjoy chatting, finding communities, and connecting with friends!`,
+            content: `Hey **${user.username}**! Welcome to **${Config.get().general.instanceName || "Zycord"}**! 🎉\n\nWe're excited to have you here. Please check your inbox to verify your email address to keep your username and secure your account.\n\nEnjoy chatting, finding communities, and connecting with friends!`,
         }).catch((err) => console.error("[Welcome DM] Failed to send welcome DM:", err));
 
         if (body.invite) {
@@ -390,7 +390,7 @@ export default router;
  * @argument { "fingerprint":"805826570869932034.wR8vi8lGlFBJerErO9LG5NViJFw", "email":"qo8etzvaf@gmail.com", "username":"qp39gr98", "password":"wtp9gep9gw", "invite":null, "consent":true, "date_of_birth":"2000-04-04", "gift_code_sku_id":null, "captcha_key":null}
  *
  * Field Error
- * @returns { "code": 50035, "errors": { "consent": { "_errors": [{ "code": "CONSENT_REQUIRED", "message": "You must agree to Discord's Terms of Service and Privacy Policy." }]}}, "message": "Invalid Form Body"}
+ * @returns { "code": 50035, "errors": { "consent": { "_errors": [{ "code": "CONSENT_REQUIRED", "message": "You must agree to Zycord's Terms of Service and Privacy Policy." }]}}, "message": "Invalid Form Body"}
  *
  * Success 200:
  * @returns {token: "OMITTED"}

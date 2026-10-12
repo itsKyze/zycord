@@ -137,7 +137,7 @@ export async function creationOptions(origin: string, user: User) {
         publicKey: {
             challenge,
             timeout: 60000,
-            rp: { id: rpIdFor(origin), name: "Discord" },
+            rp: { id: rpIdFor(origin), name: Config.get().general.instanceName || "Zycord" },
             user: { id: b64url(Buffer.from(user.id)), name: user.username, displayName: user.username },
             pubKeyCredParams: [
                 { type: "public-key", alg: -7 },

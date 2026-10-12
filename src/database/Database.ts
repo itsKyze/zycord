@@ -107,7 +107,7 @@ async function initializeDatabase(): Promise<DataSource> {
                 "[Database]" +
                     red(
                         ` We don't have migrations for DB type '${DatabaseType}'` +
-                            ` To ignore, set DB_SYNC=true in your env. https://docs.spacebar.chat/setup/server/configuration/env/`,
+                            ` To ignore, set DB_SYNC=true in your env. https://app.zyron.site/developers/docs`,
                     ),
             );
             process.exit(1);

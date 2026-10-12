@@ -36,7 +36,7 @@ router.get(
     }),
     (req: Request, res: Response) => {
         res.json({
-            implementation: "spacebar-server-ts",
+            implementation: "zycord-server",
             version: getRevInfoOrFail(),
         } satisfies SpacebarVersionResponse);
     },

@@ -42,7 +42,7 @@ export async function postSignedInteraction(url: string, privateKeyPem: string, 
         redirect: "error",
         headers: {
             "content-type": "application/json",
-            "user-agent": "Discord-Interactions/1.0 (+https://discord.com)",
+            "user-agent": "Discord-Interactions/1.0 (+https://app.zyron.site)",
             "x-signature-ed25519": signature,
             "x-signature-timestamp": timestamp,
         },
