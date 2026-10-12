@@ -1,7 +1,7 @@
 import { h } from "../runtime.jsx";
 
 /* ============================================================================
-   1. DOWNLOAD PAGE (/download) — Exact 2026 discord.com/download Layout
+   1. DOWNLOAD PAGE (/download) — Exact 2026 Zycord Layout
    ============================================================================ */
 export function DownloadPage() {
 	return (
@@ -286,7 +286,7 @@ export function DownloadPage() {
 }
 
 /* ============================================================================
-   2. QUESTS PAGE (/quests) — Exact 2026 discord.com/ads/quests Layout
+   2. QUESTS PAGE (/quests) — Exact 2026 Zycord Layout
    ============================================================================ */
 export function QuestsPage() {
 	return (

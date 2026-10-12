@@ -1,6 +1,6 @@
 /* ============================================================================
-   ZYCORD PUBLIC WEBSITE & APPLICATION ECOSYSTEM — DISCORD 2026 DESIGN SYSTEM
-   Exact Discord.com Cosmic Theme, Solid Blurple Mega-Dropdowns, 3D Props & Stages
+   ZYCORD PUBLIC WEBSITE & APPLICATION ECOSYSTEM — ZYCORD 2026 DESIGN SYSTEM
+   Exact Zycord Cosmic Theme, Solid Blurple Mega-Dropdowns, 3D Props & Stages
    ============================================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Poppins:ital,wght@0,700;0,800;0,900;1,800;1,900&display=swap");
@@ -36,8 +36,8 @@
 	--border-bright: rgba(255, 255, 255, 0.28);
 
 	/* Typography Tokens */
-	--font-abc-ginto-nord-discord: "Poppins", "Nunito", "Inter", system-ui, -apple-system, sans-serif;
-	--font-abc-ginto-discord: "Inter", system-ui, -apple-system, sans-serif;
+	--font-abc-ginto-nord-zycord: "Poppins", "Nunito", "Inter", system-ui, -apple-system, sans-serif;
+	--font-abc-ginto-zycord: "Inter", system-ui, -apple-system, sans-serif;
 	--font-gg-sans: "Inter", system-ui, -apple-system, sans-serif;
 	--font-abc-ginto-normal: "Inter", system-ui, -apple-system, sans-serif;
 	--font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
@@ -225,7 +225,7 @@ svg {
 	transform: none;
 }
 
-/* Official Discord.com Blurple Button (.hero_button-r.blue-button.n-home._2025) — Screenshot 3 */
+/* Official Zycord Blurple Button (.hero_button-r.blue-button.n-home._2025) — Screenshot 3 */
 .zy-btn-primary {
 	position: relative;
 	overflow: hidden;
@@ -265,7 +265,7 @@ svg {
 	opacity: 1;
 }
 
-/* Official Discord.com White Download Button (.button-bl.download-button.imagine.is_2025) — Screenshots 1 & 2 */
+/* Official Zycord White Download Button (.button-bl.download-button.imagine.is_2025) — Screenshots 1 & 2 */
 .zy-btn-secondary {
 	background-color: #ffffff;
 	color: #000000;
@@ -283,7 +283,7 @@ svg {
 	transform: none;
 }
 
-/* Official Discord.com Translucent / Outline Button (.button-white.nitro-new.is-full.is-new) */
+/* Official Zycord Translucent / Outline Button (.button-white.nitro-new.is-full.is-new) */
 .zy-btn-ghost {
 	background-color: rgba(255, 255, 255, 0.1);
 	color: #ffffff;
@@ -302,7 +302,7 @@ svg {
 	transform: none;
 }
 
-/* Official Discord.com Top-Right Navbar Button (.button-nav.login-button-js.new) — Screenshot 4 */
+/* Official Zycord Top-Right Navbar Button (.button-nav.login-button-js.new) — Screenshot 4 */
 .zy-btn-login {
 	background-color: #ffffff;
 	color: #000000;
@@ -333,7 +333,7 @@ svg {
 }
 
 /* ============================================================================
-   EXACT DISCORD.COM 2026 NAVBAR & SOLID BLURPLE MEGA-DROPDOWNS
+   EXACT Zycord 2026 NAVBAR & SOLID BLURPLE MEGA-DROPDOWNS
    (Matches user's 5 screenshots pixel-for-pixel)
    ============================================================================ */
 
@@ -360,7 +360,7 @@ svg {
 	pointer-events: auto;
 }
 
-/* Official Discord.com Scrolled White Brand Pill (Screenshots 141324, 141331, 141345) */
+/* Official Zycord Scrolled White Brand Pill (Screenshots 141324, 141331, 141345) */
 .zy-navbar.is-scrolled .zy-brand {
 	background-color: #ffffff;
 	color: #000000;
@@ -456,7 +456,7 @@ svg {
 	transition: background-color 0.16s ease, color 0.16s ease;
 }
 
-/* Solid Blurple Pill Trigger on Hover / Click — Exact match to discord.com */
+/* Solid Blurple Pill Trigger on Hover / Click — Exact match to Zycord */
 .zy-nav-item:hover > .zy-nav-link,
 .zy-nav-item:focus-within > .zy-nav-link,
 .zy-nav-item.is-open > .zy-nav-link,
@@ -719,7 +719,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 }
 
 /* ============================================================================
-   CARDS & DISCORD 2026 FROSTED 44PX SHOWCASE PANELS
+   CARDS & ZYCORD 2026 FROSTED 44PX SHOWCASE PANELS
    ============================================================================ */
 
 .zy-card {
@@ -754,7 +754,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	font-size: 24px;
 }
 
-/* Discord 2026 Frosted Glass Outer Showcase Card (Matches .home--block-group._2025 on discord.com — Screenshots 141340–141401) */
+/* Zycord 2026 Frosted Glass Outer Showcase Card (Matches .home--block-group._2025 on Zycord — Screenshots 141340–141401) */
 .zy-showcase-card {
 	position: relative;
 	z-index: 3;
@@ -797,7 +797,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	padding: clamp(18px, 2.5vw, 38px);
 }
 
-/* Vibrant Inner Stage Container inside Frosted Showcase Card (Matches .home--group-chat-img.video._2025 on discord.com) */
+/* Vibrant Inner Stage Container inside Frosted Showcase Card (Matches .home--group-chat-img.video._2025 on Zycord) */
 .zy-scene-stage {
 	position: relative;
 	border-radius: 48px;
@@ -918,7 +918,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	transition: transform 0.08s linear;
 }
 
-/* Exact Discord.com Section 5 Characters Structure (.characters-wr.is_2025 — Screenshot 141345.png) */
+/* Exact Zycord Section 5 Characters Structure (.characters-wr.is_2025 — Screenshot 141345.png) */
 .zy-sec5-3d-wrap {
 	position: relative;
 	z-index: 3;
@@ -1200,7 +1200,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 }
 
 /* ============================================================================
-   GLOBAL FOOTER (DISCORD 2026 BLURPLE FOOTER + GIANT WORDMARK)
+   GLOBAL FOOTER (ZYCORD 2026 BLURPLE FOOTER + GIANT WORDMARK)
    ============================================================================ */
 
 .zy-footer {
@@ -1866,7 +1866,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 /* ============================================================================
    INTERACTIVE ACTION DROPDOWNS (Download OS / PTB & Careers Job Filter)
-   Matches .dropdown-list-dark.is_2025 & .dropdown-link-d.is_2025 on discord.com
+   Matches .dropdown-list-dark.is_2025 & .dropdown-link-d.is_2025 on Zycord
    ============================================================================ */
 
 .zy-action-dropdown {

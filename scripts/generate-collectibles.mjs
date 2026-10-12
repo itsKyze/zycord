@@ -5,24 +5,24 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const assetsDir = path.join(__dirname, "..", "assets");
 
-// Load real Discord decorations (217 items) and real profile effects (65 items)
-let discordDecorations = [];
+// Load real Zycord decorations (217 items) and real profile effects (65 items)
+let zycordDecorations = [];
 try {
-    const rawDeco = await fs.readFile(path.join(assetsDir, "discord-decorations.json"), "utf8");
-    discordDecorations = JSON.parse(rawDeco);
+    const rawDeco = await fs.readFile(path.join(assetsDir, "zycord-decorations.json"), "utf8");
+    zycordDecorations = JSON.parse(rawDeco);
 } catch {
-    console.warn("Could not read discord-decorations.json, using fallback.");
+    console.warn("Could not read zycord-decorations.json, using fallback.");
 }
 
-let discordEffects = [];
+let zycordEffects = [];
 try {
-    const rawEffects = await fs.readFile(path.join(assetsDir, "discord-profile-effects.json"), "utf8");
-    discordEffects = JSON.parse(rawEffects);
+    const rawEffects = await fs.readFile(path.join(assetsDir, "zycord-profile-effects.json"), "utf8");
+    zycordEffects = JSON.parse(rawEffects);
 } catch {
-    console.warn("Could not read discord-profile-effects.json, using fallback.");
+    console.warn("Could not read zycord-profile-effects.json, using fallback.");
 }
 
-// Fallback hashes if discord-decorations.json is missing
+// Fallback hashes if zycord-decorations.json is missing
 const fallbackHashes = [
     { hash: "a_0c0eeb351ae2cf48c6e1eee2cae49d40", label: "Hugh the Rainbow" },
     { hash: "a_0e839cd79500e7b68e2bbbed54790c28", label: "Phoenix" },
@@ -97,8 +97,8 @@ const categoryBuckets = categoriesDefinitions.map((c) => ({
 }));
 
 // Categorize Decorations
-if (discordDecorations.length > 0) {
-    for (const deco of discordDecorations) {
+if (zycordDecorations.length > 0) {
+    for (const deco of zycordDecorations) {
         const match = deco.url?.match(/avatar-decoration-presets\/([^.?]+)/);
         const assetHash = deco.asset || (match ? match[1] : null);
         if (!assetHash) continue;
@@ -139,8 +139,8 @@ if (discordDecorations.length > 0) {
 }
 
 // Categorize Profile Effects
-if (discordEffects.length > 0) {
-    for (const eff of discordEffects) {
+if (zycordEffects.length > 0) {
+    for (const eff of zycordEffects) {
         const titleLower = (eff.title || "").toLowerCase();
         let assigned = false;
         for (let i = 0; i < categoryBuckets.length - 1; i++) {
@@ -157,21 +157,21 @@ if (discordEffects.length > 0) {
     }
 }
 
-// Load real Discord nameplates (285 items) and real frames (68 items)
-let discordNameplates = [];
+// Load real Zycord nameplates (285 items) and real frames (68 items)
+let zycordNameplates = [];
 try {
-    const rawNp = await fs.readFile(path.join(assetsDir, "discord-nameplates.json"), "utf8");
-    discordNameplates = JSON.parse(rawNp);
+    const rawNp = await fs.readFile(path.join(assetsDir, "zycord-nameplates.json"), "utf8");
+    zycordNameplates = JSON.parse(rawNp);
 } catch {
-    console.warn("Could not read discord-nameplates.json");
+    console.warn("Could not read zycord-nameplates.json");
 }
 
-let discordFrames = [];
+let zycordFrames = [];
 try {
-    const rawFrames = await fs.readFile(path.join(assetsDir, "discord-frames.json"), "utf8");
-    discordFrames = JSON.parse(rawFrames);
+    const rawFrames = await fs.readFile(path.join(assetsDir, "zycord-frames.json"), "utf8");
+    zycordFrames = JSON.parse(rawFrames);
 } catch {
-    console.warn("Could not read discord-frames.json");
+    console.warn("Could not read zycord-frames.json");
 }
 
 const getPaletteFromName = (name) => {
@@ -191,7 +191,7 @@ const getPaletteFromName = (name) => {
 };
 
 // Categorize Nameplates
-for (const np of discordNameplates) {
+for (const np of zycordNameplates) {
     const nameLower = np.name.toLowerCase();
     const palette = getPaletteFromName(np.name);
     let assigned = false;
@@ -219,7 +219,7 @@ for (const np of discordNameplates) {
 }
 
 // Categorize Profile Frames
-for (const fr of discordFrames) {
+for (const fr of zycordFrames) {
     const nameLower = fr.name.toLowerCase();
     let assigned = false;
     for (let i = 0; i < categoryBuckets.length - 1; i++) {

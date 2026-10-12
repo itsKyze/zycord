@@ -322,7 +322,7 @@ export function ZycordFooter() {
 				</svg>
 			</div>
 
-			{/* Cookie Settings Modal (Discord Cookie Preferences Dialog) */}
+			{/* Cookie Settings Modal (Zycord Cookie Preferences Dialog) */}
 			<div
 				className="zy-cookie-modal-backdrop"
 				id="zy-cookie-modal-backdrop"

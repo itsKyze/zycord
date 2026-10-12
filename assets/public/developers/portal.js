@@ -879,9 +879,9 @@
             ),
         );
 
-        const initialType = app.custom_install_url ? "custom" : Object.values(config).some((entry) => entry?.oauth2_install_params) ? "discord" : "none";
+        const initialType = app.custom_install_url ? "custom" : Object.values(config).some((entry) => entry?.oauth2_install_params) ? "zycord" : "none";
         const radios = Object.fromEntries(
-            ["discord", "custom", "none"].map((type) => [type, el("input", { type: "radio", name: "install-link", id: `install-link-${type}`, value: type, checked: type === initialType })]),
+            ["zycord", "custom", "none"].map((type) => [type, el("input", { type: "radio", name: "install-link", id: `install-link-${type}`, value: type, checked: type === initialType })]),
         );
         const providedLink = `${location.origin}/oauth2/authorize?client_id=${app.id}`;
         const customUrl = el("input", { id: "install-url", type: "url", inputmode: "url", placeholder: "https://example.com/install", value: app.custom_install_url ?? "" });
@@ -903,7 +903,7 @@
                 el(
                     "div",
                     { class: "radio-list", role: "radiogroup", "aria-label": "Install link" },
-                    el("label", { class: "check" }, radios.discord, "Provided link"),
+                    el("label", { class: "check" }, radios.zycord, "Provided link"),
                     el("label", { class: "check" }, radios.custom, "Custom URL"),
                     el("label", { class: "check" }, radios.none, "None"),
                 ),
@@ -942,9 +942,9 @@
 
         const linkType = () => Object.values(radios).find((radio) => radio.checked)?.value;
         const update = () => {
-            providedField.hidden = linkType() !== "discord";
+            providedField.hidden = linkType() !== "zycord";
             customField.hidden = linkType() !== "custom";
-            settingsCard.hidden = linkType() !== "discord";
+            settingsCard.hidden = linkType() !== "zycord";
             userSettings.hidden = !contexts[1].checked;
             guildSettings.hidden = !contexts[0].checked;
             permissionsGroup.hidden = !contexts[0].checked || !guildScopes.bot.checked;
@@ -971,10 +971,10 @@
                     const scopes = Object.entries(guildScopes)
                         .filter(([, box]) => box.checked)
                         .map(([scope]) => scope);
-                    if (type === "discord" && contexts[0].checked && !scopes.length) return showError(error, "Pick at least one scope for guild installs.");
+                    if (type === "zycord" && contexts[0].checked && !scopes.length) return showError(error, "Pick at least one scope for guild installs.");
                     const integration_types_config = {
-                        ...(contexts[0].checked && { 0: type === "discord" ? { oauth2_install_params: { scopes, permissions: scopes.includes("bot") ? picker.value().toString() : "0" } } : {} }),
-                        ...(contexts[1].checked && { 1: type === "discord" ? { oauth2_install_params: { scopes: ["applications.commands"], permissions: "0" } } : {} }),
+                        ...(contexts[0].checked && { 0: type === "zycord" ? { oauth2_install_params: { scopes, permissions: scopes.includes("bot") ? picker.value().toString() : "0" } } : {} }),
+                        ...(contexts[1].checked && { 1: type === "zycord" ? { oauth2_install_params: { scopes: ["applications.commands"], permissions: "0" } } : {} }),
                     };
                     save.disabled = true;
                     try {

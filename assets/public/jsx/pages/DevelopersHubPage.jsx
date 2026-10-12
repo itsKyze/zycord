@@ -4,7 +4,7 @@ export function DevelopersHubPage() {
 	return (
 		<div>
 			{/* =====================================================================
-			    1. DEVELOPER CENTERED HERO — EXACT DISCORD.COM/DEVELOPERS 3D OBJECTS
+			    1. DEVELOPER CENTERED HERO — EXACT Zycord 3D OBJECTS
 			    ===================================================================== */}
 			<section className="zy-subhero" style={{ paddingTop: "76px", paddingBottom: "48px" }}>
 				<img src="/site/media/zycord/dev-fire-extinguisher.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "92px", top: "10%", left: "6%" }} />
@@ -154,7 +154,7 @@ export function DevelopersHubPage() {
 								100% compatible with Zycord REST API v9/v10 and WebSocket Gateway opcodes, intents, slash commands, and webhooks.
 							</p>
 							<div style={{ marginTop: "auto", paddingTop: "12px" }}>
-								<a className="zy-btn zy-btn-secondary zy-btn-sm" href="/_spacebar/api/openapi.json" target="_blank" rel="noopener">OpenAPI JSON Spec ↗</a>
+								<a className="zy-btn zy-btn-secondary zy-btn-sm" href="/_zycord/api/openapi.json" target="_blank" rel="noopener">OpenAPI JSON Spec ↗</a>
 							</div>
 						</article>
 

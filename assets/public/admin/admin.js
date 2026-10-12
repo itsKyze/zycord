@@ -2416,7 +2416,7 @@ async function renderAnnouncements(view) {
 
 /* ---------- badges ---------- */
 
-// discord's own badge art; the CDN proxies any icon hash it doesn't store from discord's CDN
+// zycord's own badge art; the CDN proxies any icon hash it doesn't store from zycord's CDN
 const BADGE_PRESETS = [
     ["5e74e9b61934fc1f67c65515d1f7e60d", "Staff"],
     ["3f9748e53446a137a052f3454e2de41e", "Partnered Server Owner"],
