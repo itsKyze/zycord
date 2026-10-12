@@ -23,7 +23,7 @@ import { HTTPError } from "lambert-server/HTTPError";
 import { route } from "@spacebar/api/middlewares";
 import { storage } from "@spacebar/cdn/util/Storage";
 import { Guild } from "@spacebar/database";
-import { DiscordApiErrors } from "@spacebar/util";
+import { Config, DiscordApiErrors } from "@spacebar/util";
 
 const router: Router = Router({ mergeParams: true });
 

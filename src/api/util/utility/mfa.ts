@@ -23,7 +23,7 @@ import jwt from "jsonwebtoken";
 import { verifyToken } from "node-2fa";
 import { In } from "typeorm";
 import { BackupCode, SecurityKey, Session, User, generateMfaBackupCodes } from "@spacebar/database";
-import { EVENT, Event, JwtKeypairManager, UserUpdateEvent, emitEvent } from "@spacebar/util";
+import { Config, EVENT, Event, JwtKeypairManager, UserUpdateEvent, emitEvent } from "@spacebar/util";
 import { PrivateUserProjection, UserFlags } from "@spacebar/schemas";
 import { revokeStaleE2eeDevices } from "./e2ee";
 import { PhoneVerification } from "./phoneVerification";
