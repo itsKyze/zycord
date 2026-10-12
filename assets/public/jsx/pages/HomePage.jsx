@@ -26,7 +26,11 @@ export function HomePage() {
 									data-zy-parallax-rotate="-8"
 								/>
 							</div>
-							<h1 className="zy-display">GROUP CHAT THAT'S ALL FUN &amp; GAMES</h1>
+							<h1 className="zy-display" style={{ whiteSpace: "nowrap" }}>
+								GROUP CHAT<br />
+								THAT'S ALL<br />
+								FUN &amp; GAMES
+							</h1>
 							<p className="zy-body-lg">
 								Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.
 							</p>

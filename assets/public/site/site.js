@@ -1104,7 +1104,7 @@
         "data-zy-parallax": "0.14",
         "data-zy-parallax-rotate": "-8"
       }
-    )), /* @__PURE__ */ h("h1", { className: "zy-display" }, "GROUP CHAT THAT'S ALL FUN & GAMES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.")), /* @__PURE__ */ h("div", { className: "hero-art-stage" }, /* @__PURE__ */ h("div", { className: "hero-art-glow" }), /* @__PURE__ */ h(
+    )), /* @__PURE__ */ h("h1", { className: "zy-display", style: { whiteSpace: "nowrap" } }, "GROUP CHAT", /* @__PURE__ */ h("br", null), "THAT'S ALL", /* @__PURE__ */ h("br", null), "FUN & GAMES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.")), /* @__PURE__ */ h("div", { className: "hero-art-stage" }, /* @__PURE__ */ h("div", { className: "hero-art-glow" }), /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/download-trophy.webp",
