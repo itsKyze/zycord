@@ -123,41 +123,42 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 1: MAKE YOUR GROUP CHATS MORE FUN
-			    (Exact Match to Discord.com:
+			    (Exact Match to Discord.com Screenshot 141401.png:
 			     - Video on LEFT, Copy on RIGHT
 			     - Party Wumpus peeking from behind the top-right of the card (z-index: 0)
-			     - Large 3D Spotted Egg (Egg (1).webp) floating on the bottom-left with scroll parallax)
+			     - Blurred 3D Spotted Egg floating behind/below the bottom-left corner)
 			    ===================================================================== */}
 			<section className="zy-section" id="chat">
 				<div className="zy-container" style={{ position: "relative" }}>
-					{/* Animated Party Wumpus peeking from behind top-right of the card (matches .chats_top.is_2025) */}
+					{/* Animated Party Wumpus peeking from behind top-right of the card */}
 					<img
 						src="/site/media/discord/party-wumpus.gif"
 						alt=""
 						aria-hidden="true"
 						style={{
 							position: "absolute",
-							top: "-98px",
-							right: "224px",
-							width: "172px",
+							top: "-82px",
+							right: "186px",
+							width: "152px",
 							zIndex: 0,
 							pointerEvents: "none"
 						}}
 					/>
-					{/* Large 3D Spotted Egg (Egg (1).webp) floating on bottom-left with scroll-down parallax */}
+					{/* Blurred 3D Spotted Egg floating on bottom-left (Screenshot 141401 & 141358) */}
 					<img
 						src="/site/media/discord/prop-egg.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
-						data-zy-parallax="0.22"
-						data-zy-parallax-rotate="-12"
+						data-zy-parallax="0.18"
+						data-zy-parallax-rotate="-10"
 						style={{
-							width: "clamp(220px, 18vw, 316px)",
-							bottom: "-250px",
-							left: "-115px",
+							width: "clamp(180px, 14vw, 224px)",
+							bottom: "-148px",
+							left: "-42px",
 							zIndex: 1,
-							opacity: "0.94"
+							filter: "blur(3px) drop-shadow(0 18px 30px rgba(0, 0, 0, 0.48))",
+							opacity: "0.92"
 						}}
 					/>
 
@@ -192,8 +193,8 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 2: STREAM LIKE YOU'RE IN THE SAME ROOM (COPY LEFT, VIDEO RIGHT)
-			    (Exact Match to Discord.com:
-			     - 3D Clyde Cube (Clyde Cube.webp) floating below bottom-left with scroll parallax)
+			    (Exact Match to Discord.com Screenshot 141358.png:
+			     - Blurred 3D Clyde Cube floating below bottom-left)
 			    ===================================================================== */}
 			<section className="zy-section" id="video">
 				<div className="zy-container" style={{ position: "relative" }}>
@@ -202,13 +203,15 @@ export function HomePage() {
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
-						data-zy-parallax="0.2"
-						data-zy-parallax-rotate="14"
+						data-zy-parallax="0.16"
+						data-zy-parallax-rotate="12"
 						style={{
-							width: "clamp(185px, 15vw, 224px)",
-							bottom: "-165px",
-							left: "56px",
-							zIndex: 1
+							width: "clamp(155px, 12.5vw, 188px)",
+							bottom: "-135px",
+							left: "92px",
+							zIndex: 1,
+							filter: "blur(2.5px) drop-shadow(0 18px 30px rgba(0, 0, 0, 0.46))",
+							opacity: "0.9"
 						}}
 					/>
 
@@ -243,8 +246,8 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 3: HOP IN WHEN YOU'RE FREE, NO NEED TO CALL (VIDEO LEFT, COPY RIGHT)
-			    (Exact Match to Discord.com:
-			     - Large 3D Box (Box.webp) on top-right with scroll parallax)
+			    (Exact Match to Discord.com Screenshot 141355.png:
+			     - Sharp 3D Pink/White Box overlapping the top-right border of the card)
 			    ===================================================================== */}
 			<section className="zy-section" id="voice">
 				<div className="zy-container" style={{ position: "relative" }}>
@@ -253,27 +256,13 @@ export function HomePage() {
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
-						data-zy-parallax="0.18"
-						data-zy-parallax-rotate="-10"
+						data-zy-parallax="0.14"
+						data-zy-parallax-rotate="-8"
 						style={{
-							width: "clamp(215px, 16.5vw, 295px)",
-							top: "-132px",
-							right: "-36px",
-							zIndex: 4
-						}}
-					/>
-					<img
-						src="/site/media/discord/prop-rupee-gem.webp"
-						alt=""
-						aria-hidden="true"
-						className="zy-float-prop"
-						data-zy-parallax="-0.15"
-						data-zy-parallax-rotate="12"
-						style={{
-							width: "clamp(130px, 10vw, 175px)",
-							bottom: "-72px",
-							left: "2%",
-							zIndex: 2
+							width: "clamp(185px, 14.5vw, 226px)",
+							top: "-98px",
+							right: "42px",
+							zIndex: 6
 						}}
 					/>
 
@@ -314,13 +303,13 @@ export function HomePage() {
 					{[0, 1, 2, 3].map(() => (
 						<div className="zy-marquee-item">
 							<span>TALK</span>
-							<span className="zy-marquee-icon"><ZycordMark size={42} color="#ffffff" /></span>
+							<span className="zy-marquee-icon"><ZycordMark size={44} color="#ffffff" /></span>
 							<span>PLAY</span>
-							<span className="zy-marquee-icon"><ZycordMark size={42} color="#ffffff" /></span>
+							<span className="zy-marquee-icon"><ZycordMark size={44} color="#ffffff" /></span>
 							<span>CHAT</span>
-							<span className="zy-marquee-icon"><ZycordMark size={42} color="#ffffff" /></span>
+							<span className="zy-marquee-icon"><ZycordMark size={44} color="#ffffff" /></span>
 							<span>HANG OUT</span>
-							<span className="zy-marquee-icon"><ZycordMark size={42} color="#ffffff" /></span>
+							<span className="zy-marquee-icon"><ZycordMark size={44} color="#ffffff" /></span>
 						</div>
 					))}
 				</div>
@@ -328,25 +317,24 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 4: SEE WHO'S AROUND TO CHILL (VIDEO RIGHT, COPY LEFT)
-			    (Exact Match to Discord.com:
-			     - Large 3D Coin (Set 3 3.webp) floating between Section 4 and Section 5 on the left)
+			    (Exact Match to Discord.com Screenshot 141350.png:
+			     - Blurred 3D Coin overlapping bottom-left behind the card)
 			    ===================================================================== */}
 			<section className="zy-section" id="presence">
 				<div className="zy-container" style={{ position: "relative" }}>
-					{/* Large 3D Discord Coin (Set 3 3.webp) floating in background bottom-left with scroll parallax */}
 					<img
 						src="/site/media/discord/prop-coin.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
-						data-zy-parallax="0.24"
-						data-zy-parallax-rotate="16"
+						data-zy-parallax="0.18"
+						data-zy-parallax-rotate="14"
 						style={{
-							width: "clamp(190px, 16vw, 282px)",
-							bottom: "-220px",
-							left: "-105px",
-							filter: "blur(2.5px) drop-shadow(0 22px 38px rgba(0, 0, 0, 0.48))",
-							opacity: "0.86",
+							width: "clamp(175px, 14vw, 228px)",
+							bottom: "-86px",
+							left: "-68px",
+							filter: "blur(3px) drop-shadow(0 20px 34px rgba(0, 0, 0, 0.48))",
+							opacity: "0.88",
 							zIndex: 1
 						}}
 					/>
@@ -382,26 +370,44 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 5: ALWAYS HAVE SOMETHING TO DO TOGETHER
-			    (Exact Match to Discord.com:
+			    (Exact Match to Discord.com Screenshot 141345.png:
 			     - Green stage with Vibin/YouTube video on LEFT, Copy on RIGHT
-			     - Exact Discord.com .characters-wr -> .characters-hunds (.characters-bot + .characters-top) + .characters
-			     - Large 3D Radish/Turnip (Set 2 4.webp / prop-turnip.webp) on BOTTOM-LEFT corner with scroll parallax)
+			     - Woman & Friends characters sitting along top-right border of card
+			     - Sharp 3D Radish/Turnip overlapping bottom-left corner of card
+			     - Blurred 3D Plump/Pot floating below bottom-right)
 			    ===================================================================== */}
-			<section className="zy-section" id="activities" style={{ paddingTop: "148px" }}>
+			<section className="zy-section" id="activities" style={{ paddingTop: "136px" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					{/* Large 3D Radish/Turnip (Set 2 4.webp) overlapping bottom-left corner of the card with scroll parallax */}
+					{/* Sharp 3D Radish/Turnip overlapping bottom-left corner of the card */}
 					<img
 						src="/site/media/discord/prop-turnip.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
-						data-zy-parallax="0.18"
-						data-zy-parallax-rotate="-10"
+						data-zy-parallax="0.14"
+						data-zy-parallax-rotate="-8"
 						style={{
-							width: "clamp(185px, 14.5vw, 244px)",
-							bottom: "-96px",
-							left: "-58px",
+							width: "clamp(155px, 12.5vw, 196px)",
+							bottom: "-54px",
+							left: "-24px",
 							zIndex: 8
+						}}
+					/>
+					{/* Blurred 3D Plump/Pot floating below bottom-right of Section 5 (Screenshot 141345 & 141340) */}
+					<img
+						src="/site/media/discord/prop-plump.webp"
+						alt=""
+						aria-hidden="true"
+						className="zy-float-prop"
+						data-zy-parallax="0.16"
+						data-zy-parallax-rotate="10"
+						style={{
+							width: "clamp(150px, 12vw, 192px)",
+							bottom: "-142px",
+							right: "88px",
+							filter: "blur(3.5px) drop-shadow(0 18px 30px rgba(0, 0, 0, 0.45))",
+							opacity: "0.86",
+							zIndex: 1
 						}}
 					/>
 
@@ -460,26 +466,10 @@ export function HomePage() {
 
 			{/* =====================================================================
 			    SECTION 6: WHEREVER YOU GAME, HANG OUT HERE (COPY LEFT, VIDEO RIGHT)
-			    (Exact Match to Discord.com:
-			     - Large 3D Plump/Pan prop (Set 3 4.webp) above top-right with scroll parallax)
+			    (Exact Match to Discord.com Screenshot 141340.png & 141338.png)
 			    ===================================================================== */}
 			<section className="zy-section" id="platforms">
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img
-						src="/site/media/discord/prop-plump.webp"
-						alt=""
-						aria-hidden="true"
-						className="zy-float-prop"
-						data-zy-parallax="0.2"
-						data-zy-parallax-rotate="12"
-						style={{
-							width: "clamp(175px, 15vw, 276px)",
-							top: "-165px",
-							right: "36px",
-							zIndex: 1
-						}}
-					/>
-
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">

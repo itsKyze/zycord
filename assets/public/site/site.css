@@ -360,6 +360,20 @@ svg {
 	pointer-events: auto;
 }
 
+/* Official Discord.com Scrolled White Brand Pill (Screenshots 141324, 141331, 141345) */
+.zy-navbar.is-scrolled .zy-brand {
+	background-color: #ffffff;
+	color: #000000;
+	border-radius: 16px;
+	padding: 8px 16px;
+	box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
+}
+
+.zy-navbar.is-scrolled .zy-brand:hover {
+	background-color: #c7c8ce;
+	color: #000000;
+}
+
 .zy-navbar.is-scrolled .zy-nav-links {
 	opacity: 0;
 	visibility: hidden;
@@ -381,20 +395,23 @@ svg {
 .zy-brand {
 	display: inline-flex;
 	align-items: center;
-	gap: 10px;
+	gap: 8px;
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 900;
-	font-size: 21px;
+	font-size: 20px;
 	letter-spacing: -0.02em;
 	color: var(--color-snow);
+	padding: 8px 12px;
+	border-radius: 16px;
 	position: relative;
 	z-index: 1002;
+	transition: background-color 0.25s ease, color 0.25s ease, padding 0.25s ease;
 }
 
 .zy-brand-mark {
-	width: 34px;
-	height: 34px;
-	border-radius: 10px;
+	width: 28px;
+	height: 28px;
+	border-radius: 8px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
@@ -737,13 +754,13 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	font-size: 24px;
 }
 
-/* Discord 2026 Frosted Glass Outer Showcase Card (Matches .home--block-group._2025 on discord.com) */
+/* Discord 2026 Frosted Glass Outer Showcase Card (Matches .home--block-group._2025 on discord.com — Screenshots 141340–141401) */
 .zy-showcase-card {
 	position: relative;
 	z-index: 3;
-	max-width: 1360px;
+	max-width: 1180px;
 	margin: 0 auto;
-	border-radius: 88px;
+	border-radius: 64px;
 	background-image: linear-gradient(
 		135deg,
 		rgba(255, 255, 255, 0.2),
@@ -755,45 +772,45 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	backdrop-filter: blur(80px);
 	-webkit-backdrop-filter: blur(80px);
 	border: none;
-	padding: 20px;
+	padding: 18px;
 	box-shadow:
-		inset 0 0 0 3px rgba(255, 255, 255, 0.2),
+		inset 0 0 0 2px rgba(255, 255, 255, 0.2),
 		0 34px 90px rgba(0, 0, 0, 0.48);
 	overflow: visible;
 }
 
 .zy-showcase-grid {
 	display: grid;
-	grid-template-columns: 0.64fr 1.36fr;
-	gap: clamp(24px, 3vw, 44px);
+	grid-template-columns: 0.72fr 1.28fr;
+	gap: clamp(20px, 2.4vw, 36px);
 	align-items: center;
 }
 
 .zy-showcase-grid.is-reversed {
-	grid-template-columns: 1.36fr 0.64fr;
+	grid-template-columns: 1.28fr 0.72fr;
 }
 
 .zy-showcase-copy {
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
-	padding: clamp(20px, 2.8vw, 42px);
+	gap: 18px;
+	padding: clamp(18px, 2.5vw, 38px);
 }
 
 /* Vibrant Inner Stage Container inside Frosted Showcase Card (Matches .home--group-chat-img.video._2025 on discord.com) */
 .zy-scene-stage {
 	position: relative;
-	border-radius: 72px;
+	border-radius: 48px;
 	padding: 0;
 	overflow: hidden;
-	box-shadow: 0 22px 58px rgba(0, 0, 0, 0.42);
+	box-shadow: 0 20px 52px rgba(0, 0, 0, 0.4);
 	border: none;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	background-size: cover;
 	background-position: center;
-	min-height: clamp(460px, 35vw, 650px);
+	min-height: clamp(410px, 31vw, 520px);
 	aspect-ratio: 306 / 233;
 	width: 100%;
 }
@@ -822,23 +839,23 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	border-radius: 72px;
+	border-radius: 48px;
 	display: block;
 	box-shadow: none;
 }
 
 /* ============================================================================
-   INFINITE MARQUEE RIBBON ("TALK ✦ PLAY ✦ CHAT ✦ HANG OUT")
+   INFINITE MARQUEE RIBBON ("TALK ✦ PLAY ✦ CHAT ✦ HANG OUT") — Screenshot 141350.png
    ============================================================================ */
 
 .zy-marquee-band {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
-	padding: 30px 0;
-	margin: 32px 0;
-	background: linear-gradient(90deg, rgba(88, 101, 242, 0.35), rgba(255, 255, 255, 0.14), rgba(88, 101, 242, 0.35));
-	backdrop-filter: blur(20px);
+	padding: 26px 0;
+	margin: 28px 0;
+	background: linear-gradient(90deg, rgba(88, 101, 242, 0.42), rgba(145, 155, 255, 0.34), rgba(88, 101, 242, 0.42));
+	backdrop-filter: blur(22px);
 	border-top: 1px solid rgba(255, 255, 255, 0.24);
 	border-bottom: 1px solid rgba(255, 255, 255, 0.24);
 }
@@ -846,7 +863,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-marquee-track {
 	display: flex;
 	align-items: center;
-	gap: 54px;
+	gap: 58px;
 	width: max-content;
 	animation: zy-marquee-scroll 26s linear infinite;
 }
@@ -854,11 +871,12 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-marquee-item {
 	display: inline-flex;
 	align-items: center;
-	gap: 54px;
+	gap: 58px;
 	font-family: var(--font-abc-ginto-nord-discord);
 	font-weight: 900;
-	font-size: clamp(32px, 4.2vw, 56px);
-	letter-spacing: -0.01em;
+	font-size: clamp(36px, 4.6vw, 62px);
+	line-height: 1;
+	letter-spacing: -0.015em;
 	text-transform: uppercase;
 	color: #ffffff;
 	white-space: nowrap;
@@ -892,10 +910,12 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	transition: transform 0.08s linear;
 }
 
-/* Exact Discord.com Section 5 Characters Structure (.characters-wr.is_2025) */
+/* Exact Discord.com Section 5 Characters Structure (.characters-wr.is_2025 — Screenshot 141345.png) */
 .zy-sec5-3d-wrap {
 	position: relative;
 	z-index: 3;
+	max-width: 1180px;
+	margin: 0 auto;
 	overflow: visible;
 }
 
@@ -915,9 +935,9 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* Hands & Upper Body of Woman OVER the top border of the glass card */
 .zy-sec5-char-bot {
 	position: absolute;
-	top: -116px;
-	right: 295px;
-	width: 248px;
+	top: -110px;
+	right: 265px;
+	width: 232px;
 	height: auto;
 	z-index: 6;
 	pointer-events: none;
@@ -927,9 +947,9 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* Lower Body of Woman BEHIND the frosted glass card (blurred by card backdrop-filter) */
 .zy-sec5-char-top {
 	position: absolute;
-	top: -16px;
-	right: 306px;
-	width: 248px;
+	top: -14px;
+	right: 274px;
+	width: 232px;
 	height: auto;
 	z-index: 1;
 	opacity: 0.28;
@@ -941,9 +961,9 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* Garfield & Simon Hugging BEHIND the top-right edge of the card */
 .zy-sec5-char-friends {
 	position: absolute;
-	top: -168px;
-	right: 82px;
-	width: 268px;
+	top: -158px;
+	right: 68px;
+	width: 252px;
 	height: auto;
 	z-index: 1;
 	clip-path: inset(0 0 43.2% 0);
