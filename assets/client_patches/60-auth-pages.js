@@ -15,7 +15,7 @@
     const hashParams = new URLSearchParams(location.hash.replace(/^#/, ""));
     const searchParams = new URLSearchParams(location.search);
     const verifyToken = hashParams.get("token") || searchParams.get("token");
-    const instanceName = document.title || "Discord";
+    const instanceName = window.GLOBAL_ENV?.INSTANCE_NAME || document.title || "Zycord";
 
     if (remoteAuth && !token) {
         history.replaceState(history.state, "", `/login?redirect_to=${encodeURIComponent(location.pathname)}`);
@@ -227,7 +227,7 @@
                 title("Email Verified!"),
                 text(["Thanks for verifying your email address."]),
                 actions([
-                    button("Continue to Discord", "primary", () => {
+                    button(`Continue to ${instanceName}`, "primary", () => {
                         if (loggedIn) return close();
                         localStorage.setItem("token", JSON.stringify(result.token));
                         location.replace("/channels/@me");

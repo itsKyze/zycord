@@ -21,7 +21,7 @@ import { Guild, Tag, Template } from "@spacebar/database";
 import { Config, DiscordApiErrors } from "@spacebar/util";
 import { ChannelType } from "@spacebar/schemas";
 
-// a template code, or a link to one: discord.new/<code>, discord.com/template/<code> or this instance's /template/<code>
+// a template code, or a link to one: zycord.new/<code>, discord.new/<code>, app.zyron.site/template/<code>, discord.com/template/<code> or /template/<code>
 export function guildTemplateCode(input: string) {
     let value = input.trim();
     try {
@@ -29,7 +29,9 @@ export function guildTemplateCode(input: string) {
     } catch {
         // keep it as it is
     }
-    const link = value.match(/(?:discord\.new|(?:discord(?:app)?\.com|\/)\/?template)\/([\w-]+)/i) ?? value.match(/^(?:https?:\/\/)?discord\.new\/([\w-]+)/i);
+    const link =
+        value.match(/(?:(?:discord|zycord)\.new|(?:(?:https?:\/\/)?[\w.-]+|\/)\/?template)\/([\w-]+)/i) ??
+        value.match(/^(?:https?:\/\/)?(?:discord|zycord)\.new\/([\w-]+)/i);
     return link ? link[1] : value;
 }
 
