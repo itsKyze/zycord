@@ -182,6 +182,93 @@ function bindScrollParallax() {
 	updateParallax();
 }
 
+function bindActionDropdowns() {
+	const toggles = document.querySelectorAll("[data-zy-dropdown-toggle]");
+	if (!toggles.length) return;
+
+	const closeAll = (except) => {
+		const openMenus = document.querySelectorAll(".zy-action-dropdown.is-open");
+		for (let i = 0; i < openMenus.length; i++) {
+			if (openMenus[i] !== except) {
+				openMenus[i].classList.remove("is-open");
+			}
+		}
+	};
+
+	for (let i = 0; i < toggles.length; i++) {
+		toggles[i].addEventListener("click", function (e) {
+			e.preventDefault();
+			e.stopPropagation();
+			const wrap = this.closest(".zy-action-dropdown");
+			if (!wrap) return;
+			const willOpen = !wrap.classList.contains("is-open");
+			closeAll(wrap);
+			wrap.classList.toggle("is-open", willOpen);
+		});
+	}
+
+	document.addEventListener("click", (e) => {
+		if (!e.target || !e.target.closest || !e.target.closest(".zy-action-dropdown")) {
+			closeAll(null);
+		}
+	});
+}
+
+function bindCarousels() {
+	const wraps = document.querySelectorAll("[data-zy-carousel]");
+	for (let i = 0; i < wraps.length; i++) {
+		((wrap) => {
+			const track = wrap.querySelector("[data-zy-carousel-track]");
+			const prevBtn = wrap.querySelector("[data-zy-carousel-prev]");
+			const nextBtn = wrap.querySelector("[data-zy-carousel-next]");
+			if (!track) return;
+
+			const getStep = () => Math.max(280, Math.round(track.clientWidth * 0.65));
+
+			if (prevBtn) {
+				prevBtn.addEventListener("click", (e) => {
+					e.preventDefault();
+					track.scrollBy({ left: -getStep(), behavior: "smooth" });
+				});
+			}
+			if (nextBtn) {
+				nextBtn.addEventListener("click", (e) => {
+					e.preventDefault();
+					track.scrollBy({ left: getStep(), behavior: "smooth" });
+				});
+			}
+		})(wraps[i]);
+	}
+}
+
+function bindJobFilters() {
+	const items = document.querySelectorAll("[data-zy-job-filter]");
+	if (!items.length) return;
+	const labelEl = document.querySelector("[data-zy-job-filter-label]");
+	const cards = document.querySelectorAll("[data-zy-job-dept]");
+
+	for (let i = 0; i < items.length; i++) {
+		items[i].addEventListener("click", function (e) {
+			e.preventDefault();
+			const dept = this.getAttribute("data-zy-job-filter") || "all";
+			const text = this.textContent || "Featured";
+			if (labelEl) labelEl.textContent = text;
+
+			for (let k = 0; k < items.length; k++) {
+				items[k].classList.toggle("is-active", items[k] === this);
+			}
+			for (let c = 0; c < cards.length; c++) {
+				const cardDept = cards[c].getAttribute("data-zy-job-dept") || "";
+				const show = dept === "all" || cardDept.toLowerCase() === dept.toLowerCase();
+				cards[c].style.display = show ? "" : "none";
+			}
+
+			const dd = this.closest(".zy-action-dropdown");
+			if (dd) dd.classList.remove("is-open");
+		});
+	}
+}
+
 function initSiteJSX() {
 	const navMount = document.querySelector("[data-zy-navbar]");
 	if (navMount) {
@@ -209,6 +296,9 @@ function initSiteJSX() {
 	bindTabGroups();
 	bindReactions();
 	bindScrollParallax();
+	bindActionDropdowns();
+	bindCarousels();
+	bindJobFilters();
 }
 
 window.ZycordSite = {
@@ -223,3 +313,4 @@ if (document.readyState === "loading") {
 } else {
 	initSiteJSX();
 }
+

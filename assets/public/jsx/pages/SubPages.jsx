@@ -75,21 +75,69 @@ export function DownloadPage() {
 						<div className="zy-alt-copy">
 							<h2 className="zy-alt-title">Download for desktop</h2>
 							<p className="zy-body-lg">
-								Bring your favorite features to a bigger screen with our desktop app, available on Windows, macOS, and Linux with native system tray and global keybinds.
+								Use Zycord to easily talk while playing your favorite PC games, show what you’re playing as your status, and stream your games to your friends.
 							</p>
 							<div className="zy-pill-btn-row">
 								<a className="zy-white-pill-btn" href="/download/windows">
-									<span>Windows (64-bit)</span>
-									<span>↓</span>
-								</a>
-								<a className="zy-white-pill-btn" href="/download/windows">
+									<svg width="22" height="22" viewBox="0 0 24 25" fill="currentColor" aria-hidden="true">
+										<path d="M19.6239 8.31868C19.5079 8.40869 17.4597 9.56281 17.4597 12.1291C17.4597 15.0974 20.066 16.1475 20.144 16.1735C20.132 16.2375 19.7299 17.6116 18.7698 19.0118C17.9138 20.2439 17.0197 21.474 15.6595 21.474C14.2994 21.474 13.9494 20.6839 12.3792 20.6839C10.849 20.6839 10.305 21.5 9.06087 21.5C7.81675 21.5 6.94866 20.3599 5.95056 18.9597C4.79444 17.3156 3.86035 14.7613 3.86035 12.3371C3.86035 8.44869 6.3886 6.38649 8.87685 6.38649C10.199 6.38649 11.3011 7.25458 12.1312 7.25458C12.9213 7.25458 14.1534 6.33448 15.6575 6.33448C16.2276 6.33448 18.2758 6.38649 19.6239 8.31868ZM14.9435 4.68832C15.5655 3.95024 16.0056 2.92614 16.0056 1.90204C16.0056 1.76003 15.9936 1.61601 15.9676 1.5C14.9555 1.538 13.7513 2.17407 13.0253 3.01615C12.4552 3.66422 11.9232 4.68832 11.9232 5.72642C11.9232 5.88244 11.9492 6.03845 11.9612 6.08846C12.0252 6.10046 12.1292 6.11446 12.2332 6.11446C13.1413 6.11446 14.2834 5.5064 14.9435 4.68832Z" />
+									</svg>
 									<span>macOS</span>
-									<span>↓</span>
 								</a>
-								<a className="zy-white-pill-btn" href="/download/windows">
-									<span>Linux (deb / tar.gz)</span>
-									<span>↓</span>
-								</a>
+
+								{/* Interactive Windows Dropdown (x64 / ARM64) */}
+								<div className="zy-action-dropdown" data-zy-dropdown>
+									<button type="button" className="zy-white-pill-btn" data-zy-dropdown-toggle style={{ border: "none", cursor: "pointer" }}>
+										<svg width="20" height="20" viewBox="0 0 24 25" fill="currentColor" aria-hidden="true">
+											<path d="M4 4.5H11.5848V12.0815H4V4.5ZM12.4152 4.5H20V12.0815H12.4152V4.5ZM4 12.9152H11.5848V20.5H4V12.9152ZM12.4152 12.9152H20V20.5H12.4152" />
+										</svg>
+										<span>Windows</span>
+										<svg className="zy-action-dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="3.5 6 8 10.5 12.5 6" />
+										</svg>
+									</button>
+									<div className="zy-action-dropdown-menu" role="menu">
+										<a className="zy-action-dropdown-item" href="/download/windows?arch=x64">
+											<span>x64</span>
+											<span>↓</span>
+										</a>
+										<a className="zy-action-dropdown-item" href="/download/windows?arch=arm64">
+											<span>ARM64</span>
+											<span>↓</span>
+										</a>
+									</div>
+								</div>
+
+								{/* Interactive Linux Dropdown (deb / tar.gz / rpm / pkg.tar.zst) */}
+								<div className="zy-action-dropdown" data-zy-dropdown>
+									<button type="button" className="zy-white-pill-btn" data-zy-dropdown-toggle style={{ border: "none", cursor: "pointer" }}>
+										<svg width="20" height="20" viewBox="0 0 24 25" fill="currentColor" aria-hidden="true">
+											<path d="M12.24 3.5C9.5 3.5 9.6 6.8 9.5 9.7C8.6 10.8 7.3 13.8 6.8 15.8C6.2 16.7 4.4 17.2 4.5 18.2C4.7 19.6 7.5 21.2 9.0 21.4C10.2 20.8 11.2 20.5 12.2 20.5C13.3 20.5 14.3 20.7 14.9 21.4C16.2 21.5 18.8 19.6 19.3 18.2C18.4 17.7 18.4 16.5 18.0 16.1C18.4 14.8 17.7 12.7 15.6 9.7C14.6 8.4 15.4 6.9 14.6 5.0C13.9 3.6 12.9 3.5 12.24 3.5Z" />
+										</svg>
+										<span>Linux</span>
+										<svg className="zy-action-dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+											<polyline points="3.5 6 8 10.5 12.5 6" />
+										</svg>
+									</button>
+									<div className="zy-action-dropdown-menu" role="menu">
+										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=deb">
+											<span>deb</span>
+											<span>↓</span>
+										</a>
+										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=tar.gz">
+											<span>tar.gz</span>
+											<span>↓</span>
+										</a>
+										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=rpm">
+											<span>rpm</span>
+											<span>↓</span>
+										</a>
+										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=pkg.tar.zst">
+											<span>pkg.tar.zst</span>
+											<span>↓</span>
+										</a>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="zy-alt-media-card is-green">
@@ -105,17 +153,20 @@ export function DownloadPage() {
 						<div className="zy-alt-copy">
 							<h2 className="zy-alt-title">Download for mobile</h2>
 							<p className="zy-body-lg">
-								Keep up with your chats and hop into voice channels wherever you are with our iOS, Android, and instant Web PWA apps.
+								Out and about? Sunk in a massive beanbag? Bring Zycord with you and chat whenever, have fun with friends, or just see what’s up.
 							</p>
 							<div className="zy-pill-btn-row">
 								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
-									<span>App Store (iOS)</span>
+									<svg width="20" height="20" viewBox="0 0 24 25" fill="currentColor" aria-hidden="true">
+										<path d="M19.6239 8.31868C19.5079 8.40869 17.4597 9.56281 17.4597 12.1291C17.4597 15.0974 20.066 16.1475 20.144 16.1735C20.132 16.2375 19.7299 17.6116 18.7698 19.0118C17.9138 20.2439 17.0197 21.474 15.6595 21.474C14.2994 21.474 13.9494 20.6839 12.3792 20.6839C10.849 20.6839 10.305 21.5 9.06087 21.5C7.81675 21.5 6.94866 20.3599 5.95056 18.9597C4.79444 17.3156 3.86035 14.7613 3.86035 12.3371C3.86035 8.44869 6.3886 6.38649 8.87685 6.38649C10.199 6.38649 11.3011 7.25458 12.1312 7.25458C12.9213 7.25458 14.1534 6.33448 15.6575 6.33448C16.2276 6.33448 18.2758 6.38649 19.6239 8.31868Z" />
+									</svg>
+									<span>App Store</span>
 								</a>
 								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
-									<span>Google Play (Android)</span>
-								</a>
-								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
-									<span>Install Web PWA</span>
+									<svg width="20" height="20" viewBox="0 0 24 25" fill="currentColor" aria-hidden="true">
+										<path d="M12.411 13.3719L4.51124 21.248L4.65636 21.3458C5.01074 21.5483 5.44836 21.5517 5.80498 21.3537L15.1942 16.1484L12.411 13.3719ZM4.08374 20.0858L11.6145 12.5776L4.08374 5.0694V20.0858ZM19.9979 11.5145L16.3192 9.47488L13.2075 12.5776L16.218 15.5802L19.9979 13.4855C20.3602 13.2841 20.5841 12.9084 20.5841 12.5C20.5841 12.0916 20.3602 11.7159 19.9979 11.5145ZM4.65636 3.65415L4.42799 3.82515L12.411 11.7834L15.2955 8.90789L5.80498 3.64628C5.44836 3.44828 5.01074 3.45165 4.65636 3.65415Z" />
+									</svg>
+									<span>Google Play</span>
 								</a>
 							</div>
 						</div>
@@ -126,16 +177,20 @@ export function DownloadPage() {
 						<div className="zy-alt-copy">
 							<h2 className="zy-alt-title">Link your console</h2>
 							<p className="zy-body-lg">
-								Talk with your friends on Zycord while playing your favorite console games on PlayStation and Xbox, and sync live Rich Presence to your profile.
+								Coordinate from the couch and talk with your Zycord friends across PC, mobile, and your fellow console users — supported platforms even let you stream your game directly from your console.
 							</p>
 							<div className="zy-pill-btn-row">
-								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
-									<span>PlayStation</span>
-									<span>↗</span>
+								<a className="zy-white-pill-btn" href="/blog">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+										<path d="M14.6814 7.63604V12.9786C16.9395 14.0641 18.7164 12.9772 18.7164 10.1098C18.7164 7.16804 17.6761 5.86227 14.6087 4.81347C13.4028 4.40838 10.8827 3.73515 9.29913 3.4502V19.402L13.2409 20.5474V7.16849C13.2409 6.54142 13.5219 6.12277 13.9748 6.26736C14.5659 6.43137 14.6814 7.00852 14.6814 7.63604ZM19.7146 14.4624C18.5436 13.9992 17.0516 13.8401 15.8335 13.9805L13.5759 14.5016V16.2555L16.5739 15.1539C17.0853 14.9626 17.8355 14.9216 18.25 15.0634C18.6644 15.2052 18.5865 15.4749 18.0758 15.6658L13.5759 17.3387V19.0285L19.6907 16.737C20.5126 16.4222 20.8483 15.9806 20.8483 15.9806C21.1835 15.5387 21.0345 14.8977 19.7146 14.4624ZM3.33921 15.4713C2.69265 15.9491 2.94775 16.7166 4.34774 17.1764C5.86965 17.6763 7.32914 17.9804 8.71894 17.7357L8.99585 17.6859V16.1144L7.70419 16.4963C7.16946 16.6879 6.38308 16.7279 5.94907 16.5864C5.51511 16.4446 5.5968 16.1749 6.13157 15.984L8.99585 15.0096V13.2532L4.95387 14.6976C3.93724 15.0297 3.33921 15.4713 3.33921 15.4713Z" />
+									</svg>
+									<span>Playstation</span>
 								</a>
-								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+								<a className="zy-white-pill-btn" href="/blog">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+										<path d="M11.9824 4C10.4899 4 9.06724 4.41739 7.88739 5.14783C8.8 4.7 11.1 6.2 11.98 6.75C12.9 6.2 15.2 4.7 16.08 5.15C14.9 4.42 13.48 4 11.9824 4ZM6.15 6.54C4.83 7.97 4 9.88 4 12C4 16.42 7.57 20 11.98 20C14.31 20 16.43 18.99 17.88 17.39C16.8 14.8 13.1 10.8 11.98 9.95C10.8 10.8 7.1 14.8 6.15 17.43C5.7 15.8 7.5 11.5 10.5 8.17C9.5 7.1 7.5 6.1 6.15 6.54ZM17.85 6.57C16.5 6.1 14.5 7.1 13.47 8.17C16.5 11.5 18.3 15.8 17.92 17.39C19.2 15.97 20 14.09 20 12C19.97 9.91 19.17 8 17.85 6.57Z" />
+									</svg>
 									<span>Xbox</span>
-									<span>↗</span>
 								</a>
 							</div>
 						</div>
@@ -144,7 +199,28 @@ export function DownloadPage() {
 						</div>
 					</div>
 
-					{/* Feeling experimental? PTB Card */}
+					{/* 4. VR (Meta Quest) */}
+					<div className="zy-alt-row is-reversed">
+						<div className="zy-alt-media-card is-blue" style={{ minHeight: "340px", background: "linear-gradient(145deg, #1b4be6 0%, #4b73ff 48%, #10164f 100%)" }}>
+							<img src="/site/media/discord/dev-card-apps.webp" alt="Download Zycord for VR" style={{ maxHeight: "340px" }} />
+						</div>
+						<div className="zy-alt-copy">
+							<h2 className="zy-alt-title">Download for VR</h2>
+							<p className="zy-body-lg">
+								Connect with your Zycord communities and DMs from wherever the virtual world takes you. On supported platforms, you’ll be able to join video calls with a digital avatar.
+							</p>
+							<div className="zy-pill-btn-row">
+								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+									<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+										<path d="M17.2 4C15.1 4 13.5 5.6 11.8 8.2L9.8 11.3C7.9 14.4 6.2 17.5 4.4 17.5C3.2 17.5 2.6 16.2 2.6 14.6C2.6 11.5 4.3 6.6 6.9 6.6C8.3 6.6 9.6 8.1 11.1 10.6L14.3 15.9C15.8 18.5 17.4 20.2 19.9 20.2C22.4 20.2 24 18.1 24 14.5C24 9.1 20.7 4 17.2 4Z" />
+									</svg>
+									<span>Meta Quest</span>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					{/* Feeling experimental? PTB Card with interactive dropdown */}
 					<div className="zy-ptb-card">
 						<img
 							src="/site/media/discord/download-ptb-3d.png"
@@ -162,13 +238,47 @@ export function DownloadPage() {
 						/>
 						<h2 className="zy-alt-title" style={{ textAlign: "center" }}>Feeling experimental?</h2>
 						<p className="zy-body-lg" style={{ maxWidth: "600px", textAlign: "center" }}>
-							Try out the newest features before they launch by using our Public Test Build or jumping directly into the web client.
+							Try out the newest features before they launch by using our Public Test Build.
 						</p>
 						<div className="zy-pill-btn-row" style={{ justifyContent: "center" }}>
-							<a className="zy-white-pill-btn" href="/download/windows">
-								<span>Download Public Test Build</span>
-								<span>↓</span>
-							</a>
+							<div className="zy-action-dropdown" data-zy-dropdown>
+								<button type="button" className="zy-white-pill-btn" data-zy-dropdown-toggle style={{ border: "none", cursor: "pointer", padding: "16px 28px", fontSize: "16px" }}>
+									<span>Download Test Build</span>
+									<svg className="zy-action-dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+										<polyline points="3.5 6 8 10.5 12.5 6" />
+									</svg>
+								</button>
+								<div className="zy-action-dropdown-menu" role="menu" style={{ minWidth: "230px" }}>
+									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=osx">
+										<span>Mac</span>
+										<span>↓</span>
+									</a>
+									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&arch=x64">
+										<span>Windows 64-bit</span>
+										<span>↓</span>
+									</a>
+									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&arch=arm64">
+										<span>Windows ARM64</span>
+										<span>↓</span>
+									</a>
+									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=deb">
+										<span>Linux deb</span>
+										<span>↓</span>
+									</a>
+									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=tar.gz">
+										<span>Linux tar.gz</span>
+										<span>↓</span>
+									</a>
+									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=rpm">
+										<span>Linux rpm</span>
+										<span>↓</span>
+									</a>
+									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=pkg.tar.zst">
+										<span>Linux pkg.tar.zst</span>
+										<span>↓</span>
+									</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

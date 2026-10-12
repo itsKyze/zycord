@@ -1790,6 +1790,220 @@ body.has-nav-dd-open .zy-nav-page-blur {
 }
 
 /* ============================================================================
+   INTERACTIVE ACTION DROPDOWNS (Download OS / PTB & Careers Job Filter)
+   ============================================================================ */
+
+.zy-action-dropdown {
+	position: relative;
+	display: inline-flex;
+}
+
+.zy-action-dropdown-menu {
+	position: absolute;
+	top: calc(100% + 10px);
+	left: 0;
+	min-width: 210px;
+	padding: 10px;
+	border-radius: 20px;
+	background: #11121c;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	box-shadow: 0 24px 60px rgba(0, 0, 0, 0.72);
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	opacity: 0;
+	visibility: hidden;
+	transform: translateY(8px) scale(0.98);
+	transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s;
+	z-index: 200;
+}
+
+.zy-action-dropdown.is-open .zy-action-dropdown-menu {
+	opacity: 1;
+	visibility: visible;
+	transform: translateY(0) scale(1);
+}
+
+.zy-action-dropdown-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 11px 16px;
+	border-radius: 12px;
+	font-family: var(--font-abc-ginto-discord);
+	font-size: 15px;
+	font-weight: 700;
+	color: #ffffff;
+	background: transparent;
+	border: none;
+	text-align: left;
+	cursor: pointer;
+	text-decoration: none;
+	transition: background-color 0.14s ease;
+}
+
+.zy-action-dropdown-item:hover,
+.zy-action-dropdown-item.is-active {
+	background: var(--color-blurple);
+	color: #ffffff;
+}
+
+.zy-action-dropdown-arrow {
+	width: 14px;
+	height: 14px;
+	transition: transform 0.18s ease;
+}
+
+.zy-action-dropdown.is-open .zy-action-dropdown-arrow {
+	transform: rotate(180deg);
+}
+
+/* ============================================================================
+   NITRO GREEN "WHAT'S NEW" HERO BANNER & FAQ TABS
+   ============================================================================ */
+
+.zy-nitro-green-banner {
+	position: relative;
+	border-radius: 40px;
+	padding: 44px 44px;
+	margin-bottom: 24px;
+	background: linear-gradient(135deg, #0e4f28 0%, #107c41 52%, #18392b 100%);
+	border: 1px solid rgba(255, 255, 255, 0.22);
+	box-shadow: 0 28px 72px rgba(0, 0, 0, 0.48);
+	overflow: hidden;
+	display: grid;
+	grid-template-columns: minmax(280px, 440px) minmax(0, 1fr);
+	align-items: center;
+	gap: 32px;
+}
+
+.zy-nitro-green-banner-bg {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100%;
+	width: 58%;
+	object-fit: cover;
+	opacity: 0.92;
+	pointer-events: none;
+}
+
+.zy-nitro-green-content {
+	position: relative;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 18px;
+}
+
+.zy-faq-tabs {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 28px;
+}
+
+.zy-faq-tab-btn {
+	padding: 12px 24px;
+	border-radius: 999px;
+	font-family: var(--font-abc-ginto-discord);
+	font-size: 15px;
+	font-weight: 700;
+	color: rgba(255, 255, 255, 0.78);
+	background: rgba(255, 255, 255, 0.08);
+	border: 1px solid rgba(255, 255, 255, 0.14);
+	cursor: pointer;
+	transition: background-color 0.16s ease, color 0.16s ease, transform 0.16s ease, border-color 0.16s ease;
+}
+
+.zy-faq-tab-btn:hover {
+	background: rgba(255, 255, 255, 0.16);
+	color: #ffffff;
+}
+
+.zy-faq-tab-btn.is-active {
+	background: var(--color-blurple);
+	color: #ffffff;
+	border-color: rgba(255, 255, 255, 0.35);
+	box-shadow: 0 10px 26px rgba(88, 101, 242, 0.45);
+}
+
+/* ============================================================================
+   INTERACTIVE CAROUSELS (Careers Office Gallery & 26 Clubs/ERGs Slider)
+   ============================================================================ */
+
+.zy-carousel-wrap {
+	position: relative;
+	width: 100%;
+}
+
+.zy-carousel-track {
+	display: flex;
+	gap: 20px;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scroll-behavior: smooth;
+	padding: 8px 4px 20px;
+	scrollbar-width: none;
+}
+
+.zy-carousel-track::-webkit-scrollbar {
+	display: none;
+}
+
+.zy-carousel-slide-gallery {
+	flex: 0 0 min(82vw, 720px);
+	scroll-snap-align: center;
+	border-radius: 36px;
+	overflow: hidden;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+	box-shadow: 0 24px 64px rgba(0, 0, 0, 0.52);
+	height: 420px;
+}
+
+.zy-carousel-slide-gallery img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+}
+
+.zy-carousel-slide-club {
+	flex: 0 0 260px;
+	scroll-snap-align: start;
+}
+
+.zy-carousel-controls {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 14px;
+	margin-top: 16px;
+}
+
+.zy-carousel-arrow {
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.12);
+	border: 1px solid rgba(255, 255, 255, 0.24);
+	color: #ffffff;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	transition: background-color 0.16s ease, transform 0.16s ease;
+}
+
+.zy-carousel-arrow:hover {
+	background: var(--color-blurple);
+	transform: scale(1.06);
+}
+
+/* ============================================================================
    RESPONSIVE BREAKPOINTS
    ============================================================================ */
 
@@ -1804,8 +2018,15 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	.zy-showcase-grid.is-reversed,
 	.zy-alt-row,
 	.zy-alt-row.is-reversed,
-	.zy-plan-grid {
+	.zy-plan-grid,
+	.zy-nitro-green-banner {
 		grid-template-columns: 1fr;
+	}
+	.zy-nitro-green-banner-bg {
+		position: relative;
+		width: 100%;
+		height: 220px;
+		border-radius: 24px;
 	}
 	.zy-grid-3,
 	.zy-gallery-strip,
@@ -1831,5 +2052,9 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	.zy-btn-secondary {
 		width: 100%;
 	}
+	.zy-carousel-slide-gallery {
+		height: 260px;
+	}
 }
+
 

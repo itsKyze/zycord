@@ -6,7 +6,7 @@
 	<title>Careers at __INSTANCE_NAME__ — Build the Future of Real-Time Communication</title>
 	<meta name="description" content="Join the engineering, design, infrastructure, and safety teams building __INSTANCE_NAME__." />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css" />
+	<link rel="stylesheet" href="/site/site.css?v=20261012c" />
 	<style>
 		.jobs-filter-bar {
 			display: flex;
@@ -80,16 +80,46 @@
 					</div>
 				</div>
 
-				<!-- 8-Photo Office Gallery Grid -->
-				<div class="zy-gallery-strip">
-					<img src="/site/media/discord/careers-hero.webp" alt="__INSTANCE_NAME__ HQ Entrance" />
-					<img src="/site/media/discord/careers-office-1.webp" alt="__INSTANCE_NAME__ Workspace" />
-					<img src="/site/media/discord/careers-office-2.webp" alt="__INSTANCE_NAME__ Focus Pod" />
-					<img src="/site/media/discord/careers-office-4.webp" alt="__INSTANCE_NAME__ Chess & Collaboration Lounge" />
-					<img src="/site/media/discord/careers-office-5.webp" alt="__INSTANCE_NAME__ Engineering Room" />
-					<img src="/site/media/discord/careers-office-6.webp" alt="__INSTANCE_NAME__ Design Studio" />
-					<img src="/site/media/discord/careers-office-7.webp" alt="__INSTANCE_NAME__ Gaming Couch" />
-					<img src="/site/media/discord/careers-office-3.webp" alt="__INSTANCE_NAME__ Team Hangout" />
+				<!-- Interactive 8-Photo Office Gallery Carousel with Prev/Next Arrows -->
+				<div class="zy-carousel-wrap" data-zy-carousel style="margin-top:36px;">
+					<div class="zy-carousel-track" data-zy-carousel-track>
+						<div class="zy-carousel-slide-gallery">
+							<img src="/site/media/discord/careers-hero.webp" alt="__INSTANCE_NAME__ HQ Entrance" />
+						</div>
+						<div class="zy-carousel-slide-gallery">
+							<img src="/site/media/discord/careers-office-1.webp" alt="__INSTANCE_NAME__ Workspace" />
+						</div>
+						<div class="zy-carousel-slide-gallery">
+							<img src="/site/media/discord/careers-office-2.webp" alt="__INSTANCE_NAME__ Focus Pod" />
+						</div>
+						<div class="zy-carousel-slide-gallery">
+							<img src="/site/media/discord/careers-office-4.webp" alt="__INSTANCE_NAME__ Chess &amp; Collaboration Lounge" />
+						</div>
+						<div class="zy-carousel-slide-gallery">
+							<img src="/site/media/discord/careers-office-5.webp" alt="__INSTANCE_NAME__ Engineering Room" />
+						</div>
+						<div class="zy-carousel-slide-gallery">
+							<img src="/site/media/discord/careers-office-6.webp" alt="__INSTANCE_NAME__ Design Studio" />
+						</div>
+						<div class="zy-carousel-slide-gallery">
+							<img src="/site/media/discord/careers-office-7.webp" alt="__INSTANCE_NAME__ Gaming Couch" />
+						</div>
+						<div class="zy-carousel-slide-gallery">
+							<img src="/site/media/discord/careers-office-3.webp" alt="__INSTANCE_NAME__ Team Hangout" />
+						</div>
+					</div>
+					<div class="zy-carousel-controls">
+						<button type="button" class="zy-carousel-arrow" data-zy-carousel-prev aria-label="Previous slide">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M14.5 18L8.5 12L14.5 6" />
+							</svg>
+						</button>
+						<button type="button" class="zy-carousel-arrow" data-zy-carousel-next aria-label="Next slide">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M9.5 18L15.5 12L9.5 6" />
+							</svg>
+						</button>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -151,60 +181,71 @@
 					/>
 					<h2 class="zy-heading">DON’T JUST IMAGINE THE FUTURE OF GAMING — BUILD IT WITH US.</h2>
 					<p class="zy-body-lg" style="margin-top:12px;">
-						Explore our open roles and see if any of our engineering, design, or safety positions would be a great fit for you.
+						Explore our careers page and see if any of our open jobs would be a great fit for you.
 					</p>
-				</div>
 
-				<div class="jobs-filter-bar" id="jobs-filters">
-					<button type="button" class="job-filter-btn is-active" data-dept="all">Featured (All)</button>
-					<button type="button" class="job-filter-btn" data-dept="engineering">Core Engineering</button>
-					<button type="button" class="job-filter-btn" data-dept="media">Voice &amp; WebRTC Media</button>
-					<button type="button" class="job-filter-btn" data-dept="design">Product &amp; Collectibles Design</button>
-					<button type="button" class="job-filter-btn" data-dept="security">Security &amp; Cryptography</button>
+					<!-- Interactive Department Selector Dropdown (Exact discord.com/careers style) -->
+					<div style="display:flex;justify-content:center;margin-top:24px;margin-bottom:32px;">
+						<div class="zy-action-dropdown" data-zy-dropdown>
+							<button type="button" class="zy-white-pill-btn" data-zy-dropdown-toggle style="border:none;cursor:pointer;min-width:220px;justify-content:space-between;">
+								<span data-zy-job-filter-label>Featured</span>
+								<svg class="zy-action-dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="3.5 6 8 10.5 12.5 6" />
+								</svg>
+							</button>
+							<div class="zy-action-dropdown-menu" role="listbox" style="min-width:260px;">
+								<button type="button" class="zy-action-dropdown-item is-active" data-zy-job-filter="all">Featured</button>
+								<button type="button" class="zy-action-dropdown-item" data-zy-job-filter="engineering">Core Engineering</button>
+								<button type="button" class="zy-action-dropdown-item" data-zy-job-filter="media">Voice &amp; WebRTC Media</button>
+								<button type="button" class="zy-action-dropdown-item" data-zy-job-filter="design">Product &amp; Collectibles Design</button>
+								<button type="button" class="zy-action-dropdown-item" data-zy-job-filter="security">Security &amp; Safety</button>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				<div id="jobs-list">
-					<article class="job-row" data-job-dept="engineering">
+					<article class="job-row" data-zy-job-dept="engineering" data-job-dept="engineering">
 						<div>
 							<span class="zy-eyebrow">Core Engineering</span>
 							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Staff Distributed Systems Engineer — Real-Time Gateway</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote / San Francisco HQ · Full-Time · TypeScript, Rust, WebSockets</p>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote (U.S.) · Full-Time · TypeScript, Rust, WebSockets</p>
 						</div>
 						<a class="zy-white-pill-btn" href="/developers">Apply Now →</a>
 					</article>
 
-					<article class="job-row" data-job-dept="media">
+					<article class="job-row" data-zy-job-dept="media" data-job-dept="media">
 						<div>
 							<span class="zy-eyebrow">Voice &amp; WebRTC Media</span>
 							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Senior WebRTC Audio/Video SFU Engineer</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote / San Francisco HQ · Full-Time · WebRTC, Opus, AV1/H.264</p>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote (U.S.) · Full-Time · WebRTC, Opus, AV1/H.264</p>
 						</div>
 						<a class="zy-white-pill-btn" href="/developers">Apply Now →</a>
 					</article>
 
-					<article class="job-row" data-job-dept="design">
+					<article class="job-row" data-zy-job-dept="design" data-job-dept="design">
 						<div>
 							<span class="zy-eyebrow">Product &amp; Collectibles Design</span>
 							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Lead Motion &amp; 3D Collectibles Designer</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote · Full-Time · Blender, SVG Shaders, Design Systems</p>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote · Full-Time · Blender, SVG Shaders, Design Systems</p>
 						</div>
 						<a class="zy-white-pill-btn" href="/nitro">View Collectibles →</a>
 					</article>
 
-					<article class="job-row" data-job-dept="security">
+					<article class="job-row" data-zy-job-dept="security" data-job-dept="security">
 						<div>
-							<span class="zy-eyebrow">Security &amp; Cryptography</span>
-							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Principal Security Engineer — End-to-End Encryption &amp; WebAuthn</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote · Full-Time · WebCrypto, ECDH, Passkeys, Zero-Knowledge</p>
+							<span class="zy-eyebrow">Security &amp; Safety</span>
+							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Engineering Manager, Safety Platform &amp; Cryptography</h3>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote (U.S.) · Full-Time · WebCrypto, ECDH, Passkeys</p>
 						</div>
 						<a class="zy-white-pill-btn" href="/safety">Security Overview →</a>
 					</article>
 
-					<article class="job-row" data-job-dept="engineering">
+					<article class="job-row" data-zy-job-dept="engineering" data-job-dept="engineering">
 						<div>
-							<span class="zy-eyebrow">Desktop Platform</span>
+							<span class="zy-eyebrow">Core Engineering</span>
 							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Senior Desktop Client Engineer (Windows / macOS / Linux)</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote · Full-Time · Electron, C++, Hardware Overlay &amp; Audio Capture</p>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote · Full-Time · Electron, C++, Hardware Overlay &amp; Audio Capture</p>
 						</div>
 						<a class="zy-white-pill-btn" href="/download">View Desktop App →</a>
 					</article>
@@ -226,7 +267,7 @@
 						<img src="/site/media/discord/careers-perk-hq.svg" alt="__INSTANCE_NAME__ HQ" />
 						<h3 class="zy-heading-sm" style="font-size:22px;">__INSTANCE_NAME__ HQ</h3>
 						<p class="zy-body" style="font-size:14px;">
-							Great work can happen anywhere. Our flexible work model empowers our people to choose where they work best: at home, in our SF HQ, or a mix of both.
+							At __INSTANCE_NAME__, we believe great work can happen anywhere, whether in person or virtually. Our flexible work model empowers our people to choose where they work best: at home, in one of our offices like our San Francisco HQ, or a mix of both.
 						</p>
 					</article>
 
@@ -234,7 +275,7 @@
 						<img src="/site/media/discord/careers-perk-grow.svg" alt="Grow together" />
 						<h3 class="zy-heading-sm" style="font-size:22px;">Grow together</h3>
 						<p class="zy-body" style="font-size:14px;">
-							Develop both professionally and personally alongside your colleagues with leadership programs, technical workshops, and mentorship.
+							Look forward to developing both professionally and personally alongside your colleagues. All of our managers go through a leadership program, and we offer enriching trainings for everyone.
 						</p>
 					</article>
 
@@ -242,7 +283,7 @@
 						<img src="/site/media/discord/careers-perk-money.svg" alt="Money matters" />
 						<h3 class="zy-heading-sm" style="font-size:22px;">Money matters</h3>
 						<p class="zy-body" style="font-size:14px;">
-							Competitive compensation packages, equity ownership, and retirement matching to reward your impact and meet your financial goals.
+							__INSTANCE_NAME__ strives to offer fair and competitive compensation packages, including equity. Take advantage of our retirement offerings (including 401k matching in the U.S.) to meet your financial goals.
 						</p>
 					</article>
 
@@ -250,7 +291,7 @@
 						<img src="/site/media/discord/careers-perk-health.svg" alt="Health benefits" />
 						<h3 class="zy-heading-sm" style="font-size:22px;">Health benefits</h3>
 						<p class="zy-body" style="font-size:14px;">
-							Comprehensive medical, dental, vision, reproductive, gender-affirming, and mental healthcare coverage for you and your dependents.
+							At __INSTANCE_NAME__, we health-care about you! We offer medical, dental, vision, reproductive, gender-affirming, and mental healthcare to our employees.
 						</p>
 					</article>
 
@@ -258,7 +299,7 @@
 						<img src="/site/media/discord/careers-perk-family.svg" alt="Family support" />
 						<h3 class="zy-heading-sm" style="font-size:22px;">Family support</h3>
 						<p class="zy-body" style="font-size:14px;">
-							Spend quality time with the next generation with 12+ weeks of paid parental leave, plus fertility, adoption, and family support benefits.
+							Spend some quality time with the next generation with 12+ weeks parental leave, as well as fertility, adoption, and surrogacy benefits.
 						</p>
 					</article>
 
@@ -266,7 +307,7 @@
 						<img src="/site/media/discord/careers-perk-rr.svg" alt="R&amp;R" />
 						<h3 class="zy-heading-sm" style="font-size:22px;">R&amp;R</h3>
 						<p class="zy-body" style="font-size:14px;">
-							Stay refreshed with four weeks of PTO, 16+ paid holidays including winter break, and flexible mental health days.
+							Stay refreshed with four weeks of PTO, 16 paid holidays each year including a week off for the winter holidays, and flexible sick time (which includes mental health days).
 						</p>
 					</article>
 
@@ -274,7 +315,7 @@
 						<img src="/site/media/discord/careers-perk-wellness.svg" alt="Wellness on us" />
 						<h3 class="zy-heading-sm" style="font-size:22px;">Wellness on us</h3>
 						<p class="zy-body" style="font-size:14px;">
-							Take advantage of a quarterly wellness stipend for your gym membership, ergonomic setup, or activities that keep you feeling great.
+							Take advantage of a $375 quarterly stipend for your gym membership or other activities to keep you feeling great.
 						</p>
 					</article>
 
@@ -282,81 +323,185 @@
 						<img src="/site/media/discord/careers-perk-giving.svg" alt="Giving back" />
 						<h3 class="zy-heading-sm" style="font-size:22px;">Giving back</h3>
 						<p class="zy-body" style="font-size:14px;">
-							Paid volunteer days off plus annual charitable donation matching for the causes and open-source communities you care about.
+							Whatever social cause you’re passionate about, take a day (or two) off to make an impact. While you're at it, take advantage of $1,000/year in donation matching to charitable organizations!
 						</p>
 					</article>
+				</div>
+				<p class="zy-body" style="text-align:center;font-size:13px;opacity:0.7;margin-top:18px;">
+					Benefits listed apply to US-based, full time employees. Benefits for employees outside the US may vary by location.
+				</p>
+			</div>
+		</section>
+
+		<!-- =====================================================================
+		     5. WHEN IT'S TIME FOR FUN, FIND YOUR PARTY HERE (ALL 26 CLUBS & ERGS)
+		     ===================================================================== -->
+		<section class="zy-section" style="padding-top:24px;">
+			<div class="zy-container">
+				<div style="text-align:center;max-width:760px;margin:0 auto 36px;">
+					<h2 class="zy-heading">WHEN IT’S TIME FOR FUN, FIND YOUR PARTY HERE</h2>
+					<p class="zy-body-lg" style="margin-top:12px;">
+						Working at __INSTANCE_NAME__ is like hanging out on your favorite server; our employees hang out and play games together, talk about their favorite hobbies, and build inclusive spaces where employees can offer mentorship and guidance.
+					</p>
+				</div>
+
+				<!-- Interactive 26-Club Horizontal Slider with Prev/Next Arrows -->
+				<div class="zy-carousel-wrap" data-zy-carousel>
+					<div class="zy-carousel-track" data-zy-carousel-track>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-anime.svg" alt="Anime Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Anime Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-art.svg" alt="Art Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Art Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-afk.svg" alt="Asian Friends &amp; Kinship (AFK)" /><h3 class="zy-heading-sm" style="font-size:20px;">Asian Friends &amp; Kinship (AFK)</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-basketball.svg" alt="Basketball Buds" /><h3 class="zy-heading-sm" style="font-size:20px;">Basketball Buds</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-baam.png" alt="Black &amp; African American Movement (BAAM)" /><h3 class="zy-heading-sm" style="font-size:20px;">Black &amp; African American Movement (BAAM)</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-book.svg" alt="Book Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Book Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-brain.svg" alt="Brain &amp; Body Works" /><h3 class="zy-heading-sm" style="font-size:20px;">Brain &amp; Body Works</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-cat.svg" alt="Cat Cam Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Cat Cam Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-climb.svg" alt="Climbtime" /><h3 class="zy-heading-sm" style="font-size:20px;">Climbtime</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-chess.svg" alt="Deep Blurple Chess Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Deep Blurple Chess Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-esports.svg" alt="Esports Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Esports Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-futbol.svg" alt="Futbol Friends" /><h3 class="zy-heading-sm" style="font-size:20px;">Futbol Friends</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-hiphop.svg" alt="Hip Hop Enthusiasts" /><h3 class="zy-heading-sm" style="font-size:20px;">Hip Hop Enthusiasts</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-jewish.svg" alt="Jew-ish" /><h3 class="zy-heading-sm" style="font-size:20px;">Jew-ish</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-cafeteria.png" alt="La Cafetería" /><h3 class="zy-heading-sm" style="font-size:20px;">La Cafetería</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-pride.png" alt="Pride" /><h3 class="zy-heading-sm" style="font-size:20px;">Pride</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-realitea.svg" alt="Reali-tea TV Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Reali-tea TV Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-spin.svg" alt="Spin Society" /><h3 class="zy-heading-sm" style="font-size:20px;">Spin Society</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-tabletop.svg" alt="Tabletop Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Tabletop Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-taskmaster.svg" alt="Taskmaster Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Taskmaster Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-parent.svg" alt="The Parent Trap" /><h3 class="zy-heading-sm" style="font-size:20px;">The Parent Trap</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-theatre.svg" alt="Theatre" /><h3 class="zy-heading-sm" style="font-size:20px;">Theatre</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-veterans.svg" alt="Veterans: Fort Wumpus" /><h3 class="zy-heading-sm" style="font-size:20px;">Veterans: Fort Wumpus</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-volleyball.svg" alt="Volleyball Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Volleyball Club</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-whiskey.svg" alt="Whiskey and Spirits Society" /><h3 class="zy-heading-sm" style="font-size:20px;">Whiskey and Spirits Society</h3></article>
+						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/discord/careers-club-women.png" alt="Women in Tech" /><h3 class="zy-heading-sm" style="font-size:20px;">Women in Tech</h3></article>
+					</div>
+					<div class="zy-carousel-controls">
+						<button type="button" class="zy-carousel-arrow" data-zy-carousel-prev aria-label="Previous clubs">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M14.5 18L8.5 12L14.5 6" />
+							</svg>
+						</button>
+						<button type="button" class="zy-carousel-arrow" data-zy-carousel-next aria-label="Next clubs">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M9.5 18L15.5 12L9.5 6" />
+							</svg>
+						</button>
+					</div>
 				</div>
 			</div>
 		</section>
 
 		<!-- =====================================================================
-		     5. WHEN IT'S TIME FOR FUN, FIND YOUR PARTY HERE (CLUBS & ERGS)
+		     6. QUESTIONS? HIRING PROCESS FAQ ACCORDION (ALL 10 OFFICIAL FAQS)
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:24px;padding-bottom:64px;">
-			<div class="zy-container">
-				<div style="text-align:center;max-width:760px;margin:0 auto 36px;">
-					<h2 class="zy-heading">WHEN IT’S TIME FOR FUN, FIND YOUR PARTY HERE</h2>
-					<p class="zy-body-lg" style="margin-top:12px;">
-						Working at __INSTANCE_NAME__ is like hanging out on your favorite server — our employees play games together, talk about their favorite hobbies, and build inclusive spaces.
+		<section class="zy-section" style="padding-top:24px;">
+			<div class="zy-container" style="max-width:940px;">
+				<div style="text-align:center;margin-bottom:28px;">
+					<h2 class="zy-heading">QUESTIONS?</h2>
+					<p class="zy-body-lg" style="margin-top:8px;">
+						Questions about our hiring process? Check out our frequently asked questions.
 					</p>
 				</div>
 
-				<div class="zy-clubs-grid">
-					<article class="zy-club-card">
-						<img src="/site/media/discord/careers-club-anime.svg" alt="Anime Club" />
-						<h3 class="zy-heading-sm" style="font-size:20px;">Anime Club</h3>
-					</article>
-					<article class="zy-club-card">
-						<img src="/site/media/discord/careers-club-art.svg" alt="Art Club" />
-						<h3 class="zy-heading-sm" style="font-size:20px;">Art Club</h3>
-					</article>
-					<article class="zy-club-card">
-						<img src="/site/media/discord/careers-club-esports.svg" alt="Esports Club" />
-						<h3 class="zy-heading-sm" style="font-size:20px;">Esports Club</h3>
-					</article>
-					<article class="zy-club-card">
-						<img src="/site/media/discord/careers-club-chess.svg" alt="Deep Blurple Chess Club" />
-						<h3 class="zy-heading-sm" style="font-size:20px;">Deep Blurple Chess Club</h3>
-					</article>
-					<article class="zy-club-card">
-						<img src="/site/media/discord/careers-club-cat.svg" alt="Cat Cam Club" />
-						<h3 class="zy-heading-sm" style="font-size:20px;">Cat Cam Club</h3>
-					</article>
-					<article class="zy-club-card">
-						<img src="/site/media/discord/careers-club-book.svg" alt="Book Club" />
-						<h3 class="zy-heading-sm" style="font-size:20px;">Book Club</h3>
-					</article>
-					<article class="zy-club-card">
-						<img src="/site/media/discord/careers-club-basketball.svg" alt="Basketball Buds" />
-						<h3 class="zy-heading-sm" style="font-size:20px;">Basketball Buds</h3>
-					</article>
-					<article class="zy-club-card">
-						<img src="/site/media/discord/careers-club-afk.svg" alt="Asian Friends &amp; Kinship" />
-						<h3 class="zy-heading-sm" style="font-size:20px;">Asian Friends &amp; Kinship</h3>
-					</article>
+				<div class="zy-accordion">
+					<div class="zy-accordion-item is-open">
+						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="true">
+							<span>What states do you hire in? Do I have to live in San Francisco to work for __INSTANCE_NAME__?</span>
+							<span class="zy-accordion-icon">▾</span>
+						</button>
+						<div class="zy-accordion-content">
+							While we have no requirement to work from the office, we’re hiring most roles in the SF Bay Area to foster a vibrant central hub in the region. Not every role requires candidates to be based in the SF Bay Area — in many cases, we continue to hire remotely from across the U.S. and internationally.
+						</div>
+					</div>
+					<div class="zy-accordion-item">
+						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+							<span>Where are your offices located?</span>
+							<span class="zy-accordion-icon">▾</span>
+						</button>
+						<div class="zy-accordion-content">
+							We have one office in San Francisco and one in Amsterdam.
+						</div>
+					</div>
+					<div class="zy-accordion-item">
+						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+							<span>What countries do you hire in?</span>
+							<span class="zy-accordion-icon">▾</span>
+						</button>
+						<div class="zy-accordion-content">
+							The majority of our roles are US-based. We are able to hire full-time employees in the US, Canada (Ontario and British Columbia), and the Netherlands, with additional international roles supported through our Employer of Record partner.
+						</div>
+					</div>
+					<div class="zy-accordion-item">
+						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+							<span>Does __INSTANCE_NAME__ sponsor employees?</span>
+							<span class="zy-accordion-icon">▾</span>
+						</button>
+						<div class="zy-accordion-content">
+							Yes! Our immigration policy includes continued sponsorship for candidates with a current O-1, TN, E-3, H-1B1, or H-1B visa, sponsorship of new TN or E-3 visas, and Green Card sponsorship for eligible employees.
+						</div>
+					</div>
+					<div class="zy-accordion-item">
+						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+							<span>I submitted an application, when will I hear back from a recruiter?</span>
+							<span class="zy-accordion-icon">▾</span>
+						</button>
+						<div class="zy-accordion-content">
+							Thanks a ton for applying! We do our best to respond to each person who applies within two weeks.
+						</div>
+					</div>
+					<div class="zy-accordion-item">
+						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+							<span>Can I apply to multiple positions at a time?</span>
+							<span class="zy-accordion-icon">▾</span>
+						</button>
+						<div class="zy-accordion-content">
+							You can! Although, we recommend that you apply only to the roles you are most interested in and qualified for.
+						</div>
+					</div>
+					<div class="zy-accordion-item">
+						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+							<span>What do I need to know before my interview?</span>
+							<span class="zy-accordion-icon">▾</span>
+						</button>
+						<div class="zy-accordion-content">
+							If you’re selected to interview, your recruiter will share all the details you need to know about the entire interview process — including how to prepare for each stage. Don’t hesitate to ask questions!
+						</div>
+					</div>
+					<div class="zy-accordion-item">
+						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+							<span>Do I have to write a Cover Letter?</span>
+							<span class="zy-accordion-icon">▾</span>
+						</button>
+						<div class="zy-accordion-content">
+							Double check the job description to see if one is required! It’s never a bad idea to write a cover letter, since it gives us a chance to get to know you better.
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =====================================================================
+		     7. HUNGRY FOR MORE? FOOTER CTA BANNER
+		     ===================================================================== -->
+		<section class="zy-section" style="padding-top:16px;padding-bottom:64px;">
+			<div class="zy-container">
+				<div class="zy-ptb-card">
+					<img src="/site/media/discord/prop-pickaxe.png" alt="" aria-hidden="true" class="zy-float-prop" style="width:118px;top:-32px;left:4%;" />
+					<img src="/site/media/discord/prop-coin.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:108px;bottom:-28px;right:5%;" />
+					<h2 class="zy-alt-title" style="text-align:center;">Hungry for more?</h2>
+					<p class="zy-body-lg" style="max-width:600px;text-align:center;">
+						Check out our company principles to learn even more about what makes __INSTANCE_NAME__ a special place to work!
+					</p>
+					<a class="zy-white-pill-btn" href="/blog" style="padding:16px 34px;font-size:16px;">
+						<span>Learn More</span>
+					</a>
 				</div>
 			</div>
 		</section>
 	</main>
 
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js"></script>
-	<script>
-		(function () {
-			var btns = document.querySelectorAll("#jobs-filters .job-filter-btn");
-			var rows = document.querySelectorAll("#jobs-list .job-row");
-			for (var i = 0; i < btns.length; i++) {
-				btns[i].addEventListener("click", function () {
-					for (var j = 0; j < btns.length; j++) btns[j].classList.remove("is-active");
-					this.classList.add("is-active");
-					var dept = this.getAttribute("data-dept");
-					for (var k = 0; k < rows.length; k++) {
-						var match = dept === "all" || rows[k].getAttribute("data-job-dept") === dept;
-						rows[k].style.display = match ? "" : "none";
-					}
-				});
-			}
-		})();
-	</script>
+	<script src="/site/site.js?v=20261012c"></script>
 </body>
 </html>
+

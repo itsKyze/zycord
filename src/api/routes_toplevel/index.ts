@@ -24,7 +24,7 @@ import { legalPageRouter } from "@spacebar/api/util";
 import { brandPage, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
-const page = fs.readFileSync(path.join(PUBLIC_ASSETS_FOLDER, "index.html"), "utf8");
+const indexPagePath = path.join(PUBLIC_ASSETS_FOLDER, "index.html");
 
 const JSX_MARKETING_PAGES: Record<string, { pageKey: string; title: string; desc: string }> = {
 	"/application-directory": {
@@ -88,13 +88,13 @@ function renderMarketingShell(pageKey: string, title: string, desc: string): str
 	<title>${title}</title>
 	<meta name="description" content="${desc}" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css" />
+	<link rel="stylesheet" href="/site/site.css?v=20261012c" />
 </head>
 <body>
 	<header data-zy-navbar></header>
 	<main data-zy-jsx-page="${pageKey}"></main>
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js"></script>
+	<script src="/site/site.js?v=20261012c"></script>
 </body>
 </html>`;
 }
@@ -106,7 +106,8 @@ router.get(
 		authentication: "never",
 	}),
 	(_req: Request, res: Response) => {
-		res.set("Cache-Control", "no-cache");
+		const page = fs.readFileSync(indexPagePath, "utf8");
+		res.set("Cache-Control", "no-store, no-cache, must-revalidate");
 		return res.type("html").send(brandPage(page));
 	},
 );
