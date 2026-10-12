@@ -982,11 +982,12 @@
           zIndex: 8
         }
       }
-    ), /* @__PURE__ */ h("div", { className: "zy-sec5-3d-wrap" }, /* @__PURE__ */ h("div", { className: "zy-sec5-chars-wr", "aria-hidden": "true" }, /* @__PURE__ */ h("div", { className: "zy-sec5-chars-hands" }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-sec5-3d-wrap" }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/sec5-card-characters.png",
         alt: "",
+        "aria-hidden": "true",
         className: "zy-sec5-char-bot"
       }
     ), /* @__PURE__ */ h(
@@ -994,16 +995,18 @@
       {
         src: "/site/media/discord/sec5-woman-bottom.webp",
         alt: "",
+        "aria-hidden": "true",
         className: "zy-sec5-char-top"
       }
-    )), /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/discord/sec5-garfield-simon.webp",
         alt: "",
+        "aria-hidden": "true",
         className: "zy-sec5-char-friends"
       }
-    )), /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
+    ), /* @__PURE__ */ h("div", { className: "zy-showcase-card is-sec5" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid is-reversed" }, /* @__PURE__ */ h(
       "div",
       {
         className: "zy-scene-stage stage-emerald",
