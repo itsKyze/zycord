@@ -40,13 +40,13 @@ const accent = (tone: keyof typeof TONES, def: string): ClanBadgeShade => ({ ch:
 export const CUSTOM_CLAN_BADGE_PACK = "Custom Icon Pack";
 
 // the client's own badges come in a free set and four packs
-const DISCORD_CLAN_BADGE_PACKS: [number, number, string][] = [
+const ZYCORD_CLAN_BADGE_PACKS: [number, number, string][] = [
     [21, 25, "Pets"],
     [26, 30, "Flex"],
     [31, 35, "Plants"],
     [36, 40, "Creepy Crawlies"],
 ];
-export const discordClanBadgePack = (id: number) => DISCORD_CLAN_BADGE_PACKS.find(([first, last]) => id >= first && id <= last)?.[2] ?? "Discord";
+export const zycordClanBadgePack = (id: number) => ZYCORD_CLAN_BADGE_PACKS.find(([first, last]) => id >= first && id <= last)?.[2] ?? "Zycord";
 
 export const CUSTOM_CLAN_BADGES: CustomClanBadge[] = [
     {
@@ -1365,9 +1365,8 @@ export const CUSTOM_CLAN_BADGES: CustomClanBadge[] = [
     },
     {
         id: 10048,
-        name: "DISCORD",
+        name: "ZYCORD",
         staff_only: false,
-        pack: "The worst company ever",
         // the logo, traced from its outline at badge size, in the main colour
         grid: [
             "................",

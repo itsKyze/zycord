@@ -95,7 +95,7 @@ export function getClientPlatform(properties?: { browser?: string; $browser?: st
     const browser = (properties?.browser ?? properties?.$browser ?? "").toLowerCase();
     const os = (properties?.os ?? properties?.$os ?? "").toLowerCase();
     if (browser.includes("android") || browser.includes("ios") || os === "android" || os === "ios") return "mobile";
-    if (browser === "discord client" || browser.includes("electron")) return "desktop";
+    if (browser === "zycord client" || browser.includes("zycord") || browser === "discord client" || browser.includes("electron")) return "desktop";
     if (browser.includes("embedded")) return "embedded";
     if (browser.includes("vr")) return "vr";
     return "web";

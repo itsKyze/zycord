@@ -16,4 +16,4 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-//TODO: populate default discord categories + init, get and set methods
+//TODO: populate default Zycord categories + init, get and set methods

@@ -16,8 +16,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Discord.com sends ISO strings with +00:00 extension, not Z
-// This causes issues with Python bot libs
+// Zycord sends ISO strings with +00:00 extension, not Z
+// This ensures compatibility with Python bot libs
 
 export function JSONReplacer(this: { [key: string]: unknown }, key: string, value: unknown) {
     if (this[key] instanceof Date) {
@@ -37,13 +37,13 @@ export function JSONReplacer(this: { [key: string]: unknown }, key: string, valu
     return value;
 }
 
-function discordDate(this: Date) {
+function zycordDate(this: Date) {
     return Number.isNaN(this.getTime()) ? null : this.toISOString().replace("Z", "+00:00");
 }
 
 export function JSONStringify(value: unknown) {
     const toJSON = Date.prototype.toJSON;
-    Date.prototype.toJSON = discordDate as typeof toJSON;
+    Date.prototype.toJSON = zycordDate as typeof toJSON;
     try {
         return JSON.stringify(value);
     } finally {
