@@ -6,7 +6,7 @@
 	<title>__INSTANCE_NAME__ Nitro — Unlock a World of Perks</title>
 	<meta name="description" content="Tired of living the default life? Subscribe to __INSTANCE_NAME__ Nitro for HD video streaming, custom profiles, 1 GB uploads, custom emoji anywhere, and Nitro Rewards." />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261012k" />
+	<link rel="stylesheet" href="/site/site.css?v=20261012p" />
 	<style>
 		.nitro-divider {
 			width: 100%;
@@ -14,76 +14,70 @@
 			background: rgba(255, 255, 255, 0.22);
 			margin: 8px 0;
 		}
-		.nitro-xbox-pill {
-			display: inline-flex;
-			align-items: center;
-			gap: 10px;
-			padding: 8px 16px;
-			border-radius: 14px;
-			background: rgba(255, 255, 255, 0.16);
-			border: 1px solid rgba(255, 255, 255, 0.28);
-			width: fit-content;
-		}
 		.zy-compare-table td img {
 			display: inline-block;
 			vertical-align: middle;
 		}
 	</style>
 </head>
-<body>
+<body style="background-color:#000000;">
 	<header data-zy-navbar></header>
 
-	<main>
+	<main class="zy-nitro-page">
+		<!-- Top 1445px Cosmic Purple-Magenta Hero Glow spanning Hero + Plan Cards -->
+		<img
+			src="/site/media/zycord/nitro-hero-bg.png"
+			alt=""
+			aria-hidden="true"
+			class="zy-nitro-hero-bg"
+		/>
+
 		<!-- =====================================================================
-		     1. CENTERED HERO — EXACT 2026 Zycord
+		     1. CENTERED HERO — EXACT 2026 DISCORD NITRO (Matches Screenshot 2)
 		     ===================================================================== -->
-		<section
-			class="zy-subhero"
-			style="position:relative;padding-top:96px;padding-bottom:64px;overflow:visible;"
-		>
-			<img
-				src="/site/media/zycord/nitro-hero-bg.png"
-				alt=""
-				aria-hidden="true"
-				style="position:absolute;top:0;left:0;width:100%;height:1350px;object-fit:cover;object-position:top center;pointer-events:none;z-index:0;"
-			/>
-			<div class="zy-container" style="position:relative;z-index:2;">
-				<img src="/site/media/zycord/nitro-bolt.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:148px;top:-12px;left:8%;" />
-				<div class="zy-subhero-inner">
-					<h1 class="zy-subhero-title" style="font-style:italic;max-width:780px;">UNLOCK A WORLD OF PERKS WITH NITRO</h1>
-					<p class="zy-subhero-sub" style="max-width:640px;">
+		<section class="zy-nitro-hero-section">
+			<div class="zy-container">
+				<div class="zy-nitro-hero-box">
+					<img
+						src="/site/media/zycord/nitro-bolt.webp"
+						alt=""
+						aria-hidden="true"
+						class="zy-nitro-bolt"
+					/>
+					<h1 class="zy-subhero-title" style="font-style:italic;max-width:740px;">UNLOCK A WORLD OF PERKS WITH NITRO</h1>
+					<p class="zy-subhero-sub" style="max-width:620px;">
 						Tired of living the default life? We get it. Subscribe to Nitro, and unlock the supercharged side of __INSTANCE_NAME__.
 					</p>
-					<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:12px;">
-						<a class="zy-btn zy-btn-primary" href="#pick-plan" style="padding:16px 42px;font-size:18px;border-radius:12px;">
+					<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
+						<a class="zy-btn zy-btn-secondary" href="#pick-plan" style="padding:15.5px 28px;font-size:18px;border-radius:12px;">
 							<span>Subscribe</span>
 						</a>
 					</div>
 					<img
 						src="/site/media/zycord/nitro-wumpus-jetpack.webp"
 						alt="__INSTANCE_NAME__ Nitro Wumpus"
-						style="width:clamp(280px, 38vw, 460px);height:auto;margin-top:20px;filter:drop-shadow(0 28px 54px rgba(0,0,0,0.55));"
+						class="zy-nitro-jetpack"
 					/>
 				</div>
 			</div>
 		</section>
 
 		<!-- =====================================================================
-		     2. 2-COLUMN PLAN CARDS (NITRO BASIC vs NITRO — EXACT Zycord)
+		     2. 2-COLUMN PLAN CARDS (NITRO BASIC vs NITRO — EXACT Screenshot 2)
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:24px;">
+		<section class="zy-section" style="padding-top:16px;padding-bottom:64px;">
 			<div class="zy-container" style="position:relative;">
 				<div class="zy-plan-grid">
 					<!-- Nitro Basic -->
 					<article class="zy-plan-card is-basic">
 						<div>
-							<h2 class="zy-display" style="font-size:40px;font-style:italic;">Nitro Basic</h2>
-							<p class="zy-body-lg" style="margin-top:10px;color:rgba(255,255,255,0.92);">
+							<h2 class="zy-display" style="font-size:44px;font-style:italic;">Nitro Basic</h2>
+							<p class="zy-body-lg" style="margin-top:12px;color:rgba(255,255,255,0.92);">
 								Supercharge your chats with some of Nitro’s most-loved perks.
 							</p>
 						</div>
 						<div>
-							<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="width:100%;padding:18px 28px;font-size:17px;">
+							<a class="zy-plan-btn-basic" data-zy-open-app href="/app">
 								<span>Get Nitro Basic</span>
 							</a>
 						</div>
@@ -96,22 +90,22 @@
 					</article>
 
 					<!-- Nitro -->
-					<article class="zy-plan-card is-pro" style="position:relative;overflow:visible;">
+					<article class="zy-plan-card is-pro">
 						<div>
-							<h2 class="zy-display" style="font-size:40px;font-style:italic;">Nitro</h2>
-							<p class="zy-body-lg" style="margin-top:10px;color:rgba(255,255,255,0.92);">
+							<h2 class="zy-display" style="font-size:44px;font-style:italic;">Nitro</h2>
+							<p class="zy-body-lg" style="margin-top:12px;color:rgba(255,255,255,0.92);">
 								All the perks, all the power. The best way to supercharge your world on __INSTANCE_NAME__.
 							</p>
 						</div>
 						<div>
-							<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="width:100%;padding:18px 28px;font-size:17px;">
+							<a class="zy-plan-btn-pro" data-zy-open-app href="/app">
 								<span>Get Nitro</span>
 							</a>
 						</div>
 						<div class="nitro-divider"></div>
 						<div style="font-size:18px;font-weight:700;color:#fff;">Everything in Basic, plus</div>
 						<ul class="zy-plan-checklist">
-							<li class="nitro-xbox-pill">
+							<li class="zy-nitro-xbox-pill">
 								<img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" />
 								<span>Xbox Game Pass*</span>
 							</li>
@@ -127,8 +121,7 @@
 							src="/site/media/zycord/nitro-orb-apple.webp"
 							alt=""
 							aria-hidden="true"
-							class="zy-float-prop"
-							style="width:155px;bottom:-38px;right:-24px;z-index:5;"
+							class="zy-nitro-apple"
 						/>
 					</article>
 				</div>
@@ -139,45 +132,53 @@
 		     3. WHAT'S NEW IN NITRO (GREEN XBOX GAME PASS BANNER + 2 VIDEO CARDS)
 		     ===================================================================== -->
 		<section class="zy-section" style="padding-top:36px;">
-			<div class="zy-container">
-				<div style="text-align:center;max-width:760px;margin:0 auto 36px;">
-					<h2 class="zy-heading" style="font-style:italic;">WHAT’S NEW</h2>
+			<div class="zy-container" style="max-width:1180px;">
+				<div style="text-align:center;max-width:760px;margin:0 auto 44px;">
+					<h2 class="zy-heading" style="font-style:italic;font-size:clamp(36px,4.4vw,56px);">WHAT’S NEW</h2>
 				</div>
 
-				<!-- Green Xbox Game Pass + Nitro Hero Banner -->
+				<!-- Green Xbox Game Pass + Nitro Hero Banner (nitro-banner-media.webp + nitro-whats-new-bg.png) -->
 				<div class="zy-nitro-green-banner">
 					<img src="/site/media/zycord/nitro-whats-new-bg.png" alt="Array of game art covers included in Xbox Game Pass" class="zy-nitro-green-banner-bg" />
 					<div class="zy-nitro-green-content">
-						<img src="/site/media/zycord/nitro-xbox-logo.svg" alt="Xbox Game Pass + Nitro" style="height:44px;width:auto;" />
+						<img src="/site/media/zycord/nitro-xbox-logo.svg" alt="Xbox Game Pass + Nitro" style="width:100%;max-width:420px;height:auto;" />
 						<ul class="zy-plan-checklist">
-							<li><img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>50+ PC and console games like Stardew Valley &amp; Fallout 4</span></li>
-							<li><img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>10 hours of cloud gaming each month</span></li>
-							<li><img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>Earn rewards with Xbox just by playing</span></li>
-							<li><img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>Cloud gaming for select games from your Xbox library</span></li>
+							<li><img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;flex-shrink:0;" /><span>50+ PC and console games like Stardew Valley &amp; Fallout 4</span></li>
+							<li><img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;flex-shrink:0;" /><span>10 hours of cloud gaming each month</span></li>
+							<li><img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;flex-shrink:0;" /><span>Earn rewards with Xbox just by playing</span></li>
+							<li><img src="/site/media/zycord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;flex-shrink:0;" /><span>Cloud gaming for select games from your Xbox library</span></li>
 						</ul>
 						<a href="/terms" style="font-size:13px;color:rgba(255,255,255,0.82);text-decoration:underline;">Terms and eligibility rules apply.</a>
 					</div>
 				</div>
 
 				<div class="zy-grid-2">
-					<article class="zy-card" style="padding:28px;">
-						<video autoplay loop muted playsinline poster="/site/media/zycord/nitro-perk-1.webp" style="width:100%;border-radius:20px;display:block;">
-							<source src="/site/media/zycord/nitro-perk-1.mp4" type="video/mp4" />
-						</video>
-						<h3 class="zy-heading-sm" style="font-size:28px;margin-top:8px;">Save on Gear</h3>
-						<p class="zy-body">
-							Build your dream setup with exclusive discount codes every month. Only with Nitro.
-						</p>
+					<article class="zy-nitro-perk-card">
+						<div class="zy-nitro-perk-video-wrap">
+							<video autoplay loop muted playsinline poster="/site/media/zycord/nitro-perk-1.webp">
+								<source src="/site/media/zycord/nitro-perk-1.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<div style="padding:0 16px;">
+							<h3 class="zy-heading-sm" style="font-size:32px;text-transform:none;">Save on Gear</h3>
+							<p class="zy-body-lg" style="margin-top:8px;color:rgba(255,255,255,0.86);">
+								Build your dream setup with exclusive discount codes every month. Only with Nitro.
+							</p>
+						</div>
 					</article>
 
-					<article class="zy-card" style="padding:28px;">
-						<video autoplay loop muted playsinline poster="/site/media/zycord/nitro-perk-2.webp" style="width:100%;border-radius:20px;display:block;">
-							<source src="/site/media/zycord/nitro-perk-2.mp4" type="video/mp4" />
-						</video>
-						<h3 class="zy-heading-sm" style="font-size:28px;margin-top:8px;">Unlock More Orbs</h3>
-						<p class="zy-body">
-							Grow your stash with monthly Orb drops and a 1.2x multiplier on Quest rewards.
-						</p>
+					<article class="zy-nitro-perk-card">
+						<div class="zy-nitro-perk-video-wrap">
+							<video autoplay loop muted playsinline poster="/site/media/zycord/nitro-perk-2.webp">
+								<source src="/site/media/zycord/nitro-perk-2.mp4" type="video/mp4" />
+							</video>
+						</div>
+						<div style="padding:0 16px;">
+							<h3 class="zy-heading-sm" style="font-size:32px;text-transform:none;">Unlock More Orbs</h3>
+							<p class="zy-body-lg" style="margin-top:8px;color:rgba(255,255,255,0.86);">
+								Grow your stash with monthly Orb drops and a 1.2x multiplier on Quest rewards.
+							</p>
+						</div>
 					</article>
 				</div>
 			</div>
@@ -187,9 +188,9 @@
 		     4. EXPLORE THE BEST OF NITRO (4 OFFICIAL VIDEO SHOWCASE ROWS)
 		     ===================================================================== -->
 		<section class="zy-section" style="padding-top:32px;">
-			<div class="zy-container" style="position:relative;">
+			<div class="zy-container" style="position:relative;max-width:1180px;">
 				<div style="text-align:center;max-width:760px;margin:0 auto 36px;">
-					<h2 class="zy-heading" style="font-style:italic;">EXPLORE THE BEST OF NITRO</h2>
+					<h2 class="zy-heading" style="font-style:italic;font-size:clamp(36px,4.4vw,56px);">EXPLORE THE BEST OF NITRO</h2>
 				</div>
 
 				<!-- Row 1 -->
@@ -253,38 +254,41 @@
 					</div>
 				</div>
 
-				<img src="/site/media/zycord/nitro-star.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:128px;bottom:-36px;right:4%;" />
+				<img src="/site/media/zycord/nitro-star.webp" alt="" aria-hidden="true" class="zy-nitro-star" />
 			</div>
 		</section>
 
 		<!-- =====================================================================
-		     5. PICK YOUR PLAN COMPARISON TABLE (EXACT Zycord)
+		     5. PICK YOUR PLAN COMPARISON TABLE (EXACT DISCORD NITRO)
 		     ===================================================================== -->
 		<section class="zy-section" id="pick-plan" style="padding-top:40px;">
 			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/zycord/nitro-tornado.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:126px;top:-24px;left:2%;" />
-				<img src="/site/media/zycord/nitro-battery.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:120px;top:-16px;right:2%;" />
+				<img src="/site/media/zycord/nitro-tornado.webp" alt="" aria-hidden="true" class="zy-nitro-windy" />
+				<img src="/site/media/zycord/nitro-battery.webp" alt="" aria-hidden="true" class="zy-nitro-battery" />
 
-				<div style="text-align:center;max-width:740px;margin:0 auto 36px;">
-					<h2 class="zy-heading" style="font-style:italic;">PICK YOUR PLAN</h2>
+				<div style="text-align:center;max-width:740px;margin:0 auto 44px;">
+					<h2 class="zy-heading" style="font-style:italic;font-size:clamp(36px,4.4vw,56px);">PICK YOUR PLAN</h2>
 				</div>
 
 				<div class="zy-compare-wrap">
+					<img src="/site/media/zycord/nitro-ellipse-1.png" alt="" aria-hidden="true" class="zy-compare-ellipse-1" />
+					<img src="/site/media/zycord/nitro-ellipse-2.png" alt="" aria-hidden="true" class="zy-compare-ellipse-2" />
+					<img src="/site/media/zycord/nitro-ellipse-3.webp" alt="" aria-hidden="true" class="zy-compare-ellipse-3" />
 					<table class="zy-compare-table">
 						<thead>
 							<tr>
-								<th style="font-family:var(--font-abc-ginto-nord);font-size:20px;font-style:italic;vertical-align:bottom;padding-bottom:24px;">Features</th>
-								<th style="font-family:var(--font-abc-ginto-nord);font-size:22px;font-style:italic;padding-bottom:24px;">
+								<th style="font-family:var(--font-abc-ginto-nord-zycord);font-size:20px;font-style:italic;vertical-align:bottom;padding-bottom:24px;">Features</th>
+								<th style="font-family:var(--font-abc-ginto-nord-zycord);font-size:22px;font-style:italic;padding-bottom:24px;">
 									<div>NITRO<br /><span style="font-size:16px;opacity:0.85;">BASIC</span></div>
 									<div style="margin-top:14px;">
-										<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="padding:10px 22px;font-size:14px;">Subscribe</a>
+										<a class="zy-plan-btn-basic" data-zy-open-app href="/app" style="padding:10px 22px;font-size:14px;width:auto;">Subscribe</a>
 									</div>
 								</th>
-								<th style="font-family:var(--font-abc-ginto-nord);font-size:22px;font-style:italic;padding-bottom:24px;border-top:2px solid #fe59d6;border-radius:20px 20px 0 0;">
+								<th style="font-family:var(--font-abc-ginto-nord-zycord);font-size:22px;font-style:italic;padding-bottom:24px;">
 									<div style="display:inline-block;padding:4px 12px;border-radius:999px;background:linear-gradient(90deg,#5865f2,#fe59d6);font-size:11px;letter-spacing:0.08em;margin-bottom:8px;font-style:normal;">POPULAR</div>
 									<div>NITRO</div>
 									<div style="margin-top:14px;">
-										<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="padding:10px 22px;font-size:14px;">Subscribe</a>
+										<a class="zy-plan-btn-pro" data-zy-open-app href="/app" style="padding:10px 22px;font-size:14px;width:auto;">Subscribe</a>
 									</div>
 								</th>
 							</tr>
@@ -433,7 +437,7 @@
 		     ===================================================================== -->
 		<section class="zy-section" style="padding-top:32px;">
 			<div class="zy-container" style="max-width:960px;position:relative;">
-				<img src="/site/media/zycord/nitro-faq-key.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:108px;top:-18px;right:0;" />
+				<img src="/site/media/zycord/nitro-faq-key.webp" alt="" aria-hidden="true" class="zy-nitro-faq-key" />
 				<div style="text-align:center;margin-bottom:24px;">
 					<h2 class="zy-heading" style="font-style:italic;">QUESTIONS?</h2>
 					<p class="zy-body-lg" style="margin-top:8px;">Questions about Nitro? Check out our FAQ.</p>
@@ -621,32 +625,31 @@
 		</section>
 
 		<!-- =====================================================================
-		     7. WHAT ARE YOU WAITING FOR? FOOTER CTA BANNER (EXACT Zycord)
+		     7. WHAT ARE YOU WAITING FOR? FOOTER CTA BANNER (EXACT DISCORD NITRO)
 		     ===================================================================== -->
-		<section
-			class="zy-section"
-			style="position:relative;padding-top:110px;padding-bottom:130px;text-align:center;overflow:hidden;"
-		>
+		<section class="zy-nitro-footer-cta">
 			<img
 				src="/site/media/zycord/nitro-footer-bg.png"
 				alt=""
 				aria-hidden="true"
-				style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:bottom center;pointer-events:none;z-index:0;"
+				class="zy-nitro-footer-bg-img"
 			/>
-			<div class="zy-container" style="position:relative;z-index:2;max-width:920px;">
-				<img src="/site/media/zycord/nitro-flag.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:142px;top:-48px;left:4%;" />
-				<img src="/site/media/zycord/nitro-box.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:138px;bottom:-44px;right:4%;" />
-				<h2 class="zy-alt-title" style="text-align:center;font-style:italic;font-size:clamp(36px,4.8vw,62px);">WHAT ARE YOU WAITING FOR?</h2>
-				<div style="margin-top:28px;">
-					<a class="zy-btn zy-btn-primary" data-zy-open-app href="/app" style="padding:16px 44px;font-size:18px;border-radius:12px;">
-						<span>Subscribe</span>
-					</a>
+			<div class="zy-container">
+				<div class="zy-nitro-footer-inner">
+					<img src="/site/media/zycord/nitro-flag.webp" alt="" aria-hidden="true" class="zy-nitro-flag" />
+					<img src="/site/media/zycord/nitro-box.webp" alt="" aria-hidden="true" class="zy-nitro-box" />
+					<h2 class="zy-alt-title" style="text-align:center;font-style:italic;font-size:clamp(36px,4.8vw,62px);">WHAT ARE YOU WAITING FOR?</h2>
+					<div style="margin-top:28px;">
+						<a class="zy-btn zy-btn-secondary" href="#pick-plan" style="padding:15.5px 28px;font-size:18px;border-radius:12px;">
+							<span>Subscribe</span>
+						</a>
+					</div>
 				</div>
 			</div>
 		</section>
 	</main>
 
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261012k"></script>
+	<script src="/site/site.js?v=20261012p"></script>
 </body>
 </html>

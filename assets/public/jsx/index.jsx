@@ -270,6 +270,20 @@ function bindJobFilters() {
 	}
 }
 
+function bindAutoplayVideos() {
+	const videos = document.querySelectorAll("video[autoplay], video.zy-stage-video");
+	for (let i = 0; i < videos.length; i++) {
+		const v = videos[i];
+		v.muted = true;
+		v.defaultMuted = true;
+		v.playsInline = true;
+		try {
+			const p = v.play();
+			if (p && typeof p.catch === "function") p.catch(() => {});
+		} catch (_e) {}
+	}
+}
+
 function initSiteJSX() {
 	const navMount = document.querySelector("[data-zy-navbar]");
 	if (navMount) {
@@ -300,6 +314,7 @@ function initSiteJSX() {
 	bindActionDropdowns();
 	bindCarousels();
 	bindJobFilters();
+	bindAutoplayVideos();
 
 	const savedLang = getSavedLanguage();
 	applySiteLanguage(savedLang.code, savedLang.label);

@@ -6,15 +6,20 @@
 	<title>__INSTANCE_NAME__ — Group Chat That's All Fun &amp; Games</title>
 	<meta name="description" content="__INSTANCE_NAME__ is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out." />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261012k" />
+	<link rel="stylesheet" href="/site/site.css?v=20261012p" />
 	<style>
 		/* ============================================================================
 		   OFFICIAL ZYCORD 2026 3D HERO COMPOSITE & HORIZON STYLES
 		   ============================================================================ */
 		.hero-section {
-			padding: 48px 0 96px;
+			padding: 140px 0 96px;
 			position: relative;
 			overflow: hidden;
+		}
+		@media screen and (min-width: 1440px) {
+			.hero-section {
+				padding-top: 11rem;
+			}
 		}
 		.hero-grid {
 			display: grid;
@@ -190,6 +195,16 @@
 			margin: 0 auto;
 			overflow: visible;
 		}
+		@media (min-width: 1440px) {
+			.zy-sec5-3d-wrap {
+				max-width: 1240px;
+			}
+		}
+		@media (min-width: 1920px) {
+			.zy-sec5-3d-wrap {
+				max-width: 1500px;
+			}
+		}
 		.zy-sec5-char-bot {
 			position: absolute;
 			top: -110px;
@@ -231,7 +246,7 @@
 			position: relative;
 			overflow: visible;
 			text-align: center;
-			z-index: 7;
+			z-index: 100;
 			pointer-events: none;
 		}
 		.final-horizon-section .zy-container,
@@ -328,6 +343,6 @@
 	<!-- Global Zycord 2026 Blurple Footer (Rendered via JSX) -->
 	<footer data-zy-footer></footer>
 
-	<script src="/site/site.js?v=20261012k"></script>
+	<script src="/site/site.js?v=20261012p"></script>
 </body>
 </html>

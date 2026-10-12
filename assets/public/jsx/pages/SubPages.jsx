@@ -5,23 +5,23 @@ import { h } from "../runtime.jsx";
    ============================================================================ */
 export function DownloadPage() {
 	return (
-		<div>
-			{/* Hero */}
-			<section className="zy-subhero">
+		<div className="zy-download-page">
+			{/* Hero (.download_hero.is_download) */}
+			<section className="zy-dl-hero-section">
 				<div className="zy-container">
 					<div className="zy-subhero-inner">
 						<img
 							src="/site/media/zycord/prop-coin.webp"
 							alt=""
 							aria-hidden="true"
-							style={{ width: "86px", height: "auto", marginBottom: "6px", filter: "drop-shadow(0 16px 28px rgba(0,0,0,0.45))" }}
+							className="zy-dl-coin"
 						/>
 						<h1 className="zy-subhero-title">Download Zycord wherever you hang out</h1>
 						<p className="zy-subhero-sub">
 							Talk, play, and hang out with friends around the world over voice, video, or text. Available on Windows, macOS, Linux, iOS, Android, and consoles.
 						</p>
 						<div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: "16px", marginTop: "10px" }}>
-							<a className="zy-btn zy-btn-primary" href="/download/windows" style={{ padding: "18px 36px", fontSize: "18px" }}>
+							<a className="zy-btn zy-btn-primary" href="/download/windows" style={{ padding: "15.5px 28px", fontSize: "18px" }}>
 								<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 									<path d="M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" />
 									<path d="M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" />
@@ -31,40 +31,39 @@ export function DownloadPage() {
 						</div>
 					</div>
 
-					{/* Massive Download Hero Stage with Clyde & Wumpus flanking */}
+					{/* Massive Download Hero Stage with Clyde TOP-RIGHT & Wumpus+Leaf BOTTOM-LEFT */}
 					<div className="zy-dl-hero-stage">
 						<img
 							src="/site/media/zycord/download-clyde-point.webp"
 							alt=""
 							aria-hidden="true"
-							className="zy-float-prop"
-							style={{ width: "clamp(110px, 14vw, 195px)", left: "-4%", bottom: "12%", zIndex: 4 }}
+							className="zy-dl-clyde"
 						/>
 						<img
 							src="/site/media/zycord/download-hero.webp"
 							alt="Zycord Desktop and Mobile Interface"
 							className="zy-dl-hero-img"
 						/>
-						<img
-							src="/site/media/zycord/download-leaf.webp"
-							alt=""
-							aria-hidden="true"
-							className="zy-float-prop"
-							style={{ width: "clamp(72px, 8vw, 118px)", right: "8%", bottom: "36%", zIndex: 4 }}
-						/>
-						<img
-							src="/site/media/zycord/download-wumpus-point.webp"
-							alt=""
-							aria-hidden="true"
-							className="zy-float-prop"
-							style={{ width: "clamp(130px, 16vw, 230px)", right: "-5%", bottom: "4%", zIndex: 5 }}
-						/>
+						<div className="zy-dl-wumpus-wrap">
+							<img
+								src="/site/media/zycord/download-leaf.webp"
+								alt=""
+								aria-hidden="true"
+								className="zy-dl-wumpus-leaf"
+							/>
+							<img
+								src="/site/media/zycord/download-wumpus-point.webp"
+								alt=""
+								aria-hidden="true"
+								className="zy-dl-wumpus-body"
+							/>
+						</div>
 					</div>
 				</div>
 			</section>
 
 			{/* Alternating Platform Rows */}
-			<section className="zy-section" style={{ paddingTop: "24px" }}>
+			<section className="zy-section" style={{ paddingTop: "32px", paddingBottom: "48px" }}>
 				<div className="zy-container">
 					{/* 1. Desktop */}
 					<div className="zy-alt-row">
@@ -136,14 +135,14 @@ export function DownloadPage() {
 								</div>
 							</div>
 						</div>
-						<div className="zy-alt-media-card is-green">
+						<div className="zy-alt-media-card is-green is-dl-desktop">
 							<img src="/site/media/zycord/download-desktop-card.webp" alt="Download Zycord for Desktop" />
 						</div>
 					</div>
 
 					{/* 2. Mobile */}
 					<div className="zy-alt-row is-reversed">
-						<div className="zy-alt-media-card is-blue">
+						<div className="zy-alt-media-card is-blue is-dl-mobile">
 							<img src="/site/media/zycord/download-mobile-card.webp" alt="Download Zycord for Mobile" />
 						</div>
 						<div className="zy-alt-copy">
@@ -190,16 +189,14 @@ export function DownloadPage() {
 								</a>
 							</div>
 						</div>
-						<div className="zy-alt-media-card is-pink">
+						<div className="zy-alt-media-card is-pink is-dl-console">
 							<img src="/site/media/zycord/download-console-card.webp" alt="Link your console to Zycord" />
 						</div>
 					</div>
 
-					{/* 4. VR (Meta Quest) */}
+					{/* 4. VR (Meta Quest — Official download-vr-card.png) */}
 					<div className="zy-alt-row is-reversed">
-						<div className="zy-alt-media-card is-blue" style={{ minHeight: "340px", background: "linear-gradient(145deg, #1b4be6 0%, #4b73ff 48%, #10164f 100%)" }}>
-							<img src="/site/media/zycord/dev-card-apps.webp" alt="Download Zycord for VR" style={{ maxHeight: "340px" }} />
-						</div>
+						<div className="zy-alt-media-card is-dl-vr"></div>
 						<div className="zy-alt-copy">
 							<h2 className="zy-alt-title">Download for VR</h2>
 							<p className="zy-body-lg">
@@ -217,30 +214,32 @@ export function DownloadPage() {
 							</div>
 						</div>
 					</div>
+				</div>
+			</section>
 
-					{/* Feeling experimental? PTB Card with interactive dropdown */}
-					<div className="zy-ptb-card">
+			{/* Bottom "Feeling experimental?" Section (.download-banner.is-download.is_new-2026) */}
+			<section className="zy-dl-ptb-banner">
+				<div className="zy-container">
+					<div className="zy-dl-ptb-inner">
 						<img
 							src="/site/media/zycord/download-ptb-3d.png"
 							alt=""
 							aria-hidden="true"
-							className="zy-float-prop"
-							style={{ width: "118px", top: "-36px", left: "4%" }}
+							className="zy-dl-ptb-icon"
 						/>
 						<img
 							src="/site/media/zycord/download-trophy.webp"
 							alt=""
 							aria-hidden="true"
-							className="zy-float-prop"
-							style={{ width: "112px", bottom: "-32px", right: "5%" }}
+							className="zy-dl-ptb-trophy"
 						/>
 						<h2 className="zy-alt-title" style={{ textAlign: "center" }}>Feeling experimental?</h2>
-						<p className="zy-body-lg" style={{ maxWidth: "600px", textAlign: "center" }}>
+						<p className="zy-body-lg" style={{ maxWidth: "560px", textAlign: "center" }}>
 							Try out the newest features before they launch by using our Public Test Build.
 						</p>
 						<div className="zy-pill-btn-row" style={{ justifyContent: "center" }}>
 							<div className="zy-action-dropdown" data-zy-dropdown>
-								<button type="button" className="zy-white-pill-btn" data-zy-dropdown-toggle style={{ border: "none", cursor: "pointer", padding: "16px 28px", fontSize: "16px" }}>
+								<button type="button" className="zy-white-pill-btn" data-zy-dropdown-toggle style={{ border: "none", cursor: "pointer", padding: "15.5px 28px", fontSize: "16px" }}>
 									<span>Download Test Build</span>
 									<svg className="zy-action-dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
 										<polyline points="3.5 6 8 10.5 12.5 6" />
@@ -290,7 +289,7 @@ export function DownloadPage() {
    ============================================================================ */
 export function QuestsPage() {
 	return (
-		<div>
+		<div className="zy-quests-page">
 			{/* Hero with official quests-hero-bg.webp & floating cauldron */}
 			<section
 				className="zy-subhero"
@@ -298,7 +297,7 @@ export function QuestsPage() {
 					backgroundImage: "linear-gradient(180deg, rgba(16,18,56,0.58) 0%, rgba(16,18,56,0.95) 100%), url('/site/media/zycord/quests-hero-bg.webp')",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
-					paddingTop: "80px",
+					paddingTop: "140px",
 					paddingBottom: "76px"
 				}}
 			>
