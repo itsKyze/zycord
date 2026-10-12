@@ -134,7 +134,7 @@
       "id": 5,
       "key": "GUILD_DISCOVERY_WELCOME",
       "header": "Report Server",
-      "subheader": "Is this a server dedicated to content that breaks our [Community Guidelines](https://github.com/spacebarchat/spacebarchat/blob/master/CODE_OF_CONDUCT.md) or [Discovery Guidelines](https://github.com/spacebarchat/spacebarchat/blob/master/CODE_OF_CONDUCT.md)? Please choose the issue to report this server to Zycord Trust & Safety.",
+      "subheader": "Is this a server dedicated to content that breaks our [Community Guidelines](https://app.zyron.site/guidelines) or [Discovery Guidelines](https://app.zyron.site/guidelines)? Please choose the issue to report this server to Zycord Trust & Safety.",
       "info": null,
       "button": {
         "type": "cancel",
@@ -155,7 +155,7 @@
           "data": {
             "is_localized": true,
             "link_text": "Report illegal content under the Digital Services Act",
-            "url": "https://spacebar.chat/empty/report",
+            "url": "https://app.zyron.site/support",
             "link_description": null,
             "is_header_hidden": true
           },

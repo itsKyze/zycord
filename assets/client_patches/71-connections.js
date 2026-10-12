@@ -39,7 +39,31 @@
 
     const getBrandName = () => (window.GLOBAL_ENV?.INSTANCE_NAME || "zycord").toLowerCase();
 
-    // Intercept HTMLInputElement.value setter so React never sets _discord
+    const needsRebrand = (str) =>
+        typeof str === "string" &&
+        (str.includes("_discord") ||
+            str.includes("/.well-known/discord") ||
+            str.includes("discord=") ||
+            str.includes("discord.new/") ||
+            str.includes("discord.gg/") ||
+            str.includes("discord.gift/"));
+
+    const rebrandClientText = (str) => {
+        if (!needsRebrand(str)) return str;
+        const brand = getBrandName();
+        return str
+            .replace(/_discord/gi, `_${brand}`)
+            .replace(/\/\.well-known\/discord/gi, `/.well-known/${brand}`)
+            .replace(/discord=/gi, `${brand}=`)
+            .replace(/https?:\/\/(?:www\.)?discord\.new\//gi, `${location.origin}/template/`)
+            .replace(/\bdiscord\.new\//gi, `${location.host}/template/`)
+            .replace(/https?:\/\/(?:www\.)?discord\.gg\//gi, `${location.origin}/invite/`)
+            .replace(/\bdiscord\.gg\//gi, `${location.host}/invite/`)
+            .replace(/https?:\/\/(?:www\.)?discord\.gift\//gi, `${location.origin}/gift/`)
+            .replace(/\bdiscord\.gift\//gi, `${location.host}/gift/`);
+    };
+
+    // Intercept HTMLInputElement.value setter so React never sets _discord or discord.new/discord.gg/discord.gift
     try {
         const origValueDescriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value");
         if (origValueDescriptor && origValueDescriptor.set) {
@@ -47,71 +71,48 @@
             Object.defineProperty(HTMLInputElement.prototype, "value", {
                 ...origValueDescriptor,
                 set(val) {
-                    const brand = getBrandName();
-                    if (typeof val === "string" && (val.includes("_discord") || val.includes("/.well-known/discord") || val.includes("discord="))) {
-                        val = val
-                            .replace(/_discord/gi, `_${brand}`)
-                            .replace(/\/\.well-known\/discord/gi, `/.well-known/${brand}`)
-                            .replace(/discord=/gi, `${brand}=`);
-                    }
-                    return origSet.call(this, val);
+                    return origSet.call(this, rebrandClientText(val));
                 },
             });
         }
     } catch (_) {}
 
-    // Intercept clipboard copy so copying DNS records copies _zycord
+    // Intercept clipboard copy so copying DNS records, template links, invite links, or gift links uses our domain
     try {
         if (navigator.clipboard && navigator.clipboard.writeText) {
             const origWriteText = navigator.clipboard.writeText.bind(navigator.clipboard);
             navigator.clipboard.writeText = function (text) {
-                const brand = getBrandName();
-                if (typeof text === "string" && (text.includes("_discord") || text.includes("/.well-known/discord") || text.includes("discord="))) {
-                    text = text
-                        .replace(/_discord/gi, `_${brand}`)
-                        .replace(/\/\.well-known\/discord/gi, `/.well-known/${brand}`)
-                        .replace(/discord=/gi, `${brand}=`);
-                }
-                return origWriteText(text);
+                return origWriteText(rebrandClientText(text));
             };
         }
     } catch (_) {}
 
-    // Rebrand domain verification instructions in the UI (text nodes + inputs + anchor links)
+    // Rebrand domain verification instructions and shortlinks in the UI (text nodes + inputs + anchor links)
     const brandDomainInstructions = () => {
         if (!document.body) return;
-        const brandName = getBrandName();
 
         // Walk text nodes
         const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
         let node;
         while ((node = walker.nextNode())) {
-            if (node.nodeValue && (node.nodeValue.includes("_discord") || node.nodeValue.includes("/.well-known/discord") || node.nodeValue.includes("discord="))) {
-                node.nodeValue = node.nodeValue
-                    .replace(/_discord/gi, `_${brandName}`)
-                    .replace(/\/\.well-known\/discord/gi, `/.well-known/${brandName}`)
-                    .replace(/discord=/gi, `${brandName}=`);
+            if (node.nodeValue && needsRebrand(node.nodeValue)) {
+                node.nodeValue = rebrandClientText(node.nodeValue);
             }
         }
 
         // Walk input and textarea elements
         const inputs = document.querySelectorAll("input, textarea");
         for (const input of inputs) {
-            if (input.value && (input.value.includes("_discord") || input.value.includes("/.well-known/discord") || input.value.includes("discord="))) {
+            if (input.value && needsRebrand(input.value)) {
                 const oldVal = input.value;
-                input.value = input.value
-                    .replace(/_discord/gi, `_${brandName}`)
-                    .replace(/\/\.well-known\/discord/gi, `/.well-known/${brandName}`)
-                    .replace(/discord=/gi, `${brandName}=`);
+                input.value = rebrandClientText(input.value);
                 if (input.value !== oldVal) {
                     input.dispatchEvent(new Event("input", { bubbles: true }));
                     input.dispatchEvent(new Event("change", { bubbles: true }));
                 }
             }
-            if (input.placeholder && (input.placeholder.includes("_discord") || input.placeholder.includes("/.well-known/discord"))) {
-                input.placeholder = input.placeholder
-                    .replace(/_discord/gi, `_${brandName}`)
-                    .replace(/\/\.well-known\/discord/gi, `/.well-known/${brandName}`);
+            if (input.placeholder && needsRebrand(input.placeholder)) {
+                input.placeholder = rebrandClientText(input.placeholder);
             }
         }
 

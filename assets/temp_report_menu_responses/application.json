@@ -204,7 +204,7 @@
           "data": {
             "is_localized": true,
             "link_text": "Report Illegal App Activity under DSA.",
-            "url": "https://spacebar.chat/empty/whole-app-report-illegal-activity-dsa",
+            "url": "https://app.zyron.site/support",
             "link_description": null,
             "is_header_hidden": true
           },
@@ -218,7 +218,7 @@
           "data": {
             "is_localized": true,
             "link_text": "This app contains content that makes it ineligible to be listed or discoverable in the App Directory.",
-            "url": "https://spacebar.chat/empty/app-directory-age-restricted-content",
+            "url": "https://app.zyron.site/support",
             "link_description": null,
             "is_header_hidden": true
           },
@@ -232,7 +232,7 @@
           "data": {
             "is_localized": true,
             "link_text": "Something else",
-            "url": "https://spacebar.chat/empty/whole-app-report-other-multiple",
+            "url": "https://app.zyron.site/support",
             "link_description": null,
             "is_header_hidden": true
           },
@@ -747,7 +747,7 @@
           "data": {
             "is_localized": true,
             "link_text": "This app is for the purpose of soliciting, sharing or distributing child sexual abuse material.",
-            "url": "https://spacebar.chat/empty/whole-app-CSAM-report",
+            "url": "https://app.zyron.site/safety",
             "link_description": null,
             "is_header_hidden": true
           },

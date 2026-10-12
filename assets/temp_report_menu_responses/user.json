@@ -1176,7 +1176,7 @@
           "data": {
             "is_localized": true,
             "link_text": "Report illegal content under the Digital Services Act",
-            "url": "https://spacebar.chat/empty/report",
+            "url": "https://app.zyron.site/support",
             "link_description": null,
             "is_header_hidden": true
           },
@@ -1514,7 +1514,7 @@
           "data": {
             "is_localized": true,
             "link_text": "Learn more about content that breaks Zycord's rules",
-            "url": "https://github.com/spacebarchat/spacebarchat/blob/master/CODE_OF_CONDUCT.md",
+            "url": "https://app.zyron.site/guidelines",
             "link_description": null
           },
           "should_submit_data": false,

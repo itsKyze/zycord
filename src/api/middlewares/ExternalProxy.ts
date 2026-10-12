@@ -50,7 +50,7 @@ export async function ExternalProxy(req: Request, res: Response) {
     const timeout = setTimeout(() => abort.abort(), 15000);
     const upstream = await fetch(target, {
         headers: {
-            "user-agent": Config.get().embeds.defaultUserAgent ?? "Mozilla/5.0 (compatible; Spacebar/1.0; +https://github.com/spacebarchat/server)",
+            "user-agent": Config.get().embeds.defaultUserAgent ?? "Mozilla/5.0 (compatible; Zycord/1.0; +https://app.zyron.site)",
             ...(req.headers.range && { range: req.headers.range }),
         },
         signal: abort.signal,

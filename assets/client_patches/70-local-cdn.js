@@ -27,13 +27,28 @@
         [/^https:\/\/cdn\.discordapp\.com\/assets\/krisp_browser_models\//, () => `${cdn()}/krisp_browser_models/`],
         [/^https:\/\/cdn\.discordapp\.com\/(media\/v1\/collectibles-shop|badge-icons|avatar-decoration-presets|app-icons|bad-domains)\//, (match, prefix) => `${cdn()}/${prefix}/`],
     ];
-    const downgraded = /^(?:http:)?\/\/((?:[\w-]+\.)*(?:discord\.com|discordapp\.com|discordapp\.net|discord\.gg|discord\.media|dis\.gd|discordstatus\.com))(?=[/:?#]|$)/i;
+    const downgraded = /^(?:http:)?\/\/((?:[\w-]+\.)*(?:discord\.com|discordapp\.com|discordapp\.net|discord\.gg|discord\.new|discord\.gift|discord\.media|dis\.gd|discordstatus\.com))(?=[/:?#]|$)/i;
+    const linkRules = [
+        [/^https?:\/\/(?:www\.)?(?:discord|zycord)\.new\/([\w-]+)\/?$/i, (m, code) => `${cdn()}/template/${code}`],
+        [/^https?:\/\/(?:www\.)?discord\.gg\/([\w-]+)\/?$/i, (m, code) => `${cdn()}/invite/${code}`],
+        [/^https?:\/\/(?:www\.)?discord\.gift\/([\w-]+)\/?$/i, (m, code) => `${cdn()}/gift/${code}`],
+        [/^https?:\/\/support\.discord\.com(?:\b.*)?$/i, () => `${cdn()}/support`],
+        [/^https?:\/\/(?:status\.discord\.com|discordstatus\.com)(?:\b.*)?$/i, () => `${cdn()}/status`],
+        [
+            /^https?:\/\/(?:(?:www|ptb|canary)\.)?discord(?:app)?\.com\/(terms|privacy|guidelines|safety|nitro|download|developers|branding|company|careers|blog|community|quests|ads\/quests|acknowledgements|licenses|company-information|status|support|template|invite|gifts?)(?=[/?#]|$)(.*)$/i,
+            (m, route, rest) => `${cdn()}/${route}${rest || ""}`,
+        ],
+    ];
     const rewrite = (value) => {
         if (typeof value !== "string") return value;
         const local = instanceUrl(value);
         return rules.reduce((acc, [pattern, to]) => acc.replace(pattern, to), local);
     };
-    const link = (value) => (typeof value === "string" ? rewrite(value.replace(downgraded, "https://$1")) : value);
+    const link = (value) => {
+        if (typeof value !== "string") return value;
+        const upgraded = rewrite(value.replace(downgraded, "https://$1"));
+        return linkRules.reduce((acc, [pattern, to]) => acc.replace(pattern, to), upgraded);
+    };
     const rewriteCss = (value) =>
         typeof value === "string" ? value.replace(/url\((["']?)((?:https?:)?\/\/[^"')]+)\1\)/g, (all, quote, url) => `url(${quote}${rewrite(url)}${quote})`) : value;
 

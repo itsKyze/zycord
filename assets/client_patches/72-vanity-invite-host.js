@@ -1,6 +1,9 @@
 (() => {
-    const find = /(\blet \w+=)"https:\/\/discord\.gg"\}/;
-    const replace = '$1`${location.origin}/invite`}';
+    const replacements = [
+        [/(\blet \w+=)"https:\/\/discord\.gg"\}/g, '$1`${location.origin}/invite`}'],
+        [/"https:\/\/discord\.new"/g, '`${location.origin}/template`'],
+        [/"https:\/\/discord\.gift"/g, '`${location.origin}/gift`'],
+    ];
 
     const patchModules = (modules) => {
         if (!modules || typeof modules !== "object") return;
@@ -8,8 +11,8 @@
             const factory = modules[id];
             if (typeof factory !== "function" || factory.__vanityHostPatched) continue;
             const source = factory.toString();
-            if (!source.includes('"https://discord.gg"}')) continue;
-            const patched = source.replace(find, replace);
+            if (!source.includes('"https://discord.gg"}') && !source.includes('"https://discord.new"') && !source.includes('"https://discord.gift"')) continue;
+            const patched = replacements.reduce((acc, [find, replace]) => acc.replace(find, replace), source);
             if (patched === source) continue;
             try {
                 const replacement = (0, eval)(`({${patched}})`)[id] ?? (0, eval)(`(${patched})`);
