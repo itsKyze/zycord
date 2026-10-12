@@ -31,8 +31,8 @@ test("initial browser gateway follows location.host including custom ports and s
     for (const [protocol, host, expected] of [
         ["http:", "localhost:3290", "ws://localhost:3290"],
         ["http:", "zycord.localhost:3290", "ws://zycord.localhost:3290"],
-        ["https:", "meowcord.example", "wss://meowcord.example"],
-        ["https:", "meowcord.example:8443", "wss://meowcord.example:8443"],
+        ["https:", "zycord.example", "wss://zycord.example"],
+        ["https:", "zycord.example:8443", "wss://zycord.example:8443"],
         ["http:", "[::1]:3290", "ws://[::1]:3290"],
     ])
         assert.equal(vm.runInNewContext(`const secure = protocol === "https:"; ${expression}`, { protocol, host }), expected);
@@ -44,7 +44,7 @@ test("native reconnect ignores the advertised resume host and follows the same b
     const context = {
         module,
         exports: module.exports,
-        location: { protocol: "https:", host: "meowcord.example:8443" },
+        location: { protocol: "https:", host: "zycord.example:8443" },
         require: (name) => (name === "@utils/types" ? (plugin) => plugin : { ZycordAuthor: {} }),
     };
     vm.runInNewContext(
@@ -62,5 +62,5 @@ test("native reconnect ignores the advertised resume host and follows the same b
         },
     };
     vm.runInNewContext(`(function(){${patched}}).call(receiver)`, { receiver, $self: plugin, e: { resume_gateway_url: "ws://localhost:3290" } });
-    assert.equal(receiver.value, "wss://meowcord.example:8443");
+    assert.equal(receiver.value, "wss://zycord.example:8443");
 });

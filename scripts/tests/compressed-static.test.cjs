@@ -45,8 +45,8 @@ function load(file) {
 }
 const { compressedStatic } = load("src/util/util/CompressedStatic.ts");
 async function fixture(t) {
-    const root = await fsp.mkdtemp(path.join(os.tmpdir(), "meowcord-static-"));
-    const body = 'const text = "Meowcord public script";\n'.repeat(1000);
+    const root = await fsp.mkdtemp(path.join(os.tmpdir(), "zycord-static-"));
+    const body = 'const text = "Zycord public script";\n'.repeat(1000);
     await fsp.writeFile(path.join(root, "app.js"), body);
     const app = express();
     app.use("/public", compressedStatic(root), express.static(root));
@@ -121,7 +121,7 @@ test("concurrent reads and same-size replacements with preserved mtime return cu
     assert.ok(results.every((r) => r.body.equals(first.body)));
     const filename = path.join(root, "app.js");
     const stat = await fsp.stat(filename);
-    const replacement = body.replaceAll("Meowcord", "MEOWCORD");
+    const replacement = body.replaceAll("Zycord", "ZYCORD");
     await fsp.writeFile(path.join(root, "new.js"), replacement);
     await fsp.utimes(path.join(root, "new.js"), stat.atime, stat.mtime);
     await fsp.rename(path.join(root, "new.js"), filename);

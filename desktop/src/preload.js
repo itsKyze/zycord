@@ -213,10 +213,10 @@ function initWindowControls() {
                 }
 
                 /* Hide native Help button so only the original Inbox is in the top bar */
-                [class*="trailing_"] a[href*="support.discord.com"],
+                [class*="trailing_"] a[href*="support"],
                 [class*="trailing_"] [aria-label*="Help" i],
                 [class*="trailing_"] [aria-label*="مساعدة" i],
-                [class*="toolbar_"] a[href*="support.discord.com"],
+                [class*="toolbar_"] a[href*="support"],
                 [class*="toolbar_"] [aria-label*="Help" i],
                 [class*="toolbar_"] [aria-label*="مساعدة" i] {
                     display: none !important;
@@ -490,9 +490,9 @@ function initWindowControls() {
                 }
 
                 /* Center Zycord logo above login form */
-                .discordLogo__921c5,
-                .authBoxExpanded__921c5 .discordLogo__921c5 {
-                    background: url("/branding/meowcord.svg") no-repeat center !important;
+                [class*="Logo__921c5"],
+                .authBoxExpanded__921c5 [class*="Logo__921c5"] {
+                    background: url("/favicon.svg") no-repeat center !important;
                     background-size: contain !important;
                     width: 72px !important;
                     height: 72px !important;

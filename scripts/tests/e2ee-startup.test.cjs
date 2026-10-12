@@ -180,7 +180,7 @@ function startupHarness() {
         exports: module.exports,
         require,
         window,
-        location: { protocol: "https:", host: "meowcord.example", pathname: "/channels/@me/123" },
+        location: { protocol: "https:", host: "zycord.example", pathname: "/channels/@me/123" },
         console,
         setTimeout,
         clearTimeout,
