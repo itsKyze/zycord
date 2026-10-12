@@ -103,10 +103,9 @@ export function HomePage() {
 					{/* Centered Hero Bottom Dual CTA Pair (Exact Discord.com layout) */}
 					<div className="hero-bottom-ctas">
 						<a className="zy-btn zy-btn-secondary" href="/download/windows">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-								<polyline points="7 10 12 15 17 10" />
-								<line x1="12" y1="15" x2="12" y2="3" />
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+								<path d="M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" />
+								<path d="M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" />
 							</svg>
 							<span>Download for Windows</span>
 						</a>
@@ -533,10 +532,9 @@ export function HomePage() {
 					</h2>
 					<div className="hero-bottom-ctas" style={{ marginTop: "32px" }}>
 						<a className="zy-btn zy-btn-secondary" href="/download/windows">
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-								<polyline points="7 10 12 15 17 10" />
-								<line x1="12" y1="15" x2="12" y2="3" />
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+								<path d="M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" />
+								<path d="M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" />
 							</svg>
 							<span>Download for Windows</span>
 						</a>
