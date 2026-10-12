@@ -90,7 +90,7 @@ try {
         });
         await page.getByRole("button", { name: "Create Account", exact: true }).click();
         await page.getByText("Verification expired or was already used. Verify again, then create your account.", { exact: true }).waitFor();
-        assert.equal(await page.getByText(/Wait!.*human/).count(), 0, "Expired proof does not open Discord CAPTCHA modal");
+        assert.equal(await page.getByText(/Wait!.*human/).count(), 0, "Expired proof does not open CAPTCHA modal");
         await page.unroute(registerRoute);
         await solve();
     }

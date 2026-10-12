@@ -2,11 +2,10 @@
 // @ts-nocheck
 import * as cluster from "node:cluster";
 
-// https://github.com/discordjs/discord.js/blob/master/src/util/Snowflake.js
 // Apache License Version 2.0 Copyright 2015 - 2021 Amish Shah
 // @fc-license-skip
 
-// Discord epoch (2015-01-01T00:00:00.000Z)
+// Zycord epoch (2015-01-01T00:00:00.000Z)
 
 /**
  * A container for useful snowflake-related methods.
@@ -28,7 +27,7 @@ export class Snowflake {
      *
      * 64                                          22     17     12          0
      *  000000111011000111100001101001000101000000  00001  00000  000000000000
-     *       number of ms since Discord epoch       worker  pid    increment
+     *       number of ms since Zycord epoch        worker  pid    increment
      * ```
      * @typedef {string} Snowflake
      */
@@ -78,7 +77,7 @@ export class Snowflake {
      */
 
     /**
-     * Deconstructs a Discord snowflake.
+     * Deconstructs a Zycord snowflake.
      * @param {Snowflake} snowflake Snowflake to deconstruct
      * @returns {DeconstructedSnowflake} Deconstructed snowflake
      */

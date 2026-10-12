@@ -524,7 +524,7 @@ export const VerificationLevels = ["NONE", "LOW", "MEDIUM", "HIGH", "VERY_HIGH"]
  * @typedef {string} APIError
  */
 export const DiscordApiErrors = {
-    //https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes
+    //https://app.zyron.site/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes
     get GENERAL_ERROR() {
         return new ApiError("General error (such as a malformed request body, amongst other things)", 0);
     },
@@ -910,7 +910,7 @@ export const DiscordApiErrors = {
         return new ApiError("You are already friends with this user", 80007);
     },
     get NO_USERS_WITH_DISCORDTAG_EXIST() {
-        return new ApiError("No users with DiscordTag exist", 80004);
+        return new ApiError("No users with ZycordTag exist", 80004);
     },
     get REACTION_BLOCKED() {
         return new ApiError("Reaction was blocked", 90001);
@@ -982,8 +982,10 @@ export const DiscordApiErrors = {
     },
 };
 
+export const ZycordApiErrors = DiscordApiErrors;
+
 /**
- * An error encountered while performing an API request (Spacebar only). Here are the potential errors:
+ * An error encountered while performing an API request (Zycord only). Here are the potential errors:
  */
 export const SpacebarApiErrors = {
     MANUALLY_TRIGGERED_ERROR: new ApiError("This is an artificial error", 1, 500),
@@ -1013,7 +1015,7 @@ export const SpacebarApiErrors = {
  * The value set for a guild's default message notifications, e.g. `ALL`. Here are the available types:
  * * ALL
  * * MENTIONS
- * * MUTED (Spacebar extension)
+ * * MUTED (Zycord extension)
  * @typedef {string} DefaultMessageNotifications
  */
 export const DefaultMessageNotifications = ["ALL", "MENTIONS", "MUTED"];
@@ -1022,7 +1024,7 @@ export const DefaultMessageNotifications = ["ALL", "MENTIONS", "MUTED"];
  * The value set for a team members's membership state:
  * * INVITED
  * * ACCEPTED
- * * INSERTED (Spacebar extension)
+ * * INSERTED (Zycord extension)
  * @typedef {string} MembershipStates
  */
 export const MembershipStates = ["INSERTED", "INVITED", "ACCEPTED"];
@@ -1031,7 +1033,7 @@ export const MembershipStates = ["INSERTED", "INVITED", "ACCEPTED"];
  * The value set for a webhook's type:
  * * Incoming
  * * Channel Follower
- * * Custom (Spacebar extension)
+ * * Custom (Zycord extension)
  * @typedef {string} WebhookTypes
  */
 export const WebhookTypes = ["Custom", "Incoming", "Channel Follower"];

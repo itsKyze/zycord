@@ -1,4 +1,3 @@
-// based on https://github.com/discordjs/discord.js/blob/master/src/util/MessageFlags.js
 // Apache License Version 2.0 Copyright 2015 - 2021 Amish Shah, 2022 Erkin Alp Güney
 // @fc-license-skip
 

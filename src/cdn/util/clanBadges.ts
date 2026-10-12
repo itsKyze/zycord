@@ -18,7 +18,7 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { ASSETS_FOLDER, clanBadgePack, CUSTOM_CLAN_BADGES, customClanBadge, discordClanBadgePack } from "@spacebar/util";
+import { ASSETS_FOLDER, clanBadgePack, CUSTOM_CLAN_BADGES, customClanBadge, zycordClanBadgePack } from "@spacebar/util";
 
 // Server tag badges, rendered from templates scripts/clan-badges.js extracts from the downloaded web client.
 // A shaded colour is stored as { ch, c0, c1, def }: the guild's primary (P) or secondary (S) colour moved to
@@ -92,7 +92,7 @@ const escape = (value: string) => value.replace(/&/g, "&amp;").replace(/</g, "&l
 // [{ id, name, pack, staff_only }] for the client's badges with a template (none until the client cache is generated) and the instance's own
 export function listClanBadges() {
     return [
-        ...Object.entries(loadTemplates() ?? {}).map(([id, { name }]) => ({ id: Number(id), name, pack: discordClanBadgePack(Number(id)), staff_only: false })),
+        ...Object.entries(loadTemplates() ?? {}).map(([id, { name }]) => ({ id: Number(id), name, pack: zycordClanBadgePack(Number(id)), staff_only: false })),
         ...CUSTOM_CLAN_BADGES.map((badge) => ({ id: badge.id, name: badge.name, pack: clanBadgePack(badge), staff_only: badge.staff_only })),
     ].sort((a, b) => a.id - b.id);
 }

@@ -229,7 +229,7 @@ const handlers = {
                             components: [
                                 { type: 9, components: [{ type: 10, content: "**Section with thumbnail**\nThumbnails sit on the right." }], accessory: { type: 11, media: { url: "attachment://square.png" } } },
                                 { type: 12, items: [{ media: { url: "attachment://square.png" }, description: "a square" }] },
-                                { type: 1, components: [{ type: 2, style: 2, label: "Secondary", custom_id: "v2secondary" }, { type: 2, style: 5, label: "Docs", url: "https://docs.discord.food" }] },
+                                { type: 1, components: [{ type: 2, style: 2, label: "Secondary", custom_id: "v2secondary" }, { type: 2, style: 5, label: "Docs", url: "https://app.zyron.site/developers/docs" }] },
                             ],
                         },
                     ],

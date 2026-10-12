@@ -331,7 +331,7 @@ export const Email: {
     },
 
     /**
-     * Wraps HTML content into Discord/Zycord official email template with brand logo
+     * Wraps HTML content into Zycord official email template with brand logo
      */
     renderHtml: function (title: string, contentHtml: string, logoUrl?: string) {
         const { instanceName, frontPage, serverName } = Config.get().general;

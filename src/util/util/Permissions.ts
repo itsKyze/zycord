@@ -1,4 +1,3 @@
-// https://github.com/discordjs/discord.js/blob/master/src/util/Permissions.js
 // Apache License Version 2.0 Copyright 2015 - 2021 Amish Shah
 // @fc-license-skip
 
@@ -15,7 +14,7 @@ export type PermissionResolvable = bigint | number | Permissions | PermissionRes
 type PermissionString = keyof typeof Permissions.FLAGS;
 
 // BigInt doesn't have a bit limit (https://stackoverflow.com/questions/53335545/whats-the-biggest-bigint-value-in-js-as-per-spec)
-// const CUSTOM_PERMISSION_OFFSET = BigInt(1) << BigInt(64); // 27 permission bits left for discord to add new ones
+// const CUSTOM_PERMISSION_OFFSET = BigInt(1) << BigInt(64); // 27 permission bits left for Zycord to add new ones
 
 export class Permissions extends BitField {
     cache: PermissionCache = {};

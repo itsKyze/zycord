@@ -1,6 +1,5 @@
 "use strict";
 
-// https://github.com/discordjs/discord.js/blob/master/src/util/BitField.js
 // Apache License Version 2.0 Copyright 2015 - 2021 Amish Shah
 // @fc-license-skip
 
