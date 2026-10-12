@@ -8,17 +8,17 @@ export function HomePage() {
 			    HERO SECTION — OFFICIAL DISCORD 2026 3D CHARACTERS, WUMPUS, CLYDE & UI
 			    ===================================================================== */}
 			<section className="hero-section">
-				<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "32px", top: "8%", left: "5%" }} />
-				<img src="/site/media/discord/star-m.svg" alt="" aria-hidden="true" className="zy-star d2" style={{ width: "22px", top: "15%", right: "7%" }} />
-				<img src="/site/media/discord/star-sm.svg" alt="" aria-hidden="true" className="zy-star d3" style={{ width: "16px", bottom: "18%", left: "11%" }} />
-				<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d4" style={{ width: "28px", bottom: "14%", right: "12%" }} />
+				<img src="/site/media/zycord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "32px", top: "8%", left: "5%" }} />
+				<img src="/site/media/zycord/star-m.svg" alt="" aria-hidden="true" className="zy-star d2" style={{ width: "22px", top: "15%", right: "7%" }} />
+				<img src="/site/media/zycord/star-sm.svg" alt="" aria-hidden="true" className="zy-star d3" style={{ width: "16px", bottom: "18%", left: "11%" }} />
+				<img src="/site/media/zycord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d4" style={{ width: "28px", bottom: "14%", right: "12%" }} />
 
 				<div className="zy-container">
 					<div className="hero-grid">
 						<div className="hero-copy">
 							<div className="hero-crown-wrap">
 								<img
-									src="/site/media/discord/careers-crown.webp"
+									src="/site/media/zycord/careers-crown.webp"
 									alt=""
 									aria-hidden="true"
 									className="hero-crown"
@@ -42,7 +42,7 @@ export function HomePage() {
 
 							{/* Blurred 3D Trophy on far right behind monitor (Matches Screenshot 1) */}
 							<img
-								src="/site/media/discord/download-trophy.webp"
+								src="/site/media/zycord/download-trophy.webp"
 								alt=""
 								aria-hidden="true"
 								className="hero-trophy-blur"
@@ -53,14 +53,14 @@ export function HomePage() {
 							{/* Main 3D Devices + Characters Stage (Clean Base + Animated Individual Characters) */}
 							<div className="hero-3d-composite">
 								<img
-									src="/site/media/discord/hero-base-clean-2026.webp"
+									src="/site/media/zycord/hero-base-clean-2026.webp"
 									alt="Zycord 3D Desktop and Mobile Interface"
 									className="hero-main-devices-img"
 									fetchpriority="high"
 								/>
 								{/* 3D Character Bottom-Left (Girl in pink jacket & blue scarf) */}
 								<img
-									src="/site/media/discord/hero-girl-2026.webp"
+									src="/site/media/zycord/hero-girl-2026.webp"
 									alt=""
 									aria-hidden="true"
 									className="hero-char-girl"
@@ -68,13 +68,13 @@ export function HomePage() {
 								{/* 3D Clyde Robot hovering with shadow next to controller */}
 								<div className="hero-char-clyde-wrap">
 									<img
-										src="/site/media/discord/hero-clyde.webp"
+										src="/site/media/zycord/hero-clyde.webp"
 										alt=""
 										aria-hidden="true"
 										className="hero-char-clyde"
 									/>
 									<img
-										src="/site/media/discord/hero-clyde-shadow.webp"
+										src="/site/media/zycord/hero-clyde-shadow.webp"
 										alt=""
 										aria-hidden="true"
 										className="hero-char-clyde-shadow"
@@ -82,20 +82,20 @@ export function HomePage() {
 								</div>
 								{/* 3D Wumpus & Floating Leaf in front of monitor stand */}
 								<img
-									src="/site/media/discord/hero-wumpus-leaf.webp"
+									src="/site/media/zycord/hero-wumpus-leaf.webp"
 									alt=""
 									aria-hidden="true"
 									className="hero-char-wumpus-leaf"
 								/>
 								<img
-									src="/site/media/discord/hero-wumpus.webp"
+									src="/site/media/zycord/hero-wumpus.webp"
 									alt=""
 									aria-hidden="true"
 									className="hero-char-wumpus"
 								/>
 								{/* 3D Character Bottom-Right (Boy in blue hoodie next to phone) */}
 								<img
-									src="/site/media/discord/hero-boy.webp"
+									src="/site/media/zycord/hero-boy.webp"
 									alt=""
 									aria-hidden="true"
 									className="hero-char-boy"
@@ -136,7 +136,7 @@ export function HomePage() {
 				<div className="zy-container" style={{ position: "relative" }}>
 					{/* Animated Party Wumpus peeking from behind top-right of the card */}
 					<img
-						src="/site/media/discord/party-wumpus.gif"
+						src="/site/media/zycord/party-wumpus.gif"
 						alt=""
 						aria-hidden="true"
 						style={{
@@ -150,7 +150,7 @@ export function HomePage() {
 					/>
 					{/* Blurred 3D Spotted Egg floating on bottom-left (Screenshot 141401 & 141358) */}
 					<img
-						src="/site/media/discord/prop-egg.webp"
+						src="/site/media/zycord/prop-egg.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
@@ -170,7 +170,7 @@ export function HomePage() {
 						<div className="zy-showcase-grid is-reversed">
 							<div
 								className="zy-scene-stage stage-magenta"
-								style={{ backgroundImage: "url('/site/media/discord/sec1-bkg.webp')" }}
+								style={{ backgroundImage: "url('/site/media/zycord/sec1-bkg.webp')" }}
 							>
 								<video
 									className="zy-stage-video"
@@ -178,9 +178,9 @@ export function HomePage() {
 									loop
 									muted
 									playsInline
-									poster="/site/media/discord/sec1-chat-fun.webp"
+									poster="/site/media/zycord/sec1-chat-fun.webp"
 								>
-									<source src="/site/media/discord/sec1-chat-fun.mp4" type="video/mp4" />
+									<source src="/site/media/zycord/sec1-chat-fun.mp4" type="video/mp4" />
 								</video>
 							</div>
 
@@ -203,7 +203,7 @@ export function HomePage() {
 			<section className="zy-section" id="video">
 				<div className="zy-container" style={{ position: "relative" }}>
 					<img
-						src="/site/media/discord/prop-clyde-cube.webp"
+						src="/site/media/zycord/prop-clyde-cube.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
@@ -230,7 +230,7 @@ export function HomePage() {
 
 							<div
 								className="zy-scene-stage stage-cerulean"
-								style={{ backgroundImage: "url('/site/media/discord/sec2-bkg.svg')" }}
+								style={{ backgroundImage: "url('/site/media/zycord/sec2-bkg.svg')" }}
 							>
 								<video
 									className="zy-stage-video"
@@ -238,9 +238,9 @@ export function HomePage() {
 									loop
 									muted
 									playsInline
-									poster="/site/media/discord/sec2-stream.webp"
+									poster="/site/media/zycord/sec2-stream.webp"
 								>
-									<source src="/site/media/discord/sec2-stream.mp4" type="video/mp4" />
+									<source src="/site/media/zycord/sec2-stream.mp4" type="video/mp4" />
 								</video>
 							</div>
 						</div>
@@ -256,7 +256,7 @@ export function HomePage() {
 			<section className="zy-section" id="voice">
 				<div className="zy-container" style={{ position: "relative" }}>
 					<img
-						src="/site/media/discord/prop-box.webp"
+						src="/site/media/zycord/prop-box.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
@@ -274,7 +274,7 @@ export function HomePage() {
 						<div className="zy-showcase-grid is-reversed">
 							<div
 								className="zy-scene-stage stage-emerald"
-								style={{ backgroundImage: "url('/site/media/discord/sec3-bkg.webp')" }}
+								style={{ backgroundImage: "url('/site/media/zycord/sec3-bkg.webp')" }}
 							>
 								<video
 									className="zy-stage-video"
@@ -282,9 +282,9 @@ export function HomePage() {
 									loop
 									muted
 									playsInline
-									poster="/site/media/discord/sec3-hop-in.webp"
+									poster="/site/media/zycord/sec3-hop-in.webp"
 								>
-									<source src="/site/media/discord/sec3-hop-in.mp4" type="video/mp4" />
+									<source src="/site/media/zycord/sec3-hop-in.mp4" type="video/mp4" />
 								</video>
 							</div>
 
@@ -327,7 +327,7 @@ export function HomePage() {
 			<section className="zy-section" id="presence">
 				<div className="zy-container" style={{ position: "relative" }}>
 					<img
-						src="/site/media/discord/prop-coin.webp"
+						src="/site/media/zycord/prop-coin.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
@@ -354,7 +354,7 @@ export function HomePage() {
 
 							<div
 								className="zy-scene-stage stage-magenta"
-								style={{ backgroundImage: "url('/site/media/discord/sec4-bkg.svg')" }}
+								style={{ backgroundImage: "url('/site/media/zycord/sec4-bkg.svg')" }}
 							>
 								<video
 									className="zy-stage-video"
@@ -362,9 +362,9 @@ export function HomePage() {
 									loop
 									muted
 									playsInline
-									poster="/site/media/discord/sec4-chill.webp"
+									poster="/site/media/zycord/sec4-chill.webp"
 								>
-									<source src="/site/media/discord/sec4-chill.mp4" type="video/mp4" />
+									<source src="/site/media/zycord/sec4-chill.mp4" type="video/mp4" />
 								</video>
 							</div>
 						</div>
@@ -384,7 +384,7 @@ export function HomePage() {
 				<div className="zy-container" style={{ position: "relative" }}>
 					{/* Sharp 3D Radish/Turnip overlapping bottom-left corner of the card */}
 					<img
-						src="/site/media/discord/prop-turnip.webp"
+						src="/site/media/zycord/prop-turnip.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
@@ -399,7 +399,7 @@ export function HomePage() {
 					/>
 					{/* Blurred 3D Plump/Pot floating below bottom-right of Section 5 (Screenshot 141345 & 141340) */}
 					<img
-						src="/site/media/discord/prop-plump.webp"
+						src="/site/media/zycord/prop-plump.webp"
 						alt=""
 						aria-hidden="true"
 						className="zy-float-prop"
@@ -418,21 +418,21 @@ export function HomePage() {
 					<div className="zy-sec5-3d-wrap">
 						{/* Woman's upper body & hands OVER the top border of the glass card (z-index: 6) */}
 						<img
-							src="/site/media/discord/sec5-card-characters.png"
+							src="/site/media/zycord/sec5-card-characters.png"
 							alt=""
 							aria-hidden="true"
 							className="zy-sec5-char-bot"
 						/>
 						{/* Woman's lower body BEHIND the frosted glass card (z-index: 1) */}
 						<img
-							src="/site/media/discord/sec5-woman-bottom.webp"
+							src="/site/media/zycord/sec5-woman-bottom.webp"
 							alt=""
 							aria-hidden="true"
 							className="zy-sec5-char-top"
 						/>
 						{/* Garfield & Simon hugging BEHIND the top-right edge of the card (z-index: 1) */}
 						<img
-							src="/site/media/discord/sec5-garfield-simon.webp"
+							src="/site/media/zycord/sec5-garfield-simon.webp"
 							alt=""
 							aria-hidden="true"
 							className="zy-sec5-char-friends"
@@ -442,7 +442,7 @@ export function HomePage() {
 							<div className="zy-showcase-grid is-reversed">
 								<div
 									className="zy-scene-stage stage-emerald"
-									style={{ backgroundImage: "url('/site/media/discord/sec5-bkg.webp')" }}
+									style={{ backgroundImage: "url('/site/media/zycord/sec5-bkg.webp')" }}
 								>
 									<video
 										className="zy-stage-video"
@@ -450,9 +450,9 @@ export function HomePage() {
 										loop
 										muted
 										playsInline
-										poster="/site/media/discord/sec5-activities.webp"
+										poster="/site/media/zycord/sec5-activities.webp"
 									>
-										<source src="/site/media/discord/sec5-activities.mp4" type="video/mp4" />
+										<source src="/site/media/zycord/sec5-activities.mp4" type="video/mp4" />
 									</video>
 								</div>
 
@@ -485,7 +485,7 @@ export function HomePage() {
 
 							<div
 								className="zy-scene-stage stage-cerulean"
-								style={{ backgroundImage: "url('/site/media/discord/sec6-bkg.webp')" }}
+								style={{ backgroundImage: "url('/site/media/zycord/sec6-bkg.webp')" }}
 							>
 								<video
 									className="zy-stage-video"
@@ -493,9 +493,9 @@ export function HomePage() {
 									loop
 									muted
 									playsInline
-									poster="/site/media/discord/sec6-platforms.webp"
+									poster="/site/media/zycord/sec6-platforms.webp"
 								>
-									<source src="/site/media/discord/sec6-platforms.mp4" type="video/mp4" />
+									<source src="/site/media/zycord/sec6-platforms.mp4" type="video/mp4" />
 								</video>
 							</div>
 						</div>
@@ -510,8 +510,8 @@ export function HomePage() {
 			     - Full character lineup + 3D Clyde Robot + Wumpus sitting OVER the footer horizon edge)
 			    ===================================================================== */}
 			<section className="final-horizon-section" id="about">
-				<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "30px", top: "10%", left: "14%" }} />
-				<img src="/site/media/discord/star-m.svg" alt="" aria-hidden="true" className="zy-star d3" style={{ width: "22px", top: "16%", right: "16%" }} />
+				<img src="/site/media/zycord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "30px", top: "10%", left: "14%" }} />
+				<img src="/site/media/zycord/star-m.svg" alt="" aria-hidden="true" className="zy-star d3" style={{ width: "22px", top: "16%", right: "16%" }} />
 
 				<div className="zy-container">
 					<h2
@@ -537,34 +537,34 @@ export function HomePage() {
 
 				<div className="final-horizon-art">
 					<img
-						src="/site/media/discord/footer-horizon.webp"
+						src="/site/media/zycord/footer-horizon.webp"
 						alt="Zycord Cosmic Horizon Lineup"
 						className="final-horizon-bg"
 						loading="lazy"
 					/>
 					<img
-						src="/site/media/discord/dev-clyde-3d.webp"
+						src="/site/media/zycord/dev-clyde-3d.webp"
 						alt=""
 						aria-hidden="true"
 						className="final-horizon-clyde"
 						loading="lazy"
 					/>
 					<img
-						src="/site/media/discord/footer-smoke.gif"
+						src="/site/media/zycord/footer-smoke.gif"
 						alt=""
 						aria-hidden="true"
 						className="final-horizon-smoke"
 						loading="lazy"
 					/>
 					<img
-						src="/site/media/discord/footer-wumpus-leaf.webp"
+						src="/site/media/zycord/footer-wumpus-leaf.webp"
 						alt=""
 						aria-hidden="true"
 						className="final-horizon-leaf"
 						loading="lazy"
 					/>
 					<img
-						src="/site/media/discord/footer-wumpus-sitting.webp"
+						src="/site/media/zycord/footer-wumpus-sitting.webp"
 						alt="Wumpus sitting on the cosmic horizon"
 						className="final-horizon-wumpus"
 						loading="lazy"

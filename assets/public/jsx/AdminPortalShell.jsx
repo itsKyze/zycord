@@ -54,7 +54,7 @@ export function AdminTopHeader() {
 					<span>Quick Filter</span>
 				</button>
 				<span className="zy-admin-mascot-chip">
-					<img src="/site/media/discord/safety-shield-3d.webp" alt="" width="22" height="22" />
+					<img src="/site/media/zycord/safety-shield-3d.webp" alt="" width="22" height="22" />
 					<span>Zycord Staff Console</span>
 				</span>
 				<a className="btn primary small" href="/app" style={{ textDecoration: "none" }}>
@@ -82,12 +82,12 @@ export function AdminLoginShowcase() {
 				</div>
 			</div>
 			<img
-				src="/site/media/discord/safety-shield-3d.webp"
+				src="/site/media/zycord/safety-shield-3d.webp"
 				alt=""
 				className="zy-admin-login-mascot"
 			/>
 			<img
-				src="/site/media/discord/dev-clyde-3d.webp"
+				src="/site/media/zycord/dev-clyde-3d.webp"
 				alt=""
 				className="zy-admin-login-prop"
 			/>

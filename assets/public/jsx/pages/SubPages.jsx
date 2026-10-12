@@ -11,7 +11,7 @@ export function DownloadPage() {
 				<div className="zy-container">
 					<div className="zy-subhero-inner">
 						<img
-							src="/site/media/discord/prop-coin.webp"
+							src="/site/media/zycord/prop-coin.webp"
 							alt=""
 							aria-hidden="true"
 							style={{ width: "86px", height: "auto", marginBottom: "6px", filter: "drop-shadow(0 16px 28px rgba(0,0,0,0.45))" }}
@@ -34,26 +34,26 @@ export function DownloadPage() {
 					{/* Massive Download Hero Stage with Clyde & Wumpus flanking */}
 					<div className="zy-dl-hero-stage">
 						<img
-							src="/site/media/discord/download-clyde-point.webp"
+							src="/site/media/zycord/download-clyde-point.webp"
 							alt=""
 							aria-hidden="true"
 							className="zy-float-prop"
 							style={{ width: "clamp(110px, 14vw, 195px)", left: "-4%", bottom: "12%", zIndex: 4 }}
 						/>
 						<img
-							src="/site/media/discord/download-hero.webp"
+							src="/site/media/zycord/download-hero.webp"
 							alt="Zycord Desktop and Mobile Interface"
 							className="zy-dl-hero-img"
 						/>
 						<img
-							src="/site/media/discord/download-leaf.webp"
+							src="/site/media/zycord/download-leaf.webp"
 							alt=""
 							aria-hidden="true"
 							className="zy-float-prop"
 							style={{ width: "clamp(72px, 8vw, 118px)", right: "8%", bottom: "36%", zIndex: 4 }}
 						/>
 						<img
-							src="/site/media/discord/download-wumpus-point.webp"
+							src="/site/media/zycord/download-wumpus-point.webp"
 							alt=""
 							aria-hidden="true"
 							className="zy-float-prop"
@@ -137,14 +137,14 @@ export function DownloadPage() {
 							</div>
 						</div>
 						<div className="zy-alt-media-card is-green">
-							<img src="/site/media/discord/download-desktop-card.webp" alt="Download Zycord for Desktop" />
+							<img src="/site/media/zycord/download-desktop-card.webp" alt="Download Zycord for Desktop" />
 						</div>
 					</div>
 
 					{/* 2. Mobile */}
 					<div className="zy-alt-row is-reversed">
 						<div className="zy-alt-media-card is-blue">
-							<img src="/site/media/discord/download-mobile-card.webp" alt="Download Zycord for Mobile" />
+							<img src="/site/media/zycord/download-mobile-card.webp" alt="Download Zycord for Mobile" />
 						</div>
 						<div className="zy-alt-copy">
 							<h2 className="zy-alt-title">Download for mobile</h2>
@@ -191,14 +191,14 @@ export function DownloadPage() {
 							</div>
 						</div>
 						<div className="zy-alt-media-card is-pink">
-							<img src="/site/media/discord/download-console-card.webp" alt="Link your console to Zycord" />
+							<img src="/site/media/zycord/download-console-card.webp" alt="Link your console to Zycord" />
 						</div>
 					</div>
 
 					{/* 4. VR (Meta Quest) */}
 					<div className="zy-alt-row is-reversed">
 						<div className="zy-alt-media-card is-blue" style={{ minHeight: "340px", background: "linear-gradient(145deg, #1b4be6 0%, #4b73ff 48%, #10164f 100%)" }}>
-							<img src="/site/media/discord/dev-card-apps.webp" alt="Download Zycord for VR" style={{ maxHeight: "340px" }} />
+							<img src="/site/media/zycord/dev-card-apps.webp" alt="Download Zycord for VR" style={{ maxHeight: "340px" }} />
 						</div>
 						<div className="zy-alt-copy">
 							<h2 className="zy-alt-title">Download for VR</h2>
@@ -221,14 +221,14 @@ export function DownloadPage() {
 					{/* Feeling experimental? PTB Card with interactive dropdown */}
 					<div className="zy-ptb-card">
 						<img
-							src="/site/media/discord/download-ptb-3d.png"
+							src="/site/media/zycord/download-ptb-3d.png"
 							alt=""
 							aria-hidden="true"
 							className="zy-float-prop"
 							style={{ width: "118px", top: "-36px", left: "4%" }}
 						/>
 						<img
-							src="/site/media/discord/download-trophy.webp"
+							src="/site/media/zycord/download-trophy.webp"
 							alt=""
 							aria-hidden="true"
 							className="zy-float-prop"
@@ -295,7 +295,7 @@ export function QuestsPage() {
 			<section
 				className="zy-subhero"
 				style={{
-					backgroundImage: "linear-gradient(180deg, rgba(16,18,56,0.58) 0%, rgba(16,18,56,0.95) 100%), url('/site/media/discord/quests-hero-bg.webp')",
+					backgroundImage: "linear-gradient(180deg, rgba(16,18,56,0.58) 0%, rgba(16,18,56,0.95) 100%), url('/site/media/zycord/quests-hero-bg.webp')",
 					backgroundSize: "cover",
 					backgroundPosition: "center",
 					paddingTop: "80px",
@@ -314,7 +314,7 @@ export function QuestsPage() {
 							<a className="zy-btn zy-btn-secondary" href="/nitro">View Collectibles Shop</a>
 						</div>
 						<img
-							src="/site/media/discord/quests-cauldron.avif"
+							src="/site/media/zycord/quests-cauldron.avif"
 							alt=""
 							aria-hidden="true"
 							style={{ width: "164px", height: "auto", marginTop: "18px", filter: "drop-shadow(0 20px 36px rgba(0,0,0,0.5))" }}
@@ -342,13 +342,13 @@ export function QuestsPage() {
 							</p>
 						</div>
 						<div className="zy-alt-media-card is-indigo">
-							<img src="/site/media/discord/quests-step-1.webp" alt="1. They accept your Quest" />
+							<img src="/site/media/zycord/quests-step-1.webp" alt="1. They accept your Quest" />
 						</div>
 					</div>
 
 					<div className="zy-alt-row is-reversed">
 						<div className="zy-alt-media-card is-blue">
-							<img src="/site/media/discord/quests-step-2.webp" alt="2. Play or Watch" />
+							<img src="/site/media/zycord/quests-step-2.webp" alt="2. Play or Watch" />
 						</div>
 						<div className="zy-alt-copy">
 							<span className="zy-eyebrow">Step 2</span>
@@ -368,7 +368,7 @@ export function QuestsPage() {
 							</p>
 						</div>
 						<div className="zy-alt-media-card is-pink">
-							<img src="/site/media/discord/quests-step-3.webp" alt="3. And Collect Rewards" />
+							<img src="/site/media/zycord/quests-step-3.webp" alt="3. And Collect Rewards" />
 						</div>
 					</div>
 				</div>
@@ -397,8 +397,8 @@ export function QuestsPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-blurple" style={{ flexDirection: "column", gap: "18px" }}>
-								<img src="/site/media/discord/quests-wumpus-banner.webp" alt="Zycord Quests Hero Banner" style={{ width: "100%", height: "auto", borderRadius: "24px" }} />
-								<img src="/site/media/discord/quests-missions.webp" alt="Zycord Quests Interactive Missions" style={{ width: "100%", height: "auto", borderRadius: "24px" }} />
+								<img src="/site/media/zycord/quests-wumpus-banner.webp" alt="Zycord Quests Hero Banner" style={{ width: "100%", height: "auto", borderRadius: "24px" }} />
+								<img src="/site/media/zycord/quests-missions.webp" alt="Zycord Quests Interactive Missions" style={{ width: "100%", height: "auto", borderRadius: "24px" }} />
 							</div>
 						</div>
 					</div>
@@ -442,42 +442,42 @@ export function BlogPage() {
 		{
 			cat: "Product & Features",
 			id: "product",
-			img: "/site/media/discord/sec1-chat-fun.webp",
+			img: "/site/media/zycord/sec1-chat-fun.webp",
 			title: "Introducing Full Profile Collectibles: Avatar Decorations, Nameplates, Effects & Frames",
 			desc: "Customize every layer of your Zycord identity with 1,099+ collectibles across 9 categories, full-card profile effects, and non-obscuring perimeter frames."
 		},
 		{
 			cat: "Engineering & Developers",
 			id: "engineering",
-			img: "/site/media/discord/dev-hero-16x9.webp",
+			img: "/site/media/zycord/dev-hero-16x9.webp",
 			title: "How Zycord Routes Sub-20ms WebRTC Voice & 1080p 60fps Video Streams",
 			desc: "A deep dive into our SFU media architecture, Opus audio packet prioritization, and hardware-accelerated screen sharing."
 		},
 		{
 			cat: "Policy & Safety",
 			id: "safety",
-			img: "/site/media/discord/safety-card-1.png",
+			img: "/site/media/zycord/safety-card-1.png",
 			title: "End-to-End Encrypted Direct Messages & Passkey Authentication",
 			desc: "Protecting private conversations with zero-knowledge client-side WebCrypto keys, recovery codes, and WebAuthn security."
 		},
 		{
 			cat: "Community",
 			id: "community",
-			img: "/site/media/discord/sec5-activities.webp",
+			img: "/site/media/zycord/sec5-activities.webp",
 			title: "Community Spotlight: Hosting 100-Player Esports Watch Parties",
 			desc: "See how gaming communities use Stage channels, custom soundboards, and Role Icons to run weekly tournaments."
 		},
 		{
 			cat: "Zycord HQ",
 			id: "hq",
-			img: "/site/media/discord/careers-office-1.webp",
+			img: "/site/media/zycord/careers-office-1.webp",
 			title: "Inside Zycord HQ: Building the Future of Real-Time Hangouts",
 			desc: "Meet the engineering and design teams crafting a faster, more expressive communication platform."
 		},
 		{
 			cat: "How to Zycord",
 			id: "guides",
-			img: "/site/media/discord/sec4-chill.webp",
+			img: "/site/media/zycord/sec4-chill.webp",
 			title: "How to Link Steam, Spotify, GitHub, PlayStation & Xbox for Rich Presence",
 			desc: "Step-by-step guide to connecting your accounts so friends can see what you're playing and jump right into your lobby."
 		}
@@ -487,7 +487,7 @@ export function BlogPage() {
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/nav-blog-cube.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "132px", top: "-42px", right: "6%" }} />
+					<img src="/site/media/zycord/nav-blog-cube.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "132px", top: "-42px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -498,7 +498,7 @@ export function BlogPage() {
 								</p>
 							</div>
 							<div className="zy-scene-stage stage-magenta">
-								<img src="/site/media/discord/quests-missions.webp" alt="Zycord Featured Update" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/zycord/quests-missions.webp" alt="Zycord Featured Update" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -531,18 +531,18 @@ export function BlogPage() {
    ============================================================================ */
 export function AppDirectoryPage() {
 	const apps = [
-		{ name: "ZyGuard AutoMod", cat: "Moderation & Security", installs: "42,800+ Servers", img: "/site/media/discord/safety-card-1.png", desc: "Real-time raid protection, regex keyword filters, anti-phishing links, and automated audit logs." },
-		{ name: "WatchParty Cinema", cat: "Activities & Watch Together", installs: "68,400+ Servers", img: "/site/media/discord/sec5-activities.webp", desc: "Synchronized YouTube, Twitch, and media playback right inside any Zycord voice channel." },
-		{ name: "Tempo Hi-Fi Music", cat: "Music & Soundboard", installs: "91,200+ Servers", img: "/site/media/discord/sec2-stream.webp", desc: "Lossless 384kbps Opus audio streaming, playlists, and live DJ queue management." },
-		{ name: "QuestMaster RPG", cat: "Games & Trivia", installs: "54,100+ Servers", img: "/site/media/discord/quests-card-1.webp", desc: "Turn-based multiplayer dungeon raids, leaderboards, and custom server loot drops." },
-		{ name: "GitPulse Notifier", cat: "Developer Tools", installs: "31,900+ Servers", img: "/site/media/discord/dev-card-apps.webp", desc: "Instant rich webhook embeds for GitHub commits, PR reviews, CI/CD builds, and releases." },
-		{ name: "LevelUp XP & Roles", cat: "Community Engagement", installs: "77,500+ Servers", img: "/site/media/discord/sec6-platforms.webp", desc: "Customizable rank cards, voice activity XP rewards, and automated role promotions." }
+		{ name: "ZyGuard AutoMod", cat: "Moderation & Security", installs: "42,800+ Servers", img: "/site/media/zycord/safety-card-1.png", desc: "Real-time raid protection, regex keyword filters, anti-phishing links, and automated audit logs." },
+		{ name: "WatchParty Cinema", cat: "Activities & Watch Together", installs: "68,400+ Servers", img: "/site/media/zycord/sec5-activities.webp", desc: "Synchronized YouTube, Twitch, and media playback right inside any Zycord voice channel." },
+		{ name: "Tempo Hi-Fi Music", cat: "Music & Soundboard", installs: "91,200+ Servers", img: "/site/media/zycord/sec2-stream.webp", desc: "Lossless 384kbps Opus audio streaming, playlists, and live DJ queue management." },
+		{ name: "QuestMaster RPG", cat: "Games & Trivia", installs: "54,100+ Servers", img: "/site/media/zycord/quests-card-1.webp", desc: "Turn-based multiplayer dungeon raids, leaderboards, and custom server loot drops." },
+		{ name: "GitPulse Notifier", cat: "Developer Tools", installs: "31,900+ Servers", img: "/site/media/zycord/dev-card-apps.webp", desc: "Instant rich webhook embeds for GitHub commits, PR reviews, CI/CD builds, and releases." },
+		{ name: "LevelUp XP & Roles", cat: "Community Engagement", installs: "77,500+ Servers", img: "/site/media/zycord/sec6-platforms.webp", desc: "Customizable rank cards, voice activity XP rewards, and automated role promotions." }
 	];
 	return (
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/prop-rupee-gem.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-44px", right: "6%" }} />
+					<img src="/site/media/zycord/prop-rupee-gem.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-44px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -557,7 +557,7 @@ export function AppDirectoryPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-blurple">
-								<img src="/site/media/discord/dev-card-apps.webp" alt="Zycord App Directory" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/zycord/dev-card-apps.webp" alt="Zycord App Directory" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -593,15 +593,15 @@ export function AppDirectoryPage() {
    ============================================================================ */
 export function GiftCardsPage() {
 	const tiers = [
-		{ title: "1 Month Zycord Nitro", price: "$9.99", badge: "Popular Gift", img: "/site/media/discord/nitro-perk-1.webp", desc: "Unlock 1080p 60fps HD streaming, 500MB uploads, custom emojis everywhere, and 2 free Server Boosts for 30 days." },
-		{ title: "1 Year Zycord Nitro", price: "$99.99", badge: "Best Value · 2 Months Free", img: "/site/media/discord/nitro-perk-2.webp", desc: "A full year of complete profile customization, animated avatars, custom banners, profile effects, and 2 Server Boosts." },
-		{ title: "Shop Collectibles Bundle", price: "$14.99", badge: "Exclusive Cosmetics", img: "/site/media/discord/nitro-perk-3.webp", desc: "Gift instant access to 1,099+ avatar decorations, animated nameplates, and full-card profile effects." }
+		{ title: "1 Month Zycord Nitro", price: "$9.99", badge: "Popular Gift", img: "/site/media/zycord/nitro-perk-1.webp", desc: "Unlock 1080p 60fps HD streaming, 500MB uploads, custom emojis everywhere, and 2 free Server Boosts for 30 days." },
+		{ title: "1 Year Zycord Nitro", price: "$99.99", badge: "Best Value · 2 Months Free", img: "/site/media/zycord/nitro-perk-2.webp", desc: "A full year of complete profile customization, animated avatars, custom banners, profile effects, and 2 Server Boosts." },
+		{ title: "Shop Collectibles Bundle", price: "$14.99", badge: "Exclusive Cosmetics", img: "/site/media/zycord/nitro-perk-3.webp", desc: "Gift instant access to 1,099+ avatar decorations, animated nameplates, and full-card profile effects." }
 	];
 	return (
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/nitro-wumpus-jetpack.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "148px", top: "-52px", right: "5%" }} />
+					<img src="/site/media/zycord/nitro-wumpus-jetpack.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "148px", top: "-52px", right: "5%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -616,7 +616,7 @@ export function GiftCardsPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-magenta">
-								<img src="/site/media/discord/nitro-banner-media.webp" alt="Zycord Nitro Gift Cards" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/zycord/nitro-banner-media.webp" alt="Zycord Nitro Gift Cards" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -655,7 +655,7 @@ export function CompanyPage() {
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/hero-wumpus.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-46px", right: "6%" }} />
+					<img src="/site/media/zycord/hero-wumpus.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "136px", top: "-46px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -670,7 +670,7 @@ export function CompanyPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-cerulean">
-								<img src="/site/media/discord/careers-hero.webp" alt="About Zycord" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/zycord/careers-hero.webp" alt="About Zycord" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -681,21 +681,21 @@ export function CompanyPage() {
 				<div className="zy-container">
 					<div className="zy-grid-3">
 						<article className="zy-card">
-							<img src="/site/media/discord/careers-office-1.webp" alt="Our Story" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/careers-office-1.webp" alt="Our Story" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>BUILT FOR REAL FRIENDSHIPS</h3>
 							<p className="zy-body">
 								Unlike endless social feeds designed for passive scrolling, Zycord is designed for active conversation — jumping into voice channels, streaming games, and building lasting memories.
 							</p>
 						</article>
 						<article className="zy-card">
-							<img src="/site/media/discord/careers-office-2.webp" alt="Engineering Excellence" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/careers-office-2.webp" alt="Engineering Excellence" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>SUB-20MS GLOBAL INFRASTRUCTURE</h3>
 							<p className="zy-body">
 								Powered by ultra-low-latency WebRTC voice, 1080p 60fps screen sharing, and end-to-end encrypted direct messaging with Passkey security.
 							</p>
 						</article>
 						<article className="zy-card">
-							<img src="/site/media/discord/careers-office-3.webp" alt="Privacy First" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/careers-office-3.webp" alt="Privacy First" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>SAFETY &amp; TRANSPARENCY</h3>
 							<p className="zy-body">
 								Your conversations belong to you. We empower communities with granular role permissions, AutoMod filters, and zero-knowledge encrypted DMs.
@@ -724,7 +724,7 @@ export function BrandingPage() {
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/careers-crown.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-40px", right: "6%" }} />
+					<img src="/site/media/zycord/careers-crown.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-40px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -773,7 +773,7 @@ export function NewsroomPage() {
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/nav-blog-cube.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "128px", top: "-42px", right: "6%" }} />
+					<img src="/site/media/zycord/nav-blog-cube.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "128px", top: "-42px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -788,7 +788,7 @@ export function NewsroomPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-sunset">
-								<img src="/site/media/discord/careers-office-4.webp" alt="Zycord Newsroom" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/zycord/careers-office-4.webp" alt="Zycord Newsroom" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -807,7 +807,7 @@ export function CreatorsPage() {
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/download-trophy.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "118px", top: "-40px", right: "6%" }} />
+					<img src="/site/media/zycord/download-trophy.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "118px", top: "-40px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -822,7 +822,7 @@ export function CreatorsPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-magenta">
-								<img src="/site/media/discord/sec2-stream.webp" alt="Zycord for Creators" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/zycord/sec2-stream.webp" alt="Zycord for Creators" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -833,21 +833,21 @@ export function CreatorsPage() {
 				<div className="zy-container">
 					<div className="zy-grid-3">
 						<article className="zy-card">
-							<img src="/site/media/discord/sec3-hop-in.webp" alt="Subscriber Role Sync" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/sec3-hop-in.webp" alt="Subscriber Role Sync" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>TWITCH &amp; YOUTUBE ROLE SYNC</h3>
 							<p className="zy-body">
 								Automatically grant exclusive VIP channels, custom role icons, and soundboard perks to your Twitch subscribers and YouTube channel members.
 							</p>
 						</article>
 						<article className="zy-card">
-							<img src="/site/media/discord/sec5-activities.webp" alt="Stage Channels" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/sec5-activities.webp" alt="Stage Channels" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>STAGE CHANNELS &amp; AMAs</h3>
 							<p className="zy-body">
 								Run moderated town halls, live podcast recordings, and interactive Q&amp;A sessions with raised-hand speaker queues for thousands of listeners.
 							</p>
 						</article>
 						<article className="zy-card">
-							<img src="/site/media/discord/sec1-chat-fun.webp" alt="Server Shop & Perks" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/sec1-chat-fun.webp" alt="Server Shop & Perks" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>CUSTOM EMOJIS &amp; SOUNDBOARDS</h3>
 							<p className="zy-body">
 								Upload your channel's iconic memes, animated emotes, and catchphrases so your community can react in voice and text.
@@ -868,7 +868,7 @@ export function CommunityPage() {
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/sec5-card-characters.png" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "156px", top: "-52px", right: "6%" }} />
+					<img src="/site/media/zycord/sec5-card-characters.png" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "156px", top: "-52px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -883,7 +883,7 @@ export function CommunityPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-emerald">
-								<img src="/site/media/discord/sec6-platforms.webp" alt="Zycord Community" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/zycord/sec6-platforms.webp" alt="Zycord Community" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -894,21 +894,21 @@ export function CommunityPage() {
 				<div className="zy-container">
 					<div className="zy-grid-3">
 						<article className="zy-card">
-							<img src="/site/media/discord/safety-card-2.webp" alt="Onboarding" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/safety-card-2.webp" alt="Onboarding" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>GUIDED SERVER ONBOARDING</h3>
 							<p className="zy-body">
 								Welcome new members with interactive role-picker questions, custom rules screening, and curated default channels.
 							</p>
 						</article>
 						<article className="zy-card">
-							<img src="/site/media/discord/sec4-chill.webp" alt="Forum Channels" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/sec4-chill.webp" alt="Forum Channels" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>FORUM &amp; THREAD CHANNELS</h3>
 							<p className="zy-body">
 								Keep busy discussions organized with searchable topic tags, pinned guidelines, and dedicated threads that never clutter main chat.
 							</p>
 						</article>
 						<article className="zy-card">
-							<img src="/site/media/discord/safety-card-4.png" alt="Community Insights" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
+							<img src="/site/media/zycord/safety-card-4.png" alt="Community Insights" style={{ width: "100%", height: "190px", objectFit: "cover", borderRadius: "16px" }} />
 							<h3 className="zy-heading-sm" style={{ fontSize: "22px", marginTop: "8px" }}>AUTO-MODERATION &amp; SAFETY</h3>
 							<p className="zy-body">
 								Protect your space effortlessly with customizable keyword filters, raid alerts, and granular role-based permission hierarchies.
@@ -926,15 +926,15 @@ export function CommunityPage() {
    ============================================================================ */
 export function MerchPage() {
 	const items = [
-		{ name: "Wumpus Plushie Collector Edition", price: "$34.00", tag: "Limited Drop", img: "/site/media/discord/hero-wumpus.webp", desc: "Ultra-soft 12-inch embroidered Wumpus plush with magnetic leaf accessory." },
-		{ name: "Blurple Heavyweight Hoodie", price: "$68.00", tag: "Apparel", img: "/site/media/discord/nitro-wumpus-wheel.webp", desc: "450gsm brushed cotton fleece in signature Zycord Blurple with puff-print wordmark." },
-		{ name: "3D Keycap & Desk Mat Bundle", price: "$49.00", tag: "Hardware Gear", img: "/site/media/discord/dev-clyde-3d.webp", desc: "Artisan resin Clyde keycap paired with an XXL stitched-edge midnight desk pad." }
+		{ name: "Wumpus Plushie Collector Edition", price: "$34.00", tag: "Limited Drop", img: "/site/media/zycord/hero-wumpus.webp", desc: "Ultra-soft 12-inch embroidered Wumpus plush with magnetic leaf accessory." },
+		{ name: "Blurple Heavyweight Hoodie", price: "$68.00", tag: "Apparel", img: "/site/media/zycord/nitro-wumpus-wheel.webp", desc: "450gsm brushed cotton fleece in signature Zycord Blurple with puff-print wordmark." },
+		{ name: "3D Keycap & Desk Mat Bundle", price: "$49.00", tag: "Hardware Gear", img: "/site/media/zycord/dev-clyde-3d.webp", desc: "Artisan resin Clyde keycap paired with an XXL stitched-edge midnight desk pad." }
 	];
 	return (
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/nitro-star.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-36px", right: "6%" }} />
+					<img src="/site/media/zycord/nitro-star.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "110px", top: "-36px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">
@@ -949,7 +949,7 @@ export function MerchPage() {
 								</div>
 							</div>
 							<div className="zy-scene-stage stage-blurple">
-								<img src="/site/media/discord/nitro-banner-media.webp" alt="Zycord Merch" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
+								<img src="/site/media/zycord/nitro-banner-media.webp" alt="Zycord Merch" style={{ width: "100%", height: "auto", borderRadius: "20px" }} />
 							</div>
 						</div>
 					</div>
@@ -998,7 +998,7 @@ export function FeedbackPage() {
 		<div>
 			<section className="zy-section" style={{ paddingTop: "48px", position: "relative", overflow: "hidden" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
-					<img src="/site/media/discord/download-clyde-point.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "124px", top: "-42px", right: "6%" }} />
+					<img src="/site/media/zycord/download-clyde-point.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "124px", top: "-42px", right: "6%" }} />
 					<div className="zy-showcase-card">
 						<div className="zy-showcase-grid">
 							<div className="zy-showcase-copy">

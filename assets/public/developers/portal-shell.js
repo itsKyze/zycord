@@ -105,14 +105,14 @@
     return /* @__PURE__ */ h("div", { className: "zy-dev-hero-banner" }, /* @__PURE__ */ h("div", { className: "zy-dev-hero-copy" }, /* @__PURE__ */ h("span", { className: "zy-dev-eyebrow" }, /* @__PURE__ */ h("svg", { width: "13", height: "13", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.4", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "6px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("polyline", { points: "16 18 22 12 16 6" }), /* @__PURE__ */ h("polyline", { points: "8 6 2 12 8 18" })), "ZYCORD DEVELOPER PORTAL · HOME"), /* @__PURE__ */ h("h2", null, "Build Bots, Social SDK Integrations & Multiplayer Activities"), /* @__PURE__ */ h("p", null, "Manage your OAuth2 credentials, Bot users, Gateway intents, Rich Presence assets, Profile Widgets, and embedded voice channel Activities."), /* @__PURE__ */ h("div", { className: "zy-dev-hero-pills" }, /* @__PURE__ */ h("a", { href: "/developers#sdk-quickstart" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "6px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("path", { d: "M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" }), /* @__PURE__ */ h("path", { d: "M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" })), "Quickstart Guide"), /* @__PURE__ */ h("a", { href: "/_spacebar/api/openapi.json", target: "_blank", rel: "noopener" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "6px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("polygon", { points: "13 2 3 14 12 14 11 22 21 10 12 10 13 2" })), "OpenAPI v9/v10 JSON"), /* @__PURE__ */ h("a", { href: "/support" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "6px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("circle", { cx: "12", cy: "12", r: "10" }), /* @__PURE__ */ h("path", { d: "M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" }), /* @__PURE__ */ h("line", { x1: "12", y1: "17", x2: "12.01", y2: "17" })), "Developer Support"))), /* @__PURE__ */ h("div", { className: "zy-dev-hero-art" }, /* @__PURE__ */ h(
       "img",
       {
-        src: "/site/media/discord/dev-hero-16x9.webp",
+        src: "/site/media/zycord/dev-hero-16x9.webp",
         alt: "Zycord Developer Ecosystem",
         className: "zy-dev-hero-img"
       }
     ), /* @__PURE__ */ h(
       "img",
       {
-        src: "/site/media/discord/dev-clyde-3d.webp",
+        src: "/site/media/zycord/dev-clyde-3d.webp",
         alt: "",
         "aria-hidden": "true",
         className: "zy-dev-clyde-float"

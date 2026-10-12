@@ -9,7 +9,7 @@ export const NAVIGATION_ITEMS = [
 		label: "Discover",
 		href: "/discover",
 		key: "discover",
-		decor: "/site/media/discord/nav-discover-scroll.webp",
+		decor: "/site/media/zycord/nav-discover-scroll.webp",
 		decorStyle: { width: "120px", right: "-38px", bottom: "-42px" },
 		columns: [
 			{
@@ -26,7 +26,7 @@ export const NAVIGATION_ITEMS = [
 		href: "/safety",
 		key: "safety",
 		is2Col: true,
-		decor: "/site/media/discord/nav-safety-egg.webp",
+		decor: "/site/media/zycord/nav-safety-egg.webp",
 		decorStyle: { width: "126px", right: "-36px", bottom: "-44px" },
 		columns: [
 			{
@@ -56,7 +56,7 @@ export const NAVIGATION_ITEMS = [
 		label: "Quests",
 		href: "/quests",
 		key: "quests",
-		decor: "/site/media/discord/nav-quests-trophy.webp",
+		decor: "/site/media/zycord/nav-quests-trophy.webp",
 		decorStyle: { width: "128px", right: "-42px", bottom: "-46px" },
 		columns: [
 			{
@@ -73,7 +73,7 @@ export const NAVIGATION_ITEMS = [
 		label: "Support",
 		href: "/support",
 		key: "support",
-		decor: "/site/media/discord/nav-support-nelly.webp",
+		decor: "/site/media/zycord/nav-support-nelly.webp",
 		decorStyle: { width: "136px", right: "-44px", bottom: "-46px" },
 		columns: [
 			{
@@ -92,7 +92,7 @@ export const NAVIGATION_ITEMS = [
 		href: "/blog",
 		key: "blog",
 		isWide: true,
-		decor: "/site/media/discord/nav-blog-cube.webp",
+		decor: "/site/media/zycord/nav-blog-cube.webp",
 		decorStyle: { width: "134px", right: "-42px", bottom: "-46px" },
 		columns: [
 			{
@@ -114,7 +114,7 @@ export const NAVIGATION_ITEMS = [
 		href: "/developers",
 		key: "developers",
 		isWide: true,
-		decor: "/site/media/discord/nav-developers-clyde.webp",
+		decor: "/site/media/zycord/nav-developers-clyde.webp",
 		decorStyle: { width: "142px", right: "-48px", bottom: "-52px" },
 		columns: [
 			{
