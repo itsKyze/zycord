@@ -88,13 +88,13 @@ function renderMarketingShell(pageKey: string, title: string, desc: string): str
 	<title>${title}</title>
 	<meta name="description" content="${desc}" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261012e" />
+	<link rel="stylesheet" href="/site/site.css?v=20261012f" />
 </head>
 <body>
 	<header data-zy-navbar></header>
 	<main data-zy-jsx-page="${pageKey}"></main>
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261012e"></script>
+	<script src="/site/site.js?v=20261012f"></script>
 </body>
 </html>`;
 }
