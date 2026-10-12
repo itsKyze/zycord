@@ -3,104 +3,30 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>__INSTANCE_NAME__ Nitro — Unlock a World of Perks &amp; Profile Collectibles</title>
-	<meta name="description" content="Subscribe to __INSTANCE_NAME__ Nitro for HD 1080p 60fps streaming, custom emojis everywhere, 500MB uploads, and 1,099+ Avatar Decorations, Nameplates, Profile Effects, and Profile Frames." />
+	<title>__INSTANCE_NAME__ Nitro — Unlock a World of Perks</title>
+	<meta name="description" content="Tired of living the default life? Subscribe to __INSTANCE_NAME__ Nitro for HD video streaming, custom profiles, 1 GB uploads, custom emoji anywhere, and Nitro Rewards." />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261012c" />
+	<link rel="stylesheet" href="/site/site.=20261012d" />
 	<style>
-		.profile-preview-card {
-			position: relative;
+		.nitro-divider {
 			width: 100%;
-			max-width: 380px;
-			margin: 0 auto;
-			border-radius: 24px;
-			background: #14162b;
-			border: 2px solid rgba(88, 101, 242, 0.65);
-			box-shadow:
-				0 28px 64px rgba(0, 0, 0, 0.6),
-				0 0 0 4px rgba(88, 101, 242, 0.18);
-			overflow: hidden;
-			transition: all 0.28s ease;
+			height: 1px;
+			background: rgba(255, 255, 255, 0.22);
+			margin: 8px 0;
 		}
-		.profile-preview-card.frame-neon {
-			border-color: #eb459e;
-			box-shadow:
-				0 28px 64px rgba(235, 69, 158, 0.35),
-				0 0 0 4px rgba(235, 69, 158, 0.24);
-		}
-		.profile-preview-card.frame-gold {
-			border-color: #fda220;
-			box-shadow:
-				0 28px 64px rgba(253, 162, 32, 0.35),
-				0 0 0 4px rgba(253, 162, 32, 0.24);
-		}
-		.profile-preview-card.frame-emerald {
-			border-color: #57f287;
-			box-shadow:
-				0 28px 64px rgba(87, 242, 135, 0.32),
-				0 0 0 4px rgba(87, 242, 135, 0.22);
-		}
-		.profile-banner {
-			height: 118px;
-			background: linear-gradient(135deg, #5865f2 0%, #eb459e 55%, #00b0f4 100%);
-			position: relative;
-			transition: background 0.3s ease;
-		}
-		.profile-effect-overlay {
-			position: absolute;
-			inset: 0;
-			background:
-				radial-gradient(circle at 22% 18%, rgba(255, 255, 255, 0.24), transparent 36%),
-				radial-gradient(circle at 80% 72%, rgba(88, 101, 242, 0.26), transparent 45%);
-			pointer-events: none;
-			z-index: 2;
-		}
-		.profile-avatar-wrap {
-			width: 86px;
-			height: 86px;
-			border-radius: 50%;
-			margin: -43px 0 0 22px;
-			position: relative;
-			z-index: 3;
-			background: #0e1024;
-			padding: 6px;
-			display: flex;
+		.nitro-xbox-pill {
+			display: inline-flex;
 			align-items: center;
-			justify-content: center;
-			font-family: var(--font-abc-ginto-nord);
-			font-weight: 800;
-			font-size: 26px;
-			color: #fff;
+			gap: 10px;
+			padding: 8px 16px;
+			border-radius: 14px;
+			background: rgba(255, 255, 255, 0.16);
+			border: 1px solid rgba(255, 255, 255, 0.28);
+			width: fit-content;
 		}
-		.profile-avatar-ring {
-			position: absolute;
-			inset: -4px;
-			border-radius: 50%;
-			border: 3px dashed #57f287;
-			box-shadow: 0 0 16px rgba(87, 242, 135, 0.7);
-			animation: spinRing 12s linear infinite;
-		}
-		@keyframes spinRing {
-			to { transform: rotate(360deg); }
-		}
-		.profile-body {
-			padding: 16px 22px 22px;
-			position: relative;
-			z-index: 3;
-			display: flex;
-			flex-direction: column;
-			gap: 12px;
-		}
-		.nameplate-preview {
-			padding: 10px 14px;
-			border-radius: 12px;
-			background: linear-gradient(90deg, rgba(88, 101, 242, 0.45), rgba(235, 69, 158, 0.42));
-			border: 1px solid rgba(255, 255, 255, 0.2);
-			font-size: 13px;
-			font-weight: 700;
-			display: flex;
-			align-items: center;
-			justify-content: space-between;
+		.zy-compare-table td img {
+			display: inline-block;
+			vertical-align: middle;
 		}
 	</style>
 </head>
@@ -113,76 +39,91 @@
 		     ===================================================================== -->
 		<section
 			class="zy-subhero"
-			style="background-image:linear-gradient(180deg, rgba(20,16,68,0.5) 0%, rgba(25,27,92,0.96) 100%), url('/site/media/discord/nitro-hero-bg.png');background-size:cover;background-position:center;padding-top:76px;padding-bottom:64px;"
+			style="background-image:linear-gradient(180deg, rgba(20,16,68,0.45) 0%, rgba(25,27,92,0.96) 100%), url('/site/media/discord/nitro-hero-bg.png');background-size:cover;background-position:center;padding-top:84px;padding-bottom:64px;"
 		>
 			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/discord/nitro-bolt.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:126px;top:4%;left:6%;" />
+				<img src="/site/media/discord/nitro-bolt.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:136px;top:2%;left:6%;" />
 				<div class="zy-subhero-inner">
-					<h1 class="zy-subhero-title" style="font-style:italic;">UNLOCK A WORLD OF PERKS WITH NITRO</h1>
-					<p class="zy-subhero-sub">
+					<h1 class="zy-subhero-title" style="font-style:italic;max-width:780px;">UNLOCK A WORLD OF PERKS WITH NITRO</h1>
+					<p class="zy-subhero-sub" style="max-width:640px;">
 						Tired of living the default life? We get it. Subscribe to Nitro, and unlock the supercharged side of __INSTANCE_NAME__.
 					</p>
-					<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:8px;">
-						<a class="zy-white-pill-btn" href="#pick-plan" style="padding:18px 36px;font-size:18px;">
+					<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:12px;">
+						<a class="zy-btn zy-btn-primary" href="#pick-plan" style="padding:18px 42px;font-size:18px;border-radius:18px;">
 							<span>Subscribe</span>
-						</a>
-						<a class="zy-btn zy-btn-secondary" href="#collectibles-studio" style="padding:18px 34px;font-size:18px;">
-							<span>Try Collectibles Live</span>
 						</a>
 					</div>
 					<img
 						src="/site/media/discord/nitro-wumpus-jetpack.webp"
 						alt="__INSTANCE_NAME__ Nitro Wumpus"
-						style="width:clamp(240px, 34vw, 420px);height:auto;margin-top:16px;filter:drop-shadow(0 28px 54px rgba(0,0,0,0.55));"
+						style="width:clamp(260px, 36vw, 440px);height:auto;margin-top:20px;filter:drop-shadow(0 28px 54px rgba(0,0,0,0.55));"
 					/>
 				</div>
 			</div>
 		</section>
 
 		<!-- =====================================================================
-		     2. 2-COLUMN PLAN CARDS (NITRO BASIC vs NITRO)
+		     2. 2-COLUMN PLAN CARDS (NITRO BASIC vs NITRO — EXACT DISCORD.COM/NITRO)
 		     ===================================================================== -->
 		<section class="zy-section" style="padding-top:24px;">
 			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/discord/nitro-orb-apple.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:118px;top:-44px;right:4%;z-index:4;" />
 				<div class="zy-plan-grid">
 					<!-- Nitro Basic -->
 					<article class="zy-plan-card is-basic">
 						<div>
-							<span class="zy-eyebrow">Essentials</span>
-							<h2 class="zy-display" style="font-size:38px;font-style:italic;margin-top:10px;">NITRO BASIC</h2>
-							<p class="zy-body" style="margin-top:6px;">The essential perks to express yourself in every chat.</p>
+							<h2 class="zy-display" style="font-size:40px;font-style:italic;">Nitro Basic</h2>
+							<p class="zy-body-lg" style="margin-top:10px;color:rgba(255,255,255,0.92);">
+								Supercharge your chats with some of Nitro’s most-loved perks.
+							</p>
 						</div>
+						<div>
+							<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="width:100%;padding:18px 28px;font-size:17px;">
+								<span>Get Nitro Basic</span>
+							</a>
+						</div>
+						<div class="nitro-divider"></div>
 						<ul class="zy-plan-checklist">
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>Custom emoji anywhere &amp; make them animated</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>Custom stickers anywhere</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>50MB file uploads</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>Custom app icons &amp; Nitro badge</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>Custom emoji anywhere</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>50MB uploads</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>Custom app icons</span></li>
 						</ul>
-						<div style="margin-top:auto;padding-top:14px;">
-							<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="width:100%;">Subscribe to Basic</a>
-						</div>
 					</article>
 
-					<!-- Nitro Pro -->
-					<article class="zy-plan-card is-pro">
+					<!-- Nitro -->
+					<article class="zy-plan-card is-pro" style="position:relative;overflow:visible;">
 						<div>
-							<span class="zy-eyebrow" style="background:rgba(87,242,135,0.22);border-color:rgba(87,242,135,0.55);color:#57f287;">Most Popular</span>
-							<h2 class="zy-display" style="font-size:38px;font-style:italic;margin-top:10px;">NITRO</h2>
-							<p class="zy-body" style="margin-top:6px;">All the perks, complete profile customization, and HD streaming.</p>
+							<h2 class="zy-display" style="font-size:40px;font-style:italic;">Nitro</h2>
+							<p class="zy-body-lg" style="margin-top:10px;color:rgba(255,255,255,0.92);">
+								All the perks, all the power. The best way to supercharge your world on __INSTANCE_NAME__.
+							</p>
 						</div>
+						<div>
+							<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="width:100%;padding:18px 28px;font-size:17px;">
+								<span>Get Nitro</span>
+							</a>
+						</div>
+						<div class="nitro-divider"></div>
+						<div style="font-size:18px;font-weight:700;color:#fff;">Everything in Basic, plus</div>
 						<ul class="zy-plan-checklist">
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span><strong>Everything in Basic, plus:</strong></span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>1,099+ Collectibles, Avatar Decorations &amp; Frames</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>Custom profiles, animated banners &amp; per-server profiles</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>500MB file uploads</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>HD video streaming up to 1080p 60fps</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>2 Free Server Boosts + 30% off extra Boosts</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>Color app themes, custom soundboards &amp; more!</span></li>
+							<li class="nitro-xbox-pill">
+								<img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" />
+								<span>Xbox Game Pass*</span>
+							</li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>Custom profiles</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>1 GB uploads</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>HD video streaming</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>Color app themes and more!</span></li>
 						</ul>
-						<div style="margin-top:auto;padding-top:14px;">
-							<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="width:100%;">Subscribe to Nitro</a>
+						<div style="font-size:13px;color:rgba(255,255,255,0.75);margin-top:8px;">
+							*Available in select regions. <a href="/terms" style="color:#fff;text-decoration:underline;">Terms and eligibility rules apply.</a>
 						</div>
+						<img
+							src="/site/media/discord/nitro-orb-apple.webp"
+							alt=""
+							aria-hidden="true"
+							class="zy-float-prop"
+							style="width:155px;bottom:-38px;right:-24px;z-index:5;"
+						/>
 					</article>
 				</div>
 			</div>
@@ -191,7 +132,7 @@
 		<!-- =====================================================================
 		     3. WHAT'S NEW IN NITRO (GREEN XBOX GAME PASS BANNER + 2 VIDEO CARDS)
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:24px;">
+		<section class="zy-section" style="padding-top:36px;">
 			<div class="zy-container">
 				<div style="text-align:center;max-width:760px;margin:0 auto 36px;">
 					<h2 class="zy-heading" style="font-style:italic;">WHAT’S NEW</h2>
@@ -203,12 +144,12 @@
 					<div class="zy-nitro-green-content">
 						<img src="/site/media/discord/nitro-xbox-logo.svg" alt="Xbox Game Pass + Nitro" style="height:44px;width:auto;" />
 						<ul class="zy-plan-checklist">
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>50+ PC and console games like Stardew Valley &amp; Fallout 4</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>10 hours of cloud gaming each month</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>Earn rewards with Xbox just by playing</span></li>
-							<li><img src="/site/media/discord/nitro-check-1.svg" alt="" style="width:20px;height:20px;" /><span>Cloud gaming for select games from your Xbox library</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>50+ PC and console games like Stardew Valley &amp; Fallout 4</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>10 hours of cloud gaming each month</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>Earn rewards with Xbox just by playing</span></li>
+							<li><img src="/site/media/discord/nitro-checkmark-white.svg" alt="" style="width:22px;height:22px;" /><span>Cloud gaming for select games from your Xbox library</span></li>
 						</ul>
-						<a href="/terms" style="font-size:13px;color:rgba(255,255,255,0.78);text-decoration:underline;">Terms and eligibility rules apply.</a>
+						<a href="/terms" style="font-size:13px;color:rgba(255,255,255,0.82);text-decoration:underline;">Terms and eligibility rules apply.</a>
 					</div>
 				</div>
 
@@ -239,17 +180,15 @@
 		<!-- =====================================================================
 		     4. EXPLORE THE BEST OF NITRO (4 OFFICIAL VIDEO SHOWCASE ROWS)
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:24px;">
+		<section class="zy-section" style="padding-top:32px;">
 			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/discord/nitro-star.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:104px;top:0;right:4%;" />
-				<div style="text-align:center;max-width:760px;margin:0 auto 28px;">
+				<div style="text-align:center;max-width:760px;margin:0 auto 36px;">
 					<h2 class="zy-heading" style="font-style:italic;">EXPLORE THE BEST OF NITRO</h2>
 				</div>
 
 				<!-- Row 1 -->
 				<div class="zy-alt-row">
 					<div class="zy-alt-copy">
-						<span class="zy-eyebrow">Show Off Your Style</span>
 						<h3 class="zy-alt-title">TURN HEADS IN EVERY CHAT</h3>
 						<p class="zy-body-lg">
 							Take your look to the next level with animated avatars, banner images, profile themes, and more!
@@ -270,7 +209,6 @@
 						</video>
 					</div>
 					<div class="zy-alt-copy">
-						<span class="zy-eyebrow">Personalize Everything</span>
 						<h3 class="zy-alt-title">MAKE THIS PLACE YOUR SPACE</h3>
 						<p class="zy-body-lg">
 							Add a little you to your __INSTANCE_NAME__ with custom color themes, app icons, and more.
@@ -281,7 +219,6 @@
 				<!-- Row 3 -->
 				<div class="zy-alt-row">
 					<div class="zy-alt-copy">
-						<span class="zy-eyebrow">Express Yourself</span>
 						<h3 class="zy-alt-title">HYPE AND MEME WITH BETTER EMOJIS</h3>
 						<p class="zy-body-lg">
 							Use custom emojis anywhere, including on your profile, in other servers, or on your face*.<br />
@@ -303,86 +240,26 @@
 						</video>
 					</div>
 					<div class="zy-alt-copy">
-						<span class="zy-eyebrow">No Limits, All Fun</span>
 						<h3 class="zy-alt-title">LIVE LIFE WITHOUT LIMITS</h3>
 						<p class="zy-body-lg">
 							From crystal-clear streams to chunky memes, send it all.
 						</p>
 					</div>
 				</div>
+
+				<img src="/site/media/discord/nitro-star.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:128px;bottom:-36px;right:4%;" />
 			</div>
 		</section>
 
 		<!-- =====================================================================
-		     5. LIVE INTERACTIVE 4-LAYER PROFILE COLLECTIBLES STUDIO
+		     5. PICK YOUR PLAN COMPARISON TABLE (EXACT DISCORD.COM/NITRO)
 		     ===================================================================== -->
-		<section class="zy-section" id="collectibles-studio" style="padding-top:16px;">
-			<div class="zy-container">
-				<div class="zy-showcase-card">
-					<div class="zy-showcase-grid">
-						<div class="zy-showcase-copy">
-							<span class="zy-eyebrow">Interactive 4-Layer Profile Cosmetics</span>
-							<h2 class="zy-heading">TRY PROFILE COLLECTIBLES LIVE</h2>
-							<p class="zy-body-lg">
-								Combine <strong>Avatar Decorations</strong>, <strong>Nameplates</strong>, full-height <strong>Profile Effects</strong>, and non-obscuring perimeter <strong>Profile Frames</strong>. Pick a theme preset below to preview how all four layers work together!
-							</p>
-							<div class="zy-tab-strip" id="cosmetic-theme-switcher">
-								<button type="button" class="zy-tab-btn is-active" data-theme="cosmic">Cosmic Blurple</button>
-								<button type="button" class="zy-tab-btn" data-theme="neon">Cyber Fuchsia</button>
-								<button type="button" class="zy-tab-btn" data-theme="gold">Solar Gold</button>
-								<button type="button" class="zy-tab-btn" data-theme="emerald">Emerald Nebula</button>
-							</div>
-							<div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:8px;">
-								<a class="zy-btn zy-btn-primary" data-zy-open-app href="/app">Equip in User Settings</a>
-								<a class="zy-btn zy-btn-secondary" href="/gift-cards">Gift Collectibles</a>
-							</div>
-						</div>
-
-						<div>
-							<div class="profile-preview-card" id="live-profile-card">
-								<div class="profile-effect-overlay"></div>
-								<div class="profile-banner" id="live-profile-banner"></div>
-								<div class="profile-avatar-wrap">
-									<span>KZ</span>
-									<span class="profile-avatar-ring" id="live-avatar-ring"></span>
-								</div>
-								<div class="profile-body">
-									<div>
-										<div style="font-size:20px;font-weight:800;display:flex;align-items:center;gap:8px;">
-											<span>Kyze</span>
-											<span style="font-size:11px;padding:2px 8px;border-radius:99px;background:var(--color-blurple);">NITRO</span>
-										</div>
-										<div style="font-size:13px;color:var(--color-greyple);">@kyze · Full Profile Cosmetics Active</div>
-									</div>
-
-									<div class="nameplate-preview" id="live-nameplate">
-										<span>Active Nameplate</span>
-										<span id="live-nameplate-label">Twilight Nebula</span>
-									</div>
-
-									<div style="padding:12px;border-radius:10px;background:#111317;border:1px solid rgba(255,255,255,0.08);font-size:13px;color:var(--color-fog);">
-										<div style="font-weight:700;color:#fff;margin-bottom:4px;">EQUIPPED COLLECTIBLES</div>
-										<div>• Avatar Decoration: <strong id="label-deco">Astral Pulse Ring</strong></div>
-										<div>• Profile Effect: <strong id="label-effect">Starfall Cascade (Full Height)</strong></div>
-										<div>• Profile Frame: <strong id="label-frame">Cosmic Indigo Perimeter</strong></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- =====================================================================
-		     6. PICK YOUR PLAN COMPARISON TABLE
-		     ===================================================================== -->
-		<section class="zy-section" id="pick-plan" style="padding-top:24px;">
+		<section class="zy-section" id="pick-plan" style="padding-top:40px;">
 			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/discord/nitro-tornado.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:112px;top:-24px;left:2%;" />
-				<img src="/site/media/discord/nitro-battery.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:108px;bottom:-24px;right:2%;" />
+				<img src="/site/media/discord/nitro-tornado.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:126px;top:-24px;left:2%;" />
+				<img src="/site/media/discord/nitro-battery.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:120px;top:-16px;right:2%;" />
 
-				<div style="text-align:center;max-width:740px;margin:0 auto 32px;">
+				<div style="text-align:center;max-width:740px;margin:0 auto 36px;">
 					<h2 class="zy-heading" style="font-style:italic;">PICK YOUR PLAN</h2>
 				</div>
 
@@ -390,49 +267,154 @@
 					<table class="zy-compare-table">
 						<thead>
 							<tr>
-								<th style="font-family:var(--font-abc-ginto-nord);font-size:18px;">Features</th>
-								<th style="font-family:var(--font-abc-ginto-nord);font-size:20px;font-style:italic;">NITRO BASIC</th>
-								<th style="font-family:var(--font-abc-ginto-nord);font-size:20px;font-style:italic;">
-									<div style="font-size:11px;color:#57f287;letter-spacing:0.08em;margin-bottom:4px;">POPULAR</div>
-									NITRO
+								<th style="font-family:var(--font-abc-ginto-nord);font-size:20px;font-style:italic;vertical-align:bottom;padding-bottom:24px;">Features</th>
+								<th style="font-family:var(--font-abc-ginto-nord);font-size:22px;font-style:italic;padding-bottom:24px;">
+									<div>NITRO<br /><span style="font-size:16px;opacity:0.85;">BASIC</span></div>
+									<div style="margin-top:14px;">
+										<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="padding:10px 22px;font-size:14px;">Subscribe</a>
+									</div>
+								</th>
+								<th style="font-family:var(--font-abc-ginto-nord);font-size:22px;font-style:italic;padding-bottom:24px;border-top:2px solid #fe59d6;border-radius:20px 20px 0 0;">
+									<div style="display:inline-block;padding:4px 12px;border-radius:999px;background:linear-gradient(90deg,#5865f2,#fe59d6);font-size:11px;letter-spacing:0.08em;margin-bottom:8px;font-style:normal;">POPULAR</div>
+									<div>NITRO</div>
+									<div style="margin-top:14px;">
+										<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="padding:10px 22px;font-size:14px;">Subscribe</a>
+									</div>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr><td colspan="3" class="zy-compare-cat">Nitro Rewards</td></tr>
-							<tr><td>Xbox Game Pass (Starter Edition)</td><td>—</td><td>✓</td></tr>
-							<tr><td>Monthly discounts at Logitech G &amp; SteelSeries</td><td>—</td><td>✓</td></tr>
-							<tr><td colspan="3" class="zy-compare-cat">Show Off Your Style</td></tr>
-							<tr><td>Nitro profile badge</td><td>✓</td><td>✓</td></tr>
-							<tr><td>Custom profiles and per-server profiles</td><td>—</td><td>✓</td></tr>
-							<tr><td>Personalized entrance sounds</td><td>—</td><td>✓</td></tr>
-							<tr><td>Display Name Styles &amp; Collectibles</td><td>—</td><td>✓</td></tr>
-							<tr><td colspan="3" class="zy-compare-cat">Make This Place Your Space</td></tr>
-							<tr><td>Custom and animated emojis</td><td>✓</td><td>✓</td></tr>
-							<tr><td>Custom stickers anywhere, plus 300+ Nitro exclusive stickers</td><td>✓</td><td>✓</td></tr>
-							<tr><td>Custom app icons</td><td>✓</td><td>✓</td></tr>
-							<tr><td>Custom Soundboard sounds anywhere</td><td>—</td><td>✓</td></tr>
-							<tr><td>20+ app color themes</td><td>—</td><td>✓</td></tr>
-							<tr><td colspan="3" class="zy-compare-cat">No Limits, All Fun</td></tr>
-							<tr><td>Orbs Multiplier &amp; Monthly Orbs</td><td>—</td><td>✓</td></tr>
-							<tr><td>Bigger file sharing</td><td>50 MB</td><td><strong>1 GB</strong></td></tr>
-							<tr><td>Custom video backgrounds</td><td>✓</td><td>✓</td></tr>
-							<tr><td>Super Reactions</td><td>✓</td><td>✓</td></tr>
-							<tr><td>HD streaming</td><td>—</td><td><strong>Up to 1080p 60fps</strong></td></tr>
-							<tr><td>2 Boosts + 30% off extra Boosts</td><td>—</td><td>✓</td></tr>
-							<tr><td>3 Nitro friend passes</td><td>—</td><td>✓</td></tr>
-							<tr><td>Shop member pricing, and exclusive items</td><td>—</td><td>✓</td></tr>
-							<tr><td>Early Access</td><td>—</td><td>✓</td></tr>
-							<tr><td>Longer messages up to 4,000 characters</td><td>—</td><td>✓</td></tr>
-							<tr><td>Join up to 200 servers</td><td>—</td><td>✓</td></tr>
 							<tr>
-								<td></td>
-								<td style="padding-top:24px;">
-									<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="padding:12px 22px;font-size:14px;">Subscribe</a>
+								<td colspan="3" class="zy-compare-cat">
+									Nitro Rewards
+									<span style="display:block;font-family:var(--font-abc-ginto-discord);font-size:12px;font-weight:500;text-transform:none;color:rgba(255,255,255,0.65);margin-top:2px;">Terms and eligibility rules apply.</span>
 								</td>
-								<td style="padding-top:24px;">
-									<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="padding:12px 22px;font-size:14px;background:#5865f2;color:#fff;">Subscribe</a>
-								</td>
+							</tr>
+							<tr>
+								<td>Xbox Game Pass (Starter Edition)</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Monthly discounts at Logitech G</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Monthly discounts at SteelSeries</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+
+							<tr><td colspan="3" class="zy-compare-cat">Show Off Your Style</td></tr>
+							<tr>
+								<td>Nitro profile badge</td>
+								<td><img src="/site/media/discord/nitro-check-basic.svg" alt="Yes" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Custom profiles and per-server profiles</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Personalized entrance sounds</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Display Name Styles</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+
+							<tr><td colspan="3" class="zy-compare-cat">Make This Place Your Space</td></tr>
+							<tr>
+								<td>Custom and animated emojis</td>
+								<td><img src="/site/media/discord/nitro-check-basic.svg" alt="Yes" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Custom stickers anywhere, plus 300+ Nitro exclusive stickers</td>
+								<td><img src="/site/media/discord/nitro-check-basic.svg" alt="Yes" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Custom app icons</td>
+								<td><img src="/site/media/discord/nitro-check-basic.svg" alt="Yes" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Custom Soundboard sounds anywhere</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>20+ app color themes</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+
+							<tr><td colspan="3" class="zy-compare-cat">No limits, All Fun</td></tr>
+							<tr>
+								<td>Orbs Multiplier</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Monthly Orbs</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Bigger file sharing</td>
+								<td style="font-weight:700;">50 MB</td>
+								<td style="font-weight:800;color:#fff;">1 GB</td>
+							</tr>
+							<tr>
+								<td>Custom video backgrounds</td>
+								<td><img src="/site/media/discord/nitro-check-basic.svg" alt="Yes" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Super Reactions</td>
+								<td><img src="/site/media/discord/nitro-check-basic.svg" alt="Yes" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>HD streaming</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>2 Boosts + 30% off extra Boosts</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>3 Nitro friend passes</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Shop member pricing, and exclusive items</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Early Access</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Longer messages up to 4,000 characters</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
+							</tr>
+							<tr>
+								<td>Join up to 200 servers</td>
+								<td><img src="/site/media/discord/nitro-check-1.svg" alt="No" /></td>
+								<td><img src="/site/media/discord/nitro-check-2.svg" alt="Yes" /></td>
 							</tr>
 						</tbody>
 					</table>
@@ -441,11 +423,11 @@
 		</section>
 
 		<!-- =====================================================================
-		     7. QUESTIONS? 4-TAB INTERACTIVE FAQ ACCORDION
+		     6. QUESTIONS? 4-TAB INTERACTIVE FAQ ACCORDION
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:24px;">
-			<div class="zy-container" style="max-width:940px;position:relative;">
-				<img src="/site/media/discord/nitro-faq-key.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:96px;top:-18px;right:0;" />
+		<section class="zy-section" style="padding-top:32px;">
+			<div class="zy-container" style="max-width:960px;position:relative;">
+				<img src="/site/media/discord/nitro-faq-key.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:108px;top:-18px;right:0;" />
 				<div style="text-align:center;margin-bottom:24px;">
 					<h2 class="zy-heading" style="font-style:italic;">QUESTIONS?</h2>
 					<p class="zy-body-lg" style="margin-top:8px;">Questions about Nitro? Check out our FAQ.</p>
@@ -465,7 +447,7 @@
 						<div class="zy-accordion-item is-open">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="true">
 								<span>What’s Nitro?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
 								Nitro is a membership that unlocks features and perks across __INSTANCE_NAME__ and beyond, giving you more ways to have fun, express yourself, and get more from the games you play.
@@ -474,34 +456,34 @@
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Does __INSTANCE_NAME__ Nitro include Xbox Game Pass?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								Yes. Nitro members get access to Xbox Game Pass (Starter Edition), which includes a library of 50+ games across PC and console, plus 10 hours of cloud gaming every month. It’s included with your Nitro membership at no additional cost.
+								Yes. Nitro members get access to Xbox Game Pass (Starter Edition), which includes a library of 50+ games across PC and console, plus 10 hours of cloud gaming every month. It’s included with your Nitro membership at no additional cost. Availability varies by region. Visit your Nitro Home to get started.
 							</div>
 						</div>
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>What are Nitro Rewards?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								Nitro Rewards is a benefits program included with your Nitro membership that gives you access to gaming services, gear discounts, and perks from partners like Xbox, Logitech, and SteelSeries.
+								Nitro Rewards is a benefits program included with your Nitro membership that gives you access to gaming services, gear discounts, and perks from partners like Xbox, Logitech, and SteelSeries. We're always exploring new partners and aim to bring you more of what you love as this program evolves.
 							</div>
 						</div>
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>How does Nitro work?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								When you subscribe to Nitro, you get access to features that were previously locked for you — like using custom emoji anywhere, uploading bigger files, setting a custom video background, equipping 4-layer Profile Collectibles, and more.
+								When you subscribe to Nitro, you get access to features that were previously locked for you — like using custom emoji anywhere, uploading bigger files, setting a custom video background, and more. When the subscription ends, you’ll lose access to the perks.
 							</div>
 						</div>
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>What’s the difference between Nitro and Nitro Basic?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
 								Nitro is our most popular plan that unlocks access to all available Nitro perks, and Nitro Basic includes a selection of the most-loved Nitro perks that help you better express yourself. See the comparison chart above for a full breakdown!
@@ -510,19 +492,19 @@
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>How much does Nitro cost?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								Cost varies depending on your country and plan. You can check Nitro prices under User Settings &gt; Nitro in either the desktop, web, or mobile apps.
+								Cost varies depending on your country and plan. You can check Nitro prices under User Settings &gt; Nitro in either the desktop or mobile apps.
 							</div>
 						</div>
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Where can I buy Nitro?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								You can purchase Nitro by visiting the Nitro tab in User Settings, or in the Nitro page under Home on desktop and web. On mobile, visit User Settings by tapping your user icon in the bottom bar, then select Get Nitro.
+								You can purchase Nitro by visiting the Nitro tab in User Settings, or in the Nitro page under Home on desktop. On mobile, visit User Settings by tapping your user icon in the bottom bar, then select Get Nitro.
 							</div>
 						</div>
 					</div>
@@ -532,19 +514,19 @@
 						<div class="zy-accordion-item is-open">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="true">
 								<span>What payment methods do you accept?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								We accept credit/debit cards, PayPal, and regional payment methods, which you can manage directly inside User Settings &gt; Billing or learn more about in our <a href="/support" style="color:#fff;text-decoration:underline;">Help Center</a>.
+								We accept a variety of payment methods, which you can learn more info on <a href="/support" style="color:#fff;text-decoration:underline;">here</a>!
 							</div>
 						</div>
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Do you offer Nitro and Nitro Basic in localized pricing?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								We are constantly working to expand the availability of localized pricing for Nitro and Nitro Basic. Visit our <a href="/support" style="color:#fff;text-decoration:underline;">Help Center</a> for information on where localized pricing is currently available.
+								We are constantly working to expand the availability of localized pricing for Nitro and Nitro Basic. Check <a href="/support" style="color:#fff;text-decoration:underline;">this article</a> for information on where localized pricing is currently available.
 							</div>
 						</div>
 					</div>
@@ -554,7 +536,7 @@
 						<div class="zy-accordion-item is-open">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="true">
 								<span>Are Nitro gifts real?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
 								Yes! You can purchase a Nitro gift through the Nitro page on desktop or the Nitro Gifting tab within mobile under User Settings. Additionally, you can send a quick gift in a channel by selecting the gift icon on desktop or mobile.
@@ -563,16 +545,16 @@
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Does __INSTANCE_NAME__ offer gift cards?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								Digital gift cards are available! Check out our <a href="/gift-cards" style="color:#fff;text-decoration:underline;">gift cards page</a> or our <a href="/support" style="color:#fff;text-decoration:underline;">Help Center</a> for more information.
+								Digital gift cards are available in select regions, and we have more cooking. Check out our <a href="/gift-cards" style="color:#fff;text-decoration:underline;">gift cards page</a> or our <a href="/support" style="color:#fff;text-decoration:underline;">Help Center</a> for more information.
 							</div>
 						</div>
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Where to redeem Nitro codes?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
 								You can redeem your Nitro code on the desktop and web apps through the Gift Inventory page in User Settings.
@@ -581,16 +563,16 @@
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Can I get free Nitro from a bot or a giveaway?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
-								The only official way to receive Nitro is through a gift sent to you in chat, or by receiving a code that can be redeemed under Gift Inventory in User Settings. For more tips on staying safe, visit our <a href="/safety" style="color:#fff;text-decoration:underline;">Safety</a> page.
+								The only official way to receive Nitro is through a gift sent to you in chat, or by receiving a code that can be redeemed under Gift Inventory in User Settings on the desktop and web apps. We strongly encourage not clicking on any links from people you don’t know well. For more tips on staying safe on __INSTANCE_NAME__, visit our <a href="/safety" style="color:#fff;text-decoration:underline;">Safety</a> page.
 							</div>
 						</div>
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Does __INSTANCE_NAME__ offer Nitro Promotions?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
 								We are always working on ways to give you more with Nitro! Keep an eye out in the app or on our <a href="/blog" style="color:#fff;text-decoration:underline;">blog</a> to see when new promotions go live. :)
@@ -603,7 +585,7 @@
 						<div class="zy-accordion-item is-open">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="true">
 								<span>My Nitro subscription comes with Boosts. What are those?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
 								Server Boosts are a way to show support for your favorite communities. Each Boost that you give to a server helps collectively unlock perks for everyone in the server to enjoy.
@@ -612,7 +594,7 @@
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Are Boosts permanent?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
 								A Nitro subscription comes with 2 Boosts that you can share to any server you belong to. The Boosts do not stack over time, and they are not permanent. You’ll get to keep the Boosts for as long as your Nitro subscription is active.
@@ -621,7 +603,7 @@
 						<div class="zy-accordion-item">
 							<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
 								<span>Why is my Nitro not working?</span>
-								<span class="zy-accordion-icon">▾</span>
+								<span class="zy-accordion-icon">+</span>
 							</button>
 							<div class="zy-accordion-content">
 								If you’re having any trouble with your subscription, or have any questions, you can <a href="/support" style="color:#fff;text-decoration:underline;">reach out</a> to our team and we’ll be happy to help!
@@ -633,7 +615,7 @@
 		</section>
 
 		<!-- =====================================================================
-		     8. WHAT ARE YOU WAITING FOR? FOOTER CTA BANNER
+		     7. WHAT ARE YOU WAITING FOR? FOOTER CTA BANNER
 		     ===================================================================== -->
 		<section class="zy-section" style="padding-top:16px;padding-bottom:64px;">
 			<div class="zy-container">
@@ -641,13 +623,10 @@
 					class="zy-ptb-card"
 					style="background-image:linear-gradient(155deg, rgba(88,53,196,0.85) 0%, rgba(200,55,171,0.88) 100%), url('/site/media/discord/nitro-footer-bg.png');background-size:cover;background-position:center;"
 				>
-					<img src="/site/media/discord/nitro-flag.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:118px;top:-32px;left:4%;" />
-					<img src="/site/media/discord/nitro-box.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:114px;bottom:-28px;right:5%;" />
-					<h2 class="zy-alt-title" style="text-align:center;font-style:italic;">WHAT ARE YOU WAITING FOR?</h2>
-					<p class="zy-body-lg" style="max-width:580px;text-align:center;">
-						Unlock HD streaming, custom emojis everywhere, 500MB uploads, and complete profile customization today.
-					</p>
-					<a class="zy-white-pill-btn" data-zy-open-app href="/app" style="padding:18px 40px;font-size:18px;">
+					<img src="/site/media/discord/nitro-flag.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:132px;top:-32px;left:4%;" />
+					<img src="/site/media/discord/nitro-box.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:128px;bottom:-28px;right:5%;" />
+					<h2 class="zy-alt-title" style="text-align:center;font-style:italic;font-size:clamp(34px,4.5vw,56px);">WHAT ARE YOU WAITING FOR?</h2>
+					<a class="zy-btn zy-btn-primary" data-zy-open-app href="/app" style="padding:18px 44px;font-size:18px;border-radius:18px;margin-top:8px;">
 						<span>Subscribe</span>
 					</a>
 				</div>
@@ -656,77 +635,6 @@
 	</main>
 
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261012c"></script>
-	<script>
-		(function () {
-			var card = document.getElementById("live-profile-card");
-			var banner = document.getElementById("live-profile-banner");
-			var ring = document.getElementById("live-avatar-ring");
-			var plateLabel = document.getElementById("live-nameplate-label");
-			var deco = document.getElementById("label-deco");
-			var effect = document.getElementById("label-effect");
-			var frame = document.getElementById("label-frame");
-			var btns = document.querySelectorAll("#cosmetic-theme-switcher [data-theme]");
-
-			var themes = {
-				cosmic: {
-					cls: "",
-					banner: "linear-gradient(135deg, #5865f2 0%, #eb459e 55%, #00b0f4 100%)",
-					ring: "#57f287",
-					plate: "Twilight Nebula",
-					deco: "Astral Pulse Ring",
-					effect: "Starfall Cascade (Full Height)",
-					frame: "Cosmic Indigo Perimeter"
-				},
-				neon: {
-					cls: "frame-neon",
-					banner: "linear-gradient(135deg, #eb459e 0%, #de2761 55%, #5865f2 100%)",
-					ring: "#eb459e",
-					plate: "Cyber Kitsune Horizon",
-					deco: "Neon Sakura Halo",
-					effect: "Synthwave Lightning Loop",
-					frame: "Fuchsia Neon Border"
-				},
-				gold: {
-					cls: "frame-gold",
-					banner: "linear-gradient(135deg, #fda220 0%, #de2761 60%, #3442d9 100%)",
-					ring: "#fda220",
-					plate: "Solar Eclipse Crest",
-					deco: "Celestial Crown Aura",
-					effect: "Golden Supernova Burst",
-					frame: "Solar Gold Filigree"
-				},
-				emerald: {
-					cls: "frame-emerald",
-					banner: "linear-gradient(135deg, #1b4d3e 0%, #57f287 65%, #00b0f4 100%)",
-					ring: "#57f287",
-					plate: "Aurora Borealis",
-					deco: "Emerald Dragon Sigil",
-					effect: "Verdant Matrix Rain",
-					frame: "Emerald Crystal Frame"
-				}
-			};
-
-			for (var i = 0; i < btns.length; i++) {
-				btns[i].addEventListener("click", function () {
-					var key = this.getAttribute("data-theme") || "cosmic";
-					var t = themes[key] || themes.cosmic;
-					for (var k = 0; k < btns.length; k++) {
-						btns[k].classList.toggle("is-active", btns[k] === this);
-					}
-					if (card) card.className = "profile-preview-card " + t.cls;
-					if (banner) banner.style.background = t.banner;
-					if (ring) {
-						ring.style.borderColor = t.ring;
-						ring.style.boxShadow = "0 0 14px " + t.ring;
-					}
-					if (plateLabel) plateLabel.textContent = t.plate;
-					if (deco) deco.textContent = t.deco;
-					if (effect) effect.textContent = t.effect;
-					if (frame) frame.textContent = t.frame;
-				});
-			}
-		})();
-	</script>
+	<script src="/site/site.=20261012d"></script>
 </body>
 </html>
