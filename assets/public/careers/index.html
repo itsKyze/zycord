@@ -4,77 +4,55 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>Careers at __INSTANCE_NAME__ — Build the Future of Real-Time Communication</title>
-	<meta name="description" content="Explore engineering, WebRTC media, security, and design disciplines at __INSTANCE_NAME__." />
+	<meta name="description" content="Join the engineering, design, infrastructure, and safety teams building __INSTANCE_NAME__." />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	<link rel="stylesheet" href="/site/site.css" />
 	<style>
-		.careers-carousel {
-			border-radius: var(--radius-feature-panels);
-			background: linear-gradient(145deg, rgba(28, 32, 84, 0.9), rgba(16, 18, 48, 0.96));
-			border: 1px solid rgba(255, 255, 255, 0.14);
-			padding: clamp(24px, 4vw, 48px);
-			box-shadow: 0 28px 64px rgba(0, 0, 0, 0.48);
+		.jobs-filter-bar {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 10px;
+			margin: 24px 0 36px;
 		}
-		.carousel-header {
+		.job-filter-btn {
+			padding: 12px 22px;
+			border-radius: var(--radius-pills);
+			border: 1px solid rgba(255, 255, 255, 0.2);
+			background: rgba(25, 28, 82, 0.72);
+			color: var(--color-fog);
+			font-size: 15px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: all 0.16s ease;
+		}
+		.job-filter-btn:hover,
+		.job-filter-btn.is-active {
+			background: var(--color-blurple);
+			border-color: var(--color-blurple);
+			color: #fff;
+		}
+		.job-row {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			flex-wrap: wrap;
-			gap: 16px;
-			margin-bottom: 28px;
+			gap: 20px;
+			padding: 24px 28px;
+			border-radius: 28px;
+			background: rgba(18, 21, 64, 0.78);
+			border: 1px solid rgba(255, 255, 255, 0.16);
+			margin-bottom: 16px;
+			transition: transform 0.18s ease, border-color 0.18s ease;
 		}
-		.carousel-counter {
-			display: inline-flex;
-			align-items: center;
-			gap: 12px;
-			padding: 8px 16px;
-			border-radius: var(--radius-pills);
-			background: rgba(88, 101, 242, 0.22);
-			border: 1px solid rgba(136, 145, 242, 0.45);
-			font-weight: 800;
-			font-size: 14px;
+		.job-row:hover {
+			transform: translateY(-3px);
+			border-color: rgba(88, 101, 242, 0.75);
 		}
-		.carousel-controls {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-		}
-		.carousel-nav-btn {
-			width: 44px;
-			height: 44px;
-			border-radius: 12px;
-			border: 1px solid rgba(255, 255, 255, 0.24);
-			background: rgba(255, 255, 255, 0.08);
-			color: var(--color-snow);
-			font-size: 18px;
-			font-weight: 800;
-			cursor: pointer;
-			transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
-		}
-		.carousel-nav-btn:hover {
-			background: var(--color-blurple);
-			border-color: var(--color-blurple);
-			transform: translateY(-1px);
-		}
-		.carousel-dots {
-			display: flex;
-			gap: 8px;
-			margin-top: 24px;
-			justify-content: center;
-			flex-wrap: wrap;
-		}
-		.carousel-dot {
-			width: 28px;
-			height: 6px;
-			border-radius: 99px;
-			background: rgba(255, 255, 255, 0.2);
-			border: none;
-			cursor: pointer;
-			transition: background 0.2s ease, width 0.2s ease;
-		}
-		.carousel-dot.is-active {
-			background: var(--color-blurple);
-			width: 44px;
+		@media (max-width: 720px) {
+			.job-row {
+				flex-direction: column;
+				align-items: flex-start;
+			}
 		}
 	</style>
 </head>
@@ -82,162 +60,279 @@
 	<header data-zy-navbar></header>
 
 	<main>
-		<!-- Careers Hero -->
-		<section class="zy-section" style="padding-top:48px;text-align:center;position:relative;overflow:hidden;">
-			<img src="/site/media/discord/star-lg.svg" alt="" aria-hidden="true" class="zy-star d1" style="width:28px;top:12%;left:8%;" />
-			<img src="/site/media/discord/star-m.svg" alt="" aria-hidden="true" class="zy-star d3" style="width:22px;top:16%;right:10%;" />
+		<!-- =====================================================================
+		     1. HERO & OFFICE PHOTO GALLERY — EXACT DISCORD.COM/CAREERS
+		     ===================================================================== -->
+		<section class="zy-subhero" style="padding-top:72px;padding-bottom:36px;">
 			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/discord/careers-crown.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:104px;top:-18px;left:4%;" />
-				<img src="/site/media/discord/careers-clyde.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:118px;top:-14px;right:4%;" />
-				<span class="zy-eyebrow">Careers &amp; Engineering Culture</span>
-				<h1 class="zy-display" style="max-width:920px;margin:18px auto 0;">
-					CREATE SPACE FOR EVERYONE TO FIND BELONGING
-				</h1>
-				<p class="zy-body-lg" style="max-width:720px;margin:18px auto 32px;">
-					At __INSTANCE_NAME__, small high-ownership teams engineer low-latency WebRTC media routers, zero-knowledge E2EE vaults, expressive profile cosmetics, and real-time community infrastructure.
-				</p>
-				<div style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;">
-					<a class="zy-btn zy-btn-primary" href="#disciplines">Explore Engineering Disciplines</a>
-					<a class="zy-btn zy-btn-ghost" href="/developers">View Open-Source &amp; API Hub</a>
-				</div>
-			</div>
-		</section>
+				<img src="/site/media/discord/careers-crown.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:128px;top:0;left:6%;" />
+				<img src="/site/media/discord/prop-turnip.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:118px;top:8%;right:6%;" />
 
-		<!-- Interactive 1 of 9 to 9 of 9 Carousel -->
-		<section class="zy-section" style="padding-top:8px;">
-			<div class="zy-container">
-				<div class="careers-carousel" aria-label="Life and Engineering at Zycord Carousel">
-					<div class="carousel-header">
-						<div>
-							<span class="zy-eyebrow" style="margin-bottom:8px;">Inside __INSTANCE_NAME__</span>
-							<h2 class="zy-heading-sm">HOW WE BUILD &amp; COLLABORATE</h2>
-						</div>
-						<div style="display:flex;align-items:center;gap:14px;">
-							<span class="carousel-counter" id="carousel-counter-label">1 of 9</span>
-							<div class="carousel-controls">
-								<button type="button" class="carousel-nav-btn" id="carousel-prev" aria-label="Previous slide">←</button>
-								<button type="button" class="carousel-nav-btn" id="carousel-next" aria-label="Next slide">→</button>
-							</div>
-						</div>
+				<div class="zy-subhero-inner">
+					<h1 class="zy-subhero-title">Work at __INSTANCE_NAME__</h1>
+					<p class="zy-subhero-sub">
+						Our employees aren’t just the most talented folks in the industry (we may be a little biased), they’re also deeply passionate about gaming, fostering meaningful connections, and of course, __INSTANCE_NAME__.
+					</p>
+					<div style="margin-top:12px;">
+						<a class="zy-btn zy-btn-primary" href="#all-jobs" style="padding:18px 36px;font-size:18px;">
+							<span>See All Jobs</span>
+						</a>
 					</div>
+				</div>
 
-					<div id="carousel-slide-body" class="zy-showcase-grid" style="align-items:stretch;">
-						<!-- Populated dynamically by script below with Slide 1 default rendered for instant paint -->
-						<div class="zy-showcase-copy">
-							<span class="zy-eyebrow" id="slide-tag">01 · Real-Time Media</span>
-							<h3 class="zy-heading" id="slide-title" style="font-size:clamp(26px,3.2vw,40px);">SUB-20MS VOICE &amp; 60FPS STREAMING AT SCALE</h3>
-							<p class="zy-body-lg" id="slide-desc">
-								We obsess over every millisecond of audio packet jitter and video frame pacing so friends feel like they're sitting on the same couch.
-							</p>
-						</div>
-						<div class="zy-app-window" style="display:flex;flex-direction:column;justify-content:center;padding:28px;background:linear-gradient(135deg,#191d48,#2d1846);">
-							<div style="font-family:var(--font-mono);font-size:13px;color:var(--color-spring-green);" id="slide-metric">metric: webrtc_sfu_rtt_p95 = 14.2ms</div>
-							<div style="font-weight:800;font-size:22px;margin-top:10px;" id="slide-highlight">Opus 96kbps + Hardware H.264/VP9 1080p60</div>
-							<p style="color:var(--color-fog);font-size:14px;margin-top:8px;" id="slide-subnote">
-								Engineered directly into the __INSTANCE_NAME__ bundle with automatic TURN/STUN NAT traversal.
-							</p>
-						</div>
-					</div>
-
-					<div class="carousel-dots" id="carousel-dots" role="tablist" aria-label="Slide selector"></div>
+				<!-- 8-Photo Office Gallery Grid -->
+				<div class="zy-gallery-strip">
+					<img src="/site/media/discord/careers-hero.webp" alt="__INSTANCE_NAME__ HQ Entrance" />
+					<img src="/site/media/discord/careers-office-1.webp" alt="__INSTANCE_NAME__ Workspace" />
+					<img src="/site/media/discord/careers-office-2.webp" alt="__INSTANCE_NAME__ Focus Pod" />
+					<img src="/site/media/discord/careers-office-4.webp" alt="__INSTANCE_NAME__ Chess & Collaboration Lounge" />
+					<img src="/site/media/discord/careers-office-5.webp" alt="__INSTANCE_NAME__ Engineering Room" />
+					<img src="/site/media/discord/careers-office-6.webp" alt="__INSTANCE_NAME__ Design Studio" />
+					<img src="/site/media/discord/careers-office-7.webp" alt="__INSTANCE_NAME__ Gaming Couch" />
+					<img src="/site/media/discord/careers-office-3.webp" alt="__INSTANCE_NAME__ Team Hangout" />
 				</div>
 			</div>
 		</section>
 
-		<!-- Life & Culture Visual Showcase (Official Discord Careers Photos & Mascots) -->
-		<section class="zy-section" style="padding-top:16px;">
-			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/discord/careers-passionate.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:136px;top:-44px;right:4%;" />
-				<div class="zy-grid-3">
-					<article class="zy-card">
-						<img src="/site/media/discord/careers-office-1.webp" alt="Collaborative Engineering Spaces" style="width:100%;height:210px;object-fit:cover;border-radius:16px;" />
-						<h3 class="zy-heading-sm" style="font-size:20px;margin-top:8px;">BUILT BY PASSIONATE PEOPLE</h3>
-						<p class="zy-body">
-							We believe that __INSTANCE_NAME__ is for everyone—and our workplace is too. We empower small, autonomous squads to ship impactful features every day.
-						</p>
-					</article>
-					<article class="zy-card">
-						<img src="/site/media/discord/careers-office-2.webp" alt="Gaming & Community Culture" style="width:100%;height:210px;object-fit:cover;border-radius:16px;" />
-						<h3 class="zy-heading-sm" style="font-size:20px;margin-top:8px;">PLAY &amp; EXPERIMENT TOGETHER</h3>
-						<p class="zy-body">
-							From daily playtests in voice channels to internal hackathons, we dogfood every audio codec, activity, and profile cosmetic we build.
-						</p>
-					</article>
-					<article class="zy-card">
-						<img src="/site/media/discord/careers-office-3.webp" alt="Global Distributed Engineering" style="width:100%;height:210px;object-fit:cover;border-radius:16px;" />
-						<h3 class="zy-heading-sm" style="font-size:20px;margin-top:8px;">HIGH-OWNERSHIP ENGINEERING</h3>
-						<p class="zy-body">
-							Work directly on distributed WebSocket gateways, WebRTC media servers, E2EE cryptography, and ultra-responsive desktop and web clients.
-						</p>
-					</article>
-				</div>
-			</div>
-		</section>
-
-		<!-- Disciplines Grid -->
-		<section class="zy-section" id="disciplines">
+		<!-- =====================================================================
+		     2. BE A PART OF THE FUTURE OF GAMING — CLYDE & 2 ALTERNATING ROWS
+		     ===================================================================== -->
+		<section class="zy-section" style="padding-top:32px;">
 			<div class="zy-container">
-				<div style="text-align:center;max-width:740px;margin:0 auto 44px;">
-					<span class="zy-eyebrow">Departments &amp; Teams</span>
-					<h2 class="zy-heading" style="margin-top:14px;">DISCIPLINES AT __INSTANCE_NAME__</h2>
-					<p class="zy-body-lg" style="margin-top:12px;">
-						Curious how __INSTANCE_NAME__ is built? Explore our core engineering and product areas or contribute directly via our Developer Ecosystem.
+				<div style="text-align:center;max-width:740px;margin:0 auto 48px;">
+					<h2 class="zy-heading">BE A PART OF THE FUTURE OF GAMING</h2>
+					<img
+						src="/site/media/discord/careers-clyde.webp"
+						alt="__INSTANCE_NAME__ Clyde"
+						style="width:168px;height:auto;margin:20px auto;display:block;filter:drop-shadow(0 18px 32px rgba(0,0,0,0.45));"
+					/>
+					<p class="zy-body-lg">
+						We believe __INSTANCE_NAME__ is uniquely positioned to shape the future of gaming. We aren’t just imagining what it may look like — we’re building __INSTANCE_NAME__ to be the perfect place to talk while playing games on any platform, no matter what device you play on.
 					</p>
 				</div>
 
-				<div class="zy-grid-3">
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.9 19.1C1 15.2 1 8.8 4.9 4.9"/><path d="M7.8 16.2c-2.3-2.3-2.3-6.1 0-8.5"/><circle cx="12" cy="12" r="2"/><path d="M16.2 7.8c2.3 2.3 2.3 6.1 0 8.5"/><path d="M19.1 4.9C23 8.8 23 15.2 19.1 19.1"/></svg></div>
-						<h3 class="zy-heading-sm" style="font-size:20px;">VOICE, VIDEO &amp; WEBRTC</h3>
-						<p class="zy-body">
-							Selective Forwarding Units (SFU), adaptive bitrate control, acoustic echo cancellation, and 60fps desktop screen capture.
+				<div class="zy-alt-row">
+					<div class="zy-alt-media-card is-indigo">
+						<img src="/site/media/discord/careers-passionate.webp" alt="Work with people just as passionate as you" />
+					</div>
+					<div class="zy-alt-copy">
+						<h3 class="zy-alt-title">Work with people just as passionate as you</h3>
+						<p class="zy-body-lg">
+							Much like the people on __INSTANCE_NAME__, our employees can’t be put in a box (but maybe in a server). We come from all walks of life, and with our own unique perspectives, but we all care about the same thing: making __INSTANCE_NAME__ your home while gaming.
 						</p>
-						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/status" style="margin-top:auto;">View Live Media Metrics →</a>
+					</div>
+				</div>
+
+				<div class="zy-alt-row">
+					<div class="zy-alt-copy">
+						<h3 class="zy-alt-title">Where every idea is heard and valued</h3>
+						<p class="zy-body-lg">
+							We don't just build __INSTANCE_NAME__, we use it too! All of us want to help make __INSTANCE_NAME__ the best place to play games with friends, and everyone's input matters.
+						</p>
+					</div>
+					<div class="zy-alt-media-card is-blue">
+						<img src="/site/media/discord/careers-idea-valued.webp" alt="Where every idea is heard and valued" />
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- =====================================================================
+		     3. DON'T JUST IMAGINE THE FUTURE OF GAMING — BUILD IT WITH US (JOBS)
+		     ===================================================================== -->
+		<section class="zy-section" id="all-jobs" style="padding-top:24px;">
+			<div class="zy-container">
+				<div style="text-align:center;max-width:760px;margin:0 auto;">
+					<img
+						src="/site/media/discord/prop-egg.webp"
+						alt=""
+						aria-hidden="true"
+						style="width:92px;height:auto;margin:0 auto 14px;display:block;filter:drop-shadow(0 16px 28px rgba(0,0,0,0.45));"
+					/>
+					<h2 class="zy-heading">DON’T JUST IMAGINE THE FUTURE OF GAMING — BUILD IT WITH US.</h2>
+					<p class="zy-body-lg" style="margin-top:12px;">
+						Explore our open roles and see if any of our engineering, design, or safety positions would be a great fit for you.
+					</p>
+				</div>
+
+				<div class="jobs-filter-bar" id="jobs-filters">
+					<button type="button" class="job-filter-btn is-active" data-dept="all">Featured (All)</button>
+					<button type="button" class="job-filter-btn" data-dept="engineering">Core Engineering</button>
+					<button type="button" class="job-filter-btn" data-dept="media">Voice &amp; WebRTC Media</button>
+					<button type="button" class="job-filter-btn" data-dept="design">Product &amp; Collectibles Design</button>
+					<button type="button" class="job-filter-btn" data-dept="security">Security &amp; Cryptography</button>
+				</div>
+
+				<div id="jobs-list">
+					<article class="job-row" data-job-dept="engineering">
+						<div>
+							<span class="zy-eyebrow">Core Engineering</span>
+							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Staff Distributed Systems Engineer — Real-Time Gateway</h3>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote / San Francisco HQ · Full-Time · TypeScript, Rust, WebSockets</p>
+						</div>
+						<a class="zy-white-pill-btn" href="/developers">Apply Now →</a>
 					</article>
 
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-						<h3 class="zy-heading-sm" style="font-size:20px;">DISTRIBUTED GATEWAY &amp; API</h3>
-						<p class="zy-body">
-							High-throughput WebSocket event fanout, presence state synchronization, 64-bit permission bitfields, and REST v9/v10 APIs.
-						</p>
-						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/developers" style="margin-top:auto;">Explore API Architecture →</a>
+					<article class="job-row" data-job-dept="media">
+						<div>
+							<span class="zy-eyebrow">Voice &amp; WebRTC Media</span>
+							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Senior WebRTC Audio/Video SFU Engineer</h3>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote / San Francisco HQ · Full-Time · WebRTC, Opus, AV1/H.264</p>
+						</div>
+						<a class="zy-white-pill-btn" href="/developers">Apply Now →</a>
 					</article>
 
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-						<h3 class="zy-heading-sm" style="font-size:20px;">CRYPTOGRAPHY &amp; SAFETY</h3>
-						<p class="zy-body">
-							Client-side ECDH + AES-GCM End-to-End Encrypted DMs, zero-knowledge key backups, WebAuthn Passkeys, and AutoMod engines.
-						</p>
-						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/safety" style="margin-top:auto;">Visit Safety Center →</a>
+					<article class="job-row" data-job-dept="design">
+						<div>
+							<span class="zy-eyebrow">Product &amp; Collectibles Design</span>
+							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Lead Motion &amp; 3D Collectibles Designer</h3>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote · Full-Time · Blender, SVG Shaders, Design Systems</p>
+						</div>
+						<a class="zy-white-pill-btn" href="/nitro">View Collectibles →</a>
 					</article>
 
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="13.5" cy="6.5" r="4"/><path d="M17.5 10.5c1.5 2 1.5 4.5 0 6.5L15 21H9l-2.5-4C5 15 5 12.5 6.5 10.5"/></svg></div>
-						<h3 class="zy-heading-sm" style="font-size:20px;">DESIGN &amp; COLLECTIBLES</h3>
-						<p class="zy-body">
-							Crafting Avatar Decorations, Nameplates, full-height Profile Effects, perimeter Profile Frames, and tactile motion design.
-						</p>
-						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/nitro" style="margin-top:auto;">See Collectibles Studio →</a>
+					<article class="job-row" data-job-dept="security">
+						<div>
+							<span class="zy-eyebrow">Security &amp; Cryptography</span>
+							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Principal Security Engineer — End-to-End Encryption &amp; WebAuthn</h3>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote · Full-Time · WebCrypto, ECDH, Passkeys, Zero-Knowledge</p>
+						</div>
+						<a class="zy-white-pill-btn" href="/safety">Security Overview →</a>
 					</article>
 
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
-						<h3 class="zy-heading-sm" style="font-size:20px;">DESKTOP &amp; WEB CLIENTS</h3>
-						<p class="zy-body">
-							Electron Windows native integration, PWA offline caching, instant channel switching, and custom client runtime patches.
+					<article class="job-row" data-job-dept="engineering">
+						<div>
+							<span class="zy-eyebrow">Desktop Platform</span>
+							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Senior Desktop Client Engineer (Windows / macOS / Linux)</h3>
+							<p class="zy-body" style="font-size:15px;margin-top:4px;">Remote · Full-Time · Electron, C++, Hardware Overlay &amp; Audio Capture</p>
+						</div>
+						<a class="zy-white-pill-btn" href="/download">View Desktop App →</a>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- =====================================================================
+		     4. EXPERIENCE LIFE AT ZYCORD (8 OFFICIAL PERK CARDS WITH SVG ICONS)
+		     ===================================================================== -->
+		<section class="zy-section" style="padding-top:24px;">
+			<div class="zy-container">
+				<div style="text-align:center;max-width:740px;margin:0 auto 36px;">
+					<h2 class="zy-heading">EXPERIENCE LIFE AT __INSTANCE_NAME__</h2>
+				</div>
+
+				<div class="zy-perks-grid">
+					<article class="zy-perk-card">
+						<img src="/site/media/discord/careers-perk-hq.svg" alt="__INSTANCE_NAME__ HQ" />
+						<h3 class="zy-heading-sm" style="font-size:22px;">__INSTANCE_NAME__ HQ</h3>
+						<p class="zy-body" style="font-size:14px;">
+							Great work can happen anywhere. Our flexible work model empowers our people to choose where they work best: at home, in our SF HQ, or a mix of both.
 						</p>
-						<a class="zy-btn zy-btn-ghost zy-btn-sm" href="/download" style="margin-top:auto;">Download Clients →</a>
 					</article>
 
-					<article class="zy-card">
-						<div class="zy-card-icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg></div>
-						<h3 class="zy-heading-sm" style="font-size:20px;">DEVELOPER PLATFORM</h3>
-						<p class="zy-body">
-							Empowering community builders with OAuth2 identity providers, webhooks, bot tokens, and interactive slash commands.
+					<article class="zy-perk-card">
+						<img src="/site/media/discord/careers-perk-grow.svg" alt="Grow together" />
+						<h3 class="zy-heading-sm" style="font-size:22px;">Grow together</h3>
+						<p class="zy-body" style="font-size:14px;">
+							Develop both professionally and personally alongside your colleagues with leadership programs, technical workshops, and mentorship.
 						</p>
-						<a class="zy-btn zy-btn-primary zy-btn-sm" href="/developers/applications" style="margin-top:auto;">Open Developer Portal →</a>
+					</article>
+
+					<article class="zy-perk-card">
+						<img src="/site/media/discord/careers-perk-money.svg" alt="Money matters" />
+						<h3 class="zy-heading-sm" style="font-size:22px;">Money matters</h3>
+						<p class="zy-body" style="font-size:14px;">
+							Competitive compensation packages, equity ownership, and retirement matching to reward your impact and meet your financial goals.
+						</p>
+					</article>
+
+					<article class="zy-perk-card">
+						<img src="/site/media/discord/careers-perk-health.svg" alt="Health benefits" />
+						<h3 class="zy-heading-sm" style="font-size:22px;">Health benefits</h3>
+						<p class="zy-body" style="font-size:14px;">
+							Comprehensive medical, dental, vision, reproductive, gender-affirming, and mental healthcare coverage for you and your dependents.
+						</p>
+					</article>
+
+					<article class="zy-perk-card">
+						<img src="/site/media/discord/careers-perk-family.svg" alt="Family support" />
+						<h3 class="zy-heading-sm" style="font-size:22px;">Family support</h3>
+						<p class="zy-body" style="font-size:14px;">
+							Spend quality time with the next generation with 12+ weeks of paid parental leave, plus fertility, adoption, and family support benefits.
+						</p>
+					</article>
+
+					<article class="zy-perk-card">
+						<img src="/site/media/discord/careers-perk-rr.svg" alt="R&amp;R" />
+						<h3 class="zy-heading-sm" style="font-size:22px;">R&amp;R</h3>
+						<p class="zy-body" style="font-size:14px;">
+							Stay refreshed with four weeks of PTO, 16+ paid holidays including winter break, and flexible mental health days.
+						</p>
+					</article>
+
+					<article class="zy-perk-card">
+						<img src="/site/media/discord/careers-perk-wellness.svg" alt="Wellness on us" />
+						<h3 class="zy-heading-sm" style="font-size:22px;">Wellness on us</h3>
+						<p class="zy-body" style="font-size:14px;">
+							Take advantage of a quarterly wellness stipend for your gym membership, ergonomic setup, or activities that keep you feeling great.
+						</p>
+					</article>
+
+					<article class="zy-perk-card">
+						<img src="/site/media/discord/careers-perk-giving.svg" alt="Giving back" />
+						<h3 class="zy-heading-sm" style="font-size:22px;">Giving back</h3>
+						<p class="zy-body" style="font-size:14px;">
+							Paid volunteer days off plus annual charitable donation matching for the causes and open-source communities you care about.
+						</p>
+					</article>
+				</div>
+			</div>
+		</section>
+
+		<!-- =====================================================================
+		     5. WHEN IT'S TIME FOR FUN, FIND YOUR PARTY HERE (CLUBS & ERGS)
+		     ===================================================================== -->
+		<section class="zy-section" style="padding-top:24px;padding-bottom:64px;">
+			<div class="zy-container">
+				<div style="text-align:center;max-width:760px;margin:0 auto 36px;">
+					<h2 class="zy-heading">WHEN IT’S TIME FOR FUN, FIND YOUR PARTY HERE</h2>
+					<p class="zy-body-lg" style="margin-top:12px;">
+						Working at __INSTANCE_NAME__ is like hanging out on your favorite server — our employees play games together, talk about their favorite hobbies, and build inclusive spaces.
+					</p>
+				</div>
+
+				<div class="zy-clubs-grid">
+					<article class="zy-club-card">
+						<img src="/site/media/discord/careers-club-anime.svg" alt="Anime Club" />
+						<h3 class="zy-heading-sm" style="font-size:20px;">Anime Club</h3>
+					</article>
+					<article class="zy-club-card">
+						<img src="/site/media/discord/careers-club-art.svg" alt="Art Club" />
+						<h3 class="zy-heading-sm" style="font-size:20px;">Art Club</h3>
+					</article>
+					<article class="zy-club-card">
+						<img src="/site/media/discord/careers-club-esports.svg" alt="Esports Club" />
+						<h3 class="zy-heading-sm" style="font-size:20px;">Esports Club</h3>
+					</article>
+					<article class="zy-club-card">
+						<img src="/site/media/discord/careers-club-chess.svg" alt="Deep Blurple Chess Club" />
+						<h3 class="zy-heading-sm" style="font-size:20px;">Deep Blurple Chess Club</h3>
+					</article>
+					<article class="zy-club-card">
+						<img src="/site/media/discord/careers-club-cat.svg" alt="Cat Cam Club" />
+						<h3 class="zy-heading-sm" style="font-size:20px;">Cat Cam Club</h3>
+					</article>
+					<article class="zy-club-card">
+						<img src="/site/media/discord/careers-club-book.svg" alt="Book Club" />
+						<h3 class="zy-heading-sm" style="font-size:20px;">Book Club</h3>
+					</article>
+					<article class="zy-club-card">
+						<img src="/site/media/discord/careers-club-basketball.svg" alt="Basketball Buds" />
+						<h3 class="zy-heading-sm" style="font-size:20px;">Basketball Buds</h3>
+					</article>
+					<article class="zy-club-card">
+						<img src="/site/media/discord/careers-club-afk.svg" alt="Asian Friends &amp; Kinship" />
+						<h3 class="zy-heading-sm" style="font-size:20px;">Asian Friends &amp; Kinship</h3>
 					</article>
 				</div>
 			</div>
@@ -248,125 +343,19 @@
 	<script src="/site/site.js"></script>
 	<script>
 		(function () {
-			var slides = [
-				{
-					tag: "01 · Real-Time Media",
-					title: "SUB-20MS VOICE & 60FPS STREAMING AT SCALE",
-					desc: "We obsess over every millisecond of audio packet jitter and video frame pacing so friends feel like they're sitting on the same couch.",
-					metric: "metric: webrtc_sfu_rtt_p95 = 14.2ms",
-					highlight: "Opus 96kbps + Hardware H.264/VP9 1080p60",
-					subnote: "Engineered directly into the Zycord bundle with automatic TURN/STUN NAT traversal."
-				},
-				{
-					tag: "02 · Privacy by Design",
-					title: "CLIENT-SIDE END-TO-END ENCRYPTED DMS",
-					desc: "Private conversations use WebCrypto ECDH P-256 key agreement and AES-256-GCM encryption before a single byte leaves your browser or desktop app.",
-					metric: "cipher: ECDH-P256 + AES-256-GCM",
-					highlight: "Zero-Knowledge Recovery Key Vault",
-					subnote: "Seamless device migration with user-controlled cryptographic recovery keys."
-				},
-				{
-					tag: "03 · Self-Expression",
-					title: "4-LAYER PROFILE COSMETICS ENGINE",
-					desc: "We built full support for Avatar Decorations, custom Nameplates, full-height Profile Effects, and non-obscuring perimeter Profile Frames.",
-					metric: "cosmetics: decoration + nameplate + effect + frame",
-					highlight: "Real-Time Gateway Synchronization",
-					subnote: "Every cosmetic equips instantaneously across guild member lists, chat messages, and profile modals."
-				},
-				{
-					tag: "04 · Developer First",
-					title: "100% OPENAPI & BOT ECOSYSTEM COMPATIBILITY",
-					desc: "Developers can register applications, mint bot tokens, configure OAuth2 redirects, and inspect live OpenAPI specs right from the built-in portal.",
-					metric: "endpoint: /_spacebar/api/openapi.json",
-					highlight: "Self-Hosted Developer Portal & Bot Gateway",
-					subnote: "Full support for webhooks, rich embeds, reactions, and granular permission scopes."
-				},
-				{
-					tag: "05 · Community Safety",
-					title: "AUTOMOD & 64-BIT PERMISSION HIERARCHIES",
-					desc: "Server owners get fine-grained 64-bit role bitfields, channel overwrites, automated keyword filtering, and comprehensive audit logs.",
-					metric: "permissions: 64-bit BigInt bitfield engine",
-					highlight: "Real-Time Raid & Scam Mitigation",
-					subnote: "Built to keep communities welcoming without slowing down legitimate conversation."
-				},
-				{
-					tag: "06 · Connected Identity",
-					title: "12+ OAUTH2 & GAMING ACCOUNT CONNECTIONS",
-					desc: "Link Steam, GitHub, Twitch, YouTube, Spotify, Epic Games, PlayStation, Xbox, Battle.net, Reddit, TikTok, and X directly to your profile.",
-					metric: "connections: verified OAuth2 + Rich Presence",
-					highlight: "Live Game & Music Activity Cards",
-					subnote: "Show friends what you're playing or building in real time."
-				},
-				{
-					tag: "07 · Native + Web Parity",
-					title: "UNIFIED ELECTRON DESKTOP & BROWSER RUNTIME",
-					desc: "Whether you install ZycordSetup.exe on Windows or launch /app in a browser tab, you get the exact same fast, dark-themed experience.",
-					metric: "build: Windows x64 NSIS + Progressive Web App",
-					highlight: "Zero Feature Lag Across Platforms",
-					subnote: "Instant client patch pipeline delivers UI improvements without waiting for app store reviews."
-				},
-				{
-					tag: "08 · Operational Transparency",
-					title: "LIVE TELEMETRY & PUBLIC STATUS DASHBOARD",
-					desc: "Every Zycord instance exposes live health checks, gateway ping, WebRTC media status, and uptime history at /status.",
-					metric: "status: /status/summary.json · 99.98% uptime",
-					highlight: "Automated Subsystem Probing",
-					subnote: "Real-time visibility into API, Gateway, Database, CDN, and Voice infrastructure."
-				},
-				{
-					tag: "09 · Built for Belonging",
-					title: "CRAFTED FOR GAMERS, CREATORS & COMMUNITIES",
-					desc: "Every pixel—from our deep cosmic indigo surfaces to our Blurple CTAs—is designed to make hanging out online feel effortless and alive.",
-					metric: "theme: Deep Cosmic Indigo (#0E0F2D) + Blurple (#5865F2)",
-					highlight: "Jump Into Zycord Today",
-					subnote: "Open Zycord in your browser or start building on our API."
-				}
-			];
-
-			var index = 0;
-			var counterEl = document.getElementById("carousel-counter-label");
-			var tagEl = document.getElementById("slide-tag");
-			var titleEl = document.getElementById("slide-title");
-			var descEl = document.getElementById("slide-desc");
-			var metricEl = document.getElementById("slide-metric");
-			var highlightEl = document.getElementById("slide-highlight");
-			var subnoteEl = document.getElementById("slide-subnote");
-			var dotsWrap = document.getElementById("carousel-dots");
-			var prevBtn = document.getElementById("carousel-prev");
-			var nextBtn = document.getElementById("carousel-next");
-
-			function renderSlide(i) {
-				index = (i + slides.length) % slides.length;
-				var s = slides[index];
-				if (counterEl) counterEl.textContent = (index + 1) + " of " + slides.length;
-				if (tagEl) tagEl.textContent = s.tag;
-				if (titleEl) titleEl.textContent = s.title;
-				if (descEl) descEl.textContent = s.desc;
-				if (metricEl) metricEl.textContent = s.metric;
-				if (highlightEl) highlightEl.textContent = s.highlight;
-				if (subnoteEl) subnoteEl.textContent = s.subnote;
-
-				if (dotsWrap) {
-					var dots = dotsWrap.querySelectorAll(".carousel-dot");
-					for (var d = 0; d < dots.length; d++) {
-						dots[d].classList.toggle("is-active", d === index);
+			var btns = document.querySelectorAll("#jobs-filters .job-filter-btn");
+			var rows = document.querySelectorAll("#jobs-list .job-row");
+			for (var i = 0; i < btns.length; i++) {
+				btns[i].addEventListener("click", function () {
+					for (var j = 0; j < btns.length; j++) btns[j].classList.remove("is-active");
+					this.classList.add("is-active");
+					var dept = this.getAttribute("data-dept");
+					for (var k = 0; k < rows.length; k++) {
+						var match = dept === "all" || rows[k].getAttribute("data-job-dept") === dept;
+						rows[k].style.display = match ? "" : "none";
 					}
-				}
-			}
-
-			if (dotsWrap) {
-				slides.forEach(function (_, idx) {
-					var btn = document.createElement("button");
-					btn.type = "button";
-					btn.className = "carousel-dot" + (idx === 0 ? " is-active" : "");
-					btn.setAttribute("aria-label", "Go to slide " + (idx + 1));
-					btn.addEventListener("click", function () { renderSlide(idx); });
-					dotsWrap.appendChild(btn);
 				});
 			}
-
-			if (prevBtn) prevBtn.addEventListener("click", function () { renderSlide(index - 1); });
-			if (nextBtn) nextBtn.addEventListener("click", function () { renderSlide(index + 1); });
 		})();
 	</script>
 </body>

@@ -31,19 +31,22 @@ export const NAVIGATION_ITEMS = [
 			{
 				title: "Resources",
 				links: [
-					{ label: "Safety News", href: "/safety" },
-					{ label: "Safety Library", href: "/safety#moderation" },
+					{ label: "Family Center", href: "/safety#family-center" },
+					{ label: "Safety Library", href: "/safety#safety-library" },
+					{ label: "Safety News", href: "/safety#safety-news" },
+					{ label: "Teen Charter", href: "/safety#teen-charter" },
+					{ label: "Zycord Player's Guide", href: "/safety#players-guide" },
 					{ label: "Community Guidelines", href: "/guidelines", external: true }
 				]
 			},
 			{
 				title: "Hubs",
 				links: [
-					{ label: "Parent Hub", href: "/safety#moderation" },
-					{ label: "Policy Hub", href: "/legal" },
-					{ label: "Privacy Hub", href: "/privacy" },
-					{ label: "Transparency Hub", href: "/safety#e2ee" },
-					{ label: "Wellbeing Hub", href: "/safety#checklist" }
+					{ label: "Parent Hub", href: "/safety#parent-hub" },
+					{ label: "Policy Hub", href: "/safety#policy-hub" },
+					{ label: "Privacy Hub", href: "/safety#privacy-hub" },
+					{ label: "Transparency Hub", href: "/safety#transparency-hub" },
+					{ label: "Wellbeing Hub", href: "/safety#wellbeing-hub" }
 				]
 			}
 		]
@@ -76,8 +79,9 @@ export const NAVIGATION_ITEMS = [
 				title: "Resources",
 				links: [
 					{ label: "Help Center", href: "/support" },
-					{ label: "System Status", href: "/status" },
-					{ label: "Submit a Request", href: "/support#faq" }
+					{ label: "Feedback", href: "/feedback" },
+					{ label: "Submit a Request", href: "/feedback#request" },
+					{ label: "System Status", href: "/status" }
 				]
 			}
 		]
