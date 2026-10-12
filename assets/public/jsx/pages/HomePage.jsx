@@ -407,28 +407,29 @@ export function HomePage() {
 					/>
 
 					<div className="zy-sec5-3d-wrap">
-						{/* Exact Discord.com .characters-wr.is_2025 structure */}
-						<div className="zy-sec5-chars-wr" aria-hidden="true">
-							<div className="zy-sec5-chars-hands">
-								<img
-									src="/site/media/discord/sec5-card-characters.png"
-									alt=""
-									className="zy-sec5-char-bot"
-								/>
-								<img
-									src="/site/media/discord/sec5-woman-bottom.webp"
-									alt=""
-									className="zy-sec5-char-top"
-								/>
-							</div>
-							<img
-								src="/site/media/discord/sec5-garfield-simon.webp"
-								alt=""
-								className="zy-sec5-char-friends"
-							/>
-						</div>
+						{/* Woman's upper body & hands OVER the top border of the glass card (z-index: 6) */}
+						<img
+							src="/site/media/discord/sec5-card-characters.png"
+							alt=""
+							aria-hidden="true"
+							className="zy-sec5-char-bot"
+						/>
+						{/* Woman's lower body BEHIND the frosted glass card (z-index: 1) */}
+						<img
+							src="/site/media/discord/sec5-woman-bottom.webp"
+							alt=""
+							aria-hidden="true"
+							className="zy-sec5-char-top"
+						/>
+						{/* Garfield & Simon hugging BEHIND the top-right edge of the card (z-index: 1) */}
+						<img
+							src="/site/media/discord/sec5-garfield-simon.webp"
+							alt=""
+							aria-hidden="true"
+							className="zy-sec5-char-friends"
+						/>
 
-						<div className="zy-showcase-card">
+						<div className="zy-showcase-card is-sec5">
 							<div className="zy-showcase-grid is-reversed">
 								<div
 									className="zy-scene-stage stage-emerald"
