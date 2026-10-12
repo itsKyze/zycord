@@ -32,10 +32,10 @@ interface TemplatePreview {
 
 type ClientButton = (props: { variant?: string; text: string; onClick: () => void; disabled?: boolean; loading?: boolean; fullWidth?: boolean }) => JSX.Element;
 
-// a template code from what was pasted: discord.new/<code>, discord.com/template/<code>, <instance>/template/<code> or the bare code
+// a template code from what was pasted: zycord.new/<code>, discord.new/<code>, <instance>/template/<code> or the bare code
 function templateCode(input: string) {
     const value = input.trim();
-    const link = value.match(/(?:discord\.new|\/template)\/([\w-]+)/i);
+    const link = value.match(/(?:(?:discord|zycord)\.new|\/template)\/([\w-]+)/i);
     const code = link ? link[1] : value;
     return /^[\w-]{2,64}$/.test(code) ? code : null;
 }
@@ -57,7 +57,7 @@ function TemplateLink({ Button, onClose }: { Button: ClientButton; onClose?: () 
 
     const load = async () => {
         const code = templateCode(link);
-        if (!code) return setError("Paste a template link, like https://app.zyron.site/template/abc123 or https://discord.new/abc123");
+        if (!code) return setError("Paste a template link, like https://app.zyron.site/template/abc123 or https://zycord.new/abc123");
         setBusy(true);
         setError(null);
         try {
@@ -124,7 +124,7 @@ function TemplateLink({ Button, onClose }: { Button: ClientButton; onClose?: () 
                 </>
             ) : (
                 <div className="zycord-template-actions">
-                    <TextInput value={link} onChange={(value: string) => (setLink(value), setError(null))} placeholder="https://app.zyron.site/template/... or discord.new/..." />
+                    <TextInput value={link} onChange={(value: string) => (setLink(value), setError(null))} placeholder="https://app.zyron.site/template/... or zycord.new/..." />
                     <Button variant="secondary" text="Load" onClick={load} loading={busy} disabled={busy || !link.trim()} />
                 </div>
             )}

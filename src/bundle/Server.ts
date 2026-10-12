@@ -122,7 +122,7 @@ async function main() {
     await Promise.all([api.start(), cdn.start(), gateway.start(), webrtc.start()]);
     TestClient(app);
 
-    if (fs.existsSync("/proc/self/comm")) fs.writeFileSync("/proc/self/comm", `spacebar-bundle-${cluster.worker ? cluster.worker.id : port}`);
+    if (fs.existsSync("/proc/self/comm")) fs.writeFileSync("/proc/self/comm", `zycord-bundle-${cluster.worker ? cluster.worker.id : port}`);
     process.title = `sb-bundle-${cluster.worker ? cluster.worker.id : port}`;
 
     console.log(`[Server] ${green(`Listening on port ${bold(port)}`)}`);

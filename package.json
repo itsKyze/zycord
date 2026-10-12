@@ -1,7 +1,7 @@
 {
     "name": "zycord-server",
     "version": "1.0.0",
-    "description": "Self-hosted server for the Discord API and gateway that serves a rebranded official Discord web client with Vencord - Zyron Solutions Ltd",
+    "description": "Zycord real-time voice, video, and chat communication platform — Zyron Solutions Ltd",
     "scripts": {
         "prepare": "husky install",
         "postinstall": "patch-package",
@@ -38,12 +38,12 @@
     "types": "src/bundle/index.ts",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/spacebarchat/server.git"
+        "url": "git+https://github.com/itsKyze/zycord.git"
     },
     "author": "Zyron Solutions Ltd",
     "license": "AGPL-3.0-only",
     "bugs": {
-        "url": "https://github.com/spacebarchat/server/issues"
+        "url": "https://github.com/itsKyze/zycord/issues"
     },
     "imports": {
         "#*": "./dist/*/index.js"

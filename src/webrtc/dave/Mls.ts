@@ -158,7 +158,7 @@ export const keyPackageRef = (keyPackage: Buffer) => refHash("MLS 1.0 KeyPackage
 export class ExternalSender {
     readonly privateKey: crypto.KeyObject;
     readonly publicKey: Buffer;
-    readonly identity = Buffer.from("spacebar-voice-gateway");
+    readonly identity = Buffer.from("zycord-voice-gateway");
 
     constructor() {
         const { privateKey, publicKey } = crypto.generateKeyPairSync("ec", { namedCurve: "prime256v1" });

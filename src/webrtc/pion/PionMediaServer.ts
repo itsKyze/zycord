@@ -151,7 +151,7 @@ export class PionMediaServer implements SignalingDelegate {
     async start(publicIp: string, portMin: number) {
         this._ip = publicIp;
         this._port = portMin;
-        const socketPath = process.env.PION_SFU_IPC || `/tmp/spacebar-sfu-${portMin}.sock`;
+        const socketPath = process.env.PION_SFU_IPC || `/tmp/zycord-sfu-${portMin}.sock`;
         this.ipc = new IpcClient(
             socketPath,
             (payload) => this.onEvent(payload),

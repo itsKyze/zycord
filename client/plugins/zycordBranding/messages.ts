@@ -30,6 +30,10 @@ const brandText = (text: string, name: string) => {
     return text
         .replace(/https?:\/\/discord\.gg\//g, () => `${location.origin}/invite/`)
         .replace(/(?<![\w@.-])discord\.gg\//g, () => `${host}/invite/`)
+        .replace(/https?:\/\/discord\.new\//g, () => `${location.origin}/template/`)
+        .replace(/(?<![\w@.-])discord\.new\//g, () => `${host}/template/`)
+        .replace(/https?:\/\/discord\.gift\//g, () => `${location.origin}/gift/`)
+        .replace(/(?<![\w@.-])discord\.gift\//g, () => `${host}/gift/`)
         .replace(/https?:\/\/(?:www\.)?discord\.com(?![\w.-])/g, () => location.origin)
         .replace(/(?<![\w@./-])discord\.com(?![\w.-])/g, () => host)
         .replace(/_discord/gi, `_${lower}`)

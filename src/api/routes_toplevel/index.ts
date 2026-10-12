@@ -21,7 +21,7 @@ import path from "node:path";
 import { Router, Response, Request } from "express";
 import { route } from "@spacebar/api/middlewares";
 import { legalPageRouter } from "@spacebar/api/util";
-import { ASSETS_FOLDER, brandPage, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
+import { ASSETS_FOLDER, brandPage, Config, getRevInfoOrFail, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
 const indexPagePath = path.join(PUBLIC_ASSETS_FOLDER, "index.html");
@@ -139,6 +139,39 @@ router.get("/_zycord/api/openapi.json", route({ spacebarOnly: true, authenticati
 router.get("/_zycord/api/schemas.json", route({ spacebarOnly: true, authentication: "never" }), (_req: Request, res: Response) => {
 	res.set("Cache-Control", "public, max-age=21600");
 	return res.sendFile(path.join(ASSETS_FOLDER, "schemas.json"), { dotfiles: "allow" });
+});
+
+router.get("/_zycord/api/version", route({ spacebarOnly: true, authentication: "never" }), (_req: Request, res: Response) => {
+	return res.json({
+		implementation: "zycord-server",
+		version: getRevInfoOrFail(),
+	});
+});
+
+router.get("/.well-known/zycord/client", route({ spacebarOnly: true, authentication: "never" }), (_req: Request, res: Response) => {
+	return res.json({
+		api: {
+			baseUrl: Config.get().api.endpointPublic!.split("/api/")[0],
+			apiVersions: {
+				default: Config.get().api.defaultVersion,
+				active: Config.get().api.activeVersions,
+			},
+		},
+		cdn: {
+			baseUrl: Config.get().cdn.endpointPublic!,
+		},
+		gateway: {
+			baseUrl: Config.get().gateway.endpointPublic!,
+			encoding: ["etf", "json"],
+			compression: ["zstd-stream", "zlib-stream", null],
+		},
+		admin:
+			Config.get().admin.endpointPublic === null
+				? undefined
+				: {
+						baseUrl: Config.get().admin.endpointPublic!,
+					},
+	});
 });
 
 export default router;
