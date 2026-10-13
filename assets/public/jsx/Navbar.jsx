@@ -293,7 +293,20 @@ export function ZycordNavbar() {
 				<div className="zy-navbar-inner">
 					<a className="zy-brand" href="/" aria-label="Zycord Home">
 						<span className="zy-brand-mark">
-							<img src="/favicon.svg" alt="Zycord" width="28" height="28" />
+							<img
+								src="/branding/zycord_icon_white.svg"
+								alt="Zycord"
+								width="28"
+								height="28"
+								className="zy-brand-icon-white"
+							/>
+							<img
+								src="/branding/zycord_icon.svg"
+								alt="Zycord"
+								width="28"
+								height="28"
+								className="zy-brand-icon-scrolled"
+							/>
 						</span>
 						<span>Zycord</span>
 					</a>
@@ -414,7 +427,12 @@ export function ZycordNavbar() {
 					<div className="zy-drawer-header">
 						<a className="zy-brand" href="/">
 							<span className="zy-brand-mark">
-								<img src="/favicon.svg" alt="Zycord" width="28" height="28" />
+								<img
+									src="/branding/zycord_icon_white.svg"
+									alt="Zycord"
+									width="28"
+									height="28"
+								/>
 							</span>
 							<span>Zycord</span>
 						</a>

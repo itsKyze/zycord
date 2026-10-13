@@ -661,7 +661,25 @@
         }
       });
     }
-    return /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("div", { className: "zy-nav-page-blur", id: "zy-nav-page-blur", "aria-hidden": "true" }), /* @__PURE__ */ h("header", { className: "zy-navbar", id: "zy-navbar" }, /* @__PURE__ */ h("div", { className: "zy-navbar-inner" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "Zycord", width: "28", height: "28" })), /* @__PURE__ */ h("span", null, "Zycord")), /* @__PURE__ */ h("nav", { "aria-label": "Primary Navigation" }, /* @__PURE__ */ h("ul", { className: "zy-nav-links" }, NAVIGATION_ITEMS.map((item) => {
+    return /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("div", { className: "zy-nav-page-blur", id: "zy-nav-page-blur", "aria-hidden": "true" }), /* @__PURE__ */ h("header", { className: "zy-navbar", id: "zy-navbar" }, /* @__PURE__ */ h("div", { className: "zy-navbar-inner" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/", "aria-label": "Zycord Home" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/branding/zycord_icon_white.svg",
+        alt: "Zycord",
+        width: "28",
+        height: "28",
+        className: "zy-brand-icon-white"
+      }
+    ), /* @__PURE__ */ h(
+      "img",
+      {
+        src: "/branding/zycord_icon.svg",
+        alt: "Zycord",
+        width: "28",
+        height: "28",
+        className: "zy-brand-icon-scrolled"
+      }
+    )), /* @__PURE__ */ h("span", null, "Zycord")), /* @__PURE__ */ h("nav", { "aria-label": "Primary Navigation" }, /* @__PURE__ */ h("ul", { className: "zy-nav-links" }, NAVIGATION_ITEMS.map((item) => {
       const hasDropdown = Boolean(item.columns && item.columns.length);
       const isActive = item.key === activeKey;
       return /* @__PURE__ */ h(
@@ -759,7 +777,15 @@
         id: "zy-mobile-drawer",
         "aria-label": "Mobile Navigation"
       },
-      /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-drawer-header" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h("img", { src: "/favicon.svg", alt: "Zycord", width: "28", height: "28" })), /* @__PURE__ */ h("span", null, "Zycord")), /* @__PURE__ */ h(
+      /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-drawer-header" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h(
+        "img",
+        {
+          src: "/branding/zycord_icon_white.svg",
+          alt: "Zycord",
+          width: "28",
+          height: "28"
+        }
+      )), /* @__PURE__ */ h("span", null, "Zycord")), /* @__PURE__ */ h(
         "button",
         {
           type: "button",

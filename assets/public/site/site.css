@@ -425,9 +425,25 @@ main:not(.zy-nitro-page) > :first-child:not(.zy-home-wrapper):not(.zy-download-p
 }
 
 .zy-brand-mark img {
-	width: 30px;
-	height: 30px;
+	width: 28px;
+	height: 28px;
 	object-fit: contain;
+}
+
+.zy-brand-icon-white {
+	display: block;
+}
+
+.zy-brand-icon-scrolled {
+	display: none;
+}
+
+.zy-navbar.is-scrolled .zy-brand-icon-white {
+	display: none;
+}
+
+.zy-navbar.is-scrolled .zy-brand-icon-scrolled {
+	display: block;
 }
 
 .zy-nav-links {
