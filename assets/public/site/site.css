@@ -438,12 +438,13 @@ main:not(.zy-nitro-page) > :first-child:not(.zy-home-wrapper):not(.zy-download-p
 	display: none;
 }
 
+/* Always show white icon, even when scrolled */
 .zy-navbar.is-scrolled .zy-brand-icon-white {
-	display: none;
+	display: block;
 }
 
 .zy-navbar.is-scrolled .zy-brand-icon-scrolled {
-	display: block;
+	display: none;
 }
 
 .zy-nav-links {
