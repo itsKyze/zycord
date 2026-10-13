@@ -2430,7 +2430,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-nitro-windy {
 	position: absolute;
-	inset: -11.9375rem -1.5rem auto auto;
+	top: -8.5rem;
+	right: 0;
 	max-width: 212px;
 	width: 100%;
 	height: auto;
@@ -2438,12 +2439,12 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	z-index: 3;
 }
 
-/* 3D Battery anchored inside .zy-compare-wrap above the left "Features" column header */
+/* 3D Battery at top-left of #pick-plan .zy-container flanking "PICK YOUR PLAN" (Screenshot 010733.png) */
 .zy-nitro-battery {
 	position: absolute;
-	top: -5.5rem;
-	left: -0.75rem;
-	max-width: 200px;
+	top: -1.5rem;
+	left: 0;
+	max-width: 212px;
 	width: 100%;
 	height: auto;
 	pointer-events: none;
@@ -2454,7 +2455,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	position: absolute;
 	top: -1.5rem;
 	right: 0;
-	max-width: 11.5rem;
+	max-width: 12.5rem;
 	width: 100%;
 	height: auto;
 	pointer-events: none;
@@ -2463,7 +2464,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 @media screen and (min-width: 1280px) {
 	.zy-nitro-windy {
-		top: -10.4375rem;
+		top: -9.5rem;
 	}
 }
 
@@ -2474,17 +2475,17 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 	.zy-nitro-windy {
 		max-width: 250px;
-		top: -13.5rem;
+		top: -10.5rem;
 		right: -1.5rem;
 	}
 	.zy-nitro-battery {
-		max-width: 245px;
-		top: -7.5rem;
-		left: -1.25rem;
+		max-width: 250px;
+		top: -1.5625rem;
+		left: -1.625rem;
 	}
 	.zy-nitro-faq-key {
-		max-width: 14.5rem;
-		top: -1.5rem;
+		max-width: 15.625rem;
+		top: -1.5625rem;
 		right: 0;
 	}
 }
@@ -2496,18 +2497,18 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 	.zy-nitro-windy {
 		max-width: 303px;
-		top: -16.5rem;
+		top: -12.5rem;
 		right: -2.5rem;
 	}
 	.zy-nitro-battery {
-		max-width: 285px;
-		top: -9rem;
-		left: -1.5rem;
+		max-width: 303px;
+		top: 0.125rem;
+		left: -2rem;
 	}
 	.zy-nitro-faq-key {
-		max-width: 17.5rem;
-		top: -2.5rem;
-		right: 1rem;
+		max-width: 18.9375rem;
+		top: -3.1125rem;
+		right: 2rem;
 	}
 }
 
@@ -2552,15 +2553,15 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 /* ============================================================================
    NITRO COMPARISON TABLE (.plan_component.is-update & .relative.mob-none.is-new)
-   Exact 1:1 Live Discord Layout: No outer card box, 2 vertical column pills!
+   Exact 1:1 Live Discord Layout (Screenshots 010733 - 010801)
    ============================================================================ */
 
 .zy-compare-wrap {
-	--nitro-col-w: 210px;
+	--nitro-col-w: 220px;
 	position: relative;
 	width: 100%;
 	max-width: 1538px;
-	margin: 120px auto 0;
+	margin: 165px auto 56px;
 	padding: 0;
 	background: transparent;
 	border: none;
@@ -2573,22 +2574,22 @@ body.has-nav-dd-open .zy-nav-page-blur {
 @media screen and (min-width: 1440px) {
 	.zy-compare-wrap {
 		--nitro-col-w: 251px;
-		margin-top: 160px;
+		margin-top: 195px;
 	}
 }
 
 @media screen and (min-width: 1920px) {
 	.zy-compare-wrap {
 		--nitro-col-w: 314px;
-		margin-top: 187px;
+		margin-top: 225px;
 	}
 }
 
 /* Vertical Column Pill 1: NITRO BASIC (.nitro-price.is-line-nitro.is-line.is-new) */
 .zy-compare-col-basic {
 	position: absolute;
-	top: -32px;
-	bottom: -16px;
+	top: -44px;
+	bottom: -48px;
 	right: calc(var(--nitro-col-w) + 16px);
 	width: var(--nitro-col-w);
 	border-radius: 40px;
@@ -2612,8 +2613,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* Vertical Column Pill 2: NITRO (.nitro-price.is-line-nitro.is-new) */
 .zy-compare-col-pro {
 	position: absolute;
-	top: -32px;
-	bottom: -16px;
+	top: -44px;
+	bottom: -48px;
 	right: 0;
 	width: var(--nitro-col-w);
 	border-radius: 40px;
@@ -2656,10 +2657,10 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-compare-table th,
 .zy-compare-table td {
 	box-sizing: border-box;
-	padding: 22px 24px;
+	padding: 26px 24px 26px 0;
 	text-align: left;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-	font-size: 16px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+	font-size: 20px;
 	font-weight: 500;
 	color: #ffffff;
 }
@@ -2667,24 +2668,26 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-compare-table thead th {
 	border-bottom: none;
 	padding-top: 0;
-	padding-bottom: 32px;
+	padding-bottom: 28px;
 	vertical-align: bottom;
 }
 
 .zy-compare-table th,
-.zy-compare-table td:not(.zy-compare-cat) {
+.zy-compare-table td {
 	position: relative;
 	z-index: 2;
 	background: transparent;
 }
 
 .zy-compare-th-features {
-	font-family: var(--font-abc-ginto-zycord);
-	font-size: 20px !important;
-	font-weight: 700 !important;
-	font-style: normal;
+	font-family: var(--font-abc-ginto-nord-zycord) !important;
+	font-size: 28px !important;
+	font-weight: 900 !important;
+	font-style: italic !important;
+	text-transform: uppercase;
+	letter-spacing: -0.02em;
 	color: #ffffff;
-	padding-left: 28px !important;
+	padding-left: 0 !important;
 }
 
 /* Column 2 (NITRO BASIC): width includes 16px right spacer so content centers inside .zy-compare-col-basic */
@@ -2714,25 +2717,42 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	flex-direction: column;
 	align-items: center;
 	justify-content: flex-end;
-	gap: 14px;
+	gap: 18px;
 	width: 100%;
 }
 
 .zy-compare-plan-name {
 	font-family: var(--font-abc-ginto-nord-zycord);
 	font-weight: 900;
-	font-size: 26px;
-	line-height: 0.96;
+	font-size: 28px;
+	line-height: 0.95;
 	font-style: italic;
 	text-transform: uppercase;
 	color: #ffffff;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 3px;
 }
 
+.zy-compare-plan-sub {
+	font-size: 13px;
+	letter-spacing: 0.03em;
+	line-height: 1;
+}
+
+/* POPULAR Frosted Glass Pill straddling top border of NITRO Column Pill (Screenshot 010733.png) */
 .zy-compare-popular-badge {
+	position: absolute;
+	top: -15px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 4;
 	display: inline-block;
-	padding: 8px 12px;
+	padding: 8px 13px;
 	border-radius: 10px;
-	background-image: linear-gradient(86deg, rgba(255, 255, 255, 0.2) 11%, rgba(255, 255, 255, 0.04));
+	background-color: rgba(45, 38, 72, 0.85);
+	background-image: linear-gradient(86deg, rgba(255, 255, 255, 0.22) 11%, rgba(255, 255, 255, 0.06));
 	backdrop-filter: blur(120px);
 	-webkit-backdrop-filter: blur(120px);
 	font-family: var(--font-abc-ginto-nord-zycord);
@@ -2742,34 +2762,55 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	color: #ffffff;
 	font-style: normal;
 	text-transform: uppercase;
+	white-space: nowrap;
 }
 
 .zy-compare-th-inner .zy-plan-btn-basic,
 .zy-compare-th-inner .zy-plan-btn-pro {
-	width: 100%;
-	padding: 12px 18px;
+	width: auto;
+	min-width: 116px;
+	padding: 12px 22px;
 	font-size: 15px;
 	border-radius: 12px;
 }
 
-/* Category Section Header Row (.plan2.is-nitro.line-top.is-gradient.is-new) */
+/* Category Section Header Row (.plan2.is-nitro.line-top.is-gradient.is-new — Screenshots 010733, 010739, 010745) */
 .zy-compare-cat {
 	position: relative;
-	z-index: 0;
-	font-family: var(--font-abc-ginto-zycord);
-	font-weight: 700 !important;
-	font-size: 20px !important;
-	color: #ffffff;
-	padding: 24px 28px !important;
-	background-image: url("/site/media/zycord/nitro-table-cat-bg.png");
-	background-position: 0% 50%;
-	background-repeat: no-repeat;
-	background-size: cover;
+	z-index: 2;
+	padding: 26px 28px !important;
+	background-image: url("/site/media/zycord/nitro-table-cat-bg.png") !important;
+	background-position: 0% 50% !important;
+	background-repeat: no-repeat !important;
+	background-size: 100% 100% !important;
 	border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.6) !important;
 	border-left: 1px solid rgba(255, 255, 255, 0.6) !important;
 	border-top-left-radius: 20px;
 	border-bottom-left-radius: 20px;
+}
+
+.zy-compare-cat-title {
+	font-family: var(--font-abc-ginto-nord-zycord);
+	font-weight: 900;
+	font-style: italic;
+	font-size: 28px;
+	line-height: 1.05;
+	letter-spacing: -0.02em;
+	text-transform: uppercase;
+	color: #ffffff;
+}
+
+.zy-compare-cat-sub {
+	display: inline-block;
+	font-family: var(--font-abc-ginto-zycord);
+	font-size: 14px;
+	font-weight: 400;
+	font-style: normal;
+	text-transform: none;
+	color: #ffffff;
+	text-decoration: underline;
+	margin-top: 6px;
 }
 
 @media screen and (max-width: 991px) {
@@ -2785,19 +2826,19 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* Official Nitro Bottom CTA Section (.download-banner.is-nitro.is-new) */
+/* Official Nitro Bottom CTA Section (.download-banner.is-nitro.is-new — Screenshot 010721.png) */
 .zy-nitro-footer-cta {
 	position: relative;
-	padding: 120px 0 140px;
+	padding: 170px 0 200px;
 	text-align: center;
-	overflow: hidden;
+	overflow: visible;
 	z-index: 1;
 }
 
 .zy-nitro-footer-bg-img {
 	position: absolute;
 	inset: auto 0% 0%;
-	margin-bottom: -20px;
+	margin-bottom: 0;
 	width: 100%;
 	height: auto;
 	pointer-events: none;
@@ -2806,16 +2847,16 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-nitro-footer-inner {
 	position: relative;
-	max-width: 820px;
+	max-width: 780px;
 	margin: 0 auto;
 	z-index: 2;
 }
 
 .zy-nitro-flag {
 	position: absolute;
-	top: -5.5rem;
-	right: -5.5rem;
-	max-width: 190px;
+	top: -7.5rem;
+	right: -13.5rem;
+	max-width: 240px;
 	width: 100%;
 	height: auto;
 	mix-blend-mode: screen;
@@ -2825,51 +2866,52 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-nitro-box {
 	position: absolute;
-	bottom: -4.25rem;
-	left: -5.5rem;
-	max-width: 195px;
+	bottom: -5.5rem;
+	left: -13rem;
+	max-width: 230px;
 	width: 100%;
 	height: auto;
 	pointer-events: none;
+	z-index: 1;
 }
 
 @media screen and (min-width: 1440px) {
 	.zy-nitro-footer-cta {
-		padding-top: 140px;
-		padding-bottom: 170px;
+		padding-top: 190px;
+		padding-bottom: 220px;
 	}
 	.zy-nitro-footer-inner {
-		max-width: 56rem;
+		max-width: 54rem;
 	}
 	.zy-nitro-flag {
-		max-width: 230px;
-		top: -6.5rem;
-		right: -7.5rem;
+		max-width: 280px;
+		top: -8.5rem;
+		right: -14.5rem;
 	}
 	.zy-nitro-box {
-		max-width: 235px;
-		bottom: -5rem;
-		left: -7.5rem;
+		max-width: 255px;
+		bottom: -6rem;
+		left: -14rem;
 	}
 }
 
 @media screen and (min-width: 1920px) {
 	.zy-nitro-footer-cta {
-		padding-top: 170px;
-		padding-bottom: 200px;
+		padding-top: 220px;
+		padding-bottom: 250px;
 	}
 	.zy-nitro-footer-inner {
-		max-width: 64rem;
+		max-width: 62rem;
 	}
 	.zy-nitro-flag {
-		max-width: 270px;
-		top: -7.5rem;
-		right: -9.5rem;
+		max-width: 330px;
+		top: -9.5rem;
+		right: -17.5rem;
 	}
 	.zy-nitro-box {
-		max-width: 270px;
-		bottom: -6rem;
-		left: -9.5rem;
+		max-width: 295px;
+		bottom: -7rem;
+		left: -16.5rem;
 	}
 }
 
@@ -3140,7 +3182,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	flex-wrap: wrap;
 	justify-content: center;
 	gap: 10px;
-	margin-bottom: 36px;
+	margin-top: 28px;
+	margin-bottom: 44px;
 }
 
 .zy-faq-tab-btn {
@@ -3149,8 +3192,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	font-family: var(--font-abc-ginto-zycord);
 	font-size: 16px;
 	font-weight: 500;
-	color: #ffffff;
-	background-color: #292929;
+	color: rgba(255, 255, 255, 0.65);
+	background-color: transparent;
 	border: none;
 	cursor: pointer;
 	box-shadow: none;
@@ -3158,7 +3201,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 }
 
 .zy-faq-tab-btn:hover {
-	background-color: rgba(255, 255, 255, 0.25);
+	background-color: rgba(255, 255, 255, 0.14);
 	color: #ffffff;
 }
 
@@ -3176,7 +3219,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-nitro-page .zy-accordion-item {
 	background: transparent;
 	border: none;
-	border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.16);
 	border-radius: 0;
 	overflow: hidden;
 }
@@ -3186,14 +3229,14 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	background: transparent;
 	font-family: var(--font-abc-ginto-zycord);
 	font-size: 20px;
-	font-weight: 500;
+	font-weight: 700;
 	color: #ffffff;
 }
 
 .zy-nitro-page .zy-accordion-icon {
-	color: rgba(255, 255, 255, 0.65);
-	font-size: 28px;
-	font-weight: 300;
+	color: #ffffff;
+	font-size: 26px;
+	font-weight: 400;
 	line-height: 1;
 	transition: transform 0.2s ease;
 }
@@ -3204,7 +3247,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-nitro-page .zy-accordion-content {
 	padding: 0 48px 32px 0;
-	color: rgba(255, 255, 255, 0.5);
+	color: rgba(255, 255, 255, 0.65);
 	font-size: 18px;
 	line-height: 1.5;
 }
