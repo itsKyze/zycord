@@ -1164,6 +1164,63 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	display: block;
 }
 
+/* Official Hero Wumpus & Leaf */
+.hero-char-wumpus {
+	position: absolute;
+	left: 46.8%;
+	bottom: -1.5%;
+	width: 23.5%;
+	height: auto;
+	z-index: 5;
+	pointer-events: none;
+	filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.58));
+}
+
+.hero-char-wumpus-leaf {
+	position: absolute;
+	left: 49.5%;
+	bottom: 23.5%;
+	width: 21.5%;
+	height: auto;
+	z-index: 6;
+	pointer-events: none;
+	animation: hero-leaf-float 4.2s ease-in-out infinite;
+}
+
+@keyframes hero-leaf-float {
+	0%, 100% { transform: translate3d(0, 0px, 0) rotate(-3deg); }
+	50% { transform: translate3d(0, -6px, 0) rotate(4deg); }
+}
+
+/* Official Horizon Wumpus & Leaf */
+.final-horizon-wumpus {
+	position: absolute;
+	left: 49.6%;
+	bottom: -26.5%;
+	transform: translateX(-50%);
+	width: clamp(320px, 28vw, 420px);
+	height: auto;
+	z-index: 9;
+	pointer-events: none;
+	filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.62));
+}
+
+.final-horizon-leaf {
+	position: absolute;
+	left: 49.6%;
+	bottom: 47.5%;
+	width: clamp(160px, 14vw, 210px);
+	height: auto;
+	z-index: 10;
+	pointer-events: none;
+	animation: horizon-leaf-float 4.2s ease-in-out infinite;
+}
+
+@keyframes horizon-leaf-float {
+	0%, 100% { transform: translate3d(-50%, 0px, 0) rotate(-3deg); }
+	50% { transform: translate3d(-50%, -7px, 0) rotate(4deg); }
+}
+
 .zy-star {
 	position: absolute;
 	pointer-events: none;
