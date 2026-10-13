@@ -1374,10 +1374,10 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-footer {
 	margin-top: 0;
 	padding: 100px 0 0;
-	background-color: #000000;
+	background-color: #5865f2;
 	background-image: url("/site/media/zycord/footer-bg-2026.png");
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: 100% 100%;
 	background-position: 50% 0;
 	border-top: none;
 	position: relative;
@@ -2018,11 +2018,12 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	position: relative;
 	z-index: 98;
 	padding: 10rem 0 18rem;
+	margin-bottom: -2px;
 	background-color: #000000;
 	background-image: url("/site/media/zycord/download-ptb-bg.png");
-	background-position: 50% -5%;
+	background-position: 50% 100%;
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: 100% 100%;
 	text-align: center;
 	overflow: visible;
 }
@@ -2430,7 +2431,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-nitro-windy {
 	position: absolute;
-	top: -8.5rem;
+	top: -6rem;
 	right: 0;
 	max-width: 212px;
 	width: 100%;
@@ -2442,7 +2443,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* 3D Battery at top-left of #pick-plan .zy-container flanking "PICK YOUR PLAN" (Screenshot 010733.png) */
 .zy-nitro-battery {
 	position: absolute;
-	top: -1.5rem;
+	top: -5rem;
 	left: 0;
 	max-width: 212px;
 	width: 100%;
@@ -2464,7 +2465,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 @media screen and (min-width: 1280px) {
 	.zy-nitro-windy {
-		top: -9.5rem;
+		top: -6.5rem;
 	}
 }
 
@@ -2475,12 +2476,12 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 	.zy-nitro-windy {
 		max-width: 250px;
-		top: -10.5rem;
+		top: -7rem;
 		right: -1.5rem;
 	}
 	.zy-nitro-battery {
 		max-width: 250px;
-		top: -1.5625rem;
+		top: -5.5rem;
 		left: -1.625rem;
 	}
 	.zy-nitro-faq-key {
@@ -2497,12 +2498,12 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 	.zy-nitro-windy {
 		max-width: 303px;
-		top: -12.5rem;
+		top: -8.5rem;
 		right: -2.5rem;
 	}
 	.zy-nitro-battery {
 		max-width: 303px;
-		top: 0.125rem;
+		top: -6.5rem;
 		left: -2rem;
 	}
 	.zy-nitro-faq-key {
@@ -2561,7 +2562,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	position: relative;
 	width: 100%;
 	max-width: 1538px;
-	margin: 165px auto 56px;
+	margin: 115px auto 56px;
 	padding: 0;
 	background: transparent;
 	border: none;
@@ -2574,14 +2575,14 @@ body.has-nav-dd-open .zy-nav-page-blur {
 @media screen and (min-width: 1440px) {
 	.zy-compare-wrap {
 		--nitro-col-w: 251px;
-		margin-top: 195px;
+		margin-top: 135px;
 	}
 }
 
 @media screen and (min-width: 1920px) {
 	.zy-compare-wrap {
 		--nitro-col-w: 314px;
-		margin-top: 225px;
+		margin-top: 155px;
 	}
 }
 
@@ -2650,19 +2651,23 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-compare-table {
 	position: relative;
 	width: 100%;
-	border-collapse: collapse;
+	border-collapse: separate;
+	border-spacing: 0;
 	min-width: 680px;
 }
 
 .zy-compare-table th,
 .zy-compare-table td {
 	box-sizing: border-box;
-	padding: 26px 24px 26px 0;
+	padding: 26px 24px 26px 28px;
 	text-align: left;
 	border-bottom: 1px solid rgba(255, 255, 255, 0.14);
 	font-size: 20px;
 	font-weight: 500;
 	color: #ffffff;
+	position: relative;
+	z-index: 2;
+	background: transparent;
 }
 
 .zy-compare-table thead th {
@@ -2672,11 +2677,25 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	vertical-align: bottom;
 }
 
-.zy-compare-table th,
-.zy-compare-table td {
-	position: relative;
-	z-index: 2;
-	background: transparent;
+/* Feature column (1st td): divider starts at left: 28px directly under text (Screenshot 010739.png) */
+.zy-compare-table tbody td:first-child:not(.zy-compare-cat) {
+	border-bottom: none;
+}
+
+.zy-compare-table tbody tr:not(.zy-row-before-cat) td:first-child:not(.zy-compare-cat)::after {
+	content: "";
+	position: absolute;
+	left: 28px;
+	right: 0;
+	bottom: 0;
+	height: 1px;
+	background: rgba(255, 255, 255, 0.14);
+	pointer-events: none;
+}
+
+/* Rows immediately preceding a category banner have no bottom border */
+.zy-compare-table tbody tr.zy-row-before-cat td {
+	border-bottom: none !important;
 }
 
 .zy-compare-th-features {
@@ -2687,7 +2706,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	text-transform: uppercase;
 	letter-spacing: -0.02em;
 	color: #ffffff;
-	padding-left: 0 !important;
+	padding-left: 28px !important;
 }
 
 /* Column 2 (NITRO BASIC): width includes 16px right spacer so content centers inside .zy-compare-col-basic */
@@ -2783,11 +2802,11 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	background-position: 0% 50% !important;
 	background-repeat: no-repeat !important;
 	background-size: 100% 100% !important;
-	border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.6) !important;
-	border-left: 1px solid rgba(255, 255, 255, 0.6) !important;
-	border-top-left-radius: 20px;
-	border-bottom-left-radius: 20px;
+	border-top: 1px solid rgba(255, 255, 255, 0.4) !important;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.4) !important;
+	border-left: 1px solid rgba(255, 255, 255, 0.4) !important;
+	border-right: none !important;
+	border-radius: 16px 0 0 16px !important;
 }
 
 .zy-compare-cat-title {
@@ -2837,7 +2856,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-nitro-footer-bg-img {
 	position: absolute;
-	inset: auto 0% 0%;
+	inset: auto 0% -2px;
+	display: block;
 	margin-bottom: 0;
 	width: 100%;
 	height: auto;
