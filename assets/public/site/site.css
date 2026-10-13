@@ -428,12 +428,6 @@ main:not(.zy-nitro-page) > :first-child:not(.zy-home-wrapper):not(.zy-download-p
 	width: 30px;
 	height: 30px;
 	object-fit: contain;
-	filter: brightness(0) invert(1);
-	transition: filter 0.25s ease;
-}
-
-.zy-navbar.is-scrolled .zy-brand-mark img {
-	filter: none;
 }
 
 .zy-nav-links {
