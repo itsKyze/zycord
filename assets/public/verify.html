@@ -1,242 +1,547 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-US" class="platform-web theme-dark theme-darker images-dark density-default font-size-16 has-webkit-scrollbar full-motion app-focused visual-refresh">
 	<head>
 		<meta charset="UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0" />
 		<title>Zycord</title>
 		<link rel="icon" href="/static/branding/favicon.svg" type="image/svg+xml" />
 		<style>
+			@font-face {
+				font-family: "gg sans";
+				src: url("/assets/fonts/ggsans-Normal.woff2") format("woff2");
+				font-weight: 400;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "gg sans";
+				src: url("/assets/fonts/ggsans-Medium.woff2") format("woff2");
+				font-weight: 500;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "gg sans";
+				src: url("/assets/fonts/ggsans-Semibold.woff2") format("woff2");
+				font-weight: 600;
+				font-style: normal;
+				font-display: swap;
+			}
+			@font-face {
+				font-family: "gg sans";
+				src: url("/assets/fonts/ggsans-Bold.woff2") format("woff2");
+				font-weight: 700;
+				font-style: normal;
+				font-display: swap;
+			}
+
+			:root {
+				--font-primary: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+				--font-display: "gg sans", "Noto Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+				--text-strong: #fafafa;
+				--text-default: #efeff0;
+				--brand-500: #5865f2;
+			}
+
 			* {
 				margin: 0;
 				padding: 0;
 				box-sizing: border-box;
 			}
-			html, body {
+
+			html,
+			body {
+				width: 100%;
 				height: 100%;
+				background-color: #000000;
+				color: var(--text-default);
+				font-family: var(--font-primary);
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+				overflow: hidden;
+				user-select: none;
+			}
+
+			/* Full-screen characterBackground_eb4069 */
+			.characterBackground_eb4069 {
+				position: relative;
+				width: 100vw;
+				height: 100vh;
+				overflow: hidden;
+				background-color: #000000;
+			}
+
+			/* PulseGradient container (MOD 426660 + CSS 630279) */
+			.pulseGradient__11664 {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				pointer-events: none;
+				overflow: hidden;
+			}
+
+			.pulseGradient__11664 svg {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				display: block;
+			}
+
+			@keyframes pulseBackgroundDark {
+				0%,
+				100% {
+					opacity: 0.75;
+				}
+				50% {
+					opacity: 0.5;
+				}
+			}
+
+			@keyframes pulseBackgroundLight {
+				0%,
+				100% {
+					opacity: 0.5;
+				}
+				50% {
+					opacity: 0.32;
+				}
+			}
+
+			@keyframes pulseForegroundRing {
+				0%,
+				100% {
+					opacity: 0.9;
+					transform: scale(1);
+				}
+				50% {
+					opacity: 0.65;
+					transform: scale(1.02);
+				}
+			}
+
+			@keyframes pulseForeground {
+				0%,
+				100% {
+					opacity: 0.95;
+				}
+				50% {
+					opacity: 0.72;
+				}
+			}
+
+			.pulseBackgroundDark__11664 {
+				animation: pulseBackgroundDark 6s ease-in-out infinite;
+			}
+
+			.pulseBackgroundLight__11664 {
+				animation: pulseBackgroundLight 6s ease-in-out infinite;
+			}
+
+			.pulseForegroundRing__11664 {
+				transform-origin: 500px 1000px;
+				animation: pulseForegroundRing 4s ease-in-out infinite;
+			}
+
+			.pulseForeground__11664 {
+				animation: pulseForeground 4s ease-in-out infinite;
+			}
+
+			/* Top-left logoWithText_eb4069 (48px top/left, 124x24) */
+			.logoWithText_eb4069 {
+				position: fixed;
+				top: 48px;
+				left: 48px;
+				width: 124px;
+				height: 24px;
+				z-index: 10;
+				display: block;
+				text-decoration: none;
+			}
+
+			.logoWithText_eb4069 img {
+				width: 124px;
+				height: 24px;
+				display: block;
+				object-fit: contain;
+				object-position: left center;
+			}
+
+			@media (max-width: 485px) {
+				.logoWithText_eb4069 {
+					display: none;
+				}
+			}
+
+			/* Centered wrapper_b97385 */
+			.wrapper_b97385 {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				z-index: 2;
+			}
+
+			.animatedDiv_b97385 {
+				opacity: 1;
+				transform: scale(1) translateY(0px) translateZ(0px);
+				display: flex;
+				align-items: center;
+				justify-content: center;
 				width: 100%;
 			}
-			body {
-				color: #ffffff;
-				font-family: 'gg sans', 'Noto Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-				min-height: 100vh;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				position: relative;
-				overflow: hidden;
-				-webkit-font-smoothing: antialiased;
-				perspective: 1000px;
+
+			/* authBox__921c5 container__492b5 — transparent on /verify */
+			.authBox__921c5.container__492b5 {
+				width: 480px;
+				max-width: 100%;
+				padding: 32px;
+				background-color: transparent;
+				box-shadow: none;
+				border-radius: 8px;
+				color: var(--text-default);
 			}
 
-			/* Blue/purple gradient theme for Gmail email verification (Matches real Zycord verify page) */
-			body.theme-email {
-				background-color: #0b0e26;
-				background-image: radial-gradient(circle 850px at 66% 66%, #3346be 0%, #212c7d 28%, #141b4e 55%, #0c1032 75%, #06081a 100%);
-			}
-
-			/* Pitch black theme for login authorization (Matches real Zycord verify page) */
-			body.theme-login {
-				background-color: #000000 !important;
-				background-image: none !important;
-			}
-
-			/* Top-left Zycord logo header — positioned fixed so stage stays dead-center */
-			.header {
-				position: absolute;
-				top: 24px;
-				left: 24px;
-				z-index: 10;
-			}
-			.brand {
-				display: inline-block;
-				text-decoration: none;
-			}
-			.brand img {
-				height: 24px;
-				width: auto;
-				display: block;
-			}
-
-			/* Centered main stage */
-			.main-content {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
+			.centeringWrapper__921c5 {
+				width: 100%;
 				text-align: center;
-				padding: 20px;
-				z-index: 2;
-				pointer-events: auto;
 			}
 
-			/* Envelope 3D illustration container */
-			.illustration {
-				width: 140px;
-				height: 116px;
-				margin-bottom: 24px;
+			/* Mana stack_dbd263 */
+			.stack_dbd263 {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				width: 100%;
+			}
+
+			.stack-gap-24 {
+				gap: 24px;
+			}
+
+			.stack-gap-8 {
+				gap: 8px;
+			}
+
+			/* Envelope image container (.image__492b5) */
+			.image__492b5 {
+				margin-bottom: 8px;
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
-				perspective: 800px;
 			}
-			.illustration img {
-				width: 140px;
+
+			.image__492b5 img {
+				width: 288px;
+				height: 162px;
+				max-width: 100%;
 				height: auto;
 				display: block;
-				filter: drop-shadow(0 14px 34px rgba(88, 101, 242, 0.45));
-				transform-style: preserve-3d;
-				will-change: transform;
 			}
 
-			@keyframes popIn {
-				from { transform: scale(0.7); opacity: 0; }
-				to   { transform: scale(1);   opacity: 1; }
-			}
-
-			/* Headings */
-			.title {
-				font-size: 20px;
+			/* Typography (heading-xl/semibold & text-md/normal) */
+			.heading-xl-semibold {
+				font-family: var(--font-display);
+				font-size: 24px;
+				line-height: 30px;
 				font-weight: 600;
-				line-height: 24px;
-				color: #f2f3f5;
-				margin-bottom: 8px;
-			}
-			.subtitle {
-				font-size: 14px;
-				font-weight: 400;
-				color: #949ba4;
-				max-width: 420px;
-				line-height: 20px;
-				margin-bottom: 24px;
+				color: var(--text-strong);
+				text-align: center;
+				margin: 0;
 			}
 
-			/* Button — matches Zycord standard: pure white, dark text, subtle 3px radius */
-			.btn {
-				background-color: #ffffff;
-				color: #060607;
-				font-size: 14px;
-				font-weight: 500;
-				line-height: 16px;
-				padding: 2px 20px;
-				min-height: 38px;
-				min-width: 96px;
-				border-radius: 3px;
-				border: none;
-				cursor: pointer;
-				text-decoration: none;
+			.subtitle__492b5 {
+				font-family: var(--font-primary);
+				font-size: 16px;
+				line-height: 20px;
+				font-weight: 400;
+				color: var(--text-default);
+				text-align: center;
+			}
+
+			/* Mana overlay-primary button (button_a22cb0 md_a22cb0 overlay-primary_a22cb0) */
+			.button_a22cb0 {
+				position: relative;
 				display: inline-flex;
 				align-items: center;
 				justify-content: center;
-				font-family: inherit;
-				transition: background-color 0.17s ease, color 0.17s ease;
-			}
-			.btn:hover {
-				background-color: #e3e5e8;
-			}
-			.btn:active {
-				background-color: #c7c8ce;
+				box-sizing: border-box;
+				background-color: #ffffff;
+				color: #000000;
+				border: 1px solid rgba(151, 151, 159, 0.12);
+				border-radius: 8px;
+				min-height: 40px;
+				padding: 7px 15px;
+				font-family: var(--font-primary);
+				font-size: 16px;
+				line-height: 20px;
+				font-weight: 500;
+				cursor: pointer;
+				text-decoration: none;
+				transition:
+					background-color 0.15s ease,
+					border-color 0.15s ease,
+					color 0.15s ease;
 			}
 
-			/* Subtle circular spinner matching Zycord's loading state */
-			.spinner {
-				width: 24px;
-				height: 24px;
-				border: 2.5px solid rgba(88, 101, 242, 0.25);
-				border-top-color: #5865f2;
-				border-radius: 50%;
-				animation: spin 0.8s linear infinite;
-				margin-bottom: 20px;
+			.button_a22cb0:hover {
+				background-color: #e5e5e7;
 			}
-			@keyframes spin {
-				to { transform: rotate(360deg); }
+
+			.button_a22cb0:active {
+				background-color: #d7d7da;
+			}
+
+			.buttonChildrenWrapper_a22cb0 {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0 1px;
+			}
+
+			.buttonChildren_a22cb0 {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				white-space: nowrap;
+			}
+
+			/* Discord SPINNING_CIRCLE Spinner (.spinningCircle__46696) */
+			.spinningCircle__46696 {
+				width: 32px;
+				height: 32px;
+				position: relative;
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+			}
+
+			.spinningCircleInner__46696 {
+				width: 100%;
+				height: 100%;
+				transform: rotate(280deg);
+			}
+
+			.circular__46696 {
+				animation: spinner-rotate 2s linear infinite;
+				height: 100%;
+				width: 100%;
+				transform-origin: center center;
+			}
+
+			.path__46696 {
+				stroke-dasharray: 1, 200;
+				stroke-dashoffset: 0;
+				animation: spinner-dash 2s ease-in-out infinite;
+				stroke-linecap: round;
+				stroke-width: 6;
+				stroke: var(--brand-500);
+				fill: none;
+			}
+
+			.path2__46696 {
+				stroke: var(--brand-500);
+				opacity: 0.6;
+				animation-delay: 0.15s;
+			}
+
+			.path3__46696 {
+				stroke: var(--brand-500);
+				opacity: 0.3;
+				animation-delay: 0.23s;
+			}
+
+			@keyframes spinner-rotate {
+				100% {
+					transform: rotate(360deg);
+				}
+			}
+
+			@keyframes spinner-dash {
+				0% {
+					stroke-dasharray: 1, 200;
+					stroke-dashoffset: 0;
+				}
+				50% {
+					stroke-dasharray: 89, 200;
+					stroke-dashoffset: -35px;
+				}
+				100% {
+					stroke-dasharray: 89, 200;
+					stroke-dashoffset: -124px;
+				}
 			}
 		</style>
 	</head>
-	<body class="theme-email">
-		<header class="header">
-			<a class="brand" href="/channels/@me">
+	<body>
+		<div class="characterBackground_eb4069">
+			<!-- Official Discord PulseGradient (MOD 426660) -->
+			<div class="pulseGradient__11664" aria-hidden="true">
+				<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" fill="none" preserveAspectRatio="none" viewBox="0 0 1000 1000">
+					<g clip-path="url(#pulse_clip)">
+						<path fill="#000000" d="M1000 0H0v1000h1000V0Z" />
+						<g id="pulseGroupDark" class="pulseBackgroundDark__11664" filter="url(#pulse_filter_b)" opacity=".8">
+							<path fill="#201E6E" d="M500 1922.1c349.485 0 632.8-379.26 632.8-847.1 0-467.841-283.315-847.101-632.8-847.101-349.486 0-632.8 379.26-632.8 847.101 0 467.84 283.314 847.1 632.8 847.1Z" />
+						</g>
+						<g id="pulseGroupLight" class="pulseBackgroundLight__11664" filter="url(#pulse_filter_c)" opacity=".5">
+							<path fill="#EB459E" d="M500 1428c177.283 0 321-179.98 321-402 0-222.018-143.717-402-321-402s-321 179.982-321 402c0 222.02 143.717 402 321 402Z" />
+						</g>
+						<g id="pulseGroupRing" class="pulseForegroundRing__11664" filter="url(#pulse_filter_d)">
+							<path stroke="#5865F2" stroke-width="14.648" d="M500 1664.5c368.098 0 666.5-298.4 666.5-666.5 0-368.098-298.402-666.5-666.5-666.5S-166.5 629.902-166.5 998c0 368.1 298.402 666.5 666.5 666.5Z" />
+						</g>
+						<g id="pulseGroupFg" class="pulseForeground__11664" filter="url(#pulse_filter_e)">
+							<path fill="#5865F2" d="M500 1379c166.79 0 302-123.35 302-275.5C802 951.346 666.79 828 500 828s-302 123.346-302 275.5c0 152.15 135.21 275.5 302 275.5Z" />
+						</g>
+					</g>
+					<defs>
+						<filter id="pulse_filter_b" width="1753.88" height="2182.48" x="-376.941" y="-16.241" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+							<feFlood flood-opacity="0" result="BackgroundImageFix" />
+							<feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+							<feGaussianBlur result="effect1_foregroundBlur" stdDeviation="122.07" />
+						</filter>
+						<filter id="pulse_filter_c" width="1227.94" height="1389.94" x="-113.969" y="331.031" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+							<feFlood flood-opacity="0" result="BackgroundImageFix" />
+							<feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+							<feGaussianBlur result="effect1_foregroundBlur" stdDeviation="146.484" />
+						</filter>
+						<filter id="pulse_filter_d" width="1738.27" height="1738.27" x="-369.137" y="128.863" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+							<feFlood flood-opacity="0" result="BackgroundImageFix" />
+							<feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+							<feGaussianBlur result="effect1_foregroundBlur" stdDeviation="97.656" />
+						</filter>
+						<filter id="pulse_filter_e" width="1287.59" height="1234.59" x="-143.797" y="486.203" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse">
+							<feFlood flood-opacity="0" result="BackgroundImageFix" />
+							<feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+							<feGaussianBlur result="effect1_foregroundBlur" stdDeviation="170.898" />
+						</filter>
+						<clipPath id="pulse_clip">
+							<path fill="#ffffff" d="M0 0h1000v1000H0z" />
+						</clipPath>
+					</defs>
+				</svg>
+			</div>
+
+			<!-- Top-left brand logo (.logoWithText_eb4069) -->
+			<a class="logoWithText_eb4069" href="/" aria-label="Zycord">
 				<img src="/static/branding/zycord_logo_white.svg" onerror="this.onerror=null;this.src='/static/branding/zycord_logo_white.png'" alt="Zycord" />
 			</a>
-		</header>
 
-		<main class="main-content" id="stage">
-			<div class="spinner" id="spinner"></div>
-			<h1 class="title" id="title">Verifying your email</h1>
-			<p class="subtitle" id="subtitle">This may take a moment.</p>
-		</main>
+			<!-- Centered AuthBox (.wrapper_b97385 -> .authBox__921c5.container__492b5) -->
+			<div class="wrapper_b97385">
+				<div class="animatedDiv_b97385">
+					<section data-theme="darker" class="authBox__921c5 container__492b5">
+						<div class="centeringWrapper__921c5" id="verifyMount"></div>
+					</section>
+				</div>
+			</div>
+		</div>
 
 		<script>
-			// Subtle slow mouse-follow / parallax interaction matching Zycord (تتحرك الالوان بسيطة جدا)
-			let targetBgX = 66;
-			let targetBgY = 66;
-			let currentBgX = 66;
-			let currentBgY = 66;
+			(() => {
+				const verifyMount = document.getElementById("verifyMount");
 
-			let targetTiltX = 0;
-			let targetTiltY = 0;
-			let currentTiltX = 0;
-			let currentTiltY = 0;
+				// Subtle interactive pointer drift on PulseGradient layers (matching Discord Rive stateMachine)
+				const fgGroup = document.getElementById("pulseGroupFg");
+				const lightGroup = document.getElementById("pulseGroupLight");
+				let targetX = 0,
+					targetY = 0,
+					curX = 0,
+					curY = 0;
 
-			window.addEventListener("mousemove", (e) => {
-				const normX = e.clientX / window.innerWidth;
-				const normY = e.clientY / window.innerHeight;
+				window.addEventListener("mousemove", (e) => {
+					const nx = e.clientX / window.innerWidth - 0.5;
+					const ny = e.clientY / window.innerHeight - 0.5;
+					targetX = nx * 28;
+					targetY = ny * 18;
+				});
 
-				// Background radial light target shifts very subtly (بسيطة جدا)
-				targetBgX = 66 + (normX - 0.5) * 5;
-				targetBgY = 66 + (normY - 0.5) * 5;
+				window.addEventListener("mouseleave", () => {
+					targetX = 0;
+					targetY = 0;
+				});
 
-				// 3D illustration gentle tilt angles
-				const centerX = window.innerWidth / 2;
-				const centerY = window.innerHeight / 2;
-				const deltaX = (e.clientX - centerX) / centerX;
-				const deltaY = (e.clientY - centerY) / centerY;
+				function tickGradient() {
+					curX += (targetX - curX) * 0.04;
+					curY += (targetY - curY) * 0.04;
+					if (fgGroup) {
+						fgGroup.setAttribute("transform", `translate(${curX.toFixed(2)}, ${curY.toFixed(2)})`);
+					}
+					if (lightGroup) {
+						lightGroup.setAttribute("transform", `translate(${(curX * -0.6).toFixed(2)}, ${(curY * -0.6).toFixed(2)})`);
+					}
+					requestAnimationFrame(tickGradient);
+				}
+				requestAnimationFrame(tickGradient);
 
-				targetTiltX = deltaX * 6;  // rotateY degrees max 6
-				targetTiltY = -deltaY * 6; // rotateX degrees max 6
-			});
+				// Render function matching eF(props) in Discord chunk 786142
+				function renderVerifyBox({ title, subtitle, buttonText, onButtonClick, loading = false, showEnvelope = false }) {
+					const imageHtml = showEnvelope
+						? `<div class="stack_dbd263 image__492b5">
+								<img src="/static/branding/zycord_envelope.svg" onerror="this.onerror=null;this.src='/static/branding/zycord_envelope.png'" alt="${title}" width="288" height="162" />
+						   </div>`
+						: "";
 
-			window.addEventListener("mouseleave", () => {
-				targetBgX = 66;
-				targetBgY = 66;
-				targetTiltX = 0;
-				targetTiltY = 0;
-			});
+					const spinnerHtml = loading
+						? `<div class="spinningCircle__46696" role="img" aria-label="Loading">
+								<div class="spinningCircleInner__46696">
+									<svg class="circular__46696" viewBox="25 25 50 50">
+										<circle class="path__46696 path3__46696" cx="50" cy="50" r="20"></circle>
+										<circle class="path__46696 path2__46696" cx="50" cy="50" r="20"></circle>
+										<circle class="path__46696" cx="50" cy="50" r="20"></circle>
+									</svg>
+								</div>
+						   </div>`
+						: "";
 
-			function renderParallax() {
-				// Gentle smooth lerp (factor 0.035 for very smooth, subtle, slow drift)
-				currentBgX += (targetBgX - currentBgX) * 0.035;
-				currentBgY += (targetBgY - currentBgY) * 0.035;
-				currentTiltX += (targetTiltX - currentTiltX) * 0.045;
-				currentTiltY += (targetTiltY - currentTiltY) * 0.045;
+					const subtitleHtml =
+						subtitle != null && subtitle !== ""
+							? `<div class="subtitle__492b5" data-text-variant="text-md/normal">${subtitle}</div>`
+							: "";
 
-				if (document.body.classList.contains("theme-email")) {
-					document.body.style.backgroundImage = `radial-gradient(circle 850px at ${currentBgX.toFixed(2)}% ${currentBgY.toFixed(2)}%, #3346be 0%, #212c7d 28%, #141b4e 55%, #0c1032 75%, #06081a 100%)`;
+					const buttonHtml = !loading
+						? `<button data-mana-component="button" role="button" class="button_a22cb0" type="button" id="verifyActionBtn">
+								<div class="buttonChildrenWrapper_a22cb0">
+									<div class="buttonChildren_a22cb0">
+										<span>${buttonText}</span>
+									</div>
+								</div>
+						   </button>`
+						: "";
+
+					verifyMount.innerHTML = `
+						<div class="stack_dbd263 stack-gap-24" data-align="center" data-justify="center" data-direction="vertical">
+							<div class="stack_dbd263 stack-gap-8" data-align="center" data-justify="start" data-direction="vertical">
+								<div class="stack_dbd263 stack-gap-24" data-align="center" data-justify="start" data-direction="vertical">
+									${imageHtml}
+									${spinnerHtml}
+									<h1 class="heading-xl-semibold" data-text-variant="heading-xl/semibold">${title}</h1>
+								</div>
+								${subtitleHtml}
+							</div>
+							${buttonHtml}
+						</div>
+					`;
+
+					if (!loading && typeof onButtonClick === "function") {
+						const btn = document.getElementById("verifyActionBtn");
+						if (btn) btn.addEventListener("click", onButtonClick);
+					}
 				}
 
-				const img = document.querySelector(".illustration img");
-				if (img) {
-					img.style.transform = `perspective(800px) rotateX(${currentTiltY.toFixed(2)}deg) rotateY(${currentTiltX.toFixed(2)}deg) translate3d(${(currentTiltX * 0.8).toFixed(2)}px, ${(-currentTiltY * 0.8).toFixed(2)}px, 0)`;
-				}
-
-				requestAnimationFrame(renderParallax);
-			}
-			requestAnimationFrame(renderParallax);
-
-			(async () => {
-				const stage    = document.getElementById("stage");
-				const title    = document.getElementById("title");
-				const subtitle = document.getElementById("subtitle");
-
-				// Extract query and hash parameters
-				const hashParams   = new URLSearchParams(location.hash.replace(/^#/, ""));
+				// Extract token from #token=... or ?token=...
+				const hashParams = new URLSearchParams(location.hash.replace(/^#/, ""));
 				const searchParams = new URLSearchParams(location.search);
-				const verifyToken  = hashParams.get("token") || searchParams.get("token");
-				const urlType      = hashParams.get("type") || searchParams.get("type");
+				const verifyToken = hashParams.get("token") || searchParams.get("token");
+				const urlType = hashParams.get("type") || searchParams.get("type");
 
-				// Detect token payload to determine theme (login vs email)
 				let tokenPayload = null;
 				if (verifyToken) {
 					try {
@@ -250,82 +555,82 @@
 
 				const isLogin = urlType === "login" || tokenPayload?.typ === "login_verify" || tokenPayload?.typ === "login";
 
-				// Apply appropriate theme based on verification type
-				if (isLogin) {
-					document.body.classList.remove("theme-email");
-					document.body.classList.add("theme-login");
-					title.textContent = "Verifying your login";
-					subtitle.textContent = "This may take a moment.";
-				} else {
-					document.body.classList.remove("theme-login");
-					document.body.classList.add("theme-email");
-					title.textContent = "Verifying your email";
-					subtitle.textContent = "This may take a moment.";
-				}
+				const goLogin = () => {
+					location.href = "/login";
+				};
 
-				// Helper functions for rendering states
-				const showSuccess = () => {
-					stage.innerHTML = `
-						<div class="illustration">
-							<img src="/static/branding/zycord_envelope.png" onerror="this.onerror=null;this.src='/static/zycord_envelope.png'" alt="Verified" />
-						</div>
-						<h1 class="title">Email Verified!</h1>
-						<button class="btn" id="continueBtn">Continue to Zycord</button>
-					`;
-					document.getElementById("continueBtn").addEventListener("click", () => {
-						location.href = "/channels/@me";
+				const goApp = () => {
+					location.href = "/channels/@me";
+				};
+
+				const showFailed = () => {
+					renderVerifyBox({
+						title: isLogin ? "Login verification link has expired." : "Email verification link has expired.",
+						subtitle: "Please log in and resend the link.",
+						buttonText: "Log In",
+						onButtonClick: goLogin,
+						loading: false,
+						showEnvelope: false,
 					});
 				};
 
-				const showExpired = (message) => {
-					stage.innerHTML = `
-						<h1 class="title">${isLogin ? "Login verification link has expired." : "Email verification link has expired."}</h1>
-						<p class="subtitle">${message || (isLogin ? "Please try logging in again to receive a new link." : "Please log in and resend the link.")}</p>
-						<button class="btn" id="loginBtn">Log In</button>
-					`;
-					document.getElementById("loginBtn").addEventListener("click", () => {
-						location.href = "/login";
+				const showSucceeded = () => {
+					renderVerifyBox({
+						title: isLogin ? "Login Verified!" : "Email Verified!",
+						subtitle: "",
+						buttonText: "Continue to Zycord",
+						onButtonClick: goApp,
+						loading: false,
+						showEnvelope: true,
 					});
 				};
 
+				// Exact Discord rr component logic: if null == token -> immediately set state to "failed"
 				if (!verifyToken) {
-					// No token provided in URL
-					await new Promise((r) => setTimeout(r, 600));
-					showExpired("No verification token was provided.");
+					showFailed();
 					return;
 				}
 
-				// Enforce minimum loading time (1200ms) so user sees the authentic "Verifying your email" state first
-				const minDelay = new Promise((resolve) => setTimeout(resolve, 1200));
+				// Otherwise start in "submitting" state and call /api/v9/auth/verify
+				renderVerifyBox({
+					title: isLogin ? "Verifying your login" : "Verifying your email",
+					subtitle: "This may take a moment.",
+					loading: true,
+				});
 
-				try {
-					let localAuthToken = null;
-					try { localAuthToken = JSON.parse(localStorage.getItem("token") ?? "null"); } catch {}
+				(async () => {
+					const minDelay = new Promise((resolve) => setTimeout(resolve, 600));
+					try {
+						let localAuthToken = null;
+						try {
+							localAuthToken = JSON.parse(localStorage.getItem("token") ?? "null");
+						} catch {}
 
-					const fetchPromise = fetch("/api/v9/auth/verify", {
-						method: "POST",
-						headers: {
-							"Content-Type": "application/json",
-							...(localAuthToken ? { Authorization: localAuthToken } : {}),
-						},
-						body: JSON.stringify({ token: verifyToken }),
-					});
+						const fetchPromise = fetch("/api/v9/auth/verify", {
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+								...(localAuthToken ? { Authorization: localAuthToken } : {}),
+							},
+							body: JSON.stringify({ token: verifyToken }),
+						});
 
-					const [response] = await Promise.all([fetchPromise, minDelay]);
-					const data = await response.json().catch(() => ({}));
+						const [response] = await Promise.all([fetchPromise, minDelay]);
+						const data = await response.json().catch(() => ({}));
 
-					if (response.ok) {
-						if (data.token && !localAuthToken) {
-							localStorage.setItem("token", JSON.stringify(data.token));
+						if (response.ok) {
+							if (data.token && !localAuthToken) {
+								localStorage.setItem("token", JSON.stringify(data.token));
+							}
+							showSucceeded();
+						} else {
+							showFailed();
 						}
-						showSuccess();
-					} else {
-						showExpired(data?.message || data?.token?.message);
+					} catch (err) {
+						await minDelay;
+						showFailed();
 					}
-				} catch (err) {
-					await minDelay;
-					showExpired("A network error occurred. Please try again.");
-				}
+				})();
 			})();
 		</script>
 	</body>
