@@ -444,6 +444,7 @@ main:not(.zy-nitro-page) > :first-child:not(.zy-home-wrapper):not(.zy-download-p
 
 .zy-navbar.is-scrolled .zy-brand-icon-scrolled {
 	display: block;
+	filter: invert(1);
 }
 
 .zy-nav-links {
