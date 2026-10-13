@@ -1111,7 +1111,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* Hands & Upper Body of Woman OVER the top border of the glass card */
 .zy-sec5-char-bot {
 	position: absolute;
-	top: -110px;
+	top: -126px;
 	right: 265px;
 	width: 232px;
 	height: auto;
@@ -1123,7 +1123,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* Lower Body of Woman BEHIND the frosted glass card (blurred by card backdrop-filter) */
 .zy-sec5-char-top {
 	position: absolute;
-	top: -14px;
+	top: -30px;
 	right: 274px;
 	width: 232px;
 	height: auto;
@@ -1137,12 +1137,12 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* Garfield & Simon Hugging BEHIND the top-right edge of the card */
 .zy-sec5-char-friends {
 	position: absolute;
-	top: -158px;
+	top: -152px;
 	right: 68px;
 	width: 252px;
 	height: auto;
 	z-index: 1;
-	clip-path: inset(0 0 43.2% 0);
+	clip-path: inset(0 0 44.5% 0);
 	pointer-events: none;
 	display: block;
 }
