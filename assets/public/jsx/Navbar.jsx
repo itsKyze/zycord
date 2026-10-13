@@ -299,6 +299,12 @@ export function ZycordNavbar() {
 								width="28"
 								height="28"
 								className="zy-brand-icon-white"
+								onError={(e) => {
+									if (!e.currentTarget.dataset.retried) {
+										e.currentTarget.dataset.retried = "1";
+										e.currentTarget.src = "/assets/public/branding/zycord_icon_white.svg";
+									}
+								}}
 							/>
 							<img
 								src="/branding/zycord_icon.svg"
@@ -306,6 +312,12 @@ export function ZycordNavbar() {
 								width="28"
 								height="28"
 								className="zy-brand-icon-scrolled"
+								onError={(e) => {
+									if (!e.currentTarget.dataset.retried) {
+										e.currentTarget.dataset.retried = "1";
+										e.currentTarget.src = "/assets/public/branding/zycord_icon.svg";
+									}
+								}}
 							/>
 						</span>
 						<span>Zycord</span>
@@ -432,6 +444,12 @@ export function ZycordNavbar() {
 									alt="Zycord"
 									width="28"
 									height="28"
+									onError={(e) => {
+										if (!e.currentTarget.dataset.retried) {
+											e.currentTarget.dataset.retried = "1";
+											e.currentTarget.src = "/assets/public/branding/zycord_icon_white.svg";
+										}
+									}}
 								/>
 							</span>
 							<span>Zycord</span>
