@@ -1,4 +1,4 @@
-import esbuild from "esbuild";
+import { execSync } from "child_process";
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -20,18 +20,29 @@ const targets = [
 	}
 ];
 
+let esbuildModule = null;
+try {
+	esbuildModule = await import("esbuild");
+} catch (_) {}
+
 for (const t of targets) {
-	await esbuild.build({
-		entryPoints: [t.entry],
-		outfile: t.outfile,
-		bundle: true,
-		format: "iife",
-		target: ["es2020"],
-		jsxFactory: "h",
-		jsxFragment: "Fragment",
-		charset: "utf8",
-		logLevel: "info"
-	});
+	if (esbuildModule) {
+		await esbuildModule.build({
+			entryPoints: [t.entry],
+			outfile: t.outfile,
+			bundle: true,
+			format: "iife",
+			target: ["es2020"],
+			jsxFactory: "h",
+			jsxFragment: "Fragment",
+			charset: "utf8",
+			logLevel: "info"
+		});
+	} else {
+		execSync(`npx esbuild "${t.entry}" --outfile="${t.outfile}" --bundle --format=iife --target=es2020 --jsx-factory=h --jsx-fragment=Fragment --charset=utf8`, {
+			stdio: "inherit"
+		});
+	}
 }
 
 console.log("[build-jsx-site] Successfully compiled JSX components for Site, Developers Portal, and Admin Console.");
