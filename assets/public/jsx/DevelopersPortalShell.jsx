@@ -6,9 +6,7 @@ export function DevelopersPortalTopbar() {
 		<header className="zy-dev-topbar">
 			<div className="zy-dev-topbar-left">
 				<a className="zy-dev-logo" href="/developers">
-					<span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: "30px", height: "30px", borderRadius: "8px", background: "#5865F2", color: "#fff" }}>
-						<ZycordMark size={20} color="#ffffff" />
-					</span>
+					<img src="/favicon.svg" alt="Zycord" width="28" height="28" style={{ display: "block", borderRadius: "8px" }} />
 					<span>Zycord</span>
 					<span className="zy-dev-badge">DEVELOPERS</span>
 				</a>

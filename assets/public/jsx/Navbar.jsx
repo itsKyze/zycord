@@ -1,5 +1,4 @@
 import { h, Fragment } from "./runtime.jsx";
-import { ZycordMark } from "./Icons.jsx";
 import { applySiteLanguage, getSavedLanguage } from "./i18n.js";
 
 export const NAVIGATION_ITEMS = [
@@ -294,7 +293,7 @@ export function ZycordNavbar() {
 				<div className="zy-navbar-inner">
 					<a className="zy-brand" href="/" aria-label="Zycord Home">
 						<span className="zy-brand-mark">
-							<ZycordMark size={22} color="currentColor" />
+							<img src="/favicon.svg" alt="Zycord" width="28" height="28" />
 						</span>
 						<span>Zycord</span>
 					</a>
@@ -415,7 +414,7 @@ export function ZycordNavbar() {
 					<div className="zy-drawer-header">
 						<a className="zy-brand" href="/">
 							<span className="zy-brand-mark">
-								<ZycordMark size={22} color="#ffffff" />
+								<img src="/favicon.svg" alt="Zycord" width="28" height="28" />
 							</span>
 							<span>Zycord</span>
 						</a>
