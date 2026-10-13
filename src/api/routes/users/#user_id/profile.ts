@@ -19,7 +19,7 @@
 import { Request, Response, Router } from "express";
 import { In } from "typeorm";
 import { route } from "@spacebar/api/middlewares";
-import { authenticatorTypes, profileMetadata, resolveProfileCollectibles, BOOST_MILESTONES, calculateMonthsElapsed, isSubscriptionBadge, NITRO_MILESTONES } from "@spacebar/api/util";
+import { authenticatorTypes, profileMetadata, resolveProfileCollectibles, BOOST_MILESTONES, calculateMonthsElapsed, isSubscriptionBadge, NITRO_MILESTONES, BADGE_ICON_TO_INFO, hasAdminPanelAccess } from "@spacebar/api/util";
 import { Badge, Member, Relationship, User } from "@spacebar/database";
 import { broadcastUserUpdate, Config, DiscordApiErrors, emitEvent, FieldErrors, handleFile, UserUpdateEvent } from "@spacebar/util";
 import { PartialConnectedAccountResponse, PrivateUserProjection, PublicUserProjection, RelationshipType, UserProfileModifySchema } from "@spacebar/schemas";
@@ -93,8 +93,26 @@ router.get("/", route({ responses: { 200: { body: "UserProfileResponse" } } }), 
           })
         : null;
 
-    const badges = [];
-    if (user.badge_ids?.length) badges.push(...(await Badge.find({ where: { id: In(user.badge_ids) } })));
+    const badges: any[] = [];
+    if (user.badge_ids?.length) {
+        const dbBadges = await Badge.find({ where: { id: In(user.badge_ids) } });
+        for (const b of dbBadges) {
+            const mapped = BADGE_ICON_TO_INFO[b.icon] ?? (b.id === "1" ? { slug: "staff", badge_id: 22 } : null);
+            if (mapped) {
+                b.id = mapped.slug;
+            }
+            badges.push(b);
+        }
+    }
+
+    if (hasAdminPanelAccess(user.rights) && !badges.some((b) => b.id === "staff" || b.id === "1")) {
+        badges.unshift({
+            id: "staff",
+            description: `${Config.get().general.instanceName} Staff`,
+            icon: "5e74e9b61934fc1f67c65515d1f7e60d",
+            link: null,
+        } as unknown as Badge);
+    }
 
     badges.push(...prideBadges(user.pride_badges));
 
