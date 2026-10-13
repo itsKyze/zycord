@@ -306,19 +306,6 @@ export function ZycordNavbar() {
 									}
 								}}
 							/>
-							<img
-								src="/branding/zycord_icon.svg"
-								alt="Zycord"
-								width="28"
-								height="28"
-								className="zy-brand-icon-scrolled"
-								onError={(e) => {
-									if (!e.currentTarget.dataset.retried) {
-										e.currentTarget.dataset.retried = "1";
-										e.currentTarget.src = "/assets/public/branding/zycord_icon.svg";
-									}
-								}}
-							/>
 						</span>
 						<span>Zycord</span>
 					</a>
