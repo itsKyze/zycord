@@ -97,16 +97,16 @@ export const brandPage = (html: string) =>
     html
         .replaceAll("__INSTANCE_NAME__", escapeXml(instanceName()))
         .replaceAll("__INSTANCE_ICON__", instanceIconTile())
-        .replaceAll('"/site/site.css"', `"/site/site.css?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/site/site.js"', `"/site/site.js?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/developers/portal.css"', `"/developers/portal.css?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/developers/portal.js"', `"/developers/portal.js?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/developers/portal-shell.js"', `"/developers/portal-shell.js?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/admin/admin.css"', `"/admin/admin.css?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/admin/admin.js"', `"/admin/admin.js?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/admin/admin-shell.js"', `"/admin/admin-shell.js?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/status/status.css"', `"/status/status.css?v=${ASSET_BUNDLE_VERSION}"`)
-        .replaceAll('"/status/status.js"', `"/status/status.js?v=${ASSET_BUNDLE_VERSION}"`);
+        .replace(/"\/site\/site\.css(?:\?v=[^"]*)?"/g, `"/site/site.css?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/site\/site\.js(?:\?v=[^"]*)?"/g, `"/site/site.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/developers\/portal\.css(?:\?v=[^"]*)?"/g, `"/developers/portal.css?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/developers\/portal\.js(?:\?v=[^"]*)?"/g, `"/developers/portal.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/developers\/portal-shell\.js(?:\?v=[^"]*)?"/g, `"/developers/portal-shell.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/admin\/admin\.css(?:\?v=[^"]*)?"/g, `"/admin/admin.css?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/admin\/admin\.js(?:\?v=[^"]*)?"/g, `"/admin/admin.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/admin\/admin-shell\.js(?:\?v=[^"]*)?"/g, `"/admin/admin-shell.js?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/status\/status\.css(?:\?v=[^"]*)?"/g, `"/status/status.css?v=${ASSET_BUNDLE_VERSION}"`)
+        .replace(/"\/status\/status\.js(?:\?v=[^"]*)?"/g, `"/status/status.js?v=${ASSET_BUNDLE_VERSION}"`);
 
 export const sendBrandImage = (res: Response, image: BrandImage, cacheControl = "public, max-age=21600") => {
     res.set("Cache-Control", cacheControl);

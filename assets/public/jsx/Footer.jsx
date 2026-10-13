@@ -162,7 +162,7 @@ export function ZycordFooter() {
 				<div className="zy-footer-grid">
 					<div className="zy-footer-brand-col">
 						<a className="zy-footer-logo-link" href="/" aria-label="Zycord Home">
-							<ZycordMark size={44} color="#ffffff" />
+							<img src="/favicon.svg" alt="Zycord" width="44" height="44" style={{ width: "44px", height: "44px", borderRadius: "12px", display: "block" }} />
 						</a>
 
 						<div>
