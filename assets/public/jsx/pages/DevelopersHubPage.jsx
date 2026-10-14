@@ -2,11 +2,11 @@ import { h } from "../runtime.jsx";
 
 export function DevelopersHubPage() {
 	return (
-		<div>
+		<div className="zy-developers-page">
 			{/* =====================================================================
 			    1. DEVELOPER CENTERED HERO — EXACT Zycord 3D OBJECTS
 			    ===================================================================== */}
-			<section className="zy-subhero" style={{ paddingTop: "76px", paddingBottom: "48px" }}>
+			<section className="zy-subhero" style={{ paddingTop: "136px", paddingBottom: "48px" }}>
 				<img src="/site/media/zycord/dev-fire-extinguisher.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "92px", top: "10%", left: "6%" }} />
 				<img src="/site/media/zycord/dev-spider.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "86px", top: "14%", right: "8%" }} />
 				<img src="/site/media/zycord/dev-magnet.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "84px", bottom: "10%", left: "9%" }} />
@@ -288,6 +288,24 @@ authorizeUrl.searchParams.set("scope", "bot applications.commands identify");
 authorizeUrl.searchParams.set("permissions", "8"); // Administrator`}</code>
 								</pre>
 							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Bottom CTA Banner */}
+			<section className="zy-dl-ptb-banner" style={{ paddingBottom: "10rem" }}>
+				<div className="zy-container">
+					<div className="zy-dl-ptb-inner">
+						<img src="/site/media/zycord/dev-clyde-3d.webp" alt="" aria-hidden="true" className="zy-dl-ptb-icon" style={{ width: "160px" }} />
+						<img src="/site/media/zycord/dev-rubber-duck.png" alt="" aria-hidden="true" className="zy-dl-ptb-trophy" style={{ width: "150px" }} />
+						<h2 className="zy-dl-ptb-title">START BUILDING TODAY</h2>
+						<p className="zy-dl-ptb-sub">
+							Create bots, OAuth2 apps, Rich Presence integrations, and multiplayer voice Activities in the Zycord Developer Portal.
+						</p>
+						<div className="zy-pill-btn-row" style={{ justifyContent: "center", marginTop: "12px" }}>
+							<a className="zy-btn zy-btn-primary" href="/developers/applications">Open Developer Portal</a>
+							<a className="zy-btn zy-btn-secondary" href="/_zycord/api/openapi.json" target="_blank" rel="noopener">API Reference</a>
 						</div>
 					</div>
 				</div>
