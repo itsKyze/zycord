@@ -1149,7 +1149,16 @@
         "data-zy-parallax": "0.14",
         "data-zy-parallax-rotate": "-8"
       }
-    )), /* @__PURE__ */ h("h1", { className: "zy-display", style: { whiteSpace: "nowrap" } }, "GROUP CHAT", /* @__PURE__ */ h("br", null), "THAT'S ALL", /* @__PURE__ */ h("br", null), "FUN & GAMES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.")), /* @__PURE__ */ h("div", { className: "hero-art-stage" }, /* @__PURE__ */ h("div", { className: "hero-art-glow" }), /* @__PURE__ */ h(
+    )), /* @__PURE__ */ h("h1", { className: "zy-display", style: { whiteSpace: "nowrap" } }, "GROUP CHAT", /* @__PURE__ */ h("br", null), "THAT'S ALL", /* @__PURE__ */ h("br", null), "FUN & GAMES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out."), /* @__PURE__ */ h("div", { className: "hero-ctas" }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary hero-btn-dl", href: "/download/windows" }, /* @__PURE__ */ h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true" }, /* @__PURE__ */ h("path", { d: "M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" }), /* @__PURE__ */ h("path", { d: "M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" })), /* @__PURE__ */ h("span", null, "Download for Windows")), /* @__PURE__ */ h(
+      "a",
+      {
+        className: "zy-btn zy-btn-primary hero-btn-open",
+        "data-zy-open-app": true,
+        "data-zy-open-label-authed": "Open Zycord in your browser",
+        href: "/app"
+      },
+      /* @__PURE__ */ h("span", null, "Open Zycord in your browser")
+    ))), /* @__PURE__ */ h("div", { className: "hero-art-stage" }, /* @__PURE__ */ h("div", { className: "hero-art-glow" }), /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/zycord/download-trophy.webp",
@@ -1215,16 +1224,7 @@
         "aria-hidden": "true",
         className: "hero-char-boy"
       }
-    )))), /* @__PURE__ */ h("div", { className: "hero-bottom-ctas" }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/download/windows" }, /* @__PURE__ */ h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true" }, /* @__PURE__ */ h("path", { d: "M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" }), /* @__PURE__ */ h("path", { d: "M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" })), /* @__PURE__ */ h("span", null, "Download for Windows")), /* @__PURE__ */ h(
-      "a",
-      {
-        className: "zy-btn zy-btn-primary",
-        "data-zy-open-app": true,
-        "data-zy-open-label-authed": "Open Zycord in your browser",
-        href: "/app"
-      },
-      /* @__PURE__ */ h("span", null, "Open Zycord in your browser")
-    )))), /* @__PURE__ */ h("section", { className: "zy-section zy-home-sec-tex-2", id: "chat" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
+    )))))), /* @__PURE__ */ h("section", { className: "zy-section zy-home-sec-tex-2", id: "chat" }, /* @__PURE__ */ h("div", { className: "zy-container", style: { position: "relative" } }, /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/zycord/party-wumpus.gif",

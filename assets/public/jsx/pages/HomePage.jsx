@@ -34,6 +34,25 @@ export function HomePage() {
 							<p className="zy-body-lg">
 								Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.
 							</p>
+
+							{/* Dual CTA Buttons Aligned on the Left under the copy (Exact Discord 1:1 layout — Screenshot 1) */}
+							<div className="hero-ctas">
+								<a className="zy-btn zy-btn-secondary hero-btn-dl" href="/download/windows">
+									<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+										<path d="M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" />
+										<path d="M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" />
+									</svg>
+									<span>Download for Windows</span>
+								</a>
+								<a
+									className="zy-btn zy-btn-primary hero-btn-open"
+									data-zy-open-app
+									data-zy-open-label-authed="Open Zycord in your browser"
+									href="/app"
+								>
+									<span>Open Zycord in your browser</span>
+								</a>
+							</div>
 						</div>
 
 						{/* Official Zycord 2026 3D Composite Stage */}
@@ -102,25 +121,6 @@ export function HomePage() {
 								/>
 							</div>
 						</div>
-					</div>
-
-					{/* Centered Hero Bottom Dual CTA Pair (Exact Zycord layout) */}
-					<div className="hero-bottom-ctas">
-						<a className="zy-btn zy-btn-secondary" href="/download/windows">
-							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-								<path d="M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" />
-								<path d="M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" />
-							</svg>
-							<span>Download for Windows</span>
-						</a>
-						<a
-							className="zy-btn zy-btn-primary"
-							data-zy-open-app
-							data-zy-open-label-authed="Open Zycord in your browser"
-							href="/app"
-						>
-							<span>Open Zycord in your browser</span>
-						</a>
 					</div>
 				</div>
 			</section>
