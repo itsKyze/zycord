@@ -140,9 +140,9 @@
 		}
 		.hero-char-wumpus {
 			position: absolute;
-			left: 46%;
-			bottom: -2%;
-			width: clamp(200px, 23vw, 320px);
+			left: 47%;
+			bottom: 0%;
+			width: clamp(210px, 24vw, 330px);
 			height: auto;
 			z-index: 5;
 			pointer-events: none;
@@ -150,14 +150,14 @@
 		}
 		.hero-char-wumpus-leaf {
 			position: absolute;
-			left: 47%;
+			left: 48%;
 			bottom: 25%;
-			width: clamp(160px, 16vw, 240px);
+			width: clamp(75px, 7.2vw, 105px);
 			height: auto;
 			z-index: 6;
 			pointer-events: none;
 			animation: hero-leaf-float 4.2s ease-in-out infinite;
-			filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
+			filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.35));
 		}
 		.hero-char-boy {
 			position: absolute;
@@ -193,24 +193,50 @@
 			50% { transform: translate3d(0, -6px, 0) rotate(4deg); }
 		}
 
-		/* Centered Hero Bottom CTA Bar (Exact Zycord layout) */
-		.hero-bottom-ctas {
+		/* Hero CTAs on the left inside .hero-copy (Matches Screenshot 1) */
+		.hero-ctas {
 			display: flex;
-			justify-content: center;
 			align-items: center;
 			flex-wrap: wrap;
-			gap: 18px;
-			margin-top: 44px;
+			gap: 16px;
+			margin-top: 32px;
 			position: relative;
 			z-index: 5;
 		}
-		.hero-bottom-ctas .zy-btn {
-			font-size: 18px;
-			line-height: 24px;
+		.hero-ctas .hero-btn-dl {
+			background-color: #ffffff;
+			color: #23272a;
+			font-size: 16px;
 			font-weight: 500;
-			padding: 15.5px 28px;
-			min-height: 54px;
-			border-radius: 12px;
+			padding: 15px 30px;
+			border-radius: 9999px;
+			box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+			transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+		}
+		.hero-ctas .hero-btn-dl:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+			color: #5865F2;
+		}
+		.hero-ctas .hero-btn-open {
+			background-color: #5865F2;
+			color: #ffffff;
+			font-size: 16px;
+			font-weight: 500;
+			padding: 15px 30px;
+			border-radius: 9999px;
+			transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+		}
+		.hero-ctas .hero-btn-open:hover {
+			background-color: #4752c4;
+			transform: translateY(-2px);
+			box-shadow: 0 8px 24px rgba(88, 101, 242, 0.4);
 		}
 
 		/* Exact Zycord Section 5 Characters Structure */
@@ -305,46 +331,46 @@
 				max-width: 1440px;
 			}
 		}
-		/* Clyde 3D Robot — positioned right under the girl's resting forearm on the left */
+		/* Clyde 3D Robot — Girl's hand rests on top of Clyde's screen (Matches Screenshot 2) */
 		.final-horizon-clyde {
 			position: absolute;
-			left: 19.8%;
-			bottom: 19%;
-			width: clamp(72px, 6.2vw, 94px);
+			left: 23.4%;
+			bottom: 11%;
+			width: clamp(120px, 10.8vw, 160px);
 			height: auto;
 			z-index: 5;
 			pointer-events: none;
-			filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.48));
+			filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.52));
 		}
-		/* Wumpus: centered neatly in the 23% gap between boy and tall guy, hands resting on the edge, legs dangling over */
+		/* Wumpus: prominent in the middle gap, hands planted on horizon edge, legs dangling (Matches Screenshot 2) */
 		.final-horizon-wumpus {
 			position: absolute;
-			left: 49.5%;
-			bottom: -4%;
+			left: 49.6%;
+			bottom: -5.5%;
 			transform: translateX(-50%);
-			width: clamp(180px, 16.5vw, 250px);
+			width: clamp(280px, 25.5vw, 370px);
 			height: auto;
 			z-index: 9;
 			pointer-events: none;
-			filter: drop-shadow(0 22px 38px rgba(0, 0, 0, 0.6));
+			filter: drop-shadow(0 24px 42px rgba(0, 0, 0, 0.62));
 		}
-		/* Leaf: hovering naturally 10px-15px directly above Wumpus's head */
+		/* Leaf: hovering naturally 15px-25px directly above Wumpus's head (Matches Screenshot 2) */
 		.final-horizon-leaf {
 			position: absolute;
-			left: 49.5%;
-			bottom: 42%;
+			left: 48.6%;
+			bottom: 53.5%;
 			transform: translateX(-50%);
-			width: clamp(50px, 4.2vw, 68px);
+			width: clamp(68px, 6vw, 92px);
 			height: auto;
 			z-index: 10;
 			pointer-events: none;
 			animation: horizon-leaf-float 4.2s ease-in-out infinite;
-			filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
+			filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
 		}
 		.final-horizon-smoke {
 			position: absolute;
-			left: 20%;
-			bottom: 24%;
+			left: 23.4%;
+			bottom: 22%;
 			transform: translateX(-50%);
 			width: clamp(80px, 7vw, 110px);
 			height: auto;
