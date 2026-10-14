@@ -79,19 +79,20 @@ export function HomePage() {
 										className="hero-char-clyde-shadow"
 									/>
 								</div>
-								{/* 3D Wumpus & Floating Leaf in front of monitor stand */}
-								<img
-									src="/site/media/zycord/hero-wumpus-leaf.webp"
-									alt=""
-									aria-hidden="true"
-									className="hero-char-wumpus-leaf"
-								/>
-								<img
-									src="/site/media/zycord/hero-wumpus.webp"
-									alt=""
-									aria-hidden="true"
-									className="hero-char-wumpus"
-								/>
+								{/* 3D Wumpus & Floating Leaf standing in front of monitor stand */}
+								<div className="hero-char-wumpus-wrap">
+									<img
+										src="/site/media/zycord/hero-wumpus-leaf.webp"
+										alt=""
+										aria-hidden="true"
+										className="hero-char-wumpus-leaf"
+									/>
+									<img
+										src="/site/media/zycord/hero-wumpus.webp"
+										alt="Zycord 3D Wumpus"
+										className="hero-char-wumpus"
+									/>
+								</div>
 								{/* 3D Character Bottom-Right (Boy in blue hoodie next to phone) */}
 								<img
 									src="/site/media/zycord/hero-boy.webp"
@@ -571,6 +572,9 @@ export function HomePage() {
 				</div>
 
 				<div className="final-horizon-art">
+					{/* Dark Horizon Floor Shelf (Matches Screenshot 2) */}
+					<div className="final-horizon-floor" aria-hidden="true"></div>
+
 					<img
 						src="/site/media/zycord/footer-horizon.webp"
 						alt="Zycord Cosmic Horizon Lineup"
@@ -591,19 +595,22 @@ export function HomePage() {
 						className="final-horizon-smoke"
 						loading="lazy"
 					/>
-					<img
-						src="/site/media/zycord/footer-wumpus-leaf.webp"
-						alt=""
-						aria-hidden="true"
-						className="final-horizon-leaf"
-						loading="lazy"
-					/>
-					<img
-						src="/site/media/zycord/footer-wumpus-sitting.webp"
-						alt="Wumpus sitting on the cosmic horizon"
-						className="final-horizon-wumpus"
-						loading="lazy"
-					/>
+					{/* 3D Sitting Wumpus with Green Leaf in Center Gap, dangling legs over edge */}
+					<div className="final-horizon-wumpus-wrap">
+						<img
+							src="/site/media/zycord/footer-wumpus-leaf.webp"
+							alt=""
+							aria-hidden="true"
+							className="final-horizon-leaf"
+							loading="lazy"
+						/>
+						<img
+							src="/site/media/zycord/footer-wumpus-sitting.webp"
+							alt="Wumpus sitting on the cosmic horizon"
+							className="final-horizon-wumpus"
+							loading="lazy"
+						/>
+					</div>
 				</div>
 			</section>
 		</div>
