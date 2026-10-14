@@ -1,3 +1,4 @@
+import { h, Fragment } from "../runtime.jsx";
 import { ZycordMark } from "../Icons.jsx";
 
 export function HomePage() {
