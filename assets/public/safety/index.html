@@ -31,7 +31,7 @@
 	<meta name="apple-mobile-web-app-title" content="Zycord" />
 	<meta name="application-name" content="Zycord" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261012t" />
+	<link rel="stylesheet" href="/site/site.css?v=20261014g" />
 	<style>
 		.checklist-row {
 			display: flex;
@@ -58,11 +58,11 @@
 <body>
 	<header data-zy-navbar></header>
 
-	<main>
+	<main class="zy-safety-page">
 		<!-- =====================================================================
 		     1. CENTERED HERO — EXACT 2026 Zycord
 		     ===================================================================== -->
-		<section class="zy-subhero" style="padding-top:132px;padding-bottom:56px;">
+		<section class="zy-subhero zy-safety-hero" style="padding-top:156px;padding-bottom:76px;">
 			<div class="zy-container" style="position:relative;">
 				<img
 					src="/site/media/zycord/safety-shield-3d.webp"
@@ -308,10 +308,28 @@
 				</div>
 			</div>
 		</section>
+
+		<!-- Bottom CTA Banner -->
+		<section class="zy-dl-ptb-banner" style="padding-top:140px;padding-bottom:140px;">
+			<div class="zy-container">
+				<div class="zy-dl-ptb-inner">
+					<img src="/site/media/zycord/safety-shield-3d.webp" alt="" aria-hidden="true" class="zy-dl-ptb-icon" style="width:160px;" />
+					<img src="/site/media/zycord/safety-egg-3d.webp" alt="" aria-hidden="true" class="zy-dl-ptb-trophy" style="width:150px;" />
+					<h2 class="zy-dl-ptb-title">HAVE A SAFETY QUESTION?</h2>
+					<p class="zy-dl-ptb-sub">
+						Visit our Support &amp; Help Center or review our Community Guidelines and Privacy Policy anytime.
+					</p>
+					<div class="zy-pill-btn-row" style="justify-content:center;margin-top:12px;">
+						<a class="zy-btn zy-btn-primary" href="/support">Visit Support Center</a>
+						<a class="zy-white-pill-btn" href="/guidelines">Community Guidelines</a>
+					</div>
+				</div>
+			</div>
+		</section>
 	</main>
 
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261012t"></script>
+	<script src="/site/site.js?v=20261014g"></script>
 	<script>
 		(function () {
 			var checks = document.querySelectorAll("[data-sec-check]");

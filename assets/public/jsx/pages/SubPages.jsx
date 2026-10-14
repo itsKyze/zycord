@@ -63,8 +63,8 @@ export function DownloadPage() {
 			</section>
 
 			{/* Alternating Platform Rows */}
-			<section className="zy-section" style={{ paddingTop: "32px", paddingBottom: "48px" }}>
-				<div className="zy-container">
+			<section className="zy-section zy-dl-rows-section">
+				<div className="zy-container zy-dl-container">
 					{/* 1. Desktop */}
 					<div className="zy-alt-row">
 						<div className="zy-alt-copy">
@@ -94,11 +94,9 @@ export function DownloadPage() {
 									<div className="zy-action-dropdown-menu" role="menu">
 										<a className="zy-action-dropdown-item" href="/download/windows?arch=x64">
 											<span>x64</span>
-											<span>↓</span>
 										</a>
 										<a className="zy-action-dropdown-item" href="/download/windows?arch=arm64">
 											<span>ARM64</span>
-											<span>↓</span>
 										</a>
 									</div>
 								</div>
@@ -117,19 +115,15 @@ export function DownloadPage() {
 									<div className="zy-action-dropdown-menu" role="menu">
 										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=deb">
 											<span>deb</span>
-											<span>↓</span>
 										</a>
 										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=tar.gz">
 											<span>tar.gz</span>
-											<span>↓</span>
 										</a>
 										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=rpm">
 											<span>rpm</span>
-											<span>↓</span>
 										</a>
 										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=pkg.tar.zst">
 											<span>pkg.tar.zst</span>
-											<span>↓</span>
 										</a>
 									</div>
 								</div>
@@ -195,7 +189,7 @@ export function DownloadPage() {
 					</div>
 
 					{/* 4. VR (Meta Quest — Official download-vr-card.png) */}
-					<div className="zy-alt-row is-reversed">
+					<div className="zy-alt-row is-reversed is-last-dl-row">
 						<div className="zy-alt-media-card is-dl-vr"></div>
 						<div className="zy-alt-copy">
 							<h2 className="zy-alt-title">Download for VR</h2>
@@ -233,47 +227,26 @@ export function DownloadPage() {
 							aria-hidden="true"
 							className="zy-dl-ptb-trophy"
 						/>
-						<h2 className="zy-alt-title" style={{ textAlign: "center" }}>Feeling experimental?</h2>
-						<p className="zy-body-lg" style={{ maxWidth: "560px", textAlign: "center" }}>
+						<h2 className="zy-dl-ptb-title">Feeling experimental?</h2>
+						<p className="zy-dl-ptb-sub">
 							Try out the newest features before they launch by using our Public Test Build.
 						</p>
-						<div className="zy-pill-btn-row" style={{ justifyContent: "center" }}>
-							<div className="zy-action-dropdown" data-zy-dropdown>
-								<button type="button" className="zy-white-pill-btn" data-zy-dropdown-toggle style={{ border: "none", cursor: "pointer", padding: "15.5px 28px", fontSize: "16px" }}>
+						<div className="zy-ptb-dropdown-wrap">
+							<div className="zy-action-dropdown zy-ptb-dropdown" data-zy-dropdown>
+								<button type="button" className="zy-ptb-dropdown-btn" data-zy-dropdown-toggle>
 									<span>Download Test Build</span>
-									<svg className="zy-action-dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-										<polyline points="3.5 6 8 10.5 12.5 6" />
+									<svg className="zy-action-dropdown-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+										<path d="M4.66699 6.6665L8.00033 9.99984L11.3337 6.6665" />
 									</svg>
 								</button>
-								<div className="zy-action-dropdown-menu" role="menu" style={{ minWidth: "230px" }}>
-									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=osx">
-										<span>Mac</span>
-										<span>↓</span>
-									</a>
-									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&arch=x64">
-										<span>Windows 64-bit</span>
-										<span>↓</span>
-									</a>
-									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&arch=arm64">
-										<span>Windows ARM64</span>
-										<span>↓</span>
-									</a>
-									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=deb">
-										<span>Linux deb</span>
-										<span>↓</span>
-									</a>
-									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=tar.gz">
-										<span>Linux tar.gz</span>
-										<span>↓</span>
-									</a>
-									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=rpm">
-										<span>Linux rpm</span>
-										<span>↓</span>
-									</a>
-									<a className="zy-action-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=pkg.tar.zst">
-										<span>Linux pkg.tar.zst</span>
-										<span>↓</span>
-									</a>
+								<div className="zy-action-dropdown-menu zy-ptb-dropdown-menu" role="menu">
+									<a className="zy-ptb-dropdown-item" href="/download/windows?channel=ptb&platform=osx">Mac</a>
+									<a className="zy-ptb-dropdown-item" href="/download/windows?channel=ptb&arch=x64">Windows 64-bit</a>
+									<a className="zy-ptb-dropdown-item" href="/download/windows?channel=ptb&arch=arm64">Windows ARM64</a>
+									<a className="zy-ptb-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=deb">Linux deb</a>
+									<a className="zy-ptb-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=tar.gz">Linux tar.gz</a>
+									<a className="zy-ptb-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=rpm">Linux rpm</a>
+									<a className="zy-ptb-dropdown-item" href="/download/windows?channel=ptb&platform=linux&format=pkg.tar.zst">Linux pkg.tar.zst</a>
 								</div>
 							</div>
 						</div>
@@ -425,6 +398,24 @@ export function QuestsPage() {
 							<div className="zy-accordion-content">
 								Yes! Visit the <a href="/developers/applications" style={{ color: "#fff", textDecoration: "underline" }}>Zycord Developer Portal</a> to configure Rich Presence assets, Profile Widgets, and embedded Activities.
 							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			{/* Bottom CTA Banner */}
+			<section className="zy-dl-ptb-banner" style={{ paddingBottom: "10rem" }}>
+				<div className="zy-container">
+					<div className="zy-dl-ptb-inner">
+						<img src="/site/media/zycord/quests-cauldron.avif" alt="" aria-hidden="true" className="zy-dl-ptb-icon" style={{ width: "160px" }} />
+						<img src="/site/media/zycord/download-trophy.webp" alt="" aria-hidden="true" className="zy-dl-ptb-trophy" style={{ width: "170px" }} />
+						<h2 className="zy-dl-ptb-title">READY TO LAUNCH YOUR QUEST?</h2>
+						<p className="zy-dl-ptb-sub">
+							Reward players with exclusive Avatar Decorations, Orbs, and in-game loot on Zycord.
+						</p>
+						<div className="zy-pill-btn-row" style={{ justifyContent: "center", marginTop: "12px" }}>
+							<a className="zy-btn zy-btn-primary" data-zy-open-app href="/app">Explore Quests in App</a>
+							<a className="zy-btn zy-btn-secondary" href="/developers">Developer Solutions</a>
 						</div>
 					</div>
 				</div>

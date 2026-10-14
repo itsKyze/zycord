@@ -72,12 +72,11 @@ html {
 body {
 	margin: 0;
 	min-height: 100vh;
-	background-color: #090b26;
-	background:
-		radial-gradient(ellipse 95% 55% at 50% 0%, rgba(42, 52, 185, 0.52) 0%, rgba(16, 19, 64, 0.22) 58%, transparent 100%),
-		radial-gradient(circle at 85% 22%, rgba(88, 101, 242, 0.25) 0%, transparent 45%),
-		radial-gradient(circle at 12% 68%, rgba(88, 101, 242, 0.2) 0%, transparent 50%),
-		linear-gradient(180deg, #090b26 0%, #10144a 36%, #181d68 68%, #2832b8 92%, #5865f2 100%);
+	background-color: #000000;
+	background-image: url("/site/media/zycord/download-hero-bg.webp");
+	background-position: 50% 0%;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
 	color: var(--color-snow);
 	/* Only clip horizontal overflow on body — prevents double scrollbar on subpages */
 	overflow-x: clip;
@@ -1783,7 +1782,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 /* Official Discord /download Page Wrapper & Hero (.download_hero.is_download) */
 .zy-download-page {
-	background: linear-gradient(180deg, #090b26 0%, #10144a 36%, #181d68 68%, #2832b8 92%, #5865f2 100%);
+	background-color: #000000;
+	background-image: none;
 	color: #ffffff;
 	overflow-x: clip;
 	overflow-y: visible;
@@ -1798,8 +1798,14 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	background-image: url("/site/media/zycord/download-hero-bg.webp");
 	background-position: 50% 0;
 	background-repeat: no-repeat;
-	background-size: cover;
+	background-size: auto;
 	overflow: visible;
+}
+
+@media screen and (min-width: 1440px) {
+	.zy-dl-hero-section {
+		background-size: 100%;
+	}
 }
 
 .zy-dl-coin {
@@ -1940,6 +1946,15 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
 }
 
+@media screen and (max-width: 991px) {
+	.zy-alt-row,
+	.zy-alt-row.is-reversed {
+		grid-template-columns: 1fr;
+		gap: 36px;
+		padding: 36px 0;
+	}
+}
+
 .zy-alt-copy {
 	display: flex;
 	flex-direction: column;
@@ -1980,28 +1995,83 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	background-image: linear-gradient(145deg, #1a1e5a 0%, #5865f2 100%);
 }
 
-/* Official /download card edge-bleed variants */
+/* Official /download Alternating Platform Cards Section */
+.zy-dl-rows-section {
+	padding-top: 200px;
+	padding-bottom: 0;
+	position: relative;
+	z-index: 3;
+}
+
+.zy-dl-container {
+	max-width: 1185px;
+}
+
+@media screen and (min-width: 1920px) {
+	.zy-dl-container {
+		max-width: 1520px;
+	}
+}
+
+.zy-download-page .zy-alt-row {
+	grid-template-columns: minmax(0, 1fr) 437px;
+	gap: 100px;
+	padding: 0;
+	margin-bottom: 120px;
+	align-items: center;
+}
+
+.zy-download-page .zy-alt-row.is-reversed {
+	grid-template-columns: 437px minmax(0, 1fr);
+}
+
+.zy-download-page .zy-alt-row.is-last-dl-row {
+	margin-bottom: 200px;
+}
+
+@media screen and (min-width: 1920px) {
+	.zy-download-page .zy-alt-row {
+		grid-template-columns: minmax(0, 1fr) 533px;
+		gap: 120px;
+	}
+	.zy-download-page .zy-alt-row.is-reversed {
+		grid-template-columns: 533px minmax(0, 1fr);
+	}
+}
+
+/* Official /download card edge-bleed variants — exact Discord 72px corner radius & crop padding */
 .zy-alt-media-card.is-dl-desktop {
-	padding: 64px 0 0 64px;
+	padding: 80px 0 0 80px;
+	border-radius: 72px;
+	box-shadow: none;
 }
 .zy-alt-media-card.is-dl-desktop img {
 	border-radius: 24px 0 0 0;
+	box-shadow: none;
 }
 .zy-alt-media-card.is-dl-mobile {
-	padding: 60px 60px 0;
+	padding: 80px 80px 0;
+	border-radius: 72px;
+	box-shadow: none;
 }
 .zy-alt-media-card.is-dl-mobile img {
-	border-radius: 36px 36px 0 0;
+	border-radius: 0;
+	box-shadow: none;
 }
 .zy-alt-media-card.is-dl-console {
-	padding: 64px 0 64px 64px;
+	padding: 80px 0 80px 80px;
+	border-radius: 72px;
+	box-shadow: none;
 }
 .zy-alt-media-card.is-dl-console img {
 	border-radius: 24px 0 0 24px;
+	box-shadow: none;
 }
 .zy-alt-media-card.is-dl-vr {
 	padding: 0;
-	aspect-ratio: 420 / 590;
+	border-radius: 72px;
+	box-shadow: none;
+	aspect-ratio: 437 / 539;
 	background-image: url("/site/media/zycord/download-vr-card.png");
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
@@ -2052,15 +2122,16 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	transform: none;
 }
 
-/* Official Discord Bottom "Feeling experimental?" Section (.download-banner.is-download.is_new-2026) */
+/* Official Discord Bottom "Feeling experimental?" Section (.download-banner.bottom-small.is-update) */
 .zy-dl-ptb-banner {
 	position: relative;
 	z-index: 98;
-	padding: 6rem 0 6.5rem;
+	padding-top: 10rem;
+	padding-bottom: 18rem;
 	margin-bottom: 0;
 	background-color: transparent;
 	background-image: url("/site/media/zycord/download-ptb-bg.png");
-	background-position: 50% 100%;
+	background-position: 50% -5%;
 	background-repeat: no-repeat;
 	background-size: cover;
 	text-align: center;
@@ -2068,43 +2139,293 @@ body.has-nav-dd-open .zy-nav-page-blur {
 }
 
 @media screen and (max-width: 991px) {
+	.zy-dl-rows-section {
+		padding-top: 100px;
+	}
+	.zy-download-page .zy-alt-row,
+	.zy-download-page .zy-alt-row.is-reversed {
+		grid-template-columns: 1fr;
+		gap: 40px;
+		margin-bottom: 80px;
+	}
+	.zy-download-page .zy-alt-row.is-last-dl-row {
+		margin-bottom: 100px;
+	}
+	.zy-alt-media-card.is-dl-desktop,
+	.zy-alt-media-card.is-dl-mobile,
+	.zy-alt-media-card.is-dl-console,
+	.zy-alt-media-card.is-dl-vr {
+		border-radius: 44px;
+	}
+	.zy-alt-media-card.is-dl-desktop {
+		padding: 40px 0 0 40px;
+	}
+	.zy-alt-media-card.is-dl-mobile {
+		padding: 40px 40px 0;
+	}
+	.zy-alt-media-card.is-dl-console {
+		padding: 40px 0 40px 40px;
+	}
 	.zy-dl-ptb-banner {
-		padding-top: 4.5rem;
-		padding-bottom: 5rem;
+		padding-top: 6rem;
+		padding-bottom: 10rem;
 	}
 }
 
 .zy-dl-ptb-inner {
 	position: relative;
-	max-width: 590px;
+	max-width: 725px;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	gap: 20px;
+	gap: 0;
 	z-index: 2;
 }
 
-.zy-dl-ptb-icon {
-	position: absolute;
-	top: -124px;
-	left: -175px;
-	width: 170px;
-	height: auto;
-	pointer-events: none;
-	z-index: 3;
-	filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.52));
+@media screen and (min-width: 1920px) {
+	.zy-dl-ptb-inner {
+		max-width: 850px;
+	}
 }
 
-.zy-dl-ptb-trophy {
+.zy-dl-ptb-title {
+	font-family: var(--font-abc-ginto-nord-zycord);
+	font-size: clamp(32px, 4vw, 50px);
+	line-height: 1.0;
+	letter-spacing: -0.02em;
+	font-weight: 900;
+	text-transform: uppercase;
+	color: #ffffff;
+	margin: 0 0 24px;
+	text-align: center;
+}
+
+@media screen and (min-width: 1920px) {
+	.zy-dl-ptb-title {
+		font-size: 64px;
+	}
+}
+
+.zy-dl-ptb-sub {
+	font-family: var(--font-abc-ginto-zycord);
+	font-size: clamp(16px, 1.35vw, 20px);
+	line-height: 26px;
+	font-weight: 400;
+	color: #ffffff;
+	max-width: 590px;
+	margin: 0;
+	text-align: center;
+}
+
+@media screen and (min-width: 1920px) {
+	.zy-dl-ptb-sub {
+		font-size: 24px;
+		line-height: 32px;
+		max-width: 710px;
+	}
+}
+
+/* 3D Turnip (Left) — Matches Discord .feeling-decor-1.is-update */
+.zy-dl-ptb-icon {
 	position: absolute;
-	bottom: -118px;
-	right: -175px;
-	width: 170px;
+	top: -100px;
+	left: -135px;
+	width: 180px;
 	height: auto;
 	pointer-events: none;
+	user-select: none;
 	z-index: 3;
-	filter: drop-shadow(0 20px 34px rgba(0, 0, 0, 0.52));
+	filter: none;
+}
+
+/* 3D Trophy (Right) — Matches Discord .feeling-decor-2.is-update */
+.zy-dl-ptb-trophy {
+	position: absolute;
+	bottom: -104px;
+	right: -138px;
+	width: 180px;
+	height: auto;
+	pointer-events: none;
+	user-select: none;
+	z-index: 3;
+	filter: none;
+}
+
+@media screen and (min-width: 1440px) {
+	.zy-dl-ptb-icon {
+		width: 200px;
+		max-width: 12.5rem;
+		left: -187px;
+	}
+	.zy-dl-ptb-trophy {
+		width: 200px;
+		max-width: 12.5rem;
+		right: -199px;
+	}
+}
+
+@media screen and (min-width: 1920px) {
+	.zy-dl-ptb-icon {
+		width: 280px;
+		max-width: none;
+		top: -120px;
+		left: -260px;
+	}
+	.zy-dl-ptb-trophy {
+		width: 280px;
+		max-width: none;
+		bottom: -120px;
+		right: -270px;
+	}
+}
+
+@media screen and (max-width: 991px) {
+	.zy-dl-ptb-icon {
+		width: 110px;
+		top: -54px;
+		left: 0;
+	}
+	.zy-dl-ptb-trophy {
+		width: 110px;
+		bottom: -58px;
+		right: 0;
+	}
+}
+
+/* Official Discord "Download Test Build" Dropdown (.new-dark-button.download-new + .dropdown-list-6.is-download-new) */
+.zy-ptb-dropdown-wrap {
+	margin-top: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	z-index: 120;
+}
+
+.zy-ptb-dropdown {
+	position: relative;
+	display: inline-block;
+	text-align: left;
+}
+
+.zy-ptb-dropdown-btn {
+	position: relative;
+	overflow: clip;
+	isolation: isolate;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	padding: 14.5px 24px 13.5px;
+	border-radius: 8px;
+	border: none;
+	background-color: #5865f2;
+	color: #ffffff;
+	font-family: var(--font-abc-ginto-zycord);
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 500;
+	cursor: pointer;
+	user-select: none;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.zy-ptb-dropdown-btn::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(155deg, #434995 0%, #1f1d5d 100%);
+	opacity: 0;
+	transition: opacity 0.3s ease;
+	z-index: -1;
+	pointer-events: none;
+}
+
+.zy-ptb-dropdown-btn:hover::after,
+.zy-ptb-dropdown-btn[aria-expanded="true"]::after,
+.zy-ptb-dropdown.is-open > .zy-ptb-dropdown-btn::after {
+	opacity: 1;
+}
+
+.zy-ptb-dropdown-btn .zy-dropdown-chevron,
+.zy-ptb-dropdown-btn .zy-action-dropdown-arrow {
+	width: 14px;
+	height: 14px;
+	transition: transform 0.25s ease;
+	flex-shrink: 0;
+}
+
+.zy-ptb-dropdown-btn[aria-expanded="true"] .zy-dropdown-chevron,
+.zy-ptb-dropdown.is-open .zy-dropdown-chevron,
+.zy-ptb-dropdown.is-open .zy-action-dropdown-arrow {
+	transform: rotate(180deg);
+}
+
+.zy-action-dropdown-menu.zy-ptb-dropdown-menu,
+.zy-ptb-dropdown-menu {
+	position: absolute;
+	top: calc(100% + 8px);
+	left: 0;
+	width: 100%;
+	min-width: 227px;
+	max-height: 260px;
+	overflow-y: auto;
+	padding: 8px;
+	border-radius: 12px;
+	background-color: #30305f;
+	border: none;
+	box-shadow: 0 18px 44px rgba(0, 0, 0, 0.45);
+	z-index: 220;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.16s ease, visibility 0.16s;
+}
+
+.zy-ptb-dropdown-menu.is-open,
+.zy-action-dropdown.zy-ptb-dropdown.is-open .zy-ptb-dropdown-menu,
+.zy-ptb-dropdown.is-open .zy-ptb-dropdown-menu {
+	opacity: 1;
+	visibility: visible;
+}
+
+.zy-ptb-dropdown-menu::-webkit-scrollbar {
+	width: 6px;
+}
+
+.zy-ptb-dropdown-menu::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.zy-ptb-dropdown-menu::-webkit-scrollbar-thumb {
+	background: rgba(255, 255, 255, 0.25);
+	border-radius: 999px;
+}
+
+.zy-action-dropdown-item.zy-ptb-dropdown-item,
+.zy-ptb-dropdown-item {
+	display: block;
+	width: 100%;
+	padding: 13px 16px;
+	border-radius: 12px;
+	color: #ffffff;
+	font-family: var(--font-abc-ginto-zycord);
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 400;
+	text-align: left;
+	text-decoration: none;
+	background: transparent;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.zy-action-dropdown-item.zy-ptb-dropdown-item:hover,
+.zy-ptb-dropdown-item:hover {
+	background-color: rgba(255, 255, 255, 0.12);
+	color: #ffffff;
 }
 
 /* Legacy .zy-ptb-card fallback */
@@ -2130,14 +2451,15 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-nitro-page {
 	position: relative;
-	background: linear-gradient(180deg, #09061c 0%, #100a29 35%, #150c38 65%, #241454 88%, #5865f2 100%);
+	background-color: #000000;
+	background-image: none;
 	color: #ffffff;
 	overflow-x: clip;
 	overflow-y: visible;
 }
 
 .zy-nitro-page .zy-container {
-	max-width: 1180px;
+	max-width: 1185px;
 }
 
 @media screen and (min-width: 1440px) {
@@ -2629,9 +2951,9 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 /* 2 Video Perk Cards below Green Xbox Banner (.nitro-card) */
 .zy-nitro-perk-card {
-	border-radius: 56px;
+	border-radius: 96px;
 	background-color: #1a1a1e;
-	padding: 24px 24px 40px;
+	padding: 32px 32px 56px;
 	display: flex;
 	flex-direction: column;
 	gap: 12px;
@@ -2640,7 +2962,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-nitro-perk-video-wrap {
 	width: 100%;
 	aspect-ratio: 1358 / 1186;
-	border-radius: 44px;
+	border-radius: 96px;
 	overflow: hidden;
 	margin-bottom: 12px;
 	background: #0f1014;
@@ -2651,6 +2973,60 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	height: 100%;
 	object-fit: cover;
 	display: block;
+}
+
+.zy-nitro-page .zy-alt-row {
+	grid-template-columns: minmax(0, 1fr) 666px;
+	gap: 80px;
+	padding: 60px 0;
+}
+
+.zy-nitro-page .zy-alt-row.is-reversed {
+	grid-template-columns: 666px minmax(0, 1fr);
+}
+
+.zy-nitro-page .zy-alt-media-card {
+	border-radius: 96px;
+}
+
+.zy-nitro-page .zy-alt-media-card video,
+.zy-nitro-page .zy-alt-media-card img {
+	border-radius: 64px;
+}
+
+@media screen and (max-width: 1180px) {
+	.zy-nitro-page .zy-alt-row,
+	.zy-nitro-page .zy-alt-row.is-reversed {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 48px;
+	}
+}
+
+@media screen and (max-width: 991px) {
+	.zy-plan-grid {
+		grid-template-columns: 1fr;
+		gap: 24px;
+	}
+	.zy-nitro-perk-card {
+		border-radius: 48px;
+		padding: 20px 20px 36px;
+	}
+	.zy-nitro-perk-video-wrap {
+		border-radius: 36px;
+	}
+	.zy-nitro-page .zy-alt-row,
+	.zy-nitro-page .zy-alt-row.is-reversed {
+		grid-template-columns: 1fr;
+		gap: 32px;
+		padding: 40px 0;
+	}
+	.zy-nitro-page .zy-alt-media-card {
+		border-radius: 48px;
+	}
+	.zy-nitro-page .zy-alt-media-card video,
+	.zy-nitro-page .zy-alt-media-card img {
+		border-radius: 32px;
+	}
 }
 
 /* ============================================================================
@@ -2974,7 +3350,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 /* Official Nitro Bottom CTA Section (.download-banner.is-nitro.is-new — Screenshot 010721.png) */
 .zy-nitro-footer-cta {
 	position: relative;
-	padding: 170px 0 200px;
+	padding: 120px 0 160px;
 	text-align: center;
 	overflow: visible;
 	z-index: 1;
@@ -2982,9 +3358,9 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 .zy-nitro-footer-bg-img {
 	position: absolute;
-	inset: auto 0% -2px;
+	inset: auto 0% 0%;
 	display: block;
-	margin-bottom: 0;
+	margin-bottom: -20px;
 	width: 100%;
 	height: auto;
 	pointer-events: none;
@@ -3023,8 +3399,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 @media screen and (min-width: 1440px) {
 	.zy-nitro-footer-cta {
-		padding-top: 190px;
-		padding-bottom: 220px;
+		padding-top: 120px;
+		padding-bottom: 160px;
 	}
 	.zy-nitro-footer-inner {
 		max-width: 54rem;
@@ -3043,8 +3419,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 
 @media screen and (min-width: 1920px) {
 	.zy-nitro-footer-cta {
-		padding-top: 220px;
-		padding-bottom: 250px;
+		padding-top: 150px;
+		padding-bottom: 200px;
 	}
 	.zy-nitro-footer-inner {
 		max-width: 62rem;
@@ -3438,8 +3814,15 @@ body.has-nav-dd-open .zy-nav-page-blur {
 }
 
 /* Careers Page Container matching Discord's deep dark blurple aesthetic */
-.zy-careers-page {
-	background: linear-gradient(180deg, #090b26 0%, #10144a 24%, #14195c 54%, #181d68 78%, #5865f2 100%);
+.zy-careers-page,
+.zy-quests-page,
+.zy-safety-page,
+.zy-developers-page {
+	background-color: #000000;
+	background-image: url("/site/media/zycord/download-hero-bg.webp");
+	background-position: 50% 0%;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
 	color: #ffffff;
 	overflow-x: clip;
 	overflow-y: visible;
@@ -4191,4 +4574,24 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 		transform: none;
 	}
 }
+
+/* Global Subpage Bottom Glow Transition into Footer (for pages without dedicated bottom banner) */
+main:not(.zy-home-wrapper):not(.zy-download-page):not(.zy-nitro-page) > section:last-child:not(.zy-dl-ptb-banner):not(.zy-nitro-footer-cta):not(.final-horizon-section) {
+	position: relative;
+	padding-bottom: 136px !important;
+	background-image: url("/site/media/zycord/download-ptb-bg.png");
+	background-position: 50% 100%;
+	background-repeat: no-repeat;
+	background-size: 100% 340px;
+}
+
+main > div:not(.zy-download-page):not(.zy-nitro-page) > section:last-child:not(.zy-dl-ptb-banner):not(.zy-nitro-footer-cta):not(.final-horizon-section) {
+	position: relative;
+	padding-bottom: 136px !important;
+	background-image: url("/site/media/zycord/download-ptb-bg.png");
+	background-position: 50% 100%;
+	background-repeat: no-repeat;
+	background-size: 100% 340px;
+}
+
 
