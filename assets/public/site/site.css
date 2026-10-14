@@ -4052,21 +4052,21 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 .final-horizon-clyde {
 	position: absolute;
 	inset: auto auto 0% 0%;
-	width: 9%;
-	max-width: 128px;
+	width: 10.5%;
+	max-width: 150px;
 	height: auto;
-	margin-left: 8rem;
-	margin-bottom: 1.25rem;
-	transform: scaleX(-1);
-	z-index: 1;
+	margin-left: 7.4%;
+	margin-bottom: 1.5rem;
+	transform: none;
+	z-index: 10;
 	pointer-events: none;
 	filter: none;
 	animation: none;
 }
 @media (min-width: 1920px) {
 	.final-horizon-clyde {
-		margin-left: 12rem;
-		margin-bottom: 1.5rem;
+		margin-left: 7.8%;
+		margin-bottom: 2rem;
 	}
 }
 /* WUMPUS SITTING AT CENTER — Matches Discord .wumpus-footer-home-contain.smaller.is_2025 */
