@@ -1,4 +1,6 @@
 * text=auto
+assets/public/download/*.deb filter=lfs diff=lfs merge=lfs -text
+assets/public/updates/linux/*.deb filter=lfs diff=lfs merge=lfs -text
 *.sh -crlf
 *.nix -crlf
 .husky/pre-commit -crlf

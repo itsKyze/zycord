@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Zycord
+Comment=Zycord real-time voice, video, and chat communication platform
+GenericName=Internet Messenger
+Exec=/opt/Zycord/zycord %U
+Icon=zycord
+Type=Application
+StartupNotify=true
+Categories=Network;InstantMessaging;Chat;VideoConference;
+MimeType=x-scheme-handler/zycord;
+StartupWMClass=Zycord

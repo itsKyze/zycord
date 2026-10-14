@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ZycordTheme" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">@color/zycord_bg</item>
+        <item name="android:colorBackground">@color/zycord_bg</item>
+        <item name="android:statusBarColor">@color/zycord_bg</item>
+        <item name="android:navigationBarColor">@color/zycord_bg</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+</resources>

@@ -16,23 +16,44 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import fs from "node:fs/promises";
 import path from "node:path";
-import express, { Router } from "express";
+import express, { Router, Request, Response } from "express";
 import { PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
 const UPDATES_FOLDER = path.join(PUBLIC_ASSETS_FOLDER, "updates");
 
-router.use(
-    "/windows",
-    express.static(path.join(UPDATES_FOLDER, "windows"), {
-        index: false,
-        redirect: false,
-        setHeaders: (res) => {
-            res.set("Access-Control-Allow-Origin", "*");
-            res.set("Cache-Control", "no-cache");
-        },
-    }),
-);
+const staticOptions = {
+    index: false,
+    redirect: false,
+    setHeaders: (res: Response) => {
+        res.set("Access-Control-Allow-Origin", "*");
+        res.set("Cache-Control", "no-cache, no-store, must-revalidate");
+        const requestPath = String(res.req?.path || "");
+        if (requestPath.endsWith(".mobileconfig")) {
+            res.set("Content-Type", "application/x-apple-aspen-config");
+            res.set("Content-Disposition", 'inline; filename="Zycord.mobileconfig"');
+        }
+    },
+};
+
+router.get("/", async (_req: Request, res: Response) => {
+    try {
+        const manifest = await fs.readFile(path.join(UPDATES_FOLDER, "manifest.json"), "utf8");
+        res.set("Access-Control-Allow-Origin", "*")
+            .set("Cache-Control", "no-cache, no-store, must-revalidate")
+            .type("json")
+            .send(manifest);
+    } catch {
+        res.status(404).json({ error: "Updates manifest not found" });
+    }
+});
+
+for (const platformName of ["windows", "android", "macos", "linux", "ios"]) {
+    router.use(`/${platformName}`, express.static(path.join(UPDATES_FOLDER, platformName), staticOptions));
+}
+
+router.use(express.static(UPDATES_FOLDER, staticOptions));
 
 export default router;

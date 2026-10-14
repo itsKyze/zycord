@@ -47,7 +47,7 @@ def main():
 
     # Save app icons
     app_icon_512.save(os.path.join(ROOT, "assets", "icon.png"), "PNG")
-    app_icon_512.save(os.path.join(ROOT, "desktop", "assets", "icon.png"), "PNG")
+    app_icon_512.save(os.path.join(ROOT, "platform", "desktop", "assets", "icon.png"), "PNG")
     app_icon_512.save(os.path.join(ROOT, "extra", "admin-api", "Utilities", "Spacebar.Client", "wwwroot", "icon-512.png"), "PNG")
     app_icon_512.save(os.path.join(ROOT, "extra", "admin-api", "Utilities", "Spacebar.Client", "wwwroot", "img", "icon.png"), "PNG")
 
@@ -55,7 +55,7 @@ def main():
     ico_sizes = [(16,16), (24,24), (32,32), (48,48), (64,64), (128,128), (256,256)]
     ico_imgs = [app_icon_512.resize(s, Image.Resampling.LANCZOS) for s in ico_sizes]
     ico_imgs[0].save(os.path.join(ROOT, "assets", "icon.ico"), format="ICO", sizes=ico_sizes, append_images=ico_imgs[1:])
-    ico_imgs[0].save(os.path.join(ROOT, "desktop", "assets", "icon.ico"), format="ICO", sizes=ico_sizes, append_images=ico_imgs[1:])
+    ico_imgs[0].save(os.path.join(ROOT, "platform", "desktop", "assets", "icon.ico"), format="ICO", sizes=ico_sizes, append_images=ico_imgs[1:])
 
     # 5. White Mascot Icons
     # assets/icon_white.png: 658x512
@@ -68,18 +68,18 @@ def main():
     icon_white_canvas.save(os.path.join(ROOT, "assets", "icon_white.png"), "PNG")
     icon_white_canvas.save(os.path.join(ROOT, "extra", "admin-api", "Utilities", "Spacebar.Client", "wwwroot", "img", "icon_white.png"), "PNG")
 
-    # desktop/assets/logo.png: 512x512 white mascot
+    # platform/desktop/assets/logo.png: 512x512 white mascot
     desktop_logo = Image.new("RGBA", (512, 512), (0, 0, 0, 0))
     scale_dl = min(460.0 / cw, 460.0 / ch)
     sdl_w = int(round(cw * scale_dl))
     sdl_h = int(round(ch * scale_dl))
     rdl = cropped_white.resize((sdl_w, sdl_h), Image.Resampling.LANCZOS)
     desktop_logo.paste(rdl, ((512 - sdl_w) // 2, (512 - sdl_h) // 2), rdl)
-    desktop_logo.save(os.path.join(ROOT, "desktop", "assets", "logo.png"), "PNG")
+    desktop_logo.save(os.path.join(ROOT, "platform", "desktop", "assets", "logo.png"), "PNG")
 
-    # desktop/assets/tray_mascot.png: 16x16 icon for desktop tray menu
+    # platform/desktop/assets/tray_mascot.png: 16x16 icon for desktop tray menu
     tray_mascot = app_icon_512.resize((16, 16), Image.Resampling.LANCZOS)
-    tray_mascot.save(os.path.join(ROOT, "desktop", "assets", "tray_mascot.png"), "PNG")
+    tray_mascot.save(os.path.join(ROOT, "platform", "desktop", "assets", "tray_mascot.png"), "PNG")
 
     # 6. Admin PWA / Favicon icons
     icon_192 = app_icon_512.resize((192, 192), Image.Resampling.LANCZOS)

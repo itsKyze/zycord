@@ -20,11 +20,11 @@ jobs:
           node-version: 20
 
       - name: Install Desktop Dependencies
-        working-directory: ./desktop
+        working-directory: ./platform/desktop
         run: npm install
 
       - name: Build Windows Installer (ZycordSetup.exe)
-        working-directory: ./desktop
+        working-directory: ./platform/desktop
         run: npm run build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -33,14 +33,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Zycord-Windows-Installer
-          path: desktop/dist/ZycordSetup.exe
+          path: platform/desktop/dist/ZycordSetup.exe
 
       - name: Release to GitHub (on tag)
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            desktop/dist/ZycordSetup.exe
-            desktop/dist/latest.yml
+            platform/desktop/dist/ZycordSetup.exe
+            platform/desktop/dist/latest.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
