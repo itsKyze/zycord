@@ -301,13 +301,13 @@ export function ZycordFooter() {
 			<div className="zy-wordmark-container" aria-hidden="true">
 				<svg
 					className="zy-wordmark-svg"
-					viewBox="0 0 1765 340"
+					viewBox="0 0 1765 390"
 					fill="none"
 					xmlns="http://www.w3.org/2000/svg"
 				>
 					<text
 						x="882.5"
-						y="236"
+						y="292"
 						text-anchor="middle"
 						fill="#E0E3FF"
 						font-family="Poppins, 'Inter', system-ui, sans-serif"
