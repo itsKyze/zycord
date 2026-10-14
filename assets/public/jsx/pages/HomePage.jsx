@@ -573,9 +573,6 @@ export function HomePage() {
 				</div>
 
 				<div className="final-horizon-art">
-					{/* Dark Horizon Floor Shelf (Matches Screenshot 2) */}
-					<div className="final-horizon-floor" aria-hidden="true"></div>
-
 					<img
 						src="/site/media/zycord/footer-horizon.webp"
 						alt="Zycord Cosmic Horizon Lineup"
