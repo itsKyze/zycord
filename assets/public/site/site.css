@@ -1168,125 +1168,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	display: block;
 }
 
-/* ============================================================================
-   FINAL HORIZON SECTION — Full CTA + Wumpus Sitting on Horizon Edge
-   (Exact Match to Discord's final section layout)
-   ============================================================================ */
 
-.final-horizon-section {
-	position: relative;
-	overflow: visible;
-	padding-top: 72px;
-	padding-bottom: 0;
-	text-align: center;
-	z-index: 10;
-}
-
-.final-horizon-art {
-	position: relative;
-	width: 100%;
-	max-width: 1220px;
-	margin: 48px auto 0;
-	overflow: visible;
-	pointer-events: none;
-}
-
-.final-horizon-bg {
-	width: 100%;
-	height: auto;
-	display: block;
-	position: relative;
-	bottom: 0;
-	z-index: 2;
-	margin: 0 auto;
-}
-
-/* Clyde 3D Robot — positioned right under the girl's resting forearm on the left */
-.final-horizon-clyde {
-	position: absolute;
-	left: 19.8%;
-	bottom: 19%;
-	width: clamp(72px, 6.2vw, 94px);
-	height: auto;
-	z-index: 5;
-	pointer-events: none;
-	filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.48));
-}
-
-.final-horizon-smoke {
-	position: absolute;
-	left: 20%;
-	bottom: 24%;
-	transform: translateX(-50%);
-	width: clamp(80px, 7vw, 110px);
-	height: auto;
-	z-index: 4;
-	pointer-events: none;
-	opacity: 0;
-}
-
-/* Official Hero Wumpus & Leaf — exact Discord 2026 sizing */
-.hero-char-wumpus {
-	position: absolute;
-	left: 46%;
-	bottom: -2%;
-	width: clamp(200px, 23vw, 320px);
-	height: auto;
-	z-index: 5;
-	pointer-events: none;
-	filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.6));
-}
-
-/* hero-wumpus-leaf — floats above wumpus head like Discord */
-.hero-char-wumpus-leaf {
-	position: absolute;
-	left: 47%;
-	bottom: 25%;
-	width: clamp(160px, 16vw, 240px);
-	height: auto;
-	z-index: 6;
-	pointer-events: none;
-	animation: hero-leaf-float 4.2s ease-in-out infinite;
-	filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
-}
-
-@keyframes hero-leaf-float {
-	0%, 100% { transform: translate3d(0, 0px, 0) rotate(-3deg); }
-	50% { transform: translate3d(0, -9px, 0) rotate(5deg); }
-}
-
-/* Official Horizon Wumpus & Leaf — exact Discord 2026 sizing */
-/* footer-wumpus-sitting — sits neatly in the 23% gap with hands on the edge and legs dangling */
-.final-horizon-wumpus {
-	position: absolute;
-	left: 49.5%;
-	bottom: -4%;
-	transform: translateX(-50%);
-	width: clamp(180px, 16.5vw, 250px);
-	height: auto;
-	z-index: 9;
-	pointer-events: none;
-	filter: drop-shadow(0 22px 38px rgba(0, 0, 0, 0.6));
-}
-
-/* footer-wumpus-leaf — floats naturally 10px-15px above Wumpus's head */
-.final-horizon-leaf {
-	position: absolute;
-	left: 49.5%;
-	bottom: 42%;
-	transform: translateX(-50%);
-	width: clamp(50px, 4.2vw, 68px);
-	height: auto;
-	z-index: 10;
-	pointer-events: none;
-	animation: horizon-leaf-float 4.2s ease-in-out infinite;
-	filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.35));
-}
-
-@keyframes horizon-leaf-float {
-	0%, 100% { transform: translate3d(-50%, 0px, 0) rotate(-3deg); }
-	50% { transform: translate3d(-50%, -8px, 0) rotate(4deg); }
-}
 
 .zy-star {
 	position: absolute;
@@ -3885,9 +3767,9 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 }
 .hero-char-girl {
 	position: absolute;
-	left: -2%;
-	bottom: 0%;
-	width: 20%;
+	left: 5%;
+	bottom: 1.8%;
+	width: 22%;
 	height: auto;
 	z-index: 4;
 	pointer-events: none;
@@ -3895,9 +3777,9 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 }
 .hero-char-clyde-wrap {
 	position: absolute;
-	left: 10%;
-	bottom: 3.2%;
-	width: 7.8%;
+	left: 14.5%;
+	bottom: 4.8%;
+	width: 8.5%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -3919,13 +3801,11 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 }
 .hero-char-wumpus-wrap {
 	position: absolute;
-	left: 47.8%;
+	left: 44.5%;
 	bottom: 1.2%;
 	transform: translateX(-50%);
-	width: 15.5%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	width: 21.5%;
+	display: block;
 	z-index: 6;
 	pointer-events: none;
 }
@@ -3937,9 +3817,9 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 }
 .hero-char-wumpus-leaf {
 	position: absolute;
-	top: -12%;
-	left: 31%;
-	width: 44%;
+	bottom: 89%;
+	left: 33%;
+	width: 34%;
 	height: auto;
 	z-index: 7;
 	animation: hero-leaf-float 4.2s ease-in-out infinite;
@@ -3947,9 +3827,9 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 }
 .hero-char-boy {
 	position: absolute;
-	left: 77.5%;
-	bottom: 0.8%;
-	width: 13.8%;
+	left: 71.5%;
+	bottom: 1.8%;
+	width: 17%;
 	height: auto;
 	z-index: 4;
 	pointer-events: none;
@@ -3957,14 +3837,14 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 }
 .hero-trophy-blur {
 	position: absolute;
-	right: 0%;
+	right: -1%;
 	top: 24%;
-	width: clamp(140px, 11vw, 185px);
+	width: clamp(140px, 12vw, 195px);
 	height: auto;
 	z-index: 1;
 	pointer-events: none;
 	filter: blur(4px) drop-shadow(0 16px 28px rgba(0, 0, 0, 0.45));
-	opacity: 0.76;
+	opacity: 0.78;
 }
 @keyframes hero-clyde-bob {
 	0%, 100% { transform: translate3d(0, -10px, 0); }
@@ -4043,17 +3923,17 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	left: 0;
 	right: 0;
 	bottom: 0;
-	height: 42px;
-	background: linear-gradient(180deg, #15183d 0%, #0d0f28 100%);
-	border-top: 1px solid rgba(88, 101, 242, 0.28);
-	box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.5);
+	height: 14px;
+	background: #111328;
+	border-top: 1px solid rgba(88, 101, 242, 0.35);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
 	z-index: 1;
 }
 .final-horizon-clyde {
 	position: absolute;
-	left: 20.8%;
-	bottom: 6.2%;
-	width: 6.8%;
+	left: 20%;
+	bottom: 3.5%;
+	width: 7.2%;
 	height: auto;
 	z-index: 5;
 	pointer-events: none;
@@ -4061,13 +3941,11 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 }
 .final-horizon-wumpus-wrap {
 	position: absolute;
-	left: 48.2%;
-	bottom: -2.8%;
+	left: 48%;
+	bottom: -4%;
 	transform: translateX(-50%);
-	width: 17%;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	width: 20%;
+	display: block;
 	z-index: 9;
 	pointer-events: none;
 }
@@ -4079,9 +3957,9 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 }
 .final-horizon-leaf {
 	position: absolute;
-	top: -10.5%;
-	left: 28%;
-	width: 44%;
+	bottom: 87%;
+	left: 31%;
+	width: 38%;
 	height: auto;
 	z-index: 10;
 	animation: horizon-leaf-float 4.2s ease-in-out infinite;
