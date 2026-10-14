@@ -547,21 +547,26 @@ export function HomePage() {
 			     - Full character lineup + 3D Clyde Robot + Wumpus sitting OVER the footer horizon edge)
 			    ===================================================================== */}
 			<section className="final-horizon-section zy-home-sec-tex-7" id="about">
-				<img src="/site/media/zycord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "30px", top: "10%", left: "14%" }} />
-				<img src="/site/media/zycord/star-m.svg" alt="" aria-hidden="true" className="zy-star d3" style={{ width: "22px", top: "16%", right: "16%" }} />
+				<img src="/site/media/zycord/star-lg.svg" alt="" aria-hidden="true" className="zy-star d1" style={{ width: "30px", top: "12%", left: "12%" }} />
+				<img src="/site/media/zycord/star-m.svg" alt="" aria-hidden="true" className="zy-star d3" style={{ width: "22px", top: "18%", right: "14%" }} />
+				<img src="/site/media/zycord/star-sm.svg" alt="" aria-hidden="true" className="zy-star d2" style={{ width: "16px", top: "34%", left: "8%" }} />
+				<img src="/site/media/zycord/star-sm.svg" alt="" aria-hidden="true" className="zy-star d4" style={{ width: "16px", top: "28%", right: "10%" }} />
 
 				<div className="zy-container">
 					<h2
-						className="zy-display"
+						className="zy-display final-horizon-title"
 						style={{
-							fontSize: "clamp(32px, 4.8vw, 58px)",
+							fontSize: "clamp(30px, 4vw, 54px)",
 							maxWidth: "920px",
-							margin: "0 auto"
+							margin: "0 auto",
+							lineHeight: "1.16"
 						}}
 					>
-						YOU CAN'T SCROLL ANYMORE. BETTER GO CHAT.
+						YOU CAN'T SCROLL ANYMORE.
+						<br />
+						BETTER GO CHAT.
 					</h2>
-					<div className="hero-bottom-ctas" style={{ marginTop: "32px" }}>
+					<div className="hero-bottom-ctas" style={{ marginTop: "24px" }}>
 						<a className="zy-btn zy-btn-secondary" href="/download/windows">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 								<path d="M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" />
@@ -573,6 +578,7 @@ export function HomePage() {
 				</div>
 
 				<div className="final-horizon-art">
+					<div className="final-horizon-floor" aria-hidden="true" />
 					<img
 						src="/site/media/zycord/footer-horizon.webp"
 						alt="Zycord Cosmic Horizon Lineup"
