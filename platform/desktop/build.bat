@@ -25,6 +25,6 @@ if %ERRORLEVEL% NEQ 0 (
 echo.
 echo ========================================================
 echo   BUILD COMPLETED SUCCESSFULLY!
-echo   Installer: desktop\dist\ZycordSetup.exe
+echo   Installer: platform\desktop\dist\ZycordSetup.exe
 echo ========================================================
 pause

@@ -73,7 +73,7 @@ export function DownloadPage() {
 								Use Zycord to easily talk while playing your favorite PC games, show what you’re playing as your status, and stream your games to your friends.
 							</p>
 							<div className="zy-pill-btn-row">
-								<a className="zy-white-pill-btn" href="/download/windows?platform=osx">
+								<a className="zy-white-pill-btn" href="/download/macos" download="Zycord-macOS.zip">
 									<svg width="24" height="25" viewBox="0 0 24 25" fill="currentColor" aria-hidden="true">
 										<path d="M19.6239 8.31868C19.5079 8.40869 17.4597 9.56281 17.4597 12.1291C17.4597 15.0974 20.066 16.1475 20.144 16.1735C20.132 16.2375 19.7299 17.6116 18.7698 19.0118C17.9138 20.2439 17.0197 21.474 15.6595 21.474C14.2994 21.474 13.9494 20.6839 12.3792 20.6839C10.849 20.6839 10.305 21.5 9.06087 21.5C7.81675 21.5 6.94866 20.3599 5.95056 18.9597C4.79444 17.3156 3.86035 14.7613 3.86035 12.3371C3.86035 8.44869 6.3886 6.38649 8.87685 6.38649C10.199 6.38649 11.3011 7.25458 12.1312 7.25458C12.9213 7.25458 14.1534 6.33448 15.6575 6.33448C16.2276 6.33448 18.2758 6.38649 19.6239 8.31868ZM14.9435 4.68832C15.5655 3.95024 16.0056 2.92614 16.0056 1.90204C16.0056 1.76003 15.9936 1.61601 15.9676 1.5C14.9555 1.538 13.7513 2.17407 13.0253 3.01615C12.4552 3.66422 11.9232 4.68832 11.9232 5.72642C11.9232 5.88244 11.9492 6.03845 11.9612 6.08846C12.0252 6.10046 12.1292 6.11446 12.2332 6.11446C13.1413 6.11446 14.2834 5.5064 14.9435 4.68832Z" />
 									</svg>
@@ -113,16 +113,16 @@ export function DownloadPage() {
 										</svg>
 									</button>
 									<div className="zy-action-dropdown-menu" role="menu">
-										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=deb">
+										<a className="zy-action-dropdown-item" href="/download/linux?format=deb">
 											<span>deb</span>
 										</a>
-										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=tar.gz">
+										<a className="zy-action-dropdown-item" href="/download/linux?format=tar.gz">
 											<span>tar.gz</span>
 										</a>
-										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=rpm">
+										<a className="zy-action-dropdown-item" href="/download/linux?format=rpm">
 											<span>rpm</span>
 										</a>
-										<a className="zy-action-dropdown-item" href="/download/windows?platform=linux&format=pkg.tar.zst">
+										<a className="zy-action-dropdown-item" href="/download/linux?format=pkg.tar.zst">
 											<span>pkg.tar.zst</span>
 										</a>
 									</div>
@@ -145,17 +145,17 @@ export function DownloadPage() {
 								Out and about? Sunk in a massive beanbag? Bring Zycord with you and chat whenever, have fun with friends, or just see what’s up.
 							</p>
 							<div className="zy-pill-btn-row">
-								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+								<a className="zy-white-pill-btn" href="/download/Zycord.mobileconfig">
 									<svg width="24" height="25" viewBox="0 0 24 25" fill="currentColor" aria-hidden="true">
 										<path d="M19.6239 8.31868C19.5079 8.40869 17.4597 9.56281 17.4597 12.1291C17.4597 15.0974 20.066 16.1475 20.144 16.1735C20.132 16.2375 19.7299 17.6116 18.7698 19.0118C17.9138 20.2439 17.0197 21.474 15.6595 21.474C14.2994 21.474 13.9494 20.6839 12.3792 20.6839C10.849 20.6839 10.305 21.5 9.06087 21.5C7.81675 21.5 6.94866 20.3599 5.95056 18.9597C4.79444 17.3156 3.86035 14.7613 3.86035 12.3371C3.86035 8.44869 6.3886 6.38649 8.87685 6.38649C10.199 6.38649 11.3011 7.25458 12.1312 7.25458C12.9213 7.25458 14.1534 6.33448 15.6575 6.33448C16.2276 6.33448 18.2758 6.38649 19.6239 8.31868ZM14.9435 4.68832C15.5655 3.95024 16.0056 2.92614 16.0056 1.90204C16.0056 1.76003 15.9936 1.61601 15.9676 1.5C14.9555 1.538 13.7513 2.17407 13.0253 3.01615C12.4552 3.66422 11.9232 4.68832 11.9232 5.72642C11.9232 5.88244 11.9492 6.03845 11.9612 6.08846C12.0252 6.10046 12.1292 6.11446 12.2332 6.11446C13.1413 6.11446 14.2834 5.5064 14.9435 4.68832Z" />
 									</svg>
-									<span>App Store</span>
+									<span>iOS</span>
 								</a>
-								<a className="zy-white-pill-btn" data-zy-open-app href="/app">
+								<a className="zy-white-pill-btn" href="/download/android" download="Zycord.apk">
 									<svg width="24" height="25" viewBox="0 0 24 25" fill="currentColor" aria-hidden="true">
 										<path d="M12.411 13.3719L4.51124 21.248L4.65636 21.3458C5.01074 21.5483 5.44836 21.5517 5.80498 21.3537L15.1942 16.1484L12.411 13.3719ZM4.08374 20.0858L11.6145 12.5776L4.08374 5.0694V20.0858ZM19.9979 11.5145L16.3192 9.47488L13.2075 12.5776L16.218 15.5802L19.9979 13.4855C20.3602 13.2841 20.5841 12.9084 20.5841 12.5C20.5841 12.0916 20.3602 11.7159 19.9979 11.5145ZM4.65636 3.65415L4.42799 3.82515L12.411 11.7834L15.2955 8.90789L5.80498 3.64628C5.44836 3.44828 5.01074 3.45165 4.65636 3.65415Z" />
 									</svg>
-									<span>Google Play</span>
+									<span>Android APK</span>
 								</a>
 							</div>
 						</div>

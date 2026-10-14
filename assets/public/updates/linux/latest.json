@@ -1,0 +1,20 @@
+{
+  "version": "1.0.11",
+  "versionCode": 11,
+  "platform": "linux",
+  "releaseDate": "2026-10-14T21:17:59.464Z",
+  "files": [
+    {
+      "url": "/updates/linux/Zycord-linux-amd64.deb",
+      "fileName": "Zycord-linux-amd64.deb",
+      "sha512": "Tr8ASwbYCUH7l+lRxsPgv5wO1ZdzE7fZGZ1jwfkI2DilQTg5OiREqBxP9YO1nY9C/0ihh7BxMdLETLvaOYiEXQ==",
+      "size": 108173700
+    },
+    {
+      "url": "/updates/linux/Zycord-linux-x64.tar.gz",
+      "fileName": "Zycord-linux-x64.tar.gz",
+      "sha512": "6dF2Yl/jwgQyMX10ioPXeAc46L40QL9eGo67VULboZj8pmA6JKYXc31HMXlksKZEzZBTzPxVH3t7PvZjQf1tnw==",
+      "size": 104131328
+    }
+  ]
+}

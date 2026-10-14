@@ -4,8 +4,14 @@ dist/
 node_modules
 *.exe
 !assets/public/download/ZycordSetup.exe
+!assets/public/download/ZycordSetup-x64.exe
+!assets/public/download/ZycordSetup-arm64.exe
 !assets/public/updates/windows/ZycordSetup.exe
-!desktop/assets/Update.exe
+!assets/public/updates/windows/ZycordSetup-x64.exe
+!assets/public/updates/windows/ZycordSetup-arm64.exe
+!platform/desktop/assets/Update.exe
+platform/android/app/build/
+platform/android/keystore/
 database.db
 tsconfig.tsbuildinfo
 files/

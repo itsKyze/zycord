@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>PayloadContent</key>
+	<array>
+		<dict>
+			<key>FullScreen</key>
+			<true/>
+			<key>Icon</key>
+			<data></data>
+			<key>IsRemovable</key>
+			<true/>
+			<key>Label</key>
+			<string>Zycord</string>
+			<key>PayloadDescription</key>
+			<string>Adds Zycord to the Home Screen.</string>
+			<key>PayloadDisplayName</key>
+			<string>Zycord</string>
+			<key>PayloadIdentifier</key>
+			<string>com.zyron.zycord.webclip</string>
+			<key>PayloadType</key>
+			<string>com.apple.webClip.managed</string>
+			<key>PayloadUUID</key>
+			<string>8C5E2B1A-6F44-4A91-9D20-11C04D0EB001</string>
+			<key>PayloadVersion</key>
+			<integer>1</integer>
+			<key>Precomposed</key>
+			<true/>
+			<key>URL</key>
+			<string>https://app.zyron.site/app</string>
+		</dict>
+	</array>
+	<key>PayloadDisplayName</key>
+	<string>Zycord</string>
+	<key>PayloadIdentifier</key>
+	<string>com.zyron.zycord.profile</string>
+	<key>PayloadRemovalDisallowed</key>
+	<false/>
+	<key>PayloadType</key>
+	<string>Configuration</string>
+	<key>PayloadUUID</key>
+	<string>A91D4E77-2B10-4C55-8E61-11C04D040001</string>
+	<key>PayloadVersion</key>
+	<integer>1</integer>
+</dict>
+</plist>

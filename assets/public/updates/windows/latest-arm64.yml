@@ -1,0 +1,8 @@
+version: 1.0.11
+files:
+  - url: ZycordSetup-arm64.exe
+    sha512: 4VZPRnaolDyjKDAQr2y2EKiPwmKm3CfArp7qfDoR5r9Rp4qq5ZmzG1Bj419a2wMeR4B95xXi0JcadNTQNsXkhQ==
+    size: 84491171
+path: ZycordSetup-arm64.exe
+sha512: 4VZPRnaolDyjKDAQr2y2EKiPwmKm3CfArp7qfDoR5r9Rp4qq5ZmzG1Bj419a2wMeR4B95xXi0JcadNTQNsXkhQ==
+releaseDate: '2026-10-14T21:17:59.464Z'
