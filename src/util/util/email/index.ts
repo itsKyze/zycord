@@ -51,7 +51,7 @@ export enum MailTypes {
 export const Email: {
     transporter: IEmailClient | null;
     init: () => Promise<void>;
-    generateLink: (type: Omit<MailTypes, "changePassword">, id: string) => Promise<string>;
+    generateLink: (type: Omit<MailTypes, "changePassword">, id: string, extra?: { ip?: string }) => Promise<string>;
     sendMail: (type: MailTypes, user: User, email: string) => Promise<void>;
     sendVerifyEmail: (user: User, email: string) => Promise<void>;
     sendResetPassword: (user: User, email: string) => Promise<void>;
@@ -65,7 +65,7 @@ export const Email: {
             region: string;
             country_name: string;
         },
-    ) => Promise<void>;
+    ) => Promise<boolean>;
     doReplacements: (
         template: string,
         user: User,
@@ -160,7 +160,7 @@ export const Email: {
      * @param type the MailType to generate a link for
      * @param id user id
      */
-    generateLink: async function (type, id) {
+    generateLink: async function (type, id, extra) {
         const user = await User.findOne({ where: { id }, select: { id: true, email: true, data: true } });
         const reset = type === MailTypes.resetPassword;
         const isLogin = type === MailTypes.newLoginLocation;
@@ -169,6 +169,7 @@ export const Email: {
                 typ: reset ? "password_reset" : isLogin ? "login_verify" : "email_verify",
                 uid: id,
                 email: user?.email,
+                ip: extra?.ip,
                 ph: crypto
                     .createHash("sha256")
                     .update(user?.data?.hash ?? "")
@@ -280,7 +281,7 @@ export const Email: {
     sendNewLoginLocation: async function (user, email, ipInfo) {
         if (!this.transporter) {
             console.log(`[Email] Skipped newLoginLocation delivery for user ${user.id}: no email provider configured`);
-            return;
+            return false;
         }
 
         const htmlTemplate = await fs.readFile(path.join(ASSET_FOLDER_PATH, "email_templates", "new_login_location.html"), { encoding: "utf-8" });
@@ -291,7 +292,7 @@ export const Email: {
         const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
         const logoUrl = `${origin}/static/zycord_logo.png`;
 
-        const actionUrl = await this.generateLink(MailTypes.newLoginLocation, user.id);
+        const actionUrl = await this.generateLink(MailTypes.newLoginLocation, user.id, { ip: ipInfo?.ip });
 
         const html = this.doReplacements(htmlTemplate, user, actionUrl, ipInfo, logoUrl);
         const text = this.doReplacements(textTemplate, user, actionUrl, ipInfo);
@@ -306,7 +307,8 @@ export const Email: {
             html,
         };
 
-        return this.transporter.sendMail(message);
+        await this.transporter.sendMail(message);
+        return true;
     },
 
     /**

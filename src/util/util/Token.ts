@@ -260,9 +260,15 @@ export async function generateCompactToken(id: string): Promise<string> {
     });
 }
 
-export async function generateToken(id: string, isAdminSession: boolean = false, scopes: string[] | undefined = undefined, existingSession?: Session): Promise<string | undefined> {
+export async function generateToken(
+    id: string,
+    isAdminSession: boolean = false,
+    scopes: string[] | undefined = undefined,
+    existingSession?: Session,
+    issuedAt?: number,
+): Promise<string | undefined> {
     await assertNotSuspended(id);
-    const iat = Math.floor(Date.now() / 1000);
+    const iat = issuedAt ?? Math.floor(Date.now() / 1000);
     const keyPair = JwtKeypairManager.keypair;
 
     const session =
@@ -290,6 +296,7 @@ export async function generateToken(id: string, isAdminSession: boolean = false,
             keyPair.privateKey,
             {
                 algorithm: "ES512",
+                noTimestamp: true,
             },
             (err, token) => {
                 if (err) return rej(err);

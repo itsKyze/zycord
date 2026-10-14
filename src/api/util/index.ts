@@ -17,6 +17,7 @@
 */
 
 export * from "./utility/ipAddress";
+export * from "./utility/loginVerification";
 export * from "./handlers/Message";
 export * from "./handlers/DirectMessage";
 export * from "./utility/passwordStrength";
