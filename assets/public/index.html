@@ -67,15 +67,18 @@
 			position: relative;
 			height: 44px;
 		}
+		/* Crown — Matches Discord .crown.is_2025 (12rem at 1440px, 14rem at 1920px, depth-of-field blur) */
 		.hero-crown {
 			position: absolute;
 			left: 38%;
-			top: -86px;
-			width: clamp(160px, 12vw, 210px);
+			top: -92px;
+			width: clamp(160px, 13.3vw, 224px);
 			height: auto;
-			filter: none;
+			filter: blur(4px);
 			opacity: 1;
 			pointer-events: none;
+			will-change: transform, translate;
+			animation: hero-prop-float 6s ease-in-out infinite;
 		}
 		.hero-art-stage {
 			position: relative;
@@ -192,17 +195,23 @@
 			pointer-events: none;
 			filter: none;
 		}
-		/* Trophy on right — Matches Discord .star.is_2025 */
+		/* Trophy on right — Matches Discord .star.is_2025 (depth-of-field blur, floating behind the monitor) */
 		.hero-trophy-blur {
 			position: absolute;
-			right: -3%;
-			top: 26%;
-			width: clamp(144px, 11vw, 168px);
+			right: -4%;
+			top: 22%;
+			width: clamp(150px, 12.8vw, 205px);
 			height: auto;
 			z-index: 1;
 			pointer-events: none;
-			filter: none;
+			filter: blur(4px);
 			opacity: 1;
+			will-change: transform, translate;
+			animation: hero-prop-float 7s ease-in-out -2.5s infinite reverse;
+		}
+		@keyframes hero-prop-float {
+			0%, 100% { translate: 0 0; rotate: 0deg; }
+			50% { translate: 0 -14px; rotate: 4deg; }
 		}
 		@keyframes hero-clyde-bob {
 			0%, 100% { transform: translate3d(0, -10px, 0); }
