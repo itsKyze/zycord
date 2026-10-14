@@ -602,10 +602,10 @@
 
 				const showSucceeded = () => {
 					renderVerifyBox({
-						title: isLogin ? "Login Verified!" : "Email Verified!",
-						subtitle: "",
-						buttonText: "Continue to Zycord",
-						onButtonClick: goApp,
+						title: isLogin ? "Device verified" : "Email Verified!",
+						subtitle: isLogin ? "This location is approved. Go back to the sign-in screen and log in again." : "",
+						buttonText: isLogin ? "Back to Login" : "Continue to Zycord",
+						onButtonClick: isLogin ? goLogin : goApp,
 						loading: false,
 						showEnvelope: true,
 					});
@@ -645,7 +645,7 @@
 						const data = await response.json().catch(() => ({}));
 
 						if (response.ok) {
-							if (data.token && !localAuthToken) {
+							if (!isLogin && data.token && !localAuthToken) {
 								localStorage.setItem("token", JSON.stringify(data.token));
 							}
 							showSucceeded();

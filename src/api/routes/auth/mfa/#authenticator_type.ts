@@ -18,7 +18,7 @@
 
 import { Request, Response, Router } from "express";
 import { route } from "@spacebar/api/middlewares";
-import { MfaInvalidCode, MfaInvalidTicket, guardedMfaAttempt, readTicket, verifyMfaMethod } from "@spacebar/api/util";
+import { MfaInvalidCode, MfaInvalidTicket, gateNewLoginLocation, guardedMfaAttempt, readTicket, verifyMfaMethod } from "@spacebar/api/util";
 import { User } from "@spacebar/database";
 import { generateToken } from "@spacebar/util";
 
@@ -31,8 +31,13 @@ router.post("/", route({ authentication: "never", spacebarOnly: false }), async 
     if (!decoded?.uid) throw MfaInvalidTicket();
     if (!(await guardedMfaAttempt(ticket!, () => verifyMfaMethod(decoded.uid!, authenticator_type, code, decoded)))) throw MfaInvalidCode();
 
-    const user = await User.findOneOrFail({ where: { id: decoded.uid }, select: { id: true, disabled: true, deleted: true }, relations: { settings: true } });
+    const user = await User.findOneOrFail({
+        where: { id: decoded.uid },
+        select: { id: true, disabled: true, deleted: true, email: true, verified: true, data: true },
+        relations: { settings: true },
+    });
     if (decoded.undelete && (user.disabled || user.deleted)) await User.update({ id: user.id }, { disabled: false, deleted: false });
+    await gateNewLoginLocation(req, user);
 
     res.json({
         user_id: user.id,

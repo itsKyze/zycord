@@ -19,7 +19,7 @@
 import bcrypt from "bcrypt";
 import { Request, Response, Router } from "express";
 import { route } from "@spacebar/api/middlewares";
-import { EmailChange, Pomelo, authenticatorTypes, checkProfileAcrossGuilds, oauth2User, revokeSessions } from "@spacebar/api/util";
+import { EmailChange, Pomelo, authenticatorTypes, checkProfileAcrossGuilds, consumeBackupCode, oauth2User, requireMfa, revokeSessions, verifyTotp } from "@spacebar/api/util";
 import { AvatarDecoration, User } from "@spacebar/database";
 import {
     broadcastUserUpdate,
@@ -87,12 +87,14 @@ router.patch(
 
         const user = await User.findOneOrFail({
             where: { id: req.user_id },
-            select: Object.fromEntries([...PrivateUserProjection, "data", "recent_avatars"].map((i) => [i, true])), //TODO: cleanup
+            select: Object.fromEntries([...PrivateUserProjection, "data", "recent_avatars", "totp_secret"].map((i) => [i, true])), //TODO: cleanup
         });
 
         const publicBefore = JSON.stringify(user.toPublicUser());
         let newToken: string | undefined;
         let emailChanged = false;
+        let passwordChanged = false;
+        let passwordIssuedAt = 0;
 
         const checkPassword = async () => {
             if (!body.password)
@@ -145,10 +147,48 @@ router.patch(
 
         if (body.new_password) {
             await checkPassword();
-            user.data.hash = await bcrypt.hash(body.new_password, 12);
-            user.data.valid_tokens_since = new Date();
-            await revokeSessions(user.id, req.session?.session_id);
-            newToken = (await generateToken(user.id, false, undefined, req.session)) as string;
+            if (!user.data?.hash)
+                throw FieldErrors({
+                    password: {
+                        code: "PASSWORD_DOES_NOT_MATCH",
+                        message: req.t("auth:login.INVALID_PASSWORD"),
+                    },
+                });
+            const min = Config.get().register.password.minLength ?? 8;
+            if (body.new_password.length < min || body.new_password.length > 72)
+                throw FieldErrors({
+                    new_password: {
+                        code: "PASSWORD_REQUIREMENTS_MIN_LENGTH",
+                        message: `Must be between ${min} and 72 in length.`,
+                    },
+                });
+            if (await bcrypt.compare(body.new_password, user.data.hash))
+                throw FieldErrors({
+                    new_password: {
+                        code: "PASSWORD_REQUIREMENTS_NOT_MET",
+                        message: "New password cannot be the same as your current password.",
+                    },
+                });
+            if (user.mfa_enabled && user.totp_secret) {
+                const totpOk = verifyTotp(user.totp_secret, body.code);
+                const backupOk = !totpOk && (await consumeBackupCode(user.id, body.code));
+                if (!totpOk && !backupOk)
+                    throw FieldErrors({
+                        code: {
+                            code: "INVALID_TOTP",
+                            message: "Invalid two-factor code.",
+                        },
+                    });
+            } else if (user.mfa_enabled) {
+                await requireMfa(req, { password: body.password });
+            }
+            passwordIssuedAt = Math.floor(Date.now() / 1000) + 1;
+            user.data = {
+                ...user.data,
+                hash: await bcrypt.hash(body.new_password, 12),
+                valid_tokens_since: new Date(passwordIssuedAt * 1000),
+            };
+            passwordChanged = true;
         }
 
         if (body.username && body.username !== user.username) {
@@ -268,6 +308,12 @@ router.patch(
 
         user.validate();
         await user.save();
+        if (passwordChanged) {
+            await User.update({ id: user.id }, { data: user.data });
+            await revokeSessions(user.id, req.session?.session_id);
+            newToken = (await generateToken(user.id, false, undefined, req.session, passwordIssuedAt)) as string;
+            if (user.email) await Email.sendPasswordChanged(user, user.email).catch((e) => console.error(`[Email] failed to send password changed email to ${user.id}`, e));
+        }
 
         const updated = await User.findOneOrFail({
             where: { id: req.user_id },
