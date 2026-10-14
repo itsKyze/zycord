@@ -1528,18 +1528,21 @@
         },
         /* @__PURE__ */ h("source", { src: "/site/media/zycord/sec6-platforms.mp4", type: "video/mp4" })
       )
-    ))))), /* @__PURE__ */ h("section", { className: "final-horizon-section zy-home-sec-tex-7", id: "about" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-lg.svg", alt: "", "aria-hidden": "true", className: "zy-star d1", style: { width: "30px", top: "10%", left: "14%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-m.svg", alt: "", "aria-hidden": "true", className: "zy-star d3", style: { width: "22px", top: "16%", right: "16%" } }), /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h(
+    ))))), /* @__PURE__ */ h("section", { className: "final-horizon-section zy-home-sec-tex-7", id: "about" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-lg.svg", alt: "", "aria-hidden": "true", className: "zy-star d1", style: { width: "30px", top: "12%", left: "12%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-m.svg", alt: "", "aria-hidden": "true", className: "zy-star d3", style: { width: "22px", top: "18%", right: "14%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-sm.svg", alt: "", "aria-hidden": "true", className: "zy-star d2", style: { width: "16px", top: "34%", left: "8%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-sm.svg", alt: "", "aria-hidden": "true", className: "zy-star d4", style: { width: "16px", top: "28%", right: "10%" } }), /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h(
       "h2",
       {
-        className: "zy-display",
+        className: "zy-display final-horizon-title",
         style: {
-          fontSize: "clamp(32px, 4.8vw, 58px)",
+          fontSize: "clamp(30px, 4vw, 54px)",
           maxWidth: "920px",
-          margin: "0 auto"
+          margin: "0 auto",
+          lineHeight: "1.16"
         }
       },
-      "YOU CAN'T SCROLL ANYMORE. BETTER GO CHAT."
-    ), /* @__PURE__ */ h("div", { className: "hero-bottom-ctas", style: { marginTop: "32px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/download/windows" }, /* @__PURE__ */ h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true" }, /* @__PURE__ */ h("path", { d: "M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" }), /* @__PURE__ */ h("path", { d: "M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" })), /* @__PURE__ */ h("span", null, "Download for Windows")))), /* @__PURE__ */ h("div", { className: "final-horizon-art" }, /* @__PURE__ */ h(
+      "YOU CAN'T SCROLL ANYMORE.",
+      /* @__PURE__ */ h("br", null),
+      "BETTER GO CHAT."
+    ), /* @__PURE__ */ h("div", { className: "hero-bottom-ctas", style: { marginTop: "24px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/download/windows" }, /* @__PURE__ */ h("svg", { width: "24", height: "24", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true" }, /* @__PURE__ */ h("path", { d: "M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" }), /* @__PURE__ */ h("path", { d: "M18 18.001V20.001H6V18.001H4V20.001C4 21.103 4.897 22.001 6 22.001H18C19.104 22.001 20 21.103 20 20.001V18.001H18Z" })), /* @__PURE__ */ h("span", null, "Download for Windows")))), /* @__PURE__ */ h("div", { className: "final-horizon-art" }, /* @__PURE__ */ h("div", { className: "final-horizon-floor", "aria-hidden": "true" }), /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/zycord/footer-horizon.webp",
