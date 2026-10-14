@@ -2069,7 +2069,13 @@ authorizeUrl.searchParams.set("permissions", "8"); // Administrator`)
         const prevBtn = wrap.querySelector("[data-zy-carousel-prev]");
         const nextBtn = wrap.querySelector("[data-zy-carousel-next]");
         if (!track) return;
-        const getStep = () => Math.max(280, Math.round(track.clientWidth * 0.65));
+        const getStep = () => {
+          const slide = track.querySelector(".zy-carousel-slide-gallery, .zy-carousel-slide-club, article");
+          if (slide && slide.offsetWidth > 0) {
+            return slide.offsetWidth + 28;
+          }
+          return Math.max(280, Math.round(track.clientWidth * 0.65));
+        };
         if (prevBtn) {
           prevBtn.addEventListener("click", (e) => {
             e.preventDefault();
