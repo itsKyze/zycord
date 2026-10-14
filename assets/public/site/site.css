@@ -59,6 +59,7 @@
 
 html {
 	scroll-behavior: smooth;
+	/* Background color matches footer/blurple — prevents black overscroll flash at bottom */
 	background-color: #5865f2;
 	color: var(--color-snow);
 	font-family: var(--font-abc-ginto-zycord);
@@ -66,20 +67,20 @@ html {
 	line-height: 1.5;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	overflow-x: hidden;
 }
 
 body {
 	margin: 0;
 	min-height: 100vh;
-	background-color: #5865f2;
+	background-color: #090b26;
 	background:
 		radial-gradient(ellipse 95% 55% at 50% 0%, rgba(42, 52, 185, 0.52) 0%, rgba(16, 19, 64, 0.22) 58%, transparent 100%),
 		radial-gradient(circle at 85% 22%, rgba(88, 101, 242, 0.25) 0%, transparent 45%),
 		radial-gradient(circle at 12% 68%, rgba(88, 101, 242, 0.2) 0%, transparent 50%),
 		linear-gradient(180deg, #090b26 0%, #10144a 36%, #181d68 68%, #2832b8 92%, #5865f2 100%);
 	color: var(--color-snow);
-	overflow-x: hidden;
+	/* Only clip horizontal overflow on body — prevents double scrollbar on subpages */
+	overflow-x: clip;
 }
 
 a {
@@ -1222,66 +1223,66 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	opacity: 0.85;
 }
 
-/* Official Hero Wumpus & Leaf — تكبير مثل Discord */
+/* Official Hero Wumpus & Leaf — exact Discord 2026 sizing */
 .hero-char-wumpus {
 	position: absolute;
-	left: 45%;
-	bottom: -1%;
-	width: 27%;
+	left: 46%;
+	bottom: -2%;
+	width: clamp(200px, 23vw, 320px);
 	height: auto;
 	z-index: 5;
 	pointer-events: none;
-	filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.58));
+	filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.6));
 }
 
-/* hero-wumpus-leaf — مكبّرة ومرفوعة مثل Discord الأصلي */
+/* hero-wumpus-leaf — floats above wumpus head like Discord */
 .hero-char-wumpus-leaf {
 	position: absolute;
-	left: 48.5%;
-	bottom: 28%;
-	width: 26%;
+	left: 47%;
+	bottom: 25%;
+	width: clamp(160px, 16vw, 240px);
 	height: auto;
 	z-index: 6;
 	pointer-events: none;
 	animation: hero-leaf-float 4.2s ease-in-out infinite;
-	filter: drop-shadow(0 8px 20px rgba(0,0,0,0.35));
+	filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.35));
 }
 
 @keyframes hero-leaf-float {
 	0%, 100% { transform: translate3d(0, 0px, 0) rotate(-3deg); }
-	50% { transform: translate3d(0, -8px, 0) rotate(4deg); }
+	50% { transform: translate3d(0, -9px, 0) rotate(5deg); }
 }
 
-/* Official Horizon Wumpus & Leaf — مثل Discord */
-/* footer-wumpus-sitting — مكبّر ومرفوع */
+/* Official Horizon Wumpus & Leaf — exact Discord 2026 sizing */
+/* footer-wumpus-sitting — sits on the horizon edge with legs dangling */
 .final-horizon-wumpus {
 	position: absolute;
 	left: 50%;
-	bottom: -4%;
+	bottom: -8%;
 	transform: translateX(-50%);
-	width: clamp(380px, 34vw, 520px);
+	width: clamp(300px, 28vw, 420px);
 	height: auto;
 	z-index: 9;
 	pointer-events: none;
 	filter: drop-shadow(0 24px 40px rgba(0, 0, 0, 0.62));
 }
 
-/* footer-wumpus-leaf — مكبّر */
+/* footer-wumpus-leaf — floats above horizon wumpus head like Discord */
 .final-horizon-leaf {
 	position: absolute;
 	left: 50%;
-	bottom: 53%;
-	width: clamp(210px, 19vw, 290px);
+	bottom: 68%;
+	width: clamp(110px, 10vw, 155px);
 	height: auto;
 	z-index: 10;
 	pointer-events: none;
 	animation: horizon-leaf-float 4.2s ease-in-out infinite;
-	filter: drop-shadow(0 8px 20px rgba(0,0,0,0.35));
+	filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.35));
 }
 
 @keyframes horizon-leaf-float {
 	0%, 100% { transform: translate3d(-50%, 0px, 0) rotate(-3deg); }
-	50% { transform: translate3d(-50%, -9px, 0) rotate(4deg); }
+	50% { transform: translate3d(-50%, -10px, 0) rotate(5deg); }
 }
 
 .zy-star {
@@ -1884,7 +1885,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 .zy-download-page {
 	background: linear-gradient(180deg, #090b26 0%, #10144a 36%, #181d68 68%, #2832b8 92%, #5865f2 100%);
 	color: #ffffff;
-	overflow: visible;
+	overflow-x: clip;
+	overflow-y: visible;
 }
 
 .zy-dl-hero-section {
@@ -2230,7 +2232,8 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	position: relative;
 	background: linear-gradient(180deg, #09061c 0%, #100a29 35%, #150c38 65%, #241454 88%, #5865f2 100%);
 	color: #ffffff;
-	overflow: visible;
+	overflow-x: clip;
+	overflow-y: visible;
 }
 
 .zy-nitro-page .zy-container {
@@ -2663,6 +2666,67 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
+/* Green Xbox Game Pass Banner (nitro-whats-new-bg.png + nitro-xbox-logo.svg) */
+.zy-nitro-green-banner {
+	position: relative;
+	border-radius: 56px;
+	overflow: hidden;
+	background-color: #0b2e23;
+	background-image: linear-gradient(135deg, #07221a 0%, #0d382b 100%);
+	min-height: 440px;
+	display: flex;
+	align-items: center;
+	margin-bottom: 24px;
+	box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+	border: 1px solid rgba(53, 237, 126, 0.25);
+}
+
+.zy-nitro-green-banner-bg {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	width: 58%;
+	height: 100%;
+	object-fit: cover;
+	object-position: left center;
+	pointer-events: none;
+	z-index: 1;
+	mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.7) 18%, black 100%);
+	-webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0, 0, 0, 0.7) 18%, black 100%);
+}
+
+.zy-nitro-green-content {
+	position: relative;
+	z-index: 2;
+	padding: 56px 64px;
+	max-width: 540px;
+	display: flex;
+	flex-direction: column;
+	gap: 24px;
+	text-align: left;
+}
+
+@media screen and (max-width: 991px) {
+	.zy-nitro-green-banner {
+		flex-direction: column;
+		align-items: stretch;
+		min-height: auto;
+		border-radius: 40px;
+	}
+	.zy-nitro-green-banner-bg {
+		position: relative;
+		width: 100%;
+		height: 240px;
+		mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+		-webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+	}
+	.zy-nitro-green-content {
+		padding: 32px 28px 40px;
+		max-width: 100%;
+	}
+}
+
 /* 2 Video Perk Cards below Green Xbox Banner (.nitro-card) */
 .zy-nitro-perk-card {
 	border-radius: 56px;
@@ -2772,17 +2836,42 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	overflow: hidden;
 }
 
-.zy-compare-ellipse-1,
-.zy-compare-ellipse-2,
-.zy-compare-ellipse-3 {
+.zy-compare-ellipse-1 {
 	position: absolute;
-	inset: 0% 0% auto;
+	top: 0;
+	left: 0;
 	width: 100%;
 	height: auto;
 	border-top-left-radius: 39px;
 	border-top-right-radius: 39px;
 	pointer-events: none;
 	z-index: 0;
+	mix-blend-mode: screen;
+}
+
+.zy-compare-ellipse-2 {
+	position: absolute;
+	top: 26%;
+	left: -10%;
+	width: 120%;
+	height: auto;
+	pointer-events: none;
+	z-index: 0;
+	opacity: 0.92;
+	mix-blend-mode: screen;
+}
+
+.zy-compare-ellipse-3 {
+	position: absolute;
+	bottom: 6%;
+	top: auto;
+	left: 0;
+	width: 100%;
+	height: auto;
+	pointer-events: none;
+	z-index: 0;
+	opacity: 0.88;
+	mix-blend-mode: screen;
 }
 
 .zy-compare-table {
@@ -3426,6 +3515,22 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	scroll-behavior: smooth;
 	padding: 8px 4px 20px;
 	scrollbar-width: none;
+	cursor: grab;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: pan-y;
+}
+
+.zy-carousel-track.is-dragging {
+	cursor: grabbing;
+	scroll-snap-type: none;
+	scroll-behavior: auto;
+}
+
+.zy-carousel-track img {
+	pointer-events: none;
+	user-select: none;
+	-webkit-user-drag: none;
 }
 
 .zy-carousel-track::-webkit-scrollbar {

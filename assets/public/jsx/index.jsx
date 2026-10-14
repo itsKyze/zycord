@@ -238,6 +238,82 @@ function bindCarousels() {
 					track.scrollBy({ left: getStep(), behavior: "smooth" });
 				});
 			}
+
+			// Interactive drag-with-hand (mouse & touch drag-to-scroll like Discord)
+			let isDown = false;
+			let startX = 0;
+			let startScrollLeft = 0;
+			let hasDragged = false;
+			let lastX = 0;
+			let velocity = 0;
+			let rafId = null;
+
+			const stopMomentum = () => {
+				if (rafId) {
+					cancelAnimationFrame(rafId);
+					rafId = null;
+				}
+			};
+
+			const onPointerDown = (e) => {
+				if (e.button !== undefined && e.button !== 0) return;
+				stopMomentum();
+				isDown = true;
+				hasDragged = false;
+				startX = e.pageX || (e.touches && e.touches[0].pageX) || 0;
+				lastX = startX;
+				startScrollLeft = track.scrollLeft;
+				velocity = 0;
+				track.classList.add("is-dragging");
+			};
+
+			const onPointerMove = (e) => {
+				if (!isDown) return;
+				const currentX = e.pageX || (e.touches && e.touches[0].pageX) || 0;
+				const delta = currentX - startX;
+				if (Math.abs(delta) > 4) {
+					hasDragged = true;
+				}
+				velocity = currentX - lastX;
+				lastX = currentX;
+				track.scrollLeft = startScrollLeft - delta;
+			};
+
+			const onPointerUp = () => {
+				if (!isDown) return;
+				isDown = false;
+				track.classList.remove("is-dragging");
+
+				// Momentum release
+				if (Math.abs(velocity) > 2) {
+					let currentVel = velocity * 1.4;
+					const decay = () => {
+						track.scrollLeft -= currentVel;
+						currentVel *= 0.92;
+						if (Math.abs(currentVel) > 0.5) {
+							rafId = requestAnimationFrame(decay);
+						}
+					};
+					rafId = requestAnimationFrame(decay);
+				}
+
+				if (hasDragged) {
+					const blockClick = (ev) => {
+						ev.preventDefault();
+						ev.stopPropagation();
+						window.removeEventListener("click", blockClick, true);
+					};
+					window.addEventListener("click", blockClick, true);
+				}
+			};
+
+			track.addEventListener("mousedown", onPointerDown);
+			window.addEventListener("mousemove", onPointerMove);
+			window.addEventListener("mouseup", onPointerUp);
+
+			track.addEventListener("touchstart", onPointerDown, { passive: true });
+			track.addEventListener("touchmove", onPointerMove, { passive: true });
+			track.addEventListener("touchend", onPointerUp, { passive: true });
 		})(wraps[i]);
 	}
 }
