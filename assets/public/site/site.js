@@ -1209,7 +1209,7 @@
     )), /* @__PURE__ */ h(
       "img",
       {
-        src: "/site/media/zycord/hero-boy.webp",
+        src: "/site/media/zycord/hero-layer-2026.webp",
         alt: "",
         "aria-hidden": "true",
         className: "hero-char-boy"
@@ -1539,7 +1539,7 @@
     ), /* @__PURE__ */ h(
       "img",
       {
-        src: "/site/media/zycord/dev-clyde-3d.webp",
+        src: "/site/media/zycord/footer-clyde.webp",
         alt: "",
         "aria-hidden": "true",
         className: "final-horizon-clyde",

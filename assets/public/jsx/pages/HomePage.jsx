@@ -96,7 +96,7 @@ export function HomePage() {
 								</div>
 								{/* 3D Character Bottom-Right (Boy in blue hoodie next to phone) */}
 								<img
-									src="/site/media/zycord/hero-boy.webp"
+									src="/site/media/zycord/hero-layer-2026.webp"
 									alt=""
 									aria-hidden="true"
 									className="hero-char-boy"
@@ -578,7 +578,7 @@ export function HomePage() {
 						loading="lazy"
 					/>
 					<img
-						src="/site/media/zycord/dev-clyde-3d.webp"
+						src="/site/media/zycord/footer-clyde.webp"
 						alt=""
 						aria-hidden="true"
 						className="final-horizon-clyde"
