@@ -31,7 +31,7 @@
 	<meta name="apple-mobile-web-app-title" content="Zycord" />
 	<meta name="application-name" content="Zycord" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261012t" />
+	<link rel="stylesheet" href="/site/site.css?v=20261014c" />
 	<style>
 		.jobs-filter-bar {
 			display: flex;
@@ -84,66 +84,70 @@
 <body>
 	<header data-zy-navbar></header>
 
-	<main>
+	<main class="zy-careers-page">
 		<!-- =====================================================================
-		     1. HERO & OFFICE PHOTO GALLERY — EXACT Zycord
+		     1. HERO & OFFICE PHOTO GALLERY — EXACT DISCORD 2026
 		     ===================================================================== -->
-		<section class="zy-subhero" style="padding-top:132px;padding-bottom:36px;">
+		<section class="zy-subhero" style="padding-top:140px;padding-bottom:24px;overflow:visible;">
 			<div class="zy-container" style="position:relative;">
-				<img src="/site/media/zycord/careers-crown.webp" alt="" aria-hidden="true" class="zy-float-prop tilt" style="width:128px;top:0;left:6%;" />
-				<img src="/site/media/zycord/prop-turnip.webp" alt="" aria-hidden="true" class="zy-float-prop" style="width:118px;top:8%;right:6%;" />
-
 				<div class="zy-subhero-inner">
-					<h1 class="zy-subhero-title">Work at __INSTANCE_NAME__</h1>
+					<h1 class="zy-subhero-title" style="font-style:italic;">Work at __INSTANCE_NAME__</h1>
 					<p class="zy-subhero-sub">
 						Our employees aren’t just the most talented folks in the industry (we may be a little biased), they’re also deeply passionate about gaming, fostering meaningful connections, and of course, __INSTANCE_NAME__.
 					</p>
-					<div style="margin-top:12px;">
+					<div style="margin-top:16px;">
 						<a class="zy-btn zy-btn-primary" href="#all-jobs" style="padding:18px 36px;font-size:18px;">
 							<span>See All Jobs</span>
 						</a>
 					</div>
 				</div>
+			</div>
 
-				<!-- Interactive 8-Photo Office Gallery Carousel with Prev/Next Arrows -->
-				<div class="zy-carousel-wrap" data-zy-carousel style="margin-top:36px;">
-					<div class="zy-carousel-track" data-zy-carousel-track>
-						<div class="zy-carousel-slide-gallery">
-							<img src="/site/media/zycord/careers-hero.webp" alt="__INSTANCE_NAME__ HQ Entrance" />
-						</div>
-						<div class="zy-carousel-slide-gallery">
-							<img src="/site/media/zycord/careers-office-1.webp" alt="__INSTANCE_NAME__ Workspace" />
-						</div>
-						<div class="zy-carousel-slide-gallery">
-							<img src="/site/media/zycord/careers-office-2.webp" alt="__INSTANCE_NAME__ Focus Pod" />
-						</div>
-						<div class="zy-carousel-slide-gallery">
-							<img src="/site/media/zycord/careers-office-4.webp" alt="__INSTANCE_NAME__ Chess &amp; Collaboration Lounge" />
-						</div>
-						<div class="zy-carousel-slide-gallery">
-							<img src="/site/media/zycord/careers-office-5.webp" alt="__INSTANCE_NAME__ Engineering Room" />
-						</div>
-						<div class="zy-carousel-slide-gallery">
-							<img src="/site/media/zycord/careers-office-6.webp" alt="__INSTANCE_NAME__ Design Studio" />
-						</div>
-						<div class="zy-carousel-slide-gallery">
-							<img src="/site/media/zycord/careers-office-7.webp" alt="__INSTANCE_NAME__ Gaming Couch" />
-						</div>
-						<div class="zy-carousel-slide-gallery">
-							<img src="/site/media/zycord/careers-office-3.webp" alt="__INSTANCE_NAME__ Team Hangout" />
-						</div>
+			<!-- Official Discord Full-Bleed 8-Photo Office Gallery with Side Floating Arrows + Floating 3D Crown & Clyde -->
+			<div class="zy-careers-hero-carousel-wrap" data-zy-carousel>
+				<!-- Floating 3D Crown on Top-Left (Matches Discord Screenshot) -->
+				<img src="/site/media/zycord/careers-crown.webp" alt="" aria-hidden="true" class="zy-careers-crown-prop" />
+
+				<!-- Floating 3D Clyde Smiling Head on Bottom-Right (Matches Discord Screenshot) -->
+				<img src="/site/media/zycord/careers-clyde.webp" alt="" aria-hidden="true" class="zy-careers-clyde-prop" />
+
+				<!-- Side Floating Circular Arrows -->
+				<button type="button" class="zy-carousel-side-arrow is-prev" data-zy-carousel-prev aria-label="Previous slide">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M14.5 18L8.5 12L14.5 6" />
+					</svg>
+				</button>
+				<button type="button" class="zy-carousel-side-arrow is-next" data-zy-carousel-next aria-label="Next slide">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M9.5 18L15.5 12L9.5 6" />
+					</svg>
+				</button>
+
+				<!-- Draggable Centered Track with Giant Capsule-Rounded Cards -->
+				<div class="zy-carousel-track zy-careers-track" data-zy-carousel-track>
+					<div class="zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-hero.webp" alt="__INSTANCE_NAME__ HQ Entrance" />
 					</div>
-					<div class="zy-carousel-controls">
-						<button type="button" class="zy-carousel-arrow" data-zy-carousel-prev aria-label="Previous slide">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M14.5 18L8.5 12L14.5 6" />
-							</svg>
-						</button>
-						<button type="button" class="zy-carousel-arrow" data-zy-carousel-next aria-label="Next slide">
-							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M9.5 18L15.5 12L9.5 6" />
-							</svg>
-						</button>
+					<div class="zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-1.webp" alt="__INSTANCE_NAME__ Workspace" />
+					</div>
+					<div class="zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-2.webp" alt="__INSTANCE_NAME__ Focus Pod" />
+					</div>
+					<div class="zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-4.webp" alt="__INSTANCE_NAME__ Chess &amp; Collaboration Lounge" />
+					</div>
+					<div class="zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-5.webp" alt="__INSTANCE_NAME__ Engineering Room" />
+					</div>
+					<div class="zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-6.webp" alt="__INSTANCE_NAME__ Design Studio" />
+					</div>
+					<div class="zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-7.webp" alt="__INSTANCE_NAME__ Gaming Couch" />
+					</div>
+					<div class="zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-3.webp" alt="__INSTANCE_NAME__ Team Hangout" />
 					</div>
 				</div>
 			</div>
