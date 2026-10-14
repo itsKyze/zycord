@@ -37,19 +37,20 @@
 		   OFFICIAL ZYCORD 2026 3D HERO COMPOSITE & HORIZON STYLES
 		   ============================================================================ */
 		.hero-section {
-			padding: 140px 0 96px;
+			padding: 132px 0 88px;
 			position: relative;
 			overflow: hidden;
 		}
 		@media screen and (min-width: 1440px) {
 			.hero-section {
-				padding-top: 11rem;
+				padding-top: 9.5rem;
+				padding-bottom: 5.5rem;
 			}
 		}
 		.hero-grid {
 			display: grid;
 			grid-template-columns: 0.78fr 1.42fr;
-			gap: 28px;
+			gap: 24px;
 			align-items: center;
 			position: relative;
 			z-index: 2;
@@ -58,8 +59,9 @@
 			display: flex;
 			flex-direction: column;
 			gap: 24px;
+			max-width: 492px;
 			position: relative;
-			z-index: 3;
+			z-index: 4;
 		}
 		.hero-crown-wrap {
 			position: relative;
@@ -68,11 +70,11 @@
 		.hero-crown {
 			position: absolute;
 			left: 38%;
-			top: -72px;
-			width: clamp(135px, 11vw, 168px);
+			top: -86px;
+			width: clamp(160px, 12vw, 210px);
 			height: auto;
-			filter: blur(3px) drop-shadow(0 16px 28px rgba(0, 0, 0, 0.52));
-			opacity: 0.86;
+			filter: none;
+			opacity: 1;
 			pointer-events: none;
 		}
 		.hero-art-stage {
@@ -80,7 +82,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: center;
-			min-height: clamp(460px, 40vw, 640px);
+			min-height: clamp(460px, 40vw, 600px);
 		}
 		.hero-art-glow {
 			position: absolute;
@@ -96,8 +98,15 @@
 			position: relative;
 			z-index: 2;
 			width: 100%;
-			max-width: 980px;
+			max-width: 863px;
 			margin: 0 auto;
+			transform: translate(3%, 2%);
+		}
+		@media (min-width: 1920px) {
+			.hero-3d-composite {
+				max-width: 1056px;
+				width: 1056px;
+			}
 		}
 		.hero-main-devices-img {
 			width: 100%;
@@ -105,46 +114,52 @@
 			display: block;
 			filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.65));
 		}
+		/* Girl on left — Matches Discord .home-image-gerl.is_2026 */
 		.hero-char-girl {
 			position: absolute;
-			left: -2%;
-			bottom: 0%;
-			width: 26%;
+			left: 3.1%;
+			bottom: -4.8%;
+			width: 20.1%;
+			max-width: 204px;
 			height: auto;
-			z-index: 4;
+			z-index: 5;
 			pointer-events: none;
-			filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.55));
+			filter: none;
 		}
+		/* Clyde & Shadow — Matches Discord .home_clyde.is_2025.is_2026 */
 		.hero-char-clyde-wrap {
 			position: absolute;
-			left: 20%;
-			bottom: 9%;
-			width: 11%;
+			left: 22.8%;
+			bottom: 1.5%;
+			width: 6.8%;
+			max-width: 72px;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			gap: 4px;
-			z-index: 5;
+			z-index: 6;
 			pointer-events: none;
 		}
 		.hero-char-clyde {
 			width: 100%;
 			height: auto;
-			filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.5));
+			filter: none;
 			animation: hero-clyde-bob 3.8s ease-in-out infinite;
 		}
 		.hero-char-clyde-shadow {
-			width: 80%;
+			width: 64%;
 			height: 3px;
-			opacity: 0.65;
+			opacity: 0.72;
 			animation: hero-clyde-shadow-pulse 3.8s ease-in-out infinite;
 		}
+		/* Wumpus & Leaf — Matches Discord .home_wumpus.is_2025.is_2026 & .home_wumpus-pl.is_2025.is_2026 */
 		.hero-char-wumpus-wrap {
 			position: absolute;
-			left: 42%;
-			bottom: -1%;
+			left: 44.5%;
+			bottom: 0.4%;
 			transform: translateX(-50%);
-			width: 20%;
+			width: 20.4%;
+			max-width: 216px;
 			display: block;
 			z-index: 6;
 			pointer-events: none;
@@ -153,38 +168,41 @@
 			width: 100%;
 			height: auto;
 			display: block;
-			filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55));
+			filter: none;
 		}
 		.hero-char-wumpus-leaf {
 			position: absolute;
-			bottom: 91%;
-			left: 29%;
-			width: 40%;
+			bottom: 98.5%;
+			left: 0%;
+			width: 100%;
 			height: auto;
 			z-index: 7;
+			filter: none;
 			animation: hero-leaf-float 4.2s ease-in-out infinite;
-			filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
 		}
+		/* Boy in front of phone — Matches Discord Layer.webp (background-position: 80% 90%, background-size: 100px) */
 		.hero-char-boy {
 			position: absolute;
-			left: 73%;
-			bottom: 0%;
-			width: 20%;
+			left: 79.5%;
+			bottom: 2.2%;
+			width: 9.5%;
+			max-width: 100px;
 			height: auto;
-			z-index: 4;
+			z-index: 6;
 			pointer-events: none;
-			filter: drop-shadow(0 18px 32px rgba(0, 0, 0, 0.55));
+			filter: none;
 		}
+		/* Trophy on right — Matches Discord .star.is_2025 */
 		.hero-trophy-blur {
 			position: absolute;
-			right: -1%;
-			top: 24%;
-			width: clamp(140px, 12vw, 195px);
+			right: -3%;
+			top: 26%;
+			width: clamp(144px, 11vw, 168px);
 			height: auto;
 			z-index: 1;
 			pointer-events: none;
-			filter: blur(4px) drop-shadow(0 16px 28px rgba(0, 0, 0, 0.45));
-			opacity: 0.78;
+			filter: none;
+			opacity: 1;
 		}
 		@keyframes hero-clyde-bob {
 			0%, 100% { transform: translate3d(0, -10px, 0); }
@@ -205,10 +223,10 @@
 			justify-content: center;
 			align-items: center;
 			flex-wrap: wrap;
-			gap: 18px;
-			margin-top: 44px;
+			gap: 24px;
+			margin-top: clamp(36px, 4.2vw, 52px);
 			position: relative;
-			z-index: 5;
+			z-index: 10;
 		}
 		.hero-bottom-ctas .zy-btn {
 			font-size: 18px;
@@ -538,11 +556,20 @@
 			}
 			.hero-copy {
 				align-items: center;
+				margin: 0 auto;
+			}
+			.hero-3d-composite {
+				max-width: 680px;
+				transform: none;
 			}
 		}
 		@media (max-width: 580px) {
 			.hero-bottom-ctas .zy-btn {
 				width: 100%;
+			}
+			.hero-3d-composite {
+				max-width: 100%;
+				transform: none;
 			}
 		}
 	</style>
@@ -557,6 +584,6 @@
 	<!-- Global Zycord 2026 Blurple Footer (Rendered via JSX) -->
 	<footer data-zy-footer></footer>
 
-	<script src="/site/site.js?v=20261014e"></script>
+	<script src="/site/site.js?v=20261014f"></script>
 </body>
 </html>
