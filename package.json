@@ -41,6 +41,10 @@
         "url": "git+https://github.com/itsKyze/zycord.git"
     },
     "author": "Zyron Solutions Ltd",
+    "contributors": [
+        "itsKyze <itsKyze@users.noreply.github.com>",
+        "Cursor Agent <cursoragent@cursor.com>"
+    ],
     "license": "AGPL-3.0-only",
     "bugs": {
         "url": "https://github.com/itsKyze/zycord/issues"
