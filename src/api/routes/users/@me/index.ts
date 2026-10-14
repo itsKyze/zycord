@@ -169,6 +169,7 @@ router.patch(
                         message: "New password cannot be the same as your current password.",
                     },
                 });
+            const previousHash = user.data.hash;
             if (user.mfa_enabled && user.totp_secret) {
                 const totpOk = verifyTotp(user.totp_secret, body.code);
                 const backupOk = !totpOk && (await consumeBackupCode(user.id, body.code));
@@ -185,6 +186,7 @@ router.patch(
             passwordIssuedAt = Math.floor(Date.now() / 1000) + 1;
             user.data = {
                 ...user.data,
+                previous_hash: previousHash,
                 hash: await bcrypt.hash(body.new_password, 12),
                 valid_tokens_since: new Date(passwordIssuedAt * 1000),
             };

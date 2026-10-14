@@ -1,6 +1,8 @@
 import { Request } from "express";
-import { Session, User } from "@spacebar/database";
+import { Session, User, TrustedLoginDevice } from "@spacebar/database";
 import { Email, FieldErrors } from "@spacebar/util";
+
+const DEVICE_IDLE_MS = 24 * 60 * 60 * 1000;
 
 export function normalizeIp(ip?: string | null) {
     if (!ip) return "";
@@ -15,59 +17,115 @@ export function requestIp(req: Request) {
     return normalizeIp(typeof header === "string" ? header : req.ip);
 }
 
-export async function authorizeLoginIp(userId: string, ip?: string | null) {
-    const normalized = normalizeIp(ip);
-    if (!normalized) return;
-    const user = await User.findOne({ where: { id: userId }, select: { id: true, data: true } });
-    if (!user?.data) return;
-    const current = (user.data.authorized_ips ?? []).map((entry) => normalizeIp(entry)).filter(Boolean);
-    if (current.includes(normalized)) return;
-    await User.update({ id: userId }, { data: { ...user.data, authorized_ips: [...current, normalized].slice(-30) } });
+export function describeLoginDevice(req: Request): TrustedLoginDevice {
+    const ua = String(req.headers["user-agent"] ?? "");
+    let os = "Unknown";
+    if (/Windows/i.test(ua)) os = "Windows";
+    else if (/Android/i.test(ua)) os = "Android";
+    else if (/iPad/i.test(ua)) os = "iPadOS";
+    else if (/iPhone|iOS/i.test(ua)) os = "iOS";
+    else if (/Mac OS X|Macintosh/i.test(ua)) os = "macOS";
+    else if (/CrOS/i.test(ua)) os = "ChromeOS";
+    else if (/Linux/i.test(ua)) os = "Linux";
+
+    let client = "Browser";
+    if (/ZycordMobile/i.test(ua)) client = "Zycord";
+    else if (/Electron/i.test(ua)) client = "Zycord";
+    else if (/Edg\//i.test(ua)) client = "Edge";
+    else if (/OPR\/|Opera/i.test(ua)) client = "Opera";
+    else if (/Chrome\//i.test(ua)) client = "Chrome";
+    else if (/Firefox\//i.test(ua)) client = "Firefox";
+    else if (/Safari/i.test(ua)) client = "Safari";
+
+    const kind: TrustedLoginDevice["kind"] = /Android|iPhone|iPad|Mobile|ZycordMobile/i.test(ua) ? "mobile" : "desktop";
+    return {
+        key: `${kind}|${os}|${client}`,
+        label: `${client} on ${os}`,
+        kind,
+        os,
+        client,
+        ip: requestIp(req),
+        last_seen: Date.now(),
+    };
 }
 
-export async function knownLoginIps(userId: string, authorized: string[] = []) {
-    const sessions = await Session.find({ where: { user_id: userId }, select: { session_id: true, last_seen_ip: true, last_seen: true } });
-    const ips = new Set<string>();
-    for (const session of sessions) {
-        const ip = normalizeIp(session.last_seen_ip);
-        if (ip) ips.add(ip);
-    }
-    for (const ip of authorized) {
-        const normalized = normalizeIp(ip);
-        if (normalized) ips.add(normalized);
-    }
-    const mostRecent = sessions.reduce((max, session) => Math.max(max, session.last_seen?.getTime() ?? 0), 0);
-    return { ips, sessionCount: sessions.length, mostRecent };
+function deviceFromClaim(claimed: { ip?: string; device?: string; label?: string }, fallback: TrustedLoginDevice): TrustedLoginDevice {
+    const [kind, os, client] = (claimed.device || fallback.key).split("|");
+    const safeKind: TrustedLoginDevice["kind"] = kind === "mobile" ? "mobile" : "desktop";
+    return {
+        key: claimed.device || fallback.key,
+        label: claimed.label || fallback.label,
+        kind: safeKind,
+        os: os || fallback.os,
+        client: client || fallback.client,
+        ip: normalizeIp(claimed.ip) || fallback.ip,
+        last_seen: Date.now(),
+    };
+}
+
+export async function rememberTrustedDevice(userId: string, device: TrustedLoginDevice) {
+    const ip = normalizeIp(device.ip);
+    if (!device.key || !ip) return;
+    const user = await User.findOne({ where: { id: userId }, select: { id: true, data: true } });
+    if (!user?.data) return;
+    const nextDevice = { ...device, ip, last_seen: Date.now() };
+    const devices = (user.data.trusted_devices ?? []).filter((entry) => !(entry.key === nextDevice.key && normalizeIp(entry.ip) === ip));
+    const ips = (user.data.authorized_ips ?? []).map((entry) => normalizeIp(entry)).filter(Boolean);
+    await User.update(
+        { id: userId },
+        {
+            data: {
+                ...user.data,
+                authorized_ips: ips.includes(ip) ? ips : [...ips, ip].slice(-30),
+                trusted_devices: [...devices, nextDevice].slice(-30),
+            },
+        },
+    );
+}
+
+export async function authorizeLoginDevice(userId: string, req: Request, claimed?: { ip?: string; device?: string; label?: string }) {
+    await rememberTrustedDevice(userId, deviceFromClaim(claimed ?? {}, describeLoginDevice(req)));
 }
 
 export async function gateNewLoginLocation(req: Request, user: Pick<User, "id" | "email" | "verified"> & { data?: User["data"] }) {
-    const ip = requestIp(req);
-    if (user.email && user.verified) {
-        const known = await knownLoginIps(user.id, user.data?.authorized_ips);
-        const daysSinceActivity = known.mostRecent > 0 ? (Date.now() - known.mostRecent) / (1000 * 60 * 60 * 24) : 999;
-        const isUnknownIp = known.ips.size > 0 && !!ip && !known.ips.has(ip);
-        const isStaleLogin = known.sessionCount > 0 && daysSinceActivity > 7;
+    const device = describeLoginDevice(req);
+    const devices = user.data?.trusted_devices ?? [];
+    const knownIps = new Set((user.data?.authorized_ips ?? []).map((entry) => normalizeIp(entry)).filter(Boolean));
+    const sessions = await Session.find({ where: { user_id: user.id }, select: { session_id: true, last_seen: true, last_seen_ip: true } });
+    const recentlyHere = sessions.some((session) => normalizeIp(session.last_seen_ip) === device.ip && Date.now() - (session.last_seen?.getTime() ?? 0) < DEVICE_IDLE_MS);
+    const match = devices.find((entry) => entry.key === device.key && normalizeIp(entry.ip) === device.ip);
+    const idle = !!match && Date.now() - (match.last_seen || 0) > DEVICE_IDLE_MS && !recentlyHere;
+    const firstDevice = devices.length === 0 && knownIps.size === 0;
+    const legacyIp = devices.length === 0 && !!device.ip && knownIps.has(device.ip);
 
-        if (isUnknownIp || isStaleLogin) {
-            const sent = await Email.sendNewLoginLocation(user as User, user.email, {
-                ip: ip || "127.0.0.1",
-                city: (req.headers["cf-ipcity"] as string) || "Unknown City",
-                region: (req.headers["cf-region"] as string) || "Unknown Region",
-                country_name: (req.headers["cf-ipcountry"] as string) || "Unknown Country",
-            }).catch((e) => {
-                console.error(`[Login] Failed to send new login location email to ${user.id}:`, e);
-                return false;
-            });
-
-            if (isUnknownIp && sent)
-                throw FieldErrors({
-                    login: {
-                        code: "ACCOUNT_LOGIN_VERIFICATION_EMAIL",
-                        message: "New login location detected, please check your e-mail.",
-                    },
-                });
-        }
+    if (!user.email || !user.verified || firstDevice || legacyIp) {
+        if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
+        return;
     }
 
-    if (ip) await authorizeLoginIp(user.id, ip).catch((e) => console.error(`[Login] Failed to remember login location for ${user.id}:`, e));
+    if (!match || idle) {
+        const sent = await Email.sendNewLoginLocation(user as User, user.email!, {
+            ip: device.ip || "127.0.0.1",
+            city: (req.headers["cf-ipcity"] as string) || "Unknown City",
+            region: (req.headers["cf-region"] as string) || "Unknown Region",
+            country_name: (req.headers["cf-ipcountry"] as string) || "Unknown Country",
+            device: device.label,
+            deviceKey: device.key,
+        }).catch((e) => {
+            console.error(`[Login] Failed to send new login location email to ${user.id}:`, e);
+            return false;
+        });
+
+        if (sent)
+            throw FieldErrors({
+                login: {
+                    code: "ACCOUNT_LOGIN_VERIFICATION_EMAIL",
+                    message: idle
+                        ? "We haven't seen this device in a while. Check your e-mail to verify it's you."
+                        : "New device login detected, please check your e-mail.",
+                },
+            });
+    }
+
+    if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
 }

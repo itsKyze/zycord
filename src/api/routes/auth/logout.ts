@@ -18,7 +18,7 @@
 
 import { Request, Response, Router } from "express";
 import { route } from "@spacebar/api/middlewares";
-import { revokeStaleE2eeDevices } from "@spacebar/api/util";
+import { describeLoginDevice, rememberTrustedDevice, revokeStaleE2eeDevices } from "@spacebar/api/util";
 import { PushDevice, Session } from "@spacebar/database";
 import { emitEvent } from "@spacebar/util";
 
@@ -45,6 +45,7 @@ router.post(
         }
 
         const session_id = req.session?.session_id;
+        await rememberTrustedDevice(req.user_id, describeLoginDevice(req)).catch(() => {});
         if (req.session) await Session.remove(req.session);
 
         res.status(204).send();

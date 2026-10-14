@@ -17,7 +17,7 @@
 */
 
 import { Request, Response, Router } from "express";
-import { authorizeLoginIp, emitUserUpdate, readTicket, requestIp } from "@spacebar/api/util";
+import { authorizeLoginDevice, emitUserUpdate, readTicket } from "@spacebar/api/util";
 import { route } from "@spacebar/api/middlewares";
 import { User } from "@spacebar/database";
 import { FieldErrors, generateToken } from "@spacebar/util";
@@ -48,7 +48,9 @@ router.post(
                 },
             });
 
-        const decoded = readTicket<{ typ: string; uid?: string; email?: string; ip?: string }>(token, "email_verify") ?? readTicket<{ typ: string; uid?: string; email?: string; ip?: string }>(token, "login_verify");
+        const decoded =
+            readTicket<{ typ: string; uid?: string; email?: string; ip?: string; device?: string; label?: string }>(token, "email_verify") ??
+            readTicket<{ typ: string; uid?: string; email?: string; ip?: string; device?: string; label?: string }>(token, "login_verify");
         if (!decoded?.uid) throw invalid();
 
         const user = await User.findOne({ where: { id: decoded.uid }, select: { id: true, email: true, verified: true, disabled: true, deleted: true } });
@@ -71,7 +73,7 @@ router.post(
         }
 
         if (decoded.typ === "login_verify") {
-            await authorizeLoginIp(user.id, decoded.ip || requestIp(req));
+            await authorizeLoginDevice(user.id, req, decoded);
             return res.json({ user_id: user.id, token: null, verified: true });
         }
 

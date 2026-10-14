@@ -51,7 +51,7 @@ export enum MailTypes {
 export const Email: {
     transporter: IEmailClient | null;
     init: () => Promise<void>;
-    generateLink: (type: Omit<MailTypes, "changePassword">, id: string, extra?: { ip?: string }) => Promise<string>;
+    generateLink: (type: Omit<MailTypes, "changePassword">, id: string, extra?: { ip?: string; device?: string; label?: string }) => Promise<string>;
     sendMail: (type: MailTypes, user: User, email: string) => Promise<void>;
     sendVerifyEmail: (user: User, email: string) => Promise<void>;
     sendResetPassword: (user: User, email: string) => Promise<void>;
@@ -64,6 +64,8 @@ export const Email: {
             city: string;
             region: string;
             country_name: string;
+            device?: string;
+            deviceKey?: string;
         },
     ) => Promise<boolean>;
     doReplacements: (
@@ -75,6 +77,7 @@ export const Email: {
             city: string;
             region: string;
             country_name: string;
+            device?: string;
         },
         logoUrl?: string,
     ) => string;
@@ -123,6 +126,7 @@ export const Email: {
             city: string;
             region: string;
             country_name: string;
+            device?: string;
         },
         logoUrl?: string,
     ) {
@@ -144,6 +148,7 @@ export const Email: {
             ["{locationCity}", ipInfo?.city],
             ["{locationRegion}", ipInfo?.region],
             ["{locationCountryName}", ipInfo?.country_name],
+            ["{deviceName}", ipInfo && "device" in ipInfo ? ipInfo.device : undefined],
         ];
 
         // loop through all replacements and replace them in the template
@@ -170,6 +175,8 @@ export const Email: {
                 uid: id,
                 email: user?.email,
                 ip: extra?.ip,
+                device: extra?.device,
+                label: extra?.label,
                 ph: crypto
                     .createHash("sha256")
                     .update(user?.data?.hash ?? "")
@@ -292,7 +299,7 @@ export const Email: {
         const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
         const logoUrl = `${origin}/static/zycord_logo.png`;
 
-        const actionUrl = await this.generateLink(MailTypes.newLoginLocation, user.id, { ip: ipInfo?.ip });
+        const actionUrl = await this.generateLink(MailTypes.newLoginLocation, user.id, { ip: ipInfo?.ip, device: ipInfo?.deviceKey, label: ipInfo?.device });
 
         const html = this.doReplacements(htmlTemplate, user, actionUrl, ipInfo, logoUrl);
         const text = this.doReplacements(textTemplate, user, actionUrl, ipInfo);
