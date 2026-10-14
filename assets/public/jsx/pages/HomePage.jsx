@@ -553,20 +553,12 @@ export function HomePage() {
 				<img src="/site/media/zycord/star-sm.svg" alt="" aria-hidden="true" className="zy-star d4" style={{ width: "16px", top: "28%", right: "10%" }} />
 
 				<div className="zy-container">
-					<h2
-						className="zy-display final-horizon-title"
-						style={{
-							fontSize: "clamp(30px, 4vw, 54px)",
-							maxWidth: "920px",
-							margin: "0 auto",
-							lineHeight: "1.16"
-						}}
-					>
+					<h2 className="zy-display final-horizon-title">
 						YOU CAN'T SCROLL ANYMORE.
 						<br />
 						BETTER GO CHAT.
 					</h2>
-					<div className="hero-bottom-ctas" style={{ marginTop: "24px" }}>
+					<div className="hero-bottom-ctas">
 						<a className="zy-btn zy-btn-secondary" href="/download/windows">
 							<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
 								<path d="M17.707 10.708L16.293 9.29398L13 12.587V2.00098H11V12.587L7.70697 9.29398L6.29297 10.708L12 16.415L17.707 10.708Z" />
