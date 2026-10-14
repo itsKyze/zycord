@@ -31,7 +31,7 @@
 	<meta name="apple-mobile-web-app-title" content="Zycord" />
 	<meta name="application-name" content="Zycord" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261014b" />
+	<link rel="stylesheet" href="/site/site.css?v=20261014d" />
 	<style>
 		/* ============================================================================
 		   OFFICIAL ZYCORD 2026 3D HERO COMPOSITE & HORIZON STYLES
@@ -107,9 +107,9 @@
 		}
 		.hero-char-girl {
 			position: absolute;
-			left: -2%;
-			bottom: 0%;
-			width: 20%;
+			left: 5%;
+			bottom: 1.8%;
+			width: 22%;
 			height: auto;
 			z-index: 4;
 			pointer-events: none;
@@ -117,9 +117,9 @@
 		}
 		.hero-char-clyde-wrap {
 			position: absolute;
-			left: 10%;
-			bottom: 3.2%;
-			width: 7.8%;
+			left: 14.5%;
+			bottom: 4.8%;
+			width: 8.5%;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -141,13 +141,11 @@
 		}
 		.hero-char-wumpus-wrap {
 			position: absolute;
-			left: 47.8%;
+			left: 44.5%;
 			bottom: 1.2%;
 			transform: translateX(-50%);
-			width: 15.5%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
+			width: 21.5%;
+			display: block;
 			z-index: 6;
 			pointer-events: none;
 		}
@@ -159,9 +157,9 @@
 		}
 		.hero-char-wumpus-leaf {
 			position: absolute;
-			top: -12%;
-			left: 31%;
-			width: 44%;
+			bottom: 89%;
+			left: 33%;
+			width: 34%;
 			height: auto;
 			z-index: 7;
 			animation: hero-leaf-float 4.2s ease-in-out infinite;
@@ -169,9 +167,9 @@
 		}
 		.hero-char-boy {
 			position: absolute;
-			left: 77.5%;
-			bottom: 0.8%;
-			width: 13.8%;
+			left: 71.5%;
+			bottom: 1.8%;
+			width: 17%;
 			height: auto;
 			z-index: 4;
 			pointer-events: none;
@@ -179,14 +177,14 @@
 		}
 		.hero-trophy-blur {
 			position: absolute;
-			right: 0%;
+			right: -1%;
 			top: 24%;
-			width: clamp(140px, 11vw, 185px);
+			width: clamp(140px, 12vw, 195px);
 			height: auto;
 			z-index: 1;
 			pointer-events: none;
 			filter: blur(4px) drop-shadow(0 16px 28px rgba(0, 0, 0, 0.45));
-			opacity: 0.76;
+			opacity: 0.78;
 		}
 		@keyframes hero-clyde-bob {
 			0%, 100% { transform: translate3d(0, -10px, 0); }
@@ -321,18 +319,18 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			height: 42px;
-			background: linear-gradient(180deg, #15183d 0%, #0d0f28 100%);
-			border-top: 1px solid rgba(88, 101, 242, 0.28);
-			box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.5);
+			height: 14px;
+			background: #111328;
+			border-top: 1px solid rgba(88, 101, 242, 0.35);
+			box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
 			z-index: 1;
 		}
 		/* Clyde 3D Robot standing on horizon floor next to girl's legs */
 		.final-horizon-clyde {
 			position: absolute;
-			left: 20.8%;
-			bottom: 6.2%;
-			width: 6.8%;
+			left: 20%;
+			bottom: 3.5%;
+			width: 7.2%;
 			height: auto;
 			z-index: 5;
 			pointer-events: none;
@@ -341,13 +339,11 @@
 		/* 3D Sitting Wumpus with Green Leaf in Center Gap, dangling legs over edge */
 		.final-horizon-wumpus-wrap {
 			position: absolute;
-			left: 48.2%;
-			bottom: -2.8%;
+			left: 48%;
+			bottom: -4%;
 			transform: translateX(-50%);
-			width: 17%;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
+			width: 20%;
+			display: block;
 			z-index: 9;
 			pointer-events: none;
 		}
@@ -359,9 +355,9 @@
 		}
 		.final-horizon-leaf {
 			position: absolute;
-			top: -10.5%;
-			left: 28%;
-			width: 44%;
+			bottom: 87%;
+			left: 31%;
+			width: 38%;
 			height: auto;
 			z-index: 10;
 			animation: horizon-leaf-float 4.2s ease-in-out infinite;
@@ -409,6 +405,6 @@
 	<!-- Global Zycord 2026 Blurple Footer (Rendered via JSX) -->
 	<footer data-zy-footer></footer>
 
-	<script src="/site/site.js?v=20261014c"></script>
+	<script src="/site/site.js?v=20261014d"></script>
 </body>
 </html>
