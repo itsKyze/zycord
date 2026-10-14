@@ -132,6 +132,11 @@ CHROME_PATH="/Applications/Brave Browser.app/Contents/MacOS/Brave Browser" PORT=
 
 Read [CONTRIBUTING.MD](CONTRIBUTING.MD) for the branch and commit conventions and the checks to run before you push.
 
+## Contributors
+
+- **itsKyze** ([@itsKyze](https://github.com/itsKyze))
+- **Cursor Agent** ([@cursoragent](https://github.com/cursoragent))
+
 ## License
 
 AGPL-3.0-only, see [COPYING](COPYING). Copyright (C) 2026 Zyron Solutions Ltd.
