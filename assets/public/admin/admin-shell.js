@@ -114,24 +114,10 @@
       },
       /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("circle", { cx: "11", cy: "11", r: "8" }), /* @__PURE__ */ h("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })),
       /* @__PURE__ */ h("span", null, "Quick Filter")
-    ), /* @__PURE__ */ h("span", { className: "zy-admin-mascot-chip" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/safety-shield-3d.webp", alt: "", width: "22", height: "22" }), /* @__PURE__ */ h("span", null, "Zycord Staff Console")), /* @__PURE__ */ h("a", { className: "btn primary small", href: "/app", style: { textDecoration: "none" } }, "Open Zycord App")));
+    ), /* @__PURE__ */ h("span", { className: "zy-admin-mascot-chip" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/safety-shield-3d.webp", alt: "", width: "22", height: "22" }), /* @__PURE__ */ h("span", null, "Staff")), /* @__PURE__ */ h("a", { className: "btn primary small", href: "/app", style: { textDecoration: "none" } }, "Open Zycord")));
   }
   function AdminLoginShowcase() {
-    return /* @__PURE__ */ h("div", { className: "zy-admin-login-art" }, /* @__PURE__ */ h("div", { className: "zy-admin-login-art-copy" }, /* @__PURE__ */ h("span", { className: "zy-admin-login-badge" }, "ZYCORD INSTANCE ADMINISTRATION"), /* @__PURE__ */ h("h2", null, "Enterprise Control, Real-Time Moderation & Collectibles"), /* @__PURE__ */ h("p", null, "Manage users, servers, 1,099+ profile collectibles, custom badges, security reports, announcements, and live system telemetry from a unified Zycord command console."), /* @__PURE__ */ h("div", { className: "zy-admin-login-pills" }, /* @__PURE__ */ h("span", null, "Users & Guilds"), /* @__PURE__ */ h("span", null, "1,099 Collectibles"), /* @__PURE__ */ h("span", null, "Live Telemetry"), /* @__PURE__ */ h("span", null, "Safety & Reports"))), /* @__PURE__ */ h(
-      "img",
-      {
-        src: "/site/media/zycord/safety-shield-3d.webp",
-        alt: "",
-        className: "zy-admin-login-mascot"
-      }
-    ), /* @__PURE__ */ h(
-      "img",
-      {
-        src: "/site/media/zycord/dev-clyde-3d.webp",
-        alt: "",
-        className: "zy-admin-login-prop"
-      }
-    ));
+    return /* @__PURE__ */ h("div", { className: "zy-admin-login-art" }, /* @__PURE__ */ h("div", { className: "zy-admin-login-qr", "aria-hidden": "true" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/safety-shield-3d.webp", alt: "" })), /* @__PURE__ */ h("h2", null, "Log in with QR Code"), /* @__PURE__ */ h("p", null, "Scan this with the ", /* @__PURE__ */ h("strong", null, "Zycord mobile app"), " to log in instantly."));
   }
   function decorateSidebarIcons() {
     const links = document.querySelectorAll("#nav a[data-tab]");

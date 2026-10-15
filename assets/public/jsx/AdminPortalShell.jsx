@@ -55,10 +55,10 @@ export function AdminTopHeader() {
 				</button>
 				<span className="zy-admin-mascot-chip">
 					<img src="/site/media/zycord/safety-shield-3d.webp" alt="" width="22" height="22" />
-					<span>Zycord Staff Console</span>
+					<span>Staff</span>
 				</span>
 				<a className="btn primary small" href="/app" style={{ textDecoration: "none" }}>
-					Open Zycord App
+					Open Zycord
 				</a>
 			</div>
 		</div>
@@ -68,29 +68,13 @@ export function AdminTopHeader() {
 export function AdminLoginShowcase() {
 	return (
 		<div className="zy-admin-login-art">
-			<div className="zy-admin-login-art-copy">
-				<span className="zy-admin-login-badge">ZYCORD INSTANCE ADMINISTRATION</span>
-				<h2>Enterprise Control, Real-Time Moderation &amp; Collectibles</h2>
-				<p>
-					Manage users, servers, 1,099+ profile collectibles, custom badges, security reports, announcements, and live system telemetry from a unified Zycord command console.
-				</p>
-				<div className="zy-admin-login-pills">
-					<span>Users &amp; Guilds</span>
-					<span>1,099 Collectibles</span>
-					<span>Live Telemetry</span>
-					<span>Safety &amp; Reports</span>
-				</div>
+			<div className="zy-admin-login-qr" aria-hidden="true">
+				<img src="/site/media/zycord/safety-shield-3d.webp" alt="" />
 			</div>
-			<img
-				src="/site/media/zycord/safety-shield-3d.webp"
-				alt=""
-				className="zy-admin-login-mascot"
-			/>
-			<img
-				src="/site/media/zycord/dev-clyde-3d.webp"
-				alt=""
-				className="zy-admin-login-prop"
-			/>
+			<h2>Log in with QR Code</h2>
+			<p>
+				Scan this with the <strong>Zycord mobile app</strong> to log in instantly.
+			</p>
 		</div>
 	);
 }

@@ -10,9 +10,8 @@
     </head>
     <body>
         <a class="skip-link" href="#view">Skip to content</a>
-        <div id="login" class="login" hidden>
+        <div id="login" class="login zy-admin-login-bg" hidden>
             <div class="zy-admin-login-shell">
-                <div id="zy-admin-login-art-mount"></div>
                 <form class="card login-card" id="login-form" autocomplete="on">
                     <div class="brand login-brand">
                         __INSTANCE_ICON__
@@ -21,14 +20,15 @@
                             <span class="muted">Admin Control Center</span>
                         </div>
                     </div>
-                    <h1>Welcome back, Administrator</h1>
-                    <p class="muted">Sign in with an account that has administrator permissions on this instance.</p>
-                    <label>Email or username<input name="login" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required /></label>
+                    <h1>Welcome back!</h1>
+                    <p class="muted">We're so excited to see you again.</p>
+                    <label>Email or Username<input name="login" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required /></label>
                     <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
-                    <label id="mfa-field" hidden>Two-factor code<input name="code" inputmode="numeric" autocomplete="one-time-code" /></label>
+                    <label id="mfa-field" hidden>Authenticator App<input name="code" inputmode="numeric" autocomplete="one-time-code" /></label>
                     <p class="form-error" id="login-error" hidden></p>
-                    <button class="btn primary" type="submit">Sign In to Console</button>
+                    <button class="btn primary" type="submit">Log In</button>
                 </form>
+                <div id="zy-admin-login-art-mount"></div>
             </div>
         </div>
 
@@ -73,10 +73,14 @@
                     <p id="nav-empty" class="muted" hidden>No matching sections. Try another search.</p>
                 </nav>
                 <div class="sidebar-foot">
-                    <div class="me" id="me"></div>
-                    <a class="btn ghost small" href="/status" target="_blank" rel="noopener">View status page ↗</a>
-                    <a class="btn ghost small" href="/app">Back to app</a>
-                    <button class="btn ghost small" id="logout" type="button">Sign out</button>
+                    <div class="zy-admin-user-panel">
+                        <div class="me" id="me"></div>
+                        <div class="zy-admin-user-actions">
+                            <a class="btn ghost small" href="/status" target="_blank" rel="noopener">Status</a>
+                            <a class="btn ghost small" href="/app">App</a>
+                            <button class="btn ghost small" id="logout" type="button">Log Out</button>
+                        </div>
+                    </div>
                 </div>
             </aside>
             <div class="zy-admin-main-col">
