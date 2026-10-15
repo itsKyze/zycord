@@ -169,35 +169,13 @@ export function getCurrentPathKey() {
 }
 
 function mobileColumns(item) {
-	if (item.key === "download") {
-		return [
-			{
-				links: [
-					{ label: "Windows", href: "/download/windows" },
-					{ label: "Mac", href: "/download/macos" },
-					{ label: "Linux", href: "/download/linux" },
-					{ label: "iOS", href: "/download/Zycord.mobileconfig" },
-					{ label: "Android", href: "/download/android" }
-				]
-			}
-		];
-	}
 	return item.columns || null;
 }
 
 function DrawerChevron() {
 	return (
-		<svg
-			className="zy-drawer-chevron"
-			viewBox="0 0 16 16"
-			fill="none"
-			stroke="currentColor"
-			stroke-width="2.2"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			aria-hidden="true"
-		>
-			<polyline points="3.5 6 8 10.5 12.5 6" />
+		<svg className="zy-drawer-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+			<path d="M12 6L8 10L4 6" stroke="white" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
 		</svg>
 	);
 }
@@ -243,26 +221,28 @@ function MobileDrawerItem({ item, activeKey, onNavigate }) {
 				<DrawerChevron />
 			</button>
 			<div className="zy-drawer-sub">
-				{columns.map((col) => (
-					<div className="zy-drawer-sub-group">
-						{col.title ? <div className="zy-drawer-sub-title">{col.title}</div> : null}
-						{(col.links || []).map((lnk) => (
-							<a href={lnk.href} onClick={onNavigate}>
-								{lnk.label}
-							</a>
-						))}
-						{col.subSection ? (
-							<Fragment>
-								<div className="zy-drawer-sub-title">{col.subSection.title}</div>
-								{(col.subSection.links || []).map((lnk) => (
-									<a href={lnk.href} onClick={onNavigate}>
-										{lnk.label}
-									</a>
-								))}
-							</Fragment>
-						) : null}
-					</div>
-				))}
+				<div className="zy-drawer-sub-inner">
+					{columns.map((col) => (
+						<div className="zy-drawer-sub-group">
+							{col.title ? <div className="zy-drawer-sub-title">{col.title}</div> : null}
+							{(col.links || []).map((lnk) => (
+								<a href={lnk.href} onClick={onNavigate}>
+									{lnk.label}
+								</a>
+							))}
+							{col.subSection ? (
+								<Fragment>
+									<div className="zy-drawer-sub-title">{col.subSection.title}</div>
+									{(col.subSection.links || []).map((lnk) => (
+										<a href={lnk.href} onClick={onNavigate}>
+											{lnk.label}
+										</a>
+									))}
+								</Fragment>
+							) : null}
+						</div>
+					))}
+				</div>
 			</div>
 		</li>
 	);
@@ -383,6 +363,16 @@ export function ZycordNavbar() {
 		document.addEventListener("keydown", (ev) => {
 			if (ev.key === "Escape") {
 				closeAllNavDropdowns(null);
+				const drawer = document.getElementById("zy-mobile-drawer");
+				if (drawer && drawer.classList.contains("is-open")) {
+					const backdrop = document.getElementById("zy-drawer-backdrop");
+					const openBtn = document.getElementById("zy-mobile-open");
+					drawer.classList.remove("is-open");
+					drawer.setAttribute("aria-hidden", "true");
+					if (backdrop) backdrop.classList.remove("is-open");
+					if (openBtn) openBtn.setAttribute("aria-expanded", "false");
+					document.body.style.overflow = "";
+				}
 			}
 		});
 	}
@@ -508,18 +498,13 @@ export function ZycordNavbar() {
 							aria-expanded="false"
 							onClick={() => setDrawer(true)}
 						>
-							<svg
-								width="20"
-								height="20"
-								viewBox="0 0 24 24"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2.2"
-								stroke-linecap="round"
-							>
-								<line x1="3" y1="6" x2="21" y2="6" />
-								<line x1="3" y1="12" x2="21" y2="12" />
-								<line x1="3" y1="18" x2="21" y2="18" />
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+								<path
+									fill-rule="evenodd"
+									clip-rule="evenodd"
+									d="M4 6C4 5.44772 4.44772 5 5 5H19C19.5523 5 20 5.44772 20 6C20 6.55228 19.5523 7 19 7H5C4.44772 7 4 6.55228 4 6ZM4 12C4 11.4477 4.44772 11 5 11H19C19.5523 11 20 11.4477 20 12C20 12.5523 19.5523 13 19 13H5C4.44772 13 4 12.5523 4 12ZM5 17C4.44772 17 4 17.4477 4 18C4 18.5523 4.44772 19 5 19H12C12.5523 19 13 18.5523 13 18C13 17.4477 12.5523 17 12 17H5Z"
+									fill="white"
+								/>
 							</svg>
 						</button>
 					</div>
@@ -539,23 +524,19 @@ export function ZycordNavbar() {
 			>
 				<div className="zy-drawer-sheet">
 					<div className="zy-drawer-header">
-						<a className="zy-brand" href="/" onClick={() => setDrawer(false)}>
-							<span className="zy-brand-mark">
-								<img
-									src="/branding/zycord_icon_white.svg"
-									alt=""
-									width="28"
-									height="28"
-									className="zy-brand-icon-white"
-									onError={(e) => {
-										if (!e.currentTarget.dataset.retried) {
-											e.currentTarget.dataset.retried = "1";
-											e.currentTarget.src = "/assets/public/branding/zycord_icon_white.svg";
-										}
-									}}
-								/>
-							</span>
-							<span>Zycord</span>
+						<a className="zy-drawer-logo" href="/" aria-label="Zycord Home" onClick={() => setDrawer(false)}>
+							<img
+								src="/branding/zycord_icon_white.svg"
+								alt=""
+								width="32"
+								height="32"
+								onError={(e) => {
+									if (!e.currentTarget.dataset.retried) {
+										e.currentTarget.dataset.retried = "1";
+										e.currentTarget.src = "/assets/public/branding/zycord_icon_white.svg";
+									}
+								}}
+							/>
 						</a>
 						<button
 							type="button"
@@ -564,9 +545,8 @@ export function ZycordNavbar() {
 							aria-label="Close Menu"
 							onClick={() => setDrawer(false)}
 						>
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-								<line x1="18" y1="6" x2="6" y2="18" />
-								<line x1="6" y1="6" x2="18" y2="18" />
+							<svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+								<path d="M18 6L6 18M6 6L18 18" stroke="white" stroke-width="2" stroke-linecap="round" />
 							</svg>
 						</button>
 					</div>
