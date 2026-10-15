@@ -602,6 +602,69 @@
     if (path.startsWith("/status")) return "status";
     return "";
   }
+  function mobileColumns(item) {
+    if (item.key === "download") {
+      return [
+        {
+          links: [
+            { label: "Windows", href: "/download/windows" },
+            { label: "Mac", href: "/download/macos" },
+            { label: "Linux", href: "/download/linux" },
+            { label: "iOS", href: "/download/Zycord.mobileconfig" },
+            { label: "Android", href: "/download/android" }
+          ]
+        }
+      ];
+    }
+    return item.columns || null;
+  }
+  function DrawerChevron() {
+    return /* @__PURE__ */ h(
+      "svg",
+      {
+        className: "zy-drawer-chevron",
+        viewBox: "0 0 16 16",
+        fill: "none",
+        stroke: "currentColor",
+        "stroke-width": "2.2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true"
+      },
+      /* @__PURE__ */ h("polyline", { points: "3.5 6 8 10.5 12.5 6" })
+    );
+  }
+  function MobileDrawerItem({ item, activeKey, onNavigate }) {
+    const columns = mobileColumns(item);
+    const hasSub = Boolean(columns && columns.length);
+    if (!hasSub) {
+      return /* @__PURE__ */ h("li", { className: "zy-drawer-item" }, /* @__PURE__ */ h(
+        "a",
+        {
+          className: `zy-drawer-trigger${item.key === activeKey ? " is-active" : ""}`,
+          href: item.href,
+          onClick: onNavigate
+        },
+        /* @__PURE__ */ h("span", null, item.label)
+      ));
+    }
+    const toggle = (event) => {
+      const row = event.currentTarget.closest(".zy-drawer-item");
+      if (!row) return;
+      const open = !row.classList.contains("is-open");
+      const rows = row.parentElement ? row.parentElement.querySelectorAll(".zy-drawer-item.is-open") : [];
+      for (let i = 0; i < rows.length; i++) {
+        if (rows[i] !== row) {
+          rows[i].classList.remove("is-open");
+          const trigger = rows[i].querySelector(".zy-drawer-trigger");
+          if (trigger) trigger.setAttribute("aria-expanded", "false");
+        }
+      }
+      row.classList.toggle("is-open", open);
+      event.currentTarget.setAttribute("aria-expanded", open ? "true" : "false");
+    };
+    return /* @__PURE__ */ h("li", { className: "zy-drawer-item" }, /* @__PURE__ */ h("button", { type: "button", className: "zy-drawer-trigger", "aria-expanded": "false", onClick: toggle }, /* @__PURE__ */ h("span", null, item.label), /* @__PURE__ */ h(DrawerChevron, null)), /* @__PURE__ */ h("div", { className: "zy-drawer-sub" }, columns.map((col) => /* @__PURE__ */ h("div", { className: "zy-drawer-sub-group" }, col.title ? /* @__PURE__ */ h("div", { className: "zy-drawer-sub-title" }, col.title) : null, (col.links || []).map((lnk) => /* @__PURE__ */ h("a", { href: lnk.href, onClick: onNavigate }, lnk.label)), col.subSection ? /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("div", { className: "zy-drawer-sub-title" }, col.subSection.title), (col.subSection.links || []).map((lnk) => /* @__PURE__ */ h("a", { href: lnk.href, onClick: onNavigate }, lnk.label))) : null))));
+  }
   function DropdownMenu({ item }) {
     if (!item.columns || !item.columns.length) return null;
     const ddClass = [
@@ -631,6 +694,7 @@
       const openBtn = document.getElementById("zy-mobile-open");
       if (!drawer || !backdrop || !openBtn) return;
       drawer.classList.toggle("is-open", open);
+      drawer.setAttribute("aria-hidden", open ? "false" : "true");
       backdrop.classList.toggle("is-open", open);
       openBtn.setAttribute("aria-expanded", open ? "true" : "false");
       document.body.style.overflow = open ? "hidden" : "";
@@ -787,13 +851,14 @@
       {
         className: "zy-mobile-drawer",
         id: "zy-mobile-drawer",
-        "aria-label": "Mobile Navigation"
+        "aria-label": "Mobile Navigation",
+        "aria-hidden": "true"
       },
-      /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("div", { className: "zy-drawer-header" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/" }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h(
+      /* @__PURE__ */ h("div", { className: "zy-drawer-sheet" }, /* @__PURE__ */ h("div", { className: "zy-drawer-header" }, /* @__PURE__ */ h("a", { className: "zy-brand", href: "/", onClick: () => setDrawer(false) }, /* @__PURE__ */ h("span", { className: "zy-brand-mark" }, /* @__PURE__ */ h(
         "img",
         {
           src: "/branding/zycord_icon_white.svg",
-          alt: "Zycord",
+          alt: "",
           width: "28",
           height: "28",
           className: "zy-brand-icon-white",
@@ -808,23 +873,20 @@
         "button",
         {
           type: "button",
-          className: "zy-mobile-toggle",
-          style: { display: "inline-flex" },
+          className: "zy-drawer-close",
           id: "zy-mobile-close",
           "aria-label": "Close Menu",
           onClick: () => setDrawer(false)
         },
-        /* @__PURE__ */ h("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), /* @__PURE__ */ h("line", { x1: "6", y1: "6", x2: "18", y2: "18" }))
-      )), /* @__PURE__ */ h("ul", { className: "zy-drawer-links" }, /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { href: "/" }, /* @__PURE__ */ h("span", null, "Home"), /* @__PURE__ */ h("span", { "aria-hidden": "true" }, "→"))), NAVIGATION_ITEMS.map((item) => /* @__PURE__ */ h("li", null, /* @__PURE__ */ h(
-        "a",
+        /* @__PURE__ */ h("svg", { width: "18", height: "18", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.4", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("line", { x1: "18", y1: "6", x2: "6", y2: "18" }), /* @__PURE__ */ h("line", { x1: "6", y1: "6", x2: "18", y2: "18" }))
+      )), /* @__PURE__ */ h("ul", { className: "zy-drawer-links" }, NAVIGATION_ITEMS.map((item) => /* @__PURE__ */ h(
+        MobileDrawerItem,
         {
-          className: item.key === activeKey ? "is-active" : "",
-          href: item.href
-        },
-        /* @__PURE__ */ h("span", null, item.label),
-        /* @__PURE__ */ h("span", { "aria-hidden": "true" }, "→")
-      ))), /* @__PURE__ */ h("li", null, /* @__PURE__ */ h("a", { href: "/status" }, /* @__PURE__ */ h("span", null, "System Status"), /* @__PURE__ */ h("span", { "aria-hidden": "true" }, "→"))))),
-      /* @__PURE__ */ h("div", { className: "zy-drawer-footer" }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/app" }, "Open Zycord in Browser"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/download/windows" }, "Download for Windows"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-ghost", href: authHref }, authLabel))
+          item,
+          activeKey,
+          onNavigate: () => setDrawer(false)
+        }
+      ))), /* @__PURE__ */ h("div", { className: "zy-drawer-footer" }, /* @__PURE__ */ h("a", { className: "zy-drawer-open", href: "/app", onClick: () => setDrawer(false) }, "Open Zycord"), /* @__PURE__ */ h("a", { className: "zy-drawer-download", href: "/download/windows", onClick: () => setDrawer(false) }, "Download for Windows")))
     ));
   }
 
@@ -1149,7 +1211,7 @@
         "data-zy-parallax": "0.14",
         "data-zy-parallax-rotate": "-8"
       }
-    )), /* @__PURE__ */ h("h1", { className: "zy-display", style: { whiteSpace: "nowrap" } }, "GROUP CHAT", /* @__PURE__ */ h("br", null), "THAT'S ALL", /* @__PURE__ */ h("br", null), "FUN & GAMES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.")), /* @__PURE__ */ h("div", { className: "hero-art-stage" }, /* @__PURE__ */ h("div", { className: "hero-art-glow" }), /* @__PURE__ */ h(
+    )), /* @__PURE__ */ h("h1", { className: "zy-display" }, "GROUP CHAT", /* @__PURE__ */ h("br", null), "THAT'S ALL", /* @__PURE__ */ h("br", null), "FUN & GAMES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.")), /* @__PURE__ */ h("div", { className: "hero-art-stage" }, /* @__PURE__ */ h("div", { className: "hero-art-glow" }), /* @__PURE__ */ h(
       "img",
       {
         src: "/site/media/zycord/download-trophy.webp",

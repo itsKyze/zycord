@@ -26,7 +26,7 @@ export function HomePage() {
 									data-zy-parallax-rotate="-8"
 								/>
 							</div>
-							<h1 className="zy-display" style={{ whiteSpace: "nowrap" }}>
+							<h1 className="zy-display">
 								GROUP CHAT<br />
 								THAT'S ALL<br />
 								FUN &amp; GAMES

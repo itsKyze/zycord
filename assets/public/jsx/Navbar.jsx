@@ -168,6 +168,106 @@ export function getCurrentPathKey() {
 	return "";
 }
 
+function mobileColumns(item) {
+	if (item.key === "download") {
+		return [
+			{
+				links: [
+					{ label: "Windows", href: "/download/windows" },
+					{ label: "Mac", href: "/download/macos" },
+					{ label: "Linux", href: "/download/linux" },
+					{ label: "iOS", href: "/download/Zycord.mobileconfig" },
+					{ label: "Android", href: "/download/android" }
+				]
+			}
+		];
+	}
+	return item.columns || null;
+}
+
+function DrawerChevron() {
+	return (
+		<svg
+			className="zy-drawer-chevron"
+			viewBox="0 0 16 16"
+			fill="none"
+			stroke="currentColor"
+			stroke-width="2.2"
+			stroke-linecap="round"
+			stroke-linejoin="round"
+			aria-hidden="true"
+		>
+			<polyline points="3.5 6 8 10.5 12.5 6" />
+		</svg>
+	);
+}
+
+function MobileDrawerItem({ item, activeKey, onNavigate }) {
+	const columns = mobileColumns(item);
+	const hasSub = Boolean(columns && columns.length);
+
+	if (!hasSub) {
+		return (
+			<li className="zy-drawer-item">
+				<a
+					className={`zy-drawer-trigger${item.key === activeKey ? " is-active" : ""}`}
+					href={item.href}
+					onClick={onNavigate}
+				>
+					<span>{item.label}</span>
+				</a>
+			</li>
+		);
+	}
+
+	const toggle = (event) => {
+		const row = event.currentTarget.closest(".zy-drawer-item");
+		if (!row) return;
+		const open = !row.classList.contains("is-open");
+		const rows = row.parentElement ? row.parentElement.querySelectorAll(".zy-drawer-item.is-open") : [];
+		for (let i = 0; i < rows.length; i++) {
+			if (rows[i] !== row) {
+				rows[i].classList.remove("is-open");
+				const trigger = rows[i].querySelector(".zy-drawer-trigger");
+				if (trigger) trigger.setAttribute("aria-expanded", "false");
+			}
+		}
+		row.classList.toggle("is-open", open);
+		event.currentTarget.setAttribute("aria-expanded", open ? "true" : "false");
+	};
+
+	return (
+		<li className="zy-drawer-item">
+			<button type="button" className="zy-drawer-trigger" aria-expanded="false" onClick={toggle}>
+				<span>{item.label}</span>
+				<DrawerChevron />
+			</button>
+			<div className="zy-drawer-sub">
+				{columns.map((col) => (
+					<div className="zy-drawer-sub-group">
+						{col.title ? <div className="zy-drawer-sub-title">{col.title}</div> : null}
+						{(col.links || []).map((lnk) => (
+							<a href={lnk.href} onClick={onNavigate}>
+								{lnk.label}
+							</a>
+						))}
+						{col.subSection ? (
+							<Fragment>
+								<div className="zy-drawer-sub-title">{col.subSection.title}</div>
+								{(col.subSection.links || []).map((lnk) => (
+									<a href={lnk.href} onClick={onNavigate}>
+										{lnk.label}
+									</a>
+								))}
+							</Fragment>
+						) : null}
+					</div>
+				))}
+			</div>
+		</li>
+	);
+}
+
 function DropdownMenu({ item }) {
 	if (!item.columns || !item.columns.length) return null;
 
@@ -253,6 +353,7 @@ export function ZycordNavbar() {
 		const openBtn = document.getElementById("zy-mobile-open");
 		if (!drawer || !backdrop || !openBtn) return;
 		drawer.classList.toggle("is-open", open);
+		drawer.setAttribute("aria-hidden", open ? "false" : "true");
 		backdrop.classList.toggle("is-open", open);
 		openBtn.setAttribute("aria-expanded", open ? "true" : "false");
 		document.body.style.overflow = open ? "hidden" : "";
@@ -434,14 +535,15 @@ export function ZycordNavbar() {
 				className="zy-mobile-drawer"
 				id="zy-mobile-drawer"
 				aria-label="Mobile Navigation"
+				aria-hidden="true"
 			>
-				<div>
+				<div className="zy-drawer-sheet">
 					<div className="zy-drawer-header">
-						<a className="zy-brand" href="/">
+						<a className="zy-brand" href="/" onClick={() => setDrawer(false)}>
 							<span className="zy-brand-mark">
 								<img
 									src="/branding/zycord_icon_white.svg"
-									alt="Zycord"
+									alt=""
 									width="28"
 									height="28"
 									className="zy-brand-icon-white"
@@ -457,54 +559,34 @@ export function ZycordNavbar() {
 						</a>
 						<button
 							type="button"
-							className="zy-mobile-toggle"
-							style={{ display: "inline-flex" }}
+							className="zy-drawer-close"
 							id="zy-mobile-close"
 							aria-label="Close Menu"
 							onClick={() => setDrawer(false)}
 						>
-							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
 								<line x1="18" y1="6" x2="6" y2="18" />
 								<line x1="6" y1="6" x2="18" y2="18" />
 							</svg>
 						</button>
 					</div>
 					<ul className="zy-drawer-links">
-						<li>
-							<a href="/">
-								<span>Home</span>
-								<span aria-hidden="true">→</span>
-							</a>
-						</li>
 						{NAVIGATION_ITEMS.map((item) => (
-							<li>
-								<a
-									className={item.key === activeKey ? "is-active" : ""}
-									href={item.href}
-								>
-									<span>{item.label}</span>
-									<span aria-hidden="true">→</span>
-								</a>
-							</li>
+							<MobileDrawerItem
+								item={item}
+								activeKey={activeKey}
+								onNavigate={() => setDrawer(false)}
+							/>
 						))}
-						<li>
-							<a href="/status">
-								<span>System Status</span>
-								<span aria-hidden="true">→</span>
-							</a>
-						</li>
 					</ul>
-				</div>
-				<div className="zy-drawer-footer">
-					<a className="zy-btn zy-btn-primary" href="/app">
-						Open Zycord in Browser
-					</a>
-					<a className="zy-btn zy-btn-secondary" href="/download/windows">
-						Download for Windows
-					</a>
-					<a className="zy-btn zy-btn-ghost" href={authHref}>
-						{authLabel}
-					</a>
+					<div className="zy-drawer-footer">
+						<a className="zy-drawer-open" href="/app" onClick={() => setDrawer(false)}>
+							Open Zycord
+						</a>
+						<a className="zy-drawer-download" href="/download/windows" onClick={() => setDrawer(false)}>
+							Download for Windows
+						</a>
+					</div>
 				</div>
 			</aside>
 		</Fragment>
