@@ -19,7 +19,6 @@
 import definePlugin from "@utils/types";
 
 import { ZycordAuthor } from "../zycordCore/shared";
-import managedStyle from "./style.css?managed";
 
 type Constraint = number | { ideal?: number; max?: number } | undefined;
 type Quality = { width?: number; height?: number; framerate?: number };
@@ -32,7 +31,6 @@ export default definePlugin({
     description: "Announces the resolution and frame rate a browser Go Live stream really captures, so viewers see the right quality.",
     authors: [ZycordAuthor],
     required: true,
-    managedStyle,
 
     withFrameRate(quality: Quality, constraints: { frameRate?: Constraint }) {
         const framerate = constraintValue(constraints.frameRate);
