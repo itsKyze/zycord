@@ -177,11 +177,13 @@ router.patch(
                         message: `Must be between ${min} and 72 in length.`,
                     },
                 });
-            if (await bcrypt.compare(body.new_password, user.data.hash))
+            const reusedCurrent = await bcrypt.compare(body.new_password, user.data.hash);
+            const reusedPrevious = !!user.data.previous_hash && (await bcrypt.compare(body.new_password, user.data.previous_hash));
+            if (reusedCurrent || reusedPrevious)
                 throw FieldErrors({
                     new_password: {
-                        code: "PASSWORD_REQUIREMENTS_NOT_MET",
-                        message: "New password cannot be the same as your current password.",
+                        code: "PASSWORD_ALREADY_USED",
+                        message: "This password was already used. Choose a different password.",
                     },
                 });
             const previousHash = user.data.hash;

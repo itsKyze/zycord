@@ -1,8 +1,10 @@
+import crypto from "node:crypto";
 import { Request } from "express";
-import { Session, User, TrustedLoginDevice } from "@spacebar/database";
+import { User, TrustedLoginDevice } from "@spacebar/database";
 import { Email, FieldErrors } from "@spacebar/util";
 
 const DEVICE_IDLE_MS = 24 * 60 * 60 * 1000;
+const VERIFY_EMAIL_COOLDOWN_MS = 10 * 60 * 1000;
 
 export function normalizeIp(ip?: string | null) {
     if (!ip) return "";
@@ -15,6 +17,10 @@ export function requestIp(req: Request) {
     const forwarded = req.headers["cf-connecting-ip"] ?? req.headers["x-forwarded-for"];
     const header = Array.isArray(forwarded) ? forwarded[0] : forwarded;
     return normalizeIp(typeof header === "string" ? header : req.ip);
+}
+
+function uaFingerprint(ua: string) {
+    return crypto.createHash("sha256").update(ua).digest("hex").slice(0, 12);
 }
 
 export function describeLoginDevice(req: Request): TrustedLoginDevice {
@@ -38,8 +44,9 @@ export function describeLoginDevice(req: Request): TrustedLoginDevice {
     else if (/Safari/i.test(ua)) client = "Safari";
 
     const kind: TrustedLoginDevice["kind"] = /Android|iPhone|iPad|Mobile|ZycordMobile/i.test(ua) ? "mobile" : "desktop";
+    const fingerprint = uaFingerprint(ua);
     return {
-        key: `${kind}|${os}|${client}`,
+        key: `${kind}|${os}|${client}|${fingerprint}`,
         label: `${client} on ${os}`,
         kind,
         os,
@@ -69,7 +76,7 @@ export async function rememberTrustedDevice(userId: string, device: TrustedLogin
     const user = await User.findOne({ where: { id: userId }, select: { id: true, data: true } });
     if (!user?.data) return;
     const nextDevice = { ...device, ip, last_seen: Date.now() };
-    const devices = (user.data.trusted_devices ?? []).filter((entry) => !(entry.key === nextDevice.key && normalizeIp(entry.ip) === ip));
+    const devices = (user.data.trusted_devices ?? []).filter((entry) => entry.key !== nextDevice.key && !nextDevice.key.startsWith(`${entry.key}|`));
     const ips = (user.data.authorized_ips ?? []).map((entry) => normalizeIp(entry)).filter(Boolean);
     await User.update(
         { id: userId },
@@ -87,24 +94,31 @@ export async function authorizeLoginDevice(userId: string, req: Request, claimed
     await rememberTrustedDevice(userId, deviceFromClaim(claimed ?? {}, describeLoginDevice(req)));
 }
 
-export async function gateNewLoginLocation(req: Request, user: Pick<User, "id" | "email" | "verified"> & { data?: User["data"] }) {
-    const device = describeLoginDevice(req);
-    const devices = user.data?.trusted_devices ?? [];
-    const knownIps = new Set((user.data?.authorized_ips ?? []).map((entry) => normalizeIp(entry)).filter(Boolean));
-    const sessions = await Session.find({ where: { user_id: user.id }, select: { session_id: true, last_seen: true, last_seen_ip: true } });
-    const recentlyHere = sessions.some((session) => normalizeIp(session.last_seen_ip) === device.ip && Date.now() - (session.last_seen?.getTime() ?? 0) < DEVICE_IDLE_MS);
-    const match = devices.find((entry) => entry.key === device.key && normalizeIp(entry.ip) === device.ip);
-    const idle = !!match && Date.now() - (match.last_seen || 0) > DEVICE_IDLE_MS && !recentlyHere;
-    const firstDevice = devices.length === 0 && knownIps.size === 0;
-    const legacyIp = devices.length === 0 && !!device.ip && knownIps.has(device.ip);
+function recentlyEmailed(user: { data?: User["data"] }, deviceKey: string) {
+    const sentAt = user.data?.login_verify_sent?.[deviceKey] ?? 0;
+    return sentAt > 0 && Date.now() - sentAt < VERIFY_EMAIL_COOLDOWN_MS;
+}
 
-    if (!user.email || !user.verified || firstDevice || legacyIp) {
-        if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
-        return;
-    }
+async function markVerifyEmailSent(userId: string, deviceKey: string) {
+    const user = await User.findOne({ where: { id: userId }, select: { id: true, data: true } });
+    if (!user?.data) return;
+    await User.update(
+        { id: userId },
+        {
+            data: {
+                ...user.data,
+                login_verify_sent: {
+                    ...(user.data.login_verify_sent ?? {}),
+                    [deviceKey]: Date.now(),
+                },
+            },
+        },
+    );
+}
 
-    if (!match || idle) {
-        const sent = await Email.sendNewLoginLocation(user as User, user.email!, {
+async function challengeNewDevice(req: Request, user: Pick<User, "id" | "email"> & { data?: User["data"] }, device: TrustedLoginDevice, idle: boolean) {
+    if (user.email && !recentlyEmailed(user, device.key)) {
+        await Email.sendNewLoginLocation(user as User, user.email, {
             ip: device.ip || "127.0.0.1",
             city: (req.headers["cf-ipcity"] as string) || "Unknown City",
             region: (req.headers["cf-region"] as string) || "Unknown Region",
@@ -115,16 +129,39 @@ export async function gateNewLoginLocation(req: Request, user: Pick<User, "id" |
             console.error(`[Login] Failed to send new login location email to ${user.id}:`, e);
             return false;
         });
+        await markVerifyEmailSent(user.id, device.key).catch((e) => console.error(`[Login] Failed to record verify email for ${user.id}:`, e));
+    }
 
-        if (sent)
-            throw FieldErrors({
-                login: {
-                    code: "ACCOUNT_LOGIN_VERIFICATION_EMAIL",
-                    message: idle
-                        ? "We haven't seen this device in a while. Check your e-mail to verify it's you."
-                        : "New device login detected, please check your e-mail.",
-                },
-            });
+    throw FieldErrors({
+        login: {
+            code: "ACCOUNT_LOGIN_VERIFICATION_EMAIL",
+            message: idle
+                ? "We haven't seen this device in a while. Check your e-mail to verify it's you."
+                : "New login from a phone or computer. Check the e-mail on this account to verify it's you.",
+        },
+    });
+}
+
+export async function gateNewLoginLocation(req: Request, user: Pick<User, "id" | "email" | "verified"> & { data?: User["data"] }) {
+    const device = describeLoginDevice(req);
+    if (!user.email || !user.verified) {
+        if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
+        return;
+    }
+
+    const devices = user.data?.trusted_devices ?? [];
+    const match = devices.find((entry) => entry.key === device.key || device.key.startsWith(`${entry.key}|`));
+    const samePlace = !!match && normalizeIp(match.ip) === device.ip;
+    const idle = !!match && Date.now() - (match.last_seen || 0) > DEVICE_IDLE_MS;
+    const firstDevice = devices.length === 0;
+
+    if (firstDevice) {
+        if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
+        return;
+    }
+
+    if (!match || !samePlace || idle) {
+        await challengeNewDevice(req, user, device, idle && !!match);
     }
 
     if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));

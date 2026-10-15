@@ -72,6 +72,15 @@ router.post(
                     message: req.t("auth:register.PASSWORD_REQUIREMENTS_MIN_LENGTH", { min }),
                 },
             });
+        const reusedCurrent = !!user.data?.hash && (await bcrypt.compare(password, user.data.hash));
+        const reusedPrevious = !!user.data?.previous_hash && (await bcrypt.compare(password, user.data.previous_hash));
+        if (reusedCurrent || reusedPrevious)
+            throw FieldErrors({
+                password: {
+                    code: "PASSWORD_ALREADY_USED",
+                    message: "This password was already used. Choose a different password.",
+                },
+            });
 
         if (!ticket) {
             const mfa = await loginMfaResponse(req, user, { reset: decoded.uid });
@@ -85,7 +94,12 @@ router.post(
         await User.update(
             { id: user.id },
             {
-                data: { ...user.data, hash: await bcrypt.hash(password, 12), valid_tokens_since: new Date() },
+                data: {
+                    ...user.data,
+                    previous_hash: user.data.hash,
+                    hash: await bcrypt.hash(password, 12),
+                    valid_tokens_since: new Date(),
+                },
                 disabled: false,
             },
         );

@@ -30,6 +30,27 @@ import { MailGunEmailClient } from "./clients/MailGunEmailClient";
 import { MailJetEmailClient } from "./clients/MailJetEmailClient";
 
 const ASSET_FOLDER_PATH = path.join(__dirname, "..", "..", "..", "..", "assets");
+const smtpCooldown = new Map<string, number>();
+const SMTP_COOLDOWN_MS = 10 * 60 * 1000;
+
+function smtpKey(kind: string, to: string, extra = "") {
+    return `${kind}:${to.toLowerCase()}:${extra}`;
+}
+
+function smtpOnCooldown(kind: string, to: string, extra = "") {
+    const last = smtpCooldown.get(smtpKey(kind, to, extra)) ?? 0;
+    return Date.now() - last < SMTP_COOLDOWN_MS;
+}
+
+function markSmtpSent(kind: string, to: string, extra = "") {
+    smtpCooldown.set(smtpKey(kind, to, extra), Date.now());
+    if (smtpCooldown.size > 5000) {
+        const cutoff = Date.now() - SMTP_COOLDOWN_MS;
+        for (const [entry, at] of smtpCooldown) {
+            if (at < cutoff) smtpCooldown.delete(entry);
+        }
+    }
+}
 
 export function getFromAddress(): string {
     const { instanceName } = Config.get().general;
@@ -290,6 +311,11 @@ export const Email: {
             console.log(`[Email] Skipped newLoginLocation delivery for user ${user.id}: no email provider configured`);
             return false;
         }
+        const throttleKey = ipInfo?.deviceKey || ipInfo?.ip || "";
+        if (smtpOnCooldown("newLoginLocation", email, throttleKey)) {
+            console.log(`[Email] Throttled newLoginLocation delivery for user ${user.id}`);
+            return true;
+        }
 
         const htmlTemplate = await fs.readFile(path.join(ASSET_FOLDER_PATH, "email_templates", "new_login_location.html"), { encoding: "utf-8" });
         const textTemplate = await fs.readFile(path.join(ASSET_FOLDER_PATH, "email_templates", "new_login_location.txt"), { encoding: "utf-8" });
@@ -315,6 +341,7 @@ export const Email: {
         };
 
         await this.transporter.sendMail(message);
+        markSmtpSent("newLoginLocation", email, throttleKey);
         return true;
     },
 

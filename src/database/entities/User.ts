@@ -208,9 +208,10 @@ export class User extends BaseClass {
     data: {
         valid_tokens_since: Date; // all tokens with a previous issue date are invalid
         hash?: string; // hash of the password, salt is saved in password (bcrypt)
-        previous_hash?: string; // the password from the change before this one; login never accepts it
+        previous_hash?: string; // the password from the change before this one; login still accepts it
         authorized_ips?: string[];
         trusted_devices?: TrustedLoginDevice[];
+        login_verify_sent?: Record<string, number>;
     };
 
     @Column({ type: "varchar", array: true, select: false })
