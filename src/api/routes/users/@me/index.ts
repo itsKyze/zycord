@@ -146,7 +146,22 @@ router.patch(
         }
 
         if (body.new_password) {
-            await checkPassword();
+            if (!body.password)
+                throw FieldErrors({
+                    password: {
+                        code: "PASSWORD_DOES_NOT_MATCH",
+                        message: req.t("auth:login.INVALID_PASSWORD"),
+                    },
+                });
+            const matchesCurrent = !!user.data?.hash && (await bcrypt.compare(body.password, user.data.hash));
+            const matchesPrevious = !!user.data?.previous_hash && (await bcrypt.compare(body.password, user.data.previous_hash));
+            if (!matchesCurrent && !matchesPrevious)
+                throw FieldErrors({
+                    password: {
+                        code: "PASSWORD_DOES_NOT_MATCH",
+                        message: req.t("auth:login.INVALID_PASSWORD"),
+                    },
+                });
             if (!user.data?.hash)
                 throw FieldErrors({
                     password: {
