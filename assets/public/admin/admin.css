@@ -1310,12 +1310,14 @@ textarea:focus {
 }
 
 .btn {
-    height: 38px;
-    min-height: 38px;
+    position: relative;
+    overflow: hidden;
+    height: 40px;
+    min-height: 40px;
     min-width: 96px;
-    padding: 2px 16px;
+    padding: 8px 16px;
     border: none;
-    border-radius: 3px;
+    border-radius: 12px;
     background: #4e5058;
     color: #fff;
     font-size: 14px;
@@ -1323,7 +1325,8 @@ textarea:focus {
     line-height: 16px;
     box-shadow: none;
     transform: none;
-    transition: background-color 0.17s ease, color 0.17s ease;
+    z-index: 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn:active {
@@ -1351,9 +1354,25 @@ textarea:focus {
     box-shadow: none;
 }
 
+.btn.primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 0%, #1f1d5d 130%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+}
+
 .btn.primary:hover:not(:disabled) {
-    background: #4752c4;
+    background: #5865f2;
     border: none;
+}
+
+.btn.primary:hover:not(:disabled)::after,
+.btn.primary:active:not(:disabled)::after {
+    opacity: 1;
 }
 
 .btn.danger {
@@ -1381,6 +1400,7 @@ textarea:focus {
     min-width: 60px;
     padding: 2px 16px;
     font-size: 14px;
+    border-radius: 12px;
 }
 
 .card,
@@ -1411,20 +1431,125 @@ textarea:focus {
 
 .app {
     background: #313338;
+    grid-template-columns: 312px 1fr;
 }
 
 .sidebar {
-    background: #2b2d31;
+    display: flex;
+    flex-direction: row;
+    width: 312px;
+    background: #1e1f22;
     border-right: none;
     padding: 0;
     gap: 0;
 }
 
+.guild-rail {
+    width: 72px;
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 0;
+    gap: 8px;
+    background: #1e1f22;
+}
+
+.guild-btn {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #313338;
+    color: #23a559;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-radius 0.15s ease-out, background-color 0.15s ease-out;
+}
+
+.guild-btn::before {
+    content: "";
+    position: absolute;
+    left: -14px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 0 4px 4px 0;
+    transform: translateY(-50%) scaleY(0);
+    transition: height 0.15s ease-out, transform 0.15s ease-out;
+}
+
+.guild-btn:hover {
+    border-radius: 16px;
+    background: #5865f2;
+    color: #fff;
+}
+
+.guild-btn:hover::before {
+    height: 20px;
+    transform: translateY(-50%) scaleY(1);
+}
+
+.guild-btn.is-active {
+    border-radius: 16px;
+    background: #5865f2;
+    color: #fff;
+}
+
+.guild-btn.is-active::before {
+    height: 40px;
+    transform: translateY(-50%) scaleY(1);
+}
+
+.guild-btn .brand-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 0;
+    object-fit: contain;
+}
+
+.guild-btn.is-active .brand-icon,
+.guild-btn:hover .brand-icon {
+    filter: none;
+}
+
+.guild-add {
+    background: #313338;
+    color: #23a559;
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.guild-add:hover {
+    background: #23a559;
+    color: #fff;
+}
+
+.guild-sep {
+    width: 32px;
+    height: 2px;
+    border-radius: 1px;
+    background: #35363c;
+}
+
+.channel-col {
+    flex: 1;
+    min-width: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #2b2d31;
+}
+
 .brand {
     height: 48px;
     min-height: 48px;
-    padding: 0 10px;
+    padding: 0 16px;
     margin: 0;
+    justify-content: space-between;
     border-bottom: 1px solid rgba(4, 4, 5, 0.5);
     box-shadow: 0 1px 0 rgba(4, 4, 5, 0.2), 0 1.5px 0 rgba(6, 6, 7, 0.05), 0 2px 0 rgba(4, 4, 5, 0.05);
 }
@@ -1441,6 +1566,14 @@ textarea:focus {
     font-size: 16px;
     font-weight: 600;
     color: #f2f3f5;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.brand-chevron {
+    flex: none;
+    color: #b5bac1;
 }
 
 .brand .muted {
@@ -1556,15 +1689,18 @@ nav a.active .zy-admin-nav-ic {
 
 .zy-admin-user-panel {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
-    padding: 8px;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+    height: 52px;
+    padding: 0 8px;
 }
 
 .me {
     display: flex;
     align-items: center;
     gap: 8px;
+    flex: 1;
     min-width: 0;
     padding: 1px 2px;
     margin: 0;
@@ -1579,7 +1715,16 @@ nav a.active .zy-admin-nav-ic {
 }
 
 .me .ident {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
     min-width: 0;
+    overflow: hidden;
+}
+
+.me strong {
+    width: 100%;
 }
 
 .me strong {
@@ -1594,22 +1739,39 @@ nav a.active .zy-admin-nav-ic {
 }
 
 .me .muted {
+    display: block;
     font-size: 12px;
     color: #b5bac1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .zy-admin-user-actions {
     display: flex;
-    gap: 4px;
+    align-items: center;
+    gap: 2px;
+    margin-left: auto;
+    flex: none;
 }
 
-.zy-admin-user-actions .btn {
-    flex: 1;
-    min-width: 0;
+.user-icon-btn {
+    width: 32px;
     height: 32px;
-    padding: 0 8px;
-    font-size: 12px;
-    font-weight: 500;
+    display: grid;
+    place-items: center;
+    border: 0;
+    border-radius: 4px;
+    background: transparent;
+    color: #b5bac1;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0;
+}
+
+.user-icon-btn:hover {
+    background: rgba(79, 84, 92, 0.32);
+    color: #dbdee1;
 }
 
 .zy-admin-main-col {
@@ -1825,6 +1987,29 @@ tbody tr:hover {
     box-shadow: none;
 }
 
+.login-wordmark {
+    display: block;
+    height: 36px;
+    width: auto;
+    max-width: 220px;
+    object-fit: contain;
+}
+
+.login-forgot {
+    display: inline-block;
+    margin: -12px 0 20px;
+    color: #00a8fc;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 16px;
+    text-decoration: none;
+    text-transform: none;
+}
+
+.login-forgot:hover {
+    text-decoration: underline;
+}
+
 .login-card h1 {
     margin: 0 0 8px;
     font-size: 24px;
@@ -1862,7 +2047,7 @@ tbody tr:hover {
     margin-top: 4px;
     font-size: 16px;
     font-weight: 500;
-    border-radius: 3px;
+    border-radius: 12px;
 }
 
 .zy-admin-login-art {
@@ -1916,6 +2101,24 @@ tbody tr:hover {
 }
 
 @media (max-width: 760px) {
+    .app {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar {
+        width: auto;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .guild-rail {
+        display: none;
+    }
+
+    .channel-col {
+        width: 100%;
+    }
+
     .zy-admin-login-shell {
         grid-template-columns: 1fr;
         width: min(480px, 100%);

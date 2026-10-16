@@ -25,6 +25,21 @@ import { Metric } from "prom-client";
 export class Monitoring {
     static isInitialised = false;
     private static eventLoop = monitorEventLoopDelay({ resolution: 20 });
+    private static httpPrev = { sum: 0, count: 0, ms: 0 };
+
+    /** Mean HTTP duration in ms for the interval since the last sample. Real request time, not a synthetic value. */
+    public static async sampleHttpMs() {
+        const snap = await this.snapshot();
+        const sum = snap.routes.reduce((n, row) => n + row.seconds, 0);
+        const count = snap.requests;
+        const dCount = count - this.httpPrev.count;
+        const dSum = sum - this.httpPrev.sum;
+        let ms = this.httpPrev.ms;
+        if (dCount > 0) ms = (dSum * 1000) / dCount;
+        else if (count > 0 && this.httpPrev.count === 0) ms = (sum * 1000) / count;
+        this.httpPrev = { sum, count, ms };
+        return Math.round(ms * 100) / 100;
+    }
 
     public static async snapshot() {
         const metric = client.register.getSingleMetric("spacebar_http_duration") as client.Histogram<string> | undefined;

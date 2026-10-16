@@ -78,6 +78,7 @@ export * from "./Tag";
 export * from "./StageInstance";
 export * from "./StatusComponent";
 export * from "./StatusIncident";
+export * from "./StatusMetric";
 export * from "./UserViolation";
 export * from "./Announcement";
 export * from "./AnnouncementMessage";

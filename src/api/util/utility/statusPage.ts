@@ -16,8 +16,8 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { In, MoreThan, Not } from "typeorm";
-import { RESOLVED_INCIDENT_STATES, StatusComponent, StatusComponentStatus, StatusIncident, getDatabase } from "@spacebar/database";
+import { In, LessThan, MoreThan, Not } from "typeorm";
+import { RESOLVED_INCIDENT_STATES, StatusComponent, StatusComponentStatus, StatusIncident, StatusMetric, getDatabase } from "@spacebar/database";
 import { Config, Snowflake } from "@spacebar/util";
 import { Monitoring } from "../../../util/monitoring/Monitoring";
 
@@ -70,34 +70,150 @@ export function serializeIncident(incident: StatusIncident, components: StatusCo
 
 const DAY = 24 * 60 * 60 * 1000;
 const UPTIME_DAYS = 90;
-const OUTAGE_WEIGHT: Partial<Record<Indicator, number>> = { major: 0.3, critical: 1 };
+const METRIC_KEEP_MS = 35 * DAY;
+const OUTAGE_WEIGHT: Partial<Record<Indicator, number>> = { minor: 0.1, major: 0.3, critical: 1 };
+const OUTAGE_LABEL: Partial<Record<Indicator, string>> = {
+    minor: "Degraded performance",
+    major: "Partial outage",
+    critical: "Major outage",
+    maintenance: "Maintenance",
+};
+
+type DayOutage = { impact: Indicator; label: string; duration_ms: number };
+type UptimeDay = { date: string; indicator: Indicator | null; outages: DayOutage[]; related: string[] };
 
 function componentUptime(component: StatusComponent, incidents: StatusIncident[], now: number) {
     const today = Math.floor(now / DAY) * DAY;
     const firstDay = today - (UPTIME_DAYS - 1) * DAY;
     const createdAt = Number(BigInt(component.id) >> 22n) + Snowflake.EPOCH;
     const tracked = Math.max(firstDay, createdAt);
-    const days = Array.from({ length: UPTIME_DAYS }, (_, i) => ({
-        date: new Date(firstDay + i * DAY).toISOString().slice(0, 10),
-        indicator: (firstDay + (i + 1) * DAY <= createdAt ? null : "none") as Indicator | null,
-    }));
+    const days: UptimeDay[] = Array.from({ length: UPTIME_DAYS }, (_, i) => {
+        const start = firstDay + i * DAY;
+        return {
+            date: new Date(start).toISOString().slice(0, 10),
+            indicator: start + DAY <= createdAt ? null : ("none" as Indicator | null),
+            outages: [] as DayOutage[],
+            related: [] as string[],
+        };
+    });
+    const durations = days.map(() => new Map<Indicator, number>());
+    const related = days.map(() => new Set<string>());
     let downtime = 0;
     for (const incident of incidents) {
-        if (incident.is_maintenance || !incident.component_ids.includes(component.id)) continue;
-        const start = Math.max(incident.created_at.getTime(), tracked);
-        const end = Math.min(incident.resolved_at?.getTime() ?? now, now);
+        if (!incident.component_ids.includes(component.id)) continue;
+        const start = incident.created_at.getTime();
+        const end = incident.resolved_at?.getTime() ?? now;
         if (end <= start) continue;
-        downtime += (end - start) * (OUTAGE_WEIGHT[incident.impact] ?? 0);
-        for (let day = Math.floor(start / DAY) * DAY; day < end; day += DAY) {
-            const entry = days[(day - firstDay) / DAY];
-            if (entry?.indicator && IMPACT_SEVERITY[incident.impact] > IMPACT_SEVERITY[entry.indicator]) entry.indicator = incident.impact;
+        const impact = incident.impact as Indicator;
+        if (!incident.is_maintenance) {
+            const clippedStart = Math.max(start, tracked);
+            const clippedEnd = Math.min(end, now);
+            if (clippedEnd > clippedStart) downtime += (clippedEnd - clippedStart) * (OUTAGE_WEIGHT[impact] ?? 0);
+        }
+        for (let day = Math.floor(start / DAY) * DAY; day < end && day <= today; day += DAY) {
+            const index = (day - firstDay) / DAY;
+            const entry = days[index];
+            if (!entry || entry.indicator === null) continue;
+            const overlap = Math.min(end, day + DAY) - Math.max(start, day);
+            if (overlap <= 0) continue;
+            durations[index].set(impact, (durations[index].get(impact) ?? 0) + overlap);
+            related[index].add(incident.name);
+            if (IMPACT_SEVERITY[impact] > IMPACT_SEVERITY[entry.indicator ?? "none"]) entry.indicator = impact;
         }
     }
     const current = COMPONENT_INDICATOR[component.status];
     const last = days[days.length - 1];
-    if (current !== "maintenance" && IMPACT_SEVERITY[current] > IMPACT_SEVERITY[last.indicator ?? "none"]) last.indicator = current;
+    if (last.indicator !== null && IMPACT_SEVERITY[current] > IMPACT_SEVERITY[last.indicator ?? "none"]) last.indicator = current;
+    for (let i = 0; i < days.length; i++) {
+        days[i].outages = [...durations[i].entries()]
+            .filter(([impact]) => impact !== "none")
+            .sort((a, b) => IMPACT_SEVERITY[b[0]] - IMPACT_SEVERITY[a[0]])
+            .map(([impact, duration_ms]) => ({ impact, label: OUTAGE_LABEL[impact] || impact, duration_ms: Math.round(duration_ms) }));
+        days[i].related = [...related[i]];
+    }
     const span = now - tracked;
     return { uptime: span > 0 ? Math.max(0, Math.round((1 - downtime / span) * 10000) / 100) : 100, uptime_days: days };
+}
+
+type MetricPoint = { t: number; ms: number };
+const metricMemory: MetricPoint[] = [];
+let metricHydrated = false;
+let metricTimer: ReturnType<typeof setInterval> | null = null;
+let lastPrune = 0;
+
+function bucketSeries(samples: MetricPoint[], spanMs: number, bucketMs: number, now: number) {
+    const start = now - spanMs;
+    const buckets = new Map<number, { sum: number; n: number }>();
+    for (const sample of samples) {
+        if (sample.t < start) continue;
+        const key = Math.floor(sample.t / bucketMs) * bucketMs;
+        const bucket = buckets.get(key) ?? { sum: 0, n: 0 };
+        bucket.sum += sample.ms;
+        bucket.n += 1;
+        buckets.set(key, bucket);
+    }
+    return [...buckets.keys()]
+        .sort((a, b) => a - b)
+        .map((t) => ({ t, ms: Math.round(buckets.get(t)!.sum / buckets.get(t)!.n) }));
+}
+
+async function hydrateMetrics() {
+    if (metricHydrated) return;
+    metricHydrated = true;
+    try {
+        const rows = await StatusMetric.find({
+            where: { recorded_at: MoreThan(new Date(Date.now() - METRIC_KEEP_MS)) },
+            order: { recorded_at: "ASC" },
+            take: 60_000,
+        });
+        metricMemory.length = 0;
+        for (const row of rows) metricMemory.push({ t: row.recorded_at.getTime(), ms: row.api_ms });
+    } catch {
+        metricMemory.length = 0;
+    }
+}
+
+async function persistApiSample() {
+    const ms = await Monitoring.sampleHttpMs();
+    const point = { t: Date.now(), ms };
+    metricMemory.push(point);
+    if (metricMemory.length > 60 * 24 * 40) metricMemory.splice(0, metricMemory.length - 60 * 24 * 35);
+    try {
+        await StatusMetric.create({ recorded_at: new Date(point.t), api_ms: ms }).save();
+        if (point.t - lastPrune > DAY) {
+            lastPrune = point.t;
+            await StatusMetric.delete({ recorded_at: LessThan(new Date(point.t - METRIC_KEEP_MS)) });
+        }
+    } catch {
+        /* table may not exist until migrate */
+    }
+    return ms;
+}
+
+function ensureMetricSampler() {
+    if (metricTimer) return;
+    metricTimer = setInterval(() => {
+        persistApiSample().catch(() => {});
+    }, 60_000);
+    metricTimer.unref?.();
+}
+
+async function apiMetrics() {
+    await hydrateMetrics();
+    ensureMetricSampler();
+    const current = metricMemory.length ? metricMemory[metricMemory.length - 1].ms : await persistApiSample();
+    const now = Date.now();
+    return {
+        api_response_time: {
+            unit: "ms",
+            current: Math.round(current),
+            series: {
+                day: bucketSeries(metricMemory, DAY, 15 * 60 * 1000, now),
+                week: bucketSeries(metricMemory, 7 * DAY, 60 * 60 * 1000, now),
+                month: bucketSeries(metricMemory, 30 * DAY, 3 * 60 * 60 * 1000, now),
+            },
+        },
+    };
 }
 
 export async function getStatusSummary() {
@@ -153,6 +269,8 @@ export async function getStatusSummary() {
         };
     }
 
+    const metrics = await apiMetrics();
+
     return {
         page: {
             id: Config.get().general.instanceId,
@@ -171,6 +289,7 @@ export async function getStatusSummary() {
         incidents: incidents.map((i) => serializeIncident(i, components)),
         scheduled_maintenances: maintenances.map((i) => serializeIncident(i, components)),
         history: recent.map((i) => serializeIncident(i, components)),
+        metrics,
     };
 }
 
