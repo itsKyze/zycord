@@ -112,7 +112,7 @@ export const NAVIGATION_ITEMS = [
 		label: "Developers",
 		href: "/developers",
 		key: "developers",
-		isWide: true,
+		is2Col: true,
 		decor: "/site/media/zycord/nav-developers-clyde.webp",
 		decorStyle: { width: "142px", right: "-48px", bottom: "-52px" },
 		columns: [
@@ -125,16 +125,16 @@ export const NAVIGATION_ITEMS = [
 					{ label: "Apps & Activities", href: "/developers/applications" },
 					{ label: "Developer Newsletter", href: "/developers#newsletter" },
 					{ label: "Developer Case Studies", href: "/developers#cases" }
-				],
-				subSection: {
-					title: "Build",
-					links: [
-						{ label: "Official Game Communities", href: "/discover", external: true },
-						{ label: "Developer Portal", href: "/developers/applications", external: true },
-						{ label: "Documentation", href: "/developers/docs", external: true },
-						{ label: "Developer Help Center", href: "/support", external: true }
-					]
-				}
+				]
+			},
+			{
+				title: "Build",
+				links: [
+					{ label: "Official Game Communities", href: "/discover", external: true },
+					{ label: "Developer Portal", href: "/developers/applications", external: true },
+					{ label: "Documentation", href: "/developers/docs", external: true },
+					{ label: "Developer Help Center", href: "/support", external: true }
+				]
 			}
 		]
 	},
