@@ -2272,7 +2272,17 @@ function syncNavCounts() {
     const link = $('#nav a[data-tab="reports"]');
     if (!link) return;
     const open = state.overview?.counts?.open_reports ?? 0;
-    mount(link, html`Reports${open ? html`<span class="nav-count">${fmtNumber(open)}</span>` : ""}`);
+    let count = link.querySelector(".nav-count");
+    if (open) {
+        if (!count) {
+            count = document.createElement("span");
+            count.className = "nav-count";
+            link.append(count);
+        }
+        count.textContent = fmtNumber(open);
+    } else {
+        count?.remove();
+    }
 }
 
 /* ---------- announcements ---------- */

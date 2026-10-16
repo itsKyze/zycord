@@ -83,8 +83,7 @@ function decorateSidebarIcons() {
 	const links = document.querySelectorAll("#nav a[data-tab]");
 	for (let i = 0; i < links.length; i++) {
 		const link = links[i];
-		const existing = link.querySelector(".zy-admin-nav-ic");
-		if (existing) existing.remove();
+		if (link.querySelector(".zy-admin-nav-ic")) continue;
 		const tab = link.getAttribute("data-tab") || "";
 		const svgMarkup = SVG_STRINGS[tab] || SVG_STRINGS.overview;
 		const span = document.createElement("span");
