@@ -3,80 +3,766 @@
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>Jobs at Zycord | Work with Us</title>
-	<meta name="description" content="Zycord is looking for passionate people to help build the future of communication. Explore open roles and join our team." />
+	<title>Jobs and Career Opportunities at __INSTANCE_NAME__</title>
+	<meta name="description" content="Apply for jobs at __INSTANCE_NAME__ and help build the best app to talk, play, and hang out with friends over voice, video, or text." />
 
 	<!-- Open Graph / Discord / Facebook -->
 	<meta property="og:type" content="website" />
-	<meta property="og:site_name" content="Zycord" />
-	<meta property="og:title" content="Jobs at Zycord | Zycord" />
-	<meta property="og:description" content="Zycord is looking for passionate people to help build the future of communication. Explore open roles and join our team." />
+	<meta property="og:site_name" content="__INSTANCE_NAME__" />
+	<meta property="og:title" content="Jobs and Career Opportunities at __INSTANCE_NAME__" />
+	<meta property="og:description" content="Apply for jobs at __INSTANCE_NAME__ and help build the best app to talk, play, and hang out with friends over voice, video, or text." />
 	<meta property="og:image" content="/site/og-image.jpg" />
 	<meta property="og:image:secure_url" content="/site/og-image.jpg" />
 	<meta property="og:image:type" content="image/jpeg" />
 	<meta property="og:image:width" content="1200" />
 	<meta property="og:image:height" content="630" />
-	<meta property="og:image:alt" content="Jobs at Zycord | Zycord" />
+	<meta property="og:image:alt" content="Jobs and Career Opportunities at __INSTANCE_NAME__" />
 	<meta property="og:url" content="/careers" />
 
 	<!-- Twitter Cards -->
 	<meta name="twitter:card" content="summary_large_image" />
-	<meta name="twitter:site" content="@zycord" />
-	<meta name="twitter:title" content="Jobs at Zycord | Zycord" />
-	<meta name="twitter:description" content="Zycord is looking for passionate people to help build the future of communication. Explore open roles and join our team." />
+	<meta name="twitter:site" content="@__INSTANCE_NAME__" />
+	<meta name="twitter:title" content="Jobs and Career Opportunities at __INSTANCE_NAME__" />
+	<meta name="twitter:description" content="Apply for jobs at __INSTANCE_NAME__ and help build the best app to talk, play, and hang out with friends over voice, video, or text." />
 	<meta name="twitter:image" content="/site/og-image.jpg" />
 
 	<!-- Mobile & Theme -->
 	<meta name="theme-color" content="#5865F2" />
-	<meta name="apple-mobile-web-app-title" content="Zycord" />
-	<meta name="application-name" content="Zycord" />
+	<meta name="apple-mobile-web-app-title" content="__INSTANCE_NAME__" />
+	<meta name="application-name" content="__INSTANCE_NAME__" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261015c" />
+	<link rel="stylesheet" href="/site/site.css?v=20261016a" />
+
 	<style>
-		.jobs-filter-bar {
+		/* =====================================================================
+		   DISCORD CAREERS 2026 OFFICIAL DESIGN SYSTEM OVERRIDES & ENHANCEMENTS
+		   ===================================================================== */
+		:root {
+			--careers-bg: #0c0f2a;
+			--careers-card-bg: rgba(22, 26, 74, 0.68);
+			--careers-card-border: rgba(255, 255, 255, 0.14);
+			--careers-card-hover: rgba(30, 36, 102, 0.85);
+			--careers-accent: #5865f2;
+		}
+
+		body {
+			background-color: var(--careers-bg);
+			color: #ffffff;
+			font-family: var(--font-abc-ginto-zycord, "gg sans", "Noto Sans", sans-serif);
+			overflow-x: hidden;
+		}
+
+		.zy-careers-page {
+			background-color: var(--careers-bg);
+			background-image: radial-gradient(circle at 50% 0%, #1e2474 0%, #0c0f2a 65%);
+			background-repeat: no-repeat;
+			background-size: 100% 1200px;
+			color: #ffffff;
+			overflow-x: clip;
+			overflow-y: visible;
+			position: relative;
+		}
+
+		/* Typography matching Discord Webflow 2026 */
+		.careers-h1 {
+			font-size: clamp(42px, 5.8vw, 76px);
+			font-weight: 900;
+			line-height: 1.05;
+			letter-spacing: -0.02em;
+			text-transform: none;
+			margin: 0 auto 18px;
+			font-style: italic;
+		}
+
+		.careers-lead {
+			font-size: clamp(17px, 1.35vw, 21px);
+			line-height: 1.55;
+			color: rgba(255, 255, 255, 0.85);
+			max-width: 660px;
+			margin: 0 auto;
+			text-align: center;
+		}
+
+		.careers-section-h2 {
+			font-size: clamp(30px, 4vw, 52px);
+			font-weight: 900;
+			line-height: 1.1;
+			letter-spacing: -0.015em;
+			text-transform: uppercase;
+			margin: 0 auto 16px;
+			text-align: center;
+		}
+
+		/* Hero Section Layout & Floating 3D Props */
+		.careers-hero-wrap {
+			padding-top: 150px;
+			padding-bottom: 32px;
+			position: relative;
+			text-align: center;
+		}
+
+		.careers-hero-inner {
+			position: relative;
+			max-width: 780px;
+			margin: 0 auto;
+			z-index: 5;
+		}
+
+		.careers-crown-prop {
+			position: absolute;
+			left: -40px;
+			top: -45px;
+			width: clamp(100px, 11vw, 160px);
+			height: auto;
+			z-index: 6;
+			pointer-events: none;
+			transform: rotate(-10deg);
+			filter: drop-shadow(0 20px 36px rgba(0, 0, 0, 0.55));
+			animation: careers-float 4.5s ease-in-out infinite;
+		}
+
+		.careers-clyde-hero-prop {
+			position: absolute;
+			right: -40px;
+			bottom: 40px;
+			width: clamp(110px, 12vw, 175px);
+			height: auto;
+			z-index: 6;
+			pointer-events: none;
+			filter: drop-shadow(0 22px 40px rgba(0, 0, 0, 0.6));
+			animation: careers-float 5s ease-in-out infinite reverse;
+		}
+
+		@keyframes careers-float {
+			0%, 100% { transform: translateY(0) rotate(-10deg); }
+			50% { transform: translateY(-14px) rotate(-6deg); }
+		}
+
+		/* 100vw Full-Bleed Carousel with Large Capsule Rounded Cards */
+		.careers-gallery-carousel {
+			position: relative;
+			width: 100vw;
+			left: 50%;
+			right: 50%;
+			margin-left: -50vw;
+			margin-right: -50vw;
+			margin-top: 56px;
+			margin-bottom: 24px;
+			overflow: visible;
+		}
+
+		.careers-gallery-track {
+			--slide-w: clamp(520px, 62vw, 1020px);
 			display: flex;
-			flex-wrap: wrap;
+			gap: 28px;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			scroll-behavior: smooth;
+			padding: 24px calc(50vw - (var(--slide-w) / 2));
+			scrollbar-width: none;
+			cursor: grab;
+			user-select: none;
+			-webkit-user-select: none;
+			touch-action: pan-y;
+		}
+
+		.careers-gallery-track::-webkit-scrollbar {
+			display: none;
+		}
+
+		.careers-gallery-track.is-dragging {
+			cursor: grabbing;
+			scroll-snap-type: none;
+			scroll-behavior: auto;
+		}
+
+		.careers-gallery-slide {
+			flex: 0 0 clamp(520px, 62vw, 1020px);
+			height: clamp(380px, 44vw, 620px);
+			scroll-snap-align: center;
+			border-radius: clamp(48px, 6vw, 100px);
+			overflow: hidden;
+			box-shadow: 0 32px 85px rgba(0, 0, 0, 0.65);
+			border: 1px solid rgba(255, 255, 255, 0.16);
+			position: relative;
+			background: #111438;
+		}
+
+		.careers-gallery-slide img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			pointer-events: none;
+			user-select: none;
+			-webkit-user-drag: none;
+		}
+
+		/* Floating Glass Arrows for Hero Slider */
+		.careers-gallery-arrow {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			z-index: 15;
+			width: 54px;
+			height: 54px;
+			border-radius: 50%;
+			background: rgba(14, 18, 54, 0.65);
+			backdrop-filter: blur(14px);
+			-webkit-backdrop-filter: blur(14px);
+			border: 1px solid rgba(255, 255, 255, 0.25);
+			color: #ffffff;
+			display: flex;
+			align-items: center;
 			justify-content: center;
-			gap: 10px;
-			margin: 24px 0 36px;
-		}
-		.job-filter-btn {
-			padding: 12px 22px;
-			border-radius: var(--radius-pills);
-			border: 1px solid rgba(255, 255, 255, 0.2);
-			background: rgba(25, 28, 82, 0.72);
-			color: var(--color-fog);
-			font-size: 15px;
-			font-weight: 700;
 			cursor: pointer;
+			box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+			transition: all 0.2s ease;
+		}
+
+		.careers-gallery-arrow:hover {
+			background: #ffffff;
+			color: #0c0f2a;
+			transform: translateY(-50%) scale(1.08);
+		}
+
+		.careers-gallery-arrow.is-prev { left: clamp(16px, 4vw, 64px); }
+		.careers-gallery-arrow.is-next { right: clamp(16px, 4vw, 64px); }
+
+		/* Alternating Showcase Rows */
+		.careers-alt-grid {
+			display: flex;
+			flex-direction: column;
+			gap: 64px;
+			margin-top: 48px;
+		}
+
+		.careers-alt-row {
+			display: grid;
+			grid-template-columns: 1.05fr 1fr;
+			gap: 48px;
+			align-items: center;
+		}
+
+		.careers-alt-row.is-reversed {
+			grid-template-columns: 1fr 1.05fr;
+		}
+
+		.careers-alt-media {
+			border-radius: 36px;
+			overflow: hidden;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+			background: #151842;
+		}
+
+		.careers-alt-media img {
+			width: 100%;
+			height: auto;
+			display: block;
+			object-fit: cover;
+		}
+
+		.careers-alt-copy h3 {
+			font-size: clamp(26px, 2.6vw, 40px);
+			font-weight: 800;
+			line-height: 1.15;
+			color: #ffffff;
+			margin-bottom: 16px;
+		}
+
+		.careers-alt-copy p {
+			font-size: clamp(16px, 1.25vw, 19px);
+			line-height: 1.6;
+			color: rgba(255, 255, 255, 0.8);
+		}
+
+		/* Jobs Dropdown Filter */
+		.careers-dept-dropdown {
+			position: relative;
+			display: inline-block;
+			margin: 28px 0 36px;
+		}
+
+		.careers-dept-toggle {
+			display: inline-flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 16px;
+			min-width: 240px;
+			padding: 14px 26px;
+			border-radius: 9999px;
+			background: #ffffff;
+			color: #0c0f2a;
+			font-size: 16px;
+			font-weight: 700;
+			border: none;
+			cursor: pointer;
+			box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+			transition: all 0.2s ease;
+		}
+
+		.careers-dept-toggle:hover {
+			background: #f2f3f5;
+			transform: translateY(-2px);
+		}
+
+		.careers-dept-toggle svg {
+			transition: transform 0.2s ease;
+		}
+
+		.careers-dept-dropdown.is-open .careers-dept-toggle svg {
+			transform: rotate(180deg);
+		}
+
+		.careers-dept-menu {
+			position: absolute;
+			top: calc(100% + 8px);
+			left: 50%;
+			transform: translateX(-50%);
+			min-width: 280px;
+			padding: 8px;
+			border-radius: 18px;
+			background: #111438;
+			border: 1px solid rgba(255, 255, 255, 0.16);
+			box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.16s ease, visibility 0.16s;
+			z-index: 100;
+		}
+
+		.careers-dept-dropdown.is-open .careers-dept-menu {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.careers-dept-item {
+			padding: 10px 18px;
+			border-radius: 12px;
+			background: transparent;
+			border: none;
+			color: #ffffff;
+			font-size: 15px;
+			font-weight: 600;
+			text-align: left;
+			cursor: pointer;
+			transition: background-color 0.15s ease, color 0.15s;
+		}
+
+		.careers-dept-item:hover,
+		.careers-dept-item.is-active {
+			background: var(--careers-accent);
+			color: #ffffff;
+		}
+
+		/* Job Cards (Discord 2026 Style) */
+		.careers-jobs-grid {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+			max-width: 960px;
+			margin: 0 auto;
+		}
+
+		.careers-job-card {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 24px;
+			padding: 26px 32px;
+			border-radius: 28px;
+			background: var(--careers-card-bg);
+			border: 1px solid var(--careers-card-border);
+			transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+			text-decoration: none;
+			color: inherit;
+			cursor: pointer;
+		}
+
+		.careers-job-card:hover {
+			transform: translateY(-4px);
+			background: var(--careers-card-hover);
+			border-color: rgba(88, 101, 242, 0.85);
+			box-shadow: 0 18px 42px rgba(12, 15, 42, 0.6), 0 0 0 1px rgba(88, 101, 242, 0.4);
+		}
+
+		.careers-job-tag {
+			display: inline-block;
+			padding: 4px 12px;
+			border-radius: 9999px;
+			background: rgba(88, 101, 242, 0.25);
+			border: 1px solid rgba(88, 101, 242, 0.4);
+			color: #9aa4ff;
+			font-size: 12.5px;
+			font-weight: 800;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			margin-bottom: 8px;
+		}
+
+		.careers-job-title {
+			font-size: clamp(20px, 1.8vw, 25px);
+			font-weight: 800;
+			color: #ffffff;
+			line-height: 1.25;
+			margin: 0 0 6px;
+		}
+
+		.careers-job-meta {
+			font-size: 14.5px;
+			color: rgba(255, 255, 255, 0.65);
+			margin: 0;
+			line-height: 1.4;
+		}
+
+		.careers-job-btn {
+			padding: 12px 24px;
+			border-radius: 9999px;
+			background: #ffffff;
+			color: #0c0f2a;
+			font-size: 14.5px;
+			font-weight: 800;
+			white-space: nowrap;
+			border: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 8px;
 			transition: all 0.16s ease;
+			flex-shrink: 0;
 		}
-		.job-filter-btn:hover,
-		.job-filter-btn.is-active {
-			background: var(--color-blurple);
-			border-color: var(--color-blurple);
-			color: #fff;
+
+		.careers-job-card:hover .careers-job-btn {
+			background: var(--careers-accent);
+			color: #ffffff;
+			box-shadow: 0 6px 18px rgba(88, 101, 242, 0.4);
 		}
-		.job-row {
+
+		/* Perks Grid (Exact 2-Column Discord Layout) */
+		.careers-perks-grid {
+			display: grid;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 24px;
+			max-width: 1040px;
+			margin: 0 auto;
+		}
+
+		.careers-perk-card {
+			border-radius: 28px;
+			padding: 36px 32px;
+			background: var(--careers-card-bg);
+			border: 1px solid var(--careers-card-border);
+			display: flex;
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 14px;
+			text-align: left;
+			transition: transform 0.2s ease, border-color 0.2s ease;
+		}
+
+		.careers-perk-card:hover {
+			transform: translateY(-4px);
+			border-color: rgba(88, 101, 242, 0.5);
+			background: var(--careers-card-hover);
+		}
+
+		.careers-perk-icon {
+			width: 64px;
+			height: 64px;
+			object-fit: contain;
+			margin-bottom: 4px;
+		}
+
+		.careers-perk-card h3 {
+			font-size: 24px;
+			font-weight: 800;
+			color: #ffffff;
+			margin: 0;
+		}
+
+		.careers-perk-card p {
+			font-size: 15.5px;
+			line-height: 1.6;
+			color: rgba(255, 255, 255, 0.75);
+			margin: 0;
+		}
+
+		/* Clubs & ERGs 26-Card Horizontal Carousel */
+		.careers-clubs-track {
+			display: flex;
+			gap: 20px;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			scroll-behavior: smooth;
+			padding: 16px 24px 28px;
+			scrollbar-width: none;
+			touch-action: pan-y;
+		}
+
+		.careers-clubs-track::-webkit-scrollbar {
+			display: none;
+		}
+
+		.careers-club-card {
+			flex: 0 0 240px;
+			scroll-snap-align: start;
+			border-radius: 28px;
+			padding: 28px 20px;
+			background: linear-gradient(155deg, rgba(44, 52, 152, 0.45) 0%, rgba(18, 21, 66, 0.8) 100%);
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			text-align: center;
+			gap: 16px;
+			transition: transform 0.2s ease, border-color 0.2s ease;
+		}
+
+		.careers-club-card:hover {
+			transform: translateY(-6px);
+			border-color: rgba(88, 101, 242, 0.8);
+		}
+
+		.careers-club-card img {
+			width: 80px;
+			height: 80px;
+			object-fit: contain;
+			display: block;
+		}
+
+		.careers-club-card h3 {
+			font-size: 18px;
+			font-weight: 700;
+			color: #ffffff;
+			margin: 0;
+			line-height: 1.3;
+		}
+
+		/* FAQ Accordion */
+		.careers-faq-list {
+			max-width: 920px;
+			margin: 0 auto;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.careers-faq-item {
+			border-top: 1px solid rgba(255, 255, 255, 0.14);
+		}
+
+		.careers-faq-item:last-child {
+			border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+		}
+
+		.careers-faq-trigger {
+			width: 100%;
+			padding: 24px 8px;
+			background: transparent;
+			border: none;
+			color: #ffffff;
+			font-size: clamp(17px, 1.4vw, 21px);
+			font-weight: 700;
+			text-align: left;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			gap: 20px;
-			padding: 24px 28px;
+			cursor: pointer;
+			transition: color 0.15s ease;
+		}
+
+		.careers-faq-trigger:hover {
+			color: #9aa4ff;
+		}
+
+		.careers-faq-icon {
+			width: 32px;
+			height: 32px;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.1);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			flex-shrink: 0;
+			font-size: 20px;
+			font-weight: 400;
+			color: #ffffff;
+			transition: transform 0.2s ease, background-color 0.2s;
+		}
+
+		.careers-faq-item.is-open .careers-faq-icon {
+			transform: rotate(45deg);
+			background: var(--careers-accent);
+		}
+
+		.careers-faq-content {
+			display: none;
+			padding: 0 8px 24px;
+			font-size: 16px;
+			line-height: 1.65;
+			color: rgba(255, 255, 255, 0.78);
+		}
+
+		.careers-faq-content ul {
+			margin: 12px 0 12px 24px;
+			padding: 0;
+		}
+
+		.careers-faq-content li {
+			margin-bottom: 8px;
+		}
+
+		.careers-faq-item.is-open .careers-faq-content {
+			display: block;
+		}
+
+		/* Bottom Banner ("Hungry for more?") */
+		.careers-cta-banner {
+			padding: 130px 24px;
+			text-align: center;
+			position: relative;
+			overflow: visible;
+		}
+
+		.careers-cta-inner {
+			max-width: 680px;
+			margin: 0 auto;
+			position: relative;
+		}
+
+		.careers-pickaxe-prop {
+			position: absolute;
+			left: -120px;
+			top: -40px;
+			width: clamp(120px, 14vw, 175px);
+			height: auto;
+			pointer-events: none;
+			filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+			animation: careers-float 5s ease-in-out infinite;
+		}
+
+		.careers-coin-prop {
+			position: absolute;
+			right: -120px;
+			bottom: -20px;
+			width: clamp(110px, 13vw, 165px);
+			height: auto;
+			pointer-events: none;
+			filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+			animation: careers-float 4.2s ease-in-out infinite reverse;
+		}
+
+		/* Modal Dialog for Job Applications */
+		.careers-modal-backdrop {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			background: rgba(0, 0, 0, 0.75);
+			backdrop-filter: blur(8px);
+			-webkit-backdrop-filter: blur(8px);
+			z-index: 1000;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 20px;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.2s ease, visibility 0.2s;
+		}
+
+		.careers-modal-backdrop.is-active {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		.careers-modal {
+			background: #12153b;
+			border: 1px solid rgba(255, 255, 255, 0.18);
 			border-radius: 28px;
-			background: rgba(18, 21, 64, 0.78);
+			max-width: 640px;
+			width: 100%;
+			max-height: 90vh;
+			overflow-y: auto;
+			padding: 36px 32px;
+			box-shadow: 0 24px 70px rgba(0, 0, 0, 0.75);
+			position: relative;
+			transform: scale(0.95);
+			transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
+		}
+
+		.careers-modal-backdrop.is-active .careers-modal {
+			transform: scale(1);
+		}
+
+		.careers-modal-close {
+			position: absolute;
+			top: 24px;
+			right: 24px;
+			width: 36px;
+			height: 36px;
+			border-radius: 50%;
+			background: rgba(255, 255, 255, 0.1);
+			border: none;
+			color: #ffffff;
+			font-size: 18px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			transition: background-color 0.15s ease;
+		}
+
+		.careers-modal-close:hover {
+			background: rgba(255, 255, 255, 0.25);
+		}
+
+		.careers-input {
+			width: 100%;
+			padding: 14px 18px;
+			border-radius: 12px;
+			background: rgba(0, 0, 0, 0.35);
 			border: 1px solid rgba(255, 255, 255, 0.16);
+			color: #ffffff;
+			font-size: 15px;
+			margin-top: 6px;
 			margin-bottom: 16px;
-			transition: transform 0.18s ease, border-color 0.18s ease;
+			box-sizing: border-box;
+			font-family: inherit;
 		}
-		.job-row:hover {
-			transform: translateY(-3px);
-			border-color: rgba(88, 101, 242, 0.75);
+
+		.careers-input:focus {
+			outline: none;
+			border-color: var(--careers-accent);
+			box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.4);
 		}
-		@media (max-width: 720px) {
-			.job-row {
+
+		/* Responsive Adjustments */
+		@media (max-width: 900px) {
+			.careers-perks-grid {
+				grid-template-columns: 1fr;
+			}
+			.careers-alt-row,
+			.careers-alt-row.is-reversed {
+				grid-template-columns: 1fr;
+				gap: 32px;
+			}
+			.careers-pickaxe-prop,
+			.careers-coin-prop {
+				display: none;
+			}
+			.careers-job-card {
 				flex-direction: column;
 				align-items: flex-start;
+				gap: 18px;
+			}
+			.careers-job-btn {
+				width: 100%;
+				justify-content: center;
 			}
 		}
 	</style>
@@ -86,111 +772,115 @@
 
 	<main class="zy-careers-page">
 		<!-- =====================================================================
-		     1. HERO & OFFICE PHOTO GALLERY — EXACT DISCORD 2026
+		     1. HERO & FULL-BLEED OFFICE PHOTO GALLERY — EXACT DISCORD 2026
 		     ===================================================================== -->
-		<section class="zy-subhero" style="padding-top:140px;padding-bottom:24px;overflow:visible;">
-			<div class="zy-container" style="position:relative;">
-				<div class="zy-subhero-inner">
-					<h1 class="zy-subhero-title" style="font-style:italic;">Work at __INSTANCE_NAME__</h1>
-					<p class="zy-subhero-sub">
+		<section class="careers-hero-wrap">
+			<div class="zy-container">
+				<div class="careers-hero-inner">
+					<!-- Floating 3D Crown on Top-Left -->
+					<img src="/site/media/zycord/careers-crown.webp" alt="" aria-hidden="true" class="careers-crown-prop" />
+
+					<!-- Floating 3D Clyde on Right -->
+					<img src="/site/media/zycord/careers-clyde.webp" alt="" aria-hidden="true" class="careers-clyde-hero-prop" />
+
+					<h1 class="careers-h1">Work at __INSTANCE_NAME__</h1>
+					<p class="careers-lead">
 						Our employees aren’t just the most talented folks in the industry (we may be a little biased), they’re also deeply passionate about gaming, fostering meaningful connections, and of course, __INSTANCE_NAME__.
 					</p>
-					<div style="margin-top:16px;">
-						<a class="zy-btn zy-btn-primary" href="#all-jobs" style="padding:18px 36px;font-size:18px;">
+					<div style="margin-top: 28px;">
+						<a class="zy-white-pill-btn" href="#all-jobs" style="padding: 16px 36px; font-size: 17px; font-weight: 800; display: inline-flex;">
 							<span>See All Jobs</span>
 						</a>
 					</div>
 				</div>
 			</div>
 
-			<!-- Official Discord Full-Bleed 8-Photo Office Gallery with Side Floating Arrows + Floating 3D Crown & Clyde -->
-			<div class="zy-careers-hero-carousel-wrap" data-zy-carousel>
-				<!-- Floating 3D Crown on Top-Left (Matches Discord Screenshot) -->
-				<img src="/site/media/zycord/careers-crown.webp" alt="" aria-hidden="true" class="zy-careers-crown-prop" />
-
-				<!-- Floating 3D Clyde Smiling Head on Bottom-Right (Matches Discord Screenshot) -->
-				<img src="/site/media/zycord/careers-clyde.webp" alt="" aria-hidden="true" class="zy-careers-clyde-prop" />
-
-				<!-- Side Floating Circular Arrows -->
-				<button type="button" class="zy-carousel-side-arrow is-prev" data-zy-carousel-prev aria-label="Previous slide">
+			<!-- Official Full-Bleed 8-Photo Office Gallery with Side Floating Arrows -->
+			<div class="careers-gallery-carousel" data-zy-carousel>
+				<!-- Side Circular Frosted Glass Arrows (< and >) -->
+				<button type="button" class="careers-gallery-arrow is-prev" data-zy-carousel-prev aria-label="Previous photo">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 						<path d="M14.5 18L8.5 12L14.5 6" />
 					</svg>
 				</button>
-				<button type="button" class="zy-carousel-side-arrow is-next" data-zy-carousel-next aria-label="Next slide">
+				<button type="button" class="careers-gallery-arrow is-next" data-zy-carousel-next aria-label="Next photo">
 					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
 						<path d="M9.5 18L15.5 12L9.5 6" />
 					</svg>
 				</button>
 
-				<!-- Draggable Centered Track with Giant Capsule-Rounded Cards -->
-				<div class="zy-carousel-track zy-careers-track" data-zy-carousel-track>
-					<div class="zy-carousel-slide-gallery">
-						<img src="/site/media/zycord/careers-hero.webp" alt="__INSTANCE_NAME__ HQ Entrance" />
+				<!-- Draggable Track with Giant Capsule-Rounded Cards -->
+				<div class="careers-gallery-track" data-zy-carousel-track>
+					<div class="careers-gallery-slide zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-hero.webp" alt="__INSTANCE_NAME__ HQ Entrance &amp; Lobby" />
 					</div>
-					<div class="zy-carousel-slide-gallery">
-						<img src="/site/media/zycord/careers-office-1.webp" alt="__INSTANCE_NAME__ Workspace" />
+					<div class="careers-gallery-slide zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-1.webp" alt="__INSTANCE_NAME__ Open Workspace" />
 					</div>
-					<div class="zy-carousel-slide-gallery">
-						<img src="/site/media/zycord/careers-office-2.webp" alt="__INSTANCE_NAME__ Focus Pod" />
+					<div class="careers-gallery-slide zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-2.webp" alt="__INSTANCE_NAME__ Private Focus Booth" />
 					</div>
-					<div class="zy-carousel-slide-gallery">
+					<div class="careers-gallery-slide zy-carousel-slide-gallery">
 						<img src="/site/media/zycord/careers-office-4.webp" alt="__INSTANCE_NAME__ Chess &amp; Collaboration Lounge" />
 					</div>
-					<div class="zy-carousel-slide-gallery">
-						<img src="/site/media/zycord/careers-office-5.webp" alt="__INSTANCE_NAME__ Engineering Room" />
+					<div class="careers-gallery-slide zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-5.webp" alt="__INSTANCE_NAME__ Engineering Team Room" />
 					</div>
-					<div class="zy-carousel-slide-gallery">
-						<img src="/site/media/zycord/careers-office-6.webp" alt="__INSTANCE_NAME__ Design Studio" />
+					<div class="careers-gallery-slide zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-6.webp" alt="__INSTANCE_NAME__ Design &amp; Product Studio" />
 					</div>
-					<div class="zy-carousel-slide-gallery">
-						<img src="/site/media/zycord/careers-office-7.webp" alt="__INSTANCE_NAME__ Gaming Couch" />
+					<div class="careers-gallery-slide zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-7.webp" alt="__INSTANCE_NAME__ Gaming Couch &amp; Console Area" />
 					</div>
-					<div class="zy-carousel-slide-gallery">
-						<img src="/site/media/zycord/careers-office-3.webp" alt="__INSTANCE_NAME__ Team Hangout" />
+					<div class="careers-gallery-slide zy-carousel-slide-gallery">
+						<img src="/site/media/zycord/careers-office-3.webp" alt="__INSTANCE_NAME__ Team Hangout &amp; Cafeteria" />
 					</div>
 				</div>
 			</div>
 		</section>
 
 		<!-- =====================================================================
-		     2. BE A PART OF THE FUTURE OF GAMING — CLYDE & 2 ALTERNATING ROWS
+		     2. BE A PART OF THE FUTURE OF GAMING — CLYDE & ALTERNATING ROWS
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:32px;">
+		<section class="zy-section" style="padding-top: 40px; padding-bottom: 60px;">
 			<div class="zy-container">
-				<div style="text-align:center;max-width:740px;margin:0 auto 48px;">
-					<h2 class="zy-heading">BE A PART OF THE FUTURE OF GAMING</h2>
+				<div style="text-align: center; max-width: 760px; margin: 0 auto 56px;">
+					<h2 class="careers-section-h2">BE A PART OF THE FUTURE OF GAMING</h2>
 					<img
 						src="/site/media/zycord/careers-clyde.webp"
-						alt="__INSTANCE_NAME__ Clyde"
-						style="width:168px;height:auto;margin:20px auto;display:block;filter:drop-shadow(0 18px 32px rgba(0,0,0,0.45));"
+						alt="__INSTANCE_NAME__ Clyde Mascot"
+						style="width: 170px; height: auto; margin: 20px auto; display: block; filter: drop-shadow(0 18px 36px rgba(0,0,0,0.5));"
 					/>
-					<p class="zy-body-lg">
-						We believe __INSTANCE_NAME__ is uniquely positioned to shape the future of gaming. We aren’t just imagining what it may look like — we’re building __INSTANCE_NAME__ to be the perfect place to talk while playing games on any platform, no matter what device you play on.
+					<p class="careers-lead" style="font-size: 19px;">
+						We believe __INSTANCE_NAME__ is uniquely positioned to shape the future of gaming. We aren’t just imagining what it may look like, we’re building __INSTANCE_NAME__ to be the perfect place to talk while playing games on any platform, no matter what device you play on.
 					</p>
 				</div>
 
-				<div class="zy-alt-row">
-					<div class="zy-alt-media-card is-indigo">
-						<img src="/site/media/zycord/careers-passionate.webp" alt="Work with people just as passionate as you" />
+				<div class="careers-alt-grid">
+					<!-- Row 1: Photo on Left, Copy on Right -->
+					<div class="careers-alt-row">
+						<div class="careers-alt-media">
+							<img src="/site/media/zycord/careers-passionate.webp" alt="Work with people just as passionate as you" />
+						</div>
+						<div class="careers-alt-copy">
+							<h3>Work with people just as passionate as you</h3>
+							<p>
+								Much like the people on __INSTANCE_NAME__, our employees can’t be put in a box (but maybe in a server). We come from all walks of life, and with our own unique perspectives, but we all care about the same thing: making __INSTANCE_NAME__ your home while gaming.
+							</p>
+						</div>
 					</div>
-					<div class="zy-alt-copy">
-						<h3 class="zy-alt-title">Work with people just as passionate as you</h3>
-						<p class="zy-body-lg">
-							Much like the people on __INSTANCE_NAME__, our employees can’t be put in a box (but maybe in a server). We come from all walks of life, and with our own unique perspectives, but we all care about the same thing: making __INSTANCE_NAME__ your home while gaming.
-						</p>
-					</div>
-				</div>
 
-				<div class="zy-alt-row">
-					<div class="zy-alt-copy">
-						<h3 class="zy-alt-title">Where every idea is heard and valued</h3>
-						<p class="zy-body-lg">
-							We don't just build __INSTANCE_NAME__, we use it too! All of us want to help make __INSTANCE_NAME__ the best place to play games with friends, and everyone's input matters.
-						</p>
-					</div>
-					<div class="zy-alt-media-card is-blue">
-						<img src="/site/media/zycord/careers-idea-valued.webp" alt="Where every idea is heard and valued" />
+					<!-- Row 2: Copy on Left, Photo on Right -->
+					<div class="careers-alt-row is-reversed">
+						<div class="careers-alt-copy">
+							<h3>Where every idea is heard and valued</h3>
+							<p>
+								We don't just build __INSTANCE_NAME__, we use it too! All of us want to help make __INSTANCE_NAME__ the best place to play games with friends, and everyone's input matters.
+							</p>
+						</div>
+						<div class="careers-alt-media">
+							<img src="/site/media/zycord/careers-idea-valued.webp" alt="Where every idea is heard and valued" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -199,84 +889,154 @@
 		<!-- =====================================================================
 		     3. DON'T JUST IMAGINE THE FUTURE OF GAMING — BUILD IT WITH US (JOBS)
 		     ===================================================================== -->
-		<section class="zy-section" id="all-jobs" style="padding-top:24px;">
+		<section class="zy-section" id="all-jobs" style="padding-top: 40px; padding-bottom: 60px;">
 			<div class="zy-container">
-				<div style="text-align:center;max-width:760px;margin:0 auto;">
+				<div style="text-align: center; max-width: 780px; margin: 0 auto;">
 					<img
 						src="/site/media/zycord/prop-egg.webp"
 						alt=""
 						aria-hidden="true"
-						style="width:92px;height:auto;margin:0 auto 14px;display:block;filter:drop-shadow(0 16px 28px rgba(0,0,0,0.45));"
+						style="width: 90px; height: auto; margin: 0 auto 16px; display: block; filter: drop-shadow(0 16px 28px rgba(0,0,0,0.45));"
 					/>
-					<h2 class="zy-heading">DON’T JUST IMAGINE THE FUTURE OF GAMING — BUILD IT WITH US.</h2>
-					<p class="zy-body-lg" style="margin-top:12px;">
+					<h2 class="careers-section-h2">DON’T JUST IMAGINE THE FUTURE OF GAMING — BUILD IT WITH US.</h2>
+					<p class="careers-lead" style="font-size: 18px; margin-top: 12px;">
 						Explore our careers page and see if any of our open jobs would be a great fit for you.
 					</p>
 
-					<!-- Interactive Department Selector Dropdown (Exact Zycord style) -->
-					<div style="display:flex;justify-content:center;margin-top:24px;margin-bottom:32px;">
-						<div class="zy-action-dropdown" data-zy-dropdown>
-							<button type="button" class="zy-white-pill-btn" data-zy-dropdown-toggle style="border:none;cursor:pointer;min-width:220px;justify-content:space-between;">
-								<span data-zy-job-filter-label>Featured</span>
-								<svg class="zy-action-dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-									<polyline points="3.5 6 8 10.5 12.5 6" />
-								</svg>
-							</button>
-							<div class="zy-action-dropdown-menu" role="listbox" style="min-width:260px;">
-								<button type="button" class="zy-action-dropdown-item is-active" data-zy-job-filter="all">Featured</button>
-								<button type="button" class="zy-action-dropdown-item" data-zy-job-filter="engineering">Core Engineering</button>
-								<button type="button" class="zy-action-dropdown-item" data-zy-job-filter="media">Voice &amp; WebRTC Media</button>
-								<button type="button" class="zy-action-dropdown-item" data-zy-job-filter="design">Product &amp; Collectibles Design</button>
-								<button type="button" class="zy-action-dropdown-item" data-zy-job-filter="security">Security &amp; Safety</button>
-							</div>
+					<!-- Interactive Department Selector Dropdown (Exact Discord 2026 Style) -->
+					<div class="careers-dept-dropdown" id="job-dropdown">
+						<button type="button" class="careers-dept-toggle" id="job-dropdown-btn">
+							<span id="job-dropdown-label">Featured</span>
+							<svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="3.5 6 8 10.5 12.5 6" />
+							</svg>
+						</button>
+						<div class="careers-dept-menu" role="listbox">
+							<button type="button" class="careers-dept-item is-active" data-dept="all">Featured</button>
+							<button type="button" class="careers-dept-item" data-dept="engineering">Core Engineering</button>
+							<button type="button" class="careers-dept-item" data-dept="product">Product Management</button>
+							<button type="button" class="careers-dept-item" data-dept="design">Product &amp; Visual Design</button>
+							<button type="button" class="careers-dept-item" data-dept="safety">Policy &amp; Safety</button>
+							<button type="button" class="careers-dept-item" data-dept="media">Infrastructure &amp; Media</button>
+							<button type="button" class="careers-dept-item" data-dept="operations">Operations &amp; IT</button>
+							<button type="button" class="careers-dept-item" data-dept="marketing">Marketing &amp; Community</button>
+							<button type="button" class="careers-dept-item" data-dept="people">People &amp; Places</button>
+							<button type="button" class="careers-dept-item" data-dept="legal">Finance &amp; Legal</button>
 						</div>
 					</div>
 				</div>
 
-				<div id="jobs-list">
-					<article class="job-row" data-zy-job-dept="engineering" data-job-dept="engineering">
+				<!-- All Roles Grid -->
+				<div class="careers-jobs-grid" id="jobs-list">
+					<!-- Engineering Roles -->
+					<article class="careers-job-card" data-dept="engineering" data-title="Staff Distributed Systems Engineer — Real-Time Gateway" data-loc="San Francisco, CA or Remote (U.S.)">
 						<div>
-							<span class="zy-eyebrow">Core Engineering</span>
-							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Staff Distributed Systems Engineer — Real-Time Gateway</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote (U.S.) · Full-Time · TypeScript, Rust, WebSockets</p>
+							<span class="careers-job-tag">Core Engineering</span>
+							<h3 class="careers-job-title">Staff Distributed Systems Engineer — Real-Time Gateway</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote (U.S.) · Full-Time · TypeScript, Rust, WebSockets, Redis</p>
 						</div>
-						<a class="zy-white-pill-btn" href="/developers">Apply Now →</a>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
 					</article>
 
-					<article class="job-row" data-zy-job-dept="media" data-job-dept="media">
+					<article class="careers-job-card" data-dept="media" data-title="Senior WebRTC Audio/Video SFU Engineer" data-loc="San Francisco, CA or Remote (U.S.)">
 						<div>
-							<span class="zy-eyebrow">Voice &amp; WebRTC Media</span>
-							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Senior WebRTC Audio/Video SFU Engineer</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote (U.S.) · Full-Time · WebRTC, Opus, AV1/H.264</p>
+							<span class="careers-job-tag">Infrastructure &amp; Media</span>
+							<h3 class="careers-job-title">Senior WebRTC Audio/Video SFU Engineer</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote (U.S.) · Full-Time · WebRTC, Go/C++, Opus, AV1/H.264</p>
 						</div>
-						<a class="zy-white-pill-btn" href="/developers">Apply Now →</a>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
 					</article>
 
-					<article class="job-row" data-zy-job-dept="design" data-job-dept="design">
+					<article class="careers-job-card" data-dept="engineering" data-title="Senior Desktop Client Engineer" data-loc="San Francisco, CA or Remote">
 						<div>
-							<span class="zy-eyebrow">Product &amp; Collectibles Design</span>
-							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Lead Motion &amp; 3D Collectibles Designer</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote · Full-Time · Blender, SVG Shaders, Design Systems</p>
+							<span class="careers-job-tag">Core Engineering</span>
+							<h3 class="careers-job-title">Senior Desktop Client Engineer (Electron, C++, macOS/Windows/Linux)</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote · Full-Time · Electron, Chromium, C++, Audio Capture</p>
 						</div>
-						<a class="zy-white-pill-btn" href="/nitro">View Collectibles →</a>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
 					</article>
 
-					<article class="job-row" data-zy-job-dept="security" data-job-dept="security">
+					<article class="careers-job-card" data-dept="engineering" data-title="Staff Database &amp; Infrastructure Engineer" data-loc="San Francisco, CA or Remote">
 						<div>
-							<span class="zy-eyebrow">Security &amp; Safety</span>
-							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Engineering Manager, Safety Platform &amp; Cryptography</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote (U.S.) · Full-Time · WebCrypto, ECDH, Passkeys</p>
+							<span class="careers-job-tag">Core Engineering</span>
+							<h3 class="careers-job-title">Staff Database &amp; Infrastructure Engineer</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote · Full-Time · PostgreSQL, ClickHouse, High-Concurrency Storage</p>
 						</div>
-						<a class="zy-white-pill-btn" href="/safety">Security Overview →</a>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
 					</article>
 
-					<article class="job-row" data-zy-job-dept="engineering" data-job-dept="engineering">
+					<article class="careers-job-card" data-dept="safety" data-title="Engineering Manager, Safety Platform &amp; Cryptography" data-loc="San Francisco, CA or Remote (U.S.)">
 						<div>
-							<span class="zy-eyebrow">Core Engineering</span>
-							<h3 class="zy-heading-sm" style="font-size:24px;margin-top:8px;">Senior Desktop Client Engineer (Windows / macOS / Linux)</h3>
-							<p class="zy-body" style="font-size:15px;margin-top:4px;">San Francisco or Remote · Full-Time · Electron, C++, Hardware Overlay &amp; Audio Capture</p>
+							<span class="careers-job-tag">Policy &amp; Safety</span>
+							<h3 class="careers-job-title">Engineering Manager, Safety Platform &amp; Cryptography</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote (U.S.) · Full-Time · WebCrypto, ECDH, E2EE, Trust &amp; Safety</p>
 						</div>
-						<a class="zy-white-pill-btn" href="/download">View Desktop App →</a>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
+					</article>
+
+					<!-- Product & Design Roles -->
+					<article class="careers-job-card" data-dept="product" data-title="Director of Product Management, Core Communities" data-loc="San Francisco, CA or Remote">
+						<div>
+							<span class="careers-job-tag">Product Management</span>
+							<h3 class="careers-job-title">Director of Product Management, Core Communities</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote · Full-Time · Guilds, Channels, Community Tools</p>
+						</div>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
+					</article>
+
+					<article class="careers-job-card" data-dept="design" data-title="Lead Motion &amp; 3D Collectibles Designer" data-loc="San Francisco, CA or Remote">
+						<div>
+							<span class="careers-job-tag">Product &amp; Visual Design</span>
+							<h3 class="careers-job-title">Lead Motion &amp; 3D Collectibles Designer</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote · Full-Time · Blender, Avatar Decorations, SVG Shaders</p>
+						</div>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
+					</article>
+
+					<article class="careers-job-card" data-dept="design" data-title="Staff Product Designer — Design Systems &amp; Web" data-loc="San Francisco, CA or Remote">
+						<div>
+							<span class="careers-job-tag">Product &amp; Visual Design</span>
+							<h3 class="careers-job-title">Staff Product Designer — Design Systems &amp; Web</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote · Full-Time · Figma, Design Tokens, Accessibility, UX</p>
+						</div>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
+					</article>
+
+					<!-- Operations, Marketing, People, Legal -->
+					<article class="careers-job-card" data-dept="operations" data-title="Site Reliability Engineer — Global Infrastructure" data-loc="Remote">
+						<div>
+							<span class="careers-job-tag">Operations &amp; IT</span>
+							<h3 class="careers-job-title">Site Reliability Engineer — Global Infrastructure</h3>
+							<p class="careers-job-meta">Remote · Full-Time · Kubernetes, Docker, Prometheus, Edge Routing</p>
+						</div>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
+					</article>
+
+					<article class="careers-job-card" data-dept="marketing" data-title="Senior Product Marketing Manager, Gaming Partnerships" data-loc="San Francisco, CA or Remote">
+						<div>
+							<span class="careers-job-tag">Marketing &amp; Community</span>
+							<h3 class="careers-job-title">Senior Product Marketing Manager, Gaming Partnerships</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote · Full-Time · Game Studio Collaborations, Nitro Campaigns</p>
+						</div>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
+					</article>
+
+					<article class="careers-job-card" data-dept="people" data-title="Senior Technical Recruiter — Systems &amp; Core Platform" data-loc="San Francisco, CA or Remote">
+						<div>
+							<span class="careers-job-tag">People &amp; Places</span>
+							<h3 class="careers-job-title">Senior Technical Recruiter — Systems &amp; Core Platform</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote · Full-Time · Full Lifecycle Technical Hiring</p>
+						</div>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
+					</article>
+
+					<article class="careers-job-card" data-dept="legal" data-title="Corporate Counsel, Privacy &amp; Global Compliance" data-loc="San Francisco, CA or Remote">
+						<div>
+							<span class="careers-job-tag">Finance &amp; Legal</span>
+							<h3 class="careers-job-title">Corporate Counsel, Privacy &amp; Global Compliance</h3>
+							<p class="careers-job-meta">San Francisco, CA or Remote · Full-Time · GDPR, CCPA, International Tech Law</p>
+						</div>
+						<button type="button" class="careers-job-btn">Apply Now →</button>
 					</article>
 				</div>
 			</div>
@@ -285,78 +1045,79 @@
 		<!-- =====================================================================
 		     4. EXPERIENCE LIFE AT ZYCORD (8 OFFICIAL PERK CARDS WITH SVG ICONS)
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:24px;">
+		<section class="zy-section" style="padding-top: 40px; padding-bottom: 60px;">
 			<div class="zy-container">
-				<div style="text-align:center;max-width:740px;margin:0 auto 36px;">
-					<h2 class="zy-heading">EXPERIENCE LIFE AT __INSTANCE_NAME__</h2>
+				<div style="text-align: center; max-width: 740px; margin: 0 auto 48px;">
+					<h2 class="careers-section-h2">EXPERIENCE LIFE AT __INSTANCE_NAME__</h2>
 				</div>
 
-				<div class="zy-perks-grid">
-					<article class="zy-perk-card">
-						<img src="/site/media/zycord/careers-perk-hq.svg" alt="__INSTANCE_NAME__ HQ" />
-						<h3 class="zy-heading-sm" style="font-size:22px;">__INSTANCE_NAME__ HQ</h3>
-						<p class="zy-body" style="font-size:14px;">
+				<div class="careers-perks-grid">
+					<article class="careers-perk-card">
+						<img src="/site/media/zycord/careers-perk-hq.svg" alt="__INSTANCE_NAME__ HQ" class="careers-perk-icon" />
+						<h3>__INSTANCE_NAME__ HQ</h3>
+						<p>
 							At __INSTANCE_NAME__, we believe great work can happen anywhere, whether in person or virtually. Our flexible work model empowers our people to choose where they work best: at home, in one of our offices like our San Francisco HQ, or a mix of both.
 						</p>
 					</article>
 
-					<article class="zy-perk-card">
-						<img src="/site/media/zycord/careers-perk-grow.svg" alt="Grow together" />
-						<h3 class="zy-heading-sm" style="font-size:22px;">Grow together</h3>
-						<p class="zy-body" style="font-size:14px;">
-							Look forward to developing both professionally and personally alongside your colleagues. All of our managers go through a leadership program, and we offer enriching trainings for everyone.
+					<article class="careers-perk-card">
+						<img src="/site/media/zycord/careers-perk-grow.svg" alt="Grow together" class="careers-perk-icon" />
+						<h3>Grow together</h3>
+						<p>
+							Look forward to developing both professionally and personally alongside your colleagues at __INSTANCE_NAME__. All of our managers go through a leadership program, and we offer enriching trainings for everyone. No matter what your interests or skills are, there's a place on our platform for you to find and build belonging.
 						</p>
 					</article>
 
-					<article class="zy-perk-card">
-						<img src="/site/media/zycord/careers-perk-money.svg" alt="Money matters" />
-						<h3 class="zy-heading-sm" style="font-size:22px;">Money matters</h3>
-						<p class="zy-body" style="font-size:14px;">
-							__INSTANCE_NAME__ strives to offer fair and competitive compensation packages, including equity. Take advantage of our retirement offerings (including 401k matching in the U.S.) to meet your financial goals.
+					<article class="careers-perk-card">
+						<img src="/site/media/zycord/careers-perk-money.svg" alt="Money matters" class="careers-perk-icon" />
+						<h3>Money matters</h3>
+						<p>
+							__INSTANCE_NAME__ strives to offer fair and competitive compensation packages, including equity. You'll have room to grow and be rewarded based on your contributions and impact at the company. Take advantage of our retirement offerings (including 401k matching in the U.S.) to meet your financial goals.
 						</p>
 					</article>
 
-					<article class="zy-perk-card">
-						<img src="/site/media/zycord/careers-perk-health.svg" alt="Health benefits" />
-						<h3 class="zy-heading-sm" style="font-size:22px;">Health benefits</h3>
-						<p class="zy-body" style="font-size:14px;">
+					<article class="careers-perk-card">
+						<img src="/site/media/zycord/careers-perk-health.svg" alt="Health benefits" class="careers-perk-icon" />
+						<h3>Health benefits</h3>
+						<p>
 							At __INSTANCE_NAME__, we health-care about you! We offer medical, dental, vision, reproductive, gender-affirming, and mental healthcare to our employees.
 						</p>
 					</article>
 
-					<article class="zy-perk-card">
-						<img src="/site/media/zycord/careers-perk-family.svg" alt="Family support" />
-						<h3 class="zy-heading-sm" style="font-size:22px;">Family support</h3>
-						<p class="zy-body" style="font-size:14px;">
+					<article class="careers-perk-card">
+						<img src="/site/media/zycord/careers-perk-family.svg" alt="Family support" class="careers-perk-icon" />
+						<h3>Family support</h3>
+						<p>
 							Spend some quality time with the next generation with 12+ weeks parental leave, as well as fertility, adoption, and surrogacy benefits.
 						</p>
 					</article>
 
-					<article class="zy-perk-card">
-						<img src="/site/media/zycord/careers-perk-rr.svg" alt="R&amp;R" />
-						<h3 class="zy-heading-sm" style="font-size:22px;">R&amp;R</h3>
-						<p class="zy-body" style="font-size:14px;">
+					<article class="careers-perk-card">
+						<img src="/site/media/zycord/careers-perk-rr.svg" alt="R&amp;R" class="careers-perk-icon" />
+						<h3>R&amp;R</h3>
+						<p>
 							Stay refreshed with four weeks of PTO, 16 paid holidays each year including a week off for the winter holidays, and flexible sick time (which includes mental health days).
 						</p>
 					</article>
 
-					<article class="zy-perk-card">
-						<img src="/site/media/zycord/careers-perk-wellness.svg" alt="Wellness on us" />
-						<h3 class="zy-heading-sm" style="font-size:22px;">Wellness on us</h3>
-						<p class="zy-body" style="font-size:14px;">
+					<article class="careers-perk-card">
+						<img src="/site/media/zycord/careers-perk-wellness.svg" alt="Wellness on us" class="careers-perk-icon" />
+						<h3>Wellness on us</h3>
+						<p>
 							Take advantage of a $375 quarterly stipend for your gym membership or other activities to keep you feeling great.
 						</p>
 					</article>
 
-					<article class="zy-perk-card">
-						<img src="/site/media/zycord/careers-perk-giving.svg" alt="Giving back" />
-						<h3 class="zy-heading-sm" style="font-size:22px;">Giving back</h3>
-						<p class="zy-body" style="font-size:14px;">
+					<article class="careers-perk-card">
+						<img src="/site/media/zycord/careers-perk-giving.svg" alt="Giving back" class="careers-perk-icon" />
+						<h3>Giving back</h3>
+						<p>
 							Whatever social cause you’re passionate about, take a day (or two) off to make an impact. While you're at it, take advantage of $1,000/year in donation matching to charitable organizations!
 						</p>
 					</article>
 				</div>
-				<p class="zy-body" style="text-align:center;font-size:13px;opacity:0.7;margin-top:18px;">
+
+				<p style="text-align: center; font-size: 14px; color: rgba(255, 255, 255, 0.6); max-width: 800px; margin: 28px auto 0;">
 					Benefits listed apply to US-based, full time employees. Benefits for employees outside the US may vary by location.
 				</p>
 			</div>
@@ -365,46 +1126,47 @@
 		<!-- =====================================================================
 		     5. WHEN IT'S TIME FOR FUN, FIND YOUR PARTY HERE (ALL 26 CLUBS & ERGS)
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:24px;">
+		<section class="zy-section" style="padding-top: 40px; padding-bottom: 60px;">
 			<div class="zy-container">
-				<div style="text-align:center;max-width:760px;margin:0 auto 36px;">
-					<h2 class="zy-heading">WHEN IT’S TIME FOR FUN, FIND YOUR PARTY HERE</h2>
-					<p class="zy-body-lg" style="margin-top:12px;">
+				<div style="text-align: center; max-width: 780px; margin: 0 auto 36px;">
+					<h2 class="careers-section-h2">WHEN IT’S TIME FOR FUN, FIND YOUR PARTY HERE</h2>
+					<p class="careers-lead" style="font-size: 18px; margin-top: 12px;">
 						Working at __INSTANCE_NAME__ is like hanging out on your favorite server; our employees hang out and play games together, talk about their favorite hobbies, and build inclusive spaces where employees can offer mentorship and guidance.
 					</p>
 				</div>
 
-				<!-- Interactive 26-Club Horizontal Slider with Prev/Next Arrows -->
+				<!-- 26-Club Slider with Prev/Next Controls -->
 				<div class="zy-carousel-wrap" data-zy-carousel>
-					<div class="zy-carousel-track" data-zy-carousel-track>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-anime.svg" alt="Anime Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Anime Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-art.svg" alt="Art Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Art Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-afk.svg" alt="Asian Friends &amp; Kinship (AFK)" /><h3 class="zy-heading-sm" style="font-size:20px;">Asian Friends &amp; Kinship (AFK)</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-basketball.svg" alt="Basketball Buds" /><h3 class="zy-heading-sm" style="font-size:20px;">Basketball Buds</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-baam.png" alt="Black &amp; African American Movement (BAAM)" /><h3 class="zy-heading-sm" style="font-size:20px;">Black &amp; African American Movement (BAAM)</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-book.svg" alt="Book Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Book Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-brain.svg" alt="Brain &amp; Body Works" /><h3 class="zy-heading-sm" style="font-size:20px;">Brain &amp; Body Works</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-cat.svg" alt="Cat Cam Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Cat Cam Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-climb.svg" alt="Climbtime" /><h3 class="zy-heading-sm" style="font-size:20px;">Climbtime</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-chess.svg" alt="Deep Blurple Chess Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Deep Blurple Chess Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-esports.svg" alt="Esports Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Esports Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-futbol.svg" alt="Futbol Friends" /><h3 class="zy-heading-sm" style="font-size:20px;">Futbol Friends</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-hiphop.svg" alt="Hip Hop Enthusiasts" /><h3 class="zy-heading-sm" style="font-size:20px;">Hip Hop Enthusiasts</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-jewish.svg" alt="Jew-ish" /><h3 class="zy-heading-sm" style="font-size:20px;">Jew-ish</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-cafeteria.png" alt="La Cafetería" /><h3 class="zy-heading-sm" style="font-size:20px;">La Cafetería</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-pride.png" alt="Pride" /><h3 class="zy-heading-sm" style="font-size:20px;">Pride</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-realitea.svg" alt="Reali-tea TV Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Reali-tea TV Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-spin.svg" alt="Spin Society" /><h3 class="zy-heading-sm" style="font-size:20px;">Spin Society</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-tabletop.svg" alt="Tabletop Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Tabletop Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-taskmaster.svg" alt="Taskmaster Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Taskmaster Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-parent.svg" alt="The Parent Trap" /><h3 class="zy-heading-sm" style="font-size:20px;">The Parent Trap</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-theatre.svg" alt="Theatre" /><h3 class="zy-heading-sm" style="font-size:20px;">Theatre</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-veterans.svg" alt="Veterans: Fort Wumpus" /><h3 class="zy-heading-sm" style="font-size:20px;">Veterans: Fort Wumpus</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-volleyball.svg" alt="Volleyball Club" /><h3 class="zy-heading-sm" style="font-size:20px;">Volleyball Club</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-whiskey.svg" alt="Whiskey and Spirits Society" /><h3 class="zy-heading-sm" style="font-size:20px;">Whiskey and Spirits Society</h3></article>
-						<article class="zy-club-card zy-carousel-slide-club"><img src="/site/media/zycord/careers-club-women.png" alt="Women in Tech" /><h3 class="zy-heading-sm" style="font-size:20px;">Women in Tech</h3></article>
+					<div class="careers-clubs-track" data-zy-carousel-track>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-anime.svg" alt="Anime Club" /><h3>Anime Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-art.svg" alt="Art Club" /><h3>Art Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-afk.svg" alt="Asian Friends &amp; Kinship (AFK)" /><h3>Asian Friends &amp; Kinship (AFK)</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-basketball.svg" alt="Basketball Buds" /><h3>Basketball Buds</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-baam.png" alt="Black &amp; African American Movement (BAAM)" /><h3>Black &amp; African American Movement (BAAM)</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-book.svg" alt="Book Club" /><h3>Book Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-brain.svg" alt="Brain &amp; Body Works" /><h3>Brain &amp; Body Works</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-cat.svg" alt="Cat Cam Club" /><h3>Cat Cam Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-climb.svg" alt="Climbtime" /><h3>Climbtime</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-chess.svg" alt="Deep Blurple Chess Club" /><h3>Deep Blurple Chess Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-esports.svg" alt="Esports Club" /><h3>Esports Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-futbol.svg" alt="Futbol Friends" /><h3>Futbol Friends</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-hiphop.svg" alt="Hip Hop Enthusiasts" /><h3>Hip Hop Enthusiasts</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-jewish.svg" alt="Jew-ish" /><h3>Jew-ish</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-cafeteria.png" alt="La Cafetería" /><h3>La Cafetería</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-pride.png" alt="Pride" /><h3>Pride</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-realitea.svg" alt="Reali-tea TV Club" /><h3>Reali-tea TV Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-spin.svg" alt="Spin Society" /><h3>Spin Society</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-tabletop.svg" alt="Tabletop Club" /><h3>Tabletop Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-taskmaster.svg" alt="Taskmaster Club" /><h3>Taskmaster Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-parent.svg" alt="The Parent Trap" /><h3>The Parent Trap</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-theatre.svg" alt="Theatre" /><h3>Theatre</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-veterans.svg" alt="Veterans: Fort Wumpus" /><h3>Veterans: Fort Wumpus</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-volleyball.svg" alt="Volleyball Club" /><h3>Volleyball Club</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-whiskey.svg" alt="Whiskey and Spirits Society" /><h3>Whiskey and Spirits Society</h3></article>
+						<article class="careers-club-card"><img src="/site/media/zycord/careers-club-women.png" alt="Women in Tech" /><h3>Women in Tech</h3></article>
 					</div>
-					<div class="zy-carousel-controls">
+
+					<div class="zy-carousel-controls" style="margin-top: 20px;">
 						<button type="button" class="zy-carousel-arrow" data-zy-carousel-prev aria-label="Previous clubs">
 							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
 								<path d="M14.5 18L8.5 12L14.5 6" />
@@ -421,88 +1183,185 @@
 		</section>
 
 		<!-- =====================================================================
-		     6. QUESTIONS? HIRING PROCESS FAQ ACCORDION (ALL 10 OFFICIAL FAQS)
+		     6. QUESTIONS? HIRING PROCESS FAQ ACCORDION (ALL 12 OFFICIAL FAQS)
 		     ===================================================================== -->
-		<section class="zy-section" style="padding-top:24px;">
-			<div class="zy-container" style="max-width:940px;">
-				<div style="text-align:center;margin-bottom:28px;">
-					<h2 class="zy-heading">QUESTIONS?</h2>
-					<p class="zy-body-lg" style="margin-top:8px;">
+		<section class="zy-section" style="padding-top: 40px; padding-bottom: 70px;">
+			<div class="zy-container" style="max-width: 960px;">
+				<div style="text-align: center; margin-bottom: 40px;">
+					<h2 class="careers-section-h2">QUESTIONS?</h2>
+					<p class="careers-lead" style="font-size: 18px; margin-top: 8px;">
 						Questions about our hiring process? Check out our frequently asked questions.
 					</p>
 				</div>
 
-				<div class="zy-accordion">
-					<div class="zy-accordion-item is-open">
-						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="true">
+				<div class="careers-faq-list">
+					<!-- FAQ 1 -->
+					<div class="careers-faq-item is-open">
+						<button type="button" class="careers-faq-trigger">
 							<span>What states do you hire in? Do I have to live in San Francisco to work for __INSTANCE_NAME__?</span>
-							<span class="zy-accordion-icon">▾</span>
+							<span class="careers-faq-icon">+</span>
 						</button>
-						<div class="zy-accordion-content">
-							While we have no requirement to work from the office, we’re hiring most roles in the SF Bay Area to foster a vibrant central hub in the region. Not every role requires candidates to be based in the SF Bay Area — in many cases, we continue to hire remotely from across the U.S. and internationally.
+						<div class="careers-faq-content">
+							<p>
+								While we have no requirement to work from the office, we’re hiring most roles in the SF Bay Area to foster a vibrant central hub in the region. For most roles, candidates will need to reside in or be willing to relocate to the San Francisco Bay Area (Alameda, Contra Costa, Marin, Napa, San Francisco, San Mateo, Santa Clara, Solano, and Sonoma counties).
+							</p>
+							<p style="margin-top: 12px;">
+								Not every role requires candidates to be based in the SF Bay Area. In some cases, we continue to hire from across the U.S. and internationally. Your recruiter can share more about location expectations for the role you’re interested in.
+							</p>
 						</div>
 					</div>
-					<div class="zy-accordion-item">
-						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+
+					<!-- FAQ 2 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
 							<span>Where are your offices located?</span>
-							<span class="zy-accordion-icon">▾</span>
+							<span class="careers-faq-icon">+</span>
 						</button>
-						<div class="zy-accordion-content">
-							We have one office in San Francisco and one in Amsterdam.
+						<div class="careers-faq-content">
+							<p>We have our primary headquarters in San Francisco, California and an international hub in Amsterdam, Netherlands.</p>
 						</div>
 					</div>
-					<div class="zy-accordion-item">
-						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+
+					<!-- FAQ 3 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
 							<span>What countries do you hire in?</span>
-							<span class="zy-accordion-icon">▾</span>
+							<span class="careers-faq-icon">+</span>
 						</button>
-						<div class="zy-accordion-content">
-							The majority of our roles are US-based. We are able to hire full-time employees in the US, Canada (Ontario and British Columbia), and the Netherlands, with additional international roles supported through our Employer of Record partner.
+						<div class="careers-faq-content">
+							<p>
+								The majority of our roles are US-based. We are able to hire full-time employees in the US, Canada (Ontario and British Columbia), and the Netherlands. Other roles are engaged in international locations through our global Employer of Record partner. Each job posting will state the location requirement, so be sure to review all the details in the description.
+							</p>
 						</div>
 					</div>
-					<div class="zy-accordion-item">
-						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+
+					<!-- FAQ 4 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
 							<span>Does __INSTANCE_NAME__ sponsor employees?</span>
-							<span class="zy-accordion-icon">▾</span>
+							<span class="careers-faq-icon">+</span>
 						</button>
-						<div class="zy-accordion-content">
-							Yes! Our immigration policy includes continued sponsorship for candidates with a current O-1, TN, E-3, H-1B1, or H-1B visa, sponsorship of new TN or E-3 visas, and Green Card sponsorship for eligible employees.
+						<div class="careers-faq-content">
+							<p>__INSTANCE_NAME__’s immigration policy includes:</p>
+							<ul>
+								<li>Continued sponsorship for any candidate with a current O-1, TN, E-3, H-1B1, or H-1B visa, provided they are eligible</li>
+								<li>Sponsorship of new TN or E-3 visas for Mexican/Canadian or Australian candidates</li>
+								<li>Sponsorship of Green Card for employees after 6 months of employment</li>
+								<li>Continued sponsorship of the Green Card process after 3 months of employment for candidates who have already received their priority date</li>
+							</ul>
+							<p>If you have any questions about these policies, be sure to connect with your recruiter should you be selected to interview!</p>
 						</div>
 					</div>
-					<div class="zy-accordion-item">
-						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+
+					<!-- FAQ 5 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
 							<span>I submitted an application, when will I hear back from a recruiter?</span>
-							<span class="zy-accordion-icon">▾</span>
+							<span class="careers-faq-icon">+</span>
 						</button>
-						<div class="zy-accordion-content">
-							Thanks a ton for applying! We do our best to respond to each person who applies within two weeks.
+						<div class="careers-faq-content">
+							<p>
+								Thanks a ton for applying! We do our best to respond to each person who applies within two weeks. Given the incredibly high number of applicants to some roles, we cannot guarantee each candidate will get a response directly from a recruiter.
+							</p>
 						</div>
 					</div>
-					<div class="zy-accordion-item">
-						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+
+					<!-- FAQ 6 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
+							<span>I’m interested in a role at __INSTANCE_NAME__, can I speak to a recruiter or hiring manager about it?</span>
+							<span class="careers-faq-icon">+</span>
+						</button>
+						<div class="careers-faq-content">
+							<p>
+								We’re hyped you’re interested! Based on the volume of applications __INSTANCE_NAME__ receives, recruiters and hiring managers are unable to meet with everyone who’s interested. The best thing to do is apply for the role and the team will be sure to review your application.
+							</p>
+						</div>
+					</div>
+
+					<!-- FAQ 7 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
 							<span>Can I apply to multiple positions at a time?</span>
-							<span class="zy-accordion-icon">▾</span>
+							<span class="careers-faq-icon">+</span>
 						</button>
-						<div class="zy-accordion-content">
-							You can! Although, we recommend that you apply only to the roles you are most interested in and qualified for.
+						<div class="careers-faq-content">
+							<p>
+								You can! Although, we recommend that you apply only to the roles you are most interested in and qualified for. Please note that you may hear back at different times for each role you apply to, and you can expect a separate update for each role.
+							</p>
 						</div>
 					</div>
-					<div class="zy-accordion-item">
-						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+
+					<!-- FAQ 8 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
+							<span>I saw a job posting I was interested in, but I no longer see it on the careers page. What does this mean?</span>
+							<span class="careers-faq-icon">+</span>
+						</button>
+						<div class="careers-faq-content">
+							<p>
+								This could mean a variety of things — ranging from high applicant volume that needs to be reviewed, to the role already being filled. Keep an eye on the jobs page for any similar roles, or the role being posted again!
+							</p>
+						</div>
+					</div>
+
+					<!-- FAQ 9 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
 							<span>What do I need to know before my interview?</span>
-							<span class="zy-accordion-icon">▾</span>
+							<span class="careers-faq-icon">+</span>
 						</button>
-						<div class="zy-accordion-content">
-							If you’re selected to interview, your recruiter will share all the details you need to know about the entire interview process — including how to prepare for each stage. Don’t hesitate to ask questions!
+						<div class="careers-faq-content">
+							<p>
+								If you’re selected to interview, your recruiter will share all the details you need to know about the entire interview process — including how to prepare for each stage. Don’t hesitate to ask questions!
+							</p>
 						</div>
 					</div>
-					<div class="zy-accordion-item">
-						<button type="button" class="zy-accordion-trigger" data-zy-accordion-trigger aria-expanded="false">
+
+					<!-- FAQ 10 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
 							<span>Do I have to write a Cover Letter?</span>
-							<span class="zy-accordion-icon">▾</span>
+							<span class="careers-faq-icon">+</span>
 						</button>
-						<div class="zy-accordion-content">
-							Double check the job description to see if one is required! It’s never a bad idea to write a cover letter, since it gives us a chance to get to know you better.
+						<div class="careers-faq-content">
+							<p>
+								Double check the job description to see if one is required! It’s never a bad idea to write a cover letter, since it gives us a chance to get to know you better.
+							</p>
+						</div>
+					</div>
+
+					<!-- FAQ 11 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
+							<span>What if I get an error when trying to apply?</span>
+							<span class="careers-faq-icon">+</span>
+						</button>
+						<div class="careers-faq-content">
+							<p>Applicants sometimes run into one of these errors:</p>
+							<ul>
+								<li>500 Internal Server Error</li>
+								<li>“Well this is awkward. There was a problem submitting your application. Please try again or hit up our team at careers@zyron.site”</li>
+							</ul>
+							<p>If you see one of these, we recommend these solutions:</p>
+							<ul>
+								<li>Try accessing the application by using an alternate browser such as Chrome, Firefox, Safari, Edge, or Opera.</li>
+								<li>Use an incognito browser tab to see if that resolves the issue.</li>
+								<li>If you run into an error regarding uploading an html or word doc, try uploading a PDF instead!</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- FAQ 12 -->
+					<div class="careers-faq-item">
+						<button type="button" class="careers-faq-trigger">
+							<span>If I’ve been referred, do I also need to formally apply?</span>
+							<span class="careers-faq-icon">+</span>
+						</button>
+						<div class="careers-faq-content">
+							<p>
+								Nope! You do not need to apply if someone has already referred you. When someone refers you, your referrer submits your resume and any other application materials on your behalf. From there, we’ll be in touch if you are a good fit for the role.
+							</p>
 						</div>
 					</div>
 				</div>
@@ -510,19 +1369,20 @@
 		</section>
 
 		<!-- =====================================================================
-		     7. HUNGRY FOR MORE? FOOTER CTA BANNER (.download-banner.bottom-small.is-update)
+		     7. HUNGRY FOR MORE? FOOTER CTA BANNER (WITH 3D PICKAXE & COIN)
 		     ===================================================================== -->
-		<section class="zy-dl-ptb-banner" style="padding-top:140px;padding-bottom:140px;">
+		<section class="careers-cta-banner">
 			<div class="zy-container">
-				<div class="zy-dl-ptb-inner">
-					<img src="/site/media/zycord/prop-pickaxe.png" alt="" aria-hidden="true" class="zy-dl-ptb-icon" style="width:160px;" />
-					<img src="/site/media/zycord/prop-coin.webp" alt="" aria-hidden="true" class="zy-dl-ptb-trophy" style="width:150px;" />
-					<h2 class="zy-dl-ptb-title">Hungry for more?</h2>
-					<p class="zy-dl-ptb-sub">
+				<div class="careers-cta-inner">
+					<img src="/site/media/zycord/prop-pickaxe.png" alt="" aria-hidden="true" class="careers-pickaxe-prop" />
+					<img src="/site/media/zycord/prop-coin.webp" alt="" aria-hidden="true" class="careers-coin-prop" />
+
+					<h2 class="careers-section-h2" style="font-size: clamp(34px, 4.5vw, 60px); margin-bottom: 18px;">Hungry for more?</h2>
+					<p class="careers-lead" style="margin-bottom: 32px;">
 						Check out our company principles to learn even more about what makes __INSTANCE_NAME__ a special place to work!
 					</p>
-					<div class="zy-pill-btn-row" style="justify-content:center;margin-top:12px;">
-						<a class="zy-white-pill-btn" href="/blog" style="padding:15.5px 28px;font-size:16px;">
+					<div style="display: flex; justify-content: center;">
+						<a class="zy-white-pill-btn" href="/blog" style="padding: 16px 36px; font-size: 17px; font-weight: 800;">
 							<span>Learn More</span>
 						</a>
 					</div>
@@ -531,8 +1391,170 @@
 		</section>
 	</main>
 
+	<!-- =====================================================================
+	     INTERACTIVE JOB APPLICATION MODAL
+	     ===================================================================== -->
+	<div class="careers-modal-backdrop" id="job-modal-backdrop">
+		<div class="careers-modal" role="dialog" aria-modal="true">
+			<button type="button" class="careers-modal-close" id="job-modal-close" aria-label="Close modal">✕</button>
+			<span class="careers-job-tag" id="modal-dept">Core Engineering</span>
+			<h2 class="careers-job-title" id="modal-title" style="font-size: 28px; margin: 8px 0 4px;">Staff Distributed Systems Engineer</h2>
+			<p class="careers-job-meta" id="modal-loc" style="font-size: 15px; margin-bottom: 24px;">San Francisco, CA or Remote (U.S.) · Full-Time</p>
+
+			<form id="job-apply-form" onsubmit="handleApplySubmit(event)">
+				<div style="margin-bottom: 12px;">
+					<label style="font-size: 14px; font-weight: 700; color: #ffffff;" for="apply-name">Full Name *</label>
+					<input class="careers-input" type="text" id="apply-name" required placeholder="Alex Mercer" />
+				</div>
+
+				<div style="margin-bottom: 12px;">
+					<label style="font-size: 14px; font-weight: 700; color: #ffffff;" for="apply-email">Email Address *</label>
+					<input class="careers-input" type="email" id="apply-email" required placeholder="alex@example.com" />
+				</div>
+
+				<div style="margin-bottom: 12px;">
+					<label style="font-size: 14px; font-weight: 700; color: #ffffff;" for="apply-link">LinkedIn / GitHub / Portfolio URL</label>
+					<input class="careers-input" type="url" id="apply-link" placeholder="https://linkedin.com/in/username" />
+				</div>
+
+				<div style="margin-bottom: 20px;">
+					<label style="font-size: 14px; font-weight: 700; color: #ffffff;" for="apply-notes">Tell us why you're interested in __INSTANCE_NAME__</label>
+					<textarea class="careers-input" id="apply-notes" rows="3" placeholder="I love gaming and building scalable real-time systems..."></textarea>
+				</div>
+
+				<button type="submit" class="zy-white-pill-btn" style="width: 100%; justify-content: center; padding: 16px; font-size: 16px; font-weight: 800; cursor: pointer;">
+					<span>Submit Application</span>
+				</button>
+			</form>
+
+			<div id="apply-success" style="display: none; text-align: center; padding: 24px 0;">
+				<div style="width: 64px; height: 64px; border-radius: 50%; background: #23a55a; color: #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;">✓</div>
+				<h3 style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px;">Application Submitted!</h3>
+				<p style="font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.5;">
+					Thanks for your interest in joining __INSTANCE_NAME__. Our recruiting team will review your application and be in touch soon!
+				</p>
+			</div>
+		</div>
+	</div>
+
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261015c"></script>
+	<script src="/site/site.js?v=20261016a"></script>
+
+	<script>
+		// =====================================================================
+		// INTERACTIVE BEHAVIORS FOR CAREERS PAGE
+		// =====================================================================
+
+		// 1. Department Filter Dropdown
+		(function() {
+			const dd = document.getElementById("job-dropdown");
+			const toggleBtn = document.getElementById("job-dropdown-btn");
+			const label = document.getElementById("job-dropdown-label");
+			const items = document.querySelectorAll(".careers-dept-item");
+			const cards = document.querySelectorAll(".careers-job-card");
+
+			if (toggleBtn && dd) {
+				toggleBtn.addEventListener("click", function(e) {
+					e.stopPropagation();
+					dd.classList.toggle("is-open");
+				});
+
+				document.addEventListener("click", function(e) {
+					if (!dd.contains(e.target)) {
+						dd.classList.remove("is-open");
+					}
+				});
+
+				items.forEach(function(item) {
+					item.addEventListener("click", function() {
+						const dept = this.getAttribute("data-dept");
+						const text = this.textContent;
+						label.textContent = text;
+
+						items.forEach(i => i.classList.remove("is-active"));
+						this.classList.add("is-active");
+
+						cards.forEach(function(card) {
+							const cardDept = card.getAttribute("data-dept");
+							if (dept === "all" || cardDept === dept) {
+								card.style.display = "flex";
+							} else {
+								card.style.display = "none";
+							}
+						});
+
+						dd.classList.remove("is-open");
+					});
+				});
+			}
+		})();
+
+		// 2. FAQ Accordion Click Handler
+		(function() {
+			const items = document.querySelectorAll(".careers-faq-item");
+			items.forEach(function(item) {
+				const trigger = item.querySelector(".careers-faq-trigger");
+				if (!trigger) return;
+				trigger.addEventListener("click", function() {
+					const isOpen = item.classList.contains("is-open");
+					items.forEach(i => i.classList.remove("is-open"));
+					if (!isOpen) {
+						item.classList.add("is-open");
+					}
+				});
+			});
+		})();
+
+		// 3. Application Modal Handlers
+		const modalBackdrop = document.getElementById("job-modal-backdrop");
+		const modalClose = document.getElementById("job-modal-close");
+		const modalDept = document.getElementById("modal-dept");
+		const modalTitle = document.getElementById("modal-title");
+		const modalLoc = document.getElementById("modal-loc");
+		const applyForm = document.getElementById("job-apply-form");
+		const applySuccess = document.getElementById("apply-success");
+
+		document.querySelectorAll(".careers-job-card").forEach(function(card) {
+			card.addEventListener("click", function(e) {
+				const title = this.getAttribute("data-title");
+				const loc = this.getAttribute("data-loc");
+				const tag = this.querySelector(".careers-job-tag")?.textContent || "Department";
+
+				modalDept.textContent = tag;
+				modalTitle.textContent = title;
+				modalLoc.textContent = loc;
+
+				applyForm.style.display = "block";
+				applySuccess.style.display = "none";
+				modalBackdrop.classList.add("is-active");
+			});
+		});
+
+		function closeModal() {
+			modalBackdrop.classList.remove("is-active");
+		}
+
+		if (modalClose) modalClose.addEventListener("click", closeModal);
+		if (modalBackdrop) {
+			modalBackdrop.addEventListener("click", function(e) {
+				if (e.target === modalBackdrop) closeModal();
+			});
+		}
+
+		document.addEventListener("keydown", function(e) {
+			if (e.key === "Escape" && modalBackdrop.classList.contains("is-active")) {
+				closeModal();
+			}
+		});
+
+		function handleApplySubmit(e) {
+			e.preventDefault();
+			applyForm.style.display = "none";
+			applySuccess.style.display = "block";
+			setTimeout(function() {
+				closeModal();
+			}, 3500);
+		}
+	</script>
 </body>
 </html>
-
