@@ -25,6 +25,7 @@
                     <label>Email or Username<input name="login" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" required /></label>
                     <label>Password<input name="password" type="password" autocomplete="current-password" required /></label>
                     <a class="login-forgot" href="/support">Forgot your password?</a>
+                    <div id="login-captcha" class="login-captcha" hidden></div>
                     <label id="mfa-field" hidden>Authenticator App<input name="code" inputmode="numeric" autocomplete="one-time-code" /></label>
                     <p class="form-error" id="login-error" hidden></p>
                     <button class="btn primary" type="submit">Log In</button>

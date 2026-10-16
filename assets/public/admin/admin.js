@@ -165,6 +165,7 @@ class ApiError extends Error {
 
 function describeError(body) {
     if (!body || typeof body !== "object") return null;
+    if (Array.isArray(body.captcha_key)) return "Complete the captcha to sign in.";
     const fieldErrors = [];
     const walk = (node, path) => {
         if (!node || typeof node !== "object") return;
@@ -397,12 +398,128 @@ const options = (list, selected) => list.map(([value, label]) => html`<option va
 
 const state = { overview: null, me: null };
 
+const loginCaptcha = { config: null, widgetId: null, token: null, loading: null };
+
+function loadScriptOnce(src, globalName) {
+    return new Promise((resolve, reject) => {
+        if (globalName && window[globalName]) return resolve(window[globalName]);
+        const existing = document.querySelector(`script[src="${src}"]`);
+        if (existing) {
+            existing.addEventListener("load", () => resolve(globalName ? window[globalName] : true), { once: true });
+            existing.addEventListener("error", () => reject(new Error("Couldn't load captcha.")), { once: true });
+            return;
+        }
+        const script = document.createElement("script");
+        script.src = src;
+        script.async = true;
+        script.onload = () => resolve(globalName ? window[globalName] : true);
+        script.onerror = () => reject(new Error("Couldn't load captcha."));
+        document.head.append(script);
+    });
+}
+
+function resetLoginCaptcha() {
+    loginCaptcha.token = null;
+    try {
+        const service = loginCaptcha.config?.service;
+        if (service === "hcaptcha" && window.hcaptcha && loginCaptcha.widgetId != null) window.hcaptcha.reset(loginCaptcha.widgetId);
+        if (service === "recaptcha" && window.grecaptcha && loginCaptcha.widgetId != null) window.grecaptcha.reset(loginCaptcha.widgetId);
+    } catch {
+        /* ignore */
+    }
+}
+
+function loginCaptchaToken() {
+    try {
+        const service = loginCaptcha.config?.service;
+        if (service === "hcaptcha" && window.hcaptcha && loginCaptcha.widgetId != null) return window.hcaptcha.getResponse(loginCaptcha.widgetId) || undefined;
+        if (service === "recaptcha" && window.grecaptcha && loginCaptcha.widgetId != null) return window.grecaptcha.getResponse(loginCaptcha.widgetId) || undefined;
+        if (service === "cap") return loginCaptcha.token || undefined;
+    } catch {
+        /* ignore */
+    }
+    return undefined;
+}
+
+async function ensureLoginCaptcha(challenge) {
+    const host = $("#login-captcha");
+    if (!host) return;
+    if (challenge?.captcha_sitekey) {
+        loginCaptcha.config = {
+            login: true,
+            sitekey: challenge.captcha_sitekey,
+            service: challenge.captcha_service,
+            endpoint: challenge.captcha_endpoint || loginCaptcha.config?.endpoint || null,
+        };
+    } else if (!loginCaptcha.config) {
+        try {
+            loginCaptcha.config = await api("/auth/captcha", { auth: false });
+        } catch {
+            return;
+        }
+    }
+    const cfg = loginCaptcha.config;
+    if (!cfg?.login || !cfg.service) return;
+    host.hidden = false;
+    if (loginCaptcha.widgetId != null || host.querySelector("cap-widget, iframe")) {
+        resetLoginCaptcha();
+        return;
+    }
+    if (loginCaptcha.loading) return loginCaptcha.loading;
+    loginCaptcha.loading = (async () => {
+        const waitFor = async (ready) => {
+            const start = Date.now();
+            while (!ready()) {
+                if (Date.now() - start > 10000) throw new Error("Couldn't load captcha.");
+                await new Promise((resolve) => setTimeout(resolve, 40));
+            }
+        };
+        if (cfg.service === "hcaptcha") {
+            await loadScriptOnce("https://js.hcaptcha.com/1/api.js?render=explicit");
+            await waitFor(() => window.hcaptcha?.render);
+            loginCaptcha.widgetId = window.hcaptcha.render(host, { sitekey: cfg.sitekey, theme: "dark" });
+            return;
+        }
+        if (cfg.service === "recaptcha") {
+            await loadScriptOnce("https://www.google.com/recaptcha/api.js?render=explicit");
+            await waitFor(() => window.grecaptcha?.render);
+            await new Promise((resolve) => window.grecaptcha.ready(resolve));
+            loginCaptcha.widgetId = window.grecaptcha.render(host, { sitekey: cfg.sitekey, theme: "dark" });
+            return;
+        }
+        if (cfg.service === "cap") {
+            const endpoint = (cfg.endpoint || "/api/v9/auth/cap/").replace(/\/?$/, "/");
+            await loadScriptOnce(`${endpoint}widget.js`);
+            host.replaceChildren();
+            const widget = document.createElement("cap-widget");
+            widget.setAttribute("data-cap-api-endpoint", endpoint);
+            widget.addEventListener("solve", (event) => {
+                loginCaptcha.token = event.detail?.token || "";
+            });
+            host.append(widget);
+        }
+    })()
+        .catch((error) => {
+            host.hidden = true;
+            const err = $("#login-error");
+            if (err && !err.textContent) {
+                err.textContent = error.message || "Couldn't load captcha.";
+                err.hidden = false;
+            }
+        })
+        .finally(() => {
+            loginCaptcha.loading = null;
+        });
+    return loginCaptcha.loading;
+}
+
 function showLogin(message) {
     $("#app").hidden = true;
     $("#login").hidden = false;
     const err = $("#login-error");
     err.hidden = !message;
     err.textContent = message || "";
+    ensureLoginCaptcha();
 }
 
 function syncBrandIcon() {
@@ -454,8 +571,9 @@ $("#login-form").addEventListener("submit", async (e) => {
     button.disabled = true;
     try {
         let result;
-        if (form.dataset.ticket) result = await api("/auth/mfa/totp", { method: "POST", body: { code: data.code, ticket: form.dataset.ticket }, auth: false });
-        else result = await api("/auth/login", { method: "POST", body: { login: data.login, password: data.password, undelete: false }, auth: false });
+        const captcha_key = loginCaptchaToken();
+        if (form.dataset.ticket) result = await api("/auth/mfa/totp", { method: "POST", body: { code: data.code, ticket: form.dataset.ticket, ...(captcha_key ? { captcha_key } : {}) }, auth: false });
+        else result = await api("/auth/login", { method: "POST", body: { login: data.login, password: data.password, undelete: false, ...(captcha_key ? { captcha_key } : {}) }, auth: false });
 
         if (result.mfa && result.ticket) {
             form.dataset.ticket = result.ticket;
@@ -471,8 +589,14 @@ $("#login-form").addEventListener("submit", async (e) => {
         $("#mfa-field").hidden = true;
         await boot();
     } catch (ex) {
-        err.textContent = ex.message;
+        if (ex.body?.captcha_key) {
+            await ensureLoginCaptcha(ex.body);
+            err.textContent = "Complete the captcha to sign in.";
+        } else {
+            err.textContent = ex.message;
+        }
         err.hidden = false;
+        resetLoginCaptcha();
     } finally {
         button.disabled = false;
     }
