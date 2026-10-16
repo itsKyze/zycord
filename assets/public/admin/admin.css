@@ -1431,117 +1431,17 @@ textarea:focus {
 
 .app {
     background: #313338;
-    grid-template-columns: 312px 1fr;
+    grid-template-columns: 240px 1fr;
 }
 
 .sidebar {
     display: flex;
-    flex-direction: row;
-    width: 312px;
-    background: #1e1f22;
+    flex-direction: column;
+    width: 240px;
+    background: #2b2d31;
     border-right: none;
     padding: 0;
     gap: 0;
-}
-
-.guild-rail {
-    width: 72px;
-    flex: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 12px 0;
-    gap: 8px;
-    background: #1e1f22;
-}
-
-.guild-btn {
-    position: relative;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: #313338;
-    color: #23a559;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    text-decoration: none;
-    transition: border-radius 0.15s ease-out, background-color 0.15s ease-out;
-}
-
-.guild-btn::before {
-    content: "";
-    position: absolute;
-    left: -14px;
-    top: 50%;
-    width: 8px;
-    height: 8px;
-    background: #fff;
-    border-radius: 0 4px 4px 0;
-    transform: translateY(-50%) scaleY(0);
-    transition: height 0.15s ease-out, transform 0.15s ease-out;
-}
-
-.guild-btn:hover {
-    border-radius: 16px;
-    background: #5865f2;
-    color: #fff;
-}
-
-.guild-btn:hover::before {
-    height: 20px;
-    transform: translateY(-50%) scaleY(1);
-}
-
-.guild-btn.is-active {
-    border-radius: 16px;
-    background: #5865f2;
-    color: #fff;
-}
-
-.guild-btn.is-active::before {
-    height: 40px;
-    transform: translateY(-50%) scaleY(1);
-}
-
-.guild-btn .brand-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 0;
-    object-fit: contain;
-}
-
-.guild-btn.is-active .brand-icon,
-.guild-btn:hover .brand-icon {
-    filter: none;
-}
-
-.guild-add {
-    background: #313338;
-    color: #23a559;
-    font-size: 24px;
-    font-weight: 500;
-}
-
-.guild-add:hover {
-    background: #23a559;
-    color: #fff;
-}
-
-.guild-sep {
-    width: 32px;
-    height: 2px;
-    border-radius: 1px;
-    background: #35363c;
-}
-
-.channel-col {
-    flex: 1;
-    min-width: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    background: #2b2d31;
 }
 
 .brand {
@@ -2109,14 +2009,6 @@ tbody tr:hover {
         width: auto;
         flex-direction: column;
         height: auto;
-    }
-
-    .guild-rail {
-        display: none;
-    }
-
-    .channel-col {
-        width: 100%;
     }
 
     .zy-admin-login-shell {
