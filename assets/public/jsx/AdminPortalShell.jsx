@@ -65,20 +65,6 @@ export function AdminTopHeader() {
 	);
 }
 
-export function AdminLoginShowcase() {
-	return (
-		<div className="zy-admin-login-art">
-			<div className="zy-admin-login-qr" aria-hidden="true">
-				<img src="/site/media/zycord/safety-shield-3d.webp" alt="" />
-			</div>
-			<h2>Log in with QR Code</h2>
-			<p>
-				Scan this with the <strong>Zycord mobile app</strong> to log in instantly.
-			</p>
-		</div>
-	);
-}
-
 function decorateSidebarIcons() {
 	const links = document.querySelectorAll("#nav a[data-tab]");
 	for (let i = 0; i < links.length; i++) {
@@ -126,10 +112,6 @@ function initAdminPortalShell() {
 	const topMount = document.getElementById("zy-admin-topbar-mount");
 	if (topMount) {
 		mountJSX(topMount, <AdminTopHeader />);
-	}
-	const loginMount = document.getElementById("zy-admin-login-art-mount");
-	if (loginMount) {
-		mountJSX(loginMount, <AdminLoginShowcase />);
 	}
 	decorateSidebarIcons();
 	hydrateAdminStatus();

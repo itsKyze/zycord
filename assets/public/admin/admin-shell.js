@@ -116,9 +116,6 @@
       /* @__PURE__ */ h("span", null, "Quick Filter")
     ), /* @__PURE__ */ h("span", { className: "zy-admin-mascot-chip" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/safety-shield-3d.webp", alt: "", width: "22", height: "22" }), /* @__PURE__ */ h("span", null, "Staff")), /* @__PURE__ */ h("a", { className: "btn primary small", href: "/app", style: { textDecoration: "none" } }, "Open Zycord")));
   }
-  function AdminLoginShowcase() {
-    return /* @__PURE__ */ h("div", { className: "zy-admin-login-art" }, /* @__PURE__ */ h("div", { className: "zy-admin-login-qr", "aria-hidden": "true" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/safety-shield-3d.webp", alt: "" })), /* @__PURE__ */ h("h2", null, "Log in with QR Code"), /* @__PURE__ */ h("p", null, "Scan this with the ", /* @__PURE__ */ h("strong", null, "Zycord mobile app"), " to log in instantly."));
-  }
   function decorateSidebarIcons() {
     const links = document.querySelectorAll("#nav a[data-tab]");
     for (let i = 0; i < links.length; i++) {
@@ -152,10 +149,6 @@
     const topMount = document.getElementById("zy-admin-topbar-mount");
     if (topMount) {
       mountJSX(topMount, /* @__PURE__ */ h(AdminTopHeader, null));
-    }
-    const loginMount = document.getElementById("zy-admin-login-art-mount");
-    if (loginMount) {
-      mountJSX(loginMount, /* @__PURE__ */ h(AdminLoginShowcase, null));
     }
     decorateSidebarIcons();
     hydrateAdminStatus();

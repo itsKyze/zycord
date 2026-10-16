@@ -1850,17 +1850,49 @@ tbody tr:hover {
     border-radius: 4px;
 }
 
-/* Login — Discord auth layout */
+/* Login — Discord auth artwork mixed from /login + splash */
+html:has(#login:not([hidden])) body {
+    background: #c8ccd6;
+}
+
 .zy-admin-login-bg {
-    background:
-        radial-gradient(ellipse at 50% 0%, rgba(88, 101, 242, 0.18), transparent 48%),
-        #313338;
+    position: relative;
+    background: #c8ccd6;
+}
+
+.zy-admin-login-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.zy-admin-login-backdrop img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.zy-admin-login-bg-iso {
+    object-fit: cover;
+    object-position: right center;
+}
+
+.zy-admin-login-bg-splash {
+    object-fit: cover;
+    object-position: right center;
+    opacity: 0.32;
+    mix-blend-mode: soft-light;
 }
 
 .zy-admin-login-shell {
-    width: min(784px, 100%);
-    display: grid;
-    grid-template-columns: 1fr 240px;
+    position: relative;
+    z-index: 1;
+    width: min(480px, 100%);
+    display: block;
     background: #313338;
     border: none;
     border-radius: 5px;
@@ -1952,56 +1984,6 @@ tbody tr:hover {
     border-radius: 12px;
 }
 
-.zy-admin-login-art {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 32px 16px 32px 0;
-    background: #313338;
-    color: #f2f3f5;
-    text-align: center;
-}
-
-.zy-admin-login-qr {
-    width: 176px;
-    height: 176px;
-    padding: 8px;
-    margin-bottom: 32px;
-    background: #fff;
-    border-radius: 4px;
-    display: grid;
-    place-items: center;
-}
-
-.zy-admin-login-qr img {
-    width: 148px;
-    height: 148px;
-    object-fit: contain;
-}
-
-.zy-admin-login-art h2 {
-    margin: 0 0 8px;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 30px;
-    color: #f2f3f5;
-    text-align: center;
-}
-
-.zy-admin-login-art p {
-    margin: 0;
-    max-width: 240px;
-    font-size: 16px;
-    line-height: 20px;
-    color: #b5bac1;
-}
-
-.zy-admin-login-art strong {
-    color: #00a8fc;
-    font-weight: 400;
-}
-
 @media (max-width: 760px) {
     .app {
         grid-template-columns: 1fr;
@@ -2011,15 +1993,6 @@ tbody tr:hover {
         width: auto;
         flex-direction: column;
         height: auto;
-    }
-
-    .zy-admin-login-shell {
-        grid-template-columns: 1fr;
-        width: min(480px, 100%);
-    }
-
-    .zy-admin-login-art {
-        display: none;
     }
 
     .zy-admin-topbar {
