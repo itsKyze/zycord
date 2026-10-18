@@ -51,46 +51,73 @@ const DOCS_CUSTOM_STYLE = `
 <style>
 /* Zycord Developer Documentation Overrides */
 :root {
-  --primary: 88 101 242 !important;
-  --primary-light: 121 141 249 !important;
-  --primary-dark: 88 101 242 !important;
-  --background-dark: 32 32 36 !important;
-  --background-light: 255 255 255 !important;
+  --primary: 88 101 242;
+  --primary-light: 121 141 249;
+  --primary-dark: 88 101 242;
 }
-html, body {
-  background-color: #202024 !important;
+
+/* Light Mode Styles */
+html:not(.dark), html.light {
+  color-scheme: light;
+}
+html:not(.dark) body, html.light body {
+  background-color: #ffffff !important;
+  color: #313338 !important;
+}
+html:not(.dark) #navbar, html.light #navbar {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+html:not(.dark) #sidebar-content, html.light #sidebar-content {
+  background-color: #ffffff !important;
+}
+html:not(.dark) .card, html.light .card {
+  background-color: #f8f9fa !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+}
+html:not(.dark) .card h2, html.light .card h2,
+html:not(.dark) .card [data-component-part="card-title"], html.light .card [data-component-part="card-title"] {
+  color: #060607 !important;
+}
+html:not(.dark) .card p, html.light .card p,
+html:not(.dark) .card [data-component-part="card-content"], html.light .card [data-component-part="card-content"] {
+  color: #4e5058 !important;
+}
+
+/* Dark Mode Styles */
+html.dark {
+  color-scheme: dark;
+}
+html.dark body {
+  background-color: #111214 !important;
   color: #dbdee1 !important;
-  font-family: "gg sans", "Noto Sans", system-ui, sans-serif !important;
 }
-#navbar {
-  background-color: #202024 !important;
+html.dark #navbar {
+  background-color: rgba(17, 18, 20, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
-.zy-docs-brand {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 10px !important;
-  text-decoration: none !important;
+html.dark #sidebar-content {
+  background-color: #111214 !important;
 }
-.zy-docs-brand-text {
-  font-family: "gg sans", "Noto Sans", sans-serif !important;
-  font-weight: 800 !important;
-  font-size: 19px !important;
+html.dark .card {
+  background-color: #1e1f22 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+html.dark .card h2, html.dark .card [data-component-part="card-title"] {
   color: #ffffff !important;
-  letter-spacing: -0.015em !important;
-  display: inline-flex !important;
-  align-items: center !important;
 }
-.zy-docs-brand-sub {
-  font-weight: 500 !important;
+html.dark .card p, html.dark .card [data-component-part="card-content"] {
   color: #949ba4 !important;
-  font-size: 15px !important;
-  margin-left: 6px !important;
 }
+
+/* Common Card & Layout Enhancements */
 .card-group {
   display: grid !important;
   gap: 16px !important;
-  margin-top: 16px !important;
+  margin-top: 20px !important;
   margin-bottom: 32px !important;
 }
 .card-group[style*="--cols:3"] {
@@ -101,40 +128,32 @@ html, body {
 }
 .card {
   display: block !important;
-  background-color: #2b2d31 !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: 16px !important;
+  border-radius: 14px !important;
   padding: 24px !important;
   text-decoration: none !important;
-  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), border-color 0.2s ease, box-shadow 0.2s ease !important;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease !important;
 }
 .card:hover {
   border-color: #5865F2 !important;
   transform: translateY(-2px) !important;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35) !important;
 }
-.card h2, .card [data-component-part="card-title"] {
-  color: #ffffff !important;
-  font-size: 17px !important;
-  font-weight: 700 !important;
-  margin-top: 12px !important;
-  margin-bottom: 6px !important;
+html.dark .card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4) !important;
 }
-.card p, .card [data-component-part="card-content"] {
-  color: #949ba4 !important;
-  font-size: 14px !important;
-  line-height: 1.5 !important;
-}
-#sidebar-content {
-  background-color: #202024 !important;
+html:not(.dark) .card:hover, html.light .card:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08) !important;
 }
 #sidebar-content a {
   transition: background-color 0.15s ease, color 0.15s ease !important;
   border-radius: 8px !important;
 }
-#sidebar-content a:hover {
-  background-color: rgba(255, 255, 255, 0.05) !important;
+html.dark #sidebar-content a:hover {
+  background-color: rgba(255, 255, 255, 0.06) !important;
   color: #ffffff !important;
+}
+html:not(.dark) #sidebar-content a:hover, html.light #sidebar-content a:hover {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  color: #060607 !important;
 }
 #sidebar-content [data-active="true"] > a {
   color: #5865F2 !important;
@@ -145,11 +164,46 @@ img[alt="Zycord Developer Platform"], img[alt="Discord Developer Platform"] {
   max-width: 100% !important;
   height: auto !important;
 }
-.zy-search-item:hover, .zy-search-item.is-selected {
-  background: rgba(88, 101, 242, 0.22) !important;
+
+/* Search Modal Theme Variables */
+#zy-search-overlay.is-dark #zy-search-dialog {
+  background: #1e1f22;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f2f3f5;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.7);
 }
-.zy-search-item.is-selected span {
-  color: #5865F2 !important;
+#zy-search-overlay.is-dark .zy-search-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+#zy-search-overlay.is-dark #zy-search-input {
+  color: #ffffff;
+}
+#zy-search-overlay.is-dark .zy-search-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: #949ba4;
+}
+#zy-search-overlay.is-dark .zy-search-item:hover, #zy-search-overlay.is-dark .zy-search-item.is-selected {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#zy-search-overlay.is-light #zy-search-dialog {
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  color: #060607;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+}
+#zy-search-overlay.is-light .zy-search-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+#zy-search-overlay.is-light #zy-search-input {
+  color: #060607;
+}
+#zy-search-overlay.is-light .zy-search-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+  color: #5c5e66;
+}
+#zy-search-overlay.is-light .zy-search-item:hover, #zy-search-overlay.is-light .zy-search-item.is-selected {
+  background: rgba(0, 0, 0, 0.05);
 }
 </style>
 `;
@@ -186,13 +240,23 @@ const DOCS_RUNTIME_SCRIPT = `
     buttons.forEach(function(btn) {
       var val = btn.getAttribute('data-theme-preference-value');
       if (val === theme) {
-        btn.style.backgroundColor = '#5865F2';
-        btn.style.color = '#ffffff';
+        btn.style.backgroundColor = isDark ? 'rgba(255, 255, 255, 0.14)' : 'rgba(0, 0, 0, 0.1)';
+        btn.style.color = isDark ? '#ffffff' : '#060607';
       } else {
         btn.style.backgroundColor = 'transparent';
         btn.style.color = '';
       }
     });
+
+    if (searchModal) {
+      if (isDark) {
+        searchModal.classList.add('is-dark');
+        searchModal.classList.remove('is-light');
+      } else {
+        searchModal.classList.add('is-light');
+        searchModal.classList.remove('is-dark');
+      }
+    }
   }
 
   document.addEventListener('click', function(e) {
@@ -212,39 +276,53 @@ const DOCS_RUNTIME_SCRIPT = `
 
   var searchModal = null;
   var DOCS_SEARCH_INDEX = [
-    { title: "Introduction", category: "Welcome", href: "/developers/docs", desc: "Build bots, apps, integrations, and games for communities with the Zycord Developer Platform." },
-    { title: "Bots & Companion Apps", category: "App Fundamentals", href: "/developers/bots/overview", desc: "Overview of automated bots, commands, and companions inside Zycord." },
-    { title: "Zycord Social SDK", category: "Game Features", href: "/developers/discord-social-sdk/overview", desc: "Power player connections and enhance multiplayer experiences in your game." },
-    { title: "Activities & Embedded Apps", category: "Game Features", href: "/developers/activities/overview", desc: "Build rich multiplayer experiences and web games that launch directly in Zycord voice channels." },
-    { title: "API Reference", category: "Reference", href: "/developers/reference", desc: "Complete REST API reference, endpoints, objects, authentication, and headers." },
-    { title: "Guides & Tutorials", category: "Guides", href: "/developers/guides", desc: "Comprehensive guides for building bots, activities, and games." },
-    { title: "Change Log", category: "Updates", href: "/developers/change-log", desc: "Latest API updates, new features, and technical release notes." },
-    { title: "Overview of Apps", category: "Quick Start", href: "/developers/quick-start/overview-of-apps", desc: "Understand what Zycord apps are and how they interact with servers." },
-    { title: "Build Your First App", category: "Quick Start", href: "/developers/quick-start/getting-started", desc: "Step-by-step tutorial to create, run, and host your first bot." },
-    { title: "OAuth2 & Permissions", category: "Security", href: "/developers/platform/oauth2-and-permissions", desc: "Configure bot permissions, OAuth2 scopes, and authentication flows." },
-    { title: "Interactions & Slash Commands", category: "Bots", href: "/developers/platform/interactions", desc: "Receive and respond to slash commands, user commands, and context menus." },
-    { title: "Components & Modals", category: "Bots", href: "/developers/platform/components", desc: "Interactive buttons, select menus, text inputs, and modals." },
-    { title: "Webhooks", category: "Integrations", href: "/developers/platform/webhooks", desc: "Send automated messages to channels via simple HTTP POST requests." },
-    { title: "Gateway & Real-time Events", category: "API", href: "/developers/events/gateway", desc: "WebSocket connection for receiving real-time server events." },
-    { title: "Guild / Server Resource", category: "API", href: "/developers/resources/guild", desc: "Guild object structure, endpoints, member management, and roles." },
-    { title: "Channel Resource", category: "API", href: "/developers/resources/channel", desc: "Channel types, messages, permissions, and thread endpoints." },
-    { title: "User Resource", category: "API", href: "/developers/resources/user", desc: "User objects, current user profile, connections, and avatars." },
-    { title: "Application Resource", category: "API", href: "/developers/resources/application", desc: "Manage application metadata, bot tokens, and OAuth2 credentials." }
+    { title: "Discovery on Discord", breadcrumb: "Activities > Discovery", href: "/developers/platform/discovery", desc: "Get your application or game discovered on Discord." },
+    { title: "Account Linking from Discord", breadcrumb: "Social SDK > Discord Account Linking", href: "/developers/platform/account-linking", desc: "Link player accounts between Discord and your game platform." },
+    { title: "Use with Discord APIs", breadcrumb: "Social SDK > How To", href: "/developers/discord-social-sdk/overview", desc: "Connect your game backend and client with Discord APIs." },
+    { title: "Overview of Discord Apps", breadcrumb: "Home > App Fundamentals", href: "/developers/quick-start/overview-of-apps", desc: "Understand the core concepts of building Discord bots and applications." },
+    { title: "Discord Developer Platform", breadcrumb: "Home > Welcome", href: "/developers/docs", desc: "Build bots and integrations on Discord, or connect your game with rich presence, voice chat, and more." },
+    { title: "Discord Development Guide Library", breadcrumb: "Guides", href: "/developers/guides", desc: "Step-by-step tutorials and official development guides." },
+    { title: "Bots & Companion Apps", breadcrumb: "Home > App Fundamentals", href: "/developers/bots/overview", desc: "Overview of automated bots, commands, and companions." },
+    { title: "Activities & Embedded Web Apps", breadcrumb: "Home > Game & Platform Features", href: "/developers/activities/overview", desc: "Build multiplayer web games that run inside voice channels." },
+    { title: "Social Layer for Games", breadcrumb: "Home > Game & Platform Features", href: "/developers/platform/social-layer", desc: "Voice chat, rich presence, and multiplayer social features." },
+    { title: "Rich Presence", breadcrumb: "Home > Game & Platform Features", href: "/developers/platform/rich-presence", desc: "Display real-time gameplay activity directly on user profiles." },
+    { title: "OAuth2 & Permissions", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/oauth2-and-permissions", desc: "Configure bot permissions, OAuth2 scopes, and authentication flows." },
+    { title: "Interactions & Commands", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/interactions", desc: "Receive and respond to slash commands, user commands, and context menus." },
+    { title: "Components & Modals", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/components", desc: "Interactive buttons, select menus, text inputs, and modals." },
+    { title: "Server & Channel Management", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/server-and-channel-management", desc: "Manage server roles, permissions, categories, and channels." },
+    { title: "Webhooks", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/webhooks", desc: "Send automated messages to channels via simple HTTP POST requests." },
+    { title: "Gateway & Real-time Events", breadcrumb: "API & SDK Reference > Events", href: "/developers/events/gateway", desc: "WebSocket connection for receiving real-time server events." },
+    { title: "Guild / Server Resource", breadcrumb: "API & SDK Reference > Resources", href: "/developers/resources/guild", desc: "Guild object structure, endpoints, member management, and roles." },
+    { title: "Channel Resource", breadcrumb: "API & SDK Reference > Resources", href: "/developers/resources/channel", desc: "Channel types, messages, permissions, and thread endpoints." },
+    { title: "User Resource", breadcrumb: "API & SDK Reference > Resources", href: "/developers/resources/user", desc: "User objects, current user profile, connections, and avatars." },
+    { title: "Application Resource", breadcrumb: "API & SDK Reference > Resources", href: "/developers/resources/application", desc: "Manage application metadata, bot tokens, and OAuth2 credentials." },
+    { title: "Change Log & Technical Notes", breadcrumb: "Change Log", href: "/developers/change-log", desc: "Latest API updates, new features, and technical release notes." },
+    { title: "Rate Limits", breadcrumb: "API & SDK Reference > Topics", href: "/developers/topics/rate-limits", desc: "Understanding HTTP rate limits, bucket headers, and exponential backoff." },
+    { title: "Community Servers", breadcrumb: "Home > Game & Platform Features", href: "/developers/platform/community-servers", desc: "Build tools and integrations for Discord community servers." }
   ];
 
   function createSearchModal() {
     if (searchModal) return searchModal;
+    var isDark = document.documentElement.classList.contains('dark');
     var overlay = document.createElement('div');
     overlay.id = 'zy-search-overlay';
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);z-index:99999;display:none;align-items:flex-start;justify-content:center;padding-top:12vh;';
+    overlay.className = isDark ? 'is-dark' : 'is-light';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);z-index:99999;display:none;align-items:flex-start;justify-content:center;padding-top:12vh;';
     
-    overlay.innerHTML = '<div id="zy-search-dialog" style="background:#2b2d31;width:100%;max-width:640px;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.12);overflow:hidden;margin:0 16px;">' +
-      '<div style="display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.08);gap:12px;">' +
-        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#949ba4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
-        '<input id="zy-search-input" type="text" placeholder="Search documentation, guides, and APIs..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit;" />' +
-        '<kbd style="background:#1e1f22;color:#949ba4;padding:3px 7px;border-radius:6px;font-size:12px;border:1px solid rgba(255,255,255,0.08);">ESC</kbd>' +
+    overlay.innerHTML = '<div id="zy-search-dialog" style="width:100%;max-width:600px;border-radius:14px;overflow:hidden;margin:0 16px;display:flex;flex-direction:column;">' +
+      '<div class="zy-search-header" style="display:flex;align-items:center;padding:14px 18px;gap:12px;">' +
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
+        '<input id="zy-search-input" type="text" placeholder="Search..." style="flex:1;background:transparent;border:none;outline:none;font-size:15px;font-family:inherit;font-weight:500;" />' +
+        '<kbd style="padding:2px 7px;border-radius:6px;font-size:11px;font-weight:600;opacity:0.6;border:1px solid currentColor;">ESC</kbd>' +
       '</div>' +
-      '<div id="zy-search-results" style="max-height:420px;overflow-y:auto;padding:10px 8px;"></div>' +
+      '<div id="zy-search-results" style="max-height:420px;overflow-y:auto;padding:8px 8px;"></div>' +
+      '<div class="zy-search-footer" style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;font-size:12px;">' +
+        '<div style="display:flex;align-items:center;gap:14px;">' +
+          '<span><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;margin-right:4px;">↑↓</kbd> Select</span>' +
+          '<span><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;margin-right:4px;">↵</kbd> Open</span>' +
+        '</div>' +
+        '<div><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;margin-right:4px;">Esc</kbd> Close</div>' +
+      '</div>' +
     '</div>';
     document.body.appendChild(overlay);
 
@@ -254,7 +332,7 @@ const DOCS_RUNTIME_SCRIPT = `
 
     var input = overlay.querySelector('#zy-search-input');
     input.addEventListener('input', function() {
-      renderResults(input.value.trim().toLowerCase());
+      renderResults(input.value.trim());
     });
 
     input.addEventListener('keydown', function(e) {
@@ -291,25 +369,33 @@ const DOCS_RUNTIME_SCRIPT = `
     return overlay;
   }
 
+  function highlightMatches(text, query) {
+    if (!query) return text;
+    var idx = text.toLowerCase().indexOf(query.toLowerCase());
+    if (idx === -1) return text;
+    return text.substring(0, idx) + '<span style="color:#5865F2;font-weight:700;">' + text.substring(idx, idx + query.length) + '</span>' + text.substring(idx + query.length);
+  }
+
   function renderResults(q) {
     var overlay = createSearchModal();
     var container = overlay.querySelector('#zy-search-results');
-    var filtered = !q ? DOCS_SEARCH_INDEX : DOCS_SEARCH_INDEX.filter(function(item) {
-      return item.title.toLowerCase().includes(q) || item.category.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q);
+    var query = q.toLowerCase();
+    var filtered = !query ? DOCS_SEARCH_INDEX : DOCS_SEARCH_INDEX.filter(function(item) {
+      return item.title.toLowerCase().includes(query) || item.breadcrumb.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
     });
 
     if (filtered.length === 0) {
-      container.innerHTML = '<div style="padding:28px;text-align:center;color:#949ba4;">No documentation matches found for "' + q + '"</div>';
+      container.innerHTML = '<div style="padding:32px;text-align:center;opacity:0.6;font-size:14px;">No documentation matches found for "' + q + '"</div>';
       return;
     }
 
     container.innerHTML = filtered.map(function(item, i) {
-      return '<div class="zy-search-item ' + (i === 0 ? 'is-selected' : '') + '" data-href="' + item.href + '" style="display:flex;flex-direction:column;gap:3px;padding:10px 14px;border-radius:8px;cursor:pointer;margin-bottom:4px;transition:background 0.12s ease;">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;">' +
-          '<span style="font-weight:600;color:#fff;font-size:15px;">' + item.title + '</span>' +
-          '<span style="background:#5865F2;color:#fff;font-size:11px;font-weight:600;padding:2px 7px;border-radius:12px;">' + item.category + '</span>' +
+      return '<div class="zy-search-item ' + (i === 0 ? 'is-selected' : '') + '" data-href="' + item.href + '" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;cursor:pointer;margin-bottom:2px;transition:background 0.1s ease;">' +
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:0.6;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>' +
+        '<div style="display:flex;flex-direction:column;gap:2px;flex:1;overflow:hidden;">' +
+          '<div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + highlightMatches(item.title, q) + '</div>' +
+          '<div style="font-size:12px;opacity:0.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + item.breadcrumb + '</div>' +
         '</div>' +
-        '<p style="color:#949ba4;font-size:13px;margin:0;line-height:1.4;">' + item.desc + '</p>' +
       '</div>';
     }).join('');
 
@@ -327,6 +413,14 @@ const DOCS_RUNTIME_SCRIPT = `
 
   function openSearch() {
     var modal = createSearchModal();
+    var isDark = document.documentElement.classList.contains('dark');
+    if (isDark) {
+      modal.classList.add('is-dark');
+      modal.classList.remove('is-light');
+    } else {
+      modal.classList.add('is-light');
+      modal.classList.remove('is-dark');
+    }
     modal.style.display = 'flex';
     var input = modal.querySelector('#zy-search-input');
     input.value = '';
@@ -376,12 +470,13 @@ export function transformDocsHtml(raw) {
 	// 1. Rewrite relative Mintlify asset paths to Discord live CDN
 	raw = raw.replaceAll("/mintlify-assets/", "https://docs.discord.com/mintlify-assets/");
 
-	// 2. Replace Mintlify navbar logo with Zycord Docs Logo
-	const zycordDocsLogo = `<a class="select-none zy-docs-brand" style="-webkit-touch-callout:none" href="/developers"><span class="sr-only">Zycord Documentation</span><img class="nav-logo" src="/branding/zycord_icon_white.svg" alt="Zycord" style="width:28px;height:28px;object-fit:contain;display:block;" onerror="this.src='/site/zycord_icon_white.svg'"/><span class="zy-docs-brand-text">Zycord <span class="zy-docs-brand-sub">Docs</span></span></a>`;
+	// 2. Replace Mintlify navbar logo with Zycord Docs Logo (light + dark mode automatic switching)
+	const zycordDocsLogo = `<a class="select-none zy-docs-brand" style="-webkit-touch-callout:none" href="/developers/docs"><span class="sr-only">Zycord Developer Documentation</span><img class="nav-logo w-auto h-7 relative object-contain shrink-0 block dark:hidden" src="/branding/zycord_docs_light.svg" alt="Zycord Developer Docs"/><img class="nav-logo w-auto h-7 relative object-contain shrink-0 hidden dark:block" src="/branding/zycord_docs_dark.svg" alt="Zycord Developer Docs"/></a>`;
 	raw = raw.replace(/<a[^>]*class="select-none"[^>]*href="https?:\/\/docs\.discord\.com\/developers"[^>]*>[\s\S]*?<\/a>/i, zycordDocsLogo);
 
 	// 3. Replace all Discord Docs Mintlify SVG logo CDN references
-	raw = raw.replace(/https:\/\/mintcdn\.com\/discord\/CoUXJJtPEdmG4KWD\/logo\/docs-(?:light|dark)\.svg(?:\?[^"'\s\\]*)?/gi, "/branding/zycord_icon_white.svg");
+	raw = raw.replace(/https:\/\/mintcdn\.com\/discord\/CoUXJJtPEdmG4KWD\/logo\/docs-light\.svg(?:\?[^"'\s\\]*)?/gi, "/branding/zycord_docs_light.svg");
+	raw = raw.replace(/https:\/\/mintcdn\.com\/discord\/CoUXJJtPEdmG4KWD\/logo\/docs-dark\.svg(?:\?[^"'\s\\]*)?/gi, "/branding/zycord_docs_dark.svg");
 
 	// 4. Inject custom CSS for documentation
 	raw = raw.replace("</head>", `${DOCS_CUSTOM_STYLE}\n</head>`);
