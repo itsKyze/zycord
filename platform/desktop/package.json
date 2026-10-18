@@ -1,8 +1,8 @@
 {
     "name": "zycord",
     "productName": "Zycord",
-    "version": "1.0.11",
-    "description": "Zycord",
+    "version": "1.0.12",
+    "description": "Zycord Desktop Client",
     "main": "src/main.js",
     "author": {
         "name": "Zyron Solutions Ltd",
@@ -14,8 +14,6 @@
         "start": "electron .",
         "pack": "electron-builder --dir",
         "build": "electron-builder --win",
-        "build:dir": "electron-builder --win --dir",
-        "build:portable": "electron-builder --win portable",
         "dist": "electron-builder --win nsis"
     },
     "build": {
@@ -26,12 +24,6 @@
             "output": "dist",
             "buildResources": "assets"
         },
-        "extraFiles": [
-            {
-                "from": "assets/Update.exe",
-                "to": "Update.exe"
-            }
-        ],
         "files": [
             "src/**/*",
             "assets/**/*"
@@ -41,31 +33,11 @@
                 {
                     "target": "nsis",
                     "arch": [
-                        "x64",
-                        "arm64"
+                        "x64"
                     ]
                 }
             ],
             "icon": "assets/icon.ico"
-        },
-        "linux": {
-            "maintainer": "Zyron Solutions Ltd <itsKyze@users.noreply.github.com>",
-            "target": [
-                "tar.gz",
-                "deb",
-                "rpm"
-            ],
-            "icon": "assets/icon.png",
-            "category": "Network",
-            "artifactName": "Zycord-linux-${arch}.${ext}"
-        },
-        "mac": {
-            "target": [
-                "zip"
-            ],
-            "icon": "assets/icon.png",
-            "category": "public.app-category.social-networking",
-            "artifactName": "Zycord-macOS.${ext}"
         },
         "nsis": {
             "oneClick": true,
@@ -78,8 +50,7 @@
             "uninstallDisplayName": "Zycord",
             "runAfterFinish": true,
             "deleteAppDataOnUninstall": false,
-            "include": "installer.nsh",
-            "artifactName": "ZycordSetup-${arch}.${ext}"
+            "artifactName": "ZycordSetup-x64.exe"
         },
         "publish": [
             {
@@ -89,10 +60,12 @@
         ]
     },
     "devDependencies": {
-        "electron": "^32.2.0",
+        "electron": "^33.2.0",
         "electron-builder": "^25.1.8"
     },
     "dependencies": {
-        "electron-updater": "^6.3.9"
+        "electron-updater": "^6.3.9",
+        "electron-log": "^5.2.0",
+        "lodash": "^4.17.21"
     }
 }

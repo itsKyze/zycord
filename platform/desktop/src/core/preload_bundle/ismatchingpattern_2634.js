@@ -1,0 +1,54 @@
+2634(__unused_rspack_module, exports, __webpack_require__) {
+                Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
+                let is = __webpack_require__(7431),
+                    stacktrace = __webpack_require__(7970);
+                function isMatchingPattern(value, pattern, requireExactStringMatch = !1) {
+                    return (
+                        !!is.isString(value) &&
+                        (is.isRegExp(pattern)
+                            ? pattern.test(value)
+                            : is.isString(pattern)
+                              ? requireExactStringMatch
+                                  ? value === pattern
+                                  : value.includes(pattern)
+                              : "function" == typeof pattern && pattern(value))
+                    );
+                }
+                ((exports.isMatchingPattern = isMatchingPattern),
+                    (exports.safeJoin = function (input, delimiter) {
+                        if (!Array.isArray(input)) return "";
+                        let output = [];
+                        for (let i = 0; i < input.length; i++) {
+                            let value = input[i];
+                            try {
+                                is.isVueViewModel(value) ? output.push(stacktrace.getVueInternalName(value)) : output.push(String(value));
+                            } catch {
+                                output.push("[value cannot be serialized]");
+                            }
+                        }
+                        return output.join(delimiter);
+                    }),
+                    (exports.snipLine = function (line, colno) {
+                        let newLine = line,
+                            lineLength = newLine.length;
+                        if (lineLength <= 150) return newLine;
+                        colno > lineLength && (colno = lineLength);
+                        let start = Math.max(colno - 60, 0);
+                        start < 5 && (start = 0);
+                        let end = Math.min(start + 140, lineLength);
+                        return (
+                            end > lineLength - 5 && (end = lineLength),
+                            end === lineLength && (start = Math.max(end - 140, 0)),
+                            (newLine = newLine.slice(start, end)),
+                            start > 0 && (newLine = `'{snip} ${newLine}`),
+                            end < lineLength && (newLine += " {snip}"),
+                            newLine
+                        );
+                    }),
+                    (exports.stringMatchesSomePattern = function (testString, patterns = [], requireExactStringMatch = !1) {
+                        return patterns.some((pattern) => isMatchingPattern(testString, pattern, requireExactStringMatch));
+                    }),
+                    (exports.truncate = function (str, max = 0) {
+                        return "string" != typeof str || 0 === max || str.length <= max ? str : `${str.slice(0, max)}...`;
+                    }));
+            }

@@ -1,65 +1,22 @@
 {
-  "version": "1.0.11",
-  "versionCode": 11,
-  "releaseDate": "2026-10-14T21:17:59.464Z",
+  "version": "1.0.12",
+  "versionCode": 12,
+  "releaseDate": "2026-10-18T23:52:34.233Z",
   "platforms": {
-    "android": [
-      {
-        "fileName": "Zycord.apk",
-        "url": "/updates/android/Zycord.apk",
-        "downloadUrl": "/download/Zycord.apk",
-        "sha512": "DgezPlQJlRJxxWKu3OXp9jxKKkEq2c4OXEgEQsPywvc5VTwPOqIrrLglxfLV006D3q+g0LN05hRJRsGRJGgDVg==",
-        "size": 174064
-      }
-    ],
     "windows": [
       {
         "fileName": "ZycordSetup.exe",
         "url": "/updates/windows/ZycordSetup.exe",
         "downloadUrl": "/download/ZycordSetup.exe",
-        "sha512": "8huNO2HPy2yBFGl94loQQ3RA0DbxMITtUMs1hV2g5DYhe61qrX8nX+FqxdYJbhdbEcyJs/0MYxnb//rSbPsEZg==",
-        "size": 80660813
+        "sha512": "dkTVIIqUWsBVhs+aqzVDuuWqbEp8sEFQWz+KeSeqhajImQ+xja2uFY1i9255nrg6H92AmN9EHThxPCDq7xpG1A==",
+        "size": 84647815
       },
       {
-        "fileName": "ZycordSetup-arm64.exe",
-        "url": "/updates/windows/ZycordSetup-arm64.exe",
-        "downloadUrl": "/download/ZycordSetup-arm64.exe",
-        "sha512": "4VZPRnaolDyjKDAQr2y2EKiPwmKm3CfArp7qfDoR5r9Rp4qq5ZmzG1Bj419a2wMeR4B95xXi0JcadNTQNsXkhQ==",
-        "size": 84491171
-      }
-    ],
-    "linux": [
-      {
-        "fileName": "Zycord-linux-amd64.deb",
-        "url": "/updates/linux/Zycord-linux-amd64.deb",
-        "downloadUrl": "/download/Zycord-linux-amd64.deb",
-        "sha512": "Tr8ASwbYCUH7l+lRxsPgv5wO1ZdzE7fZGZ1jwfkI2DilQTg5OiREqBxP9YO1nY9C/0ihh7BxMdLETLvaOYiEXQ==",
-        "size": 108173700
-      },
-      {
-        "fileName": "Zycord-linux-x64.tar.gz",
-        "url": "/updates/linux/Zycord-linux-x64.tar.gz",
-        "downloadUrl": "/download/Zycord-linux-x64.tar.gz",
-        "sha512": "6dF2Yl/jwgQyMX10ioPXeAc46L40QL9eGo67VULboZj8pmA6JKYXc31HMXlksKZEzZBTzPxVH3t7PvZjQf1tnw==",
-        "size": 104131328
-      }
-    ],
-    "macos": [
-      {
-        "fileName": "Zycord-macOS.zip",
-        "url": "/updates/macos/Zycord-macOS.zip",
-        "downloadUrl": "/download/Zycord-macOS.zip",
-        "sha512": "Qk60p7wst/i66uIv7Wz/fkrfK72k4BNO01VO5BT8ddKMdqGZj5XwNHnGjWVLq58106rKuZjRdCrpaRY5PRGzoQ==",
-        "size": 102969036
-      }
-    ],
-    "ios": [
-      {
-        "fileName": "Zycord.mobileconfig",
-        "url": "/updates/ios/Zycord.mobileconfig",
-        "downloadUrl": "/download/Zycord.mobileconfig",
-        "sha512": "Olm85uDNHZP1V/yFFLHqFVLzHcO6PWkVzEiUeIDDkfTDuo8W6iwSS07/yoTnKqN8Qc8lH4QQRCBuRq5sWIaVKA==",
-        "size": 1301
+        "fileName": "ZycordSetup-x64.exe",
+        "url": "/updates/windows/ZycordSetup-x64.exe",
+        "downloadUrl": "/download/ZycordSetup-x64.exe",
+        "sha512": "dkTVIIqUWsBVhs+aqzVDuuWqbEp8sEFQWz+KeSeqhajImQ+xja2uFY1i9255nrg6H92AmN9EHThxPCDq7xpG1A==",
+        "size": 84647815
       }
     ]
   }
