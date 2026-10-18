@@ -469,8 +469,8 @@ main:not(.zy-nitro-page) > :first-child:not(.zy-home-wrapper):not(.zy-download-p
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	padding: 10px 16px;
-	border-radius: 12px;
+	padding: 8px 16px;
+	border-radius: 9999px;
 	font-family: var(--font-abc-ginto-zycord);
 	font-size: 15px;
 	font-weight: 700;
@@ -481,13 +481,15 @@ main:not(.zy-nitro-page) > :first-child:not(.zy-home-wrapper):not(.zy-download-p
 	transition: background-color 0.16s ease, color 0.16s ease;
 }
 
-/* Solid Blurple Pill Trigger on Hover / Click — Exact match to Zycord */
+/* Solid Blurple Pill Trigger on Hover / Click / Active — Exact match to Discord */
 .zy-nav-item:hover > .zy-nav-link,
 .zy-nav-item:focus-within > .zy-nav-link,
 .zy-nav-item.is-open > .zy-nav-link,
-.zy-nav-link:hover {
+.zy-nav-link:hover,
+.zy-nav-link.is-active {
 	background-color: var(--color-blurple);
 	color: var(--color-snow);
+	border-radius: 9999px;
 }
 
 .zy-nav-chevron {

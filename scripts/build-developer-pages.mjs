@@ -42,7 +42,7 @@ const PAGES = [
 		desc: "Read Zycord Developer Success Stories to learn how game studios have integrated Zycord into their growth strategy.",
 	},
 	{
-		step: "3535",
+		step: "3716",
 		output: "docs.html",
 		title: "Zycord Developer Platform - Documentation",
 		desc: "Build bots, apps, integrations, and games for communities with the Zycord Developer Platform and APIs.",
@@ -94,6 +94,110 @@ const BRAND_STYLE = `
   max-width: 1320px;
   height: auto;
   display: block;
+}
+</style>
+`;
+
+const DOCS_CUSTOM_STYLE = `
+<style>
+/* Zycord Developer Documentation Overrides */
+:root {
+  --primary: 88 101 242 !important;
+  --primary-light: 121 141 249 !important;
+  --primary-dark: 88 101 242 !important;
+  --background-dark: 32 32 36 !important;
+  --background-light: 255 255 255 !important;
+}
+html, body {
+  background-color: #202024 !important;
+  color: #dbdee1 !important;
+  font-family: "gg sans", "Noto Sans", system-ui, sans-serif !important;
+}
+#navbar {
+  background-color: #202024 !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+.zy-docs-brand {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  text-decoration: none !important;
+}
+.zy-docs-brand-text {
+  font-family: "gg sans", "Noto Sans", sans-serif !important;
+  font-weight: 800 !important;
+  font-size: 19px !important;
+  color: #ffffff !important;
+  letter-spacing: -0.015em !important;
+  display: inline-flex !important;
+  align-items: center !important;
+}
+.zy-docs-brand-sub {
+  font-weight: 500 !important;
+  color: #949ba4 !important;
+  font-size: 15px !important;
+  margin-left: 6px !important;
+}
+/* Ensure Card Groups and Cards look identical to Discord Docs */
+.card-group {
+  display: grid !important;
+  gap: 16px !important;
+  margin-top: 16px !important;
+  margin-bottom: 32px !important;
+}
+.card-group[style*="--cols:3"] {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)) !important;
+}
+.card-group[style*="--cols:2"] {
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)) !important;
+}
+.card {
+  display: block !important;
+  background-color: #2b2d31 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  padding: 24px !important;
+  text-decoration: none !important;
+  transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1), border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+.card:hover {
+  border-color: #5865F2 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35) !important;
+}
+.card h2, .card [data-component-part="card-title"] {
+  color: #ffffff !important;
+  font-size: 17px !important;
+  font-weight: 700 !important;
+  margin-top: 12px !important;
+  margin-bottom: 6px !important;
+}
+.card p, .card [data-component-part="card-content"] {
+  color: #949ba4 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+}
+/* Sidebar aesthetics */
+#sidebar-content {
+  background-color: #202024 !important;
+}
+#sidebar-content a {
+  transition: background-color 0.15s ease, color 0.15s ease !important;
+  border-radius: 8px !important;
+}
+#sidebar-content a:hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #ffffff !important;
+}
+#sidebar-content [data-active="true"] > a {
+  color: #5865F2 !important;
+  font-weight: 700 !important;
+}
+/* Hero image */
+img[alt="Zycord Developer Platform"], img[alt="Discord Developer Platform"] {
+  border-radius: 16px !important;
+  max-width: 100% !important;
+  height: auto !important;
 }
 </style>
 `;
@@ -150,6 +254,21 @@ async function processPage(cfg) {
 	// Replace footer logo and wordmark
 	raw = raw.replace(/<a[^>]*class="[^"]*footer-logo-link w-inline-block[^"]*"[^>]*>[\s\S]*?<\/a>/i, FOOTER_LOGO_HTML);
 	raw = raw.replace(/<div class="container_word"[\s\S]*?<\/div>/i, FOOTER_WORDMARK_HTML);
+
+	if (cfg.output === "docs.html") {
+		// 1. Rewrite relative Mintlify asset paths to Discord live CDN
+		raw = raw.replaceAll("/mintlify-assets/", "https://docs.discord.com/mintlify-assets/");
+
+		// 2. Replace Mintlify navbar logo with Zycord Docs Logo
+		const zycordDocsLogo = `<a class="select-none zy-docs-brand" style="-webkit-touch-callout:none" href="/developers"><span class="sr-only">Zycord Documentation</span><img class="nav-logo" src="/branding/zycord_icon_white.svg" alt="Zycord" style="width:28px;height:28px;object-fit:contain;display:block;" onerror="this.src='/site/zycord_icon_white.svg'"/><span class="zy-docs-brand-text">Zycord <span class="zy-docs-brand-sub">Docs</span></span></a>`;
+		raw = raw.replace(/<a[^>]*class="select-none"[^>]*href="https?:\/\/docs\.discord\.com\/developers"[^>]*>[\s\S]*?<\/a>/i, zycordDocsLogo);
+
+		// 3. Replace all Discord Docs Mintlify SVG logo CDN references
+		raw = raw.replace(/https:\/\/mintcdn\.com\/discord\/CoUXJJtPEdmG4KWD\/logo\/docs-(?:light|dark)\.svg(?:\?[^"'\s\\]*)?/gi, "/branding/zycord_icon_white.svg");
+
+		// 4. Inject custom CSS for documentation
+		raw = raw.replace("</head>", `${DOCS_CUSTOM_STYLE}\n</head>`);
+	}
 
 	// Normalize Discord URLs to Zycord internal URLs
 	raw = raw.replaceAll("https://discord.com/developers/social-sdk", "/developers/social-sdk");
@@ -215,6 +334,25 @@ async function processPage(cfg) {
 	raw = raw.replaceAll("Discord HQ", "Zycord HQ");
 	raw = raw.replaceAll("Discord Player's Guide", "Zycord Player's Guide");
 	raw = raw.replaceAll("Discord Player&#x27;s Guide", "Zycord Player&#x27;s Guide");
+	raw = raw.replaceAll("Documentation - Discord", "Zycord Developer Documentation");
+	raw = raw.replaceAll("New to Discord development?", "New to Zycord development?");
+	raw = raw.replaceAll("New to Discord", "New to Zycord");
+	raw = raw.replaceAll("Discord Bots", "Zycord Bots");
+	raw = raw.replaceAll("Discord bots", "Zycord bots");
+	raw = raw.replaceAll("Discord apps", "Zycord apps");
+	raw = raw.replaceAll("Discord app", "Zycord app");
+	raw = raw.replaceAll("inside Discord", "inside Zycord");
+	raw = raw.replaceAll("with Discord", "with Zycord");
+	raw = raw.replaceAll("to Discord", "to Zycord");
+	raw = raw.replaceAll("Why Discord", "Why Zycord");
+	raw = raw.replaceAll("Discord API", "Zycord API");
+	raw = raw.replaceAll("Discord SDK", "Zycord SDK");
+	raw = raw.replaceAll("Join the Developer Discord", "Join Developer Community");
+	raw = raw.replaceAll("Discord Developer Policy", "Zycord Developer Policy");
+	raw = raw.replaceAll("Discord Developer Terms of Service", "Zycord Developer Terms of Service");
+	raw = raw.replaceAll("https://discord.com/invite/discord-developers", "/discover");
+	raw = raw.replaceAll("https://github.com/discord/discord-api-docs", "/community");
+	raw = raw.replaceAll("https://support-dev.discord.com/", "/support");
 
 	// Clean out telemetry and oneTrust tracking scripts
 	raw = raw.replace(/<!-- section:dataLayer -->[\s\S]*?<!-- endsection -->/gi, "");
