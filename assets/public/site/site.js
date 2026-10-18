@@ -557,11 +557,11 @@
           title: "Learn",
           links: [
             { label: "Zycord for Game Developers", href: "/developers" },
-            { label: "Integration", href: "/developers#rich-presence" },
-            { label: "Social Commerce", href: "/developers#commerce" },
-            { label: "Apps & Activities", href: "/developers/applications" },
-            { label: "Developer Newsletter", href: "/developers#newsletter" },
-            { label: "Developer Case Studies", href: "/developers#cases" }
+            { label: "Integration", href: "/developers/social-sdk" },
+            { label: "Social Commerce", href: "/developers/social-commerce" },
+            { label: "Apps & Activities", href: "/developers/build" },
+            { label: "Developer Newsletter", href: "/developers/developer-newsletter" },
+            { label: "Developer Case Studies", href: "/developers/success-stories" }
           ]
         },
         {

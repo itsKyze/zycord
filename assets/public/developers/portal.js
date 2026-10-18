@@ -396,29 +396,81 @@
         document.title = `Applications | ${config.instanceName} Developer Portal`;
         view.replaceChildren(el("p", { class: "loading" }, "Loading applications"));
         const apps = await api("GET", "/applications");
+
+        const searchInput = el("input", {
+            type: "search",
+            class: "search-input",
+            placeholder: "Search applications...",
+            "aria-label": "Search applications",
+        });
+
+        const gridContainer = el("div", { class: "app-grid-container" });
+
+        const updateGrid = (filter = "") => {
+            const query = filter.trim().toLowerCase();
+            const filtered = apps
+                .filter((app) => !query || app.name.toLowerCase().includes(query))
+                .sort((a, b) => a.name.localeCompare(b.name));
+
+            if (filtered.length) {
+                gridContainer.replaceChildren(
+                    el(
+                        "div",
+                        { class: "app-grid" },
+                        filtered.map((app) =>
+                            el(
+                                "a",
+                                { class: "app-card", href: `/developers/applications/${app.id}/information`, "data-link": true },
+                                appIcon(app),
+                                el("span", {}, app.name),
+                            ),
+                        ),
+                    ),
+                );
+            } else if (query) {
+                gridContainer.replaceChildren(
+                    el(
+                        "div",
+                        { class: "empty is-search-empty" },
+                        el("h2", {}, "No matching applications"),
+                        el("p", { class: "muted" }, `No applications found matching "${filter}".`),
+                    ),
+                );
+            } else {
+                gridContainer.replaceChildren(
+                    el(
+                        "div",
+                        { class: "empty" },
+                        el("h2", {}, "No applications yet"),
+                        el("p", { class: "muted" }, "Your applications appear here. Create one to set up a bot, or make a widget for your profile."),
+                        el(
+                            "div",
+                            { class: "actions empty-actions" },
+                            el("button", { class: "btn secondary", type: "button", onclick: widgetDialog }, "New profile widget"),
+                            el("button", { class: "btn primary", type: "button", onclick: createDialog }, "New application"),
+                        ),
+                    ),
+                );
+            }
+        };
+
+        searchInput.addEventListener("input", (e) => updateGrid(e.target.value));
+
         const head = el(
             "div",
             { class: "page-head" },
             el("h1", {}, "Applications"),
-            el("div", { class: "actions page-actions" }, el("button", { class: "btn secondary", type: "button", onclick: widgetDialog }, "New profile widget"), el("button", { class: "btn primary", type: "button", onclick: createDialog }, "New application")),
+            el(
+                "div",
+                { class: "actions page-actions" },
+                searchInput,
+                el("button", { class: "btn secondary", type: "button", onclick: widgetDialog }, "New profile widget"),
+                el("button", { class: "btn primary", type: "button", onclick: createDialog }, "New application"),
+            ),
         );
         const lead = el("p", { class: "muted page-lead" }, "Create an application to get a bot, a token and an invite link for your servers, or to put your own widget on your profile.");
-        const body = apps.length
-            ? el(
-                  "div",
-                  { class: "app-grid" },
-                  apps
-                      .sort((a, b) => a.name.localeCompare(b.name))
-                      .map((app) => el("a", { class: "app-card", href: `/developers/applications/${app.id}/information`, "data-link": true }, appIcon(app), el("span", {}, app.name))),
-              )
-            : el(
-                  "div",
-                  { class: "empty" },
-                  el("h2", {}, "No applications yet"),
-                  el("p", { class: "muted" }, "Your applications appear here. Create one to set up a bot, or make a widget for your profile."),
-                  el("div", { class: "actions empty-actions" }, el("button", { class: "btn secondary", type: "button", onclick: widgetDialog }, "New profile widget"), el("button", { class: "btn primary", type: "button", onclick: createDialog }, "Create an application")),
-              );
-        view.replaceChildren(head, lead, body);
+        updateGrid();
+        view.replaceChildren(head, lead, gridContainer);
     };
 
     const renderInformation = (app) => {

@@ -1468,12 +1468,30 @@ body {
 }
 
 @media (max-width: 860px) {
-    .zy-dev-hero-banner {
-        grid-template-columns: 1fr;
-        margin: 16px 20px 0;
-    }
     .zy-dev-topnav {
         display: none;
     }
 }
+
+.search-input {
+    background: #1e1f22;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-control);
+    color: var(--color-text-primary);
+    font-size: 14px;
+    padding: 8px 14px;
+    min-width: 220px;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.search-input:focus {
+    border-color: var(--color-accent-solid);
+    box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.25);
+}
+
+.search-input::placeholder {
+    color: var(--color-text-secondary);
+}
+
 

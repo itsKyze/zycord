@@ -28,10 +28,10 @@ const PAGE_FOLDER = path.join(PUBLIC_ASSETS_FOLDER, "developers");
 
 router.use(compressedStatic(PAGE_FOLDER), express.static(PAGE_FOLDER, { index: false, redirect: false, setHeaders: (res) => res.set("Cache-Control", "no-cache") }));
 
-async function sendDeveloperHub(res: Response) {
-	const hub = await fs.readFile(path.join(PAGE_FOLDER, "hub.html"), "utf8");
+async function sendDeveloperPage(res: Response, fileName: string) {
+	const content = await fs.readFile(path.join(PAGE_FOLDER, fileName), "utf8");
 	res.set("Cache-Control", "no-cache");
-	return res.type("html").send(brandPage(hub));
+	return res.type("html").send(brandPage(content));
 }
 
 router.get(
@@ -40,7 +40,61 @@ router.get(
 		spacebarOnly: true,
 		authentication: "never",
 	}),
-	async (_req: Request, res: Response) => sendDeveloperHub(res),
+	async (_req: Request, res: Response) => sendDeveloperPage(res, "hub.html"),
+);
+
+router.get(
+	"/social-sdk",
+	route({
+		spacebarOnly: true,
+		authentication: "never",
+	}),
+	async (_req: Request, res: Response) => sendDeveloperPage(res, "social-sdk.html"),
+);
+
+router.get(
+	"/social-commerce",
+	route({
+		spacebarOnly: true,
+		authentication: "never",
+	}),
+	async (_req: Request, res: Response) => sendDeveloperPage(res, "social-commerce.html"),
+);
+
+router.get(
+	"/build",
+	route({
+		spacebarOnly: true,
+		authentication: "never",
+	}),
+	async (_req: Request, res: Response) => sendDeveloperPage(res, "build.html"),
+);
+
+router.get(
+	"/developer-newsletter",
+	route({
+		spacebarOnly: true,
+		authentication: "never",
+	}),
+	async (_req: Request, res: Response) => sendDeveloperPage(res, "developer-newsletter.html"),
+);
+
+router.get(
+	"/success-stories",
+	route({
+		spacebarOnly: true,
+		authentication: "never",
+	}),
+	async (_req: Request, res: Response) => sendDeveloperPage(res, "success-stories.html"),
+);
+
+router.get(
+	"/docs",
+	route({
+		spacebarOnly: true,
+		authentication: "never",
+	}),
+	async (_req: Request, res: Response) => sendDeveloperPage(res, "docs.html"),
 );
 
 router.get(
@@ -49,7 +103,7 @@ router.get(
 		spacebarOnly: true,
 		authentication: "never",
 	}),
-	async (_req: Request, res: Response) => sendDeveloperHub(res),
+	async (_req: Request, res: Response) => sendDeveloperPage(res, "docs.html"),
 );
 
 router.get(
