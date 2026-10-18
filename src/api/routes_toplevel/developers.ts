@@ -119,13 +119,15 @@ function isDocPath(slug: string): boolean {
 }
 
 router.get(
-	"/*",
+	"/{*splat}",
 	route({
 		spacebarOnly: true,
 		authentication: "never",
 	}),
 	async (req: Request, res: Response) => {
-		const cleanPath = (req.path || "").replace(/^\/+/, "");
+		const rawSplat = (req.params as any).splat;
+		const splatStr = Array.isArray(rawSplat) ? rawSplat.join("/") : typeof rawSplat === "string" ? rawSplat : "";
+		const cleanPath = splatStr || (req.path || "").replace(/^\/+/, "");
 
 		if (isDocPath(cleanPath)) {
 			return sendDocResponse(res, cleanPath);

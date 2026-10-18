@@ -24,13 +24,15 @@ router.get(
 );
 
 router.get(
-	"/*",
+	"/{*splat}",
 	route({
 		spacebarOnly: true,
 		authentication: "never",
 	}),
 	async (req: Request, res: Response) => {
-		const clean = (req.path || "").replace(/^\/+/, "");
+		const rawSplat = (req.params as any).splat;
+		const splatStr = Array.isArray(rawSplat) ? rawSplat.join("/") : typeof rawSplat === "string" ? rawSplat : "";
+		const clean = splatStr || (req.path || "").replace(/^\/+/, "");
 		return sendDocResponse(res, clean || "intro");
 	},
 );

@@ -11,7 +11,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import https from "node:https";
-import { Response } from "express";
+import type { Response } from "express";
 import { brandPage, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 
 const DOCS_DIR = path.join(PUBLIC_ASSETS_FOLDER, "developers");

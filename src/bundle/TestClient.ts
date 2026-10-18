@@ -291,7 +291,7 @@ const buildHtml = () => {
         .replace(/<title>[^<]*<\/title>/, () => `<title>${title}</title>\n    ${appMeta}`);
 };
 
-const EXTRA_ROOTS = ["", "ra"];
+const EXTRA_ROOTS = ["", "ra", "docs", "developers"];
 
 const clientRoots = () => {
     const html = fs.readFileSync(path.join(CACHE_PATH, "index.html"), "utf8");
@@ -419,7 +419,7 @@ export default function TestClient(app: Application) {
     });
 
     app.get("/{*splat}", (req, res, next) => {
-        if (/^\/(api|cdn|attachments|avatars|icons|banners|emojis|stickers|imageproxy|connections)\b/.test(req.path)) return next();
+        if (/^\/(api|cdn|attachments|avatars|icons|banners|emojis|stickers|imageproxy|connections|docs|developers)\b/.test(req.path)) return next();
         const sourceChanged = DEVELOPMENT && stamp !== (stamp = sourceStamp());
         if (sourceChanged) roots = clientRoots();
         if (sourceChanged || brand !== (brand = brandStamp())) page = renderPage();
