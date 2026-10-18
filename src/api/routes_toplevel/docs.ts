@@ -24,14 +24,14 @@ router.get(
 );
 
 router.get(
-	"/{*splat}",
+	"/*",
 	route({
 		spacebarOnly: true,
 		authentication: "never",
 	}),
 	async (req: Request, res: Response) => {
-		const splat = (req.params as any).splat || "";
-		return sendDocResponse(res, splat || "intro");
+		const clean = (req.path || "").replace(/^\/+/, "");
+		return sendDocResponse(res, clean || "intro");
 	},
 );
 

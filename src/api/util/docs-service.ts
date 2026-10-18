@@ -115,7 +115,231 @@ img[alt="Zycord Developer Platform"], img[alt="Discord Developer Platform"] {
   max-width: 100% !important;
   height: auto !important;
 }
+.zy-search-item:hover, .zy-search-item.is-selected {
+  background: rgba(88, 101, 242, 0.22) !important;
+}
+.zy-search-item.is-selected span {
+  color: #5865F2 !important;
+}
 </style>
+`;
+
+const DOCS_RUNTIME_SCRIPT = `
+<script id="zycord-docs-runtime">
+(function() {
+  function applyTheme(theme) {
+    var isDark = false;
+    if (theme === 'system') {
+      isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    } else {
+      isDark = (theme === 'dark');
+    }
+    
+    var root = document.documentElement;
+    if (isDark) {
+      root.classList.add('dark');
+      root.classList.remove('light');
+      root.style.colorScheme = 'dark';
+    } else {
+      root.classList.remove('dark');
+      root.classList.add('light');
+      root.style.colorScheme = 'light';
+    }
+    
+    root.setAttribute('data-theme-preference', theme);
+    try {
+      localStorage.setItem('isDarkMode', isDark ? 'dark' : 'light');
+      localStorage.setItem('themePreference', theme);
+    } catch(e) {}
+    
+    var buttons = document.querySelectorAll('[data-theme-preference-value]');
+    buttons.forEach(function(btn) {
+      var val = btn.getAttribute('data-theme-preference-value');
+      if (val === theme) {
+        btn.style.backgroundColor = '#5865F2';
+        btn.style.color = '#ffffff';
+      } else {
+        btn.style.backgroundColor = 'transparent';
+        btn.style.color = '';
+      }
+    });
+  }
+
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('[data-theme-preference-value]');
+    if (btn) {
+      e.preventDefault();
+      var val = btn.getAttribute('data-theme-preference-value');
+      applyTheme(val);
+    }
+  });
+
+  var savedTheme = 'dark';
+  try {
+    savedTheme = localStorage.getItem('themePreference') || (localStorage.getItem('isDarkMode') === 'light' ? 'light' : 'dark');
+  } catch(e) {}
+  applyTheme(savedTheme);
+
+  var searchModal = null;
+  var DOCS_SEARCH_INDEX = [
+    { title: "Introduction", category: "Welcome", href: "/developers/docs", desc: "Build bots, apps, integrations, and games for communities with the Zycord Developer Platform." },
+    { title: "Bots & Companion Apps", category: "App Fundamentals", href: "/developers/bots/overview", desc: "Overview of automated bots, commands, and companions inside Zycord." },
+    { title: "Zycord Social SDK", category: "Game Features", href: "/developers/discord-social-sdk/overview", desc: "Power player connections and enhance multiplayer experiences in your game." },
+    { title: "Activities & Embedded Apps", category: "Game Features", href: "/developers/activities/overview", desc: "Build rich multiplayer experiences and web games that launch directly in Zycord voice channels." },
+    { title: "API Reference", category: "Reference", href: "/developers/reference", desc: "Complete REST API reference, endpoints, objects, authentication, and headers." },
+    { title: "Guides & Tutorials", category: "Guides", href: "/developers/guides", desc: "Comprehensive guides for building bots, activities, and games." },
+    { title: "Change Log", category: "Updates", href: "/developers/change-log", desc: "Latest API updates, new features, and technical release notes." },
+    { title: "Overview of Apps", category: "Quick Start", href: "/developers/quick-start/overview-of-apps", desc: "Understand what Zycord apps are and how they interact with servers." },
+    { title: "Build Your First App", category: "Quick Start", href: "/developers/quick-start/getting-started", desc: "Step-by-step tutorial to create, run, and host your first bot." },
+    { title: "OAuth2 & Permissions", category: "Security", href: "/developers/platform/oauth2-and-permissions", desc: "Configure bot permissions, OAuth2 scopes, and authentication flows." },
+    { title: "Interactions & Slash Commands", category: "Bots", href: "/developers/platform/interactions", desc: "Receive and respond to slash commands, user commands, and context menus." },
+    { title: "Components & Modals", category: "Bots", href: "/developers/platform/components", desc: "Interactive buttons, select menus, text inputs, and modals." },
+    { title: "Webhooks", category: "Integrations", href: "/developers/platform/webhooks", desc: "Send automated messages to channels via simple HTTP POST requests." },
+    { title: "Gateway & Real-time Events", category: "API", href: "/developers/events/gateway", desc: "WebSocket connection for receiving real-time server events." },
+    { title: "Guild / Server Resource", category: "API", href: "/developers/resources/guild", desc: "Guild object structure, endpoints, member management, and roles." },
+    { title: "Channel Resource", category: "API", href: "/developers/resources/channel", desc: "Channel types, messages, permissions, and thread endpoints." },
+    { title: "User Resource", category: "API", href: "/developers/resources/user", desc: "User objects, current user profile, connections, and avatars." },
+    { title: "Application Resource", category: "API", href: "/developers/resources/application", desc: "Manage application metadata, bot tokens, and OAuth2 credentials." }
+  ];
+
+  function createSearchModal() {
+    if (searchModal) return searchModal;
+    var overlay = document.createElement('div');
+    overlay.id = 'zy-search-overlay';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.72);backdrop-filter:blur(8px);z-index:99999;display:none;align-items:flex-start;justify-content:center;padding-top:12vh;';
+    
+    overlay.innerHTML = '<div id="zy-search-dialog" style="background:#2b2d31;width:100%;max-width:640px;border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.12);overflow:hidden;margin:0 16px;">' +
+      '<div style="display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid rgba(255,255,255,0.08);gap:12px;">' +
+        '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#949ba4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
+        '<input id="zy-search-input" type="text" placeholder="Search documentation, guides, and APIs..." style="flex:1;background:transparent;border:none;outline:none;color:#fff;font-size:16px;font-family:inherit;" />' +
+        '<kbd style="background:#1e1f22;color:#949ba4;padding:3px 7px;border-radius:6px;font-size:12px;border:1px solid rgba(255,255,255,0.08);">ESC</kbd>' +
+      '</div>' +
+      '<div id="zy-search-results" style="max-height:420px;overflow-y:auto;padding:10px 8px;"></div>' +
+    '</div>';
+    document.body.appendChild(overlay);
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeSearch();
+    });
+
+    var input = overlay.querySelector('#zy-search-input');
+    input.addEventListener('input', function() {
+      renderResults(input.value.trim().toLowerCase());
+    });
+
+    input.addEventListener('keydown', function(e) {
+      var items = overlay.querySelectorAll('.zy-search-item');
+      var active = overlay.querySelector('.zy-search-item.is-selected');
+      var idx = Array.from(items).indexOf(active);
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (idx < items.length - 1) {
+          if (active) active.classList.remove('is-selected');
+          items[idx + 1].classList.add('is-selected');
+          items[idx + 1].scrollIntoView({ block: 'nearest' });
+        }
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (idx > 0) {
+          if (active) active.classList.remove('is-selected');
+          items[idx - 1].classList.add('is-selected');
+          items[idx - 1].scrollIntoView({ block: 'nearest' });
+        }
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (active) {
+          var link = active.getAttribute('data-href');
+          if (link) window.location.href = link;
+        }
+      } else if (e.key === 'Escape') {
+        closeSearch();
+      }
+    });
+
+    searchModal = overlay;
+    return overlay;
+  }
+
+  function renderResults(q) {
+    var overlay = createSearchModal();
+    var container = overlay.querySelector('#zy-search-results');
+    var filtered = !q ? DOCS_SEARCH_INDEX : DOCS_SEARCH_INDEX.filter(function(item) {
+      return item.title.toLowerCase().includes(q) || item.category.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q);
+    });
+
+    if (filtered.length === 0) {
+      container.innerHTML = '<div style="padding:28px;text-align:center;color:#949ba4;">No documentation matches found for "' + q + '"</div>';
+      return;
+    }
+
+    container.innerHTML = filtered.map(function(item, i) {
+      return '<div class="zy-search-item ' + (i === 0 ? 'is-selected' : '') + '" data-href="' + item.href + '" style="display:flex;flex-direction:column;gap:3px;padding:10px 14px;border-radius:8px;cursor:pointer;margin-bottom:4px;transition:background 0.12s ease;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;">' +
+          '<span style="font-weight:600;color:#fff;font-size:15px;">' + item.title + '</span>' +
+          '<span style="background:#5865F2;color:#fff;font-size:11px;font-weight:600;padding:2px 7px;border-radius:12px;">' + item.category + '</span>' +
+        '</div>' +
+        '<p style="color:#949ba4;font-size:13px;margin:0;line-height:1.4;">' + item.desc + '</p>' +
+      '</div>';
+    }).join('');
+
+    container.querySelectorAll('.zy-search-item').forEach(function(el) {
+      el.addEventListener('mouseenter', function() {
+        container.querySelectorAll('.zy-search-item').forEach(function(e) { e.classList.remove('is-selected'); });
+        el.classList.add('is-selected');
+      });
+      el.addEventListener('click', function() {
+        var link = el.getAttribute('data-href');
+        if (link) window.location.href = link;
+      });
+    });
+  }
+
+  function openSearch() {
+    var modal = createSearchModal();
+    modal.style.display = 'flex';
+    var input = modal.querySelector('#zy-search-input');
+    input.value = '';
+    renderResults('');
+    setTimeout(function() { input.focus(); }, 40);
+  }
+
+  function closeSearch() {
+    if (searchModal) searchModal.style.display = 'none';
+  }
+
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('#search-bar-entry') || e.target.closest('#search-bar-entry-mobile')) {
+      e.preventDefault();
+      e.stopPropagation();
+      openSearch();
+    }
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+      e.preventDefault();
+      openSearch();
+    }
+    if (e.key === 'Escape') {
+      closeSearch();
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    var a = e.target.closest('a');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('/developers/') || href.startsWith('/docs')) {
+      if (!href.startsWith('http') && !a.target && !href.startsWith('#')) {
+        e.preventDefault();
+        window.location.href = href;
+      }
+    }
+  });
+})();
+</script>
 `;
 
 export function transformDocsHtml(raw: string): string {
@@ -187,6 +411,9 @@ export function transformDocsHtml(raw: string): string {
 	raw = raw.replace(/<script[^>]*otSDKStub\.js[^>]*><\/script>/gi, "");
 	raw = raw.replace(/<script[^>]*OtAutoBlock\.js[^>]*><\/script>/gi, "");
 	raw = raw.replace(/<script>[^<]*challenge-platform[^<]*<\/script>/gi, "");
+
+	// 8. Inject Docs interactive runtime
+	raw = raw.replace("</body>", `${DOCS_RUNTIME_SCRIPT}\n</body>`);
 
 	return raw;
 }

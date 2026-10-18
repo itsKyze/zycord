@@ -112,21 +112,23 @@ const DOC_PREFIXES = [
 
 function isDocPath(slug: string): boolean {
 	const clean = slug.replace(/^\/+/, "").toLowerCase();
-	return DOC_PREFIXES.some((prefix) => clean === prefix || clean.startsWith(prefix + "/"));
+	if (!clean) return false;
+	if (clean === "applications" || clean.startsWith("applications/")) return false;
+	if (clean === "home") return false;
+	return true;
 }
 
 router.get(
-	"/{*splat}",
+	"/*",
 	route({
 		spacebarOnly: true,
 		authentication: "never",
 	}),
 	async (req: Request, res: Response) => {
-		const rawSplat = (req.params as any).splat || "";
-		const cleanSplat = String(rawSplat).replace(/^\/+/, "");
+		const cleanPath = (req.path || "").replace(/^\/+/, "");
 
-		if (isDocPath(cleanSplat)) {
-			return sendDocResponse(res, cleanSplat);
+		if (isDocPath(cleanPath)) {
+			return sendDocResponse(res, cleanPath);
 		}
 
 		// Developer Portal dashboard (Applications list / details)
