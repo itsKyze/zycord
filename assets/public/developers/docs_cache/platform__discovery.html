@@ -1382,29 +1382,44 @@ signatures stay readable without clipping the type links inside them.
 
   var searchModal = null;
   var DOCS_SEARCH_INDEX = [
-    { title: "Discovery on Discord", breadcrumb: "Activities > Discovery", href: "/developers/platform/discovery", desc: "Get your application or game discovered on Discord." },
-    { title: "Account Linking from Discord", breadcrumb: "Social SDK > Discord Account Linking", href: "/developers/platform/account-linking", desc: "Link player accounts between Discord and your game platform." },
-    { title: "Use with Discord APIs", breadcrumb: "Social SDK > How To", href: "/developers/discord-social-sdk/overview", desc: "Connect your game backend and client with Discord APIs." },
-    { title: "Overview of Discord Apps", breadcrumb: "Home > App Fundamentals", href: "/developers/quick-start/overview-of-apps", desc: "Understand the core concepts of building Discord bots and applications." },
-    { title: "Discord Developer Platform", breadcrumb: "Home > Welcome", href: "/developers/docs", desc: "Build bots and integrations on Discord, or connect your game with rich presence, voice chat, and more." },
-    { title: "Discord Development Guide Library", breadcrumb: "Guides", href: "/developers/guides", desc: "Step-by-step tutorials and official development guides." },
-    { title: "Bots & Companion Apps", breadcrumb: "Home > App Fundamentals", href: "/developers/bots/overview", desc: "Overview of automated bots, commands, and companions." },
-    { title: "Activities & Embedded Web Apps", breadcrumb: "Home > Game & Platform Features", href: "/developers/activities/overview", desc: "Build multiplayer web games that run inside voice channels." },
-    { title: "Social Layer for Games", breadcrumb: "Home > Game & Platform Features", href: "/developers/platform/social-layer", desc: "Voice chat, rich presence, and multiplayer social features." },
-    { title: "Rich Presence", breadcrumb: "Home > Game & Platform Features", href: "/developers/platform/rich-presence", desc: "Display real-time gameplay activity directly on user profiles." },
-    { title: "OAuth2 & Permissions", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/oauth2-and-permissions", desc: "Configure bot permissions, OAuth2 scopes, and authentication flows." },
-    { title: "Interactions & Commands", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/interactions", desc: "Receive and respond to slash commands, user commands, and context menus." },
-    { title: "Components & Modals", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/components", desc: "Interactive buttons, select menus, text inputs, and modals." },
-    { title: "Server & Channel Management", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/server-and-channel-management", desc: "Manage server roles, permissions, categories, and channels." },
-    { title: "Webhooks", breadcrumb: "Home > App Fundamentals", href: "/developers/platform/webhooks", desc: "Send automated messages to channels via simple HTTP POST requests." },
-    { title: "Gateway & Real-time Events", breadcrumb: "API & SDK Reference > Events", href: "/developers/events/gateway", desc: "WebSocket connection for receiving real-time server events." },
-    { title: "Guild / Server Resource", breadcrumb: "API & SDK Reference > Resources", href: "/developers/resources/guild", desc: "Guild object structure, endpoints, member management, and roles." },
-    { title: "Channel Resource", breadcrumb: "API & SDK Reference > Resources", href: "/developers/resources/channel", desc: "Channel types, messages, permissions, and thread endpoints." },
-    { title: "User Resource", breadcrumb: "API & SDK Reference > Resources", href: "/developers/resources/user", desc: "User objects, current user profile, connections, and avatars." },
-    { title: "Application Resource", breadcrumb: "API & SDK Reference > Resources", href: "/developers/resources/application", desc: "Manage application metadata, bot tokens, and OAuth2 credentials." },
-    { title: "Change Log & Technical Notes", breadcrumb: "Change Log", href: "/developers/change-log", desc: "Latest API updates, new features, and technical release notes." },
-    { title: "Rate Limits", breadcrumb: "API & SDK Reference > Topics", href: "/developers/topics/rate-limits", desc: "Understanding HTTP rate limits, bucket headers, and exponential backoff." },
-    { title: "Community Servers", breadcrumb: "Home > Game & Platform Features", href: "/developers/platform/community-servers", desc: "Build tools and integrations for Discord community servers." }
+    { title: "Discovery", breadcrumb: "Activities > Discovery", href: "/developers/platform/discovery", desc: "Get your activity or game discovered in the Discord App Directory.", keywords: "disco discovery directory search explore app store" },
+    { title: "Discord Account Linking", breadcrumb: "Social SDK > Discord Account Linking", href: "/developers/platform/account-linking", desc: "Link player accounts between Discord and your game backend.", keywords: "disco discord account linking oauth authentication login" },
+    { title: "Use of Discord Marks", breadcrumb: "Platform > Game Profiles", href: "/developers/platform/game-profiles", desc: "Guidelines and requirements for using Discord brand assets and marks.", keywords: "disco discord marks branding logo guidelines terms" },
+    { title: "Overview of Apps", breadcrumb: "Home > Overview of Apps", href: "/developers/quick-start/overview-of-apps", desc: "Understand the core concepts of building apps and bots on Discord.", keywords: "disco discord apps overview fundamentals architecture" },
+    { title: "What is the Discord Developer Platform?", breadcrumb: "Home > Welcome", href: "/developers/docs", desc: "Build bots and integrations on Discord, or connect your game with rich presence.", keywords: "disco discord developer platform welcome intro documentation" },
+    { title: "Claim Your Discord Game Profile", breadcrumb: "Game Profiles > Claim Your Game", href: "/developers/platform/claim-your-game", desc: "Verify and customize your official game profile on Discord.", keywords: "disco discord claim game profile verification" },
+    { title: "Bots & Companion Apps", breadcrumb: "Home > App Fundamentals", href: "/developers/bots/overview", desc: "Build automated bots, slash commands, and server integrations.", keywords: "bots bot companion apps slash commands automated" },
+    { title: "Activities & Embedded Web Apps", breadcrumb: "Activities > Overview", href: "/developers/activities/overview", desc: "Build multiplayer web games and experiences that launch directly in Discord.", keywords: "activities activity games multiplayer web app embed" },
+    { title: "Discord Social SDK", breadcrumb: "Social SDK > Overview", href: "/developers/discord-social-sdk/overview", desc: "Integrate Discord voice, lobby management, and friends into native games.", keywords: "social sdk c++ c# unity unreal voice lobbies multiplayer" },
+    { title: "Build Your First App", breadcrumb: "Quick Start > Getting Started", href: "/developers/quick-start/getting-started", desc: "Follow a step-by-step tutorial to create, register, and run your first bot.", keywords: "getting started quickstart tutorial first app setup" },
+    { title: "Interactions & Commands", breadcrumb: "Platform > Interactions", href: "/developers/platform/interactions", desc: "Respond to user slash commands, context menus, and modal submissions.", keywords: "interactions slash commands autocomplete modals context menu" },
+    { title: "Message Components", breadcrumb: "Platform > Components", href: "/developers/platform/components", desc: "Interactive buttons, select menus, and modal dialog text inputs.", keywords: "components buttons select menus dropdown action row" },
+    { title: "OAuth2 & Permissions", breadcrumb: "Platform > OAuth2 & Permissions", href: "/developers/platform/oauth2-and-permissions", desc: "Bot permissions calculation, scopes, and OAuth2 authorization flows.", keywords: "oauth2 permissions scopes authorization tokens security" },
+    { title: "Rich Presence", breadcrumb: "Platform > Rich Presence", href: "/developers/platform/rich-presence", desc: "Display real-time gameplay activity, party size, and artwork on user profiles.", keywords: "rich presence status activity game artwork party join" },
+    { title: "Social Layer for Games", breadcrumb: "Platform > Social Layer", href: "/developers/platform/social-layer", desc: "Voice chat, friend lists, and rich social connectivity for games.", keywords: "social layer games cross-platform voice multiplayer" },
+    { title: "Webhooks", breadcrumb: "Platform > Webhooks", href: "/developers/platform/webhooks", desc: "Send automated messages to channels using standard HTTP POST requests.", keywords: "webhooks webhook post execute messages github notifications" },
+    { title: "Server & Channel Management", breadcrumb: "Platform > Server & Channel Management", href: "/developers/platform/server-and-channel-management", desc: "Create, modify, and manage guilds, channels, categories, and roles.", keywords: "server channel management guilds roles permissions categories" },
+    { title: "Community Servers", breadcrumb: "Platform > Community Servers", href: "/developers/platform/community-servers", desc: "Build specialized tools and onboarding flows for community servers.", keywords: "community servers onboarding rules welcome announcement" },
+    { title: "App Monetization", breadcrumb: "Platform > App Monetization", href: "/developers/platform/app-monetization", desc: "Sell premium subscriptions and digital items directly inside Discord.", keywords: "monetization subscriptions sku store payments purchase in-app" },
+    { title: "How to Grow Your Game", breadcrumb: "Game Development > Growth", href: "/developers/game-development/how-to-grow-your-game", desc: "Marketing, retention, and community building strategies for Discord games.", keywords: "growth marketing retention game development analytics" },
+    { title: "Gateway & WebSocket Events", breadcrumb: "Events > Gateway", href: "/developers/events/gateway", desc: "Connect to the real-time Gateway WebSocket for live events and dispatches.", keywords: "gateway websocket events heartbeat resume identify opcode" },
+    { title: "Overview of Events", breadcrumb: "Events > Overview", href: "/developers/events/overview", desc: "Comprehensive list of all Gateway event payloads and lifecycle triggers.", keywords: "events payloads dispatches message_create guild_create" },
+    { title: "Application Resource", breadcrumb: "Resources > Application", href: "/developers/resources/application", desc: "Application data structure, public flags, bot tokens, and install URLs.", keywords: "application resource bot client id token credentials" },
+    { title: "Channel Resource", breadcrumb: "Resources > Channel", href: "/developers/resources/channel", desc: "Text, voice, announcement, forum, and stage channel endpoints.", keywords: "channel resource text voice category messages threads" },
+    { title: "Guild Resource", breadcrumb: "Resources > Guild", href: "/developers/resources/guild", desc: "Guild endpoints, member management, audit logs, and server settings.", keywords: "guild resource server members roles audit log bans" },
+    { title: "Message Resource", breadcrumb: "Resources > Message", href: "/developers/resources/message", desc: "Send, edit, delete, and react to messages with embeds and attachments.", keywords: "message resource send embeds attachments reactions pins" },
+    { title: "User Resource", breadcrumb: "Resources > User", href: "/developers/resources/user", desc: "Fetch user objects, avatars, banners, flags, and connections.", keywords: "user resource profile avatar bio connections current user" },
+    { title: "Webhook Resource", breadcrumb: "Resources > Webhook", href: "/developers/resources/webhook", desc: "Incoming webhook endpoints, token authentication, and slack webhooks.", keywords: "webhook resource execute token modify delete" },
+    { title: "OAuth2 Topics", breadcrumb: "Topics > OAuth2", href: "/developers/topics/oauth2", desc: "Deep dive into OAuth2 grant types, refresh tokens, and token exchanges.", keywords: "oauth2 grant refresh token exchange bearer authorization" },
+    { title: "Permissions Topics", breadcrumb: "Topics > Permissions", href: "/developers/topics/permissions", desc: "Bitwise permission flags, role hierarchies, and channel overwrites.", keywords: "permissions bitwise flags hierarchy administrator roles overwrites" },
+    { title: "Rate Limits Topics", breadcrumb: "Topics > Rate Limits", href: "/developers/topics/rate-limits", desc: "Bucket headers, retry-after calculations, and global rate limit handling.", keywords: "rate limits 429 retry after bucket header limit remaining reset" },
+    { title: "Teams Topics", breadcrumb: "Topics > Teams", href: "/developers/topics/teams", desc: "Collaborate on developer applications with shared team ownership.", keywords: "teams developer team members ownership permissions invite" },
+    { title: "Threads Topics", breadcrumb: "Topics > Threads", href: "/developers/topics/threads", desc: "Public, private, and announcement thread channel lifecycle and archiving.", keywords: "threads thread public private forum archive lock" },
+    { title: "API Reference Documentation", breadcrumb: "Home > Reference", href: "/developers/reference", desc: "Full HTTP REST API endpoints, types, and schemas reference.", keywords: "reference api rest endpoints types schemas parameters" },
+    { title: "Developer Guides & Tutorials", breadcrumb: "Home > Guides", href: "/developers/guides", desc: "Collection of official step-by-step guides for developers.", keywords: "guides tutorials walkthroughs how to build" },
+    { title: "Change Log", breadcrumb: "Home > Change Log", href: "/developers/change-log", desc: "Historical log of all Discord API updates, breaking changes, and versions.", keywords: "changelog change log updates release notes breaking changes" },
+    { title: "Social Commerce", breadcrumb: "Home > Social Commerce", href: "/developers/social-commerce/overview", desc: "Sell physical and digital goods with native Discord checkout.", keywords: "social commerce store merchandise checkout shop" },
+    { title: "Community Resources", breadcrumb: "Developer Tools > Community Resources", href: "/developers/developer-tools/community-resources", desc: "Community-maintained libraries (discord.js, discord.py, etc.) and wrappers.", keywords: "community resources libraries sdks discord.js discord.py wrappers" }
   ];
 
   function createSearchModal() {
@@ -1413,21 +1428,28 @@ signatures stay readable without clipping the type links inside them.
     var overlay = document.createElement('div');
     overlay.id = 'zy-search-overlay';
     overlay.className = isDark ? 'is-dark' : 'is-light';
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);z-index:99999;display:none;align-items:flex-start;justify-content:center;padding-top:12vh;';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);z-index:99999;display:none;align-items:flex-start;justify-content:center;padding-top:10vh;';
     
-    overlay.innerHTML = '<div id="zy-search-dialog" style="width:100%;max-width:600px;border-radius:14px;overflow:hidden;margin:0 16px;display:flex;flex-direction:column;">' +
+    overlay.innerHTML = '<div id="zy-search-dialog" style="width:100%;max-width:620px;border-radius:12px;overflow:hidden;margin:0 16px;display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,0.6);">' +
       '<div class="zy-search-header" style="display:flex;align-items:center;padding:14px 18px;gap:12px;">' +
         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
-        '<input id="zy-search-input" type="text" placeholder="Search..." style="flex:1;background:transparent;border:none;outline:none;font-size:15px;font-family:inherit;font-weight:500;" />' +
-        '<kbd style="padding:2px 7px;border-radius:6px;font-size:11px;font-weight:600;opacity:0.6;border:1px solid currentColor;">ESC</kbd>' +
+        '<input id="zy-search-input" type="text" placeholder="Search..." autocomplete="off" spellcheck="false" style="flex:1;background:transparent;border:none;outline:none;font-size:15px;font-family:inherit;font-weight:500;" />' +
+        '<button id="zy-search-clear" type="button" style="display:none;background:transparent;border:none;cursor:pointer;padding:2px 4px;border-radius:4px;opacity:0.6;color:currentColor;" title="Clear search">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>' +
+        '</button>' +
+        '<kbd id="zy-search-esc" style="padding:2px 7px;border-radius:6px;font-size:11px;font-weight:600;opacity:0.6;border:1px solid currentColor;">ESC</kbd>' +
       '</div>' +
       '<div id="zy-search-results" style="max-height:420px;overflow-y:auto;padding:8px 8px;"></div>' +
       '<div class="zy-search-footer" style="display:flex;align-items:center;justify-content:space-between;padding:10px 16px;font-size:12px;">' +
         '<div style="display:flex;align-items:center;gap:14px;">' +
-          '<span><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;margin-right:4px;">↑↓</kbd> Select</span>' +
-          '<span><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;margin-right:4px;">↵</kbd> Open</span>' +
+          '<span style="display:flex;align-items:center;gap:4px;"><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;">↑</kbd><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;">↓</kbd> to navigate</span>' +
+          '<span style="display:flex;align-items:center;gap:4px;"><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;">↵</kbd> to select</span>' +
+          '<span style="display:flex;align-items:center;gap:4px;"><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;">esc</kbd> to close</span>' +
         '</div>' +
-        '<div><kbd style="padding:1px 5px;border-radius:4px;border:1px solid currentColor;font-size:10px;margin-right:4px;">Esc</kbd> Close</div>' +
+        '<div style="display:flex;align-items:center;gap:6px;opacity:0.55;font-size:11px;">' +
+          '<span>Search by</span>' +
+          '<span style="font-weight:700;letter-spacing:0.02em;">Mintlify</span>' +
+        '</div>' +
       '</div>' +
     '</div>';
     document.body.appendChild(overlay);
@@ -1438,8 +1460,22 @@ signatures stay readable without clipping the type links inside them.
 
     var input = overlay.querySelector('#zy-search-input');
     input.addEventListener('input', function() {
-      renderResults(input.value.trim());
+      renderResults(input.value);
     });
+    input.addEventListener('keyup', function(e) {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp' && e.key !== 'Enter' && e.key !== 'Escape') {
+        renderResults(input.value);
+      }
+    });
+
+    var clearBtn = overlay.querySelector('#zy-search-clear');
+    if (clearBtn) {
+      clearBtn.addEventListener('click', function() {
+        input.value = '';
+        renderResults('');
+        input.focus();
+      });
+    }
 
     input.addEventListener('keydown', function(e) {
       var items = overlay.querySelectorAll('.zy-search-item');
@@ -1476,31 +1512,78 @@ signatures stay readable without clipping the type links inside them.
   }
 
   function highlightMatches(text, query) {
-    if (!query) return text;
-    var idx = text.toLowerCase().indexOf(query.toLowerCase());
+    if (!query || !text) return text;
+    var q = query.trim().toLowerCase();
+    if (!q) return text;
+    var idx = text.toLowerCase().indexOf(q);
     if (idx === -1) return text;
-    return text.substring(0, idx) + '<span style="color:#5865F2;font-weight:700;">' + text.substring(idx, idx + query.length) + '</span>' + text.substring(idx + query.length);
+    return text.substring(0, idx) + '<span style="color:#5865F2;font-weight:700;text-decoration:underline;text-underline-offset:2px;">' + text.substring(idx, idx + q.length) + '</span>' + text.substring(idx + q.length);
   }
 
-  function renderResults(q) {
+  function renderResults(rawQuery) {
     var overlay = createSearchModal();
     var container = overlay.querySelector('#zy-search-results');
-    var query = q.toLowerCase();
-    var filtered = !query ? DOCS_SEARCH_INDEX : DOCS_SEARCH_INDEX.filter(function(item) {
-      return item.title.toLowerCase().includes(query) || item.breadcrumb.toLowerCase().includes(query) || item.desc.toLowerCase().includes(query);
-    });
+    var clearBtn = overlay.querySelector('#zy-search-clear');
+    var escKbd = overlay.querySelector('#zy-search-esc');
+    var query = (rawQuery || '').trim();
+    var queryLower = query.toLowerCase();
+
+    if (clearBtn && escKbd) {
+      if (query.length > 0) {
+        clearBtn.style.display = 'block';
+        escKbd.style.display = 'none';
+      } else {
+        clearBtn.style.display = 'none';
+        escKbd.style.display = 'block';
+      }
+    }
+
+    var filtered;
+    if (!queryLower) {
+      filtered = DOCS_SEARCH_INDEX.slice(0, 8);
+    } else {
+      var words = queryLower.split(/s+/).filter(Boolean);
+      filtered = DOCS_SEARCH_INDEX.filter(function(item) {
+        var t = item.title.toLowerCase();
+        var b = item.breadcrumb.toLowerCase();
+        var k = (item.keywords || '').toLowerCase();
+        var d = (item.desc || '').toLowerCase();
+        return words.every(function(w) {
+          return t.includes(w) || b.includes(w) || k.includes(w) || d.includes(w);
+        });
+      });
+
+      filtered.sort(function(a, b) {
+        var aTitleExact = a.title.toLowerCase().startsWith(queryLower) ? 0 : 1;
+        var bTitleExact = b.title.toLowerCase().startsWith(queryLower) ? 0 : 1;
+        if (aTitleExact !== bTitleExact) return aTitleExact - bTitleExact;
+        var aTitle = a.title.toLowerCase().includes(queryLower) ? 0 : 1;
+        var bTitle = b.title.toLowerCase().includes(queryLower) ? 0 : 1;
+        if (aTitle !== bTitle) return aTitle - bTitle;
+        var aBread = a.breadcrumb.toLowerCase().includes(queryLower) ? 0 : 1;
+        var bBread = b.breadcrumb.toLowerCase().includes(queryLower) ? 0 : 1;
+        return aBread - bBread;
+      });
+    }
 
     if (filtered.length === 0) {
-      container.innerHTML = '<div style="padding:32px;text-align:center;opacity:0.6;font-size:14px;">No documentation matches found for "' + q + '"</div>';
+      var safeQ = query.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      container.innerHTML = '<div style="padding:48px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">' +
+        '<div style="width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;margin-bottom:4px;">' +
+          '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.6;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>' +
+        '</div>' +
+        '<div style="font-size:15px;font-weight:600;">No results for &ldquo;<span style="color:#5865F2;">' + safeQ + '</span>&rdquo;</div>' +
+        '<div style="font-size:13px;opacity:0.6;max-width:320px;line-height:1.4;">Try searching for something else or check your spelling.</div>' +
+      '</div>';
       return;
     }
 
     container.innerHTML = filtered.map(function(item, i) {
       return '<div class="zy-search-item ' + (i === 0 ? 'is-selected' : '') + '" data-href="' + item.href + '" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:8px;cursor:pointer;margin-bottom:2px;transition:background 0.1s ease;">' +
-        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:0.6;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>' +
+        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;opacity:0.55;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>' +
         '<div style="display:flex;flex-direction:column;gap:2px;flex:1;overflow:hidden;">' +
-          '<div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + highlightMatches(item.title, q) + '</div>' +
-          '<div style="font-size:12px;opacity:0.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + item.breadcrumb + '</div>' +
+          '<div style="font-size:14px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + highlightMatches(item.title, query) + '</div>' +
+          '<div style="font-size:12px;opacity:0.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + highlightMatches(item.breadcrumb, query) + '</div>' +
         '</div>' +
       '</div>';
     }).join('');
