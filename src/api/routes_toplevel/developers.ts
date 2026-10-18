@@ -23,6 +23,8 @@ import { route } from "@spacebar/api/middlewares";
 import { brandPage, Config, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 import { compressedStatic } from "../../util/util/CompressedStatic";
 
+import { sendDocResponse } from "../util/docs-service";
+
 const router = Router({ mergeParams: true });
 const PAGE_FOLDER = path.join(PUBLIC_ASSETS_FOLDER, "developers");
 
@@ -88,23 +90,30 @@ router.get(
 	async (_req: Request, res: Response) => sendDeveloperPage(res, "success-stories.html"),
 );
 
-router.get(
-	"/docs",
-	route({
-		spacebarOnly: true,
-		authentication: "never",
-	}),
-	async (_req: Request, res: Response) => sendDeveloperPage(res, "docs.html"),
-);
+const DOC_PREFIXES = [
+	"docs",
+	"intro",
+	"reference",
+	"guides",
+	"change-log",
+	"bots",
+	"activities",
+	"discord-social-sdk",
+	"quick-start",
+	"platform",
+	"topics",
+	"resources",
+	"events",
+	"monetization",
+	"discovery",
+	"game-development",
+	"developer-tools",
+];
 
-router.get(
-	"/docs{/*splat}",
-	route({
-		spacebarOnly: true,
-		authentication: "never",
-	}),
-	async (_req: Request, res: Response) => sendDeveloperPage(res, "docs.html"),
-);
+function isDocPath(slug: string): boolean {
+	const clean = slug.replace(/^\/+/, "").toLowerCase();
+	return DOC_PREFIXES.some((prefix) => clean === prefix || clean.startsWith(prefix + "/"));
+}
 
 router.get(
 	"/{*splat}",
@@ -112,7 +121,15 @@ router.get(
 		spacebarOnly: true,
 		authentication: "never",
 	}),
-	async (_req: Request, res: Response) => {
+	async (req: Request, res: Response) => {
+		const rawSplat = (req.params as any).splat || "";
+		const cleanSplat = String(rawSplat).replace(/^\/+/, "");
+
+		if (isDocPath(cleanSplat)) {
+			return sendDocResponse(res, cleanSplat);
+		}
+
+		// Developer Portal dashboard (Applications list / details)
 		const { client, cdn, general } = Config.get();
 		const config = JSON.stringify({
 			instanceName: client.instanceName,
@@ -124,7 +141,7 @@ router.get(
 			.replace("{{CONFIG}}", config)
 			.replace("{{TITLE}}", `${client.instanceName.replace(/[<>&"]/g, "")} Developer Portal`);
 		res.set("Cache-Control", "no-cache");
-		res.type("html").send(page);
+		return res.type("html").send(page);
 	},
 );
 
