@@ -3,8 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <title>Zycord</title>
-  <link rel="stylesheet" href="index.css" />
   <style>
+    * {
+      box-sizing: border-box;
+      user-select: none;
+      -webkit-user-select: none;
+    }
     body, html {
       margin: 0;
       padding: 0;
@@ -12,11 +16,11 @@
       height: 100%;
       overflow: hidden;
       background-color: #282b30;
-      font-family: 'gg sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      user-select: none;
-      -webkit-app-region: drag;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      cursor: default;
     }
     #splash-container {
+      -webkit-app-region: drag;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -24,18 +28,21 @@
       height: 100%;
       text-align: center;
       color: #ffffff;
-      padding-bottom: 20px;
-      box-sizing: border-box;
+      padding-bottom: 25px;
     }
     .video-wrap {
       width: 200px;
       height: 200px;
       margin-bottom: -15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .video-wrap video, .video-wrap img {
+    .video-wrap img {
       width: 200px;
       height: 200px;
       object-fit: contain;
+      pointer-events: none;
     }
     .status-text {
       font-size: 16px;
@@ -43,11 +50,12 @@
       margin-top: 5px;
       color: #ffffff;
       min-height: 24px;
+      font-variant-numeric: tabular-nums;
     }
     .progress-bar-wrap {
       width: 180px;
       height: 6px;
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.12);
       border-radius: 4px;
       margin-top: 10px;
       overflow: hidden;
@@ -72,11 +80,9 @@
 <body>
   <div id="splash-container">
     <div class="video-wrap">
-      <video id="splash-video" autoplay loop muted playsinline>
-        <source src="./videos/connecting.webm" type="video/webm" />
-      </video>
+      <img id="splash-anim" src="./videos/connecting.webp" alt="Loading..." />
     </div>
-    <div id="splash-status" class="status-text">Starting Zycord...</div>
+    <div id="splash-status" class="status-text">Checking for updates...</div>
     <div id="splash-progress-wrap" class="progress-bar-wrap">
       <div id="splash-progress-fill" class="progress-bar-fill"></div>
     </div>
@@ -89,14 +95,6 @@
     const statusEl = document.getElementById('splash-status');
     const progressWrap = document.getElementById('splash-progress-wrap');
     const progressFill = document.getElementById('splash-progress-fill');
-    const videoEl = document.getElementById('splash-video');
-
-    // Handle fallback if webm fails to play
-    videoEl.onerror = () => {
-      const img = document.createElement('img');
-      img.src = './videos/connecting.webp';
-      videoEl.parentNode.replaceChild(img, videoEl);
-    };
 
     ipcRenderer.on('ZYCORD_SPLASH_UPDATE_STATE', (_, state) => {
       if (!state) return;
