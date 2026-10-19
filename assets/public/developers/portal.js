@@ -15,8 +15,6 @@
     const view = document.getElementById("view");
     let pendingToken = null;
     const nav = document.getElementById("nav");
-    document.getElementById("brand-name").textContent = config.instanceName;
-    if (config.icon) document.getElementById("brand-icon").src = config.icon;
 
     const PERMISSIONS = [
         [
@@ -181,6 +179,23 @@
         navigate(link.getAttribute("href"));
     });
     window.addEventListener("popstate", () => render());
+
+    // Header (portal-shell.js) hooks: the Create menu, the mobile drawer and the signed-in user.
+    document.addEventListener("dp:create", (event) => (event.detail === "widget" ? widgetDialog() : createDialog()));
+    document.addEventListener("click", (event) => {
+        if (event.target.closest("[data-dp-overlay], #nav a")) document.body.classList.remove("dp-nav-open");
+    });
+    api("GET", "/users/@me")
+        .then((me) => {
+            const name = document.querySelector("[data-dp-user-name]");
+            const avatar = document.querySelector("[data-dp-user-avatar]");
+            if (!me || !name) return;
+            name.textContent = me.global_name ?? me.username;
+            const src = avatarUrl(me);
+            if (src) avatar.replaceChildren(el("img", { src, alt: "" }));
+            else avatar.textContent = (me.username ?? "?").charAt(0).toUpperCase();
+        })
+        .catch(() => null);
 
     const copyButton = (getValue, label = "Copy") => {
         const button = el("button", { class: "btn secondary", type: "button" }, label);
@@ -373,12 +388,14 @@
     };
 
     const setNav = (app, section) => {
-        const link = (href, label, current) => el("a", { href, "data-link": true, "aria-current": current ? "page" : null }, label);
+        const link = (href, label, current, spa = true) => el("a", { class: "nav-item", href, "data-link": spa || null, "aria-current": current ? "page" : null }, label);
         nav.replaceChildren(
             ...[
+                link("/developers", "Home", false, false),
                 link("/developers/applications", "Applications", !app),
+                link("/developers/docs", "Documentation", false, false),
                 app && el("p", { class: "nav-heading", title: app.name }, app.name),
-                app && link(`/developers/applications/${app.id}/information`, "General information", section === "information"),
+                app && link(`/developers/applications/${app.id}/information`, "General Information", section === "information"),
                 app && link(`/developers/applications/${app.id}/installation`, "Installation", section === "installation"),
                 app && link(`/developers/applications/${app.id}/oauth2`, "OAuth2", section === "oauth2"),
                 app && link(`/developers/applications/${app.id}/bot`, "Bot", section === "bot"),
@@ -391,86 +408,187 @@
         );
     };
 
+    // Same layout as discord.com/developers/applications: heading, sort bar with Small/Large tiles, then the card grid.
+    const listPrefs = { sort: "created", size: "small" };
+    const SORTS = [
+        ["created", "Date Created"],
+        ["alphabetical", "Alphabetical"],
+    ];
+    const GRID_ICON =
+        "M15 11a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h5a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-5ZM2 20c0 1.1.9 2 2 2h5a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v5ZM13 20c0 1.1.9 2 2 2h5a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2v5ZM2 9c0 1.1.9 2 2 2h5a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v5Z";
+    const CHEVRON_ICON = "M5.3 9.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z";
+
+    const svgIcon = (d, size = 24) => {
+        const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        svg.setAttribute("aria-hidden", "true");
+        svg.setAttribute("width", size);
+        svg.setAttribute("height", size);
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("fill", "none");
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("fill", "currentColor");
+        path.setAttribute("d", d);
+        svg.append(path);
+        return svg;
+    };
+
+    // Discord's placeholder: first letter of each word, "'s" dropped ("Kyze's Bot" -> "KB").
+    const acronym = (name) =>
+        (name ?? "")
+            .replace(/'s /g, " ")
+            .replace(/\w+/g, (word) => word[0])
+            .replace(/\s/g, "") || "?";
+
+    const byId = (a, b) => (BigInt(a.id) < BigInt(b.id) ? -1 : BigInt(a.id) > BigInt(b.id) ? 1 : 0);
+
+    const sortSelect = (onChange) => {
+        const value = el("span", { class: "dp-select-value" });
+        const menu = el("div", { class: "dp-select-menu", role: "listbox", hidden: true });
+        const control = el(
+            "button",
+            { class: "dp-select-control", type: "button", id: "sort-by", "aria-haspopup": "listbox", "aria-expanded": "false" },
+            value,
+            el("span", { class: "dp-select-arrow" }, svgIcon(CHEVRON_ICON, 20)),
+        );
+        const wrap = el("div", { class: "dp-select" }, control, menu);
+        const setOpen = (open) => {
+            menu.hidden = !open;
+            control.setAttribute("aria-expanded", String(open));
+            wrap.classList.toggle("is-open", open);
+        };
+        const sync = () => {
+            value.textContent = SORTS.find(([key]) => key === listPrefs.sort)[1];
+            menu.replaceChildren(
+                ...SORTS.map(([key, text]) =>
+                    el(
+                        "button",
+                        {
+                            class: "dp-select-option",
+                            type: "button",
+                            role: "option",
+                            "aria-selected": String(key === listPrefs.sort),
+                            onclick: () => {
+                                listPrefs.sort = key;
+                                setOpen(false);
+                                sync();
+                                onChange();
+                            },
+                        },
+                        text,
+                    ),
+                ),
+            );
+        };
+        control.addEventListener("click", (event) => {
+            event.stopPropagation();
+            setOpen(menu.hidden);
+        });
+        document.addEventListener("click", (event) => {
+            if (!wrap.contains(event.target)) setOpen(false);
+        });
+        wrap.addEventListener("keydown", (event) => {
+            if (event.key !== "Escape") return;
+            setOpen(false);
+            control.focus();
+        });
+        sync();
+        return wrap;
+    };
+
+    const appCard = (app) => {
+        const src = iconUrl(app);
+        return el(
+            "div",
+            { class: "dp-card-wrapper" },
+            el(
+                "a",
+                { class: "dp-card-link", href: `/developers/applications/${app.id}/information`, "data-link": true },
+                el(
+                    "div",
+                    { class: "dp-card" },
+                    el("div", { class: "dp-card-image", style: src ? `background-image:url("${src}")` : null }, src ? null : el("span", { class: "dp-card-placeholder" }, acronym(app.name))),
+                    el("abbr", { class: "dp-card-label-abbr", title: app.name }, el("div", { class: "dp-card-label" }, app.name)),
+                ),
+            ),
+        );
+    };
+
     const renderList = async () => {
         setNav(null);
-        document.title = `Applications | ${config.instanceName} Developer Portal`;
+        document.title = `My Applications | ${config.instanceName} Developer Portal`;
         view.replaceChildren(el("p", { class: "loading" }, "Loading applications"));
         const apps = await api("GET", "/applications");
 
-        const searchInput = el("input", {
-            type: "search",
-            class: "search-input",
-            placeholder: "Search applications...",
-            "aria-label": "Search applications",
-        });
-
-        const gridContainer = el("div", { class: "app-grid-container" });
-
-        const updateGrid = (filter = "") => {
-            const query = filter.trim().toLowerCase();
-            const filtered = apps
-                .filter((app) => !query || app.name.toLowerCase().includes(query))
-                .sort((a, b) => a.name.localeCompare(b.name));
-
-            if (filtered.length) {
-                gridContainer.replaceChildren(
+        const grid = el("div");
+        const tiles = el("div", { class: "dp-card-tiles" });
+        const setSize = (size) => {
+            listPrefs.size = size;
+            updateGrid();
+        };
+        const updateGrid = () => {
+            const sorted = [...apps].sort(listPrefs.sort === "alphabetical" ? (a, b) => a.name.localeCompare(b.name) : byId);
+            grid.className = `dp-card-grid ${listPrefs.size === "large" ? "dp-card-grid-large" : "dp-card-grid-small"}`;
+            grid.replaceChildren(...sorted.map(appCard));
+            tiles.replaceChildren(
+                ...[
+                    ["small", "Small"],
+                    ["large", "Large"],
+                ].map(([size, text]) =>
                     el(
                         "div",
-                        { class: "app-grid" },
-                        filtered.map((app) =>
-                            el(
-                                "a",
-                                { class: "app-card", href: `/developers/applications/${app.id}/information`, "data-link": true },
-                                appIcon(app),
-                                el("span", {}, app.name),
-                            ),
-                        ),
+                        {
+                            class: `dp-card-tile${listPrefs.size === size ? " is-selected" : ""}`,
+                            role: "button",
+                            tabindex: "0",
+                            "aria-pressed": String(listPrefs.size === size),
+                            onclick: () => setSize(size),
+                            onkeydown: (event) => {
+                                if (event.key !== "Enter" && event.key !== " ") return;
+                                event.preventDefault();
+                                setSize(size);
+                            },
+                        },
+                        svgIcon(GRID_ICON),
+                        el("div", { class: "dp-card-tile-label" }, text),
                     ),
-                );
-            } else if (query) {
-                gridContainer.replaceChildren(
-                    el(
-                        "div",
-                        { class: "empty is-search-empty" },
-                        el("h2", {}, "No matching applications"),
-                        el("p", { class: "muted" }, `No applications found matching "${filter}".`),
-                    ),
-                );
-            } else {
-                gridContainer.replaceChildren(
-                    el(
-                        "div",
-                        { class: "empty" },
-                        el("h2", {}, "No applications yet"),
-                        el("p", { class: "muted" }, "Your applications appear here. Create one to set up a bot, or make a widget for your profile."),
-                        el(
-                            "div",
-                            { class: "actions empty-actions" },
-                            el("button", { class: "btn secondary", type: "button", onclick: widgetDialog }, "New profile widget"),
-                            el("button", { class: "btn primary", type: "button", onclick: createDialog }, "New application"),
-                        ),
-                    ),
-                );
-            }
+                ),
+            );
         };
 
-        searchInput.addEventListener("input", (e) => updateGrid(e.target.value));
-
-        const head = el(
+        const header = el(
             "div",
-            { class: "page-head" },
-            el("h1", {}, "Applications"),
+            { class: "dp-section" },
             el(
-                "div",
-                { class: "actions page-actions" },
-                searchInput,
-                el("button", { class: "btn secondary", type: "button", onclick: widgetDialog }, "New profile widget"),
-                el("button", { class: "btn primary", type: "button", onclick: createDialog }, "New application"),
+                "h1",
+                { class: "dp-heading" },
+                el("div", { class: "dp-heading-primary" }, "Applications"),
+                el("div", { class: "dp-heading-secondary" }, el("button", { class: "dp-button dp-button-primary", type: "button", onclick: createDialog }, "New Application")),
             ),
+            el("p", { class: "dp-lead" }, "Develop ", el("a", { class: "dp-anchor", href: "/developers/docs" }, "apps"), ` to customize and extend ${config.instanceName} for millions of users.`),
         );
-        const lead = el("p", { class: "muted page-lead" }, "Create an application to get a bot, a token and an invite link for your servers, or to put your own widget on your profile.");
+
+        const body = apps.length
+            ? el(
+                  "div",
+                  { class: "dp-section" },
+                  el("div", { class: "dp-option-bar" }, el("div", { class: "dp-sort-wrapper" }, el("label", { class: "dp-sort-label", for: "sort-by" }, "Sort By:"), sortSelect(updateGrid)), tiles),
+                  grid,
+              )
+            : el(
+                  "div",
+                  { class: "dp-empty" },
+                  el("p", { class: "dp-empty-title" }, "You don't have any applications yet."),
+                  el("p", { class: "dp-empty-text" }, "Create one to get a bot, a token and an invite link for your servers, or make a widget for your profile."),
+                  el(
+                      "div",
+                      { class: "dp-empty-actions" },
+                      el("button", { class: "dp-button dp-button-secondary", type: "button", onclick: widgetDialog }, "New Profile Widget"),
+                      el("button", { class: "dp-button dp-button-primary", type: "button", onclick: createDialog }, "New Application"),
+                  ),
+              );
+
         updateGrid();
-        view.replaceChildren(head, lead, gridContainer);
+        view.replaceChildren(header, body);
     };
 
     const renderInformation = (app) => {

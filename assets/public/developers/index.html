@@ -41,26 +41,13 @@
         <a class="skip-link" href="#view">Skip to content</a>
         <div id="zy-dev-topbar-mount"></div>
         <div class="layout">
-            <aside class="sidebar">
-                <a class="brand" href="/developers/applications" data-link>
-                    <img id="brand-icon" class="brand-icon" src="/static/logo.png" alt="" width="32" height="32" />
-                    <span>
-                        <strong id="brand-name"></strong>
-                        <span class="muted">Developer Portal</span>
-                    </span>
-                </a>
-                <nav id="nav" aria-label="Developer Portal"></nav>
-                <div class="sidebar-quick-links">
-                    <a href="/developers"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:middle;margin-right:5px;"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>Game Developers</a>
-                    <a href="/developers/social-sdk"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:middle;margin-right:5px;"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>Social SDK</a>
-                    <a href="/developers/docs"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:middle;margin-right:5px;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Documentation</a>
-                    <a href="/status" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:middle;margin-right:5px;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>API Status ↗</a>
+            <aside class="sidebar" aria-label="Developer Portal">
+                <div class="sidebar-content">
+                    <nav id="nav" aria-label="Developer Portal"></nav>
                 </div>
-                <a class="sidebar-foot" href="/channels/@me">← Back to Zycord App</a>
             </aside>
-            <div class="portal-main-col">
-                <main id="view" class="view" tabindex="-1"></main>
-            </div>
+            <div class="sidebar-overlay" data-dp-overlay></div>
+            <main id="view" class="view" tabindex="-1"></main>
         </div>
         <script src="/developers/portal-shell.js"></script>
         <script src="/developers/portal.js"></script>

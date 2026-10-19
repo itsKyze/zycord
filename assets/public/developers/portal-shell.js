@@ -82,14 +82,47 @@
   }
 
   // assets/public/jsx/DevelopersPortalShell.jsx
+  var plusIcon = '<path fill="currentColor" d="M13 5a1 1 0 1 0-2 0v6H5a1 1 0 1 0 0 2h6v6a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2h-6V5Z"/>';
+  var externalIcon = '<path fill="currentColor" d="M15 2a1 1 0 0 0 0 2h3.59l-5.3 5.3a1 1 0 0 0 1.42 1.4L20 5.42V9a1 1 0 1 0 2 0V3a1 1 0 0 0-1-1h-6Z"/><path fill="currentColor" d="M5 5a1 1 0 0 0-1 1v13a1 1 0 0 0 1 1h13a1 1 0 0 0 1-1v-6a1 1 0 1 1 2 0v6a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3h6a1 1 0 1 1 0 2H5Z"/>';
+  var menuIcon = '<path fill="currentColor" d="M3 5a1 1 0 0 0 0 2h18a1 1 0 1 0 0-2H3ZM2 12a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1ZM2 18a1 1 0 0 1 1-1h18a1 1 0 1 1 0 2H3a1 1 0 0 1-1-1Z"/>';
+  var Icon = ({ paths, size = 16 }) => /* @__PURE__ */ h("svg", { "aria-hidden": "true", xmlns: "http://www.w3.org/2000/svg", width: size, height: size, fill: "none", viewBox: "0 0 24 24", dangerouslySetInnerHTML: { __html: paths } });
   function DevelopersPortalTopbar() {
-    return /* @__PURE__ */ h("header", { className: "zy-dev-topbar" }, /* @__PURE__ */ h("div", { className: "zy-dev-topbar-left" }, /* @__PURE__ */ h("a", { className: "zy-dev-logo", href: "/developers" }, /* @__PURE__ */ h("img", { src: "/branding/zycord_icon_white.svg", alt: "Zycord", width: "28", height: "28", style: { display: "block" } }), /* @__PURE__ */ h("span", null, "Zycord"), /* @__PURE__ */ h("span", { className: "zy-dev-badge" }, "DEVELOPERS")), /* @__PURE__ */ h("nav", { className: "zy-dev-topnav", "aria-label": "Developer Global Navigation" }, /* @__PURE__ */ h("a", { href: "/developers/applications", className: "is-active" }, "Applications"), /* @__PURE__ */ h("a", { href: "/developers/docs" }, "Documentation"), /* @__PURE__ */ h("a", { href: "/developers" }, "Zycord for Game Developers"), /* @__PURE__ */ h("a", { href: "/_zycord/api/openapi.json", target: "_blank", rel: "noopener" }, "OpenAPI Spec"))), /* @__PURE__ */ h("div", { className: "zy-dev-topbar-right" }, /* @__PURE__ */ h("a", { className: "zy-dev-pill-btn", href: "/status" }, /* @__PURE__ */ h("span", { className: "zy-dev-dot" }), /* @__PURE__ */ h("span", null, "API Operational")), /* @__PURE__ */ h("a", { className: "zy-dev-app-btn", href: "/app" }, "Open Zycord App")));
+    return /* @__PURE__ */ h("header", { className: "dp-header" }, /* @__PURE__ */ h("div", { className: "dp-header-content" }, /* @__PURE__ */ h("div", { className: "dp-header-left" }, /* @__PURE__ */ h("button", { className: "dp-mobile-menu", type: "button", "aria-label": "Open navigation", "data-dp-menu": true }, /* @__PURE__ */ h(Icon, { paths: menuIcon, size: 24 })), /* @__PURE__ */ h("a", { className: "dp-logo", href: "/developers", "aria-label": "Zycord Developers" }, /* @__PURE__ */ h("img", { src: "/branding/zycord_icon_white.svg", alt: "", width: "24", height: "24" }), /* @__PURE__ */ h("span", null, "Zycord Developers"))), /* @__PURE__ */ h("div", { className: "dp-header-right" }, /* @__PURE__ */ h("div", { className: "dp-create" }, /* @__PURE__ */ h("button", { className: "dp-button dp-button-secondary dp-button-sm", type: "button", "aria-haspopup": "menu", "aria-expanded": "false", "data-dp-create": true }, /* @__PURE__ */ h(Icon, { paths: plusIcon }), /* @__PURE__ */ h("span", null, "Create")), /* @__PURE__ */ h("div", { className: "dp-popover", role: "menu", hidden: true, "data-dp-create-menu": true }, /* @__PURE__ */ h("button", { type: "button", role: "menuitem", "data-dp-create-item": "application" }, "Application"), /* @__PURE__ */ h("button", { type: "button", role: "menuitem", "data-dp-create-item": "widget" }, "Profile Widget"))), /* @__PURE__ */ h("a", { className: "dp-header-link", href: "/developers/docs" }, /* @__PURE__ */ h("span", null, "Docs"), /* @__PURE__ */ h(Icon, { paths: externalIcon, size: 18 })), /* @__PURE__ */ h("div", { className: "dp-header-divider", role: "separator" }), /* @__PURE__ */ h("a", { className: "dp-header-user", href: "/channels/@me", title: "Open Zycord", "data-dp-user": true }, /* @__PURE__ */ h("span", { className: "dp-header-avatar", "data-dp-user-avatar": true }), /* @__PURE__ */ h("span", { className: "dp-header-username", "data-dp-user-name": true }, "Open App")))));
   }
   function initDevelopersPortalShell() {
     const topMount = document.getElementById("zy-dev-topbar-mount");
-    if (topMount) {
-      mountJSX(topMount, /* @__PURE__ */ h(DevelopersPortalTopbar, null));
-    }
+    if (!topMount) return;
+    mountJSX(topMount, /* @__PURE__ */ h(DevelopersPortalTopbar, null));
+    const header = topMount.querySelector(".dp-header-content");
+    const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 0);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    const createButton = topMount.querySelector("[data-dp-create]");
+    const createMenu = topMount.querySelector("[data-dp-create-menu]");
+    const setMenu = (open) => {
+      createMenu.hidden = !open;
+      createButton.setAttribute("aria-expanded", String(open));
+    };
+    createButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      setMenu(createMenu.hidden);
+    });
+    createMenu.addEventListener("click", (event) => {
+      const item = event.target.closest("[data-dp-create-item]");
+      if (!item) return;
+      setMenu(false);
+      document.dispatchEvent(new CustomEvent("dp:create", { detail: item.dataset.dpCreateItem }));
+    });
+    document.addEventListener("click", (event) => {
+      if (!createMenu.hidden && !createMenu.contains(event.target)) setMenu(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && !createMenu.hidden) {
+        setMenu(false);
+        createButton.focus();
+      }
+    });
+    topMount.querySelector("[data-dp-menu]").addEventListener("click", () => document.body.classList.toggle("dp-nav-open"));
   }
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", initDevelopersPortalShell);
