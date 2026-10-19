@@ -1,13 +1,11 @@
 /**
  * Zycord Desktop Main Entry Point
- * Implements Discord-style splash screen and native bridges
  */
 const path = require("path");
 const { app, BrowserWindow, ipcMain } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
 
-// Configure logging
 log.transports.file.level = "info";
 autoUpdater.logger = log;
 
@@ -16,11 +14,11 @@ const { IPCEvents } = require("./core/modules/ipc_events");
 let splashWindow = null;
 let mainWindow = null;
 
-const DEFAULT_WEBAPP_URL = "https://app.zyron.site";
+const DEFAULT_WEBAPP_URL = "https://app.zyron.site/app";
 const APP_TITLE = "Zycord";
 const APP_ICON = path.join(__dirname, "..", "assets", "icon.png");
 
-// 1. Splash Window (identical to Discord/Zycord official splash)
+// 1. Splash Window (300x350 - exactly like Discord splash)
 function createSplashWindow() {
     splashWindow = new BrowserWindow({
         width: 300,
@@ -29,13 +27,13 @@ function createSplashWindow() {
         frame: false,
         show: false,
         center: true,
-        backgroundColor: "#2f3136",
+        backgroundColor: "#282b30",
         icon: APP_ICON,
         webPreferences: {
-            preload: path.join(__dirname, "bootstrap", "splashScreenPreload.js"),
-            nodeIntegration: false,
-            contextIsolation: true,
+            nodeIntegration: true,
+            contextIsolation: false,
             sandbox: false,
+            webSecurity: false,
         },
     });
 
@@ -43,7 +41,6 @@ function createSplashWindow() {
 
     splashWindow.once("ready-to-show", () => {
         splashWindow.show();
-        sendSplashState({ status: "checking-for-updates" });
         setupUpdates();
     });
 }
@@ -77,7 +74,7 @@ function createMainWindow() {
     const webappUrl = process.env.ZYCORD_WEBAPP_URL || DEFAULT_WEBAPP_URL;
 
     mainWindow.loadURL(webappUrl).catch(() => {
-        mainWindow.loadFile(path.join(__dirname, "bootstrap", "splash", "index.html"));
+        mainWindow.loadURL("https://app.zyron.site");
     });
 
     mainWindow.once("ready-to-show", () => {
@@ -121,37 +118,30 @@ function setupUpdates() {
         sendSplashState({ status: "starting" });
         setTimeout(() => {
             createMainWindow();
-        }, 800);
+        }, 1000);
     });
 
     autoUpdater.on("error", (err) => {
-        log.warn("[Updater] check failed, proceeding to launch:", err.message);
+        log.warn("[Updater] check skipped/failed:", err.message);
         sendSplashState({ status: "starting" });
         setTimeout(() => {
             createMainWindow();
-        }, 800);
+        }, 1000);
     });
 
+    // Check updates
     autoUpdater.checkForUpdates().catch(() => {
         sendSplashState({ status: "starting" });
         setTimeout(() => {
             createMainWindow();
-        }, 800);
+        }, 1000);
     });
 }
-
 
 // IPC Handlers
 ipcMain.on("ZYCORD_SPLASH_SCREEN_READY", () => {
     sendSplashState({ status: "checking-for-updates" });
 });
-
-ipcMain.on("ZYCORD_SPLASH_SCREEN_QUIT", () => {
-    app.quit();
-});
-
-ipcMain.handle("ZYCORD_GET_BUILD_OVERRIDE_STATUS", () => null);
-ipcMain.handle("ZYCORD_CLEAR_BUILD_OVERRIDE", () => true);
 
 // Native Window Controls
 ipcMain.handle(IPCEvents.WINDOW_MINIMIZE, () => {
