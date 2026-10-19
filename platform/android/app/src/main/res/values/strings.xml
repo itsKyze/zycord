@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="app_name">Zycord</string>
-    <color name="zycord_bg">#1E1F22</color>
-    <color name="zycord_blurple">#5865F2</color>
-    <color name="ic_launcher_background">#5865F2</color>
-</resources>
