@@ -8,6 +8,7 @@ COPY extra/pion-sfu/*.go ./
 RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/pion-sfu .
 
 FROM alpine:3.22 AS sfu
+LABEL org.opencontainers.image.source="https://github.com/zayron-labs/zycord"
 RUN mkdir -p /run/sfu && chown 1000:1000 /run/sfu
 COPY --from=sfu-build /out/pion-sfu /usr/local/bin/pion-sfu
 USER 1000:1000
@@ -35,6 +36,7 @@ COPY assets assets
 RUN npm run build:src && npm prune --omit=dev --no-audit --no-fund
 
 FROM node:26-slim AS server
+LABEL org.opencontainers.image.source="https://github.com/zayron-labs/zycord"
 RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates ffmpeg \
     && rm -rf /var/lib/apt/lists/*

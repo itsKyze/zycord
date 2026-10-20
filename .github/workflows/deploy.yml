@@ -11,11 +11,15 @@ concurrency:
 
 env:
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
+  GHCR_IMAGE: ghcr.io/${{ github.repository }}
 
 jobs:
   detect-changes:
     name: detect-changes
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: read
     outputs:
       server-changed: ${{ steps.changes.outputs.server }}
       sfu-changed: ${{ steps.changes.outputs.sfu }}
@@ -25,6 +29,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Detect changed services
         id: changes
@@ -53,8 +64,8 @@ jobs:
             echo "🔄 Manual trigger - force building all services"
             exit 0
           fi
-          if ! docker manifest inspect ghcr.io/itskyze/zycord:server-main > /dev/null 2>&1 || \
-             ! docker manifest inspect ghcr.io/itskyze/zycord:sfu-main > /dev/null 2>&1; then
+          if ! docker manifest inspect "${GHCR_IMAGE}:server-main" > /dev/null 2>&1 || \
+             ! docker manifest inspect "${GHCR_IMAGE}:sfu-main" > /dev/null 2>&1; then
             echo "force-build=true" >> $GITHUB_OUTPUT
             echo "🔄 First deployment detected - will build all services"
           else
@@ -92,7 +103,7 @@ jobs:
           context: .
           target: sfu
           push: true
-          tags: ghcr.io/itskyze/zycord:sfu-main
+          tags: ${{ env.GHCR_IMAGE }}:sfu-main
           cache-from: type=gha,scope=sfu
           cache-to: type=gha,mode=max,scope=sfu
 
@@ -104,7 +115,7 @@ jobs:
           context: .
           target: server
           push: true
-          tags: ghcr.io/itskyze/zycord:server-main
+          tags: ${{ env.GHCR_IMAGE }}:server-main
           cache-from: type=gha,scope=server
           cache-to: type=gha,mode=max,scope=server
 
@@ -113,6 +124,9 @@ jobs:
     needs: [detect-changes, build]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      packages: read
 
     steps:
       - name: Checkout
