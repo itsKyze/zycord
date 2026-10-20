@@ -630,14 +630,23 @@ export function QuestsPage() {
 					<h2 className="zy-dc-h2">DESIGNED FOR GAME PLAYERS</h2>
 					<p className="zy-dc-lead">Players like our ad format because they are rewarded for engaging. It’s a win-win for players and advertisers.</p>
 					<div className="zy-dc-quests-shots">
-						<img src="/site/media/zycord/quests-step-1.webp" alt="Accept a Quest in Zycord" />
-						<img src="/site/media/zycord/quests-card-1.webp" alt="Play or watch to complete a Quest" />
-						<img src="/site/media/zycord/quests-step-2.webp" alt="Collect Quest rewards" />
+						<figure>
+							<img src="/site/media/zycord/quests-step-1.webp" alt="Accept a Quest in Zycord" width="467" height="469" />
+							<h3>1. They accept your Quest</h3>
+							<p>Actions include watching a video, playing a game, streaming and more.</p>
+						</figure>
+						<figure>
+							<img src="/site/media/zycord/quests-card-1.webp" alt="Play or watch to complete a Quest" width="467" height="469" />
+							<h3>2. Play or Watch</h3>
+							<p>Taking the requested action completes the Quest.</p>
+						</figure>
+						<figure>
+							<img src="/site/media/zycord/quests-step-2.webp" alt="Collect Quest rewards" width="467" height="469" />
+							<h3>3. And Collect Rewards</h3>
+							<p>Rewards include in-game items and Zycord avatar decorations.</p>
+						</figure>
 					</div>
 				</section>
-				<HubRow reverse={false} hub={{ title: "1. They accept your Quest", copy: "Actions include watching a video, playing a game, streaming and more.", img: "/site/media/zycord/quests-step-1.webp" }} />
-				<HubRow reverse hub={{ title: "2. Play or Watch", copy: "Taking the requested action completes the Quest.", img: "/site/media/zycord/quests-step-2.webp" }} />
-				<HubRow reverse={false} hub={{ title: "3. And Collect Rewards", copy: "Rewards include in-game items and Zycord avatar decorations.", img: "/site/media/zycord/quests-step-3.webp" }} />
 				<section className="zy-dc-wrap" id="industries" style={{ padding: "48px 0 48px" }}>
 					<h2 className="zy-dc-h2">EXPLORE OUR SOLUTIONS</h2>
 					<p className="zy-dc-lead" style={{ textAlign: "left", margin: "16px 0 32px", maxWidth: "820px" }}>
