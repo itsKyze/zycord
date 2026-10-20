@@ -6,7 +6,7 @@ x-server: &server
         target: server
         args:
             REVISION: ${REVISION:-}
-    image: ghcr.io/zayron-labs/zycord:server-main
+    image: ghcr.io/itskyze/zycord:server-main
     init: true
 
 services:
@@ -36,7 +36,7 @@ services:
             - client:/data/client
 
     sfu:
-        image: ghcr.io/zayron-labs/zycord:sfu-main
+        image: ghcr.io/itskyze/zycord:sfu-main
         init: true
         restart: unless-stopped
         environment:
