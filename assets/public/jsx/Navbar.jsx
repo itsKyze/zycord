@@ -6,7 +6,7 @@ export const NAVIGATION_ITEMS = [
 	{ label: "Nitro", href: "/nitro", key: "nitro" },
 	{
 		label: "Discover",
-		href: "/discover",
+		href: "/servers",
 		key: "discover",
 		decor: "/site/media/zycord/nav-discover-scroll.webp",
 		decorStyle: { width: "120px", right: "-38px", bottom: "-42px" },
@@ -14,8 +14,8 @@ export const NAVIGATION_ITEMS = [
 			{
 				title: "Resources",
 				links: [
-					{ label: "Server Directory", href: "/discover#directory" },
-					{ label: "Trending Games", href: "/discover#trending" }
+					{ label: "Server Directory", href: "/servers" },
+					{ label: "Trending Games", href: "/trending-games" }
 				]
 			}
 		]
@@ -31,29 +31,29 @@ export const NAVIGATION_ITEMS = [
 			{
 				title: "Resources",
 				links: [
-					{ label: "Family Center", href: "/safety#family-center" },
-					{ label: "Safety Library", href: "/safety#safety-library" },
-					{ label: "Safety News", href: "/safety#safety-news" },
-					{ label: "Teen Charter", href: "/safety#teen-charter" },
-					{ label: "Zycord Player's Guide", href: "/safety#players-guide" },
+					{ label: "Family Center", href: "/safety-family-center" },
+					{ label: "Safety Library", href: "/safety-library" },
+					{ label: "Safety News", href: "/safety-news" },
+					{ label: "Teen Charter", href: "/safety-teen-charter" },
+					{ label: "Zycord Player's Guide", href: "/safety-players-guide" },
 					{ label: "Community Guidelines", href: "/guidelines", external: true }
 				]
 			},
 			{
 				title: "Hubs",
 				links: [
-					{ label: "Parent Hub", href: "/safety#parent-hub" },
-					{ label: "Policy Hub", href: "/safety#policy-hub" },
-					{ label: "Privacy Hub", href: "/safety#privacy-hub" },
-					{ label: "Transparency Hub", href: "/safety#transparency-hub" },
-					{ label: "Wellbeing Hub", href: "/safety#wellbeing-hub" }
+					{ label: "Parent Hub", href: "/safety-parents" },
+					{ label: "Policy Hub", href: "/safety-policies" },
+					{ label: "Privacy Hub", href: "/safety-privacy" },
+					{ label: "Transparency Hub", href: "/safety-transparency" },
+					{ label: "Wellbeing Hub", href: "/safety-wellbeing" }
 				]
 			}
 		]
 	},
 	{
 		label: "Quests",
-		href: "/quests",
+		href: "/ads/quests",
 		key: "quests",
 		decor: "/site/media/zycord/nav-quests-trophy.webp",
 		decorStyle: { width: "128px", right: "-42px", bottom: "-46px" },
@@ -61,9 +61,9 @@ export const NAVIGATION_ITEMS = [
 			{
 				title: "Resources",
 				links: [
-					{ label: "Advertising", href: "/quests" },
-					{ label: "Success Stories", href: "/quests#stories" },
-					{ label: "Quests FAQ", href: "/quests#faq" }
+					{ label: "Advertising", href: "/ads/quests" },
+					{ label: "Success Stories", href: "/ads/quests-success-stories" },
+					{ label: "Quests FAQ", href: "/ads/quests-faq" }
 				]
 			}
 		]
@@ -80,8 +80,7 @@ export const NAVIGATION_ITEMS = [
 				links: [
 					{ label: "Help Center", href: "/support" },
 					{ label: "Feedback", href: "/feedback" },
-					{ label: "Submit a Request", href: "/feedback#request" },
-					{ label: "System Status", href: "/status" }
+					{ label: "Submit a Request", href: "/support/requests/new" }
 				]
 			}
 		]
@@ -98,12 +97,12 @@ export const NAVIGATION_ITEMS = [
 				title: "Collections",
 				links: [
 					{ label: "Featured", href: "/blog" },
-					{ label: "Community", href: "/blog#community" },
-					{ label: "Zycord HQ", href: "/blog#hq" },
-					{ label: "Engineering & Developers", href: "/blog#engineering" },
-					{ label: "How to Zycord", href: "/blog#guides" },
-					{ label: "Policy & Safety", href: "/blog#safety" },
-					{ label: "Product & Features", href: "/blog#product" }
+					{ label: "Community", href: "/category/community" },
+					{ label: "Zycord HQ", href: "/category/company" },
+					{ label: "Engineering & Developers", href: "/category/engineering" },
+					{ label: "How to Zycord", href: "/category/how-to-discord" },
+					{ label: "Policy & Safety", href: "/category/safety" },
+					{ label: "Product & Features", href: "/category/product" }
 				]
 			}
 		]
@@ -157,11 +156,11 @@ export function getCurrentPathKey() {
 	if (path === "/" || path === "/index.html") return "home";
 	if (path.startsWith("/download")) return "download";
 	if (path.startsWith("/nitro")) return "nitro";
-	if (path.startsWith("/discover")) return "discover";
+	if (path.startsWith("/discover") || path.startsWith("/servers") || path.startsWith("/trending-games")) return "discover";
 	if (path.startsWith("/safety")) return "safety";
 	if (path.startsWith("/quests") || path.startsWith("/ads/quests")) return "quests";
 	if (path.startsWith("/support")) return "support";
-	if (path.startsWith("/blog")) return "blog";
+	if (path.startsWith("/blog") || path.startsWith("/category/")) return "blog";
 	if (path.startsWith("/careers")) return "careers";
 	if (path.startsWith("/developers")) return "developers";
 	if (path.startsWith("/status")) return "status";

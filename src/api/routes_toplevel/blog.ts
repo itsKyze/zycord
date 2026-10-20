@@ -25,13 +25,12 @@ import { brandPage, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 const router = Router({ mergeParams: true });
 const page = fs.readFileSync(path.join(PUBLIC_ASSETS_FOLDER, "blog", "index.html"), "utf8");
 
-router.get(
-	"/",
-	route({ spacebarOnly: true, authentication: "never" }),
-	(_req: Request, res: Response) => {
-		res.set("Cache-Control", "no-cache");
-		return res.type("html").send(brandPage(page));
-	},
-);
+function sendBlog(_req: Request, res: Response) {
+	res.set("Cache-Control", "no-cache");
+	return res.type("html").send(brandPage(page));
+}
+
+router.get("/", route({ spacebarOnly: true, authentication: "never" }), sendBlog);
+router.get("/*", route({ spacebarOnly: true, authentication: "never" }), sendBlog);
 
 export default router;

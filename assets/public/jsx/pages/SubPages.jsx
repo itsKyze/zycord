@@ -1,4 +1,5 @@
 import { h } from "../runtime.jsx";
+import { BlogPage as MarketingBlogPage } from "./MarketingParity.jsx";
 
 /* ============================================================================
    1. DOWNLOAD PAGE (/download) — Exact 2026 Zycord Layout
@@ -784,7 +785,7 @@ export function NewsroomPage() {
 					</div>
 				</div>
 			</section>
-			<BlogPage />
+			<MarketingBlogPage />
 		</div>
 	);
 }

@@ -64,8 +64,98 @@ const JSX_MARKETING_PAGES: Record<string, { pageKey: string; title: string; desc
 	},
 	"/ads/quests": {
 		pageKey: "quests",
-		title: "__INSTANCE_NAME__ Quests — Play Games, Stream & Earn Collectibles",
-		desc: "Discover __INSTANCE_NAME__ Quests and earn exclusive avatar decorations, nameplates, and profile effects.",
+		title: "__INSTANCE_NAME__ Quests — Advertise Where the World Plays",
+		desc: "Break through to some of the most passionate audiences of players with __INSTANCE_NAME__ Ads.",
+	},
+	"/ads/quests-success-stories": {
+		pageKey: "quests-stories",
+		title: "__INSTANCE_NAME__ Quests Success Stories",
+		desc: "See how brands scored big with advertising campaigns on __INSTANCE_NAME__.",
+	},
+	"/ads/quests-faq": {
+		pageKey: "quests-faq",
+		title: "__INSTANCE_NAME__ Quests Frequently Asked Questions",
+		desc: "The ins and outs of __INSTANCE_NAME__ Ads and everything in between.",
+	},
+	"/safety-family-center": {
+		pageKey: "safety-hub",
+		title: "__INSTANCE_NAME__ Family Center",
+		desc: "Learn more about what we’re doing to help your teen stay safer on our platform.",
+	},
+	"/safety-library": {
+		pageKey: "safety-hub",
+		title: "Safety Library | __INSTANCE_NAME__",
+		desc: "Everything you could ever want to know about safety on __INSTANCE_NAME__.",
+	},
+	"/safety-news": {
+		pageKey: "safety-hub",
+		title: "Safety News Hub | __INSTANCE_NAME__",
+		desc: "The latest news and updates on __INSTANCE_NAME__’s Safety, Privacy, and Policy initiatives.",
+	},
+	"/safety-teen-charter": {
+		pageKey: "safety-hub",
+		title: "Teen Charter | __INSTANCE_NAME__",
+		desc: "We collaborated with teens around the world to create a charter that guides how we make __INSTANCE_NAME__ a better place to hang out.",
+	},
+	"/safety-players-guide": {
+		pageKey: "safety-hub",
+		title: "__INSTANCE_NAME__ Player's Guide",
+		desc: "A practical guide for hanging out, playing, and staying comfortable on __INSTANCE_NAME__.",
+	},
+	"/safety-parents": {
+		pageKey: "safety-hub",
+		title: "Parent Hub | __INSTANCE_NAME__",
+		desc: "Learn more about how we help teens have positive experiences on our platform.",
+	},
+	"/safety-policies": {
+		pageKey: "safety-hub",
+		title: "Policy Hub | __INSTANCE_NAME__",
+		desc: "Learn about our Community Guidelines, developed to help keep people safe.",
+	},
+	"/safety-privacy": {
+		pageKey: "safety-hub",
+		title: "Privacy Hub | __INSTANCE_NAME__",
+		desc: "Privacy is an essential part of feeling safe. Learn how we build privacy into our products.",
+	},
+	"/safety-transparency": {
+		pageKey: "safety-hub",
+		title: "Transparency Hub | __INSTANCE_NAME__",
+		desc: "Explore data, trends, and analysis into the work done to help keep people on __INSTANCE_NAME__ safe.",
+	},
+	"/safety-wellbeing": {
+		pageKey: "safety-hub",
+		title: "Wellbeing Hub | __INSTANCE_NAME__",
+		desc: "Discover resources for ways to protect your wellbeing or to support your teen’s mental health online.",
+	},
+	"/category/community": {
+		pageKey: "blog",
+		title: "Community — __INSTANCE_NAME__ Blog",
+		desc: "Community stories and staff picks from __INSTANCE_NAME__.",
+	},
+	"/category/company": {
+		pageKey: "blog",
+		title: "__INSTANCE_NAME__ HQ — Blog",
+		desc: "Company news from __INSTANCE_NAME__ HQ.",
+	},
+	"/category/engineering": {
+		pageKey: "blog",
+		title: "Engineering & Developers — __INSTANCE_NAME__ Blog",
+		desc: "Engineering deep-dives and patch notes from __INSTANCE_NAME__.",
+	},
+	"/category/how-to-discord": {
+		pageKey: "blog",
+		title: "How to __INSTANCE_NAME__ — Blog",
+		desc: "Guides for getting the most out of __INSTANCE_NAME__.",
+	},
+	"/category/safety": {
+		pageKey: "blog",
+		title: "Policy & Safety — __INSTANCE_NAME__ Blog",
+		desc: "Safety, privacy, and policy updates from __INSTANCE_NAME__.",
+	},
+	"/category/product": {
+		pageKey: "blog",
+		title: "Product & Features — __INSTANCE_NAME__ Blog",
+		desc: "Product updates and changelogs from __INSTANCE_NAME__.",
 	},
 	"/merch": {
 		pageKey: "merch",
@@ -88,13 +178,13 @@ function renderMarketingShell(pageKey: string, title: string, desc: string): str
 	<title>${title}</title>
 	<meta name="description" content="${desc}" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261014g" />
+	<link rel="stylesheet" href="/site/site.css?v=20261020a" />
 </head>
 <body>
 	<header data-zy-navbar></header>
 	<main data-zy-jsx-page="${pageKey}"></main>
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261014g"></script>
+	<script src="/site/site.js?v=20261020a"></script>
 </body>
 </html>`;
 }

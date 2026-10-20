@@ -5,8 +5,6 @@ import { applySiteLanguage, getSavedLanguage } from "./i18n.js";
 import { HomePage } from "./pages/HomePage.jsx";
 import {
 	DownloadPage,
-	QuestsPage,
-	BlogPage,
 	AppDirectoryPage,
 	GiftCardsPage,
 	CompanyPage,
@@ -18,12 +16,30 @@ import {
 	FeedbackPage
 } from "./pages/SubPages.jsx";
 import { DevelopersHubPage } from "./pages/DevelopersHubPage.jsx";
+import {
+	DiscoverPage,
+	SafetyPage,
+	SafetyHubPage,
+	QuestsPage,
+	QuestsStoriesPage,
+	QuestsFaqPage,
+	SupportPage,
+	BlogPage,
+	MarketingDispatchPage
+} from "./pages/MarketingParity.jsx";
 
 const PAGE_COMPONENTS = {
 	home: HomePage,
 	download: DownloadPage,
+	discover: DiscoverPage,
+	safety: SafetyPage,
+	"safety-hub": SafetyHubPage,
 	quests: QuestsPage,
+	"quests-stories": QuestsStoriesPage,
+	"quests-faq": QuestsFaqPage,
+	support: SupportPage,
 	blog: BlogPage,
+	marketing: MarketingDispatchPage,
 	developers: DevelopersHubPage,
 	"application-directory": AppDirectoryPage,
 	"gift-cards": GiftCardsPage,
@@ -366,7 +382,62 @@ function bindAutoplayVideos() {
 	}
 }
 
+function bindLightTheme() {
+	const path = (window.location.pathname || "/").toLowerCase();
+	const light =
+		path.startsWith("/servers") ||
+		path === "/discover" ||
+		path.startsWith("/trending-games") ||
+		path.startsWith("/support");
+	document.body.classList.toggle("zy-dc-light", light);
+	document.documentElement.classList.toggle("zy-dc-light", light);
+}
+
+function bindDiscoverSearch() {
+	const input = document.getElementById("zy-dc-server-search");
+	const grid = document.getElementById("zy-dc-server-grid");
+	const count = document.getElementById("zy-dc-result-count");
+	if (!input || !grid) return;
+	const cards = grid.querySelectorAll("[data-server-card]");
+	const apply = () => {
+		const q = (input.value || "").trim().toLowerCase();
+		let shown = 0;
+		for (let i = 0; i < cards.length; i++) {
+			const hay = ((cards[i].getAttribute("data-name") || "") + " " + (cards[i].getAttribute("data-desc") || "") + " " + (cards[i].getAttribute("data-cat") || "")).toLowerCase();
+			const match = !q || hay.indexOf(q) !== -1;
+			cards[i].style.display = match ? "" : "none";
+			if (match) shown += 1;
+		}
+		if (count) count.textContent = shown + " Results Found";
+	};
+	input.addEventListener("input", apply);
+}
+
+function bindHelpSearch() {
+	const input = document.getElementById("zy-dc-help-search");
+	const grid = document.getElementById("zy-dc-help-grid");
+	if (!input || !grid) return;
+	const cards = grid.querySelectorAll("[data-help-card]");
+	input.addEventListener("input", () => {
+		const q = (input.value || "").trim().toLowerCase();
+		for (let i = 0; i < cards.length; i++) {
+			const hay = ((cards[i].getAttribute("data-name") || "") + " " + (cards[i].getAttribute("data-desc") || "")).toLowerCase();
+			cards[i].style.display = !q || hay.indexOf(q) !== -1 ? "" : "none";
+		}
+	});
+}
+
+function bindSupportForm() {
+	const form = document.querySelector("[data-zy-support-form]");
+	if (!form) return;
+	form.addEventListener("submit", (e) => {
+		e.preventDefault();
+		form.innerHTML = "<p style=\"font-weight:700;font-size:18px;color:#23a55a\">Thanks — your request has been submitted. We'll email you when there's an update.</p>";
+	});
+}
+
 function initSiteJSX() {
+	bindLightTheme();
 	const navMount = document.querySelector("[data-zy-navbar]");
 	if (navMount) {
 		replaceJSX(navMount, <ZycordNavbar />);
@@ -397,6 +468,9 @@ function initSiteJSX() {
 	bindCarousels();
 	bindJobFilters();
 	bindAutoplayVideos();
+	bindDiscoverSearch();
+	bindHelpSearch();
+	bindSupportForm();
 
 	const savedLang = getSavedLanguage();
 	applySiteLanguage(savedLang.code, savedLang.label);
