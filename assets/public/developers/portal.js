@@ -7,10 +7,57 @@
             return null;
         }
     })();
-    if (!token) {
-        location.replace(`/login?redirect_to=${encodeURIComponent(location.pathname)}`);
-        return;
-    }
+    let cachedApps = [];
+    const showWelcomeModal = () => {
+        if (document.getElementById("dp-welcome-modal")) return;
+        const redirectParam = encodeURIComponent(location.pathname + location.search);
+        const modal = el(
+            "div",
+            { class: "dp-modal-backdrop", id: "dp-welcome-modal", role: "dialog", "aria-modal": "true", "aria-labelledby": "dp-welcome-title" },
+            el(
+                "div",
+                { class: "dp-modal dp-modal-welcome" },
+                el(
+                    "header",
+                    { class: "dp-modal-header dp-modal-header-centered dp-modal-header-gradient" },
+                    el(
+                        "div",
+                        { class: "dp-modal-graphic" },
+                        el(
+                            "div",
+                            { class: "dp-modal-graphic-container" },
+                            el("img", {
+                                src: "https://cdn.discordapp.com/assets/content/245d5056b4f5dfc9e2490357d139476c28730eab1d7ae37ea4aa488ac94e6cee.svg",
+                                alt: "",
+                                draggable: "false",
+                            }),
+                        ),
+                    ),
+                    el("h1", { class: "dp-modal-title-xl", id: "dp-welcome-title" }, "Welcome to the Developer Portal"),
+                    el(
+                        "p",
+                        { class: "dp-modal-subtitle" },
+                        `Nurture communities, level up games, and bring players together with a suite of tools built by ${config.instanceName} and powered by developers.`,
+                    ),
+                ),
+                el(
+                    "footer",
+                    { class: "dp-modal-footer dp-modal-footer-full" },
+                    el(
+                        "a",
+                        { class: "dp-button dp-button-secondary dp-button-full", href: `/register?redirect_to=${redirectParam}` },
+                        "Create Account",
+                    ),
+                    el(
+                        "a",
+                        { class: "dp-button dp-button-primary dp-button-full", href: `/login?redirect_to=${redirectParam}` },
+                        "Log In",
+                    ),
+                ),
+            ),
+        );
+        document.body.append(modal);
+    };
 
     const view = document.getElementById("view");
     let pendingToken = null;
@@ -142,6 +189,10 @@
             body: body === undefined ? undefined : JSON.stringify(body),
         });
         if (res.status === 401) {
+            if (!token) {
+                showWelcomeModal();
+                throw new Error("Sign in to continue.");
+            }
             location.replace(`/login?redirect_to=${encodeURIComponent(location.pathname)}`);
             throw new Error("Your session has expired.");
         }
@@ -182,20 +233,37 @@
 
     // Header (portal-shell.js) hooks: the Create menu, the mobile drawer and the signed-in user.
     document.addEventListener("dp:create", (event) => (event.detail === "widget" ? widgetDialog() : createDialog()));
+    window.__zyOpenCreateAppModal = (opts = {}) => createDialog(opts);
     document.addEventListener("click", (event) => {
-        if (event.target.closest("[data-dp-overlay], #nav a")) document.body.classList.remove("dp-nav-open");
+        if (event.target.closest("[data-dp-overlay], .sidebar-overlay, #nav a")) {
+            document.body.classList.remove("dp-nav-open");
+            document.body.classList.remove("dev-mobile-nav-open");
+        }
+        if (!event.target.closest(".dp-app-switcher")) {
+            document.querySelectorAll(".dp-app-switcher-menu").forEach((menu) => {
+                menu.hidden = true;
+            });
+            document.querySelectorAll(".dp-app-switcher-btn").forEach((btn) => {
+                btn.setAttribute("aria-expanded", "false");
+            });
+        }
     });
-    api("GET", "/users/@me")
-        .then((me) => {
-            const name = document.querySelector("[data-dp-user-name]");
-            const avatar = document.querySelector("[data-dp-user-avatar]");
-            if (!me || !name) return;
-            name.textContent = me.global_name ?? me.username;
-            const src = avatarUrl(me);
-            if (src) avatar.replaceChildren(el("img", { src, alt: "" }));
-            else avatar.textContent = (me.username ?? "?").charAt(0).toUpperCase();
-        })
-        .catch(() => null);
+    if (token) {
+        api("GET", "/users/@me")
+            .then((me) => {
+                if (me && typeof window.__zySetTopbarUser === "function") {
+                    window.__zySetTopbarUser(me);
+                }
+                const name = document.querySelector("[data-dp-user-name]");
+                const avatar = document.querySelector("[data-dp-user-avatar]");
+                if (!me || !name) return;
+                name.textContent = me.global_name ?? me.username;
+                const src = avatarUrl(me);
+                if (src) avatar.replaceChildren(el("img", { src, alt: "" }));
+                else avatar.textContent = (me.username ?? "?").charAt(0).toUpperCase();
+            })
+            .catch(() => null);
+    }
 
     const copyButton = (getValue, label = "Copy") => {
         const button = el("button", { class: "btn secondary", type: "button" }, label);
@@ -282,45 +350,142 @@
             el("p", { class: "hint" }, hint),
         );
 
-    const createDialog = () => {
-        const input = el("input", { id: "new-app-name", type: "text", maxlength: "32", required: true, autocomplete: "off" });
+    const CREATE_PURPOSE_META = {
+        BOT: { subheading: "Build a bot using a new app", targetSection: "bot" },
+        EMBEDDED_ACTIVITY: { subheading: "Build an activity using a new app", targetSection: "activities" },
+        SOCIAL_SDK: { subheading: `Connect ${config.instanceName} to your game using a new app`, targetSection: "information" },
+        GAME_CLAIM: { subheading: "Customize your official presence using a new app", targetSection: "widget" },
+    };
+
+    const createDialog = (opts = {}) => {
+        if (!token) {
+            showWelcomeModal();
+            return;
+        }
+        const purpose = typeof opts === "object" && opts && opts.purpose ? opts.purpose : "DEFAULT";
+        const meta = CREATE_PURPOSE_META[purpose] || null;
+        const input = el("input", {
+            id: "appname",
+            name: "name",
+            type: "text",
+            maxlength: "32",
+            required: true,
+            autocomplete: "off",
+            class: "dp-modal-input",
+        });
+        let agreed = false;
         const error = errorLine();
-        const submit = el("button", { class: "btn primary", type: "submit" }, "Create");
+        error.id = "create-error";
+        input.setAttribute("aria-describedby", "create-error");
+
+        const submit = el(
+            "button",
+            { class: "dp-button dp-button-primary", type: "submit", disabled: true },
+            "Create",
+        );
+
+        const syncDisabled = () => {
+            submit.disabled = !input.value.trim() || !agreed;
+        };
+        input.addEventListener("input", syncDisabled);
+
+        const checkOption = el(
+            "label",
+            {
+                class: "dp-checkbox-option",
+                onclick: (e) => {
+                    if (e.target.closest("a")) return;
+                    e.preventDefault();
+                    agreed = !agreed;
+                    if (agreed) checkOption.setAttribute("data-selected", "");
+                    else checkOption.removeAttribute("data-selected");
+                    syncDisabled();
+                },
+            },
+            el(
+                "div",
+                { class: "dp-checkbox-indicator", "aria-hidden": "true" },
+                svgIcon("M19.06 6.94a1.5 1.5 0 0 1 0 2.12l-8 8a1.5 1.5 0 0 1-2.12 0l-4-4a1.5 1.5 0 0 1 2.12-2.12L10 13.88l6.94-6.94a1.5 1.5 0 0 1 2.12 0Z", 16),
+            ),
+            el(
+                "span",
+                { class: "dp-checkbox-label" },
+                "By clicking Create, you agree to the ",
+                el("a", { class: "dp-anchor", href: "/terms", target: "_blank", rel: "noreferrer" }, `${config.instanceName} Developer Terms of Service`),
+                " and ",
+                el("a", { class: "dp-anchor", href: "/developers/docs/intro", target: "_blank", rel: "noreferrer" }, "Developer Policy"),
+                ".",
+            ),
+        );
+
+        const closeBtn = el(
+            "button",
+            {
+                type: "button",
+                class: "dp-modal-close",
+                "aria-label": "Close",
+                onclick: () => dialog.close(),
+            },
+            svgIcon("M19.3 20.7a1 1 0 0 0 1.4-1.4L13.42 12l7.3-7.3a1 1 0 0 0-1.42-1.4L12 10.58l-7.3-7.3a1 1 0 0 0-1.4 1.42L10.58 12l-7.3 7.3a1 1 0 1 0 1.42 1.4L12 13.42l7.3 7.3Z", 20),
+        );
+
         const dialog = el(
             "dialog",
-            { "aria-labelledby": "create-title" },
+            { class: "dp-native-modal", "aria-labelledby": "create-title" },
             el(
                 "form",
                 {
+                    class: "dp-modal-form",
                     onsubmit: async (event) => {
                         event.preventDefault();
                         error.hidden = true;
-                        if (!input.value.trim()) {
-                            input.setAttribute("aria-invalid", "true");
-                            showError(error, "Give your application a name.");
-                            input.focus();
-                            return;
-                        }
+                        if (!input.value.trim() || !agreed) return;
                         submit.disabled = true;
                         try {
                             const app = await api("POST", "/applications", { name: input.value.trim() });
                             dialog.close();
-                            navigate(`/developers/applications/${app.id}/information`);
+                            const section = meta?.targetSection || "information";
+                            navigate(`/developers/applications/${app.id}/${section}`);
                         } catch (e) {
                             showError(error, e);
-                        } finally {
-                            submit.disabled = false;
+                            syncDisabled();
                         }
                     },
                 },
-                el("h2", { id: "create-title" }, "Create an application"),
-                el("p", { class: "muted" }, "An application holds your bot, its token and its commands."),
-                el("div", { class: "field", style: "margin-top:16px" }, el("label", { for: "new-app-name" }, "Name"), input, error),
-                el("div", { class: "actions" }, el("button", { class: "btn secondary", type: "button", onclick: () => dialog.close() }, "Cancel"), submit),
+                el(
+                    "header",
+                    { class: "dp-modal-header" },
+                    el(
+                        "div",
+                        { class: "dp-modal-header-row" },
+                        el("h2", { id: "create-title", class: "dp-modal-title" }, "Create a new app"),
+                        closeBtn,
+                    ),
+                    meta?.subheading ? el("p", { class: "dp-modal-subtitle" }, meta.subheading) : null,
+                ),
+                el(
+                    "div",
+                    { class: "dp-modal-body" },
+                    error,
+                    el(
+                        "div",
+                        { class: "dp-modal-field" },
+                        el("label", { for: "appname", class: "dp-modal-label" }, "Name", el("span", { class: "dp-required-star" }, " *")),
+                        input,
+                    ),
+                    checkOption,
+                ),
+                el(
+                    "footer",
+                    { class: "dp-modal-footer" },
+                    el("button", { class: "dp-button dp-button-secondary", type: "button", onclick: () => dialog.close() }, "Cancel"),
+                    submit,
+                ),
             ),
         );
-        input.setAttribute("aria-describedby", "create-error");
-        error.id = "create-error";
+        dialog.addEventListener("click", (e) => {
+            if (e.target === dialog) dialog.close();
+        });
         dialog.addEventListener("close", () => dialog.remove());
         document.body.append(dialog);
         dialog.showModal();
@@ -329,6 +494,10 @@
 
     // A profile widget lives on an application, so this makes one named after you with your avatar, like the app header on the card.
     const widgetDialog = async () => {
+        if (!token) {
+            showWelcomeModal();
+            return;
+        }
         const me = await api("GET", "/users/@me").catch(() => null);
         const input = el("input", { id: "new-widget-name", type: "text", maxlength: "32", required: true, autocomplete: "off", value: me?.global_name ?? me?.username ?? "" });
         const avatar = avatarUrl(me);
@@ -387,24 +556,194 @@
         input.select();
     };
 
+    const SIDEBAR_GROUPS_STATE = {
+        overview: true,
+        games: true,
+        activities: true,
+    };
+
     const setNav = (app, section) => {
-        const link = (href, label, current, spa = true) => el("a", { class: "nav-item", href, "data-link": spa || null, "aria-current": current ? "page" : null }, label);
+        if (!app) {
+            const topLink = (href, label, current, spa = true) =>
+                el(
+                    "a",
+                    {
+                        class: `nav-item${current ? " active-primary" : ""}`,
+                        href,
+                        "data-link": spa || null,
+                        "aria-current": current ? "page" : null,
+                    },
+                    label,
+                );
+            nav.replaceChildren(
+                topLink("/developers", "Home", false, false),
+                topLink("/developers/applications", "Applications", true, true),
+                topLink("/developers/docs/intro", "Embed Debugger", false, false),
+            );
+            return;
+        }
+
+        if (token && cachedApps.length === 0) {
+            api("GET", "/applications")
+                .then((list) => {
+                    if (Array.isArray(list) && list.length > 0) {
+                        cachedApps = list;
+                        setNav(app, section);
+                    }
+                })
+                .catch(() => null);
+        }
+
+        const backLink = el(
+            "a",
+            {
+                class: "dp-back-link",
+                href: "/developers/applications",
+                "data-link": true,
+            },
+            svgIcon("M3.3 11.3a1 1 0 0 0 0 1.4l8 8a1 1 0 1 0 1.4-1.4L6.42 13H20a1 1 0 1 0 0-2H6.41l6.3-6.3a1 1 0 0 0-1.42-1.4l-8 8Z", 16),
+            el("span", {}, "Applications"),
+        );
+
+        const appSrc = iconUrl(app);
+        const appSwitcherMenu = el("div", { class: "dp-app-switcher-menu", role: "listbox", hidden: true });
+        const appSwitcherBtn = el(
+            "button",
+            {
+                type: "button",
+                class: "dp-app-switcher-btn",
+                "aria-haspopup": "listbox",
+                "aria-expanded": "false",
+                onclick: (e) => {
+                    e.stopPropagation();
+                    const open = appSwitcherMenu.hidden;
+                    appSwitcherMenu.hidden = !open;
+                    appSwitcherBtn.setAttribute("aria-expanded", String(open));
+                },
+            },
+            el(
+                "div",
+                { class: "dp-app-switcher-current" },
+                appSrc
+                    ? el("img", { class: "dp-app-switcher-icon", src: appSrc, alt: "" })
+                    : el("span", { class: "dp-app-switcher-placeholder" }, acronym(app.name)),
+                el("span", { class: "dp-app-switcher-name" }, app.name),
+            ),
+            svgIcon("M5.3 9.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z", 18),
+        );
+
+        const appsToShow = cachedApps.some((a) => a.id === app.id) ? cachedApps : [app, ...cachedApps];
+        appSwitcherMenu.replaceChildren(
+            ...appsToShow.map((item) => {
+                const s = iconUrl(item);
+                return el(
+                    "button",
+                    {
+                        type: "button",
+                        class: `dp-app-switcher-option${item.id === app.id ? " is-selected" : ""}`,
+                        role: "option",
+                        "aria-selected": String(item.id === app.id),
+                        onclick: () => {
+                            appSwitcherMenu.hidden = true;
+                            appSwitcherBtn.setAttribute("aria-expanded", "false");
+                            if (item.id !== app.id) {
+                                navigate(`/developers/applications/${item.id}/${section}`);
+                            }
+                        },
+                    },
+                    s
+                        ? el("img", { class: "dp-app-switcher-opt-icon", src: s, alt: "" })
+                        : el("span", { class: "dp-app-switcher-opt-placeholder" }, acronym(item.name)),
+                    el("span", { class: "dp-app-switcher-opt-name" }, item.name),
+                );
+            }),
+        );
+
+        const switcherWrap = el("div", { class: "dp-app-switcher" }, appSwitcherBtn, appSwitcherMenu);
+
+        const subLink = (sec, label, isNew = false) =>
+            el(
+                "a",
+                {
+                    class: `dp-subnav-item${section === sec ? " is-active" : ""}`,
+                    href: `/developers/applications/${app.id}/${sec}`,
+                    "data-link": true,
+                    "aria-current": section === sec ? "page" : null,
+                },
+                el("span", {}, label),
+                isNew ? el("span", { class: "dp-nav-badge" }, "NEW") : null,
+            );
+
+        const makeSectionGroup = (key, title, iconPath, items, hasNewBadge = false) => {
+            const listEl = el("div", { class: "dp-nav-group-items", hidden: !SIDEBAR_GROUPS_STATE[key] }, ...items);
+            const chevWrap = el(
+                "span",
+                { class: "dp-nav-group-chevron" },
+                svgIcon(
+                    SIDEBAR_GROUPS_STATE[key]
+                        ? "M5.3 14.7a1 1 0 0 0 1.4 0L12 9.42l5.3 5.3a1 1 0 0 0 1.4-1.42l-6-6a1 1 0 0 0-1.4 0l-6 6a1 1 0 0 0 0 1.42Z"
+                        : "M5.3 9.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z",
+                    16,
+                ),
+            );
+            const headerBtn = el(
+                "button",
+                {
+                    type: "button",
+                    class: "dp-nav-group-header",
+                    "aria-expanded": String(SIDEBAR_GROUPS_STATE[key]),
+                    onclick: () => {
+                        SIDEBAR_GROUPS_STATE[key] = !SIDEBAR_GROUPS_STATE[key];
+                        listEl.hidden = !SIDEBAR_GROUPS_STATE[key];
+                        headerBtn.setAttribute("aria-expanded", String(SIDEBAR_GROUPS_STATE[key]));
+                        chevWrap.replaceChildren(
+                            svgIcon(
+                                SIDEBAR_GROUPS_STATE[key]
+                                    ? "M5.3 14.7a1 1 0 0 0 1.4 0L12 9.42l5.3 5.3a1 1 0 0 0 1.4-1.42l-6-6a1 1 0 0 0-1.4 0l-6 6a1 1 0 0 0 0 1.42Z"
+                                    : "M5.3 9.3a1 1 0 0 1 1.4 0l5.3 5.29 5.3-5.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 0 1 0-1.42Z",
+                                16,
+                            ),
+                        );
+                    },
+                },
+                svgIcon(iconPath, 18),
+                el("span", { class: "dp-nav-group-title" }, title),
+                hasNewBadge ? el("span", { class: "dp-nav-badge" }, "NEW") : null,
+                chevWrap,
+            );
+            return el("div", { class: "dp-nav-group" }, headerBtn, listEl);
+        };
+
         nav.replaceChildren(
-            ...[
-                link("/developers", "Home", false, false),
-                link("/developers/applications", "Applications", !app),
-                link("/developers/docs", "Documentation", false, false),
-                app && el("p", { class: "nav-heading", title: app.name }, app.name),
-                app && link(`/developers/applications/${app.id}/information`, "General Information", section === "information"),
-                app && link(`/developers/applications/${app.id}/installation`, "Installation", section === "installation"),
-                app && link(`/developers/applications/${app.id}/oauth2`, "OAuth2", section === "oauth2"),
-                app && link(`/developers/applications/${app.id}/bot`, "Bot", section === "bot"),
-                app && link(`/developers/applications/${app.id}/emojis`, "Emojis", section === "emojis"),
-                app && link(`/developers/applications/${app.id}/rich-presence`, "Rich Presence", section === "rich-presence"),
-                app && link(`/developers/applications/${app.id}/widget`, "Profile Widget", section === "widget"),
-                app && link(`/developers/applications/${app.id}/testers`, "App Testers", section === "testers"),
-                app && link(`/developers/applications/${app.id}/activities`, "Activities", section === "activities"),
-            ].filter(Boolean),
+            backLink,
+            switcherWrap,
+            makeSectionGroup(
+                "overview",
+                "Overview",
+                "M2.4 8.4 10.78 1.94a2 2 0 0 1 2.44 0l8.39 6.45a2 2 0 0 1-.79 3.54l-.32.07-.82 8.2a2 2 0 0 1-1.99 1.8H16a1 1 0 0 1-1-1v-5a3 3 0 1 0-6 0v5a1 1 0 0 1-1 1H6.31a2 2 0 0 1-1.99-1.8L3.5 12l-.32-.07a2 2 0 0 1-.79-3.54Z",
+                [
+                    subLink("information", "General Information"),
+                    subLink("installation", "Installation", true),
+                    subLink("oauth2", "OAuth2"),
+                    subLink("bot", "Bot"),
+                    subLink("emojis", "Emojis", true),
+                    subLink("rich-presence", "Rich Presence"),
+                    subLink("testers", "App Testers"),
+                ],
+            ),
+            makeSectionGroup(
+                "games",
+                "Games",
+                "M20.97 4.06c0 .18.08.35.24.43.55.28.9.82 1.04 1.42.3 1.24.75 3.7.75 7.09v4.91a3.09 3.09 0 0 1-5.85 1.38l-1.76-3.51a1.09 1.09 0 0 0-1.23-.55c-.57.13-1.36.27-2.16.27s-1.6-.14-2.16-.27c-.49-.11-1 .1-1.23.55l-1.76 3.51A3.09 3.09 0 0 1 1 17.91V13c0-3.38.46-5.85.75-7.1.15-.6.49-1.13 1.04-1.4a.47.47 0 0 0 .24-.44c0-.7.48-1.32 1.2-1.47l2.93-.62c.48-.1 1 .06 1.36.4.35.34.78.71 1.28.68a42.4 42.4 0 0 1 4.4 0c.5.03.93-.34 1.28-.69.35-.33.88-.5 1.36-.39l2.94.62c.7.15 1.19.78 1.19 1.47ZM20 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM15.5 12a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5 7a1 1 0 0 1 2 0v1h1a1 1 0 0 1 0 2H7v1a1 1 0 1 1-2 0v-1H4a1 1 0 1 1 0-2h1V7Z",
+                [subLink("widget", "Profile Widget", true)],
+                true,
+            ),
+            makeSectionGroup(
+                "activities",
+                "Activities",
+                "M2.06 7.61c-.25.95.31 1.92 1.26 2.18l4.3 1.15c.95.26 1.93-.31 2.18-1.26l1.15-4.3c.26-.95-.31-1.92-1.26-2.18l-4.3-1.15a1.78 1.78 0 0 0-2.18 1.26l-1.15 4.3ZM13.78 4.22a2.47 2.47 0 0 1 3.49 0l2.51 2.51a2.47 2.47 0 0 1 0 3.49l-2.51 2.51a2.47 2.47 0 0 1-3.49 0l-2.51-2.51a2.47 2.47 0 0 1 0-3.49l2.51-2.51ZM3.56 14.22A1.78 1.78 0 0 0 1.78 16v4.44c0 .99.8 1.78 1.78 1.78H8c.98 0 1.78-.8 1.78-1.78V16c0-.98-.8-1.78-1.78-1.78H3.56ZM14.22 14.22c-.98 0-1.78.8-1.78 1.78v4.44c0 .99.8 1.78 1.78 1.78h4.45c.98 0 1.78-.8 1.78-1.78V16c0-.98-.8-1.78-1.78-1.78h-4.45Z",
+                [subLink("activities", "Settings")],
+            ),
         );
     };
 
@@ -412,7 +751,7 @@
     const listPrefs = { sort: "created", size: "small" };
     const SORTS = [
         ["created", "Date Created"],
-        ["alphabetical", "Alphabetical"],
+        ["alphabetical", "A–Z"],
     ];
     const GRID_ICON =
         "M15 11a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h5a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-5ZM2 20c0 1.1.9 2 2 2h5a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v5ZM13 20c0 1.1.9 2 2 2h5a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2h-5a2 2 0 0 0-2 2v5ZM2 9c0 1.1.9 2 2 2h5a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v5Z";
@@ -495,6 +834,52 @@
         return wrap;
     };
 
+    const sizeTiles = (onChange) => {
+        const tiles = el("div", { class: "dp-card-tiles" });
+        const paint = () => {
+            tiles.replaceChildren(
+                ...[
+                    ["small", "Small"],
+                    ["large", "Large"],
+                ].map(([size, text]) =>
+                    el(
+                        "div",
+                        {
+                            class: `dp-card-tile${listPrefs.size === size ? " is-selected" : ""}`,
+                            role: "button",
+                            tabindex: "0",
+                            "aria-pressed": String(listPrefs.size === size),
+                            onclick: () => {
+                                listPrefs.size = size;
+                                paint();
+                                onChange?.();
+                            },
+                            onkeydown: (event) => {
+                                if (event.key !== "Enter" && event.key !== " ") return;
+                                event.preventDefault();
+                                listPrefs.size = size;
+                                paint();
+                                onChange?.();
+                            },
+                        },
+                        svgIcon(GRID_ICON),
+                        el("div", { class: "dp-card-tile-label" }, text),
+                    ),
+                ),
+            );
+        };
+        paint();
+        return tiles;
+    };
+
+    const optionBar = (onChange) =>
+        el(
+            "div",
+            { class: "dp-option-bar" },
+            el("div", { class: "dp-sort-wrapper" }, el("span", { class: "dp-sort-label" }, "Sort By:"), sortSelect(onChange)),
+            sizeTiles(onChange),
+        );
+
     const appCard = (app) => {
         const src = iconUrl(app);
         return el(
@@ -516,44 +901,6 @@
     const renderList = async () => {
         setNav(null);
         document.title = `My Applications | ${config.instanceName} Developer Portal`;
-        view.replaceChildren(el("p", { class: "loading" }, "Loading applications"));
-        const apps = await api("GET", "/applications");
-
-        const grid = el("div");
-        const tiles = el("div", { class: "dp-card-tiles" });
-        const setSize = (size) => {
-            listPrefs.size = size;
-            updateGrid();
-        };
-        const updateGrid = () => {
-            const sorted = [...apps].sort(listPrefs.sort === "alphabetical" ? (a, b) => a.name.localeCompare(b.name) : byId);
-            grid.className = `dp-card-grid ${listPrefs.size === "large" ? "dp-card-grid-large" : "dp-card-grid-small"}`;
-            grid.replaceChildren(...sorted.map(appCard));
-            tiles.replaceChildren(
-                ...[
-                    ["small", "Small"],
-                    ["large", "Large"],
-                ].map(([size, text]) =>
-                    el(
-                        "div",
-                        {
-                            class: `dp-card-tile${listPrefs.size === size ? " is-selected" : ""}`,
-                            role: "button",
-                            tabindex: "0",
-                            "aria-pressed": String(listPrefs.size === size),
-                            onclick: () => setSize(size),
-                            onkeydown: (event) => {
-                                if (event.key !== "Enter" && event.key !== " ") return;
-                                event.preventDefault();
-                                setSize(size);
-                            },
-                        },
-                        svgIcon(GRID_ICON),
-                        el("div", { class: "dp-card-tile-label" }, text),
-                    ),
-                ),
-            );
-        };
 
         const header = el(
             "div",
@@ -562,33 +909,61 @@
                 "h1",
                 { class: "dp-heading" },
                 el("div", { class: "dp-heading-primary" }, "Applications"),
-                el("div", { class: "dp-heading-secondary" }, el("button", { class: "dp-button dp-button-primary", type: "button", onclick: createDialog }, "New Application")),
+                el("div", { class: "dp-heading-secondary" }, el("button", { class: "dp-button dp-button-primary", id: "create-app-btn", type: "button", onclick: () => createDialog() }, "New Application")),
             ),
-            el("p", { class: "dp-lead" }, "Develop ", el("a", { class: "dp-anchor", href: "/developers/docs" }, "apps"), ` to customize and extend ${config.instanceName} for millions of users.`),
+            el(
+                "p",
+                { class: "dp-lead dp-lead-flush" },
+                "Develop ",
+                el("a", { class: "dp-anchor", href: "/developers/docs/intro" }, "apps"),
+                ` to customize and extend ${config.instanceName} for millions of users.`,
+            ),
         );
 
-        const body = apps.length
-            ? el(
-                  "div",
-                  { class: "dp-section" },
-                  el("div", { class: "dp-option-bar" }, el("div", { class: "dp-sort-wrapper" }, el("label", { class: "dp-sort-label", for: "sort-by" }, "Sort By:"), sortSelect(updateGrid)), tiles),
-                  grid,
-              )
-            : el(
-                  "div",
-                  { class: "dp-empty" },
-                  el("p", { class: "dp-empty-title" }, "You don't have any applications yet."),
-                  el("p", { class: "dp-empty-text" }, "Create one to get a bot, a token and an invite link for your servers, or make a widget for your profile."),
-                  el(
+        if (!token) {
+            view.replaceChildren(header, el("div", { class: "dp-section dp-section-flush" }, optionBar()));
+            showWelcomeModal();
+            return;
+        }
+
+        view.replaceChildren(header, el("p", { class: "loading" }, "Loading applications"));
+        const apps = await api("GET", "/applications");
+        cachedApps = Array.isArray(apps) ? apps : [];
+
+        const grid = el("div");
+        const updateGrid = () => {
+            const sorted = [...cachedApps].sort(listPrefs.sort === "alphabetical" ? (a, b) => a.name.localeCompare(b.name) : byId);
+            grid.className = `dp-card-grid ${listPrefs.size === "large" ? "dp-card-grid-large" : "dp-card-grid-small"}`;
+            grid.replaceChildren(...sorted.map(appCard));
+        };
+
+        const body = el(
+            "div",
+            { class: "dp-section dp-section-flush" },
+            cachedApps.length > 0 ? optionBar(updateGrid) : null,
+            el(
+                "div",
+                { class: `dp-apps-list-wrapper${cachedApps.length === 0 ? " dp-apps-list-flush" : ""}` },
+                el("h3", { class: "dp-subheading" }, "My Applications"),
+                cachedApps.length > 0 ? grid : null,
+            ),
+            cachedApps.length === 0
+                ? el(
                       "div",
-                      { class: "dp-empty-actions" },
-                      el("button", { class: "dp-button dp-button-secondary", type: "button", onclick: widgetDialog }, "New Profile Widget"),
-                      el("button", { class: "dp-button dp-button-primary", type: "button", onclick: createDialog }, "New Application"),
-                  ),
-              );
+                      { class: "dp-empty-state" },
+                      el("div", { class: "dp-empty-primary" }, "You don't have any applications yet, sad face."),
+                      el("div", { class: "dp-empty-secondary" }, "Click New Application above to get started."),
+                  )
+                : null,
+        );
 
         updateGrid();
         view.replaceChildren(header, body);
+
+        if (new URLSearchParams(location.search).get("new_application") === "true") {
+            history.replaceState(null, "", location.pathname);
+            createDialog();
+        }
     };
 
     const renderInformation = (app) => {
@@ -2602,6 +2977,10 @@
     };
 
     const renderApp = async (id, section) => {
+        if (!token) {
+            await renderList();
+            return;
+        }
         if (!SECTIONS[section]) return navigate(`/developers/applications/${id}/information`, true);
         view.replaceChildren(el("p", { class: "loading" }, "Loading application"));
         let app;
