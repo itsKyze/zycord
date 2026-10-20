@@ -31,6 +31,6 @@ function sendSupport(_req: Request, res: Response) {
 }
 
 router.get("/", route({ spacebarOnly: true, authentication: "never" }), sendSupport);
-router.get("/*", route({ spacebarOnly: true, authentication: "never" }), sendSupport);
+router.get("/{*splat}", route({ spacebarOnly: true, authentication: "never" }), sendSupport);
 
 export default router;

@@ -1624,6 +1624,9 @@
   function Wrap({ light, className, children }) {
     return /* @__PURE__ */ h("div", { className: `zy-dc-page${light ? " is-light" : ""}${className ? " " + className : ""}` }, children);
   }
+  function NotFoundPage() {
+    return /* @__PURE__ */ h("div", { className: "zy-dc-404" }, /* @__PURE__ */ h("div", { className: "zy-dc-404-icon" }, /* @__PURE__ */ h("img", { src: "/static/logo.png", alt: "", width: "240", height: "240" })), /* @__PURE__ */ h("span", { className: "zy-dc-404-badge" }, "Error 404"), /* @__PURE__ */ h("h1", { className: "zy-dc-404-title" }, "Wrong turn in hyperspace"), /* @__PURE__ */ h("p", { className: "zy-dc-404-copy" }, "Nothing on Zycord lives at this address. The link might be mistyped, or the channel may have moved."));
+  }
   var SERVERS = [
     { slug: "midjourney-662267976984297473", name: "Midjourney", cat: "tech", splash: `${DC}/discovery-splashes/662267976984297473/4798759e115d2500fef16347d578729a.jpg?size=2048&format=auto`, icon: `${DC}/icons/662267976984297473/39128f6c9fc33f4c95a27d4c601ad7db.png?size=256`, online: "563,446", members: "18,500,000", verified: true, desc: "The official server for Midjourney, a text-to-image AI where your imagination is the only limit." },
     { slug: "steal-a-brainrot-1376018788041887795", name: "Steal a Brainrot", cat: "gaming", splash: `${DC}/discovery-splashes/1376018788041887795/7a06ebb2b3d4cb427a4c4358ec29cfa2.jpg?size=2048&format=auto`, icon: `${DC}/icons/1376018788041887795/f9f69ceda1bb918075ee1b2fd4cb5fcc.png?size=256`, online: "412,200", members: "4,800,000", verified: true, desc: "The official Steal a Brainrot community. Trades, raids, and meme drops." },
@@ -1709,12 +1712,23 @@
   }
   function DiscoverPage() {
     const { path, parts } = discoverPathParts();
-    if (path === "/trending-games" || path.startsWith("/trending-games/")) {
+    if (path === "/trending-games") {
+      return /* @__PURE__ */ h(Wrap, { light: true }, /* @__PURE__ */ h(TrendingView, null));
+    }
+    if (path.startsWith("/trending-games/")) {
+      const slug = parts.slice(1).join("/");
+      const game = TRENDING.find((g) => g.name.toLowerCase().replace(/\s+/g, "-") === slug);
+      if (!game) return /* @__PURE__ */ h(NotFoundPage, null);
       return /* @__PURE__ */ h(Wrap, { light: true }, /* @__PURE__ */ h(TrendingView, null));
     }
     if (parts[0] === "servers" && parts[1] && /-\d{10,}$/.test(parts[1])) {
-      const server = SERVERS.find((s) => s.slug === parts[1]) || SERVERS[0];
+      const server = SERVERS.find((s) => s.slug === parts[1]);
+      if (!server) return /* @__PURE__ */ h(NotFoundPage, null);
       return /* @__PURE__ */ h(Wrap, { light: true }, /* @__PURE__ */ h(ServerDetailView, { server }));
+    }
+    if (parts[0] === "servers" && parts[1]) {
+      const catId = parts[1].replace("science-tech", "tech").replace("science%20%26%20tech", "tech");
+      if (!CATS.some((c) => c.id === catId || c.href === `/servers/${parts[1]}`)) return /* @__PURE__ */ h(NotFoundPage, null);
     }
     return /* @__PURE__ */ h(Wrap, { light: true }, /* @__PURE__ */ h(DirectoryView, null));
   }
@@ -1856,7 +1870,8 @@
   }
   function SafetyHubPage() {
     const path = (window.location.pathname || "/").toLowerCase();
-    const page = HUB_PAGES[path] || HUB_PAGES["/safety-library"];
+    const page = HUB_PAGES[path];
+    if (!page) return /* @__PURE__ */ h(NotFoundPage, null);
     return /* @__PURE__ */ h(Wrap, null, /* @__PURE__ */ h("div", { className: "zy-dc-article" }, /* @__PURE__ */ h(SafetyHero, { title: page.title, lead: page.lead }), /* @__PURE__ */ h("div", { className: "zy-dc-wrap" }, /* @__PURE__ */ h("div", { className: "zy-dc-prose" }, page.sections.map((s) => /* @__PURE__ */ h(Fragment, null, /* @__PURE__ */ h("h2", null, s.h), /* @__PURE__ */ h("p", null, s.p))), page.faq ? /* @__PURE__ */ h("div", { className: "zy-dc-faq", style: { marginTop: "36px" } }, page.faq.map((item) => /* @__PURE__ */ h("div", { className: "zy-dc-faq-item zy-accordion-item" }, /* @__PURE__ */ h("button", { type: "button", "data-zy-accordion-trigger": true, className: "zy-accordion-trigger" }, /* @__PURE__ */ h("span", null, item.q), /* @__PURE__ */ h("span", null, "▾")), /* @__PURE__ */ h("div", { className: "zy-dc-faq-body" }, item.a)))) : null, /* @__PURE__ */ h("p", { style: { marginTop: "28px" } }, /* @__PURE__ */ h("a", { className: "zy-dc-explore", href: "/guidelines" }, "Community Guidelines"))), /* @__PURE__ */ h(RelatedHubs, { current: path }))));
   }
   var QUEST_STORIES = [
@@ -1909,6 +1924,7 @@
     if (topic && path !== "/support") {
       return /* @__PURE__ */ h(Wrap, { light: true, className: "zy-dc-support" }, /* @__PURE__ */ h("div", { className: "zy-dc-wrap" }, /* @__PURE__ */ h("p", { style: { color: "#5865f2", fontWeight: 700 } }, /* @__PURE__ */ h("a", { href: "/support" }, "Help Center"), " / ", topic.title), /* @__PURE__ */ h("h1", { style: { fontFamily: "var(--font-abc-ginto-nord-zycord)", fontSize: "42px", margin: "12px 0 16px" } }, topic.title), /* @__PURE__ */ h("p", { style: { maxWidth: "720px", fontSize: "18px", lineHeight: "28px" } }, topic.desc), /* @__PURE__ */ h("div", { className: "zy-dc-prose", style: { color: "#2e3338", marginTop: "32px" } }, /* @__PURE__ */ h("h2", { style: { color: "#23272a" } }, "How to get started"), /* @__PURE__ */ h("p", { style: { color: "#4e5058" } }, "Open User Settings from the gear icon next to your avatar. Most privacy, notification, and billing controls live there. For server tools, open Server Settings from the dropdown on the server name."), /* @__PURE__ */ h("h2", { style: { color: "#23272a" } }, "Still stuck?"), /* @__PURE__ */ h("p", { style: { color: "#4e5058" } }, /* @__PURE__ */ h("a", { href: "/support/requests/new", style: { color: "#5865f2" } }, "Submit a request"), " or check ", /* @__PURE__ */ h("a", { href: "/status", style: { color: "#5865f2" } }, "system status"), "."))));
     }
+    if (path !== "/support" && path !== "/support/") return /* @__PURE__ */ h(NotFoundPage, null);
     return /* @__PURE__ */ h(Wrap, { light: true, className: "zy-dc-support" }, /* @__PURE__ */ h("div", { className: "zy-dc-wrap" }, /* @__PURE__ */ h(SupportHero, null), /* @__PURE__ */ h("div", { className: "zy-dc-help-grid", id: "zy-dc-help-grid" }, HELP_TOPICS.map((t) => /* @__PURE__ */ h("a", { className: "zy-dc-help-card", href: t.href, "data-help-card": true, "data-name": t.title, "data-desc": t.desc }, /* @__PURE__ */ h("span", { className: "zy-dc-help-icon" }, t.icon), /* @__PURE__ */ h("h2", null, t.title), /* @__PURE__ */ h("p", null, t.desc)))), /* @__PURE__ */ h("div", { className: "zy-dc-cta-band", style: { marginTop: "48px" } }, /* @__PURE__ */ h("h2", null, "Developer Support"), /* @__PURE__ */ h("p", null, "Building an app, bot, or Activity? Visit the Developer Portal and docs, or open a developer request."), /* @__PURE__ */ h("a", { className: "zy-dc-explore", href: "/developers/docs", style: { background: "#5865f2", color: "#fff" } }, "Developer Docs"))));
   }
   var POSTS = [
@@ -1944,10 +1960,12 @@
   function BlogPage() {
     const state = blogState();
     if (state.mode === "post") {
-      const post = POSTS.find((p) => p.slug === state.slug) || POSTS[0];
+      const post = POSTS.find((p) => p.slug === state.slug);
+      if (!post) return /* @__PURE__ */ h(NotFoundPage, null);
       return /* @__PURE__ */ h(Wrap, null, /* @__PURE__ */ h("div", { className: "zy-dc-blog" }, /* @__PURE__ */ h("div", { className: "zy-dc-wrap" }, /* @__PURE__ */ h("p", { style: { color: "#c9cdfb", fontWeight: 700 } }, /* @__PURE__ */ h("a", { href: "/blog" }, "Zycord Blog"), " / ", post.catLabel), /* @__PURE__ */ h("span", { className: "zy-dc-cat-chip" }, post.catLabel), /* @__PURE__ */ h("h1", { className: "zy-dc-h1", style: { fontSize: "64px", lineHeight: "64px", marginTop: "12px" } }, post.title), /* @__PURE__ */ h("p", { className: "zy-dc-lead", style: { textAlign: "left", margin: "20px 0 32px" } }, post.desc), /* @__PURE__ */ h("img", { src: post.img, alt: "", style: { width: "100%", maxHeight: "420px", objectFit: "cover", borderRadius: "16px" } }), /* @__PURE__ */ h("div", { className: "zy-dc-prose", style: { marginTop: "32px" } }, /* @__PURE__ */ h("p", null, "We’re continuing to invest in the tools that keep hangouts comfortable — without turning Zycord into something it isn’t. Adults keep the same product they know. Teens get stronger defaults, clearer reporting, and age-appropriate safety."), /* @__PURE__ */ h("p", null, "If you want to try the latest features, open the app and check User Settings. For policy questions, visit the ", /* @__PURE__ */ h("a", { href: "/safety", style: { textDecoration: "underline" } }, "Safety Center"), ".")))));
     }
     const active = state.cat;
+    if (state.mode === "category" && !BLOG_CATS.some((c) => c.id === active)) return /* @__PURE__ */ h(NotFoundPage, null);
     const list = active === "featured" ? POSTS : POSTS.filter((p) => p.cat === active);
     const featured = POSTS.find((p) => p.featured) || POSTS[0];
     return /* @__PURE__ */ h(Wrap, null, /* @__PURE__ */ h("div", { className: "zy-dc-blog" }, /* @__PURE__ */ h("div", { className: "zy-dc-wrap" }, /* @__PURE__ */ h("div", { className: "zy-dc-blog-hero" }, /* @__PURE__ */ h("h1", null, "ZYCORD BLOG")), active === "featured" ? /* @__PURE__ */ h("a", { className: "zy-dc-featured", href: `/blog/${featured.slug}` }, /* @__PURE__ */ h("img", { src: featured.img, alt: "" }), /* @__PURE__ */ h("div", null, /* @__PURE__ */ h("span", { className: "zy-dc-cat-chip" }, featured.catLabel), /* @__PURE__ */ h("h2", null, featured.title), /* @__PURE__ */ h("p", { className: "zy-dc-lead", style: { textAlign: "left", margin: 0 } }, featured.desc))) : /* @__PURE__ */ h("h2", { className: "zy-dc-h2", style: { marginBottom: "24px" } }, BLOG_CATS.find((c) => c.id === active)?.label || "Collection"), /* @__PURE__ */ h("nav", { className: "zy-dc-blog-cats", "aria-label": "Collections" }, BLOG_CATS.map((c) => /* @__PURE__ */ h("a", { className: c.id === active ? "is-active" : "", href: c.href }, c.label))), /* @__PURE__ */ h("div", { className: "zy-dc-post-grid" }, list.map((p) => /* @__PURE__ */ h("a", { className: "zy-dc-post-card", href: `/blog/${p.slug}` }, /* @__PURE__ */ h("img", { src: p.img, alt: "" }), /* @__PURE__ */ h("span", { className: "zy-dc-cat-chip" }, p.catLabel), /* @__PURE__ */ h("h3", null, p.title), /* @__PURE__ */ h("p", null, p.desc)))))));
@@ -1962,7 +1980,7 @@
     if (path.includes("quests-faq")) return /* @__PURE__ */ h(QuestsFaqPage, null);
     if (path.startsWith("/support")) return /* @__PURE__ */ h(SupportPage, null);
     if (path.startsWith("/blog") || path.startsWith("/category/")) return /* @__PURE__ */ h(BlogPage, null);
-    return /* @__PURE__ */ h(SafetyPage, null);
+    return /* @__PURE__ */ h(NotFoundPage, null);
   }
 
   // assets/public/jsx/pages/SubPages.jsx
@@ -2569,6 +2587,8 @@ authorizeUrl.searchParams.set("permissions", "8"); // Administrator`)
       const PageComp = PAGE_COMPONENTS[pageName];
       if (PageComp) {
         mountJSX(pageMount, /* @__PURE__ */ h(PageComp, null));
+      } else {
+        mountJSX(pageMount, /* @__PURE__ */ h(NotFoundPage, null));
       }
     }
     const footerMount = document.querySelector("[data-zy-footer]");

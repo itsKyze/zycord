@@ -23,6 +23,19 @@ function Wrap({ light, className, children }) {
 	return <div className={`zy-dc-page${light ? " is-light" : ""}${className ? " " + className : ""}`}>{children}</div>;
 }
 
+export function NotFoundPage() {
+	return (
+		<div className="zy-dc-404">
+			<div className="zy-dc-404-icon">
+				<img src="/static/logo.png" alt="" width="240" height="240" />
+			</div>
+			<span className="zy-dc-404-badge">Error 404</span>
+			<h1 className="zy-dc-404-title">Wrong turn in hyperspace</h1>
+			<p className="zy-dc-404-copy">Nothing on Zycord lives at this address. The link might be mistyped, or the channel may have moved.</p>
+		</div>
+	);
+}
+
 /* -------------------------------------------------------------------------- */
 /* Discover — discord.com/servers + /trending-games                           */
 /* -------------------------------------------------------------------------- */
@@ -320,12 +333,23 @@ function ServerDetailView({ server }) {
 
 export function DiscoverPage() {
 	const { path, parts } = discoverPathParts();
-	if (path === "/trending-games" || path.startsWith("/trending-games/")) {
+	if (path === "/trending-games") {
+		return <Wrap light>{<TrendingView />}</Wrap>;
+	}
+	if (path.startsWith("/trending-games/")) {
+		const slug = parts.slice(1).join("/");
+		const game = TRENDING.find((g) => g.name.toLowerCase().replace(/\s+/g, "-") === slug);
+		if (!game) return <NotFoundPage />;
 		return <Wrap light>{<TrendingView />}</Wrap>;
 	}
 	if (parts[0] === "servers" && parts[1] && /-\d{10,}$/.test(parts[1])) {
-		const server = SERVERS.find((s) => s.slug === parts[1]) || SERVERS[0];
+		const server = SERVERS.find((s) => s.slug === parts[1]);
+		if (!server) return <NotFoundPage />;
 		return <Wrap light>{<ServerDetailView server={server} />}</Wrap>;
+	}
+	if (parts[0] === "servers" && parts[1]) {
+		const catId = parts[1].replace("science-tech", "tech").replace("science%20%26%20tech", "tech");
+		if (!CATS.some((c) => c.id === catId || c.href === `/servers/${parts[1]}`)) return <NotFoundPage />;
 	}
 	return <Wrap light>{<DirectoryView />}</Wrap>;
 }
@@ -514,7 +538,8 @@ function RelatedHubs({ current }) {
 
 export function SafetyHubPage() {
 	const path = (window.location.pathname || "/").toLowerCase();
-	const page = HUB_PAGES[path] || HUB_PAGES["/safety-library"];
+	const page = HUB_PAGES[path];
+	if (!page) return <NotFoundPage />;
 	return (
 		<Wrap>
 			<div className="zy-dc-article">
@@ -781,6 +806,8 @@ export function SupportPage() {
 		);
 	}
 
+	if (path !== "/support" && path !== "/support/") return <NotFoundPage />;
+
 	return (
 		<Wrap light className="zy-dc-support">
 			<div className="zy-dc-wrap">
@@ -846,7 +873,8 @@ function blogState() {
 export function BlogPage() {
 	const state = blogState();
 	if (state.mode === "post") {
-		const post = POSTS.find((p) => p.slug === state.slug) || POSTS[0];
+		const post = POSTS.find((p) => p.slug === state.slug);
+		if (!post) return <NotFoundPage />;
 		return (
 			<Wrap>
 				<div className="zy-dc-blog">
@@ -877,6 +905,7 @@ export function BlogPage() {
 	}
 
 	const active = state.cat;
+	if (state.mode === "category" && !BLOG_CATS.some((c) => c.id === active)) return <NotFoundPage />;
 	const list = active === "featured" ? POSTS : POSTS.filter((p) => p.cat === active);
 	const featured = POSTS.find((p) => p.featured) || POSTS[0];
 
@@ -936,5 +965,5 @@ export function MarketingDispatchPage() {
 	if (path.includes("quests-faq")) return <QuestsFaqPage />;
 	if (path.startsWith("/support")) return <SupportPage />;
 	if (path.startsWith("/blog") || path.startsWith("/category/")) return <BlogPage />;
-	return <SafetyPage />;
+	return <NotFoundPage />;
 }

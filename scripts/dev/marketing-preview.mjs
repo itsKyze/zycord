@@ -25,13 +25,13 @@ function shell(pageKey, title) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>${title}</title>
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261020a" />
+	<link rel="stylesheet" href="/site/site.css?v=20261020b" />
 </head>
 <body>
 	<header data-zy-navbar></header>
 	<main data-zy-jsx-page="${pageKey}"></main>
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261020a"></script>
+	<script src="/site/site.js?v=20261020b"></script>
 </body>
 </html>`;
 }
@@ -56,10 +56,18 @@ http
 			res.writeHead(200, { "Content-Type": "text/html" });
 			return res.end(html);
 		}
+		if (u === "/favicon.svg" || u === "/static/logo.png") {
+			const icon = u === "/favicon.svg" ? path.join(root, "favicon.svg") : path.resolve("assets/icon.png");
+			if (fs.existsSync(icon)) {
+				res.writeHead(200, { "Content-Type": u.endsWith(".svg") ? "image/svg+xml" : "image/png" });
+				return fs.createReadStream(icon).pipe(res);
+			}
+		}
 		const file = path.join(root, u.replace(/^\//, ""));
 		if (!file.startsWith(root) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
-			res.writeHead(404);
-			return res.end("nf " + u);
+			const nf = path.join(root, "not-found.html");
+			res.writeHead(404, { "Content-Type": "text/html" });
+			return res.end(fs.readFileSync(nf, "utf8").replaceAll("__INSTANCE_NAME__", "Zycord").replaceAll("__INSTANCE_ICON__", '<img class="brand-icon" src="/static/logo.png" alt="" />'));
 		}
 		res.writeHead(200, { "Content-Type": mime[path.extname(file)] || "application/octet-stream" });
 		fs.createReadStream(file).pipe(res);

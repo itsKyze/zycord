@@ -31,6 +31,6 @@ function sendDirectory(_req: Request, res: Response) {
 }
 
 router.get("/", route({ spacebarOnly: true, authentication: "never" }), sendDirectory);
-router.get("/*", route({ spacebarOnly: true, authentication: "never" }), sendDirectory);
+router.get("/{*splat}", route({ spacebarOnly: true, authentication: "never" }), sendDirectory);
 
 export default router;

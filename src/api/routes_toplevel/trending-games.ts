@@ -31,6 +31,6 @@ function sendTrending(_req: Request, res: Response) {
 }
 
 router.get("/", route({ spacebarOnly: true, authentication: "never" }), sendTrending);
-router.get("/*", route({ spacebarOnly: true, authentication: "never" }), sendTrending);
+router.get("/{*splat}", route({ spacebarOnly: true, authentication: "never" }), sendTrending);
 
 export default router;

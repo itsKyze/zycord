@@ -31,6 +31,6 @@ function sendBlog(_req: Request, res: Response) {
 }
 
 router.get("/", route({ spacebarOnly: true, authentication: "never" }), sendBlog);
-router.get("/*", route({ spacebarOnly: true, authentication: "never" }), sendBlog);
+router.get("/{*splat}", route({ spacebarOnly: true, authentication: "never" }), sendBlog);
 
 export default router;

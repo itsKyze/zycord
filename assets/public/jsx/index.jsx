@@ -25,7 +25,8 @@ import {
 	QuestsFaqPage,
 	SupportPage,
 	BlogPage,
-	MarketingDispatchPage
+	MarketingDispatchPage,
+	NotFoundPage
 } from "./pages/MarketingParity.jsx";
 
 const PAGE_COMPONENTS = {
@@ -450,6 +451,8 @@ function initSiteJSX() {
 		const PageComp = PAGE_COMPONENTS[pageName];
 		if (PageComp) {
 			mountJSX(pageMount, <PageComp />);
+		} else {
+			mountJSX(pageMount, <NotFoundPage />);
 		}
 	}
 

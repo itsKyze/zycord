@@ -23,6 +23,8 @@ import { route } from "@spacebar/api/middlewares";
 import { brandPage, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
 
 const router = Router({ mergeParams: true });
+const notFound = fs.readFileSync(path.join(PUBLIC_ASSETS_FOLDER, "not-found.html"), "utf8");
+
 router.get(
 	"/",
 	route({ spacebarOnly: true, authentication: "never" }),
@@ -30,6 +32,15 @@ router.get(
 		res.set("Cache-Control", "no-cache");
 		const page = fs.readFileSync(path.join(PUBLIC_ASSETS_FOLDER, "discover", "index.html"), "utf8");
 		return res.type("html").send(brandPage(page));
+	},
+);
+
+router.get(
+	"/{*splat}",
+	route({ spacebarOnly: true, authentication: "never" }),
+	(_req: Request, res: Response) => {
+		res.set("Cache-Control", "no-cache");
+		return res.status(404).type("html").send(brandPage(notFound));
 	},
 );
 
