@@ -68,13 +68,13 @@ function sendAds(req: Request, res: Response) {
 	<title>${meta.title}</title>
 	<meta name="description" content="${meta.desc}" />
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261020b" />
+	<link rel="stylesheet" href="/site/site.css?v=20261020c" />
 </head>
 <body>
 	<header data-zy-navbar></header>
 	<main data-zy-jsx-page="${meta.pageKey}"></main>
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261020b"></script>
+	<script src="/site/site.js?v=20261020c"></script>
 </body>
 </html>`;
 	res.set("Cache-Control", "no-cache");

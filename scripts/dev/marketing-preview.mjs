@@ -25,13 +25,13 @@ function shell(pageKey, title) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>${title}</title>
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	<link rel="stylesheet" href="/site/site.css?v=20261020b" />
+	<link rel="stylesheet" href="/site/site.css?v=20261020c" />
 </head>
 <body>
 	<header data-zy-navbar></header>
 	<main data-zy-jsx-page="${pageKey}"></main>
 	<footer data-zy-footer></footer>
-	<script src="/site/site.js?v=20261020b"></script>
+		<script src="/site/site.js?v=20261020c"></script>
 </body>
 </html>`;
 }

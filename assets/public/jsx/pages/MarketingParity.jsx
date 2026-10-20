@@ -101,8 +101,9 @@ function CatIcon({ id }) {
 		);
 	}
 	return (
-		<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-			<path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+		<svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+			<circle cx="12" cy="12" r="8.25" stroke="currentColor" stroke-width="1.8" />
+			<circle cx="12" cy="12" r="3.4" fill="currentColor" />
 		</svg>
 	);
 }
@@ -374,7 +375,7 @@ const SAFETY_IMG = {
 
 const SAFETY_HUBS = [
 	{ id: "library", href: "/safety-library", title: "Safety Library", copy: "Everything you could ever want to know about safety on Zycord. Whether you’re a user, a moderator, or a parent, discover all of our tools and resources and how to use them.", img: SAFETY_IMG.library },
-	{ id: "privacy", href: "/safety-privacy", title: "Privacy Hub", copy: "Privacy is an essential part of feeling safe. No matter what, we build privacy into our products and keep you informed about what's happening with your data. Learn more about what that means, including how to control your information.", img: SAFETY_IMG.privacy },
+	{ id: "privacy", href: "/safety-privacy", title: "Privacy Hub", copy: "Privacy is an essential part of feeling safe. No matter what, we build privacy into our products and keep you informed about what's happening with your data. Learn more about what that means, including the data we collect and the tools that put you in control.", img: SAFETY_IMG.privacy },
 	{ id: "parents", href: "/safety-parents", title: "Parent Hub", copy: "Learn more about what we’re doing to help your teen stay safer on our platform, explore our Family Center tool, and download our Parent’s Guide to Zycord.", img: SAFETY_IMG.parent },
 	{ id: "transparency", href: "/safety-transparency", title: "Transparency Hub", copy: "Explore data, trends, and analysis into the work done to help keep people on Zycord safe. Transparency reports cover information about enforcement of our platform policies, as well as our response to legal requests.", img: SAFETY_IMG.transparency },
 	{ id: "news", href: "/safety-news", title: "Safety News Hub", copy: "The latest news and updates on Zycord’s Safety, Privacy, and Policy initiatives.", img: SAFETY_IMG.news },
@@ -591,23 +592,55 @@ const QUEST_STORIES = [
 	{ title: "Walmart Skyward", tag: "Video Quest", copy: "Walmart becomes the first brand to use Video Quests to bring players into its own custom Zycord server experience." }
 ];
 
+function QuestsSubnav({ active }) {
+	const items = [
+		{ id: "ads", href: "/ads/quests", label: "Advertising" },
+		{ id: "industries", href: "/ads/quests#industries", label: "Industries" },
+		{ id: "stories", href: "/ads/quests-success-stories", label: "Success Stories" },
+		{ id: "faq", href: "/ads/quests-faq", label: "FAQ" }
+	];
+	return (
+		<nav className="zy-dc-quests-subnav" aria-label="Quests">
+			{items.map((item) => (
+				<a className={item.id === active ? "is-active" : ""} href={item.href}>
+					{item.label}
+				</a>
+			))}
+		</nav>
+	);
+}
+
 export function QuestsPage() {
 	return (
 		<Wrap>
-			<div style={{ background: "#000" }}>
-				<SafetyHero title="ADVERTISE WHERE THE WORLD PLAYS" lead="Break through to some of the most passionate audiences of players with Zycord Ads." />
-				<div className="zy-dc-wrap" style={{ paddingBottom: "48px" }}>
-					<div style={{ textAlign: "center", maxWidth: "760px", margin: "0 auto 48px" }}>
-						<h2 className="zy-dc-h2">DESIGNED FOR GAME PLAYERS</h2>
-						<p className="zy-dc-lead">Players like our ad format because they are rewarded for engaging. It’s a win-win for players and advertisers.</p>
+			<div className="zy-dc-quests">
+				<section className="zy-dc-quests-hero">
+					<img className="zy-dc-quests-hero-bg" src="/site/media/zycord/quests-hero-bg.webp" alt="" />
+					<QuestsSubnav active="ads" />
+					<div className="zy-dc-hero-inner">
+						<h1 className="zy-dc-h1">ADVERTISE WHERE THE WORLD PLAYS</h1>
+						<p className="zy-dc-lead">Break through to some of the most passionate audiences of players with Zycord Ads.</p>
+						<a className="zy-dc-cta-blurple" href="#launch">
+							Get Started
+						</a>
 					</div>
-				</div>
+					<img className="zy-dc-quests-trophy" src="/site/media/zycord/nav-quests-trophy.webp" alt="" width="280" height="280" />
+				</section>
+				<section className="zy-dc-wrap zy-dc-quests-designed">
+					<h2 className="zy-dc-h2">DESIGNED FOR GAME PLAYERS</h2>
+					<p className="zy-dc-lead">Players like our ad format because they are rewarded for engaging. It’s a win-win for players and advertisers.</p>
+					<div className="zy-dc-quests-shots">
+						<img src="/site/media/zycord/quests-step-1.webp" alt="Accept a Quest in Zycord" />
+						<img src="/site/media/zycord/quests-card-1.webp" alt="Play or watch to complete a Quest" />
+						<img src="/site/media/zycord/quests-step-2.webp" alt="Collect Quest rewards" />
+					</div>
+				</section>
 				<HubRow reverse={false} hub={{ title: "1. They accept your Quest", copy: "Actions include watching a video, playing a game, streaming and more.", img: "/site/media/zycord/quests-step-1.webp" }} />
 				<HubRow reverse hub={{ title: "2. Play or Watch", copy: "Taking the requested action completes the Quest.", img: "/site/media/zycord/quests-step-2.webp" }} />
 				<HubRow reverse={false} hub={{ title: "3. And Collect Rewards", copy: "Rewards include in-game items and Zycord avatar decorations.", img: "/site/media/zycord/quests-step-3.webp" }} />
-				<section className="zy-dc-wrap" style={{ padding: "48px 40px 96px" }}>
+				<section className="zy-dc-wrap" id="industries" style={{ padding: "48px 0 48px" }}>
 					<h2 className="zy-dc-h2">EXPLORE OUR SOLUTIONS</h2>
-					<p className="zy-dc-lead" style={{ textAlign: "left", margin: "16px 0 32px" }}>
+					<p className="zy-dc-lead" style={{ textAlign: "left", margin: "16px 0 32px", maxWidth: "820px" }}>
 						Whether you’re promoting a game, movie, or something else, Quests make it easy to connect with game players at scale.
 					</p>
 					<div className="zy-dc-related">
@@ -621,31 +654,68 @@ export function QuestsPage() {
 						</div>
 						<div>
 							<h3>MISSIONS</h3>
-							<p>A fully interactive ad, native to Zycord. Users can complete mini-games, interactive videos, or quizzes for a reward.</p>
+							<p>A fully interactive ad, native to Zycord. Users can complete activities such as mini-games, interactive videos, or quizzes, in exchange for an in-Zycord reward.</p>
 						</div>
 					</div>
 					<div className="zy-dc-related" style={{ marginTop: "20px" }}>
 						<div>
 							<h3>HERO</h3>
-							<p>A large-scale, animated ad unit that spans the top of the Quest home, offering a high-visibility surface for tentpole launches.</p>
+							<p>A large-scale, animated ad unit that spans the top of the Quest home, offering a high-visibility surface to celebrate and promote tentpole launches on Zycord.</p>
 						</div>
 						<div>
-							<h3>90M+ Daily Active Users</h3>
-							<p>The world’s most passionate players come to Zycord to talk, play and hang out with friends.</p>
+							<h3>Designed with players in mind</h3>
+							<p>Our rewarded format motivates even the most skeptical audiences to engage with your ad, driving interest in your content or game.</p>
 						</div>
 						<div>
-							<h3>90%+ Play Video Games</h3>
-							<p>Reach players and communities who gather here every day across desktop, web, and mobile.</p>
+							<h3>Leverage friend-to-friend influence</h3>
+							<p>When someone accepts a Quest, their friends can see and join in. That’s the ultimate endorsement.</p>
 						</div>
 					</div>
-					<div style={{ marginTop: "40px", display: "flex", gap: "12px", flexWrap: "wrap" }}>
-						<a className="zy-dc-explore" href="/ads/quests-success-stories">
-							Success Stories
-						</a>
-						<a className="zy-dc-explore" href="/ads/quests-faq">
-							Quests FAQ
-						</a>
+				</section>
+				<section className="zy-dc-wrap zy-dc-stats">
+					<div>
+						<strong>90M+</strong>
+						<span>Daily Active Users</span>
 					</div>
+					<div>
+						<strong>90%+</strong>
+						<span>Play Video Games</span>
+					</div>
+					<div>
+						<strong>~40%</strong>
+						<span>Start a game within an hour</span>
+					</div>
+				</section>
+				<section className="zy-dc-wrap" style={{ paddingBottom: "64px" }}>
+					<h2 className="zy-dc-h2">QUESTS SUCCESS STORIES</h2>
+					<div className="zy-dc-post-grid" style={{ marginTop: "36px" }}>
+						{QUEST_STORIES.slice(0, 4).map((s) => (
+							<article>
+								<span className="zy-dc-cat-chip">{s.tag}</span>
+								<h3 style={{ margin: "12px 0 8px", fontSize: "28px" }}>{s.title}</h3>
+								<p style={{ color: "rgba(255,255,255,0.8)" }}>{s.copy}</p>
+							</article>
+						))}
+					</div>
+				</section>
+				<section className="zy-dc-wrap" id="launch" style={{ padding: "0 0 96px" }}>
+					<h2 className="zy-dc-h2">LAUNCH YOUR QUEST</h2>
+					<p className="zy-dc-lead" style={{ textAlign: "left", margin: "16px 0 28px", maxWidth: "720px" }}>
+						Zycord Ads can only be purchased through our sales team. If you’re interested in running a campaign, complete this form to get in touch with our team.
+					</p>
+					<form className="zy-dc-request" data-zy-support-form style={{ background: "rgba(255,255,255,0.06)", borderColor: "rgba(255,255,255,0.12)", color: "#fff" }}>
+						<label>Work email</label>
+						<input type="email" required placeholder="you@company.com" />
+						<label>Company</label>
+						<input type="text" required />
+						<label>What are you looking to advertise?</label>
+						<textarea rows="4" required />
+						<div style={{ marginTop: "20px" }}>
+							<button className="zy-dc-cta-blurple" type="submit">
+								Get Started
+							</button>
+						</div>
+					</form>
 				</section>
 			</div>
 		</Wrap>
@@ -655,8 +725,15 @@ export function QuestsPage() {
 export function QuestsStoriesPage() {
 	return (
 		<Wrap>
-			<div style={{ background: "#000" }}>
-				<SafetyHero title="SUCCESS STORIES" lead="See how these brands scored big with their advertising campaigns on Zycord." />
+			<div className="zy-dc-quests">
+				<section className="zy-dc-quests-hero is-compact">
+					<img className="zy-dc-quests-hero-bg" src="/site/media/zycord/quests-hero-bg.webp" alt="" />
+					<QuestsSubnav active="stories" />
+					<div className="zy-dc-hero-inner">
+						<h1 className="zy-dc-h1">SUCCESS STORIES</h1>
+						<p className="zy-dc-lead">See how these brands scored big with their advertising campaigns on Zycord.</p>
+					</div>
+				</section>
 				<div className="zy-dc-wrap" style={{ paddingBottom: "80px" }}>
 					<div className="zy-dc-post-grid">
 						{QUEST_STORIES.map((s) => (
@@ -668,7 +745,7 @@ export function QuestsStoriesPage() {
 						))}
 					</div>
 					<div style={{ marginTop: "48px" }}>
-						<a className="zy-dc-explore" href="/ads/quests">
+						<a className="zy-dc-cta-blurple" href="/ads/quests#launch">
 							Launch Your Quest
 						</a>
 					</div>
@@ -691,8 +768,15 @@ export function QuestsFaqPage() {
 	];
 	return (
 		<Wrap>
-			<div style={{ background: "#000" }}>
-				<SafetyHero title="QUESTS NOOB GUIDE" lead="The ins and outs to our Ads and everything in between." />
+			<div className="zy-dc-quests">
+				<section className="zy-dc-quests-hero is-compact">
+					<img className="zy-dc-quests-hero-bg" src="/site/media/zycord/quests-hero-bg.webp" alt="" />
+					<QuestsSubnav active="faq" />
+					<div className="zy-dc-hero-inner">
+						<h1 className="zy-dc-h1">QUESTS NOOB GUIDE</h1>
+						<p className="zy-dc-lead">The ins and outs to our Ads and everything in between.</p>
+					</div>
+				</section>
 				<div className="zy-dc-wrap" style={{ paddingBottom: "80px" }}>
 					<div className="zy-dc-faq">
 						{faqs.map((item) => (
@@ -838,7 +922,7 @@ export function SupportPage() {
 /* -------------------------------------------------------------------------- */
 
 const POSTS = [
-	{ slug: "safer-for-teens-same-zycord-for-adults", cat: "product", catLabel: "Product & Features", title: "Safer for Teens, Same Zycord for Adults", desc: "We’re launching a revamped, privacy-focused age assurance solution including methods that won’t require an ID or selfie. Here’s how it works.", img: "/site/media/zycord/safety-card-1.png", featured: true },
+	{ slug: "safer-for-teens-same-zycord-for-adults", cat: "product", catLabel: "Product & Features", title: "Safer for Teens, Same Zycord for Adults", desc: "We’re launching a revamped, privacy-focused age assurance solution including methods that won’t require an ID or selfie. Here’s how it works.", img: "/site/media/zycord/nav-blog-cube.webp", featured: true },
 	{ slug: "zycord-update-september-25-2026", cat: "product", catLabel: "Product & Features", title: "Zycord Update: September 25, 2026", desc: "Dive into additional articles and stay informed.", img: "/site/media/zycord/sec1-chat-fun.webp" },
 	{ slug: "patch-notes-february-4-2026", cat: "product", catLabel: "Product & Features", title: "Zycord Patch Notes: February 4, 2026", desc: "Fixes, quality-of-life updates, and client improvements.", img: "/site/media/zycord/sec2-stream.webp" },
 	{ slug: "how-to-customize-your-zycord-profile", cat: "how-to-discord", catLabel: "How to Zycord", title: "How to Customize Your Zycord Profile", desc: "Avatar decorations, nameplates, effects, and bios — a complete walkthrough.", img: "/site/media/zycord/sec4-chill.webp" },
@@ -889,7 +973,9 @@ export function BlogPage() {
 						<p className="zy-dc-lead" style={{ textAlign: "left", margin: "20px 0 32px" }}>
 							{post.desc}
 						</p>
-						<img src={post.img} alt="" style={{ width: "100%", maxHeight: "420px", objectFit: "cover", borderRadius: "16px" }} />
+						<div className="zy-dc-featured-banner">
+							<img src={post.img} alt="" />
+						</div>
 						<div className="zy-dc-prose" style={{ marginTop: "32px" }}>
 							<p>
 								We’re continuing to invest in the tools that keep hangouts comfortable — without turning Zycord into something it isn’t. Adults keep the same product they know. Teens get stronger defaults, clearer reporting, and age-appropriate safety.
@@ -909,6 +995,8 @@ export function BlogPage() {
 	const list = active === "featured" ? POSTS : POSTS.filter((p) => p.cat === active);
 	const featured = POSTS.find((p) => p.featured) || POSTS[0];
 
+	const explore = active === "featured" ? POSTS.filter((p) => p !== featured) : list;
+
 	return (
 		<Wrap>
 			<div className="zy-dc-blog">
@@ -918,29 +1006,36 @@ export function BlogPage() {
 					</div>
 					{active === "featured" ? (
 						<a className="zy-dc-featured" href={`/blog/${featured.slug}`}>
-							<img src={featured.img} alt="" />
-							<div>
-								<span className="zy-dc-cat-chip">{featured.catLabel}</span>
-								<h2>{featured.title}</h2>
-								<p className="zy-dc-lead" style={{ textAlign: "left", margin: 0 }}>
-									{featured.desc}
-								</p>
+							<div className="zy-dc-featured-banner">
+								<img src={featured.img} alt="" />
 							</div>
+							<h2>{featured.title}</h2>
+							<p>{featured.desc}</p>
 						</a>
 					) : (
-						<h2 className="zy-dc-h2" style={{ marginBottom: "24px" }}>
+						<h2 className="zy-dc-h2" style={{ marginBottom: "24px", textAlign: "center" }}>
 							{BLOG_CATS.find((c) => c.id === active)?.label || "Collection"}
 						</h2>
 					)}
-					<nav className="zy-dc-blog-cats" aria-label="Collections">
-						{BLOG_CATS.map((c) => (
-							<a className={c.id === active ? "is-active" : ""} href={c.href}>
-								{c.label}
-							</a>
-						))}
-					</nav>
+					<div className="zy-dc-blog-toolbar">
+						<nav className="zy-dc-blog-cats" aria-label="Collections">
+							{BLOG_CATS.map((c) => (
+								<a className={c.id === active ? "is-active" : ""} href={c.href}>
+									{c.label}
+								</a>
+							))}
+						</nav>
+						<label className="zy-dc-blog-search">
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c9cdfb" stroke-width="2" aria-hidden="true">
+								<circle cx="11" cy="11" r="8" />
+								<line x1="21" y1="21" x2="16.65" y2="16.65" />
+							</svg>
+							<input type="search" placeholder="Search" aria-label="Search the blog" />
+						</label>
+					</div>
+					<h2 className="zy-dc-h2 zy-dc-blog-explore">Explore Further</h2>
 					<div className="zy-dc-post-grid">
-						{list.map((p) => (
+						{explore.map((p) => (
 							<a className="zy-dc-post-card" href={`/blog/${p.slug}`}>
 								<img src={p.img} alt="" />
 								<span className="zy-dc-cat-chip">{p.catLabel}</span>

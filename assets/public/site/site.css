@@ -4874,9 +4874,9 @@ body.zy-dc-light .zy-footer {
 
 .zy-dc-wrap {
 	width: 100%;
-	max-width: 1260px;
+	max-width: 1600px;
 	margin: 0 auto;
-	padding: 0 40px;
+	padding: 0 56px;
 }
 
 .zy-dc-explore {
@@ -4903,7 +4903,7 @@ body.zy-dc-light .zy-footer {
 .zy-dc-hero {
 	position: relative;
 	overflow: hidden;
-	padding: 180px 0 88px;
+	padding: 200px 0 120px;
 	text-align: center;
 	color: #ffffff;
 }
@@ -4929,14 +4929,17 @@ body.zy-dc-light .zy-footer {
 }
 
 .zy-dc-hero-prop.is-left {
-	left: max(24px, calc(50% - 650px));
-	top: 182px;
+	left: max(24px, calc(50% - 760px));
+	top: 168px;
+	width: 230px;
+	height: 246px;
 }
 
 .zy-dc-hero-prop.is-right {
-	right: max(24px, calc(50% - 650px));
-	top: 115px;
+	right: max(24px, calc(50% - 760px));
+	top: 132px;
 	width: 230px;
+	height: 230px;
 }
 
 .zy-dc-hero-inner {
@@ -4948,11 +4951,12 @@ body.zy-dc-light .zy-footer {
 }
 
 .zy-dc-h1 {
-	margin: 0;
+	margin: 0 auto;
+	max-width: 1200px;
 	font-family: var(--font-abc-ginto-nord-zycord);
 	font-weight: 700;
 	font-size: 96px;
-	line-height: 86.4px;
+	line-height: 85.44px;
 	letter-spacing: -2.88px;
 	text-transform: uppercase;
 	color: #ffffff;
@@ -4990,7 +4994,7 @@ body.zy-dc-light .zy-footer {
 	font-weight: 700;
 	font-size: 56px;
 	line-height: 56px;
-	letter-spacing: -0.04em;
+	letter-spacing: -0.56px;
 	text-transform: uppercase;
 	color: #ffffff;
 }
@@ -5140,22 +5144,24 @@ body.zy-dc-light .zy-footer {
 
 .zy-dc-discover-hero .zy-dc-h1 {
 	color: #5865f2;
-	max-width: 980px;
+	max-width: 1200px;
 	margin: 0 auto;
+	line-height: 85.44px;
 }
 
 .zy-dc-discover-hero p {
-	margin: 18px auto 0;
-	max-width: 640px;
-	font-size: 20px;
-	line-height: 28px;
-	color: #4e5058;
+	margin: 32px auto 0;
+	max-width: 1200px;
+	font-size: 24px;
+	line-height: 28.8px;
+	font-weight: 400;
+	color: #2e2e34;
 }
 
 .zy-dc-megaphone {
 	position: absolute;
-	left: max(32px, calc(50% - 620px));
-	top: 48px;
+	left: max(40px, calc(50% - 780px));
+	top: 36px;
 	width: 220px;
 	height: 220px;
 	object-fit: contain;
@@ -5164,8 +5170,8 @@ body.zy-dc-light .zy-footer {
 
 .zy-dc-wumpus-lab {
 	position: absolute;
-	right: max(24px, calc(50% - 640px));
-	top: 210px;
+	right: max(24px, calc(50% - 760px));
+	top: 168px;
 	width: 231px;
 	height: 352px;
 	object-fit: contain;
@@ -5175,30 +5181,31 @@ body.zy-dc-light .zy-footer {
 .zy-dc-cats {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: center;
-	gap: 10px;
-	margin: 36px 0 18px;
+	justify-content: flex-start;
+	gap: 8px;
+	margin: 48px 0 18px;
 }
 
 .zy-dc-cat {
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	height: 40px;
-	padding: 0 16px;
-	border-radius: 20px;
-	border: 1px solid #5865f2;
+	height: 48px;
+	padding: 0 24px;
+	border-radius: 16px;
+	border: 0;
 	background: transparent;
 	color: #5865f2;
-	font-size: 14px;
-	font-weight: 600;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 18.4px;
 	text-decoration: none;
 	cursor: pointer;
 }
 
 .zy-dc-cat svg {
-	width: 18px;
-	height: 18px;
+	width: 20px;
+	height: 20px;
 }
 
 .zy-dc-cat.is-active {
@@ -5212,14 +5219,14 @@ body.zy-dc-light .zy-footer {
 	align-items: center;
 	gap: 10px;
 	width: 100%;
-	max-width: 1200px;
-	margin: 0 auto;
-	height: 44px;
-	padding: 0 16px;
-	border-radius: 22px;
+	max-width: none;
+	margin: 0;
+	height: 52px;
+	padding: 8px 16px;
+	border-radius: 16px;
 	background: #ffffff;
 	border: 1px solid transparent;
-	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+	box-shadow: none;
 }
 
 .zy-dc-search input {
@@ -5238,34 +5245,34 @@ body.zy-dc-light .zy-footer {
 }
 
 .zy-dc-results {
-	margin: 28px 0 18px;
+	margin: 28px 0 80px;
 	font-family: var(--font-abc-ginto-nord-zycord);
-	font-size: 20px;
-	font-weight: 800;
-	letter-spacing: -0.02em;
+	font-size: 28px;
+	line-height: 32.2px;
+	font-weight: 600;
+	letter-spacing: -0.56px;
 	text-transform: uppercase;
-	color: #060607;
+	text-align: left;
+	color: #23272a;
 }
 
 .zy-dc-server-grid {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	justify-content: center;
-	gap: 24px 20px;
+	grid-template-columns: repeat(3, 387px);
+	justify-content: space-between;
+	gap: 56px 24px;
 }
 
 .zy-dc-server-card {
-	width: 100%;
-	max-width: 387px;
+	width: 387px;
 	color: inherit;
 	text-decoration: none;
-	margin: 0 auto;
 }
 
 .zy-dc-server-splash {
 	position: relative;
-	width: 100%;
-	height: auto;
+	width: 387px;
+	height: 212px;
 	aspect-ratio: 387 / 212;
 	border-radius: 16px;
 	overflow: hidden;
@@ -5460,48 +5467,57 @@ body.zy-dc-light .zy-footer {
 	font-size: 13px;
 }
 
-/* Support Help Center */
+body.zy-dc-light:has(.zy-dc-support) {
+	background-color: #ffffff !important;
+}
+
+/* Support Help Center — Zendesk / support.discord.com */
 .zy-dc-support {
 	background: #ffffff;
 	color: #2e3338;
 	padding: 128px 0 80px;
 }
 
+.zy-dc-support .zy-dc-wrap {
+	max-width: 1160px;
+}
+
 .zy-dc-support-hero {
 	text-align: center;
-	padding: 24px 0 40px;
+	padding: 32px 0 48px;
 }
 
 .zy-dc-support-hero h1 {
 	margin: 0;
-	font-family: var(--font-abc-ginto-nord-zycord);
-	font-size: 56px;
-	line-height: 60px;
-	letter-spacing: -1.5px;
-	color: #23272a;
+	font-family: var(--font-gg-sans);
+	font-size: 32px;
+	line-height: 40px;
+	letter-spacing: 0;
+	font-weight: 700;
+	color: #4f545c;
 	text-transform: none;
 }
 
 .zy-dc-support-hero p {
 	margin: 16px auto 0;
-	max-width: 640px;
-	font-size: 18px;
-	line-height: 26px;
-	color: #4e5058;
+	max-width: 720px;
+	font-size: 16px;
+	line-height: 24px;
+	color: #4f545c;
 }
 
 .zy-dc-support-search {
-	max-width: 640px;
+	max-width: 650px;
 	margin: 28px auto 0;
 	display: flex;
 	align-items: center;
 	gap: 10px;
-	height: 52px;
-	padding: 0 18px;
-	border-radius: 8px;
+	height: 50px;
+	padding: 0 16px;
+	border-radius: 4px;
 	border: 1px solid #d4d7dc;
 	background: #ffffff;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .zy-dc-support-search input {
@@ -5516,45 +5532,53 @@ body.zy-dc-light .zy-footer {
 .zy-dc-help-grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 20px;
-	margin-top: 36px;
+	gap: 24px;
+	margin-top: 48px;
 }
 
 .zy-dc-help-card {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-	padding: 24px;
+	gap: 12px;
+	padding: 28px 24px;
 	border-radius: 8px;
-	background: #f6f6f7;
+	background: #ffffff;
 	border: 1px solid #e3e5e8;
-	min-height: 168px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+	min-height: 188px;
 	color: inherit;
+}
+
+.zy-dc-help-card:hover {
+	border-color: #c9cdfb;
+	box-shadow: 0 8px 16px rgba(88, 101, 242, 0.08);
 }
 
 .zy-dc-help-card h2 {
 	margin: 0;
-	font-size: 18px;
-	color: #23272a;
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 700;
+	color: #2e3338;
 }
 
 .zy-dc-help-card p {
 	margin: 0;
 	font-size: 14px;
 	line-height: 20px;
-	color: #4e5058;
+	color: #4f545c;
 }
 
 .zy-dc-help-icon {
 	width: 40px;
 	height: 40px;
-	border-radius: 10px;
+	border-radius: 8px;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	background: #5865f2;
 	color: #fff;
-	font-size: 20px;
+	font-size: 18px;
 }
 
 .zy-dc-request {
@@ -5584,35 +5608,201 @@ body.zy-dc-light .zy-footer {
 	font-family: inherit;
 }
 
-/* Blog */
-.zy-dc-blog {
+/* Quests — discord.com/ads/quests mosaic hero */
+.zy-dc-quests {
 	background: #000000;
 	color: #ffffff;
-	padding: 132px 0 80px;
+}
+
+.zy-dc-quests-hero {
+	position: relative;
+	overflow: hidden;
+	min-height: 720px;
+	padding: 108px 24px 96px;
+	text-align: center;
+}
+
+.zy-dc-quests-hero.is-compact {
+	min-height: 520px;
+	padding: 108px 24px 72px;
+}
+
+.zy-dc-quests-hero-bg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center top;
+	pointer-events: none;
+	z-index: 0;
+}
+
+.zy-dc-quests-hero::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.55) 70%, #000 100%);
+	z-index: 1;
+	pointer-events: none;
+}
+
+.zy-dc-quests-hero .zy-dc-hero-inner,
+.zy-dc-quests-hero .zy-dc-quests-subnav {
+	position: relative;
+	z-index: 3;
+}
+
+.zy-dc-quests-subnav {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 8px 32px;
+	margin: 0 auto 56px;
+}
+
+.zy-dc-quests-subnav a {
+	color: rgba(255, 255, 255, 0.72);
+	font-size: 16px;
+	line-height: 24px;
+	font-weight: 500;
+	padding: 4px 0 8px;
+	border-bottom: 2px solid transparent;
+}
+
+.zy-dc-quests-subnav a.is-active,
+.zy-dc-quests-subnav a:hover {
+	color: #ffffff;
+	border-bottom-color: #ffffff;
+}
+
+.zy-dc-quests-trophy {
+	position: absolute;
+	right: max(32px, calc(50% - 720px));
+	top: 180px;
+	width: 280px;
+	height: auto;
+	object-fit: contain;
+	pointer-events: none;
+	z-index: 2;
+}
+
+.zy-dc-cta-blurple {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 32px;
+	height: 48px;
+	padding: 0 28px;
+	border: 0;
+	border-radius: 24px;
+	background: #5865f2;
+	color: #ffffff;
+	font-family: var(--font-abc-ginto-zycord);
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 24px;
+	cursor: pointer;
+}
+
+.zy-dc-cta-blurple:hover {
+	background: #4752c4;
+	color: #ffffff;
+}
+
+.zy-dc-quests-designed {
+	padding: 72px 56px 48px;
+	text-align: center;
+}
+
+.zy-dc-quests-designed .zy-dc-lead {
+	margin-top: 16px;
+}
+
+.zy-dc-quests-shots {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+	margin-top: 48px;
+}
+
+.zy-dc-quests-shots img {
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	object-fit: cover;
+	border-radius: 16px;
+	background: #1a1c3a;
+}
+
+.zy-dc-stats {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px;
+	text-align: center;
+	padding: 64px 56px 80px;
+}
+
+.zy-dc-stats strong {
+	display: block;
+	font-family: var(--font-abc-ginto-nord-zycord);
+	font-size: 72px;
+	line-height: 72px;
+	letter-spacing: -2px;
+	font-weight: 700;
+}
+
+.zy-dc-stats span {
+	display: block;
+	margin-top: 8px;
+	font-size: 18px;
+	line-height: 24px;
+	color: rgba(255, 255, 255, 0.72);
+}
+
+/* Blog — discord.com/blog featured 1538×615 r112, 2-col 647×343 r56 */
+.zy-dc-blog {
+	background: radial-gradient(1200px 640px at 50% -10%, #3b42a0 0%, #16183a 42%, #000000 78%);
+	color: #ffffff;
+	padding: 140px 0 96px;
+}
+
+.zy-dc-blog-hero {
+	text-align: center;
 }
 
 .zy-dc-blog-hero h1 {
-	margin: 0 0 28px;
+	margin: 0 0 48px;
 	font-family: var(--font-abc-ginto-nord-zycord);
 	font-size: 96px;
-	line-height: 86.4px;
-	letter-spacing: -2.88px;
+	line-height: 96px;
+	letter-spacing: -0.48px;
 	text-transform: uppercase;
+	text-align: center;
 }
 
 .zy-dc-featured {
-	display: grid;
-	grid-template-columns: 1.15fr 0.85fr;
-	gap: 36px;
+	display: flex;
+	flex-direction: column;
 	align-items: center;
+	text-align: center;
 	margin-bottom: 48px;
+	color: inherit;
 }
 
+.zy-dc-featured-banner {
+	width: 100%;
+	aspect-ratio: 1538 / 615;
+	border-radius: 112px;
+	overflow: hidden;
+	background: #1a1c3a;
+}
+
+.zy-dc-featured-banner img,
 .zy-dc-featured img {
 	width: 100%;
-	height: 360px;
+	height: 100%;
 	object-fit: cover;
-	border-radius: 16px;
+	display: block;
 }
 
 .zy-dc-cat-chip {
@@ -5628,18 +5818,42 @@ body.zy-dc-light .zy-footer {
 }
 
 .zy-dc-featured h2 {
-	margin: 12px 0 12px;
+	margin: 36px auto 16px;
+	max-width: 1100px;
 	font-family: var(--font-abc-ginto-nord-zycord);
-	font-size: 40px;
-	line-height: 44px;
+	font-size: 56px;
+	line-height: 56px;
+	letter-spacing: -0.56px;
 	text-transform: uppercase;
+	text-align: center;
+}
+
+.zy-dc-featured p {
+	margin: 0 auto;
+	max-width: 760px;
+	font-size: 20px;
+	line-height: 28px;
+	color: rgba(255, 255, 255, 0.82);
+}
+
+.zy-dc-blog-toolbar {
+	position: sticky;
+	top: 72px;
+	z-index: 5;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	flex-wrap: wrap;
+	padding: 12px 0 28px;
+	background: linear-gradient(#0d0f2c 0%, rgba(13, 15, 44, 0.92) 70%, rgba(13, 15, 44, 0) 100%);
 }
 
 .zy-dc-blog-cats {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
-	margin: 8px 0 32px;
+	margin: 0;
 }
 
 .zy-dc-blog-cats a {
@@ -5655,10 +5869,35 @@ body.zy-dc-light .zy-footer {
 	color: #000000;
 }
 
+.zy-dc-blog-search {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	height: 40px;
+	padding: 0 14px;
+	border-radius: 20px;
+	border: 1px solid rgba(255, 255, 255, 0.18);
+	background: rgba(255, 255, 255, 0.06);
+}
+
+.zy-dc-blog-search input {
+	width: 140px;
+	border: 0;
+	outline: none;
+	background: transparent;
+	color: #ffffff;
+	font-size: 14px;
+}
+
+.zy-dc-blog-explore {
+	margin: 8px 0 32px;
+	text-align: left;
+}
+
 .zy-dc-post-grid {
 	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 24px;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 48px 40px;
 }
 
 .zy-dc-post-card {
@@ -5667,22 +5906,26 @@ body.zy-dc-light .zy-footer {
 
 .zy-dc-post-card img {
 	width: 100%;
-	height: 190px;
+	aspect-ratio: 647 / 343;
+	height: auto;
 	object-fit: cover;
-	border-radius: 16px;
-	margin-bottom: 12px;
+	border-radius: 56px;
+	margin-bottom: 16px;
+	background: #1a1c3a;
 }
 
 .zy-dc-post-card h3 {
 	margin: 8px 0 8px;
-	font-size: 20px;
-	line-height: 26px;
+	font-family: var(--font-abc-ginto-nord-zycord);
+	font-size: 28px;
+	line-height: 32px;
+	text-transform: uppercase;
 }
 
 .zy-dc-post-card p {
 	margin: 0;
-	font-size: 14px;
-	line-height: 20px;
+	font-size: 16px;
+	line-height: 24px;
 	color: rgba(255, 255, 255, 0.72);
 }
 
@@ -5746,7 +5989,7 @@ body.zy-dc-light .zy-footer {
 	font-weight: 700;
 	font-size: 48px;
 	line-height: 48px;
-	letter-spacing: -0.03em;
+	letter-spacing: -0.48px;
 	text-transform: uppercase;
 	color: #ffffff;
 }
@@ -5797,22 +6040,42 @@ body.zy-dc-light .zy-dc-404-copy {
 		line-height: 60px;
 		letter-spacing: -1.6px;
 	}
+	.zy-dc-featured h2 {
+		font-size: 40px;
+		line-height: 44px;
+	}
+	.zy-dc-featured-banner {
+		border-radius: 64px;
+	}
+	.zy-dc-stats strong {
+		font-size: 48px;
+		line-height: 48px;
+	}
 }
 
 @media (max-width: 1100px) {
 	.zy-dc-server-grid {
-		grid-template-columns: repeat(2, minmax(0, 387px));
+		grid-template-columns: repeat(2, 387px);
+		justify-content: center;
+	}
+	.zy-dc-quests-shots,
+	.zy-dc-post-grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 	.zy-dc-megaphone,
 	.zy-dc-wumpus-lab,
-	.zy-dc-hero-prop {
+	.zy-dc-hero-prop,
+	.zy-dc-quests-trophy {
 		display: none;
 	}
 }
 
 @media (max-width: 820px) {
-	.zy-dc-wrap {
-		padding: 0 20px;
+	.zy-dc-wrap,
+	.zy-dc-quests-designed,
+	.zy-dc-stats {
+		padding-left: 20px;
+		padding-right: 20px;
 	}
 	.zy-dc-server-grid,
 	.zy-dc-help-grid,
@@ -5820,7 +6083,9 @@ body.zy-dc-light .zy-dc-404-copy {
 	.zy-dc-related,
 	.zy-dc-podium,
 	.zy-dc-featured,
-	.zy-dc-form-grid {
+	.zy-dc-form-grid,
+	.zy-dc-quests-shots,
+	.zy-dc-stats {
 		grid-template-columns: 1fr;
 	}
 	.zy-dc-h1,
@@ -5838,9 +6103,15 @@ body.zy-dc-light .zy-dc-404-copy {
 		flex-basis: 180px;
 		border-radius: 40px;
 	}
-	.zy-dc-h2 {
-		font-size: 36px;
-		line-height: 38px;
+	.zy-dc-h2,
+	.zy-dc-featured h2,
+	.zy-dc-post-card h3 {
+		font-size: 28px;
+		line-height: 32px;
+	}
+	.zy-dc-featured-banner,
+	.zy-dc-post-card img {
+		border-radius: 32px;
 	}
 	.zy-dc-server-card,
 	.zy-dc-server-splash {
