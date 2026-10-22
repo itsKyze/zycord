@@ -1,22 +1,22 @@
 {
-  "version": "1.0.12",
-  "versionCode": 12,
-  "releaseDate": "2026-10-19T00:18:26.307Z",
+  "version": "1.0.13",
+  "versionCode": 13,
+  "releaseDate": "2026-10-22T20:18:38.197Z",
   "platforms": {
     "windows": [
       {
         "fileName": "ZycordSetup.exe",
         "url": "/updates/windows/ZycordSetup.exe",
         "downloadUrl": "/download/ZycordSetup.exe",
-        "sha512": "rC4UVXwDr9RKUhaH2PCRS7N/t4AFIvBfFofbiGLzgLhsf+8/Wd/edapKA9U/Unxh5buCGrzLy2aFCHjP96jTww==",
-        "size": 84648464
+        "sha512": "gTznjpc7RIeY2Uq5pAbWd3H1HjGUVKVkzdAvmSPVE8d7wcjThaJNBjSgNEwgEZmOQ+Q/8bot9l0EhDticnZ38g==",
+        "size": 84651133
       },
       {
         "fileName": "ZycordSetup-x64.exe",
         "url": "/updates/windows/ZycordSetup-x64.exe",
         "downloadUrl": "/download/ZycordSetup-x64.exe",
-        "sha512": "rC4UVXwDr9RKUhaH2PCRS7N/t4AFIvBfFofbiGLzgLhsf+8/Wd/edapKA9U/Unxh5buCGrzLy2aFCHjP96jTww==",
-        "size": 84648464
+        "sha512": "gTznjpc7RIeY2Uq5pAbWd3H1HjGUVKVkzdAvmSPVE8d7wcjThaJNBjSgNEwgEZmOQ+Q/8bot9l0EhDticnZ38g==",
+        "size": 84651133
       }
     ]
   }

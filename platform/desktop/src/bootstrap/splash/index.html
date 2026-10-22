@@ -4,6 +4,16 @@
   <meta charset="utf-8" />
   <title>Zycord</title>
   <style>
+    @font-face {
+      font-family: 'gg sans';
+      font-weight: 400;
+      src: url('./fonts/ggsans-400-normal.woff2') format('woff2');
+    }
+    @font-face {
+      font-family: 'gg sans';
+      font-weight: 500;
+      src: url('./fonts/ggsans-500-medium.woff2') format('woff2');
+    }
     * {
       box-sizing: border-box;
       user-select: none;
@@ -16,7 +26,7 @@
       height: 100%;
       overflow: hidden;
       background-color: #282b30;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-family: 'gg sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       cursor: default;
     }
     #splash-container {
@@ -72,8 +82,17 @@
       font-size: 11px;
       color: #8a8e94;
       margin-top: 12px;
-      max-width: 240px;
+      max-width: 250px;
       line-height: 1.4;
+      min-height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+    .quote-text.fade {
+      opacity: 0;
     }
   </style>
 </head>
@@ -95,6 +114,33 @@
     const statusEl = document.getElementById('splash-status');
     const progressWrap = document.getElementById('splash-progress-wrap');
     const progressFill = document.getElementById('splash-progress-fill');
+    const quoteEl = document.getElementById('splash-quote');
+
+    const QUOTES = [
+      "Hang on, connecting to Zycord Voice & Chat...",
+      "Upsorbing the Contents",
+      "Additive Parsing the Load",
+      "Commence Monosaturated Goodening",
+      "Kick Off the Multi-Core Widening",
+      "Bastening the Game Turkey",
+      "Abstracting the Rummage Disc",
+      "Undecerealenizing the Process",
+      "Postrefragmenting the Widget Layer",
+      "Satisfying the Constraints",
+      "Abnormalizing Some of the Matrices",
+      "Optimizing the People",
+      "Proclaigerizing the Network"
+    ];
+
+    let quoteIndex = 0;
+    setInterval(() => {
+      quoteIndex = (quoteIndex + 1) % QUOTES.length;
+      quoteEl.classList.add('fade');
+      setTimeout(() => {
+        quoteEl.textContent = QUOTES[quoteIndex];
+        quoteEl.classList.remove('fade');
+      }, 300);
+    }, 4000);
 
     ipcRenderer.on('ZYCORD_SPLASH_UPDATE_STATE', (_, state) => {
       if (!state) return;

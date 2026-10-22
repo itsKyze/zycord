@@ -1,7 +1,7 @@
 {
     "name": "zycord",
     "productName": "Zycord",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "description": "Zycord Desktop Client",
     "main": "src/main.js",
     "author": {
@@ -50,7 +50,8 @@
             "uninstallDisplayName": "Zycord",
             "runAfterFinish": true,
             "deleteAppDataOnUninstall": false,
-            "artifactName": "ZycordSetup-x64.exe"
+            "artifactName": "ZycordSetup-x64.exe",
+            "include": "assets/installer.nsh"
         },
         "publish": [
             {

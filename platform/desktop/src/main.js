@@ -2,7 +2,7 @@
  * Zycord Desktop Main Entry Point
  */
 const path = require("path");
-const { app, BrowserWindow, ipcMain } = require("electron");
+const { app, BrowserWindow, ipcMain, clipboard } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
 
@@ -71,7 +71,17 @@ function createMainWindow() {
         },
     });
 
+    const DISCORD_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9168 Chrome/128.0.6613.186 Electron/33.2.0 Safari/537.36 Zycord/1.0.13";
+    mainWindow.webContents.setUserAgent(DISCORD_UA);
+
     const webappUrl = process.env.ZYCORD_WEBAPP_URL || DEFAULT_WEBAPP_URL;
+
+    mainWindow.webContents.on("did-fail-load", (_event, errorCode, errorDescription, validatedURL) => {
+        log.warn("[MainWindow] Failed to load URL:", validatedURL, errorCode, errorDescription);
+        if (validatedURL !== "https://app.zyron.site") {
+            mainWindow.loadURL("https://app.zyron.site");
+        }
+    });
 
     mainWindow.loadURL(webappUrl).catch(() => {
         mainWindow.loadURL("https://app.zyron.site");
@@ -144,27 +154,44 @@ ipcMain.on("ZYCORD_SPLASH_SCREEN_READY", () => {
 });
 
 // Native Window Controls
-ipcMain.handle(IPCEvents.WINDOW_MINIMIZE, () => {
-    if (mainWindow) mainWindow.minimize();
-});
-
-ipcMain.handle(IPCEvents.WINDOW_MAXIMIZE, () => {
+const handleMinimize = () => { if (mainWindow) mainWindow.minimize(); };
+const handleMaximize = () => {
     if (mainWindow) {
         if (mainWindow.isMaximized()) mainWindow.unmaximize();
         else mainWindow.maximize();
     }
-});
+};
+const handleClose = () => { if (mainWindow) mainWindow.close(); };
 
-ipcMain.handle(IPCEvents.WINDOW_CLOSE, () => {
-    if (mainWindow) mainWindow.close();
-});
+ipcMain.handle(IPCEvents.WINDOW_MINIMIZE, handleMinimize);
+ipcMain.handle("window-minimize", handleMinimize);
+
+ipcMain.handle(IPCEvents.WINDOW_MAXIMIZE, handleMaximize);
+ipcMain.handle("window-maximize", handleMaximize);
+
+ipcMain.handle(IPCEvents.WINDOW_CLOSE, handleClose);
+ipcMain.handle("window-close", handleClose);
 
 ipcMain.handle(IPCEvents.WINDOW_SET_ALWAYS_ON_TOP, (_event, enabled) => {
+    if (mainWindow) mainWindow.setAlwaysOnTop(!!enabled);
+});
+ipcMain.handle("window-set-always-on-top", (_event, enabled) => {
     if (mainWindow) mainWindow.setAlwaysOnTop(!!enabled);
 });
 
 ipcMain.on("window-is-maximized", (event) => {
     event.returnValue = mainWindow ? mainWindow.isMaximized() : false;
+});
+
+ipcMain.handle("clipboard-copy", (_event, text) => {
+    clipboard.writeText(text || "");
+});
+ipcMain.handle("clipboard-paste", () => {
+    return clipboard.readText();
+});
+ipcMain.handle("window-relaunch", () => {
+    app.relaunch();
+    app.quit();
 });
 
 ipcMain.handle("check-for-updates", async () => {
