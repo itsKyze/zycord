@@ -2,9 +2,11 @@
  * Zycord Desktop Main Entry Point
  */
 const path = require("path");
-const { app, BrowserWindow, ipcMain, clipboard } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, clipboard } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
+
+Menu.setApplicationMenu(null);
 
 log.transports.file.level = "info";
 autoUpdater.logger = log;
@@ -61,7 +63,13 @@ function createMainWindow() {
         minWidth: 940,
         minHeight: 500,
         backgroundColor: "#1e1f22",
-        frame: true,
+        autoHideMenuBar: true,
+        titleBarStyle: "hidden",
+        titleBarOverlay: {
+            color: "#1e1f22",
+            symbolColor: "#949ba4",
+            height: 32,
+        },
         show: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
@@ -70,6 +78,7 @@ function createMainWindow() {
             sandbox: false,
         },
     });
+    mainWindow.setMenuBarVisibility(false);
 
     const ZYCORD_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.186 Electron/33.4.11 Safari/537.36 Zycord/1.0.13";
     mainWindow.webContents.setUserAgent(ZYCORD_UA);
