@@ -1,8 +1,8 @@
-version: 1.0.13
+version: 1.0.14
 files:
   - url: ZycordSetup-x64.exe
-    sha512: gTznjpc7RIeY2Uq5pAbWd3H1HjGUVKVkzdAvmSPVE8d7wcjThaJNBjSgNEwgEZmOQ+Q/8bot9l0EhDticnZ38g==
-    size: 84651133
+    sha512: RUAZQbKx/mmEQuNTcOaDiVvFiqTjICUeESaTcBCElTyHNsFoYUxWEmPWkkbYihZEcsObnjvILx2dCIUHLAFZMw==
+    size: 84649326
 path: ZycordSetup-x64.exe
-sha512: gTznjpc7RIeY2Uq5pAbWd3H1HjGUVKVkzdAvmSPVE8d7wcjThaJNBjSgNEwgEZmOQ+Q/8bot9l0EhDticnZ38g==
-releaseDate: '2026-10-22T20:18:38.197Z'
+sha512: RUAZQbKx/mmEQuNTcOaDiVvFiqTjICUeESaTcBCElTyHNsFoYUxWEmPWkkbYihZEcsObnjvILx2dCIUHLAFZMw==
+releaseDate: '2026-10-22T20:43:53.631Z'

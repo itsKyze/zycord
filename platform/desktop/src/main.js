@@ -61,7 +61,7 @@ function createMainWindow() {
         minWidth: 940,
         minHeight: 500,
         backgroundColor: "#1e1f22",
-        frame: false,
+        frame: true,
         show: false,
         webPreferences: {
             preload: path.join(__dirname, "preload.js"),
@@ -71,8 +71,8 @@ function createMainWindow() {
         },
     });
 
-    const DISCORD_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) discord/1.0.9168 Chrome/128.0.6613.186 Electron/33.2.0 Safari/537.36 Zycord/1.0.13";
-    mainWindow.webContents.setUserAgent(DISCORD_UA);
+    const ZYCORD_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.186 Electron/33.4.11 Safari/537.36 Zycord/1.0.13";
+    mainWindow.webContents.setUserAgent(ZYCORD_UA);
 
     const webappUrl = process.env.ZYCORD_WEBAPP_URL || DEFAULT_WEBAPP_URL;
 
