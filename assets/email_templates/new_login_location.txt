@@ -8,6 +8,6 @@ password as soon as possible.
 
 Device: {deviceName}
 IP Address: {ipAddress}
-Location: {locationCity}, {locationRegion}, {locationCountryName}
+Location: {location}
 
 Verify Login: {actionUrl}

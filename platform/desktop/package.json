@@ -1,7 +1,7 @@
 {
     "name": "zycord",
     "productName": "Zycord",
-    "version": "1.0.15",
+    "version": "1.0.16",
     "description": "Zycord Desktop Client",
     "main": "src/main.js",
     "author": {

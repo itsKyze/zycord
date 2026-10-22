@@ -53,6 +53,8 @@ router.post(
             select: {
                 data: true,
                 id: true,
+                username: true,
+                discriminator: true,
                 disabled: true,
                 deleted: true,
                 account_standing: true,

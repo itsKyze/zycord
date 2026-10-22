@@ -156,26 +156,49 @@ export const Email: {
         const origin = [frontPage, serverName, endpoint].map((x) => (x && /^https?:\/\//.test(x) ? new URL(x).origin : null)).find(Boolean) ?? "https://app.zyron.site";
         const finalLogoUrl = logoUrl || `${origin}/static/zycord_logo.png`;
 
-        const replacements = [
-            ["{instanceName}", instanceName],
+        const rawCountry = ipInfo?.country_name || "";
+        let formattedCountry = rawCountry;
+        if (rawCountry && rawCountry.length === 2 && !rawCountry.toLowerCase().includes("unknown")) {
+            try {
+                const dn = new Intl.DisplayNames(["en"], { type: "region" });
+                formattedCountry = dn.of(rawCountry.toUpperCase()) || rawCountry;
+            } catch {
+                formattedCountry = rawCountry;
+            }
+        } else if (rawCountry.toLowerCase().includes("unknown")) {
+            formattedCountry = "";
+        }
+
+        const rawCity = ipInfo?.city && !ipInfo.city.toLowerCase().includes("unknown") ? ipInfo.city : "";
+        const rawRegion = ipInfo?.region && !ipInfo.region.toLowerCase().includes("unknown") ? ipInfo.region : "";
+
+        const locationParts = [rawCity, rawRegion && rawRegion !== rawCity ? rawRegion : "", formattedCountry].filter(Boolean);
+        const formattedLocation = locationParts.length > 0 ? locationParts.join(", ") : "Unknown Location";
+
+        const resolvedUsername = user.username || user.email?.split("@")[0] || "there";
+
+        const replacements: [string, string | undefined][] = [
+            ["{instanceName}", instanceName || "Zycord"],
             ["{logoUrl}", finalLogoUrl],
-            ["{userUsername}", user.username],
-            ["{userDiscriminator}", user.discriminator],
+            ["{userUsername}", resolvedUsername],
+            ["{userDiscriminator}", user.discriminator || "0000"],
             ["{userId}", user.id],
-            ["{phoneNumber}", user.phone?.slice(-4)],
-            ["{userEmail}", user.email],
-            ["{actionUrl}", actionUrl],
-            ["{ipAddress}", ipInfo?.ip],
-            ["{locationCity}", ipInfo?.city],
-            ["{locationRegion}", ipInfo?.region],
-            ["{locationCountryName}", ipInfo?.country_name],
-            ["{deviceName}", ipInfo && "device" in ipInfo ? ipInfo.device : undefined],
+            ["{phoneNumber}", user.phone?.slice(-4) || ""],
+            ["{userEmail}", user.email || ""],
+            ["{actionUrl}", actionUrl || ""],
+            ["{ipAddress}", ipInfo?.ip || "Unknown IP"],
+            ["{location}", formattedLocation],
+            ["{locationCity}", rawCity || formattedLocation],
+            ["{locationRegion}", rawRegion || ""],
+            ["{locationCountryName}", formattedCountry || ""],
+            ["{deviceName}", ipInfo && "device" in ipInfo && ipInfo.device ? ipInfo.device : "Desktop"],
         ];
 
         // loop through all replacements and replace them in the template
-        for (const [key, value] of Object.values(replacements)) {
-            if (!value) continue;
-            template = template.replaceAll(key as string, value);
+        for (const [key, value] of replacements) {
+            if (value !== undefined && value !== null) {
+                template = template.replaceAll(key, value);
+            }
         }
 
         return template;

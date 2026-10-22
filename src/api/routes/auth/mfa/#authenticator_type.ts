@@ -33,7 +33,7 @@ router.post("/", route({ authentication: "never", spacebarOnly: false }), async 
 
     const user = await User.findOneOrFail({
         where: { id: decoded.uid },
-        select: { id: true, disabled: true, deleted: true, email: true, verified: true, data: true },
+        select: { id: true, username: true, discriminator: true, disabled: true, deleted: true, email: true, verified: true, data: true },
         relations: { settings: true },
     });
     if (decoded.undelete && (user.disabled || user.deleted)) await User.update({ id: user.id }, { disabled: false, deleted: false });

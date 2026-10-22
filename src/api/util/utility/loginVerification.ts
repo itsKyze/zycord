@@ -116,13 +116,58 @@ async function markVerifyEmailSent(userId: string, deviceKey: string) {
     );
 }
 
-async function challengeNewDevice(req: Request, user: Pick<User, "id" | "email"> & { data?: User["data"] }, device: TrustedLoginDevice, idle: boolean) {
+async function resolveLocation(req: Request, ip: string) {
+    let city = (req.headers["cf-ipcity"] as string) || "";
+    let region = (req.headers["cf-region"] as string) || "";
+    const country = (req.headers["cf-ipcountry"] as string) || "";
+
+    if (!city && ip && ip !== "127.0.0.1" && ip !== "::1" && !ip.startsWith("192.168.") && !ip.startsWith("10.")) {
+        try {
+            const controller = new AbortController();
+            const timeout = setTimeout(() => controller.abort(), 1200);
+            const res = await fetch(`https://ipwho.is/${encodeURIComponent(ip)}`, { signal: controller.signal });
+            clearTimeout(timeout);
+            if (res.ok) {
+                const data = (await res.json()) as any;
+                if (data && data.success !== false) {
+                    city = data.city || city;
+                    region = data.region || region;
+                }
+            }
+        } catch {
+            // Ignore error or timeout, will fallback to country code
+        }
+    }
+
+    return {
+        city: city || "",
+        region: region || "",
+        country_name: country || "",
+    };
+}
+
+async function challengeNewDevice(
+    req: Request,
+    user: Pick<User, "id" | "email"> & { username?: string; discriminator?: string; data?: User["data"] },
+    device: TrustedLoginDevice,
+    idle: boolean,
+) {
     if (user.email && !recentlyEmailed(user, device.key)) {
+        if (!user.username) {
+            const freshUser = await User.findOne({ where: { id: user.id }, select: { id: true, username: true, discriminator: true } });
+            if (freshUser?.username) {
+                user.username = freshUser.username;
+                user.discriminator = freshUser.discriminator;
+            }
+        }
+
+        const loc = await resolveLocation(req, device.ip);
+
         await Email.sendNewLoginLocation(user as User, user.email, {
             ip: device.ip || "127.0.0.1",
-            city: (req.headers["cf-ipcity"] as string) || "Unknown City",
-            region: (req.headers["cf-region"] as string) || "Unknown Region",
-            country_name: (req.headers["cf-ipcountry"] as string) || "Unknown Country",
+            city: loc.city,
+            region: loc.region,
+            country_name: loc.country_name,
             device: device.label,
             deviceKey: device.key,
         }).catch((e) => {
@@ -142,7 +187,10 @@ async function challengeNewDevice(req: Request, user: Pick<User, "id" | "email">
     });
 }
 
-export async function gateNewLoginLocation(req: Request, user: Pick<User, "id" | "email" | "verified"> & { data?: User["data"] }) {
+export async function gateNewLoginLocation(
+    req: Request,
+    user: Pick<User, "id" | "email" | "verified"> & { username?: string; discriminator?: string; data?: User["data"] },
+) {
     const device = describeLoginDevice(req);
     if (!user.email || !user.verified) {
         if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
