@@ -43,7 +43,7 @@ const helpHref = (href: unknown) => {
 };
 
 const Icon = ({ size }: { size: number }) => (
-    <img src={imageUrl(env().INSTANCE_ICON) || "/favicon.svg"} width={size} height={size} alt="" style={{ objectFit: "contain" }} />
+    <img src={imageUrl(env().INSTANCE_ICON) || "/branding/zycord_icon_white.svg"} width={size} height={size} alt="" style={{ objectFit: "contain" }} />
 );
 
 let originalOpen: typeof window.open | null = null;
@@ -81,7 +81,7 @@ export default definePlugin({
     renderLogo: (fill: string, className?: string) => (
         <image
             className={className}
-            href={imageUrl(env().INSTANCE_ICON) || "/favicon.svg"}
+            href={imageUrl(env().INSTANCE_ICON) || "/branding/zycord_icon_white.svg"}
             x="0"
             y="0"
             width="24"
@@ -96,23 +96,17 @@ export default definePlugin({
         imageUrl(env().INSTANCE_LOGO) ? (
             <img className={className} src={env().INSTANCE_LOGO} alt={instanceName()} style={{ height: 24, width: "auto", objectFit: "contain" }} />
         ) : (
-            <div
+            <img
                 className={className}
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 10,
-                    height: 24,
-                    color: "#fff",
-                    fontFamily: 'var(--font-display, "gg sans", sans-serif)',
-                    fontSize: 20,
-                    fontWeight: 800,
-                    lineHeight: "24px",
+                src="/branding/zycord_logo_white.svg"
+                alt={instanceName()}
+                style={{ height: 24, width: "auto", objectFit: "contain" }}
+                onError={(e: React.SyntheticEvent<HTMLImageElement>) => {
+                    // fallback: render icon + text if SVG fails
+                    const img = e.currentTarget;
+                    img.style.display = "none";
                 }}
-            >
-                <Icon size={24} />
-                {instanceName()}
-            </div>
+            />
         ),
 
     start() {

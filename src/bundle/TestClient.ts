@@ -42,6 +42,7 @@ import {
     helpUrl,
     instanceIcon,
     instanceIconDataUri,
+    instanceIconWhiteDataUri,
     placeholderAvatarSvg,
     qrLogoSvg,
     sendBrandImage,
@@ -147,7 +148,9 @@ export function TestClientAssets(app: Application) {
         res.set("Cache-Control", "no-cache");
         const logo = branded.wordmark && brandImageUrls().logo;
         if (logo) return res.redirect(302, logo);
-        res.type("image/svg+xml").send(branded.svg(await instanceIconDataUri()));
+        // Wordmark SVGs are rendered on dark/blurple Discord backgrounds → supply white icon URI.
+        const iconUri = branded.wordmark ? await instanceIconWhiteDataUri() : await instanceIconDataUri();
+        res.type("image/svg+xml").send(branded.svg(iconUri));
     });
     app.get("/e2ee-sw.js", (req, res) => {
         res.set({ "Cache-Control": "no-cache", "Service-Worker-Allowed": "/" });

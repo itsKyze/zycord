@@ -26,7 +26,7 @@ export const MEOWCORD_SPINNER_CSS =
     "@keyframes meowcord-spinner-flip{0%{transform:perspective(500px) translateY(0) rotateY(0) scale(1)}18%{transform:perspective(500px) translateY(2px) rotateY(0) scale(1.12,.86)}50%{transform:perspective(500px) translateY(-18px) rotateY(180deg) scale(.96,1.06)}78%{transform:perspective(500px) translateY(0) rotateY(360deg) scale(1.1,.9)}90%,100%{transform:perspective(500px) translateY(0) rotateY(360deg) scale(1)}}.meowcord-spinner>svg{overflow:visible;animation:meowcord-spinner-flip 1.1s cubic-bezier(.5,0,.3,1) infinite;transform-origin:50% 50%}.zycord-spinner>svg{overflow:visible;animation:meowcord-spinner-flip 1.1s cubic-bezier(.5,0,.3,1) infinite;transform-origin:50% 50%}@media (prefers-reduced-motion:reduce){.meowcord-spinner>svg,.zycord-spinner>svg{animation:none}}";
 
 export const MeowcordPaths = ({ fill = "currentColor", className }: { fill?: string; className?: string }) => (
-    <image className={className} href="/favicon.svg" x="0" y="0" width="24" height="24" preserveAspectRatio="xMidYMid meet" />
+    <image className={className} href="/branding/zycord_icon_white.svg" x="0" y="0" width="24" height="24" preserveAspectRatio="xMidYMid meet" />
 );
 
 export function MeowcordSpinner({ className, onReady, setRef }: { className?: string; onReady?: () => void; setRef?: (element: HTMLElement | null) => void }) {
@@ -45,12 +45,12 @@ export function MeowcordSpinner({ className, onReady, setRef }: { className?: st
                 width: 200,
                 height: 200,
                 margin: "0 auto",
-                color: "var(--text-strong,var(--header-primary,black))",
+                color: "var(--text-strong,var(--header-primary,white))",
             }}
         >
             <style>{MEOWCORD_SPINNER_CSS}</style>
             <svg width="80" height="80" viewBox="0 0 512 512" aria-hidden="true">
-                <image href="/favicon.svg" x="0" y="0" width="512" height="512" preserveAspectRatio="xMidYMid meet" />
+                <image href="/branding/zycord_icon_white.svg" x="0" y="0" width="512" height="512" preserveAspectRatio="xMidYMid meet" />
             </svg>
         </div>
     );
