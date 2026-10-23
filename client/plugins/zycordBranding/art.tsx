@@ -23,13 +23,10 @@ export const MEOWCORD_HEAD =
 export const MEOWCORD_LEFT = "";
 export const MEOWCORD_RIGHT = "";
 export const MEOWCORD_SPINNER_CSS =
-    "@keyframes meowcord-spinner-flip{0%{transform:perspective(500px) translateY(0) rotateY(0) scale(1)}18%{transform:perspective(500px) translateY(2px) rotateY(0) scale(1.12,.86)}50%{transform:perspective(500px) translateY(-18px) rotateY(180deg) scale(.96,1.06)}78%{transform:perspective(500px) translateY(0) rotateY(360deg) scale(1.1,.9)}90%,100%{transform:perspective(500px) translateY(0) rotateY(360deg) scale(1)}}@keyframes meowcord-spinner-flare-l{0%,22%,80%,100%{transform:rotate(0)}50%{transform:rotate(-28deg)}}@keyframes meowcord-spinner-flare-r{0%,22%,80%,100%{transform:rotate(0)}50%{transform:rotate(28deg)}}.meowcord-spinner>svg{overflow:visible;animation:meowcord-spinner-flip 1.1s cubic-bezier(.5,0,.3,1) infinite;transform-origin:50% 75%}.meowcord-spinner .wl,.meowcord-spinner .wr{transform-box:fill-box}.meowcord-spinner .wl{transform-origin:100% 50%;animation:meowcord-spinner-flare-l 1.1s ease-in-out infinite}.meowcord-spinner .wr{transform-origin:0% 50%;animation:meowcord-spinner-flare-r 1.1s ease-in-out infinite}@media (prefers-reduced-motion:reduce){.meowcord-spinner>svg,.meowcord-spinner .wl,.meowcord-spinner .wr{animation:none}}";
+    "@keyframes meowcord-spinner-flip{0%{transform:perspective(500px) translateY(0) rotateY(0) scale(1)}18%{transform:perspective(500px) translateY(2px) rotateY(0) scale(1.12,.86)}50%{transform:perspective(500px) translateY(-18px) rotateY(180deg) scale(.96,1.06)}78%{transform:perspective(500px) translateY(0) rotateY(360deg) scale(1.1,.9)}90%,100%{transform:perspective(500px) translateY(0) rotateY(360deg) scale(1)}}.meowcord-spinner>svg{overflow:visible;animation:meowcord-spinner-flip 1.1s cubic-bezier(.5,0,.3,1) infinite;transform-origin:50% 50%}.zycord-spinner>svg{overflow:visible;animation:meowcord-spinner-flip 1.1s cubic-bezier(.5,0,.3,1) infinite;transform-origin:50% 50%}@media (prefers-reduced-motion:reduce){.meowcord-spinner>svg,.zycord-spinner>svg{animation:none}}";
 
 export const MeowcordPaths = ({ fill = "currentColor", className }: { fill?: string; className?: string }) => (
-    <g className={className} fill={fill}>
-        <path fillRule="evenodd" d={MEOWCORD_HEAD} />
-        <path d={MEOWCORD_LEFT + MEOWCORD_RIGHT} />
-    </g>
+    <image className={className} href="/favicon.svg" x="0" y="0" width="24" height="24" preserveAspectRatio="xMidYMid meet" />
 );
 
 export function MeowcordSpinner({ className, onReady, setRef }: { className?: string; onReady?: () => void; setRef?: (element: HTMLElement | null) => void }) {
@@ -37,7 +34,7 @@ export function MeowcordSpinner({ className, onReady, setRef }: { className?: st
     return (
         <div
             ref={setRef}
-            className={`meowcord-spinner ${className ?? ""}`}
+            className={`zycord-spinner meowcord-spinner ${className ?? ""}`}
             role="progressbar"
             aria-label="Loading"
             data-testid="app-spinner"
@@ -52,10 +49,8 @@ export function MeowcordSpinner({ className, onReady, setRef }: { className?: st
             }}
         >
             <style>{MEOWCORD_SPINNER_CSS}</style>
-            <svg width="80" height="80" viewBox="0 0 24 24" aria-hidden="true">
-                <path fill="currentColor" fillRule="evenodd" d={MEOWCORD_HEAD} />
-                <path className="wl" fill="currentColor" d={MEOWCORD_LEFT} />
-                <path className="wr" fill="currentColor" d={MEOWCORD_RIGHT} />
+            <svg width="80" height="80" viewBox="0 0 512 512" aria-hidden="true">
+                <image href="/favicon.svg" x="0" y="0" width="512" height="512" preserveAspectRatio="xMidYMid meet" />
             </svg>
         </div>
     );

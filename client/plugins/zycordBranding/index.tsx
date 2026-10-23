@@ -42,14 +42,9 @@ const helpHref = (href: unknown) => {
     return href;
 };
 
-const Icon = ({ size }: { size: number }) =>
-    imageUrl(env().INSTANCE_ICON) ? (
-        <img src={env().INSTANCE_ICON} width={size} height={size} alt="" style={{ objectFit: "contain" }} />
-    ) : (
-        <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-            <MeowcordPaths />
-        </svg>
-    );
+const Icon = ({ size }: { size: number }) => (
+    <img src={imageUrl(env().INSTANCE_ICON) || "/favicon.svg"} width={size} height={size} alt="" style={{ objectFit: "contain" }} />
+);
 
 let originalOpen: typeof window.open | null = null;
 
@@ -83,12 +78,17 @@ export default definePlugin({
         }
     },
 
-    renderLogo: (fill: string, className?: string) =>
-        imageUrl(env().INSTANCE_ICON) ? (
-            <image className={className} href={env().INSTANCE_ICON} x="0" y="0" width="24" height="24" preserveAspectRatio="xMidYMid meet" />
-        ) : (
-            <MeowcordPaths className={className} fill={fill} />
-        ),
+    renderLogo: (fill: string, className?: string) => (
+        <image
+            className={className}
+            href={imageUrl(env().INSTANCE_ICON) || "/favicon.svg"}
+            x="0"
+            y="0"
+            width="24"
+            height="24"
+            preserveAspectRatio="xMidYMid meet"
+        />
+    ),
 
     renderSpinner: (props: { className?: string; onReady?: () => void; setRef?: (element: HTMLElement | null) => void }) => <MeowcordSpinner {...props} />,
 

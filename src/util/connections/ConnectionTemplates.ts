@@ -251,7 +251,7 @@ export const renderConnectingHtml = (providerId: string): string => {
     <div class="container">
         <div class="icons">
             <div class="icon-bubble instance-icon">
-                <img src="/favicon.svg" alt="${brand}" onerror="this.onerror=null; this.outerHTML='<svg width=\\'42\\' height=\\'42\\' viewBox=\\'0 0 24 24\\' fill=\\'#ffffff\\'><path d=\\'${INSTANCE_ICON_PATH}\\'/></svg>'" />
+                <img src="/favicon.svg" alt="${brand}" style="width:42px;height:42px;object-fit:contain;" />
             </div>
             <div class="plus-sign">+</div>
             <div class="icon-bubble provider-icon">
@@ -432,7 +432,7 @@ export const renderSuccessHtml = (providerId: string): string => {
     <div class="container">
         <div class="icons">
             <div class="icon-bubble instance-icon">
-                <img src="/favicon.svg" alt="${brand}" onerror="this.onerror=null; this.outerHTML='<svg width=\\'42\\' height=\\'42\\' viewBox=\\'0 0 24 24\\' fill=\\'#ffffff\\'><path d=\\'${INSTANCE_ICON_PATH}\\'/></svg>'" />
+                <img src="/favicon.svg" alt="${brand}" style="width:42px;height:42px;object-fit:contain;" />
             </div>
             <div class="plus-sign">+</div>
             <div class="icon-bubble provider-icon">

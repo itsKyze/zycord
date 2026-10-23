@@ -31,6 +31,8 @@ export const DEFAULT_FAVICON_FILE = path.join(ASSETS_FOLDER, "public", "branding
 
 export const DEFAULT_ICON_FILE = path.join(ASSETS_FOLDER, "icon.png");
 
+export const DEFAULT_LOGO_FILE = path.join(ASSETS_FOLDER, "public", "branding", "zycord_logo.png");
+
 export type BrandImage = { url: string } | { file: string };
 
 export const resolveBrandImage = (value?: string | null): BrandImage | null => {
@@ -41,9 +43,15 @@ export const resolveBrandImage = (value?: string | null): BrandImage | null => {
     return fs.statSync(file, { throwIfNoEntry: false })?.isFile() ? { file } : null;
 };
 
-export const instanceIcon = () => resolveBrandImage(Config.get().client.icon) ?? resolveBrandImage(Config.get().general.image);
+export const instanceIcon = () =>
+    resolveBrandImage(Config.get().client.icon) ??
+    resolveBrandImage(Config.get().general.image) ??
+    (fs.existsSync(DEFAULT_ICON_FILE) ? { file: DEFAULT_ICON_FILE } : null) ??
+    (fs.existsSync(DEFAULT_FAVICON_FILE) ? { file: DEFAULT_FAVICON_FILE } : null);
 
-export const instanceLogo = () => resolveBrandImage(Config.get().client.logo);
+export const instanceLogo = () =>
+    resolveBrandImage(Config.get().client.logo) ??
+    (fs.existsSync(DEFAULT_LOGO_FILE) ? { file: DEFAULT_LOGO_FILE } : null);
 
 export const instanceName = () => Config.get().client.instanceName || Config.get().general.instanceName || "Zycord";
 
@@ -58,8 +66,8 @@ export const brandImageUrls = () => {
     const icon = instanceIcon();
     const logo = instanceLogo();
     return {
-        icon: icon ? `/static/logo.png?v=${version(icon)}` : null,
-        logo: logo ? `/static/wordmark?v=${version(logo)}` : null,
+        icon: icon ? `/static/logo.png?v=${version(icon)}` : "/favicon.svg",
+        logo: logo ? `/static/wordmark?v=${version(logo)}` : "/branding/zycord_logo.png",
     };
 };
 
@@ -67,8 +75,8 @@ export const BRAND_COLOR = "#5865F2";
 
 export const instanceIconTile = () => {
     const { icon } = brandImageUrls();
-    if (icon) return `<img class="brand-icon" src="${escapeXml(icon)}" alt="" />`;
-    return `<svg class="brand-icon" viewBox="0 0 48 48" aria-hidden="true"><rect width="48" height="48" rx="15" fill="${BRAND_COLOR}"/><g transform="translate(6 6) scale(1.5)" fill="#fff"><path fill-rule="evenodd" d="${INSTANCE_ICON_PATH}"/><path d="${INSTANCE_WHISKERS_PATH}"/></g></svg>`;
+    const src = icon || "/favicon.svg";
+    return `<img class="brand-icon" src="${escapeXml(src)}" alt="" style="width:48px;height:48px;border-radius:15px;object-fit:contain;" />`;
 };
 
 const computeAssetBundleVersion = (): string => {
@@ -152,9 +160,7 @@ export const instanceIconDataUri = async () => {
 const escapeXml = (text: string) => text.replace(/[<>&"']/g, (c) => `&#${c.charCodeAt(0)};`);
 
 const iconMarkup = (x: number, y: number, size: number, iconUri: string | null) =>
-    iconUri
-        ? `<image href="${escapeXml(iconUri)}" x="${x}" y="${y}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`
-        : `<g fill="#fff" transform="translate(${x} ${y}) scale(${size / 24})"><path fill-rule="evenodd" d="${INSTANCE_ICON_PATH}"/><path d="${INSTANCE_WHISKERS_PATH}"/></g>`;
+    `<image href="${escapeXml(iconUri || "/favicon.svg")}" x="${x}" y="${y}" width="${size}" height="${size}" preserveAspectRatio="xMidYMid meet"/>`;
 
 export const wordmarkSvg = (box?: [number, number], iconUri: string | null = null) => {
     const name = instanceName();
@@ -164,14 +170,12 @@ export const wordmarkSvg = (box?: [number, number], iconUri: string | null = nul
 };
 
 export const qrLogoSvg = (iconUri: string | null = null) =>
-    `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#000"/>${iconMarkup(23, 23, 54, iconUri)}</svg>`;
+    `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#000"/>${iconMarkup(20, 20, 60, iconUri)}</svg>`;
 
 export const placeholderAvatarSvg = (size: number, background: string, foreground: string, iconUri: string | null = null) =>
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 256 256"><circle cx="128" cy="128" r="128" fill="${background}"/>${
-        iconUri
-            ? `<image href="${escapeXml(iconUri)}" x="62" y="62" width="132" height="132" preserveAspectRatio="xMidYMid meet" opacity="0.6"/>`
-            : `<g fill="${foreground}" transform="translate(62 62) scale(5.5)"><path fill-rule="evenodd" d="${INSTANCE_ICON_PATH}"/><path d="${INSTANCE_WHISKERS_PATH}"/></g>`
-    }</svg>`;
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 256 256"><circle cx="128" cy="128" r="128" fill="${background}"/><image href="${escapeXml(
+        iconUri || "/favicon.svg",
+    )}" x="62" y="62" width="132" height="132" preserveAspectRatio="xMidYMid meet" opacity="0.9"/></svg>`;
 
 export const APP_THEME_COLOR = "#121214";
 
@@ -222,4 +226,4 @@ export const appManifest = () => {
 };
 
 export const defaultAvatarSvg = (index: number) =>
-    `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><rect width="256" height="256" fill="${DEFAULT_AVATAR_COLORS[index % DEFAULT_AVATAR_COLORS.length]}"/><g fill="#fff" transform="translate(53 54) scale(6.25)"><path fill-rule="evenodd" d="${INSTANCE_ICON_PATH}"/><path d="${INSTANCE_WHISKERS_PATH}"/></g></svg>`;
+    `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><rect width="256" height="256" fill="${DEFAULT_AVATAR_COLORS[index % DEFAULT_AVATAR_COLORS.length]}"/><image href="/favicon.svg" x="48" y="48" width="160" height="160" preserveAspectRatio="xMidYMid meet"/></svg>`;
