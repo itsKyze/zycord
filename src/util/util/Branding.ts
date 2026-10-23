@@ -201,12 +201,25 @@ export const wordmarkSvg = (box?: [number, number], iconUri: string | null = nul
     return `<svg xmlns="http://www.w3.org/2000/svg" width="${boxWidth}" height="${boxHeight}" viewBox="0 0 ${width} 24" fill="none">${iconMarkup(0, 0, 24, iconUri)}<text x="32" y="19.5" fill="#fff" font-family="'gg sans','Noto Sans','Helvetica Neue',Helvetica,Arial,sans-serif" font-size="20" font-weight="800">${escapeXml(name)}</text></svg>`;
 };
 
+let cachedIconWhiteDataUri: string | null = null;
+export const getCachedIconWhiteDataUri = () => {
+    if (!cachedIconWhiteDataUri) {
+        try {
+            const buf = fs.readFileSync(DEFAULT_ICON_WHITE_FILE);
+            cachedIconWhiteDataUri = `data:image/png;base64,${buf.toString("base64")}`;
+        } catch {
+            cachedIconWhiteDataUri = "/branding/zycord_icon_white.svg";
+        }
+    }
+    return cachedIconWhiteDataUri;
+};
+
 export const qrLogoSvg = (iconUri: string | null = null) =>
-    `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#5865F2"/><circle cx="50" cy="50" r="46" fill="none" stroke="#fff" stroke-width="3"/><image href="${escapeXml(iconUri || "/branding/zycord_icon_white.svg")}" x="18" y="18" width="64" height="64" preserveAspectRatio="xMidYMid meet"/></svg>`;
+    `<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="50" fill="#000000"/><circle cx="50" cy="50" r="46" fill="none" stroke="#ffffff" stroke-width="3"/><image href="${escapeXml(iconUri || getCachedIconWhiteDataUri())}" x="18" y="18" width="64" height="64" preserveAspectRatio="xMidYMid meet"/></svg>`;
 
 export const placeholderAvatarSvg = (size: number, background: string, foreground: string, iconUri: string | null = null) =>
     `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 256 256"><circle cx="128" cy="128" r="128" fill="${background}"/><image href="${escapeXml(
-        iconUri || "/branding/zycord_icon_white.svg",
+        iconUri || getCachedIconWhiteDataUri(),
     )}" x="62" y="62" width="132" height="132" preserveAspectRatio="xMidYMid meet" opacity="0.9"/></svg>`;
 
 export const APP_THEME_COLOR = "#121214";
@@ -258,4 +271,4 @@ export const appManifest = () => {
 };
 
 export const defaultAvatarSvg = (index: number) =>
-    `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><rect width="256" height="256" fill="${DEFAULT_AVATAR_COLORS[index % DEFAULT_AVATAR_COLORS.length]}"/><image href="/branding/zycord_icon_white.svg" x="48" y="48" width="160" height="160" preserveAspectRatio="xMidYMid meet"/></svg>`;
+    `<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256"><rect width="256" height="256" rx="56" fill="${DEFAULT_AVATAR_COLORS[index % DEFAULT_AVATAR_COLORS.length]}"/><image href="${getCachedIconWhiteDataUri()}" x="48" y="48" width="160" height="160" preserveAspectRatio="xMidYMid meet"/></svg>`;

@@ -49,13 +49,14 @@ const checkout = () => {
         run("git", ["fetch", "-q", "--depth", "1", "origin", CONFIG.commit]);
     }
     run("git", ["checkout", "-q", "--force", CONFIG.commit]);
+    run("git", ["reset", "--hard", "-q", CONFIG.commit]);
     if (!fs.existsSync(SOURCE_PATCHES)) return;
     for (const patch of fs
         .readdirSync(SOURCE_PATCHES)
         .filter((x) => x.endsWith(".patch"))
         .sort()) {
         console.log(`[vencord] applying ${patch}`);
-        run("git", ["apply", "--whitespace=nowarn", path.join(SOURCE_PATCHES, patch)]);
+        run("git", ["apply", "--whitespace=nowarn", "--ignore-whitespace", "--ignore-space-change", path.join(SOURCE_PATCHES, patch)]);
     }
 };
 
