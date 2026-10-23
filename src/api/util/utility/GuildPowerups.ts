@@ -28,6 +28,8 @@ interface GuildPowerupDefinition {
     dependent_sku_id?: string;
     features: string[];
     image?: string;
+    static_image_url?: string;
+    animated_image_url?: string;
     additional_emoji_slots?: number;
     additional_sticker_slots?: number;
     additional_sound_slots?: number;
@@ -81,6 +83,8 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 3,
         features: ["GUILD_THEME"],
         image: "theme",
+        static_image_url: "/assets/powerups/theme.svg",
+        animated_image_url: "/assets/powerups/theme.svg",
     },
     {
         sku_id: "1351706802684952639",
@@ -91,6 +95,8 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 3,
         features: ["GUILD_TAGS"],
         image: "tag",
+        static_image_url: "/assets/powerups/tag.png",
+        animated_image_url: "/assets/powerups/tag_animated.png",
     },
     {
         sku_id: "1395150519886024775",
@@ -101,6 +107,8 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 3,
         features: ["GUILD_TAGS_BADGE_PACK_PETS"],
         image: "tag",
+        static_image_url: "/assets/powerups/pets.png",
+        animated_image_url: "/assets/powerups/pets_animated.png",
     },
     {
         sku_id: "1395150923734581339",
@@ -111,6 +119,8 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 5,
         features: ["GUILD_TAGS_BADGE_PACK_FLEX"],
         image: "tag",
+        static_image_url: "/assets/powerups/flex.png",
+        animated_image_url: "/assets/powerups/flex_animated.png",
     },
     {
         sku_id: "1466209416922667288",
@@ -121,6 +131,8 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 3,
         features: ["GUILD_TAGS_BADGE_PACK_PLANT"],
         image: "tag",
+        static_image_url: "/assets/powerups/plants.png",
+        animated_image_url: "/assets/powerups/plants.png",
     },
     {
         sku_id: "1466209416931055898",
@@ -131,6 +143,8 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 2,
         features: ["GUILD_TAGS_BADGE_PACK_CREEPY_CRAWLIES"],
         image: "tag",
+        static_image_url: "/assets/powerups/crawlies.png",
+        animated_image_url: "/assets/powerups/crawlies.png",
     },
     {
         sku_id: "1354906318279807056",
@@ -141,6 +155,8 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 3,
         features: ["ENHANCED_ROLE_COLORS"],
         image: "roles",
+        static_image_url: "/assets/powerups/roles.png",
+        animated_image_url: "/assets/powerups/roles_animated.png",
     },
     {
         sku_id: "1387197800336330924",
@@ -151,6 +167,8 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 5,
         features: ["VANITY_URL"],
         image: "invite",
+        static_image_url: "/assets/powerups/invite.svg",
+        animated_image_url: "/assets/powerups/invite.svg",
     },
     {
         sku_id: "1479204648718958665",
@@ -161,8 +179,19 @@ const POWERUPS: GuildPowerupDefinition[] = [
         boost_price: 3,
         features: ["MAX_FILE_SIZE_250_MB"],
         image: "uploads",
+        static_image_url: "/assets/powerups/uploads.svg",
+        animated_image_url: "/assets/powerups/uploads.svg",
     },
 ];
+
+const powerupImages = (powerup: GuildPowerupDefinition) => {
+    const staticUrl = powerup.static_image_url ?? (powerup.image ? `/assets/powerups/${powerup.image}.svg` : null);
+    const animatedUrl = powerup.animated_image_url ?? (powerup.image ? `/assets/powerups/${powerup.image}.svg` : null);
+    return {
+        animated_image_url: animatedUrl,
+        static_image_url: staticUrl,
+    };
+};
 
 const sku = (powerup: GuildPowerupDefinition) => ({
     id: powerup.sku_id,
@@ -187,8 +216,7 @@ const sku = (powerup: GuildPowerupDefinition) => ({
             additional_sticker_slots: powerup.additional_sticker_slots ?? 0,
             additional_sound_slots: powerup.additional_sound_slots ?? 0,
         },
-        animated_image_url: powerup.image ? `/assets/powerups/${powerup.image}.svg` : null,
-        static_image_url: powerup.image ? `/assets/powerups/${powerup.image}.svg` : null,
+        ...powerupImages(powerup),
     },
 });
 
@@ -201,8 +229,7 @@ export function guildPowerupListings() {
         benefits: [],
         powerup_metadata: {
             category_type: powerup.category,
-            animated_image_url: powerup.image ? `/assets/powerups/${powerup.image}.svg` : null,
-            static_image_url: powerup.image ? `/assets/powerups/${powerup.image}.svg` : null,
+            ...powerupImages(powerup),
             store_removal_date: null,
             deactivation_cooldown_period_days: 0,
         },
