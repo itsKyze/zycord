@@ -57,6 +57,20 @@
         *:focus-visible {
             outline: none !important;
         }
+
+        /* 4. Strip top borders and outer window outlines for 1:1 Discord parity */
+        #app-mount,
+        div[class*="appAsidePanelWrapper"],
+        div[class*="app_"],
+        div[class*="layers_"],
+        div[class*="layer_"] {
+            border: none !important;
+            border-top: none !important;
+            border-bottom: none !important;
+            border-radius: 0 !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
     `;
 
     if (document.head) document.head.appendChild(style);

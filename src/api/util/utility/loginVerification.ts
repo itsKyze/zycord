@@ -1,22 +1,32 @@
 import crypto from "node:crypto";
 import { Request } from "express";
 import { User, TrustedLoginDevice } from "@spacebar/database";
-import { Email, FieldErrors } from "@spacebar/util";
+import { Email, FieldErrors, Config, normalizeIp } from "@spacebar/util";
+
+export { normalizeIp };
 
 const DEVICE_IDLE_MS = 24 * 60 * 60 * 1000;
 const VERIFY_EMAIL_COOLDOWN_MS = 10 * 60 * 1000;
 
-export function normalizeIp(ip?: string | null) {
-    if (!ip) return "";
-    const value = ip.split(",")[0].trim().replace(/^::ffff:/i, "");
-    if (value === "::1") return "127.0.0.1";
-    return value;
-}
-
 export function requestIp(req: Request) {
-    const forwarded = req.headers["cf-connecting-ip"] ?? req.headers["x-forwarded-for"];
-    const header = Array.isArray(forwarded) ? forwarded[0] : forwarded;
-    return normalizeIp(typeof header === "string" ? header : req.ip);
+    const customHeader = Config.get().security.forwardedFor;
+    const headerCandidates = [
+        customHeader ? req.headers[customHeader.toLowerCase()] : undefined,
+        req.headers["cf-connecting-ip"],
+        req.headers["cf-pseudo-ipv4"],
+        req.headers["x-real-ip"],
+        req.headers["x-client-ip"],
+        req.headers["x-forwarded-for"],
+    ];
+    for (const raw of headerCandidates) {
+        if (!raw) continue;
+        const val = Array.isArray(raw) ? raw[0] : raw;
+        if (typeof val === "string" && val.trim().length > 0) {
+            const normalized = normalizeIp(val);
+            if (normalized) return normalized;
+        }
+    }
+    return normalizeIp(typeof req.ip === "string" && req.ip ? req.ip : req.socket?.remoteAddress);
 }
 
 function uaFingerprint(ua: string) {

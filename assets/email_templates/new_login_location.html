@@ -59,6 +59,14 @@
 				font-size: 14px;
 				line-height: 22px;
 				color: #2e3338;
+				word-break: break-word;
+				overflow-wrap: anywhere;
+			}
+			.ip-text {
+				font-family: Consolas, "Courier New", monospace;
+				font-size: 13px;
+				color: #2e3338;
+				word-break: break-all;
 			}
 			.btn-container {
 				text-align: center;
@@ -107,7 +115,7 @@
 				<div class="location-box">
 					<p>
 						<strong>Device:</strong> {deviceName}<br />
-						<strong>IP Address:</strong> {ipAddress}<br />
+						<strong>IP Address:</strong> <span class="ip-text">{ipAddress}</span><br />
 						<strong>Location:</strong> {location}
 					</p>
 				</div>

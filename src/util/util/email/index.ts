@@ -28,6 +28,7 @@ import { SendGridEmailClient } from "./clients/SendGridEmailClient";
 import { SMTPEmailClient } from "./clients/SMTPEmailClient";
 import { MailGunEmailClient } from "./clients/MailGunEmailClient";
 import { MailJetEmailClient } from "./clients/MailJetEmailClient";
+import { formatDisplayIp } from "../Ip";
 
 const ASSET_FOLDER_PATH = path.join(__dirname, "..", "..", "..", "..", "assets");
 const smtpCooldown = new Map<string, number>();
@@ -186,7 +187,7 @@ export const Email: {
             ["{phoneNumber}", user.phone?.slice(-4) || ""],
             ["{userEmail}", user.email || ""],
             ["{actionUrl}", actionUrl || ""],
-            ["{ipAddress}", ipInfo?.ip || "Unknown IP"],
+            ["{ipAddress}", formatDisplayIp(ipInfo?.ip)],
             ["{location}", formattedLocation],
             ["{locationCity}", rawCity || formattedLocation],
             ["{locationRegion}", rawRegion || ""],

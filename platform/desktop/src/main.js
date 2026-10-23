@@ -75,7 +75,7 @@ function createMainWindow() {
     });
     mainWindow.setMenuBarVisibility(false);
 
-    const ZYCORD_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.186 Electron/33.4.11 Safari/537.36 Zycord/1.0.13";
+    const ZYCORD_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.186 Electron/33.4.11 Safari/537.36 Zycord/1.0.17";
     mainWindow.webContents.setUserAgent(ZYCORD_UA);
 
     const webappUrl = process.env.ZYCORD_WEBAPP_URL || DEFAULT_WEBAPP_URL;

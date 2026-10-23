@@ -7,8 +7,9 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const downloadDir = path.join(root, "assets", "public", "download");
 const updatesDir = path.join(root, "assets", "public", "updates");
 const desktopDist = path.join(root, "platform", "desktop", "dist");
-const version = "1.0.11";
-const versionCode = 11;
+const desktopPkg = JSON.parse(fs.readFileSync(path.join(root, "platform", "desktop", "package.json"), "utf8"));
+const version = desktopPkg.version || "1.0.17";
+const versionCode = parseInt(version.split(".").pop(), 10) || 17;
 const releaseDate = new Date().toISOString();
 
 fs.mkdirSync(downloadDir, { recursive: true });
