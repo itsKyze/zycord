@@ -17,14 +17,30 @@
 */
 
 import { NextFunction, Request, Response } from "express";
-
-// TODO: config settings
+import { Config } from "@spacebar/util";
 
 export function CORS(req: Request, res: Response, next: NextFunction) {
-    res.set("Access-Control-Allow-Credentials", "true");
+    const origin = req.header("Origin");
+    const allowed = Config.get().security?.allowedOrigins ?? [];
+    const cdnPublic = Config.get().cdn?.endpointPublic;
+    const isAllowed =
+        !origin ||
+        allowed.includes("*") ||
+        allowed.includes(origin) ||
+        (cdnPublic && origin === cdnPublic) ||
+        (process.env.NODE_ENV !== "production" && (origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:")));
+
+    if (origin && isAllowed) {
+        res.set("Access-Control-Allow-Origin", origin);
+        res.set("Access-Control-Allow-Credentials", "true");
+    } else if (!origin) {
+        // Non-browser or same-origin request
+    } else {
+        res.set("Access-Control-Allow-Origin", "null");
+    }
+
     res.set("Access-Control-Allow-Headers", req.header("Access-Control-Request-Headers") || "*");
     res.set("Access-Control-Allow-Methods", req.header("Access-Control-Request-Method") || "*");
-    res.set("Access-Control-Allow-Origin", req.header("Origin") ?? "*");
     res.set("Access-Control-Max-Age", "60"); // dont make it too long so we can change it dynamically
     // TODO: use better CSP
     res.set(

@@ -22,7 +22,7 @@ import probe from "probe-image-size";
 import { FindOptionsWhere, In } from "typeorm";
 import { EmbedCache, Message } from "@spacebar/database";
 import { sleep, arrayDistinctBy, arrayGroupBy, normalizeUrl } from "@spacebar/extensions";
-import { Config, emitEvent, externalProxyUrl, MessageFlags, MessageUpdateEvent, OrmUtils, readVideoDimensions } from "@spacebar/util";
+import { Config, emitEvent, externalProxyUrl, MessageFlags, MessageUpdateEvent, OrmUtils, readVideoDimensions, fetchPublicUrl } from "@spacebar/util";
 import { Embed, EmbedImage, EmbedType } from "@spacebar/schemas";
 
 export function getDefaultFetchOptions(): RequestInit {
@@ -110,7 +110,7 @@ export const getMetaDescriptions = (text: string) => {
 
 const doFetch = async (url: URL, opts?: RequestInit) => {
     try {
-        const res = await fetch(url, OrmUtils.mergeDeep({ ...getDefaultFetchOptions() }, opts ?? {}));
+        const res = await fetchPublicUrl(url.toString(), OrmUtils.mergeDeep({ ...getDefaultFetchOptions() }, opts ?? {}));
         if (res.headers.get("content-length")) {
             const contentLength = parseInt(res.headers.get("content-length")!);
             if (Config.get().limits.message.maxEmbedDownloadSize && contentLength > Config.get().limits.message.maxEmbedDownloadSize) {
@@ -126,7 +126,7 @@ const doFetch = async (url: URL, opts?: RequestInit) => {
 const probeVideo = async (url: URL, contentLength: number) => {
     const chunk = 1024 * 1024;
     const read = async (range: string) => {
-        const res = await fetch(url, { ...getDefaultFetchOptions(), headers: { ...getDefaultFetchOptions().headers, range } }).catch(() => null);
+        const res = await fetchPublicUrl(url.toString(), { ...getDefaultFetchOptions(), headers: { ...getDefaultFetchOptions().headers, range } }).catch(() => null);
         if (!res?.ok) return undefined;
         const reader = res.body?.getReader();
         if (!reader) return undefined;
@@ -189,7 +189,7 @@ const gifvHandler =
     };
 
 const genericImageHandler = async (url: URL): Promise<Embed | null> => {
-    const type = await fetch(url, {
+    const type = await fetchPublicUrl(url.toString(), {
         ...getDefaultFetchOptions(),
         method: "HEAD",
     });
@@ -223,7 +223,7 @@ export const EmbedHandlers: {
 } = {
     // the url does not have a special handler
     default: async (url: URL) => {
-        const type = await fetch(url, {
+        const type = await fetchPublicUrl(url.toString(), {
             ...getDefaultFetchOptions(),
             method: "HEAD",
         });

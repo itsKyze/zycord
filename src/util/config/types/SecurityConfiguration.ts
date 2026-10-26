@@ -47,4 +47,5 @@ export class SecurityConfiguration {
     cdnSignatureIncludeIp: boolean = true;
     cdnSignatureIncludeUserAgent: boolean = true;
     allowPrivateNetworkRequests: boolean = false;
+    allowedOrigins: string[] = [];
 }

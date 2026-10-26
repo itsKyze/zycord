@@ -18,7 +18,7 @@
 
 import fs from "node:fs";
 import fsp from "node:fs/promises";
-import { join, dirname, resolve, relative, isAbsolute } from "node:path";
+import { join, dirname, resolve, relative, isAbsolute, sep } from "node:path";
 import { randomUUID } from "node:crypto";
 import { Readable } from "node:stream";
 import { pipeline } from "node:stream/promises";
@@ -30,7 +30,15 @@ export class FileStorage implements Storage {
         const root = resolve(process.env.STORAGE_LOCATION || "../");
         const filename = resolve(root, path);
         const child = relative(root, filename);
-        if (path.includes("\0") || child === ".." || child.startsWith("../") || isAbsolute(child)) throw new Error("invalid path");
+        if (
+            path.includes("\0") ||
+            child === ".." ||
+            child.startsWith(".." + sep) ||
+            child.startsWith("../") ||
+            child.startsWith("..\\") ||
+            isAbsolute(child) ||
+            (filename !== root && !filename.startsWith(root.endsWith(sep) ? root : root + sep))
+        ) throw new Error("invalid path");
         return filename;
     }
 
