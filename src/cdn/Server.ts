@@ -93,6 +93,7 @@ export class CDNServer extends Server {
         await SystemdLifecycle.setStatus(`Listening on ${this.options.host}:${this.options.port}...`);
         await ProcessLifecycle.Ready();
     }
+    
 
     async migrateAttachments() {
         if (await storage.exists(".mig_complete.attachments1")) return;
