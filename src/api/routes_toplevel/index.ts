@@ -18,10 +18,23 @@
 
 import fs from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { Router, Response, Request } from "express";
 import { route } from "@spacebar/api/middlewares";
 import { legalPageRouter } from "@spacebar/api/util";
 import { ASSETS_FOLDER, brandPage, Config, getRevInfoOrFail, PUBLIC_ASSETS_FOLDER } from "@spacebar/util";
+
+function generateCdnAccessDeniedXml(): string {
+	const reqId = "000001" + crypto.randomBytes(13).toString("hex").toUpperCase();
+	const hostId = crypto.randomBytes(48).toString("base64");
+	return `<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+  <Code>AccessDenied</Code>
+  <Message>Access Denied</Message>
+  <RequestId>${reqId}</RequestId>
+  <HostId>${hostId}</HostId>
+</Error>`;
+}
 
 const router = Router({ mergeParams: true });
 const indexPagePath = path.join(PUBLIC_ASSETS_FOLDER, "index.html");
@@ -195,7 +208,14 @@ router.get(
 		spacebarOnly: true,
 		authentication: "never",
 	}),
-	(_req: Request, res: Response) => {
+	(req: Request, res: Response) => {
+		const host = (req.headers["x-forwarded-host"] || req.headers.host || "").toString().toLowerCase();
+		if (host.startsWith("cdn.") || host === "cdn.zyron.site") {
+			res.status(403);
+			res.set("Content-Type", "application/xml; charset=utf-8");
+			res.set("Cache-Control", "no-cache, no-store, must-revalidate");
+			return res.send(generateCdnAccessDeniedXml());
+		}
 		const page = fs.readFileSync(indexPagePath, "utf8");
 		res.set("Cache-Control", "no-store, no-cache, must-revalidate");
 		return res.type("html").send(brandPage(page));

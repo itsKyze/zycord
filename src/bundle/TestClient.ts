@@ -21,7 +21,7 @@ import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
 import zlib from "node:zlib";
-import { createHash } from "node:crypto";
+import crypto, { createHash } from "node:crypto";
 import { pipeline } from "node:stream/promises";
 import { ClientAssetCompression, clientAssetVersion } from "./ClientAssetCompression";
 import { compressedStatic } from "../util/util/CompressedStatic";
@@ -422,6 +422,21 @@ export default function TestClient(app: Application) {
     });
 
     app.get("/{*splat}", (req, res, next) => {
+        const host = (req.hostname || req.headers.host || "").toLowerCase();
+        if (host.startsWith("cdn.") || host === "cdn.zyron.site") {
+            const reqId = "000001" + crypto.randomBytes(13).toString("hex").toUpperCase();
+            const hostId = crypto.randomBytes(48).toString("base64");
+            res.status(403);
+            res.set("Content-Type", "application/xml; charset=utf-8");
+            res.set("Cache-Control", "no-cache, no-store, must-revalidate");
+            return res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<Error>
+  <Code>AccessDenied</Code>
+  <Message>Access Denied</Message>
+  <RequestId>${reqId}</RequestId>
+  <HostId>${hostId}</HostId>
+</Error>`);
+        }
         if (/^\/(api|cdn|attachments|avatars|icons|banners|emojis|stickers|imageproxy|connections|docs|developers)\b/.test(req.path)) return next();
         const sourceChanged = DEVELOPMENT && stamp !== (stamp = sourceStamp());
         if (sourceChanged) roots = clientRoots();

@@ -91,19 +91,5 @@ cdn.zyron.site {
 	}
 	encode zstd gzip
 
-	# Official CDN Protection on root
-	@root path /
-	handle @root {
-		header Content-Type application/xml
-		respond `<?xml version="1.0" encoding="UTF-8"?>
-<Error>
-  <Code>AccessDenied</Code>
-  <Message>Access Denied</Message>
-</Error>` 403
-	}
-
-	# Zycord CDN (attachments, avatars, icons, banners, emojis, stickers)
-	handle {
-		reverse_proxy server:3001
-	}
+	reverse_proxy server:3001
 }
