@@ -537,10 +537,9 @@ export function transformDocsHtml(raw: string): string {
 	// 0. Remove the ugly "Documentation Index" blockquote banner completely
 	raw = raw.replace(/<blockquote[^>]*data-agent-docs-index="true"[^>]*>[\s\S]*?<\/blockquote>/gi, "");
 
-	// 1. Keep Mintlify assets strictly first-party (relative /_mintlify/) so Brave Shields / adblockers never block them
+	// 1. Keep Mintlify assets strictly first-party (relative /_mintlify/ and /mintlify-assets/) so adblockers never block them
 	raw = raw.replaceAll("https://docs.discord.com/_mintlify/", "/_mintlify/");
-	raw = raw.replaceAll("https://docs.discord.com/mintlify-assets/", "/_mintlify/assets/");
-	raw = raw.replaceAll("/mintlify-assets/", "/_mintlify/assets/");
+	raw = raw.replaceAll("https://docs.discord.com/mintlify-assets/", "/mintlify-assets/");
 
 	// 2. Replace Mintlify navbar logo with Zycord Docs Logo (light + dark mode automatic switching)
 	const zycordDocsLogo = `<a class="select-none zy-docs-brand" style="-webkit-touch-callout:none" href="/developers/docs"><span class="sr-only">Zycord Developer Documentation</span><img class="nav-logo w-auto h-7 relative object-contain shrink-0 block dark:hidden" src="/branding/zycord_docs_light.svg" alt="Zycord Developer Docs"/><img class="nav-logo w-auto h-7 relative object-contain shrink-0 hidden dark:block" src="/branding/zycord_docs_dark.svg" alt="Zycord Developer Docs"/></a>`;
@@ -647,10 +646,7 @@ export function cleanSlug(rawSlug?: string): string {
 	if (!s || s === "docs" || s === "developers" || s === "developers/docs" || s === "index") {
 		return "intro";
 	}
-	if (s.startsWith("developers/docs/")) s = s.replace(/^developers\/docs\//, "");
-	else if (s.startsWith("developers/")) s = s.replace(/^developers\//, "");
-	else if (s.startsWith("docs/")) s = s.replace(/^docs\//, "");
-
+	s = s.replace(/^(developers\/|docs\/)+/gi, "");
 	s = s.replace(/\.(html|md)$/i, "");
 	return s || "intro";
 }

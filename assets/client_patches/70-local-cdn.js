@@ -1,14 +1,17 @@
 (() => {
+    const cdnHost = window.GLOBAL_ENV?.CDN_HOST || (location.host.startsWith("app.") ? location.host.replace(/^app\./, "cdn.") : location.host);
+    const cdnOrigin = `${location.protocol}//${cdnHost}`;
+    const cdnEndpoint = `//${cdnHost}`;
+
     if (window.GLOBAL_ENV) {
-        const endpoint = `//${location.host}`;
         Object.assign(window.GLOBAL_ENV, {
-            CDN_HOST: location.host,
-            MEDIA_PROXY_ENDPOINT: endpoint,
-            IMAGE_PROXY_ENDPOINTS: endpoint,
-            ASSET_ENDPOINT: endpoint,
+            CDN_HOST: cdnHost,
+            MEDIA_PROXY_ENDPOINT: cdnEndpoint,
+            IMAGE_PROXY_ENDPOINTS: cdnEndpoint,
+            ASSET_ENDPOINT: `//${location.host}`,
         });
     }
-    const cdn = () => location.origin;
+    const cdn = () => cdnOrigin;
     const instancePaths = /^\/(?:api|cdn|assets|attachments|avatars|icons|banners|emojis|stickers|clan-badges|badge-icons|avatar-decoration-presets|app-icons|app-assets|guild-events|role-icons|splashes|discovery-splashes|user-profile-effects|content-assets|krisp_browser_models|media|soundboard-sounds|application-directory|detectables|bad-domains|changelogs)(?:\/|$)/;
     const localHost = (host) => /^(?:localhost|[\w.-]+\.localhost|127(?:\.\d{1,3}){3}|0\.0\.0\.0|\[::1\])$/i.test(host);
     const instanceUrl = (value) => {
@@ -16,7 +19,10 @@
         try {
             const url = new URL(value, location.origin);
             if (url.username || url.password || !instancePaths.test(url.pathname)) return value;
-            if (url.host === location.host || localHost(url.hostname)) return `${location.origin}${url.pathname}${url.search}${url.hash}`;
+            if (url.host === location.host || url.host === cdnHost || localHost(url.hostname)) {
+                const targetOrigin = url.pathname.startsWith("/assets/") ? location.origin : cdnOrigin;
+                return `${targetOrigin}${url.pathname}${url.search}${url.hash}`;
+            }
         } catch {}
         return value;
     };

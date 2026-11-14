@@ -17,14 +17,14 @@ mail.zyron.site {
 	}
 
 	handle @websockets {
-		reverse_proxy mailflare:3000 {
+		reverse_proxy zyron-mail:3000 {
 			stream_close_delay 5m
 		}
 	}
 
 	handle {
 		encode zstd gzip
-		reverse_proxy mailflare:3000
+		reverse_proxy zyron-mail:3000
 	}
 }
 
@@ -69,8 +69,14 @@ docs.zyron.site {
 		}
 	}
 
+	handle /mintlify-assets/* {
+		reverse_proxy https://docs.discord.com {
+			header_up Host docs.discord.com
+		}
+	}
+
 	@notDocs {
-		not path /developers/docs /developers/docs/* /docs /docs/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /favicon.* /_mintlify/*
+		not path /developers /developers/* /docs /docs/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /favicon.* /_mintlify/* /mintlify-assets/*
 	}
 	rewrite @notDocs /developers/docs{uri}
 	reverse_proxy server:3001
@@ -88,8 +94,14 @@ developers.zyron.site {
 		}
 	}
 
+	handle /mintlify-assets/* {
+		reverse_proxy https://docs.discord.com {
+			header_up Host docs.discord.com
+		}
+	}
+
 	@notDev {
-		not path /developers /developers/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /emojis/* /stickers/* /imageproxy/* /favicon.* /_mintlify/*
+		not path /developers /developers/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /emojis/* /stickers/* /imageproxy/* /favicon.* /_mintlify/* /mintlify-assets/*
 	}
 	rewrite @notDev /developers{uri}
 	reverse_proxy server:3001
@@ -111,12 +123,6 @@ admin.zyron.site {
 cdn.zyron.site {
 	tls {
 		dns cloudflare {$CF_API_TOKEN}
-	}
-	header {
-		Access-Control-Allow-Origin *
-		Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS, HEAD"
-		Access-Control-Allow-Headers *
-		Access-Control-Expose-Headers *
 	}
 	encode zstd gzip
 
