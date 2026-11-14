@@ -934,6 +934,7 @@ async function renderSettings(view) {
                         ${toggle("externalRequests.discordTemplates", "Import server templates from Zycord")}
                         ${toggle("externalRequests.discordStickerPacks", "Import standard sticker packs from Zycord")}
                         ${toggle("externalRequests.discordBadDomains", "Download Zycord's blocked-domain list")}
+                        ${toggle("externalRequests.steamAssetFallback", "Download Steam avatar frame artwork", "Art for the Steam frames in the shop, fetched when someone views one.")}
                         ${toggle("externalRequests.thirdParty", "Allow configured third-party integrations", "Also requires configuring each provider. Leave off for local operation.")}
                     </div>
                 </div>

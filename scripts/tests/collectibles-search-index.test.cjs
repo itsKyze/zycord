@@ -50,6 +50,7 @@ async function load(relative, assets, overrides = {}) {
             if (id.endsWith("/Config") || id === "./Config")
                 return { Config: { get: () => ({ cdn: { endpointPublic: "http://local-cdn", endpointPrivate: "http://local-cdn" } }) } };
             if (id === "./Branding") return { instanceName: () => "Test instance" };
+            if (id === "./SteamFrames") return { steamFrameCategory: () => ({ products: [] }), steamFrameRecency: () => undefined };
             if (id === "node:fs/promises" && overrides.fs) return overrides.fs;
             if (id === "jimp" && overrides.jimp) return overrides.jimp;
             return require(id);

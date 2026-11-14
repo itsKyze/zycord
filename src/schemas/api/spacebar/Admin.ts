@@ -25,6 +25,7 @@ export interface AdminSettingsUpdateSchema {
         discordTemplates?: boolean;
         discordStickerPacks?: boolean;
         discordBadDomains?: boolean;
+        steamAssetFallback?: boolean;
         thirdParty?: boolean;
     };
 

@@ -7,6 +7,7 @@ export class ExternalRequestConfiguration {
     discordTemplates: boolean = true;
     discordStickerPacks: boolean = true;
     discordBadDomains: boolean = false;
+    steamAssetFallback: boolean = true;
     thirdParty: boolean = true;
 }
 
@@ -27,6 +28,8 @@ export function allowsCdnUpstream(policy: ExternalRequestConfiguration, raw: str
         if (raw.includes("/../") || raw.includes("/..")) return false;
         const url = new URL(raw);
         if (url.protocol !== "https:" || url.username || url.password || url.port || /%2f|%5c/i.test(url.pathname)) return false;
+        if (url.hostname === "shared.fastly.steamstatic.com")
+            return /^\/community_assets\/images\/items\/\d{1,10}\/[0-9a-f]{40}\.(?:png|apng|jpg|gif)$/.test(url.pathname) ? policy.steamAssetFallback : policy.thirdParty;
         if (url.hostname !== "cdn.discordapp.com") return policy.thirdParty;
         if (/^\/stickers\/\d+\.(?:png|json|gif)$/.test(url.pathname)) return policy.discordStickerPacks || policy.discordAssetFallback;
         return isDiscordDecorationAsset(url.pathname) ? policy.discordDecorations : policy.discordAssetFallback;

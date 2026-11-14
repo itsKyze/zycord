@@ -34,6 +34,7 @@ async function load(relative, assets, overrides = {}) {
             if (id.endsWith("/Config") || id === "./Config")
                 return { Config: { get: () => ({ cdn: { endpointPublic: "http://local-cdn", endpointPrivate: "http://local-cdn" } }) } };
             if (id === "./Branding") return { instanceName: () => "Test instance" };
+            if (id === "./SteamFrames") return overrides.steamFrames ?? { steamFrameCategory: () => ({ products: [] }), steamFrameRecency: () => undefined };
             if (id === "node:fs/promises" && overrides.fs) return overrides.fs;
             if (id === "jimp" && overrides.jimp) return overrides.jimp;
             return require(id);
@@ -240,4 +241,51 @@ test("replacing the custom source during refresh keeps the new source published"
     await pending;
     assert.equal(await Collectibles.get(), current);
     assert.equal((await Collectibles.categories()).length, 0);
+});
+
+const steamCatalog = {
+    apps: { 730: "Counter-Strike 2" },
+    frames: [
+        { defid: 78765, appid: 730, name: "Akihabara Accept", animated: false, image: `${"a".repeat(40)}.png`, still: `${"a".repeat(40)}.png`, created: 1716924160 },
+        { defid: 4104245, appid: 795040, name: "Pumping", animated: true, image: `${"b".repeat(40)}.png`, still: `${"c".repeat(40)}.png`, created: 1792429454 },
+    ],
+};
+
+test("the steam frames are listed after the mirrored packs, work without a mirrored catalog and sort by their steam dates", async (t) => {
+    const directory = await fixture(t);
+    await fs.writeFile(path.join(directory, "steam-frames.json"), JSON.stringify(steamCatalog));
+    const steamFrames = await load("src/util/util/SteamFrames.ts", directory);
+    const alone = await load("src/util/util/Collectibles.ts", directory, { steamFrames });
+    alone.Collectibles.setCustomSource(async () => ({ categories: [], hidden: [] }));
+    assert.deepEqual(
+        Array.from(await alone.Collectibles.categories(), (x) => [x.name, x.products.length]),
+        [["Steam", 2]],
+    );
+
+    await fs.writeFile(path.join(directory, "collectibles.json"), JSON.stringify([category]));
+    const { Collectibles } = await load("src/util/util/Collectibles.ts", directory, { steamFrames });
+    Collectibles.setCustomSource(async () => ({ categories: [], hidden: [] }));
+    assert.deepEqual(
+        Array.from(await Collectibles.categories(), (x) => x.name),
+        ["Test instance pack", "Steam"],
+    );
+    const pumping = await Collectibles.product("8000000000004104245");
+    assert.equal(pumping.name, "Pumping");
+    assert.equal(pumping.summary, "An avatar frame from Steam.");
+    assert.equal(pumping.prices["0"].country_prices.prices[0].amount, 0);
+    assert.match((await Collectibles.item("8000000000004104245", 0)).asset, /^a_[0-9a-f]{32}$/);
+    assert.match((await Collectibles.item("8000000000000078765", 0)).asset, /^[0-9a-f]{32}$/);
+    assert.deepEqual(Array.from(await Collectibles.grantable("8000000000004104245")), ["8000000000004104245"]);
+    assert.deepEqual(Array.from((await Collectibles.search({ search: "counter-strike" })).skus), ["8000000000000078765"]);
+    assert.deepEqual(Array.from((await Collectibles.search({ sort_type: "recency", item_types: ["AVATAR_DECORATION"] })).skus), [
+        "8000000000004104245",
+        "8000000000000078765",
+        "11",
+    ]);
+    Collectibles.setCustomSource(async () => ({ categories: [], hidden: ["8000000000000000000"] }));
+    assert.deepEqual(
+        Array.from(await Collectibles.categories(), (x) => x.name),
+        ["Test instance pack"],
+    );
+    assert.equal((await Collectibles.product("8000000000004104245")).name, "Pumping");
 });

@@ -20,11 +20,12 @@ import { Router, Response, Request } from "express";
 import { HTTPError } from "lambert-server/HTTPError";
 import { fileTypeFromBuffer } from "file-type";
 import { storage, setCacheControl, setCacheControlNotFound, multer, validateServerAuth, fetchUpstreamAsset, sendAsset } from "../../../util";
-import { Config, Collectibles, CollectibleItemType } from "@spacebar/util";
+import { Config, Collectibles, CollectibleItemType, steamFrameArtUrl, steamFrameBySku } from "@spacebar/util";
 import crypto from "node:crypto";
 
 const ANIMATED_MIME_TYPES = ["image/apng", "image/gif", "image/gifv"];
 const STATIC_MIME_TYPES = ["image/png", "image/jpeg", "image/webp", "image/avif", "image/svg+xml", "image/svg"];
+const STEAM_ART = /^(\d{19})\/(animated|static)$/;
 
 const PALETTE_COLORS: Record<string, [string, string, string]> = {
     crimson: ["#fb7185", "#e11d48", "#4c0519"],
@@ -345,6 +346,15 @@ export const validAssetPath = (asset: string) => {
 
 async function sendUpstream(req: Request, res: Response, asset: string, slot: "static" | "animated" = "static") {
     if (!validAssetPath(asset)) return setCacheControlNotFound(req, res);
+    const steam = STEAM_ART.exec(asset);
+    const frame = steam && steamFrameBySku(steam[1]);
+    if (steam && frame) {
+        const targetSlot = steam[2] as "animated" | "static";
+        const file = await fetchUpstreamAsset(`steam-frames/${frame.asset}/${targetSlot}`, steamFrameArtUrl(frame, targetSlot));
+        if (!file) return setCacheControlNotFound(req, res);
+        res.set("Access-Control-Allow-Origin", "*");
+        return sendAsset(res, file, asset);
+    }
     const path = `collectibles-shop-upstream/${asset}`;
     let file = (await storage.get(path)) ?? (await fetchUpstreamAsset(path, `https://cdn.discordapp.com/media/v1/collectibles-shop/${asset}`));
 

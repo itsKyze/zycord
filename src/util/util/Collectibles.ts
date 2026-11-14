@@ -21,6 +21,7 @@ import path from "node:path";
 import { ASSETS_FOLDER } from "./Constants";
 import { Config } from "./Config";
 import { instanceName } from "./Branding";
+import { steamFrameCategory, steamFrameRecency } from "./SteamFrames";
 
 export enum CollectibleItemType {
     AVATAR_DECORATION = 0,
@@ -150,7 +151,11 @@ const localize = (raw: string) => {
 };
 
 const parse = (raw: string, effectsRaw?: string): Catalog => {
-    const categories = (JSON.parse(localize(raw)) as CollectibleCategory[]).sort((a, b) => (BigInt(b.sku_id) > BigInt(a.sku_id) ? 1 : -1));
+    const steam = steamFrameCategory() as unknown as CollectibleCategory;
+    const categories = [
+        ...(JSON.parse(localize(raw)) as CollectibleCategory[]).sort((a, b) => (BigInt(b.sku_id) > BigInt(a.sku_id) ? 1 : -1)),
+        ...(steam.products.length ? [steam] : []),
+    ];
     const effects = new Map((effectsRaw ? (JSON.parse(localize(effectsRaw)) as CollectibleItem[]) : []).map((x) => [x.sku_id, x]));
     const products = new Map<string, CollectibleProduct>();
     const items = new Map<string, CollectibleItem>();
@@ -315,7 +320,7 @@ const load = async (backgroundRefresh = true): Promise<Catalog> => {
             }
         } catch (_) {}
     }
-    return withCustom({ categories: [], products: new Map(), items: new Map() });
+    return withCustom(parse("[]"));
 };
 
 const listedSkus = (category: CollectibleCategory) => category.products.map((x) => x.sku_id);
@@ -368,8 +373,8 @@ const getSearchIndex = (snapshot: Catalog) => {
     return (searchIndex = { snapshot, entries, sorted: new Map() });
 };
 const compareRecency = (a: SearchEntry, b: SearchEntry) => {
-    const left = (a.recency ??= BigInt(a.product.sku_id));
-    const right = (b.recency ??= BigInt(b.product.sku_id));
+    const left = (a.recency ??= steamFrameRecency(a.product.sku_id) ?? BigInt(a.product.sku_id));
+    const right = (b.recency ??= steamFrameRecency(b.product.sku_id) ?? BigInt(b.product.sku_id));
     return left > right ? 1 : left < right ? -1 : 0;
 };
 const orderedSearchEntries = (index: ReturnType<typeof getSearchIndex>, alphabetical: boolean, direction: number) => {
