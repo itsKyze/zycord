@@ -102,14 +102,6 @@ cdn.zyron.site {
 </Error>` 403
 	}
 
-	# FreeFire game update packages & assets (auto-proxy to Garena CDN)
-	@freefire path /live/* /common/*
-	handle @freefire {
-		reverse_proxy https://dl.cdn.freefiremobile.com {
-			header_up Host dl.cdn.freefiremobile.com
-		}
-	}
-
 	# Zycord CDN (attachments, avatars, icons, banners, emojis, stickers)
 	handle {
 		reverse_proxy server:3001
