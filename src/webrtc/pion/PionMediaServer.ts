@@ -330,8 +330,9 @@ export class PionMediaServer implements SignalingDelegate {
         if (!candidate || !fingerprint) throw new Error("SFU answer has no candidate or fingerprint");
         const [, , protocol, priority, address, port] = candidate;
 
+        const basePriority = parseInt(priority, 10) || 2130706431;
         const candidateLines = [
-            `a=candidate:1 1 ${protocol.toUpperCase()} ${priority} ${address} ${port} typ host`,
+            `a=candidate:1 1 ${protocol.toUpperCase()} ${basePriority} ${address} ${port} typ host`,
         ];
 
         const localIps = new Set<string>();
@@ -346,7 +347,8 @@ export class PionMediaServer implements SignalingDelegate {
         let foundation = 2;
         for (const localIp of localIps) {
             if (localIp !== address) {
-                candidateLines.push(`a=candidate:${foundation++} 1 ${protocol.toUpperCase()} ${priority} ${localIp} ${port} typ host`);
+                const prio = Math.max(1, basePriority - (foundation - 1) * 10);
+                candidateLines.push(`a=candidate:${foundation++} 1 ${protocol.toUpperCase()} ${prio} ${localIp} ${port} typ host`);
             }
         }
 
@@ -361,7 +363,7 @@ export class PionMediaServer implements SignalingDelegate {
                 `a=fingerprint:${fingerprint}`,
                 ...candidateLines,
                 "",
-            ].join("\n"),
+            ].join("\r\n"),
             selectedVideoCodec: "H264",
         };
     }

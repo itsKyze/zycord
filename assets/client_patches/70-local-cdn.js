@@ -38,14 +38,17 @@
         [/^https:\/\/cdn\.discordapp\.com\/(media\/v1\/collectibles-shop|badge-icons|avatar-decoration-presets|app-icons|bad-domains)\//, (match, prefix) => `${cdn()}/${prefix}/`],
     ];
     const downgraded = /^(?:http:)?\/\/((?:[\w-]+\.)*(?:discord\.com|discordapp\.com|discordapp\.net|discord\.gg|discord\.new|discord\.gift|discord\.media|dis\.gd|discordstatus\.com))(?=[/:?#]|$)/i;
+    const rootDomain = location.hostname.split(".").slice(-2).join(".") || "zyron.site";
     const linkRules = [
         [/^https?:\/\/(?:www\.)?(?:discord|zycord)\.new\/([\w-]+)\/?$/i, (m, code) => `${location.origin}/template/${code}`],
         [/^https?:\/\/(?:www\.)?discord\.gg\/([\w-]+)\/?$/i, (m, code) => `${location.origin}/invite/${code}`],
         [/^https?:\/\/(?:www\.)?discord\.gift\/([\w-]+)\/?$/i, (m, code) => `${location.origin}/gift/${code}`],
         [/^https?:\/\/support\.discord\.com(?:\b.*)?$/i, () => `${location.origin}/support`],
         [/^https?:\/\/(?:status\.discord\.com|discordstatus\.com)(?:\b.*)?$/i, () => `${location.origin}/status`],
+        [/^https?:\/\/(?:(?:www|ptb|canary)\.)?discord(?:app)?\.com\/developers\/docs(?:\b.*)?$/i, (m) => `https://docs.${rootDomain}${m.replace(/^https?:\/\/[^/]+\/developers\/docs/, "") || "/"}`],
+        [/^https?:\/\/(?:(?:www|ptb|canary)\.)?discord(?:app)?\.com\/developers(?:\b.*)?$/i, (m) => `https://developers.${rootDomain}${m.replace(/^https?:\/\/[^/]+\/developers/, "") || "/"}`],
         [
-            /^https?:\/\/(?:(?:www|ptb|canary)\.)?discord(?:app)?\.com\/(terms|privacy|guidelines|safety|nitro|download|developers|branding|company|careers|blog|community|quests|ads\/quests|acknowledgements|licenses|company-information|status|support|template|invite|gifts?)(?=[/?#]|$)(.*)$/i,
+            /^https?:\/\/(?:(?:www|ptb|canary)\.)?discord(?:app)?\.com\/(terms|privacy|guidelines|safety|nitro|download|branding|company|careers|blog|community|quests|ads\/quests|acknowledgements|licenses|company-information|status|support|template|invite|gifts?)(?=[/?#]|$)(.*)$/i,
             (m, route, rest) => `${location.origin}/${route}${rest || ""}`,
         ],
     ];

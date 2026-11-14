@@ -33,6 +33,17 @@ mail.zyron.site {
 		dns cloudflare {$CF_API_TOKEN}
 	}
 
+	redir /admin https://admin.zyron.site/ permanent
+	redir /admin/* https://admin.zyron.site{uri} permanent
+
+	redir /developers/docs https://docs.zyron.site/ permanent
+	redir /developers/docs/* https://docs.zyron.site{uri} permanent
+	redir /docs https://docs.zyron.site/ permanent
+	redir /docs/* https://docs.zyron.site{uri} permanent
+
+	redir /developers https://developers.zyron.site/ permanent
+	redir /developers/* https://developers.zyron.site{uri} permanent
+
 	@websockets {
 		path / /voice /voice/* /remote-auth /remote-auth/*
 		header Connection *Upgrade*
@@ -87,6 +98,11 @@ developers.zyron.site {
 		dns cloudflare {$CF_API_TOKEN}
 	}
 	encode zstd gzip
+
+	redir /developers/docs https://docs.zyron.site/ permanent
+	redir /developers/docs/* https://docs.zyron.site{uri} permanent
+	redir /docs https://docs.zyron.site/ permanent
+	redir /docs/* https://docs.zyron.site{uri} permanent
 
 	handle /_mintlify/* {
 		reverse_proxy https://docs.discord.com {

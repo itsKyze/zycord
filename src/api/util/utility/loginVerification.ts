@@ -2,6 +2,7 @@ import crypto from "node:crypto";
 import { Request } from "express";
 import { User, TrustedLoginDevice } from "@spacebar/database";
 import { Email, FieldErrors, Config, normalizeIp } from "@spacebar/util";
+import { hasAdminPanelAccess } from "./staffBadge";
 
 export { normalizeIp };
 
@@ -9,10 +10,17 @@ const DEVICE_IDLE_MS = 24 * 60 * 60 * 1000;
 const VERIFY_EMAIL_COOLDOWN_MS = 10 * 60 * 1000;
 
 export function requestIp(req: Request) {
+    const cfIp = req.headers["cf-connecting-ip"];
+    if (cfIp) {
+        const val = Array.isArray(cfIp) ? cfIp[0] : cfIp;
+        if (typeof val === "string" && val.trim().length > 0) {
+            const normalized = normalizeIp(val);
+            if (normalized) return normalized;
+        }
+    }
     const customHeader = Config.get().security.forwardedFor;
     const headerCandidates = [
         customHeader ? req.headers[customHeader.toLowerCase()] : undefined,
-        req.headers["cf-connecting-ip"],
         req.headers["cf-pseudo-ipv4"],
         req.headers["x-real-ip"],
         req.headers["x-client-ip"],
@@ -199,9 +207,15 @@ async function challengeNewDevice(
 
 export async function gateNewLoginLocation(
     req: Request,
-    user: Pick<User, "id" | "email" | "verified"> & { username?: string; discriminator?: string; data?: User["data"] },
+    user: Pick<User, "id" | "email" | "verified"> & { username?: string; discriminator?: string; data?: User["data"]; rights?: string | bigint | number | null },
 ) {
     const device = describeLoginDevice(req);
+    // Operators and staff should not be locked out of their admin panel
+    if (hasAdminPanelAccess(user.rights)) {
+        if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
+        return;
+    }
+
     if (!user.email || !user.verified) {
         if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
         return;
@@ -213,14 +227,12 @@ export async function gateNewLoginLocation(
     const idle = !!match && Date.now() - (match.last_seen || 0) > DEVICE_IDLE_MS;
     const firstDevice = devices.length === 0;
 
-    if (firstDevice) {
+    if (firstDevice || (match && !idle)) {
         if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
         return;
     }
 
-    if (!match || !samePlace || idle) {
-        await challengeNewDevice(req, user, device, idle && !!match);
-    }
+    await challengeNewDevice(req, user, device, idle && !!match);
 
     if (device.ip) await rememberTrustedDevice(user.id, device).catch((e) => console.error(`[Login] Failed to remember device for ${user.id}:`, e));
 }

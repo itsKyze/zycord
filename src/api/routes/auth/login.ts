@@ -64,6 +64,7 @@ router.post(
                 security_keys: true,
                 verified: true,
                 email: true,
+                rights: true,
             },
             relations: { security_keys: true, settings: true },
         }).catch(() => {
