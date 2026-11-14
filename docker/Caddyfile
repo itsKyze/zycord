@@ -5,6 +5,29 @@
 	}
 }
 
+mail.zyron.site {
+	tls {
+		dns cloudflare {$CF_API_TOKEN}
+	}
+
+	@websockets {
+		path /api/realtime /api/realtime/*
+		header Connection *Upgrade*
+		header Upgrade websocket
+	}
+
+	handle @websockets {
+		reverse_proxy mailflare:3000 {
+			stream_close_delay 5m
+		}
+	}
+
+	handle {
+		encode zstd gzip
+		reverse_proxy mailflare:3000
+	}
+}
+
 {$DOMAIN} {
 	tls {
 		dns cloudflare {$CF_API_TOKEN}

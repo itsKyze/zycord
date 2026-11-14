@@ -1,15 +1,20 @@
 (() => {
+    if (/^\/(login|register)\b/.test(location.pathname)) return;
     const knownId = "573648";
     const isPlatforms = (value) => typeof value?.map === "function" && typeof value?.isSupported === "function" && typeof value?.getByUrl === "function";
     let require;
     (window.webpackChunkdiscord_app ??= []).push([[Symbol("zycord-connections")], {}, (r) => (require = r)]);
 
     const findPlatforms = () => {
-        if (!require?.m) return undefined;
-        const ids = require.m[knownId] ? [knownId] : Object.keys(require.m).filter((id) => String(require.m[id]).includes('name:"Crunchyroll"'));
+        if (!require?.c) return undefined;
+        const ids = require.c[knownId] ? [knownId] : Object.keys(require.c).filter((id) => String(require.m?.[id] || "").includes('name:"Crunchyroll"'));
         for (const id of ids) {
-            const found = Object.values(require(id) ?? {}).find(isPlatforms);
-            if (found) return found;
+            try {
+                const exp = require.c[id]?.exports;
+                if (!exp) continue;
+                const found = Object.values(exp).find(isPlatforms);
+                if (found) return found;
+            } catch (_) {}
         }
         return undefined;
     };

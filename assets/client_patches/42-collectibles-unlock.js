@@ -26,11 +26,17 @@
 
     const patchStores = (req) => {
         try {
+            if (/^\/(login|register)\b/.test(location.pathname)) return;
             if (!req?.c) return;
             for (const id in req.c) {
                 const mod = req.c[id]?.exports;
                 if (!mod) continue;
-                const targets = [mod, mod.default, mod.A, mod.Z].filter(Boolean);
+                let targets = [];
+                try {
+                    targets = [mod, mod.default, mod.A, mod.Z].filter(Boolean);
+                } catch (_) {
+                    targets = [mod];
+                }
                 for (const item of targets) {
                     if (!item || typeof item !== "object" || item.__zycordPatched) continue;
 

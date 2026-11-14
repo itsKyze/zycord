@@ -25,14 +25,15 @@ import { ZycordAuthor } from "../zycordCore/shared";
 
 const INCLUDED_IN_BOOSTING = "#{intl::hUgjyP::raw}";
 
-// Lazy-loaded form components from Discord's internal UI library
-const Forms = findByProps("FormTitle", "FormText", "FormSection") as any;
-const Switch = findByCode("tooltipNote", "handleOnChange", "FormSwitch") as any;
-
-/** Toggle rendered at the top of the Boost Perks guild-settings page */
 function BoostProgressBarToggle({ guildId }: { guildId: string }) {
     const guild = GuildStore.getGuild(guildId) as any;
     const [enabled, setEnabled] = React.useState(guild?.premium_progress_bar_enabled ?? false);
+
+    let Forms: any, Switch: any;
+    try {
+        Forms = findByProps("FormTitle", "FormText", "FormSection");
+        Switch = findByCode("tooltipNote", "handleOnChange", "FormSwitch");
+    } catch {}
 
     async function handleChange(val: boolean) {
         setEnabled(val);

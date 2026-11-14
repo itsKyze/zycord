@@ -215,6 +215,9 @@ const buildHtml = () => {
     }
 
     const env = `<script>
+window.addEventListener("error", (e) => {
+    console.error("[EXACT_CRASH_INFO]", e.message, "at", (e.filename || "inline") + ":" + e.lineno + ":" + e.colno, e.error ? e.error.stack : "");
+});
 (() => {
     const host = location.host;
     const secure = location.protocol === "https:";
