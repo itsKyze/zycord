@@ -22,6 +22,12 @@
 		}
 	}
 
+	handle /_mintlify/* {
+		reverse_proxy https://docs.discord.com {
+			header_up Host docs.discord.com
+		}
+	}
+
 	handle {
 		encode zstd gzip
 		reverse_proxy server:3001
@@ -33,7 +39,17 @@ docs.zyron.site {
 		dns cloudflare {$CF_API_TOKEN}
 	}
 	encode zstd gzip
-	rewrite * /developers/docs{uri}
+
+	handle /_mintlify/* {
+		reverse_proxy https://docs.discord.com {
+			header_up Host docs.discord.com
+		}
+	}
+
+	@notDocs {
+		not path /developers/docs /developers/docs/* /docs /docs/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /favicon.* /_mintlify/*
+	}
+	rewrite @notDocs /developers/docs{uri}
 	reverse_proxy server:3001
 }
 
@@ -42,7 +58,17 @@ developers.zyron.site {
 		dns cloudflare {$CF_API_TOKEN}
 	}
 	encode zstd gzip
-	rewrite * /developers{uri}
+
+	handle /_mintlify/* {
+		reverse_proxy https://docs.discord.com {
+			header_up Host docs.discord.com
+		}
+	}
+
+	@notDev {
+		not path /developers /developers/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /emojis/* /stickers/* /imageproxy/* /favicon.* /_mintlify/*
+	}
+	rewrite @notDev /developers{uri}
 	reverse_proxy server:3001
 }
 
@@ -51,6 +77,22 @@ admin.zyron.site {
 		dns cloudflare {$CF_API_TOKEN}
 	}
 	encode zstd gzip
-	rewrite * /admin{uri}
+
+	@notAdmin {
+		not path /admin /admin/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /emojis/* /stickers/* /imageproxy/* /favicon.*
+	}
+	rewrite @notAdmin /admin{uri}
+	reverse_proxy server:3001
+}
+
+cdn.zyron.site {
+	tls {
+		dns cloudflare {$CF_API_TOKEN}
+	}
+	encode zstd gzip
+
+	@root path /
+	redir @root https://app.zyron.site 302
+
 	reverse_proxy server:3001
 }
