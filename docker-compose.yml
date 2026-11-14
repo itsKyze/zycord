@@ -69,6 +69,7 @@ services:
         environment:
             DATABASE: postgres://zycord:${POSTGRES_PASSWORD}@postgres:5432/zycord
             DOMAIN: ${DOMAIN:?set DOMAIN in .env}
+            CDN_DOMAIN: ${CDN_DOMAIN:-cdn.zyron.site}
             INSTANCE_NAME: ${INSTANCE_NAME:-}
             TRUSTED_PROXIES: ${TRUSTED_PROXIES:-}
             WRTC_PUBLIC_IP: ${WRTC_PUBLIC_IP}

@@ -34,13 +34,19 @@ if (!domain) {
 const config = fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : {};
 const section = (...keys) => keys.reduce((parent, key) => (parent[key] ??= {}), config);
 const origin = `https://${domain}`;
+const cdnDomain = env("CDN_DOMAIN") || (domain.startsWith("app.") ? domain.replace(/^app\./, "cdn.") : domain);
+const cdnOrigin = `https://${cdnDomain}`;
 const port = env("PORT") ?? "3001";
 
 section("general").serverName = origin;
 section("api").endpointPublic = `${origin}/api/v9`;
-Object.assign(section("cdn"), { endpointPublic: `${origin}/`, endpointPrivate: `http://127.0.0.1:${port}/` });
+Object.assign(section("cdn"), { endpointPublic: `${cdnOrigin}/`, endpointPrivate: `http://127.0.0.1:${port}/` });
 section("gateway").endpointPublic = `wss://${domain}/`;
-Object.assign(section("security"), { trustedProxies: env("TRUSTED_PROXIES") ?? "uniquelocal", forwardedFor: "X-Forwarded-For" });
+Object.assign(section("security"), {
+    trustedProxies: env("TRUSTED_PROXIES") ?? "uniquelocal",
+    forwardedFor: "X-Forwarded-For",
+    allowedOrigins: ["*"],
+});
 Object.assign(section("externalRequests"), {
     discordDecorations: true,
     discordAssetFallback: true,

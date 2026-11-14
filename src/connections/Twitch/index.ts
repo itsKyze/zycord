@@ -42,7 +42,7 @@ export default class TwitchConnection extends RefreshableConnection {
     public readonly id = "twitch";
     public friendlyName = "Twitch.tv";
     public setupUrl = "https://dev.twitch.tv/console/apps/create";
-    public requiredScopes: string[] = [];
+    public readonly requiredScopes = [];
 
     public readonly authorizeUrl = "https://id.twitch.tv/oauth2/authorize";
     public readonly tokenUrl = "https://id.twitch.tv/oauth2/token";

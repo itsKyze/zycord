@@ -32,7 +32,7 @@ export default class GitHubConnection extends Connection {
     public readonly id = "github";
     public friendlyName = "GitHub";
     public setupUrl = "https://github.com/settings/developers";
-    public requiredScopes: string[] = [];
+    public readonly requiredScopes = [];
 
     public readonly authorizeUrl = "https://github.com/login/oauth/authorize";
     public readonly tokenUrl = "https://github.com/login/oauth/access_token";

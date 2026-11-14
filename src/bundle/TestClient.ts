@@ -206,11 +206,20 @@ const buildHtml = () => {
     const images = brandImageUrls();
     const json = (value: unknown) => JSON.stringify(value).replace(/</g, "\\u003c");
 
+    const cdnConfigUrl = Config.get().cdn.endpointPublic;
+    let configuredCdnHost: string | null = null;
+    if (cdnConfigUrl) {
+        try {
+            configuredCdnHost = new URL(cdnConfigUrl).host;
+        } catch (_) {}
+    }
+
     const env = `<script>
 (() => {
     const host = location.host;
     const secure = location.protocol === "https:";
-    const cdn = host;
+    const configuredCdn = ${json(configuredCdnHost)};
+    const cdn = configuredCdn || (host.startsWith("app.") ? host.replace(/^app\\./, "cdn.") : host);
     const gateway = \`\${secure ? "wss" : "ws"}://\${host}\`;
     window.GLOBAL_ENV = Object.assign(${JSON.stringify(base)}, {
         HTML_TIMESTAMP: Date.now(),
@@ -220,7 +229,7 @@ const buildHtml = () => {
         GATEWAY_ALT_ENDPOINT: gateway,
         ASSET_ENDPOINT: \`//\${host}\`,
         MEDIA_PROXY_ENDPOINT: \`//\${cdn}\`,
-        IMAGE_PROXY_ENDPOINTS: \`//\${host}\`,
+        IMAGE_PROXY_ENDPOINTS: \`//\${cdn}\`,
         CDN_HOST: cdn,
         DEVELOPERS_ENDPOINT: \`//\${host}\`,
         MARKETING_ENDPOINT: \`//\${host}\`,
@@ -421,9 +430,12 @@ export default function TestClient(app: Application) {
 </html>`);
     });
 
+    const CDN_PATH_PREFIXES = /^\/(attachments|avatars|icons|banners|emojis|stickers|role-icons|channel-icons|guild-profiles|guild-events|guild-space|app-assets|app-icons|badge-icons|clan-badges|soundboard-sounds|splashes|discovery-splashes|discover-splashes|profile-effects|embed|media|imageproxy|assets)\b/;
+
     app.get("/{*splat}", (req, res, next) => {
         const host = (req.hostname || req.headers.host || "").toLowerCase();
         if (host.startsWith("cdn.") || host === "cdn.zyron.site") {
+            if (CDN_PATH_PREFIXES.test(req.path)) return next();
             const reqId = "000001" + crypto.randomBytes(13).toString("hex").toUpperCase();
             const hostId = crypto.randomBytes(48).toString("base64");
             res.status(403);
