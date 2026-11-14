@@ -26,6 +26,20 @@ const DOCS_CUSTOM_STYLE = `
   --primary-dark: 88 101 242;
 }
 
+/* Ensure sr-only elements are completely hidden visually */
+.sr-only, [data-agent-docs-index="true"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border-width: 0 !important;
+  display: none !important;
+}
+
 /* Light Mode Styles */
 html:not(.dark), html.light {
   color-scheme: light;
@@ -520,9 +534,13 @@ const DOCS_RUNTIME_SCRIPT = `
 `;
 
 export function transformDocsHtml(raw: string): string {
-	// 1. Rewrite relative Mintlify asset paths to Discord live CDN
-	raw = raw.replaceAll("/_mintlify/assets/", "https://docs.discord.com/_mintlify/assets/");
-	raw = raw.replaceAll("/mintlify-assets/", "https://docs.discord.com/mintlify-assets/");
+	// 0. Remove the ugly "Documentation Index" blockquote banner completely
+	raw = raw.replace(/<blockquote[^>]*data-agent-docs-index="true"[^>]*>[\s\S]*?<\/blockquote>/gi, "");
+
+	// 1. Keep Mintlify assets strictly first-party (relative /_mintlify/) so Brave Shields / adblockers never block them
+	raw = raw.replaceAll("https://docs.discord.com/_mintlify/", "/_mintlify/");
+	raw = raw.replaceAll("https://docs.discord.com/mintlify-assets/", "/_mintlify/assets/");
+	raw = raw.replaceAll("/mintlify-assets/", "/_mintlify/assets/");
 
 	// 2. Replace Mintlify navbar logo with Zycord Docs Logo (light + dark mode automatic switching)
 	const zycordDocsLogo = `<a class="select-none zy-docs-brand" style="-webkit-touch-callout:none" href="/developers/docs"><span class="sr-only">Zycord Developer Documentation</span><img class="nav-logo w-auto h-7 relative object-contain shrink-0 block dark:hidden" src="/branding/zycord_docs_light.svg" alt="Zycord Developer Docs"/><img class="nav-logo w-auto h-7 relative object-contain shrink-0 hidden dark:block" src="/branding/zycord_docs_dark.svg" alt="Zycord Developer Docs"/></a>`;
@@ -602,7 +620,10 @@ function fetchPageLive(slug: string): Promise<string> {
 	return new Promise((resolve, reject) => {
 		const req = https.get(url, { headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" } }, (res) => {
 			if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-				const nextSlug = res.headers.location.replace(/^https:\/\/docs\.discord\.com\/developers\/?/, "");
+				let nextSlug = res.headers.location;
+				nextSlug = nextSlug.replace(/^https?:\/\/docs\.discord\.com\/?/, "");
+				nextSlug = nextSlug.replace(/^developers\/?/, "");
+				nextSlug = nextSlug.replace(/^\/+/, "");
 				return resolve(fetchPageLive(nextSlug));
 			}
 			if (res.statusCode !== 200) {

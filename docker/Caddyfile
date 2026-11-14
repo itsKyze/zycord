@@ -92,7 +92,7 @@ cdn.zyron.site {
 	encode zstd gzip
 
 	@root path /
-	redir @root https://app.zyron.site 302
+	respond @root "404 Not Found" 404
 
 	reverse_proxy server:3001
 }
