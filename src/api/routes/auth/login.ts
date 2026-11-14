@@ -135,6 +135,19 @@ router.post(
 
         const token = await generateToken(user.id);
 
+        const host = req.get("host") || "";
+        const parts = host.split(":")[0].split(".");
+        const rootDomain = parts.length >= 2 ? parts.slice(-2).join(".") : null;
+        if (rootDomain && rootDomain.includes(".")) {
+            res.cookie("zycord_token", token, {
+                domain: `.${rootDomain}`,
+                path: "/",
+                secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+                sameSite: "lax",
+                maxAge: 365 * 24 * 60 * 60 * 1000,
+            });
+        }
+
         // Notice this will have a different token structure, than discord
         // Discord header is just the user id as string, which is not possible with npm-jsonwebtoken package
         // https://user-images.githubusercontent.com/6506416/81051916-dd8c9900-8ec2-11ea-8794-daf12d6f31f0.png

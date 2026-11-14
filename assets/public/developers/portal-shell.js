@@ -85,7 +85,14 @@
   function getToken() {
     try {
       const raw = localStorage.getItem("token");
-      return raw ? raw.replace(/^"|"$/g, "") : "";
+      if (raw) return raw.replace(/^"|"$/g, "");
+      const match = document.cookie.match(/(?:^|;\s*)zycord_token=([^;]+)/);
+      if (match && match[1]) {
+        const t = decodeURIComponent(match[1]).replace(/^"|"$/g, "");
+        localStorage.setItem("token", JSON.stringify(t));
+        return t;
+      }
+      return "";
     } catch (_) {
       return "";
     }

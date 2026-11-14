@@ -2,7 +2,25 @@
     const config = JSON.parse(document.getElementById("portal-config").textContent);
     const token = (() => {
         try {
-            return JSON.parse(localStorage.getItem("token") ?? "null");
+            const fromLocal = JSON.parse(localStorage.getItem("token") ?? "null");
+            if (fromLocal) return fromLocal;
+            const match = document.cookie.match(/(?:^|;\s*)zycord_token=([^;]+)/);
+            if (match && match[1]) {
+                const t = decodeURIComponent(match[1]).replace(/^"|"$/g, "");
+                localStorage.setItem("token", JSON.stringify(t));
+                return t;
+            }
+            const urlParams = new URLSearchParams(location.search);
+            const fromUrl = urlParams.get("token") || urlParams.get("sso_token");
+            if (fromUrl) {
+                localStorage.setItem("token", JSON.stringify(fromUrl));
+                urlParams.delete("token");
+                urlParams.delete("sso_token");
+                const newSearch = urlParams.toString();
+                history.replaceState(null, "", location.pathname + (newSearch ? `?${newSearch}` : "") + location.hash);
+                return fromUrl;
+            }
+            return null;
         } catch {
             return null;
         }
@@ -45,12 +63,12 @@
                     { class: "dp-modal-footer dp-modal-footer-full" },
                     el(
                         "a",
-                        { class: "dp-button dp-button-secondary dp-button-full", href: `/register?redirect_to=${redirectParam}` },
+                        { class: "dp-button dp-button-secondary dp-button-full", href: `https://app.zyron.site/register?redirect_to=${redirectParam}` },
                         "Create Account",
                     ),
                     el(
                         "a",
-                        { class: "dp-button dp-button-primary dp-button-full", href: `/login?redirect_to=${redirectParam}` },
+                        { class: "dp-button dp-button-primary dp-button-full", href: `https://app.zyron.site/login?redirect_to=${redirectParam}` },
                         "Log In",
                     ),
                 ),
@@ -193,7 +211,7 @@
                 showWelcomeModal();
                 throw new Error("Sign in to continue.");
             }
-            location.replace(`/login?redirect_to=${encodeURIComponent(location.pathname)}`);
+            location.replace(`https://app.zyron.site/login?redirect_to=${encodeURIComponent(location.href)}`);
             throw new Error("Your session has expired.");
         }
         const text = await res.text();

@@ -128,7 +128,24 @@ const auth = {
             // reuse the web client's session on the same origin, unless the dashboard was explicitly signed out of
             if (sessionStorage.getItem("admin_skip_client")) return null;
             const client = localStorage.getItem("token");
-            return client ? JSON.parse(client) : null;
+            if (client) return JSON.parse(client);
+            const match = document.cookie.match(/(?:^|;\s*)zycord_token=([^;]+)/);
+            if (match && match[1]) {
+                const t = decodeURIComponent(match[1]).replace(/^"|"$/g, "");
+                localStorage.setItem("admin_token", t);
+                return t;
+            }
+            const urlParams = new URLSearchParams(location.search);
+            const fromUrl = urlParams.get("token") || urlParams.get("sso_token");
+            if (fromUrl) {
+                localStorage.setItem("admin_token", fromUrl);
+                urlParams.delete("token");
+                urlParams.delete("sso_token");
+                const newSearch = urlParams.toString();
+                history.replaceState(null, "", location.pathname + (newSearch ? `?${newSearch}` : "") + location.hash);
+                return fromUrl;
+            }
+            return null;
         } catch {
             return null;
         }

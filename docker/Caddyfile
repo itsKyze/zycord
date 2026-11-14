@@ -5,7 +5,7 @@
 	}
 }
 
-mail.zyron.site {
+mail.zyron.site, drive.zyron.site, calendar.zyron.site, workspace.zyron.site, book.zyron.site, booking.zyron.site {
 	tls {
 		dns cloudflare {$CF_API_TOKEN}
 	}
@@ -43,6 +43,9 @@ mail.zyron.site {
 
 	redir /developers https://developers.zyron.site/ permanent
 	redir /developers/* https://developers.zyron.site{uri} permanent
+
+	redir /status https://status.zyron.site/ permanent
+	redir /status/* https://status.zyron.site{uri} permanent
 
 	@websockets {
 		path / /voice /voice/* /remote-auth /remote-auth/*
@@ -103,6 +106,12 @@ developers.zyron.site {
 	redir /developers/docs/* https://docs.zyron.site{uri} permanent
 	redir /docs https://docs.zyron.site/ permanent
 	redir /docs/* https://docs.zyron.site{uri} permanent
+	redir /status https://status.zyron.site/ permanent
+	redir /status/* https://status.zyron.site{uri} permanent
+	redir /app https://app.zyron.site/app permanent
+	redir /app/* https://app.zyron.site{uri} permanent
+	redir /login https://app.zyron.site/login?redirect_to=https://developers.zyron.site/developers/applications permanent
+	redir /login/* https://app.zyron.site/login?redirect_to=https://developers.zyron.site/developers/applications permanent
 
 	handle /_mintlify/* {
 		reverse_proxy https://docs.discord.com {
@@ -117,7 +126,12 @@ developers.zyron.site {
 	}
 
 	@notDev {
-		not path /developers /developers/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /emojis/* /stickers/* /imageproxy/* /favicon.* /_mintlify/* /mintlify-assets/*
+		not path /developers /developers/* /api/* /assets/* /branding/* /cdn/* /site/* /media/* /static/* /status /status/*
+		not path /attachments/* /avatars/* /icons/* /banners/* /emojis/* /stickers/* /imageproxy/* /favicon.*
+		not path /embed/* /badge-icons/* /clan-badges/* /role-icons/* /channel-icons/* /guild-events/* /guild-profiles/* /guild-space/*
+		not path /app-assets/* /app-icons/* /soundboard-sounds/* /splashes/* /discovery-splashes/* /discover-splashes/* /profile-effects/*
+		not path /_mintlify/* /mintlify-assets/*
+		not path *.png *.jpg *.jpeg *.webp *.gif *.svg *.ico *.css *.js *.json *.woff2 *.woff *.ttf
 	}
 	rewrite @notDev /developers{uri}
 	reverse_proxy server:3001
@@ -129,10 +143,34 @@ admin.zyron.site {
 	}
 	encode zstd gzip
 
+	redir /developers https://developers.zyron.site/ permanent
+	redir /developers/* https://developers.zyron.site{uri} permanent
+	redir /status https://status.zyron.site/ permanent
+	redir /status/* https://status.zyron.site{uri} permanent
+	redir /app https://app.zyron.site/app permanent
+	redir /app/* https://app.zyron.site{uri} permanent
+
 	@notAdmin {
-		not path /admin /admin/* /api/* /assets/* /branding/* /cdn/* /attachments/* /avatars/* /icons/* /banners/* /emojis/* /stickers/* /imageproxy/* /favicon.*
+		not path /admin /admin/* /api/* /assets/* /branding/* /cdn/* /site/* /media/* /static/* /status /status/*
+		not path /attachments/* /avatars/* /icons/* /banners/* /emojis/* /stickers/* /imageproxy/* /favicon.*
+		not path /embed/* /badge-icons/* /clan-badges/* /role-icons/* /channel-icons/* /guild-events/* /guild-profiles/* /guild-space/*
+		not path /app-assets/* /app-icons/* /soundboard-sounds/* /splashes/* /discovery-splashes/* /discover-splashes/* /profile-effects/*
+		not path *.png *.jpg *.jpeg *.webp *.gif *.svg *.ico *.css *.js *.json *.woff2 *.woff *.ttf
 	}
 	rewrite @notAdmin /admin{uri}
+	reverse_proxy server:3001
+}
+
+status.zyron.site {
+	tls {
+		dns cloudflare {$CF_API_TOKEN}
+	}
+	encode zstd gzip
+
+	@notStatus {
+		not path /status /status/* /api/* /assets/* /branding/* /favicon.* *.png *.jpg *.jpeg *.webp *.gif *.svg *.ico *.css *.js *.json *.woff2 *.woff *.ttf
+	}
+	rewrite @notStatus /status{uri}
 	reverse_proxy server:3001
 }
 

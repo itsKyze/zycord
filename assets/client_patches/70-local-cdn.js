@@ -111,4 +111,38 @@
     CSSStyleDeclaration.prototype.setProperty = function (name, value, priority) {
         return setProperty.call(this, name, rewriteCss(value), priority);
     };
+
+    // Cross-subdomain SSO token sync across *.zyron.site
+    const syncTokenCookie = () => {
+        try {
+            const rawToken = localStorage.getItem("token");
+            if (rawToken) {
+                const token = JSON.parse(rawToken);
+                if (token && typeof token === "string") {
+                    const cookieDomain = rootDomain ? `.${rootDomain}` : "";
+                    const cookieStr = `zycord_token=${encodeURIComponent(token)}; domain=${cookieDomain}; path=/; max-age=31536000; SameSite=Lax; Secure`;
+                    document.cookie = cookieStr;
+                }
+            }
+        } catch {}
+    };
+    syncTokenCookie();
+    window.addEventListener("storage", syncTokenCookie);
+    setInterval(syncTokenCookie, 5000);
+
+    // If redirected to login with redirect_to and already logged in, bounce back
+    try {
+        const urlParams = new URLSearchParams(location.search);
+        const redirectTo = urlParams.get("redirect_to");
+        if (redirectTo && location.pathname.startsWith("/login")) {
+            const raw = localStorage.getItem("token");
+            if (raw && JSON.parse(raw)) {
+                syncTokenCookie();
+                const target = decodeURIComponent(redirectTo);
+                if (/^https?:\/\/[a-z0-9.-]+\.zyron\.site/i.test(target) || target.startsWith("/")) {
+                    location.replace(target);
+                }
+            }
+        }
+    } catch {}
 })();

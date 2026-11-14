@@ -39,9 +39,24 @@ router.post("/", route({ authentication: "never", spacebarOnly: false }), async 
     if (decoded.undelete && (user.disabled || user.deleted)) await User.update({ id: user.id }, { disabled: false, deleted: false });
     await gateNewLoginLocation(req, user);
 
+    const token = await generateToken(user.id);
+
+    const host = req.get("host") || "";
+    const parts = host.split(":")[0].split(".");
+    const rootDomain = parts.length >= 2 ? parts.slice(-2).join(".") : null;
+    if (rootDomain && rootDomain.includes(".")) {
+        res.cookie("zycord_token", token, {
+            domain: `.${rootDomain}`,
+            path: "/",
+            secure: req.secure || req.headers["x-forwarded-proto"] === "https",
+            sameSite: "lax",
+            maxAge: 365 * 24 * 60 * 60 * 1000,
+        });
+    }
+
     res.json({
         user_id: user.id,
-        token: await generateToken(user.id),
+        token,
         user_settings: { locale: user.settings?.locale, theme: user.settings?.theme },
     });
 });
