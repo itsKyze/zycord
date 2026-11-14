@@ -330,6 +330,26 @@ export class PionMediaServer implements SignalingDelegate {
         if (!candidate || !fingerprint) throw new Error("SFU answer has no candidate or fingerprint");
         const [, , protocol, priority, address, port] = candidate;
 
+        const candidateLines = [
+            `a=candidate:1 1 ${protocol.toUpperCase()} ${priority} ${address} ${port} typ host`,
+        ];
+
+        const localIps = new Set<string>();
+        if (process.env.WRTC_LAN_IP) {
+            for (const ip of process.env.WRTC_LAN_IP.split(",")) {
+                if (ip.trim()) localIps.add(ip.trim());
+            }
+        }
+        localIps.add("192.168.1.4");
+        localIps.add("127.0.0.1");
+
+        let foundation = 2;
+        for (const localIp of localIps) {
+            if (localIp !== address) {
+                candidateLines.push(`a=candidate:${foundation++} 1 ${protocol.toUpperCase()} ${priority} ${localIp} ${port} typ host`);
+            }
+        }
+
         return {
             sdp: [
                 `m=audio ${port} ICE/SDP`,
@@ -339,7 +359,7 @@ export class PionMediaServer implements SignalingDelegate {
                 `a=ice-ufrag:${answerAttribute("ice-ufrag")}`,
                 `a=ice-pwd:${answerAttribute("ice-pwd")}`,
                 `a=fingerprint:${fingerprint}`,
-                `a=candidate:1 1 ${protocol.toUpperCase()} ${priority} ${address} ${port} typ host`,
+                ...candidateLines,
                 "",
             ].join("\n"),
             selectedVideoCodec: "H264",

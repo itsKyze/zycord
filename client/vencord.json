@@ -6,7 +6,7 @@
         "autoUpdateNotification": false
     },
     "plugins": {
-        "AlwaysAnimate": true,
+        "AlwaysAnimate": false,
         "BetterFolders": true,
         "BetterGifAltText": true,
         "CopyEmojiMarkdown": true,

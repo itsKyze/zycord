@@ -18,7 +18,16 @@
             type: 1,
             purchasedAt: "2026-01-01T00:00:00.000Z",
             expiresAt: null,
-            items: [],
+            items: [
+                {
+                    id: skuId,
+                    skuId,
+                    type: 0,
+                    name: "",
+                    asset: "",
+                    label: "",
+                },
+            ],
             attributes: {},
             purchased: true,
         };

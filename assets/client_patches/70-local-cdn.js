@@ -12,16 +12,20 @@
         });
     }
     const cdn = () => cdnOrigin;
-    const instancePaths = /^\/(?:api|cdn|assets|attachments|avatars|icons|banners|emojis|stickers|clan-badges|badge-icons|avatar-decoration-presets|app-icons|app-assets|guild-events|role-icons|splashes|discovery-splashes|user-profile-effects|content-assets|krisp_browser_models|media|soundboard-sounds|application-directory|detectables|bad-domains|changelogs)(?:\/|$)/;
+    const mediaPaths = /^\/(?:cdn|attachments|avatars|icons|banners|emojis|stickers|clan-badges|badge-icons|avatar-decoration-presets|app-icons|app-assets|guild-events|role-icons|splashes|discovery-splashes|user-profile-effects|content-assets|krisp_browser_models|media|soundboard-sounds)(?:\/|$)/;
     const localHost = (host) => /^(?:localhost|[\w.-]+\.localhost|127(?:\.\d{1,3}){3}|0\.0\.0\.0|\[::1\])$/i.test(host);
     const instanceUrl = (value) => {
         if (typeof value !== "string" || !/^(?:https?:)?\/\//i.test(value)) return value;
         try {
             const url = new URL(value, location.origin);
-            if (url.username || url.password || !instancePaths.test(url.pathname)) return value;
-            if (url.host === location.host || url.host === cdnHost || localHost(url.hostname)) {
-                const targetOrigin = url.pathname.startsWith("/assets/") ? location.origin : cdnOrigin;
-                return `${targetOrigin}${url.pathname}${url.search}${url.hash}`;
+            if (url.username || url.password) return value;
+            if (mediaPaths.test(url.pathname)) {
+                if (url.host === location.host || url.host === cdnHost || localHost(url.hostname)) {
+                    return `${cdnOrigin}${url.pathname}${url.search}${url.hash}`;
+                }
+            } else if (url.host === cdnHost) {
+                // Non-media (API, assets, pages) mistakenly addressed to cdnHost must stay on app origin
+                return `${location.origin}${url.pathname}${url.search}${url.hash}`;
             }
         } catch {}
         return value;
@@ -35,14 +39,14 @@
     ];
     const downgraded = /^(?:http:)?\/\/((?:[\w-]+\.)*(?:discord\.com|discordapp\.com|discordapp\.net|discord\.gg|discord\.new|discord\.gift|discord\.media|dis\.gd|discordstatus\.com))(?=[/:?#]|$)/i;
     const linkRules = [
-        [/^https?:\/\/(?:www\.)?(?:discord|zycord)\.new\/([\w-]+)\/?$/i, (m, code) => `${cdn()}/template/${code}`],
-        [/^https?:\/\/(?:www\.)?discord\.gg\/([\w-]+)\/?$/i, (m, code) => `${cdn()}/invite/${code}`],
-        [/^https?:\/\/(?:www\.)?discord\.gift\/([\w-]+)\/?$/i, (m, code) => `${cdn()}/gift/${code}`],
-        [/^https?:\/\/support\.discord\.com(?:\b.*)?$/i, () => `${cdn()}/support`],
-        [/^https?:\/\/(?:status\.discord\.com|discordstatus\.com)(?:\b.*)?$/i, () => `${cdn()}/status`],
+        [/^https?:\/\/(?:www\.)?(?:discord|zycord)\.new\/([\w-]+)\/?$/i, (m, code) => `${location.origin}/template/${code}`],
+        [/^https?:\/\/(?:www\.)?discord\.gg\/([\w-]+)\/?$/i, (m, code) => `${location.origin}/invite/${code}`],
+        [/^https?:\/\/(?:www\.)?discord\.gift\/([\w-]+)\/?$/i, (m, code) => `${location.origin}/gift/${code}`],
+        [/^https?:\/\/support\.discord\.com(?:\b.*)?$/i, () => `${location.origin}/support`],
+        [/^https?:\/\/(?:status\.discord\.com|discordstatus\.com)(?:\b.*)?$/i, () => `${location.origin}/status`],
         [
             /^https?:\/\/(?:(?:www|ptb|canary)\.)?discord(?:app)?\.com\/(terms|privacy|guidelines|safety|nitro|download|developers|branding|company|careers|blog|community|quests|ads\/quests|acknowledgements|licenses|company-information|status|support|template|invite|gifts?)(?=[/?#]|$)(.*)$/i,
-            (m, route, rest) => `${cdn()}/${route}${rest || ""}`,
+            (m, route, rest) => `${location.origin}/${route}${rest || ""}`,
         ],
     ];
     const rewrite = (value) => {
