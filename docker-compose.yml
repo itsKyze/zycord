@@ -100,7 +100,10 @@ services:
 
     # optional: starts only with the caddy profile, COMPOSE_PROFILES=caddy in .env
     caddy:
-        image: caddy:2-alpine
+        build:
+            context: ./docker
+            dockerfile: Dockerfile.caddy
+        image: zycord-caddy-cf:latest
         profiles: ["caddy"]
         restart: unless-stopped
         depends_on:
@@ -109,6 +112,8 @@ services:
         environment:
             DOMAIN: ${DOMAIN}
             CADDY_GLOBAL_OPTIONS: ${CADDY_GLOBAL_OPTIONS:-}
+            CF_API_TOKEN: ${CF_API_TOKEN:?set CF_API_TOKEN in .env}
+            CF_ZONE_ID: ${CF_ZONE_ID:?set CF_ZONE_ID in .env}
         ports:
             - "80:80"
             - "443:443"

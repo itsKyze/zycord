@@ -294,7 +294,7 @@ const buildHtml = () => {
         .replace(/<title>[^<]*<\/title>/, () => `<title>${title}</title>\n    ${appMeta}`);
 };
 
-const EXTRA_ROOTS = ["", "ra", "docs", "developers"];
+const EXTRA_ROOTS = ["", "ra", "docs", "developers", "login", "app", "register", "verify", "reset", "oauth2", "invite", "gift", "gifts", "store", "discovery", "guild-discovery", "template", "popout", "activities", "embedded"];
 
 const clientRoots = () => {
     const html = fs.readFileSync(path.join(CACHE_PATH, "index.html"), "utf8");

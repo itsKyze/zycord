@@ -6,6 +6,10 @@
 }
 
 {$DOMAIN} {
+	tls {
+		dns cloudflare {$CF_API_TOKEN}
+	}
+
 	@websockets {
 		path / /voice /voice/* /remote-auth /remote-auth/*
 		header Connection *Upgrade*
@@ -22,4 +26,31 @@
 		encode zstd gzip
 		reverse_proxy server:3001
 	}
+}
+
+docs.zyron.site {
+	tls {
+		dns cloudflare {$CF_API_TOKEN}
+	}
+	encode zstd gzip
+	rewrite * /developers/docs{uri}
+	reverse_proxy server:3001
+}
+
+developers.zyron.site {
+	tls {
+		dns cloudflare {$CF_API_TOKEN}
+	}
+	encode zstd gzip
+	rewrite * /developers{uri}
+	reverse_proxy server:3001
+}
+
+admin.zyron.site {
+	tls {
+		dns cloudflare {$CF_API_TOKEN}
+	}
+	encode zstd gzip
+	rewrite * /admin{uri}
+	reverse_proxy server:3001
 }

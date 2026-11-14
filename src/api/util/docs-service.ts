@@ -521,6 +521,7 @@ const DOCS_RUNTIME_SCRIPT = `
 
 export function transformDocsHtml(raw: string): string {
 	// 1. Rewrite relative Mintlify asset paths to Discord live CDN
+	raw = raw.replaceAll("/_mintlify/assets/", "https://docs.discord.com/_mintlify/assets/");
 	raw = raw.replaceAll("/mintlify-assets/", "https://docs.discord.com/mintlify-assets/");
 
 	// 2. Replace Mintlify navbar logo with Zycord Docs Logo (light + dark mode automatic switching)
