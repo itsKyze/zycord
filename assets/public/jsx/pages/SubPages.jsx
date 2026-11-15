@@ -1,9 +1,7 @@
 import { h } from "../runtime.jsx";
 import { BlogPage as MarketingBlogPage } from "./MarketingParity.jsx";
 
-/* ============================================================================
-   1. DOWNLOAD PAGE (/download) — Exact 2026 Zycord Layout
-   ============================================================================ */
+
 export function DownloadPage() {
 	return (
 		<div className="zy-download-page">
@@ -699,9 +697,7 @@ export function CompanyPage() {
 	);
 }
 
-/* ============================================================================
-   7. BRANDING PAGE (/branding)
-   ============================================================================ */
+
 export function BrandingPage() {
 	const colors = [
 		{ name: "Zycord Blurple", hex: "#5865F2", rgb: "RGB(88, 101, 242)" },

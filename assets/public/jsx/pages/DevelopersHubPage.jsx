@@ -3,9 +3,7 @@ import { h } from "../runtime.jsx";
 export function DevelopersHubPage() {
 	return (
 		<div className="zy-developers-page">
-			{/* =====================================================================
-			    1. DEVELOPER CENTERED HERO — EXACT Zycord 3D OBJECTS
-			    ===================================================================== */}
+
 			<section className="zy-subhero" style={{ paddingTop: "136px", paddingBottom: "48px" }}>
 				<img src="/site/media/zycord/dev-fire-extinguisher.webp" alt="" aria-hidden="true" className="zy-float-prop tilt" style={{ width: "92px", top: "10%", left: "6%" }} />
 				<img src="/site/media/zycord/dev-spider.webp" alt="" aria-hidden="true" className="zy-float-prop" style={{ width: "86px", top: "14%", right: "8%" }} />
@@ -28,9 +26,6 @@ export function DevelopersHubPage() {
 				</div>
 			</section>
 
-			{/* =====================================================================
-			    2. BUILD ON THE SOCIAL LAYER OF GAMES — 16X9 STAGE
-			    ===================================================================== */}
 			<section className="zy-section" style={{ paddingTop: "12px" }}>
 				<div className="zy-container">
 					<div className="zy-showcase-card">
@@ -62,9 +57,6 @@ export function DevelopersHubPage() {
 				</div>
 			</section>
 
-			{/* =====================================================================
-			    3. REACH INTO ONE OF THE WORLD'S MOST ENGAGED GAMING AUDIENCES
-			    ===================================================================== */}
 			<section className="zy-section" style={{ paddingTop: "16px" }}>
 				<div className="zy-container">
 					<div style={{ textAlign: "center", maxWidth: "780px", margin: "0 auto 36px" }}>
@@ -91,9 +83,6 @@ export function DevelopersHubPage() {
 				</div>
 			</section>
 
-			{/* =====================================================================
-			    4. HOW GAMES USE ZYCORD TO DRIVE GROWTH (3 ICON CARDS)
-			    ===================================================================== */}
 			<section className="zy-section" id="rich-presence" style={{ paddingTop: "16px" }}>
 				<div className="zy-container">
 					<div style={{ textAlign: "center", maxWidth: "780px", margin: "0 auto 36px" }}>
@@ -125,9 +114,7 @@ export function DevelopersHubPage() {
 				</div>
 			</section>
 
-			{/* =====================================================================
-			    5. 3 CORE PILLARS (DEVELOPER PORTAL, DOCS, SOCIAL SDK)
-			    ===================================================================== */}
+
 			<section className="zy-section" style={{ paddingTop: "16px" }}>
 				<div className="zy-container">
 					<div style={{ textAlign: "center", maxWidth: "780px", margin: "0 auto 40px" }}>
@@ -172,9 +159,7 @@ export function DevelopersHubPage() {
 				</div>
 			</section>
 
-			{/* =====================================================================
-			    6. INTERACTIVE SDK & API QUICKSTART TABS
-			    ===================================================================== */}
+
 			<section className="zy-section" id="sdk-quickstart" style={{ paddingTop: "16px" }}>
 				<div className="zy-container" style={{ position: "relative" }}>
 					<div className="zy-showcase-card" id="commerce">

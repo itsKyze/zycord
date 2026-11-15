@@ -1,7 +1,3 @@
-/* ============================================================================
-   ZYCORD SITE-WIDE INTERNATIONALIZATION (i18n) & RTL/LTR ENGINE
-   Supports instant live DOM & JSX translation without page reload
-   ============================================================================ */
 
 export const TRANSLATIONS = {
 	ar: {

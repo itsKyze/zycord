@@ -33,9 +33,7 @@
 	<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 	<link rel="stylesheet" href="/site/site.css?v=20261015c" />
 	<style>
-		/* ============================================================================
-		   OFFICIAL ZYCORD 2026 3D HERO COMPOSITE & HORIZON STYLES
-		   ============================================================================ */
+
 		.hero-section {
 			padding: 132px 0 88px;
 			position: relative;
@@ -67,7 +65,7 @@
 			position: relative;
 			height: 44px;
 		}
-		/* Crown — Matches Discord .crown.is_2025 (12rem at 1440px, 14rem at 1920px, depth-of-field blur) */
+
 		.hero-crown {
 			position: absolute;
 			left: 86%;
@@ -117,7 +115,7 @@
 			display: block;
 			filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.65));
 		}
-		/* Girl on left — Matches Discord .home-image-gerl.is_2026 */
+
 		.hero-char-girl {
 			position: absolute;
 			left: 3.1%;
@@ -129,7 +127,7 @@
 			pointer-events: none;
 			filter: none;
 		}
-		/* Clyde & Shadow — Matches Discord .home_clyde.is_2025.is_2026 */
+
 		.hero-char-clyde-wrap {
 			position: absolute;
 			left: 22.8%;
@@ -155,7 +153,7 @@
 			opacity: 0.72;
 			animation: hero-clyde-shadow-pulse 3.8s ease-in-out infinite;
 		}
-		/* Wumpus & Leaf — Matches Discord .home_wumpus.is_2025.is_2026 & .home_wumpus-pl.is_2025.is_2026 */
+
 		.hero-char-wumpus-wrap {
 			position: absolute;
 			left: 44.5%;
@@ -183,7 +181,7 @@
 			filter: none;
 			animation: hero-leaf-float 4.2s ease-in-out infinite;
 		}
-		/* Boy in front of phone — Matches Discord Layer.webp (background-position: 80% 90%, background-size: 100px) */
+
 		.hero-char-boy {
 			position: absolute;
 			left: 79.5%;
@@ -195,7 +193,7 @@
 			pointer-events: none;
 			filter: none;
 		}
-		/* Trophy on right — Matches Discord .star.is_2025 (depth-of-field blur, floating behind the monitor) */
+
 		.hero-trophy-blur {
 			position: absolute;
 			left: 89%;
@@ -226,7 +224,7 @@
 			50% { transform: translate3d(0, -6px, 0) rotate(4deg); }
 		}
 
-		/* Centered Hero Bottom CTA Bar (Exact Zycord layout) */
+
 		.hero-bottom-ctas {
 			display: flex;
 			justify-content: center;
@@ -246,7 +244,6 @@
 			border-radius: 12px;
 		}
 
-		/* Exact Zycord Section 5 Characters Structure */
 		.zy-sec5-3d-wrap {
 			position: relative;
 			z-index: 3;
@@ -299,7 +296,7 @@
 			display: block;
 		}
 
-		/* Final Bottom Horizon Section — Discord 2025/2026 Exact Match (.discord_banner.color-s.is_2025) */
+
 		.zy-home-wrapper {
 			background-size: 100% 100%;
 		}
@@ -344,7 +341,7 @@
 		.final-horizon-section .zy-btn {
 			pointer-events: auto;
 		}
-		/* HEADING — Bold uppercase, Discord-weight white */
+
 		.final-horizon-section .zy-display,
 		.final-horizon-title {
 			font-size: clamp(32px, 4.2vw, 50px);
@@ -363,7 +360,7 @@
 				max-width: 1040px;
 			}
 		}
-		/* CTA BAR — centered */
+
 		.final-horizon-section .hero-bottom-ctas {
 			display: flex;
 			justify-content: center;
@@ -371,7 +368,7 @@
 			margin-top: 32px;
 			pointer-events: auto;
 		}
-		/* BUTTON — Matches Discord .button-bl.download-button.imagine.is_2025 */
+
 		.final-horizon-section .zy-btn-secondary {
 			background-color: #ffffff;
 			color: #000000;
@@ -393,7 +390,7 @@
 			transform: none;
 			box-shadow: none;
 		}
-		/* ART CONTAINER — Matches Discord .relative-2025 */
+
 		.final-horizon-art {
 			position: relative;
 			margin-top: clamp(88px, 7.5vw, 130px);
@@ -417,7 +414,7 @@
 				max-width: 1420px;
 			}
 		}
-		/* CHARACTER LINEUP (footer-horizon.webp) — Matches Discord .discord_svg.is_2025.is_n */
+
 		.final-horizon-bg {
 			width: 100%;
 			height: auto;
@@ -443,7 +440,7 @@
 		.final-horizon-floor {
 			display: none !important;
 		}
-		/* 3D CLYDE ROBOT — Matches Discord .discort_robot.discord_robot.is_2025.is_n */
+
 		.final-horizon-clyde {
 			position: absolute;
 			inset: auto auto 0% 0%;
@@ -464,7 +461,7 @@
 				margin-bottom: 2rem;
 			}
 		}
-		/* WUMPUS SITTING AT CENTER — Matches Discord .wumpus-footer-home-contain.smaller.is_2025 */
+
 		.final-horizon-wumpus-wrap {
 			position: absolute;
 			inset: auto 0% 0px;
@@ -479,7 +476,7 @@
 			z-index: 10;
 			pointer-events: none;
 		}
-		/* Matches Discord .wumpus-footer-home.is_2025.is_2026 */
+
 		.final-horizon-wumpus {
 			width: 100%;
 			max-width: 19rem;
@@ -493,7 +490,7 @@
 			z-index: 3;
 			filter: none;
 		}
-		/* Matches Discord .wumpus-footer-list.is_2025 */
+
 		.final-horizon-leaf {
 			width: 100%;
 			max-width: 19rem;
@@ -529,7 +526,7 @@
 			50% { transform: translate3d(1px, -6px, 0) rotate(2deg); }
 		}
 
-		/* Responsive adjustments */
+
 		@media (max-width: 991px) {
 			.final-horizon-clyde {
 				margin-left: 12%;

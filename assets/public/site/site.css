@@ -1,7 +1,3 @@
-/* ============================================================================
-   ZYCORD PUBLIC WEBSITE & APPLICATION ECOSYSTEM — ZYCORD 2026 DESIGN SYSTEM
-   Exact Zycord Cosmic Theme, Solid Blurple Mega-Dropdowns, 3D Props & Stages
-   ============================================================================ */
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Poppins:ital,wght@0,700;0,800;0,900;1,800;1,900&display=swap");
 
@@ -481,7 +477,7 @@ main:not(.zy-nitro-page) > :first-child:not(.zy-home-wrapper):not(.zy-download-p
 	transition: background-color 0.16s ease, color 0.16s ease;
 }
 
-/* Solid Blurple Pill Trigger on Hover / Click / Active — Exact match to Discord */
+
 .zy-nav-item:hover > .zy-nav-link,
 .zy-nav-item:focus-within > .zy-nav-link,
 .zy-nav-item.is-open > .zy-nav-link,
@@ -651,7 +647,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	z-index: 1002;
 }
 
-/* Phone menu — Discord.com slide-in burger */
+
 .zy-mobile-toggle {
 	display: none;
 	align-items: center;
@@ -925,7 +921,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	font-size: 24px;
 }
 
-/* Zycord 2026 Frosted Glass Outer Showcase Card (Matches .main-wrapper.overflow-hidden._2025 & .home--block-group._2025 on Discord) */
+
 .zy-home-wrapper {
 	background-color: #161cbb;
 	background-image: url("/site/media/zycord/home-bg-2025.png");
@@ -1082,7 +1078,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	padding: clamp(18px, 2.5vw, 34px);
 }
 
-/* Vibrant Inner Stage Container inside Frosted Showcase Card (Matches .home--group-chat-img.video._2025 / .is_2025 / .is-2025 on Discord) */
+
 .zy-scene-stage {
 	position: relative;
 	border-radius: 72px;
@@ -1258,9 +1254,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	100% { transform: translateX(-50%); }
 }
 
-/* ============================================================================
-   FLOATING 3D PROPS & TWINKLING STARS (WITH SCROLL PARALLAX SUPPORT)
-   ============================================================================ */
+
 
 .zy-float-prop {
 	position: absolute;
@@ -1286,8 +1280,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* Hands & Upper Body of Woman OVER the top border of the glass card */
-/* sec5-card-characters — مكبّرة ومرفوعة مثل Discord */
+
 .zy-sec5-char-bot {
 	position: absolute;
 	top: -200px;
@@ -1926,7 +1919,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	margin: 0 auto;
 }
 
-/* Official Discord /download Page Wrapper & Hero (.download_hero.is_download) */
+
 .zy-download-page {
 	background-color: #000000;
 	background-image: none;
@@ -2185,7 +2178,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* Official /download card edge-bleed variants — exact Discord 72px corner radius & crop padding */
+
 .zy-alt-media-card.is-dl-desktop {
 	padding: 80px 0 0 80px;
 	border-radius: 72px;
@@ -2268,7 +2261,6 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	transform: none;
 }
 
-/* Official Discord Bottom "Feeling experimental?" Section (.download-banner.bottom-small.is-update) */
 .zy-dl-ptb-banner {
 	position: relative;
 	z-index: 98;
@@ -2372,7 +2364,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* 3D Turnip (Left) — Matches Discord .feeling-decor-1.is-update */
+
 .zy-dl-ptb-icon {
 	position: absolute;
 	top: -100px;
@@ -2385,7 +2377,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	filter: none;
 }
 
-/* 3D Trophy (Right) — Matches Discord .feeling-decor-2.is-update */
+
 .zy-dl-ptb-trophy {
 	position: absolute;
 	bottom: -104px;
@@ -2439,7 +2431,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* Official Discord "Download Test Build" Dropdown (.new-dark-button.download-new + .dropdown-list-6.is-download-new) */
+
 .zy-ptb-dropdown-wrap {
 	margin-top: 40px;
 	display: flex;
@@ -2574,7 +2566,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	color: #ffffff;
 }
 
-/* Legacy .zy-ptb-card fallback */
+
 .zy-ptb-card {
 	position: relative;
 	max-width: 980px;
@@ -2591,9 +2583,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	gap: 18px;
 }
 
-/* ============================================================================
-   OFFICIAL DISCORD /nitro PAGE STYLES (1:1 Match with Screenshot 2 & Webflow)
-   ============================================================================ */
+
 
 .zy-nitro-page {
 	position: relative;
@@ -2620,7 +2610,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* Top Cosmic Purple-Magenta Hero Glow spanning Hero + Plan Cards (.bg-hero-newsroom.is-nitro) */
+
 .zy-nitro-hero-bg {
 	position: absolute;
 	inset: 0% 0% auto;
@@ -3175,10 +3165,6 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* ============================================================================
-   NITRO COMPARISON TABLE (.plan_component.is-update & .relative.mob-none.is-new)
-   Exact 1:1 Live Discord Layout (Screenshots 010733 - 010801)
-   ============================================================================ */
 
 .zy-compare-wrap {
 	--nitro-col-w: 220px;
@@ -3879,7 +3865,6 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	box-shadow: none;
 }
 
-/* Official Discord /nitro FAQ Accordion Rows (.ad_faq.top-none-line.is-line.top-line-none.is-new) */
 .zy-nitro-page .zy-accordion {
 	gap: 0;
 }
@@ -3959,7 +3944,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	display: none;
 }
 
-/* Careers Page Container matching Discord's deep dark blurple aesthetic */
+
 .zy-careers-page,
 .zy-quests-page,
 .zy-safety-page,
@@ -3975,7 +3960,6 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	position: relative;
 }
 
-/* 100vw Full-Bleed Careers Hero Carousel Wrapper (Screenshots: Center Active Slide, Side Peeks) */
 .zy-careers-hero-carousel-wrap {
 	position: relative;
 	width: 100vw;
@@ -4009,7 +3993,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	scroll-behavior: auto;
 }
 
-/* Official Discord Giant Capsule-Rounded Office Photo Card */
+
 .zy-carousel-slide-gallery {
 	flex: 0 0 clamp(520px, 62vw, 1040px);
 	height: clamp(420px, 48vw, 680px);
@@ -4032,7 +4016,6 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	-webkit-user-drag: none;
 }
 
-/* Floating 3D Crown on Top-Left of Hero Carousel */
 .zy-careers-crown-prop {
 	position: absolute;
 	left: clamp(24px, 4.5vw, 76px);
@@ -4281,9 +4264,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	right: 0;
 }
 
-/* ============================================================================
-   OFFICIAL DISCORD 2026 3D HERO COMPOSITE & HORIZON STYLES
-   ============================================================================ */
+
 .hero-section {
 	padding: 132px 0 88px;
 	position: relative;
@@ -4318,7 +4299,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	position: relative;
 	height: 44px;
 }
-/* Crown — Matches Discord .crown.is_2025 (12rem at 1440px, 14rem at 1920px, depth-of-field blur) */
+
 .hero-crown {
 	position: absolute;
 	left: 86%;
@@ -4368,7 +4349,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	display: block;
 	filter: drop-shadow(0 32px 64px rgba(0, 0, 0, 0.65));
 }
-/* Girl on left — Matches Discord .home-image-gerl.is_2026 */
+
 .hero-char-girl {
 	position: absolute;
 	left: 3.1%;
@@ -4380,7 +4361,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	pointer-events: none;
 	filter: none;
 }
-/* Clyde & Shadow — Matches Discord .home_clyde.is_2025.is_2026 */
+
 .hero-char-clyde-wrap {
 	position: absolute;
 	left: 22.8%;
@@ -4406,7 +4387,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	opacity: 0.72;
 	animation: hero-clyde-shadow-pulse 3.8s ease-in-out infinite;
 }
-/* Wumpus & Leaf — Matches Discord .home_wumpus.is_2025.is_2026 & .home_wumpus-pl.is_2025.is_2026 */
+
 .hero-char-wumpus-wrap {
 	position: absolute;
 	left: 44.5%;
@@ -4434,7 +4415,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	filter: none;
 	animation: hero-leaf-float 4.2s ease-in-out infinite;
 }
-/* Boy in front of phone — Matches Discord Layer.webp (background-position: 80% 90%, background-size: 100px) */
+
 .hero-char-boy {
 	position: absolute;
 	left: 79.5%;
@@ -4446,7 +4427,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	pointer-events: none;
 	filter: none;
 }
-/* Trophy on right — Matches Discord .star.is_2025 (depth-of-field blur, floating behind the monitor) */
+
 .hero-trophy-blur {
 	position: absolute;
 	left: 89%;
@@ -4496,7 +4477,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	border-radius: 12px;
 }
 
-/* Final Bottom Horizon Section — Discord 2025/2026 Exact Match (.discord_banner.color-s.is_2025) */
+
 .final-horizon-section {
 	margin-top: -1px;
 	padding-top: 0;
@@ -4552,7 +4533,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	margin-top: 32px;
 	pointer-events: auto;
 }
-/* BUTTON — Matches Discord .button-bl.download-button.imagine.is_2025 */
+
 .final-horizon-section .zy-btn-secondary {
 	background-color: #ffffff;
 	color: #000000;
@@ -4574,7 +4555,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	transform: none;
 	box-shadow: none;
 }
-/* ART CONTAINER — Matches Discord .relative-2025 */
+
 .final-horizon-art {
 	position: relative;
 	margin-top: clamp(88px, 7.5vw, 130px);
@@ -4598,7 +4579,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 		max-width: 1420px;
 	}
 }
-/* CHARACTER LINEUP (footer-horizon.webp) — Matches Discord .discord_svg.is_2025.is_n */
+
 .final-horizon-bg {
 	width: 100%;
 	height: auto;
@@ -4624,7 +4605,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 .final-horizon-floor {
 	display: none !important;
 }
-/* 3D CLYDE ROBOT — Matches Discord .discort_robot.discord_robot.is_2025.is_n */
+
 .final-horizon-clyde {
 	position: absolute;
 	inset: auto auto 0% 0%;
@@ -4645,7 +4626,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 		margin-bottom: 2rem;
 	}
 }
-/* WUMPUS SITTING AT CENTER — Matches Discord .wumpus-footer-home-contain.smaller.is_2025 */
+
 .final-horizon-wumpus-wrap {
 	position: absolute;
 	inset: auto 0% 0px;
@@ -4660,7 +4641,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	z-index: 10;
 	pointer-events: none;
 }
-/* Matches Discord .wumpus-footer-home.is_2025.is_2026 */
+
 .final-horizon-wumpus {
 	width: 100%;
 	max-width: 19rem;
@@ -4674,7 +4655,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	z-index: 3;
 	filter: none;
 }
-/* Matches Discord .wumpus-footer-list.is_2025 */
+
 .final-horizon-leaf {
 	width: 100%;
 	max-width: 19rem;
@@ -4701,7 +4682,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 		margin-bottom: 23rem;
 	}
 }
-/* Matches Discord .smoke-gif.hide */
+
 .final-horizon-smoke {
 	display: none !important;
 	opacity: 0 !important;
@@ -4711,7 +4692,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	50% { transform: translate3d(1px, -6px, 0) rotate(2deg); }
 }
 
-/* Responsive */
+
 @media (max-width: 991px) {
 	.final-horizon-clyde {
 		margin-left: 12%;
@@ -4799,7 +4780,7 @@ html[dir="rtl"] .zy-action-dropdown-menu {
 	}
 }
 
-/* Global Subpage Bottom Glow Transition into Footer (for pages without dedicated bottom banner) */
+
 main:not(.zy-home-wrapper):not(.zy-download-page):not(.zy-nitro-page) > section:last-child:not(.zy-dl-ptb-banner):not(.zy-nitro-footer-cta):not(.final-horizon-section) {
 	position: relative;
 	padding-bottom: 136px !important;
@@ -4818,11 +4799,7 @@ main > div:not(.zy-download-page):not(.zy-nitro-page):not(.zy-dc-page):not(.zy-d
 	background-size: 100% 340px;
 }
 
-/* ============================================================================
-   DISCORD 1:1 MARKETING SURFACES — DISCOVER / SAFETY / QUESTS / SUPPORT / BLOG
-   Metrics captured from discord.com/servers, /safety, /ads/quests, /blog,
-   support.discord.com/hc/en-us, and every linked child hub (Oct 2026).
-   ============================================================================ */
+
 
 html.zy-dc-light,
 body.zy-dc-light {
@@ -5486,7 +5463,7 @@ body.zy-dc-light:has(.zy-dc-support) {
 	background-color: #ffffff !important;
 }
 
-/* Support Help Center — Zendesk / support.discord.com */
+
 .zy-dc-support {
 	background: #ffffff;
 	color: #2e3338;
@@ -5623,7 +5600,7 @@ body.zy-dc-light:has(.zy-dc-support) {
 	font-family: inherit;
 }
 
-/* Quests — discord.com/ads/quests mosaic hero */
+
 .zy-dc-quests {
 	background: #000000;
 	color: #ffffff;
@@ -5814,7 +5791,7 @@ body.zy-dc-light:has(.zy-dc-support) {
 	color: rgba(255, 255, 255, 0.72);
 }
 
-/* Blog — discord.com/blog featured 1538×615 r112, 2-col 647×343 r56 */
+
 .zy-dc-blog {
 	background: radial-gradient(1200px 640px at 50% -10%, #3b42a0 0%, #16183a 42%, #000000 78%);
 	color: #ffffff;
@@ -5990,7 +5967,6 @@ body.zy-dc-light:has(.zy-dc-support) {
 	gap: 16px;
 }
 
-/* Discord 404 — discord.com missing-route hyperspace page */
 .zy-dc-404 {
 	min-height: 100vh;
 	display: flex;

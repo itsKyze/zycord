@@ -987,7 +987,7 @@ tbody tr:last-child td {
     box-shadow: 0 0 0 2px rgba(88, 101, 242, 0.35);
 }
 
-/* matches the web client's BOT tag (and OFFICIAL and SYSTEM, which share its look); .ai is the patched green AI variant */
+
 .name-tag {
     display: inline-flex;
     align-items: center;
@@ -2300,7 +2300,7 @@ tbody tr:hover {
     border-radius: 4px;
 }
 
-/* Login — Discord auth artwork mixed from /login + splash */
+
 html:has(#login:not([hidden])) body {
     background: #c8ccd6;
 }

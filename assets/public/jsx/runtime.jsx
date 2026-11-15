@@ -1,6 +1,3 @@
-/* ============================================================================
-   ZYCORD JSX RUNTIME (React-Compatible Lightweight DOM & Component Engine)
-   ============================================================================ */
 
 const SVG_TAGS = new Set([
 	"svg",

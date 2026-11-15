@@ -36,9 +36,7 @@ export function NotFoundPage() {
 	);
 }
 
-/* -------------------------------------------------------------------------- */
-/* Discover — discord.com/servers + /trending-games                           */
-/* -------------------------------------------------------------------------- */
+
 
 const SERVERS = [
 	{ slug: "midjourney-662267976984297473", name: "Midjourney", cat: "tech", splash: `${DC}/discovery-splashes/662267976984297473/4798759e115d2500fef16347d578729a.jpg?size=2048&format=auto`, icon: `${DC}/icons/662267976984297473/39128f6c9fc33f4c95a27d4c601ad7db.png?size=256`, online: "563,446", members: "18,500,000", verified: true, desc: "The official server for Midjourney, a text-to-image AI where your imagination is the only limit." },
@@ -355,9 +353,7 @@ export function DiscoverPage() {
 	return <Wrap light>{<DirectoryView />}</Wrap>;
 }
 
-/* -------------------------------------------------------------------------- */
-/* Safety — discord.com/safety + every hub                                    */
-/* -------------------------------------------------------------------------- */
+
 
 const SAFETY_IMG = {
 	library: `${WF}/69d3647d9620243ea45215e5_Image.png`,
