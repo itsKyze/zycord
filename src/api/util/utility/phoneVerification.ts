@@ -30,12 +30,66 @@ export const PhoneVerification = {
         return normalized;
     },
 
-    send(phone: string, user_id?: string) {
+    async send(phone: string, user_id?: string) {
         const now = Date.now();
         for (const [key, entry] of codes) if (entry.expires < now) codes.delete(key);
         const code = crypto.randomInt(0, 1_000_000).toString().padStart(6, "0");
         codes.set(phone, { code, user_id, expires: now + TTL, attempts: 0 });
-        console.log(`[SMS] no sms provider configured, verification code for ${phone}${user_id ? ` (user ${user_id})` : ""} is ${code}`);
+        console.log(`[SMS] verification code for ${phone}${user_id ? ` (user ${user_id})` : ""} is ${code}`);
+
+        // 1. TextBee SMS Gateway (Android SIM card)
+        const textbeeApiKey = process.env.TEXTBEE_API_KEY;
+        if (textbeeApiKey) {
+            try {
+                const deviceId = process.env.TEXTBEE_DEVICE_ID;
+                const body: Record<string, unknown> = {
+                    recipients: [phone],
+                    message: `Your Zycord verification code is: ${code}`,
+                };
+                if (deviceId) body.deviceId = deviceId;
+
+                const res = await fetch("https://api.textbee.dev/api/v1/gateway/send-sms", {
+                    method: "POST",
+                    headers: {
+                        "x-api-key": textbeeApiKey,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(body),
+                });
+                if (!res.ok) {
+                    const err = await res.text();
+                    console.error("[SMS/TextBee] failed to send SMS:", res.status, err);
+                } else {
+                    console.log(`[SMS/TextBee] successfully dispatched SMS to ${phone}`);
+                }
+            } catch (e) {
+                console.error("[SMS/TextBee] error dispatching SMS:", e);
+            }
+        }
+
+        // 2. Twilio SMS Integration
+        const twilioSid = process.env.TWILIO_ACCOUNT_SID;
+        const twilioToken = process.env.TWILIO_AUTH_TOKEN;
+        const twilioFrom = process.env.TWILIO_FROM;
+        if (twilioSid && twilioToken && twilioFrom) {
+            try {
+                const auth = Buffer.from(`${twilioSid}:${twilioToken}`).toString("base64");
+                await fetch(`https://api.twilio.com/2010-04-01/Accounts/${twilioSid}/Messages.json`, {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Basic ${auth}`,
+                        "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: new URLSearchParams({
+                        To: phone,
+                        From: twilioFrom,
+                        Body: `Your Zycord verification code is: ${code}`,
+                    }),
+                });
+            } catch (e) {
+                console.error("[SMS/Twilio] error:", e);
+            }
+        }
     },
 
     verify(phone: string, code: unknown, user_id?: string) {
