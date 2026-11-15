@@ -23,7 +23,7 @@
         "ReverseImageSearch": true,
         "ServerInfo": true,
         "SilentTyping": { "enabled": true, "isEnabled": false },
-        "TypingTweaks": true,
+        "TypingTweaks": false,
         "Unindent": true,
         "ValidReply": true,
         "ValidUser": true,

@@ -17,13 +17,13 @@
 */
 
 import type { ReactNode } from "react";
-import { Button as NativeButton, Forms, Text, TextInput } from "@webpack/common";
+import { Button as NativeButton, Text, TextInput } from "@webpack/common";
 
 export function SettingsSection({ title, description, className, children }: { title: string; description?: string; className?: string; children: ReactNode }) {
     return (
         <section className={className} aria-label={title}>
             <div className="zycord-ui-section-heading">
-                <Forms.FormTitle tag="h3">{title}</Forms.FormTitle>
+                <h3>{title}</h3>
                 {description && (
                     <Text variant="text-sm/normal" color="text-muted">
                         {description}
@@ -55,23 +55,61 @@ export function Field({
     return (
         <div className={className}>
             <label htmlFor={id}>
-                <Text variant="text-sm/medium">{label}</Text>
+                {Text ? <Text variant="text-sm/medium">{label}</Text> : <span>{label}</span>}
             </label>
-            <TextInput id={id} type={type} value={value} onChange={onChange} placeholder={placeholder} />
+            {TextInput ? (
+                <TextInput id={id} type={type} value={value} onChange={onChange} placeholder={placeholder} />
+            ) : (
+                <input
+                    id={id}
+                    type={type}
+                    value={value}
+                    onChange={(e: any) => onChange(e.target.value)}
+                    placeholder={placeholder}
+                    style={{
+                        width: "100%",
+                        padding: "8px 12px",
+                        borderRadius: 4,
+                        background: "var(--input-background, #1e1f22)",
+                        color: "var(--text-normal, #dbdee1)",
+                        border: "none",
+                    }}
+                />
+            )}
         </div>
     );
 }
 
 export function Button({ variant = "primary", disabled, onClick, children }: { variant?: "primary" | "secondary"; disabled?: boolean; onClick: () => void; children: ReactNode }) {
+    if (NativeButton && typeof NativeButton === "function") {
+        return (
+            <NativeButton
+                type="button"
+                color={variant === "secondary" ? NativeButton.Colors?.PRIMARY || "PRIMARY" : NativeButton.Colors?.BRAND || "BRAND"}
+                size={NativeButton.Sizes?.SMALL || "small"}
+                disabled={disabled}
+                onClick={onClick}
+            >
+                {children}
+            </NativeButton>
+        );
+    }
     return (
-        <NativeButton
+        <button
             type="button"
-            color={variant === "secondary" ? NativeButton.Colors.PRIMARY : NativeButton.Colors.BRAND}
-            size={NativeButton.Sizes.SMALL}
             disabled={disabled}
             onClick={onClick}
+            style={{
+                padding: "8px 16px",
+                borderRadius: 4,
+                cursor: disabled ? "not-allowed" : "pointer",
+                background: variant === "secondary" ? "var(--button-secondary-background, #4e5058)" : "var(--brand-experiment, #5865f2)",
+                color: "#fff",
+                border: "none",
+                fontWeight: 500,
+            }}
         >
             {children}
-        </NativeButton>
+        </button>
     );
 }

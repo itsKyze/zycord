@@ -16,6 +16,7 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import ErrorBoundary from "@components/ErrorBoundary";
 import definePlugin, { StartAt } from "@utils/types";
 import { Checkbox, FluxDispatcher, ReactDOM, RestAPI, Text, UserProfileStore, UserStore, useEffect, useState } from "@webpack/common";
 
@@ -26,6 +27,33 @@ import managedStyle from "./style.css?managed";
 type Badge = { slug: string; id: string; description: string; icon: string; source?: "twemoji-flags" | "supplemental" };
 type Selection = { flags: string[]; catalog: Badge[] };
 const pending = new Map<string, { signature?: string; dirty: boolean; promise: Promise<void> }>();
+
+async function requestApi<T>(path: string, options: { method?: string; body?: any } = {}): Promise<T> {
+    try {
+        if (RestAPI && typeof RestAPI.get === "function") {
+            if (options.method === "PATCH") {
+                const res = await RestAPI.patch({ url: path, body: options.body });
+                return res.body;
+            }
+            const res = await RestAPI.get({ url: path });
+            return res.body;
+        }
+    } catch {
+        // Fallback to native fetch
+    }
+
+    const token = UserStore?.getToken?.() || (typeof localStorage !== "undefined" ? localStorage.getItem("token")?.replace(/^"|"$/g, "") : null);
+    const response = await fetch(`/api/v9${path}`, {
+        method: options.method || "GET",
+        headers: {
+            "Content-Type": "application/json",
+            ...(token ? { Authorization: token } : {}),
+        },
+        body: options.body ? JSON.stringify(options.body) : undefined,
+    });
+    if (!response.ok) throw new Error(`API error ${response.status}`);
+    return (await response.json()) as T;
+}
 
 function refreshProfile(id: string, signature?: string): Promise<void> {
     const running = pending.get(id);
@@ -44,7 +72,7 @@ function refreshProfile(id: string, signature?: string): Promise<void> {
             do {
                 state.dirty = false;
                 try {
-                    const { body } = await RestAPI.get({ url: `/users/${id}/profile` });
+                    const body = await requestApi<any>(`/users/${id}/profile`);
                     FluxDispatcher.dispatch({ type: "USER_PROFILE_FETCH_SUCCESS", userProfile: body });
                 } catch (error) {
                     if (!state.dirty) throw error;
@@ -59,7 +87,9 @@ function refreshProfile(id: string, signature?: string): Promise<void> {
 
 function profileChanged(event: { user?: { id: string; pride_badges?: string[] }; updates?: { user?: { id: string; pride_badges?: string[] } }[] }) {
     for (const user of [event.user, ...(event.updates ?? []).map((update) => update.user)]) {
-        if (user?.pride_badges !== undefined && UserProfileStore.getUserProfile(user.id)) refreshProfile(user.id, JSON.stringify(user.pride_badges)).catch(() => {});
+        if (user?.pride_badges !== undefined && UserProfileStore?.getUserProfile?.(user.id)) {
+            refreshProfile(user.id, JSON.stringify(user.pride_badges)).catch(() => {});
+        }
     }
 }
 
@@ -100,14 +130,15 @@ function PridePicker() {
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState("");
     const [message, setMessage] = useState("");
+
     useEffect(() => {
         let active = true;
-        RestAPI.get({ url: "/users/@me/pride-badges" })
-            .then(({ body }: { body: Selection }) => {
-                if (active) {
-                    setCatalog(body.catalog);
-                    setFlags(body.flags);
-                    setSaved(body.flags);
+        requestApi<Selection>("/users/@me/pride-badges")
+            .then((body) => {
+                if (active && body) {
+                    setCatalog(body.catalog || []);
+                    setFlags(body.flags || []);
+                    setSaved(body.flags || []);
                 }
             })
             .catch(() => {
@@ -120,17 +151,22 @@ function PridePicker() {
             active = false;
         };
     }, []);
+
     const save = async (selection: string[]) => {
         setBusy(true);
         setError("");
         setMessage("");
         let persisted = false;
         try {
-            const { body } = await RestAPI.patch({ url: "/users/@me/pride-badges", body: { flags: selection } });
-            setFlags(body.flags);
-            setSaved(body.flags);
+            const body = await requestApi<{ flags: string[] }>("/users/@me/pride-badges", {
+                method: "PATCH",
+                body: { flags: selection },
+            });
+            setFlags(body.flags || []);
+            setSaved(body.flags || []);
             persisted = true;
-            await refreshProfile(UserStore.getCurrentUser().id);
+            const currentUser = UserStore?.getCurrentUser?.();
+            if (currentUser?.id) await refreshProfile(currentUser.id);
             setMessage(selection.length ? "Country flags saved." : "Country flags removed.");
         } catch {
             setError(persisted ? "Country flags saved, but the preview could not refresh. Reopen your profile." : "Could not save country flags. Try again.");
@@ -138,9 +174,13 @@ function PridePicker() {
             setBusy(false);
         }
     };
+
+    const hasCheckbox = typeof Checkbox === "function";
+
     return (
         <SettingsSection className="zycord-pride" title="Country flags" description="Choose country flags to show on your profile. Everyone who can view your profile can see them.">
             {navigationHost &&
+                ReactDOM?.createPortal &&
                 ReactDOM.createPortal(
                     <Button variant="secondary" onClick={() => setSettingsMenu(!settingsMenu)}>
                         {settingsMenu ? "Return to profile" : "Back to settings"}
@@ -165,23 +205,45 @@ function PridePicker() {
                             .filter((badge) => badge.description.toLowerCase().includes(query.trim().toLowerCase()))
                             .map((badge) => (
                                 <div key={badge.slug} className="zycord-pride-option" data-selected={flags.includes(badge.slug)}>
-                                    <Checkbox
-                                        value={flags.includes(badge.slug)}
-                                        disabled={busy}
-                                        size={20}
-                                        onChange={(_, checked) => {
-                                             setMessage("");
-                                             setFlags((current) => (checked ? [...current, badge.slug] : current.filter((slug) => slug !== badge.slug)));
-                                        }}
-                                    >
-                                        <img
-                                            src={`${location.protocol}//${(window as any).GLOBAL_ENV?.CDN_HOST || location.host}/badge-icons/${badge.icon}.png`}
-                                            width="30"
-                                            height="30"
-                                            alt=""
-                                        />
-                                        <Text variant="text-sm/medium">{badge.description}</Text>
-                                    </Checkbox>
+                                    {hasCheckbox ? (
+                                        <Checkbox
+                                            value={flags.includes(badge.slug)}
+                                            disabled={busy}
+                                            size={20}
+                                            onChange={(_, checked) => {
+                                                setMessage("");
+                                                setFlags((current) => (checked ? [...current, badge.slug] : current.filter((slug) => slug !== badge.slug)));
+                                            }}
+                                        >
+                                            <img
+                                                src={`${location.protocol}//${(window as any).GLOBAL_ENV?.CDN_HOST || location.host}/badge-icons/${badge.icon}.png`}
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
+                                            {Text ? <Text variant="text-sm/medium">{badge.description}</Text> : <span>{badge.description}</span>}
+                                        </Checkbox>
+                                    ) : (
+                                        <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer" }}>
+                                            <input
+                                                type="checkbox"
+                                                checked={flags.includes(badge.slug)}
+                                                disabled={busy}
+                                                onChange={(e) => {
+                                                    const checked = e.target.checked;
+                                                    setMessage("");
+                                                    setFlags((current) => (checked ? [...current, badge.slug] : current.filter((slug) => slug !== badge.slug)));
+                                                }}
+                                            />
+                                            <img
+                                                src={`${location.protocol}//${(window as any).GLOBAL_ENV?.CDN_HOST || location.host}/badge-icons/${badge.icon}.png`}
+                                                width="30"
+                                                height="30"
+                                                alt=""
+                                            />
+                                            <span>{badge.description}</span>
+                                        </label>
+                                    )}
                                 </div>
                             ))}
                     </div>
@@ -193,13 +255,15 @@ function PridePicker() {
                         <Button variant="secondary" disabled={busy || (!flags.length && !saved.length)} onClick={() => save([])}>
                             Remove all
                         </Button>
-                        <Text variant="text-sm/normal" color="text-muted" className="zycord-pride-count">
-                            {flags.length} selected
-                        </Text>
+                        {Text && (
+                            <Text variant="text-sm/normal" color="text-muted" className="zycord-pride-count">
+                                {flags.length} selected
+                            </Text>
+                        )}
                     </div>
                 </>
             )}
-            {!loading && (
+            {!loading && Text && (
                 <Text variant="text-xs/normal" color="text-muted" className="zycord-pride-credit">
                     {catalog.length} national country flags available.
                 </Text>
@@ -217,7 +281,11 @@ export default definePlugin({
     required: true,
     managedStyle,
     startAt: StartAt.DOMContentLoaded,
-    renderPicker: () => <PridePicker />,
+    renderPicker: () => (
+        <ErrorBoundary noop>
+            <PridePicker />
+        </ErrorBoundary>
+    ),
     flux: { USER_UPDATE: profileChanged, GUILD_MEMBER_UPDATE: profileChanged, PRESENCE_UPDATES: profileChanged },
     patches: [
         {
