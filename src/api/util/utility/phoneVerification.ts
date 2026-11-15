@@ -37,6 +37,8 @@ export const PhoneVerification = {
         codes.set(phone, { code, user_id, expires: now + TTL, attempts: 0 });
         console.log(`[SMS] verification code for ${phone}${user_id ? ` (user ${user_id})` : ""} is ${code}`);
 
+        const smsMessage = `[Zycord] رمز التحقق: ${code}\nYour verification code is: ${code}`;
+
         // 1. TextBee SMS Gateway (Android SIM card)
         const textbeeApiKey = process.env.TEXTBEE_API_KEY;
         if (textbeeApiKey) {
@@ -44,7 +46,7 @@ export const PhoneVerification = {
                 const deviceId = process.env.TEXTBEE_DEVICE_ID;
                 const body: Record<string, unknown> = {
                     recipients: [phone],
-                    message: `Your Zycord verification code is: ${code}`,
+                    message: smsMessage,
                 };
 
                 const url = deviceId
@@ -86,7 +88,7 @@ export const PhoneVerification = {
                     body: new URLSearchParams({
                         To: phone,
                         From: twilioFrom,
-                        Body: `Your Zycord verification code is: ${code}`,
+                        Body: smsMessage,
                     }),
                 });
             } catch (e) {
