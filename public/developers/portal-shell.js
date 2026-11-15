@@ -1,6 +1,6 @@
 "use strict";
 (() => {
-  // assets/public/jsx/runtime.jsx
+  // public/jsx/runtime.jsx
   var SVG_TAGS = /* @__PURE__ */ new Set([
     "svg",
     "path",
@@ -81,24 +81,11 @@
     return target;
   }
 
-  // assets/public/jsx/DevelopersPortalShell.jsx
+  // public/jsx/DevelopersPortalShell.jsx
   function getToken() {
     try {
       const raw = localStorage.getItem("token");
-      if (raw) return raw.replace(/^"|"$/g, "");
-      const match = document.cookie.match(/(?:^|;\s*)zycord_token=([^;]+)/);
-      if (match && match[1]) {
-        const t = decodeURIComponent(match[1]).replace(/^"|"$/g, "");
-        localStorage.setItem("token", JSON.stringify(t));
-        return t;
-      }
-      const urlParams = new URLSearchParams(location.search);
-      const fromUrl = urlParams.get("token") || urlParams.get("sso_token");
-      if (fromUrl) {
-        localStorage.setItem("token", JSON.stringify(fromUrl));
-        return fromUrl;
-      }
-      return "";
+      return raw ? raw.replace(/^"|"$/g, "") : "";
     } catch (_) {
       return "";
     }
@@ -268,14 +255,9 @@
         localStorage.removeItem("token");
         localStorage.removeItem("user_object");
         localStorage.removeItem("user");
-        const host = location.hostname;
-        const parts = host.split(".");
-        const rootDomain = parts.length >= 2 ? parts.slice(-2).join(".") : host;
-        document.cookie = `zycord_token=; domain=.${rootDomain}; path=/; max-age=0; SameSite=Lax; Secure`;
-        document.cookie = "zycord_token=; path=/; max-age=0;";
       } catch (_) {
       }
-      location.href = `https://app.zyron.site/login?redirect_to=${encodeURIComponent(location.origin + "/developers/applications")}`;
+      location.href = "/login?redirect_to=%2Fdevelopers%2Fapplications";
     };
     function rerender() {
       const user = state.user;

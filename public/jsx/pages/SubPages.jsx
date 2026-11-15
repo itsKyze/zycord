@@ -256,9 +256,7 @@ export function DownloadPage() {
 	);
 }
 
-/* ============================================================================
-   2. QUESTS PAGE (/quests) — Exact 2026 Zycord Layout
-   ============================================================================ */
+
 export function QuestsPage() {
 	return (
 		<div className="zy-quests-page">
@@ -423,9 +421,7 @@ export function QuestsPage() {
 	);
 }
 
-/* ============================================================================
-   3. BLOG PAGE (/blog) — Collections matching Screenshot 4
-   ============================================================================ */
+
 export function BlogPage() {
 	const posts = [
 		{
@@ -515,9 +511,7 @@ export function BlogPage() {
 	);
 }
 
-/* ============================================================================
-   4. APP DIRECTORY PAGE (/application-directory)
-   ============================================================================ */
+
 export function AppDirectoryPage() {
 	const apps = [
 		{ name: "ZyGuard AutoMod", cat: "Moderation & Security", installs: "42,800+ Servers", img: "/site/media/zycord/safety-card-1.png", desc: "Real-time raid protection, regex keyword filters, anti-phishing links, and automated audit logs." },
@@ -577,9 +571,7 @@ export function AppDirectoryPage() {
 	);
 }
 
-/* ============================================================================
-   5. GIFT CARDS PAGE (/gift-cards)
-   ============================================================================ */
+
 export function GiftCardsPage() {
 	const tiers = [
 		{ title: "1 Month Zycord Nitro", price: "$9.99", badge: "Popular Gift", img: "/site/media/zycord/nitro-perk-1.webp", desc: "Unlock 1080p 60fps HD streaming, 500MB uploads, custom emojis everywhere, and 2 free Server Boosts for 30 days." },
@@ -636,9 +628,7 @@ export function GiftCardsPage() {
 	);
 }
 
-/* ============================================================================
-   6. COMPANY / ABOUT PAGE (/company)
-   ============================================================================ */
+
 export function CompanyPage() {
 	return (
 		<div>
@@ -752,9 +742,7 @@ export function BrandingPage() {
 	);
 }
 
-/* ============================================================================
-   8. NEWSROOM PAGE (/newsroom)
-   ============================================================================ */
+
 export function NewsroomPage() {
 	return (
 		<div>
@@ -786,9 +774,7 @@ export function NewsroomPage() {
 	);
 }
 
-/* ============================================================================
-   9. CREATORS PAGE (/creators)
-   ============================================================================ */
+
 export function CreatorsPage() {
 	return (
 		<div>
@@ -847,9 +833,7 @@ export function CreatorsPage() {
 	);
 }
 
-/* ============================================================================
-   10. COMMUNITY PAGE (/community)
-   ============================================================================ */
+
 export function CommunityPage() {
 	return (
 		<div>
@@ -908,9 +892,7 @@ export function CommunityPage() {
 	);
 }
 
-/* ============================================================================
-   11. OFFICIAL MERCH PAGE (/merch)
-   ============================================================================ */
+
 export function MerchPage() {
 	const items = [
 		{ name: "Wumpus Plushie Collector Edition", price: "$34.00", tag: "Limited Drop", img: "/site/media/zycord/hero-wumpus.webp", desc: "Ultra-soft 12-inch embroidered Wumpus plush with magnetic leaf accessory." },
@@ -967,9 +949,7 @@ export function MerchPage() {
 	);
 }
 
-/* ============================================================================
-   12. FEEDBACK PAGE (/feedback)
-   ============================================================================ */
+
 export function FeedbackPage() {
 	function handleFeedbackSubmit(e) {
 		e.preventDefault();

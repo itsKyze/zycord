@@ -90,9 +90,7 @@ svg {
 	display: block;
 }
 
-/* ============================================================================
-   TYPOGRAPHY CLASSES
-   ============================================================================ */
+
 
 .zy-display {
 	font-family: var(--font-abc-ginto-nord-zycord);
@@ -180,9 +178,7 @@ svg {
 	display: inline-block;
 }
 
-/* ============================================================================
-   LAYOUT & CONTAINERS
-   ============================================================================ */
+
 
 .zy-container {
 	width: 100%;
@@ -196,9 +192,7 @@ svg {
 	position: relative;
 }
 
-/* ============================================================================
-   BUTTONS
-   ============================================================================ */
+
 
 .zy-btn {
 	display: inline-flex;
@@ -330,10 +324,7 @@ svg {
 	border-radius: 12px;
 }
 
-/* ============================================================================
-   EXACT Zycord 2026 NAVBAR & SOLID BLURPLE MEGA-DROPDOWNS
-   (Matches user's 5 screenshots pixel-for-pixel)
-   ============================================================================ */
+
 
 .zy-navbar {
 	position: fixed;
@@ -885,9 +876,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	border: 2px solid #ffffff;
 }
 
-/* ============================================================================
-   CARDS & ZYCORD 2026 FROSTED 44PX SHOWCASE PANELS
-   ============================================================================ */
+
 
 .zy-card {
 	border-radius: 24px;
@@ -1201,9 +1190,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* ============================================================================
-   INFINITE MARQUEE RIBBON ("TALK ✦ PLAY ✦ CHAT ✦ HANG OUT") — Screenshot 141350.png
-   ============================================================================ */
+
 
 .zy-marquee-band {
 	position: relative;
@@ -1387,9 +1374,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	gap: 24px;
 }
 
-/* ============================================================================
-   INTERACTIVE PRODUCT MOCKUP CHROME
-   ============================================================================ */
+
 
 .zy-app-window {
 	border-radius: 20px;
@@ -1486,9 +1471,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	color: var(--color-fog);
 }
 
-/* ============================================================================
-   ACCORDION / FAQ
-   ============================================================================ */
+
 
 .zy-accordion {
 	display: flex;
@@ -1542,9 +1525,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	display: block;
 }
 
-/* ============================================================================
-   GLOBAL FOOTER (ZYCORD 2026 BLURPLE FOOTER + GIANT WORDMARK)
-   ============================================================================ */
+
 
 .zy-footer {
 	margin-top: 0;
@@ -1878,9 +1859,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	gap: 12px;
 }
 
-/* ============================================================================
-   2026 SUBPAGE LAYOUTS (DOWNLOAD, NITRO, CAREERS, SAFETY, QUESTS, DEVELOPERS)
-   ============================================================================ */
+
 
 .zy-subhero {
 	position: relative;
@@ -3679,10 +3658,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	object-fit: contain;
 }
 
-/* ============================================================================
-   INTERACTIVE ACTION DROPDOWNS (Download OS / PTB & Careers Job Filter)
-   Matches .dropdown-list-dark.is_2025 & .dropdown-link-d.is_2025 on Zycord
-   ============================================================================ */
+
 
 .zy-action-dropdown {
 	position: relative;
@@ -3748,9 +3724,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	transform: rotate(180deg);
 }
 
-/* ============================================================================
-   NITRO GREEN "WHAT'S NEW" HERO BANNER & FAQ TABS (.nitro-green + .bg-green)
-   ============================================================================ */
+
 
 .zy-nitro-green-banner {
 	position: relative;
@@ -3905,9 +3879,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	line-height: 1.5;
 }
 
-/* ============================================================================
-   INTERACTIVE CAROUSELS (Careers Office Gallery & 26 Clubs/ERGs Slider)
-   ============================================================================ */
+
 
 .zy-carousel-wrap {
 	position: relative;
@@ -4111,9 +4083,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	transform: none;
 }
 
-/* ============================================================================
-   RESPONSIVE BREAKPOINTS
-   ============================================================================ */
+
 
 @media (max-width: 1080px) {
 	.zy-nav-links {
@@ -4202,9 +4172,7 @@ body.has-nav-dd-open .zy-nav-page-blur {
 	}
 }
 
-/* ============================================================================
-   NAVBAR COMPACT LANGUAGE PILL & SITE-WIDE RTL (ARABIC) LAYOUT MIRRORING
-   ============================================================================ */
+
 
 .zy-nav-lang-btn {
 	display: inline-flex;

@@ -1,6 +1,6 @@
 "use strict";
 (() => {
-  // assets/public/jsx/runtime.jsx
+  // public/jsx/runtime.jsx
   var SVG_TAGS = /* @__PURE__ */ new Set([
     "svg",
     "path",
@@ -81,7 +81,7 @@
     return target;
   }
 
-  // assets/public/jsx/Icons.jsx
+  // public/jsx/Icons.jsx
   var SVG_STRINGS = {
     overview: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>`,
     settings: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>`,
@@ -98,13 +98,13 @@
     system: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>`
   };
 
-  // assets/public/jsx/AdminPortalShell.jsx
+  // public/jsx/AdminPortalShell.jsx
   function AdminTopHeader() {
     const focusSearch = () => {
       const input = document.getElementById("nav-search");
       if (input) input.focus();
     };
-    return /* @__PURE__ */ h("div", { className: "zy-admin-topbar" }, /* @__PURE__ */ h("div", { className: "zy-admin-topbar-left" }, /* @__PURE__ */ h("span", { className: "zy-admin-status-pill" }, /* @__PURE__ */ h("span", { className: "zy-admin-status-dot", "data-zy-admin-status-dot": true }), /* @__PURE__ */ h("span", { "data-zy-admin-status-text": true }, "All Systems Operational")), /* @__PURE__ */ h("span", { className: "zy-admin-topbar-divider", "aria-hidden": "true" }), /* @__PURE__ */ h("div", { className: "zy-admin-quicklinks" }, /* @__PURE__ */ h("a", { href: "https://status.zyron.site/", target: "_blank", rel: "noopener" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "5px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("polyline", { points: "22 12 18 12 15 21 9 3 6 12 2 12" })), "System Status"), /* @__PURE__ */ h("a", { href: "https://developers.zyron.site/developers/applications" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "5px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("polyline", { points: "16 18 22 12 16 6" }), /* @__PURE__ */ h("polyline", { points: "8 6 2 12 8 18" })), "Developer Portal"), /* @__PURE__ */ h("a", { href: "https://app.zyron.site/nitro", target: "_blank", rel: "noopener" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "5px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("path", { d: "M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" }), /* @__PURE__ */ h("path", { d: "M3 6h18" }), /* @__PURE__ */ h("path", { d: "M16 10a4 4 0 0 1-8 0" })), "Collectibles Catalog"))), /* @__PURE__ */ h("div", { className: "zy-admin-topbar-right" }, /* @__PURE__ */ h(
+    return /* @__PURE__ */ h("div", { className: "zy-admin-topbar" }, /* @__PURE__ */ h("div", { className: "zy-admin-topbar-left" }, /* @__PURE__ */ h("span", { className: "zy-admin-status-pill" }, /* @__PURE__ */ h("span", { className: "zy-admin-status-dot", "data-zy-admin-status-dot": true }), /* @__PURE__ */ h("span", { "data-zy-admin-status-text": true }, "All Systems Operational")), /* @__PURE__ */ h("span", { className: "zy-admin-topbar-divider", "aria-hidden": "true" }), /* @__PURE__ */ h("div", { className: "zy-admin-quicklinks" }, /* @__PURE__ */ h("a", { href: "/status", target: "_blank", rel: "noopener" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "5px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("polyline", { points: "22 12 18 12 15 21 9 3 6 12 2 12" })), "System Status"), /* @__PURE__ */ h("a", { href: "/developers/applications" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "5px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("polyline", { points: "16 18 22 12 16 6" }), /* @__PURE__ */ h("polyline", { points: "8 6 2 12 8 18" })), "Developer Portal"), /* @__PURE__ */ h("a", { href: "/nitro", target: "_blank", rel: "noopener" }, /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round", style: { marginRight: "5px", verticalAlign: "-2px" } }, /* @__PURE__ */ h("path", { d: "M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" }), /* @__PURE__ */ h("path", { d: "M3 6h18" }), /* @__PURE__ */ h("path", { d: "M16 10a4 4 0 0 1-8 0" })), "Collectibles Catalog"))), /* @__PURE__ */ h("div", { className: "zy-admin-topbar-right" }, /* @__PURE__ */ h(
       "button",
       {
         type: "button",
@@ -114,7 +114,7 @@
       },
       /* @__PURE__ */ h("svg", { width: "14", height: "14", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": "2.2", "stroke-linecap": "round", "stroke-linejoin": "round" }, /* @__PURE__ */ h("circle", { cx: "11", cy: "11", r: "8" }), /* @__PURE__ */ h("line", { x1: "21", y1: "21", x2: "16.65", y2: "16.65" })),
       /* @__PURE__ */ h("span", null, "Quick Filter")
-    ), /* @__PURE__ */ h("span", { className: "zy-admin-mascot-chip" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/safety-shield-3d.webp", alt: "", width: "22", height: "22" }), /* @__PURE__ */ h("span", null, "Staff")), /* @__PURE__ */ h("a", { className: "btn primary small", href: "https://app.zyron.site/app", style: { textDecoration: "none" } }, "Open Zycord")));
+    ), /* @__PURE__ */ h("span", { className: "zy-admin-mascot-chip" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/safety-shield-3d.webp", alt: "", width: "22", height: "22" }), /* @__PURE__ */ h("span", null, "Staff")), /* @__PURE__ */ h("a", { className: "btn primary small", href: "/app", style: { textDecoration: "none" } }, "Open Zycord")));
   }
   function decorateSidebarIcons() {
     const links = document.querySelectorAll("#nav a[data-tab]");

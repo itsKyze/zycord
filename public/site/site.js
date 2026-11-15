@@ -1,6 +1,6 @@
 "use strict";
 (() => {
-  // assets/public/jsx/runtime.jsx
+  // public/jsx/runtime.jsx
   var SVG_TAGS = /* @__PURE__ */ new Set([
     "svg",
     "path",
@@ -98,7 +98,7 @@
     return node;
   }
 
-  // assets/public/jsx/i18n.js
+  // public/jsx/i18n.js
   var TRANSLATIONS = {
     ar: {
       // Navbar & Global CTA
@@ -437,7 +437,7 @@
     }
   }
 
-  // assets/public/jsx/Navbar.jsx
+  // public/jsx/Navbar.jsx
   var NAVIGATION_ITEMS = [
     { label: "Download", href: "/download", key: "download" },
     { label: "Nitro", href: "/nitro", key: "nitro" },
@@ -866,7 +866,7 @@
     ));
   }
 
-  // assets/public/jsx/Icons.jsx
+  // public/jsx/Icons.jsx
   var ZYCORD_MASCOT_PATH = "M6.25 4.42L6.8 4.51L6.8 4.6L7.16 4.7L7.25 4.88L7.43 4.88L7.62 5.15L7.8 5.15L9.08 6.61L9.53 6.52L9.53 6.43L9.9 6.43L9.9 6.34L10.27 6.34L10.27 6.25L10.81 6.25L10.81 6.16L13.19 6.16L13.19 6.25L13.73 6.25L13.73 6.34L14.1 6.34L14.1 6.43L14.47 6.43L14.47 6.52L14.92 6.61L16.11 5.24L16.29 5.24L16.57 4.88L16.75 4.88L16.84 4.7L17.02 4.7L17.2 4.51L17.48 4.51L17.48 4.42L18.03 4.51L18.39 4.88L18.39 5.06L18.57 5.15L18.57 5.43L18.76 5.61L18.94 6.52L19.21 6.52L19.21 6.43L19.4 6.43L19.76 6.16L20.03 6.16L20.13 5.97L20.67 5.79L21.04 5.43L21.22 5.43L22.13 4.51L22.5 4.6L22.5 5.43L22.41 5.43L22.41 5.79L22.32 5.79L22.32 6.07L22.23 6.07L22.13 6.43L21.95 6.52L21.77 6.98L21.22 7.53L20.95 7.62L20.95 7.71L21.22 7.71L21.22 7.62L21.5 7.62L21.5 7.53L21.68 7.53L21.68 7.43L22.32 7.16L22.41 7.25L22.32 7.98L22.23 7.98L22.04 8.53L21.13 9.44L20.77 9.53L20.67 9.72L20.4 9.72L20.4 9.9L20.49 9.81L21.22 9.81L21.22 9.72L21.59 9.72L21.68 9.9L21.59 9.9L21.5 10.27L21.31 10.36L21.31 10.54L20.77 11.09L20.58 11.09L20.22 11.45L19.85 11.54L19.94 12.09L20.03 12.09L20.03 12.37L20.13 12.37L20.13 12.73L20.22 12.73L20.22 13.1L20.31 13.1L20.31 13.46L20.4 13.46L20.4 13.92L20.49 13.92L20.49 14.37L20.58 14.37L20.58 15.01L20.67 15.01L20.67 15.65L20.77 15.65L20.77 17.75L20.67 17.75L20.67 18.12L20.58 18.12L20.49 18.57L20.31 18.67L20.31 18.85L19.94 19.21L19.76 19.21L19.4 19.49L18.94 19.49L18.94 19.58L18.57 19.58L18.57 19.49L17.84 19.3L16.57 18.03L16.57 17.84L16.11 17.39L16.11 17.2L15.83 17.02L15.83 16.84L15.56 16.75L15.47 16.57L15.1 16.47L15.1 16.38L8.9 16.38L8.9 16.47L8.71 16.47L8.44 16.75L8.17 16.84L8.17 17.02L7.71 17.48L7.71 17.66L7.43 17.84L7.43 18.03L7.07 18.3L7.07 18.48L6.52 19.03L6.34 19.03L5.97 19.4L5.06 19.58L5.06 19.49L4.7 19.49L4.7 19.4L4.42 19.4L4.15 19.12L3.97 19.12L3.69 18.85L3.69 18.67L3.51 18.57L3.42 18.03L3.33 18.03L3.33 17.75L3.23 17.75L3.23 15.74L3.33 15.74L3.42 14.37L3.51 14.37L3.6 13.46L3.69 13.46L3.69 13.1L3.78 13.1L3.78 12.73L3.87 12.73L3.87 12.37L3.97 12.37L3.97 12.09L4.06 12.09L4.15 11.54L3.97 11.54L3.69 11.27L3.51 11.27L3.42 11.09L3.23 11.09L2.69 10.54L2.69 10.36L2.5 10.27L2.5 10.08L2.32 9.9L2.41 9.72L2.87 9.72L2.87 9.81L3.6 9.81L3.6 9.72L3.33 9.72L3.23 9.53L2.78 9.35L2.05 8.62L2.05 8.44L1.77 8.17L1.68 7.62L1.59 7.62L1.68 7.16L2.32 7.43L2.32 7.53L2.5 7.53L2.5 7.62L3.05 7.71L3.05 7.8L3.14 7.71L2.96 7.53L2.78 7.53L2.23 6.98L2.05 6.52L1.87 6.43L1.77 5.97L1.59 5.79L1.59 5.33L1.5 5.33L1.5 4.6L1.87 4.51L2.32 5.06L2.5 5.06L2.69 5.33L2.87 5.33L3.33 5.79L3.51 5.79L3.51 5.88L3.87 5.97L3.97 6.16L4.24 6.16L4.24 6.25L4.42 6.25L4.79 6.52L5.06 6.52L5.15 5.88L5.24 5.88L5.24 5.61L5.43 5.43L5.43 5.15L5.61 5.06L5.61 4.88L5.97 4.51L6.25 4.51ZM8.17 10.17L8.07 10.17L8.07 10.27L7.89 10.27L7.89 10.36L7.71 10.36L7.71 10.45L7.53 10.45L7.53 10.54L7.43 10.54L7.43 10.63L7.34 10.63L7.25 10.81L7.16 10.81L7.16 11.0L6.98 11.09L6.98 11.27L6.89 11.27L6.89 11.54L6.8 11.54L6.8 12.46L6.89 12.46L6.89 12.73L6.98 12.73L6.98 12.91L7.16 13.0L7.16 13.19L7.25 13.19L7.25 13.28L7.34 13.28L7.43 13.46L7.62 13.46L7.71 13.64L7.89 13.64L7.89 13.73L8.17 13.73L8.17 13.83L9.17 13.83L9.17 13.73L9.44 13.73L9.44 13.64L9.63 13.64L9.63 13.55L9.72 13.55L9.72 13.46L9.9 13.46L9.9 13.37L10.08 13.28L10.08 13.1L10.27 13.0L10.27 12.82L10.36 12.82L10.36 12.64L10.45 12.64L10.45 12.27L10.54 12.27L10.54 11.73L10.45 11.73L10.45 11.36L10.36 11.36L10.36 11.09L10.17 11.0L10.17 10.81L10.08 10.81L10.08 10.72L9.99 10.72L9.9 10.54L9.72 10.54L9.63 10.36L9.44 10.36L9.44 10.27L9.17 10.27L9.17 10.17L8.26 10.17ZM14.92 10.17L14.83 10.17L14.83 10.27L14.56 10.27L14.56 10.36L14.37 10.36L14.28 10.54L14.1 10.54L14.1 10.63L14.01 10.63L14.01 10.72L13.83 10.81L13.83 11.0L13.73 11.0L13.73 11.18L13.64 11.18L13.64 11.36L13.55 11.36L13.55 11.73L13.46 11.73L13.46 12.27L13.55 12.27L13.55 12.64L13.64 12.64L13.73 13.0L13.92 13.1L13.92 13.28L14.01 13.28L14.1 13.46L14.28 13.46L14.37 13.64L14.56 13.64L14.56 13.73L14.83 13.73L14.83 13.83L15.83 13.83L15.83 13.73L16.11 13.73L16.11 13.64L16.29 13.64L16.38 13.46L16.57 13.46L16.57 13.37L16.66 13.37L16.66 13.28L16.84 13.19L16.84 13.0L17.02 12.91L17.02 12.73L17.11 12.73L17.11 12.46L17.2 12.46L17.2 11.54L17.11 11.54L17.11 11.27L17.02 11.27L16.93 10.9L16.84 10.9L16.84 10.81L16.75 10.81L16.75 10.72L16.66 10.72L16.66 10.63L16.47 10.54L16.47 10.45L16.29 10.45L16.29 10.36L16.11 10.36L16.11 10.27L15.93 10.27L15.93 10.17L15.01 10.17Z";
   function ZycordMark({ size = 28, color = "currentColor" }) {
     return /* @__PURE__ */ h(
@@ -882,7 +882,7 @@
     );
   }
 
-  // assets/public/jsx/Footer.jsx
+  // public/jsx/Footer.jsx
   var FOOTER_COLUMNS = [
     {
       title: "Product",
@@ -1175,7 +1175,7 @@
     ));
   }
 
-  // assets/public/jsx/pages/HomePage.jsx
+  // public/jsx/pages/HomePage.jsx
   function HomePage() {
     return /* @__PURE__ */ h("div", { className: "zy-home-wrapper" }, /* @__PURE__ */ h("section", { className: "hero-section zy-home-sec-tex-hero" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-lg.svg", alt: "", "aria-hidden": "true", className: "zy-star d1", style: { width: "32px", top: "8%", left: "5%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-m.svg", alt: "", "aria-hidden": "true", className: "zy-star d2", style: { width: "22px", top: "15%", right: "7%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-sm.svg", alt: "", "aria-hidden": "true", className: "zy-star d3", style: { width: "16px", bottom: "18%", left: "11%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/star-lg.svg", alt: "", "aria-hidden": "true", className: "zy-star d4", style: { width: "28px", bottom: "14%", right: "12%" } }), /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "hero-grid" }, /* @__PURE__ */ h("div", { className: "hero-copy" }, /* @__PURE__ */ h("div", { className: "hero-crown-wrap" }, /* @__PURE__ */ h(
       "img",
@@ -1612,7 +1612,7 @@
     )))));
   }
 
-  // assets/public/jsx/pages/MarketingParity.jsx
+  // public/jsx/pages/MarketingParity.jsx
   var WF = "https://cdn.prod.website-files.com/6257adef93867e50d84d30e2";
   var DC = "https://cdn.discordapp.com";
   function ExploreMore({ href }) {
@@ -1993,7 +1993,7 @@
     return /* @__PURE__ */ h(NotFoundPage, null);
   }
 
-  // assets/public/jsx/pages/SubPages.jsx
+  // public/jsx/pages/SubPages.jsx
   function DownloadPage() {
     return /* @__PURE__ */ h("div", { className: "zy-download-page" }, /* @__PURE__ */ h("section", { className: "zy-dl-hero-section" }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-subhero-inner" }, /* @__PURE__ */ h(
       "img",
@@ -2131,7 +2131,7 @@
     ), /* @__PURE__ */ h("button", { type: "submit", className: "zy-btn zy-btn-primary" }, "Submit Feedback"), /* @__PURE__ */ h("div", { id: "zy-feedback-status", style: { display: "none", padding: "12px", borderRadius: "12px", background: "rgba(87, 242, 135, 0.18)", border: "1px solid rgba(87, 242, 135, 0.45)", color: "#57f287", fontWeight: "700", fontSize: "14px" } }))))))));
   }
 
-  // assets/public/jsx/pages/DevelopersHubPage.jsx
+  // public/jsx/pages/DevelopersHubPage.jsx
   function DevelopersHubPage() {
     return /* @__PURE__ */ h("div", { className: "zy-developers-page" }, /* @__PURE__ */ h("section", { className: "zy-subhero", style: { paddingTop: "136px", paddingBottom: "48px" } }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/dev-fire-extinguisher.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "92px", top: "10%", left: "6%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/dev-spider.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "86px", top: "14%", right: "8%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/dev-magnet.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "84px", bottom: "10%", left: "9%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/dev-cog.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "88px", bottom: "12%", right: "10%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/dev-rubber-duck.png", alt: "", "aria-hidden": "true", className: "zy-float-prop", style: { width: "90px", top: "42%", left: "3%" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/dev-clyde-3d.webp", alt: "", "aria-hidden": "true", className: "zy-float-prop tilt", style: { width: "104px", top: "40%", right: "3%" } }), /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-subhero-inner" }, /* @__PURE__ */ h("span", { className: "zy-eyebrow" }, /* @__PURE__ */ h("span", { className: "zy-eyebrow-dot", "data-zy-status-dot": true }), /* @__PURE__ */ h("span", null, "Zycord Developer Platform · Social SDK, Bots & Activities")), /* @__PURE__ */ h("h1", { className: "zy-subhero-title" }, "Zycord for Game Developers"), /* @__PURE__ */ h("p", { className: "zy-subhero-sub" }, "Tools, integrations, and platform capabilities for game developers and bot builders to tap into the power of Zycord.")))), /* @__PURE__ */ h("section", { className: "zy-section", style: { paddingTop: "12px" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-showcase-card" }, /* @__PURE__ */ h("div", { className: "zy-showcase-grid" }, /* @__PURE__ */ h("div", { className: "zy-showcase-copy" }, /* @__PURE__ */ h("h2", { className: "zy-heading" }, "BUILD ON THE SOCIAL LAYER OF GAMES"), /* @__PURE__ */ h("p", { className: "zy-body-lg" }, "Players already spend time together on Zycord before, during, and after they play. Zycord is where the social layer of games lives today — and our developer platform lets you tap into that time to drive more players, more playtime, and richer community experiences."), /* @__PURE__ */ h("div", { style: { display: "flex", gap: "14px", flexWrap: "wrap", marginTop: "8px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/developers/applications" }, /* @__PURE__ */ h("span", null, "Open Developer Portal")), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "#sdk-quickstart" }, /* @__PURE__ */ h("span", null, "Explore the Platform")))), /* @__PURE__ */ h("div", { className: "zy-scene-stage stage-blurple" }, /* @__PURE__ */ h(
       "img",
@@ -2220,7 +2220,7 @@ authorizeUrl.searchParams.set("permissions", "8"); // Administrator`)
     )))))), /* @__PURE__ */ h("section", { className: "zy-dl-ptb-banner", style: { paddingBottom: "10rem" } }, /* @__PURE__ */ h("div", { className: "zy-container" }, /* @__PURE__ */ h("div", { className: "zy-dl-ptb-inner" }, /* @__PURE__ */ h("img", { src: "/site/media/zycord/dev-clyde-3d.webp", alt: "", "aria-hidden": "true", className: "zy-dl-ptb-icon", style: { width: "160px" } }), /* @__PURE__ */ h("img", { src: "/site/media/zycord/dev-rubber-duck.png", alt: "", "aria-hidden": "true", className: "zy-dl-ptb-trophy", style: { width: "150px" } }), /* @__PURE__ */ h("h2", { className: "zy-dl-ptb-title" }, "START BUILDING TODAY"), /* @__PURE__ */ h("p", { className: "zy-dl-ptb-sub" }, "Create bots, OAuth2 apps, Rich Presence integrations, and multiplayer voice Activities in the Zycord Developer Portal."), /* @__PURE__ */ h("div", { className: "zy-pill-btn-row", style: { justifyContent: "center", marginTop: "12px" } }, /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-primary", href: "/developers/applications" }, "Open Developer Portal"), /* @__PURE__ */ h("a", { className: "zy-btn zy-btn-secondary", href: "/_zycord/api/openapi.json", target: "_blank", rel: "noopener" }, "API Reference"))))));
   }
 
-  // assets/public/jsx/index.jsx
+  // public/jsx/index.jsx
   var PAGE_COMPONENTS = {
     home: HomePage,
     download: DownloadPage,
