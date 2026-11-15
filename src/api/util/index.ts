@@ -35,6 +35,7 @@ export * from "./handlers/ScheduledMessages";
 export * from "./utility/profile";
 export * from "./utility/collectiblePurchases";
 export * from "./utility/emailChange";
+export * from "./utility/recoveryEmail";
 export * from "./utility/pomelo";
 export * from "./utility/StickerPacks";
 export * from "./utility/Soundboard";

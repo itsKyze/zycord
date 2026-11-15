@@ -47,12 +47,22 @@ router.post(
         const captcha = await checkCaptcha(config.passwordReset.requireCaptcha, extractCaptchaToken(req), req.ip);
         if (captcha) return res.status(400).json(captcha);
 
-        const user = await User.findOne({
+        let user = await User.findOne({
             where: User.loginWhere(login),
-            select: { username: true, discriminator: true, id: true, email: true, deleted: true },
+            select: { username: true, discriminator: true, id: true, email: true, deleted: true, data: true },
         });
 
-        if (!user?.email || user.deleted)
+        const isEmail = login.includes("@");
+        const normalizedLogin = login.trim().toLowerCase();
+
+        if (!user && isEmail) {
+            user = await User.createQueryBuilder("u")
+                .where("LOWER(u.data->>'recovery_email') = :email", { email: normalizedLogin })
+                .addSelect(["u.data", "u.email", "u.username", "u.discriminator", "u.deleted"])
+                .getOne();
+        }
+
+        if (!user || user.deleted)
             throw FieldErrors({
                 login: {
                     code: "EMAIL_DOES_NOT_EXIST",
@@ -62,9 +72,16 @@ router.post(
 
         res.json({ method: "password_reset" });
 
-        Email.sendResetPassword(user, user.email).catch((e) => {
-            console.error(`Failed to send password reset email to ${user.tag} (${user.id}): ${e}`);
-        });
+        const recoveryEmail = (user.data as { recovery_email?: string })?.recovery_email;
+        const targetEmail = (isEmail && recoveryEmail && normalizedLogin === recoveryEmail.toLowerCase())
+            ? recoveryEmail
+            : (user.email ?? recoveryEmail);
+
+        if (targetEmail) {
+            Email.sendResetPassword(user, targetEmail).catch((e) => {
+                console.error(`Failed to send password reset email to ${user.tag} (${user.id}): ${e}`);
+            });
+        }
     },
 );
 

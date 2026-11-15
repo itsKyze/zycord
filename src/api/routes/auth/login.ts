@@ -48,7 +48,7 @@ router.post(
         const captcha = await checkCaptcha(config.login.requireCaptcha, extractCaptchaToken(req), req.ip);
         if (captcha) return res.status(400).json(captcha);
 
-        const user = await User.findOneOrFail({
+        let user = await User.findOne({
             where: User.loginWhere(login),
             select: {
                 data: true,
@@ -67,7 +67,32 @@ router.post(
                 rights: true,
             },
             relations: { security_keys: true, settings: true },
-        }).catch(() => {
+        });
+
+        if (!user && login.includes("@")) {
+            user = await User.createQueryBuilder("u")
+                .where("LOWER(u.data->>'recovery_email') = :email", { email: login.trim().toLowerCase() })
+                .addSelect([
+                    "u.data",
+                    "u.id",
+                    "u.username",
+                    "u.discriminator",
+                    "u.disabled",
+                    "u.deleted",
+                    "u.account_standing",
+                    "u.totp_secret",
+                    "u.mfa_enabled",
+                    "u.webauthn_enabled",
+                    "u.verified",
+                    "u.email",
+                    "u.rights",
+                ])
+                .leftJoinAndSelect("u.security_keys", "security_keys")
+                .leftJoinAndSelect("u.settings", "settings")
+                .getOne();
+        }
+
+        if (!user) {
             throw FieldErrors({
                 login: {
                     message: req.t("auth:login.INVALID_LOGIN"),
@@ -78,7 +103,7 @@ router.post(
                     code: "INVALID_LOGIN",
                 },
             });
-        });
+        }
 
         // the salt is saved in the password refer to bcrypt docs
         const same_password = await bcrypt.compare(password, user.data.hash || "");
