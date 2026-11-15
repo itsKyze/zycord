@@ -46,9 +46,12 @@ export const PhoneVerification = {
                     recipients: [phone],
                     message: `Your Zycord verification code is: ${code}`,
                 };
-                if (deviceId) body.deviceId = deviceId;
 
-                const res = await fetch("https://api.textbee.dev/api/v1/gateway/send-sms", {
+                const url = deviceId
+                    ? `https://api.textbee.dev/api/v1/gateway/devices/${deviceId}/send-sms`
+                    : "https://api.textbee.dev/api/v1/gateway/send-sms";
+
+                const res = await fetch(url, {
                     method: "POST",
                     headers: {
                         "x-api-key": textbeeApiKey,
