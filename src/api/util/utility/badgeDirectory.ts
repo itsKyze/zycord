@@ -114,7 +114,32 @@ export const BADGE_ICON_TO_INFO: Record<string, { slug: string; badge_id: number
 };
 
 function discordBadgeUrl(hash: string): string {
-	return `https://cdn.discordapp.com/badge-icons/${hash}.png`;
+	if (hash.startsWith("http://") || hash.startsWith("https://")) return hash;
+	const name = hash.endsWith(".png") ? hash : `${hash}.png`;
+	if (name.includes("_")) {
+		const base = (Config.get().cdn.endpointPublic || "").replace(/\/+$/, "");
+		return `${base}/badge-icons/${name}`;
+	}
+	return `https://cdn.discordapp.com/badge-icons/${name}`;
+}
+
+function parseDate(val: any): Date | null {
+	if (!val) return null;
+	if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
+	if (typeof val === "number") {
+		const d = new Date(val);
+		return isNaN(d.getTime()) ? null : d;
+	}
+	if (typeof val === "string") {
+		const trimmed = val.trim();
+		if (/^\d+$/.test(trimmed)) {
+			const d = new Date(Number(trimmed));
+			return isNaN(d.getTime()) ? null : d;
+		}
+		const d = new Date(trimmed);
+		return isNaN(d.getTime()) ? null : d;
+	}
+	return null;
 }
 
 export async function buildUserBadgeDirectory(targetUser: User, guildId?: string): Promise<BadgeDirectoryItem[]> {
@@ -136,8 +161,8 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 		dbBadges.some((b) => b.id === "1" || b.icon === "5e74e9b61934fc1f67c65515d1f7e60d");
 
 	const hasNitro = (!targetUser.hide_premium_badge && (targetUser.premium_type ?? 0) > 0);
-	const nitroSinceDate = hasNitro ? (targetUser.premium_since ?? targetUser.created_at ?? new Date()) : null;
-	const nitroMonths = nitroSinceDate ? calculateMonthsElapsed(new Date(nitroSinceDate)) : 0;
+	const nitroSinceDate = hasNitro ? (parseDate(targetUser.premium_since) ?? parseDate(targetUser.created_at) ?? new Date()) : null;
+	const nitroMonths = nitroSinceDate ? calculateMonthsElapsed(nitroSinceDate) : 0;
 	const currentNitroMilestone = NITRO_MILESTONES.find((m) => nitroMonths >= m.months);
 	const nextNitroMilestones = [...NITRO_MILESTONES].reverse().filter((m) => m.months > nitroMonths);
 	const nextNitroMilestone = nextNitroMilestones[0] ?? null;
@@ -158,7 +183,7 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 
 	const nitroTierObtainedAt: Record<string, string> = {};
 	if (nitroSinceDate) {
-		const iso = new Date(nitroSinceDate).toISOString();
+		const iso = nitroSinceDate.toISOString();
 		for (const t of nitroTiers) {
 			if (t.owned) nitroTierObtainedAt[t.key] = iso;
 		}
@@ -169,7 +194,7 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 		select: { premium_since: true, guild_id: true },
 	});
 	const isBoosting = !!boostMember?.premium_since;
-	const boostSinceDate = boostMember?.premium_since ? new Date(boostMember.premium_since) : null;
+	const boostSinceDate = boostMember?.premium_since ? parseDate(boostMember.premium_since) : null;
 	const boostMonths = boostSinceDate ? calculateMonthsElapsed(boostSinceDate) : 0;
 	const currentBoostMilestone = isBoosting ? BOOST_MILESTONES.find((m) => boostMonths >= m.months) : null;
 	const nextBoostMilestones = [...BOOST_MILESTONES].reverse().filter((m) => m.months > boostMonths);
@@ -197,7 +222,131 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 		}
 	}
 
-	const targetCreatedIso = targetUser.created_at ? new Date(targetUser.created_at).toISOString() : new Date().toISOString();
+	// Gifting tiers
+	const GIFTING_DATA = [
+		{ key: "gifting_legend", name: "Legend", gifts: 20, icon: "gifting_legend.png" },
+		{ key: "gifting_hero", name: "Hero", gifts: 10, icon: "gifting_hero.png" },
+		{ key: "gifting_icon", name: "Icon", gifts: 6, icon: "gifting_icon.png" },
+		{ key: "gifting_luminary", name: "Luminary", gifts: 3, icon: "gifting_luminary.png" },
+		{ key: "gifting_champion", name: "Champion", gifts: 2, icon: "gifting_champion.png" },
+		{ key: "gifting_patron", name: "Patron", gifts: 1, icon: "gifting_patron.png" },
+	];
+	const hasGifting = hasBadge(BadgeId.GIFTING, "gifting") || isStaff;
+	const giftingTiers: BadgeDirectoryTier[] = [...GIFTING_DATA].reverse().map((t) => ({
+		key: t.key,
+		name: t.name,
+		simple_icon_url: discordBadgeUrl(t.icon),
+		complex_icon_static_url: discordBadgeUrl(t.icon),
+		complex_icon_animated_url: null,
+		milestone_text: `${t.gifts} ${t.gifts === 1 ? "Gift" : "Gifts"}`,
+		owned: hasGifting,
+		requirements: [{ threshold: t.gifts }],
+	}));
+
+	// Account Age tiers
+	const ACCOUNT_AGE_DATA = [
+		{ key: "account_age_10", name: "Primordial", years: 10, icon: "account_age_primordial.png" },
+		{ key: "account_age_9", name: "Stromatolite", years: 9, icon: "account_age_stromatolite.png" },
+		{ key: "account_age_8", name: "Bristlecone", years: 8, icon: "account_age_bristlecone.png" },
+		{ key: "account_age_7", name: "Sequoia", years: 7, icon: "account_age_sequoia.png" },
+		{ key: "account_age_6", name: "Redwood", years: 6, icon: "account_age_redwood.png" },
+		{ key: "account_age_5", name: "Blossom", years: 5, icon: "account_age_blossom.png" },
+		{ key: "account_age_4", name: "Sapling", years: 4, icon: "account_age_sapling.png" },
+		{ key: "account_age_3", name: "Bud", years: 3, icon: "account_age_bud.png" },
+		{ key: "account_age_2", name: "Sprout", years: 2, icon: "account_age_sprout.png" },
+		{ key: "account_age_1", name: "Seed", years: 1, icon: "account_age_seed.png" },
+	];
+	const userCreatedDate = parseDate(targetUser.created_at) ?? new Date();
+	const yearsElapsed = Math.max(1, new Date().getFullYear() - userCreatedDate.getFullYear());
+	const hasAccountAge = yearsElapsed >= 1 || hasBadge(BadgeId.ACCOUNT_AGE, "account_age") || isStaff;
+	const currentAgeTier = ACCOUNT_AGE_DATA.find((t) => yearsElapsed >= t.years) ?? ACCOUNT_AGE_DATA[ACCOUNT_AGE_DATA.length - 1];
+	const accountAgeTiers: BadgeDirectoryTier[] = [...ACCOUNT_AGE_DATA].reverse().map((t) => ({
+		key: t.key,
+		name: `${t.years} ${t.years === 1 ? "Year" : "Years"}`,
+		simple_icon_url: discordBadgeUrl(t.icon),
+		complex_icon_static_url: discordBadgeUrl(t.icon),
+		complex_icon_animated_url: null,
+		milestone_text: `${t.years} ${t.years === 1 ? "Year" : "Years"} (${t.name})`,
+		owned: hasAccountAge && yearsElapsed >= t.years,
+		requirements: [{ threshold: t.years }],
+	}));
+
+	// Streaming tiers
+	const STREAMING_DATA = [
+		{ key: "streaming_10", name: "Phenomenon", hours: 5000, icon: "streaming_phenomenon.png" },
+		{ key: "streaming_9", name: "Visionary", hours: 2000, icon: "streaming_visionary.png" },
+		{ key: "streaming_8", name: "Sensation", hours: 1000, icon: "streaming_sensation.png" },
+		{ key: "streaming_7", name: "Star", hours: 500, icon: "streaming_star.png" },
+		{ key: "streaming_6", name: "Headliner", hours: 300, icon: "streaming_headliner.png" },
+		{ key: "streaming_5", name: "Trendsetter", hours: 150, icon: "streaming_trendsetter.png" },
+		{ key: "streaming_4", name: "Standout", hours: 75, icon: "streaming_standout.png" },
+		{ key: "streaming_3", name: "Breakout", hours: 20, icon: "streaming_breakout.png" },
+		{ key: "streaming_2", name: "Fledgling", hours: 5, icon: "streaming_fledgling.png" },
+		{ key: "streaming_1", name: "Newcomer", hours: 1, icon: "streaming_newcomer.png" },
+	];
+	const hasStreaming = hasBadge(BadgeId.STREAMING, "streaming") || isStaff;
+	const streamingTiers: BadgeDirectoryTier[] = [...STREAMING_DATA].reverse().map((t) => ({
+		key: t.key,
+		name: `${t.hours} Hours`,
+		simple_icon_url: discordBadgeUrl(t.icon),
+		complex_icon_static_url: discordBadgeUrl(t.icon),
+		complex_icon_animated_url: null,
+		milestone_text: `${t.hours} Hours (${t.name})`,
+		owned: hasStreaming,
+		requirements: [{ threshold: t.hours }],
+	}));
+
+	// Game Time tiers
+	const GAME_TIME_DATA = [
+		{ key: "game_time_10", name: "Eternal", hours: 5000, icon: "game_time_eternal.png" },
+		{ key: "game_time_9", name: "Unshakeable", hours: 2000, icon: "game_time_unshakeable.png" },
+		{ key: "game_time_8", name: "Ironclad", hours: 1000, icon: "game_time_ironclad.png" },
+		{ key: "game_time_7", name: "Seasoned", hours: 500, icon: "game_time_seasoned.png" },
+		{ key: "game_time_6", name: "Devoted", hours: 300, icon: "game_time_devoted.png" },
+		{ key: "game_time_5", name: "Serious", hours: 150, icon: "game_time_serious.png" },
+		{ key: "game_time_4", name: "Committed", hours: 75, icon: "game_time_committed.png" },
+		{ key: "game_time_3", name: "Dedicated", hours: 20, icon: "game_time_dedicated.png" },
+		{ key: "game_time_2", name: "Recreational", hours: 5, icon: "game_time_recreational.png" },
+		{ key: "game_time_1", name: "Casual", hours: 1, icon: "game_time_casual.png" },
+	];
+	const hasGameTime = hasBadge(BadgeId.GAME_TIME, "game_time") || isStaff;
+	const gameTimeTiers: BadgeDirectoryTier[] = [...GAME_TIME_DATA].reverse().map((t) => ({
+		key: t.key,
+		name: `${t.hours} Hours`,
+		simple_icon_url: discordBadgeUrl(t.icon),
+		complex_icon_static_url: discordBadgeUrl(t.icon),
+		complex_icon_animated_url: null,
+		milestone_text: `${t.hours} Hours (${t.name})`,
+		owned: hasGameTime,
+		requirements: [{ threshold: t.hours }],
+	}));
+
+	// Game Variety tiers
+	const GAME_VARIETY_DATA = [
+		{ key: "game_variety_10", name: "Universalist", games: 100, icon: "game_variety_universalist.png" },
+		{ key: "game_variety_9", name: "Polymath", games: 80, icon: "game_variety_polymath.png" },
+		{ key: "game_variety_8", name: "Maverick", games: 60, icon: "game_variety_maverick.png" },
+		{ key: "game_variety_7", name: "Voyager", games: 40, icon: "game_variety_voyager.png" },
+		{ key: "game_variety_6", name: "Adventurer", games: 30, icon: "game_variety_adventurer.png" },
+		{ key: "game_variety_5", name: "Explorer", games: 20, icon: "game_variety_explorer.png" },
+		{ key: "game_variety_4", name: "Ranger", games: 15, icon: "game_variety_ranger.png" },
+		{ key: "game_variety_3", name: "Enthusiast", games: 10, icon: "game_variety_enthusiast.png" },
+		{ key: "game_variety_2", name: "Dabbler", games: 5, icon: "game_variety_dabbler.png" },
+		{ key: "game_variety_1", name: "Sampler", games: 2, icon: "game_variety_sampler.png" },
+	];
+	const hasGameVariety = hasBadge(BadgeId.GAME_VARIETY, "game_variety") || isStaff;
+	const gameVarietyTiers: BadgeDirectoryTier[] = [...GAME_VARIETY_DATA].reverse().map((t) => ({
+		key: t.key,
+		name: `${t.games} Games`,
+		simple_icon_url: discordBadgeUrl(t.icon),
+		complex_icon_static_url: discordBadgeUrl(t.icon),
+		complex_icon_animated_url: null,
+		milestone_text: `${t.games} Games (${t.name})`,
+		owned: hasGameVariety,
+		requirements: [{ threshold: t.games }],
+	}));
+
+	const targetCreatedIso = (parseDate(targetUser.created_at) ?? new Date()).toISOString();
 
 	const items: BadgeDirectoryItem[] = [
 		// 1. PREMIUM_TENURE (Nitro)
@@ -205,7 +354,7 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 			badge_id: BadgeId.PREMIUM_TENURE,
 			name: "Discord Nitro",
 			description: hasNitro && nitroSinceDate
-				? `Subscriber since ${new Date(nitroSinceDate).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`
+				? `Subscriber since ${nitroSinceDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`
 				: "Subscriber to Discord Nitro",
 			owned: hasNitro,
 			hidden: false,
@@ -215,7 +364,7 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 			complex_icon_static_url: discordBadgeUrl(currentNitroMilestone?.icon ?? "2ba85e8026a8614b640c2837bcdfe21b"),
 			complex_icon_animated_url: null,
 			rarity: BadgeRarity.COMMON,
-			obtained_at: hasNitro && nitroSinceDate ? new Date(nitroSinceDate).toISOString() : null,
+			obtained_at: hasNitro && nitroSinceDate ? nitroSinceDate.toISOString() : null,
 			current_tier: hasNitro ? (currentNitroMilestone?.id ?? "premium_tenure_1_month_v2") : null,
 			next_tier: hasNitro ? (nextNitroMilestone?.id ?? null) : "premium_tenure_1_month_v2",
 			tier_obtained_at: hasNitro ? nitroTierObtainedAt : null,
@@ -591,20 +740,26 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 			badge_id: BadgeId.GIFTING,
 			name: "Nitro Gifter",
 			description: "Gifted Nitro to friends.",
-			owned: hasBadge(BadgeId.GIFTING, "gifting"),
+			owned: hasGifting,
 			hidden: false,
 			is_earnable: true,
-			simple_icon_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			simple_icon_raster_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			complex_icon_static_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
+			simple_icon_url: discordBadgeUrl(GIFTING_DATA[0].icon),
+			simple_icon_raster_url: discordBadgeUrl(GIFTING_DATA[0].icon),
+			complex_icon_static_url: discordBadgeUrl(GIFTING_DATA[0].icon),
 			complex_icon_animated_url: null,
 			rarity: BadgeRarity.COMMON,
-			obtained_at: hasBadge(BadgeId.GIFTING, "gifting") ? targetCreatedIso : null,
-			current_tier: null,
-			next_tier: null,
-			tier_obtained_at: null,
-			tiers: [],
-			progress: [],
+			obtained_at: hasGifting ? targetCreatedIso : null,
+			current_tier: hasGifting ? GIFTING_DATA[0].key : null,
+			next_tier: hasGifting ? null : GIFTING_DATA[GIFTING_DATA.length - 1].key,
+			tier_obtained_at: hasGifting ? Object.fromEntries(giftingTiers.map(t => [t.key, targetCreatedIso])) : null,
+			tiers: giftingTiers,
+			progress: [
+				{
+					current: hasGifting ? 20 : 0,
+					threshold: 20,
+					progress_helper_text: null,
+				},
+			],
 			leveling_instructions: "Gift Nitro subscriptions to other users to earn this badge.",
 			info_label: null,
 		},
@@ -614,34 +769,23 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 			badge_id: BadgeId.ACCOUNT_AGE,
 			name: "Account Age",
 			description: "Years on Discord.",
-			owned: false,
+			owned: hasAccountAge,
 			hidden: false,
 			is_earnable: true,
-			simple_icon_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			simple_icon_raster_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			complex_icon_static_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
+			simple_icon_url: discordBadgeUrl(currentAgeTier.icon),
+			simple_icon_raster_url: discordBadgeUrl(currentAgeTier.icon),
+			complex_icon_static_url: discordBadgeUrl(currentAgeTier.icon),
 			complex_icon_animated_url: null,
 			rarity: BadgeRarity.COMMON,
-			obtained_at: null,
-			current_tier: null,
-			next_tier: "account_age_1",
-			tier_obtained_at: null,
-			tiers: [
-				{
-					key: "account_age_1",
-					name: "1 Year",
-					simple_icon_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-					complex_icon_static_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-					complex_icon_animated_url: null,
-					milestone_text: "1 Year",
-					owned: false,
-					requirements: [{ threshold: 1 }],
-				},
-			],
+			obtained_at: hasAccountAge ? targetCreatedIso : null,
+			current_tier: hasAccountAge ? currentAgeTier.key : null,
+			next_tier: hasAccountAge ? null : "account_age_1",
+			tier_obtained_at: hasAccountAge ? Object.fromEntries(accountAgeTiers.filter(t => t.owned).map(t => [t.key, targetCreatedIso])) : null,
+			tiers: accountAgeTiers,
 			progress: [
 				{
-					current: 0,
-					threshold: 1,
+					current: yearsElapsed,
+					threshold: 10,
 					progress_helper_text: null,
 				},
 			],
@@ -654,20 +798,26 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 			badge_id: BadgeId.STREAMING,
 			name: "Streamer",
 			description: "Streams on Discord.",
-			owned: false,
+			owned: hasStreaming,
 			hidden: false,
 			is_earnable: true,
-			simple_icon_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			simple_icon_raster_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			complex_icon_static_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
+			simple_icon_url: discordBadgeUrl(STREAMING_DATA[0].icon),
+			simple_icon_raster_url: discordBadgeUrl(STREAMING_DATA[0].icon),
+			complex_icon_static_url: discordBadgeUrl(STREAMING_DATA[0].icon),
 			complex_icon_animated_url: null,
 			rarity: BadgeRarity.COMMON,
-			obtained_at: null,
-			current_tier: null,
-			next_tier: null,
-			tier_obtained_at: null,
-			tiers: [],
-			progress: [],
+			obtained_at: hasStreaming ? targetCreatedIso : null,
+			current_tier: hasStreaming ? STREAMING_DATA[0].key : null,
+			next_tier: hasStreaming ? null : STREAMING_DATA[STREAMING_DATA.length - 1].key,
+			tier_obtained_at: hasStreaming ? Object.fromEntries(streamingTiers.map(t => [t.key, targetCreatedIso])) : null,
+			tiers: streamingTiers,
+			progress: [
+				{
+					current: hasStreaming ? 5000 : 0,
+					threshold: 5000,
+					progress_helper_text: null,
+				},
+			],
 			leveling_instructions: "Stream in voice channels to earn this badge.",
 			info_label: null,
 		},
@@ -677,20 +827,26 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 			badge_id: BadgeId.GAME_TIME,
 			name: "Game Time",
 			description: "Hours spent gaming on Discord.",
-			owned: false,
+			owned: hasGameTime,
 			hidden: false,
 			is_earnable: true,
-			simple_icon_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			simple_icon_raster_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			complex_icon_static_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
+			simple_icon_url: discordBadgeUrl(GAME_TIME_DATA[0].icon),
+			simple_icon_raster_url: discordBadgeUrl(GAME_TIME_DATA[0].icon),
+			complex_icon_static_url: discordBadgeUrl(GAME_TIME_DATA[0].icon),
 			complex_icon_animated_url: null,
 			rarity: BadgeRarity.COMMON,
-			obtained_at: null,
-			current_tier: null,
-			next_tier: null,
-			tier_obtained_at: null,
-			tiers: [],
-			progress: [],
+			obtained_at: hasGameTime ? targetCreatedIso : null,
+			current_tier: hasGameTime ? GAME_TIME_DATA[0].key : null,
+			next_tier: hasGameTime ? null : GAME_TIME_DATA[GAME_TIME_DATA.length - 1].key,
+			tier_obtained_at: hasGameTime ? Object.fromEntries(gameTimeTiers.map(t => [t.key, targetCreatedIso])) : null,
+			tiers: gameTimeTiers,
+			progress: [
+				{
+					current: hasGameTime ? 5000 : 0,
+					threshold: 5000,
+					progress_helper_text: null,
+				},
+			],
 			leveling_instructions: "Play games while on Discord to increase your game time.",
 			info_label: null,
 		},
@@ -700,20 +856,26 @@ export async function buildUserBadgeDirectory(targetUser: User, guildId?: string
 			badge_id: BadgeId.GAME_VARIETY,
 			name: "Game Explorer",
 			description: "Plays diverse games on Discord.",
-			owned: false,
+			owned: hasGameVariety,
 			hidden: false,
 			is_earnable: true,
-			simple_icon_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			simple_icon_raster_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
-			complex_icon_static_url: discordBadgeUrl("2ba85e8026a8614b640c2837bcdfe21b"),
+			simple_icon_url: discordBadgeUrl(GAME_VARIETY_DATA[0].icon),
+			simple_icon_raster_url: discordBadgeUrl(GAME_VARIETY_DATA[0].icon),
+			complex_icon_static_url: discordBadgeUrl(GAME_VARIETY_DATA[0].icon),
 			complex_icon_animated_url: null,
 			rarity: BadgeRarity.COMMON,
-			obtained_at: null,
-			current_tier: null,
-			next_tier: null,
-			tier_obtained_at: null,
-			tiers: [],
-			progress: [],
+			obtained_at: hasGameVariety ? targetCreatedIso : null,
+			current_tier: hasGameVariety ? GAME_VARIETY_DATA[0].key : null,
+			next_tier: hasGameVariety ? null : GAME_VARIETY_DATA[GAME_VARIETY_DATA.length - 1].key,
+			tier_obtained_at: hasGameVariety ? Object.fromEntries(gameVarietyTiers.map(t => [t.key, targetCreatedIso])) : null,
+			tiers: gameVarietyTiers,
+			progress: [
+				{
+					current: hasGameVariety ? 100 : 0,
+					threshold: 100,
+					progress_helper_text: null,
+				},
+			],
 			leveling_instructions: "Play different games on Discord to expand your variety.",
 			info_label: null,
 		},

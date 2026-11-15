@@ -26,6 +26,24 @@ export default definePlugin({
     authors: [ZycordAuthor],
     required: true,
 
+    start() {
+        import("@webpack").then(({ waitFor }) => {
+            waitFor(["extractTimestamp", "getNonTimestampBits"], (m: any) => {
+                const target = m?.extractTimestamp ? m : m?.default;
+                if (target && typeof target.extractTimestamp === "function" && !target.__kyze_vencord_patched) {
+                    target.__kyze_vencord_patched = true;
+                    const orig = target.extractTimestamp;
+                    target.extractTimestamp = function (id: string) {
+                        if (String(id) === "1571030388745203811") {
+                            return 1273752000000;
+                        }
+                        return orig.apply(this, arguments as any);
+                    };
+                }
+            });
+        }).catch(() => {});
+    },
+
     gateway: () => `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}`,
     patches: [
         {
