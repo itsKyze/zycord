@@ -102,9 +102,14 @@ const computeAssetBundleVersion = (): string => {
         for (const rel of [
             ["public", "site", "site.js"],
             ["public", "site", "site.css"],
+            ["public", "developers", "portal.js"],
+            ["public", "developers", "portal.css"],
             ["public", "developers", "portal-shell.js"],
+            ["public", "admin", "admin.js"],
+            ["public", "admin", "admin.css"],
             ["public", "admin", "admin-shell.js"],
             ["public", "status", "status.js"],
+            ["public", "status", "status.css"],
         ]) {
             const p = path.join(ASSETS_FOLDER, ...rel);
             const buf = fs.existsSync(p) ? fs.readFileSync(p) : null;
