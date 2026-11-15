@@ -19,37 +19,26 @@
 import fs from "node:fs/promises";
 import { join } from "node:path";
 import { Request, Response, Router } from "express";
-import { fileTypeFromBuffer } from "file-type";
 import { HTTPError } from "lambert-server/HTTPError";
 import { DEFAULT_AVATAR_COLORS, DEFAULT_AVATARS_FOLDER, PUBLIC_ASSETS_FOLDER, defaultAvatarSvg } from "@spacebar/util";
 import { setCacheControl } from "../util";
 
-const defaultGroupDMAvatarHashMap = new Map([
-    ["0", "3b70bb66089c60f8be5e214bf8574c9d"],
-    ["1", "9581acd31832465bdeaa5385b0e919a3"],
-    ["2", "a8a4727cf2dc2939bd3c657fad4463fa"],
-    ["3", "2e46fe14586f8e95471c0917f56726b5"],
-    ["4", "fac7e78de9753d4a37083bba74c1d9ef"],
-    ["5", "4ab900144b0865430dc9be825c838faa"],
-    ["6", "1276374a404452756f3c9cc2601508a5"],
-    ["7", "904bf9f1b61f53ef4a3b7a893afeabe3"],
-]);
+const DEFAULT_GROUP_AVATARS_FOLDER = join(PUBLIC_ASSETS_FOLDER, "default-avatars", "group");
+const DEFAULT_GROUP_AVATARS_COUNT = 8;
+
+// Legacy Discord hash mapping (ensures old clients or cached hash links continue to resolve to original 0..7)
+const legacyGroupAvatarHashes: Record<string, string> = {
+    "3b70bb66089c60f8be5e214bf8574c9d": "0",
+    "9581acd31832465bdeaa5385b0e919a3": "1",
+    "a8a4727cf2dc2939bd3c657fad4463fa": "2",
+    "2e46fe14586f8e95471c0917f56726b5": "3",
+    "fac7e78de9753d4a37083bba74c1d9ef": "4",
+    "4ab900144b0865430dc9be825c838faa": "5",
+    "1276374a404452756f3c9cc2601508a5": "6",
+    "904bf9f1b61f53ef4a3b7a893afeabe3": "7",
+};
 
 const router = Router({ mergeParams: true });
-
-async function getFile(path: string) {
-    try {
-        return await fs.readFile(path);
-    } catch (error) {
-        try {
-            const files = await fs.readdir(path);
-            if (!files.length) return null;
-            return await fs.readFile(join(path, files[0]));
-        } catch (error) {
-            return null;
-        }
-    }
-}
 
 router.get("/avatars/:id", setCacheControl, async (req: Request, res: Response) => {
     const id = String(req.params.id).split(".")[0];
@@ -60,38 +49,19 @@ router.get("/avatars/:id", setCacheControl, async (req: Request, res: Response) 
 });
 
 router.get("/group-avatars/:id", setCacheControl, async (req: Request, res: Response) => {
-    let { id } = req.params as { [key: string]: string };
-    id = id.split(".")[0]; // remove .file extension
+    let id = String(req.params.id).split(".")[0];
+    id = legacyGroupAvatarHashes[id] || id;
 
-    let index = id;
-    if (!defaultGroupDMAvatarHashMap.has(index)) {
-        // Reverse lookup if passed as md5 hash
-        for (const [k, v] of defaultGroupDMAvatarHashMap) {
-            if (v === id) {
-                index = k;
-                break;
-            }
-        }
+    if (!/^\d+$/.test(id) || Number(id) >= DEFAULT_GROUP_AVATARS_COUNT) {
+        throw new HTTPError("not found", 404);
     }
 
-    if (!defaultGroupDMAvatarHashMap.has(index)) throw new HTTPError("not found", 404);
-
-    // Primary: look in public/default-avatars/group/{index}.png
-    const targetFile = join(PUBLIC_ASSETS_FOLDER, "default-avatars", "group", `${index}.png`);
-    let file = await getFile(targetFile);
-
-    if (!file) {
-        // Fallback: check legacy hash file in assets/public
-        const hash = defaultGroupDMAvatarHashMap.get(index);
-        file = await getFile(join(PUBLIC_ASSETS_FOLDER, `${hash}.png`));
+    const file = join(DEFAULT_GROUP_AVATARS_FOLDER, `${id}.png`);
+    if (await fs.stat(file).catch(() => null)) {
+        return res.type("png").sendFile(file, { cacheControl: false, dotfiles: "allow" });
     }
 
-    if (!file) throw new HTTPError("not found", 404);
-    const type = await fileTypeFromBuffer(file);
-
-    res.set("Content-Type", type?.mime || "image/png");
-
-    return res.send(file);
+    throw new HTTPError("not found", 404);
 });
 
 export default router;
