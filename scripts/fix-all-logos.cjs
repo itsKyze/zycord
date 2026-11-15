@@ -3,7 +3,7 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 
 // Read Zycord icon PNG base64 from the SVG wrapper
-const iconSvg = fs.readFileSync(path.join(root, 'assets/public/branding/zycord_icon.svg'), 'utf8');
+const iconSvg = fs.readFileSync(path.join(root, 'public/branding/zycord_icon.svg'), 'utf8');
 const b64match = iconSvg.match(/href="data:image\/png;base64,([^"]+)"/);
 if (!b64match) { console.error('No base64 PNG found in zycord_icon.svg'); process.exit(1); }
 const b64 = b64match[1];
@@ -17,17 +17,17 @@ console.log('[OK] Zycord icon base64 extracted, length:', b64.length);
 // ============================================================
 
 // ============================================================
-// 2. assets/public/favicon.svg — browser tab icon
+// 2. public/favicon.svg — browser tab icon
 // ============================================================
 const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512"><image width="512" height="512" href="data:image/png;base64,${b64}"/></svg>`;
-fs.writeFileSync(path.join(root, 'assets/public/favicon.svg'), faviconSvg, 'utf8');
-console.log('[OK] assets/public/favicon.svg updated');
+fs.writeFileSync(path.join(root, 'public/favicon.svg'), faviconSvg, 'utf8');
+console.log('[OK] public/favicon.svg updated');
 
 // ============================================================
-// 3. assets/public/branding/favicon.svg — branding favicon
+// 3. public/branding/favicon.svg — branding favicon
 // ============================================================
-fs.writeFileSync(path.join(root, 'assets/public/branding/favicon.svg'), faviconSvg, 'utf8');
-console.log('[OK] assets/public/branding/favicon.svg updated');
+fs.writeFileSync(path.join(root, 'public/branding/favicon.svg'), faviconSvg, 'utf8');
+console.log('[OK] public/branding/favicon.svg updated');
 
 // ============================================================
 // Helper: Replace spinner SVG in an HTML file
@@ -51,14 +51,14 @@ function fixSpinnerHtml(filePath) {
 }
 
 // ============================================================
-// 4. assets/public/branding/preview.html — THE one the server uses
+// 4. public/branding/preview.html — THE one the server uses
 // ============================================================
-fixSpinnerHtml(path.join(root, 'assets/public/branding/preview.html'));
+fixSpinnerHtml(path.join(root, 'public/branding/preview.html'));
 
 // ============================================================
-// 5. assets/public/branding/spinner.html — THE one the server uses
+// 5. public/branding/spinner.html — THE one the server uses
 // ============================================================
-fixSpinnerHtml(path.join(root, 'assets/public/branding/spinner.html'));
+fixSpinnerHtml(path.join(root, 'public/branding/spinner.html'));
 
 // ============================================================
 // 6. branding/preview.html (root) — also fix

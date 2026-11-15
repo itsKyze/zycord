@@ -107,7 +107,7 @@ test("admin rejects unsafe standalone URL and preserves masked blank secret", as
 });
 
 test("Cap configuration input templates escape stored attribute payloads", () => {
-    const source = fs.readFileSync("assets/public/admin/admin.js", "utf8");
+    const source = fs.readFileSync("public/admin/admin.js", "utf8");
     const helpers = source.slice(source.indexOf("class Raw"), source.indexOf("const snowflakeDate"));
     const attrs = [
         ...source.matchAll(

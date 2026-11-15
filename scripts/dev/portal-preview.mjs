@@ -2,7 +2,7 @@ import http from "node:http";
 import fs from "node:fs";
 import path from "node:path";
 
-const root = path.resolve("assets/public");
+const root = path.resolve("public");
 const mime = {
 	".html": "text/html",
 	".js": "text/javascript",

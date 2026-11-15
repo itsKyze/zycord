@@ -25,7 +25,7 @@ const router = Router({ mergeParams: true });
 /**
  * Serve public assets (e.g. powerup images, branding) under /assets/
  * so that powerup_metadata URLs like /assets/powerups/tag.png resolve correctly.
- * The files live in assets/public/ on disk (PUBLIC_ASSETS_FOLDER).
+ * The files live in public/ on disk (PUBLIC_ASSETS_FOLDER).
  */
 router.use(
     express.static(PUBLIC_ASSETS_FOLDER, {

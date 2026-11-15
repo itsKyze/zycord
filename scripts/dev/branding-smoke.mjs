@@ -47,7 +47,7 @@ try {
     assert.equal(await p.locator('link[rel="icon"]').getAttribute("href"), "/favicon.svg");
     let favicon = await p.request.get(origin + "/favicon.svg");
     assert.equal(favicon.status(), 200);
-    assert.equal(await favicon.text(), fs.readFileSync(path.join(root, "assets/public/branding/favicon.svg"), "utf8"));
+    assert.equal(await favicon.text(), fs.readFileSync(path.join(root, "public/branding/favicon.svg"), "utf8"));
     for (const size of [180, 192, 512]) {
         const r = await p.request.get(`${origin}/assets/pwa/icon-${size}.png`);
         assert.equal(r.status(), 200);
@@ -58,7 +58,7 @@ try {
         assert.equal(metadata.height, size);
         if (size === 512) {
             const actualPixels = await sharp(png).ensureAlpha().raw().toBuffer();
-            const referencePixels = await sharp(path.join(root, "assets/public/branding/zycord-icon.svg")).ensureAlpha().raw().toBuffer();
+            const referencePixels = await sharp(path.join(root, "public/branding/zycord-icon.svg")).ensureAlpha().raw().toBuffer();
             assert.deepEqual(actualPixels, referencePixels);
         }
         fs.writeFileSync(path.join(os.tmpdir(), `zycord-zycord-pwa-${size}.png`), png);
@@ -101,7 +101,7 @@ try {
             .map((a) => ({ name: a.animationName, duration: a.effect.getTiming().duration })),
         ready: window.brandReady,
     }));
-    const ref = fs.readFileSync(path.join(root, "assets/public/branding/spinner.html"), "utf8");
+    const ref = fs.readFileSync(path.join(root, "public/branding/spinner.html"), "utf8");
     assert.deepEqual(
         actual.paths,
         [...ref.matchAll(/<path[^>]* d="([^"]+)"/g)].map((m) => m[1]),

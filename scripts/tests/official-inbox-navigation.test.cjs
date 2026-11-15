@@ -22,14 +22,14 @@ try {
     } catch {}
 }
 const browserPath = process.env.CHROME_PATH || "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser";
-const source = fs.readFileSync("assets/public/admin/admin.js", "utf8");
+const source = fs.readFileSync("public/admin/admin.js", "utf8");
 const helpers = source.slice(source.indexOf("const $ ="), source.indexOf("const snowflakeDate ="));
 const render = source.slice(source.indexOf("async function renderOfficialInbox("));
 const response = (username) => ({ user: { id: "22", username }, official: { id: "1" }, messages: [], before: null, has_more: false, max_characters: 2000 });
 async function fixture(browser) {
     const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
     await page.setContent('<main id="view"></main>');
-    await page.addStyleTag({ content: fs.readFileSync("assets/public/admin/admin.css", "utf8") });
+    await page.addStyleTag({ content: fs.readFileSync("public/admin/admin.css", "utf8") });
     page.setDefaultTimeout(5000);
     await page.addScriptTag({
         content:

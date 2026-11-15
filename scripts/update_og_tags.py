@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Inject Discord-style Open Graph tags, Twitter Cards, theme-color, and SEO meta
-across all public landing pages in assets/public/.
+across all public landing pages in public/.
 """
 import os
 import re
@@ -9,85 +9,85 @@ import re
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 pages = {
-    'assets/public/index.html': {
+    'public/index.html': {
         'title': "Zycord — Group Chat That's All Fun & Games",
         'og_title': "Zycord - Group Chat That's All Fun & Games",
         'desc': "Zycord is great for playing games and chilling with friends, or even building a worldwide community. Customize your own space to talk, play, and hang out.",
         'url': '/',
     },
-    'assets/public/nitro/index.html': {
+    'public/nitro/index.html': {
         'title': 'Zycord Nitro — Unlock a World of Perks',
         'og_title': 'Nitro Benefits and Features | Zycord',
         'desc': 'Enhance your Zycord experience with Nitro — get custom emojis, animated avatars, larger file uploads, HD screensharing, and more.',
         'url': '/nitro',
     },
-    'assets/public/download/index.html': {
+    'public/download/index.html': {
         'title': 'Download Zycord — Desktop, Web & PWA',
         'og_title': 'Download Zycord | Zycord',
         'desc': 'Download the best app to communicate over video, voice, or text. Available for Windows Desktop, macOS, Linux, and modern Web & PWA browsers.',
         'url': '/download',
     },
-    'assets/public/discover/index.html': {
+    'public/discover/index.html': {
         'title': 'Discover Public Communities & Servers | Zycord',
         'og_title': 'Discover Communities | Zycord',
         'desc': 'Explore and join vibrant communities for gaming, anime, music, education, and tech on Zycord.',
         'url': '/discover',
     },
-    'assets/public/quests/index.html': {
+    'public/quests/index.html': {
         'title': 'Zycord Quests — Play & Earn Rewards',
         'og_title': 'Zycord Quests | Zycord',
         'desc': 'Earn rewards and exclusive perks for playing your favorite games with friends on Zycord.',
         'url': '/quests',
     },
-    'assets/public/safety/index.html': {
+    'public/safety/index.html': {
         'title': 'Zycord Safety Center | Zycord',
         'og_title': 'Zycord Safety Center | Zycord',
         'desc': 'Zycord is the place to build community and talk with friends. Explore our Safety Center to learn about staying safe and our best practices.',
         'url': '/safety',
     },
-    'assets/public/careers/index.html': {
+    'public/careers/index.html': {
         'title': 'Jobs at Zycord | Work with Us',
         'og_title': 'Jobs at Zycord | Zycord',
         'desc': 'Zycord is looking for passionate people to help build the future of communication. Explore open roles and join our team.',
         'url': '/careers',
     },
-    'assets/public/developers/index.html': {
+    'public/developers/index.html': {
         'title': 'Zycord Developer Portal | Build with Zycord',
         'og_title': 'Zycord Developer Portal | Zycord',
         'desc': 'Build bots, apps, integrations, and games for communities with the Zycord Developer Platform and APIs.',
         'url': '/developers',
     },
-    'assets/public/developers/hub.html': {
+    'public/developers/hub.html': {
         'title': 'Zycord Developer Portal | Build with Zycord',
         'og_title': 'Zycord Developer Portal | Zycord',
         'desc': 'Build bots, apps, integrations, and games for communities with the Zycord Developer Platform and APIs.',
         'url': '/developers',
     },
-    'assets/public/support/index.html': {
+    'public/support/index.html': {
         'title': 'Zycord Support & Help Center',
         'og_title': 'Zycord Support | Help Center',
         'desc': 'Need help with Zycord? Find answers, explore tutorials, or get in touch with our team.',
         'url': '/support',
     },
-    'assets/public/status/index.html': {
+    'public/status/index.html': {
         'title': 'Zycord Status — System Uptime & Incidents',
         'og_title': 'Zycord Status',
         'desc': 'Real-time operational status and uptime monitoring for Zycord services, API, Voice, Gateway, and Media.',
         'url': '/status',
     },
-    'assets/public/blog/index.html': {
+    'public/blog/index.html': {
         'title': 'Zycord Blog — News, Product Updates & Stories',
         'og_title': 'Zycord Blog',
         'desc': 'The official Zycord blog. Read about the latest product updates, new features, community stories, and engineering deep dives.',
         'url': '/blog',
     },
-    'assets/public/legal.html': {
+    'public/legal.html': {
         'title': 'Zycord Terms of Service & Privacy Policy',
         'og_title': 'Zycord Legal Terms & Privacy Policy',
         'desc': 'Review the Terms of Service, Privacy Policy, and Community Guidelines for Zycord.',
         'url': '/legal',
     },
-    'assets/public/verify.html': {
+    'public/verify.html': {
         'title': 'Verify Your Account | Zycord',
         'og_title': 'Verify Your Account | Zycord',
         'desc': 'Verify your email address or account on Zycord to access all community features.',

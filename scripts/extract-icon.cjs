@@ -1,5 +1,5 @@
 const fs = require('fs');
-const txt = fs.readFileSync('assets/public/branding/zycord-icon.svg', 'utf8');
+const txt = fs.readFileSync('public/branding/zycord-icon.svg', 'utf8');
 const idx = txt.indexOf('base64,');
 const end = txt.indexOf('"', idx);
 const buf = Buffer.from(txt.substring(idx + 7, end), 'base64');
