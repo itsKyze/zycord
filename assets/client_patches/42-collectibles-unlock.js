@@ -10,27 +10,33 @@
     if (document.head) document.head.appendChild(style);
     else document.addEventListener("DOMContentLoaded", () => document.head?.appendChild(style));
 
+    const safePurchaseCache = new Map();
     const createSafePurchase = (skuId) => {
         if (!skuId || typeof skuId !== "string") return undefined;
-        return {
-            skuId,
-            id: skuId,
-            type: 1,
-            purchasedAt: "2026-01-01T00:00:00.000Z",
-            expiresAt: null,
-            items: [
-                {
-                    id: skuId,
-                    skuId,
-                    type: 0,
-                    name: "",
-                    asset: "",
-                    label: "",
-                },
-            ],
-            attributes: {},
-            purchased: true,
-        };
+        let purchase = safePurchaseCache.get(skuId);
+        if (!purchase) {
+            purchase = {
+                skuId,
+                id: skuId,
+                type: 1,
+                purchasedAt: "2026-01-01T00:00:00.000Z",
+                expiresAt: null,
+                items: [
+                    {
+                        id: skuId,
+                        skuId,
+                        type: 0,
+                        name: "",
+                        asset: "",
+                        label: "",
+                    },
+                ],
+                attributes: {},
+                purchased: true,
+            };
+            safePurchaseCache.set(skuId, purchase);
+        }
+        return purchase;
     };
 
     const patchStores = (req) => {

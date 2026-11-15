@@ -166,7 +166,7 @@ export function steamFrameCategory(frames = load().frames) {
         summary: "Avatar frames from the Steam Points Shop.",
         store_listing_id: STEAM_CATEGORY_SKU,
         styles: STYLES,
-        hero_ranking: products.slice(0, 20).map((product) => product.sku_id),
+        hero_ranking: products.map((product) => product.sku_id),
         products,
         hero_banner_url: banner,
         catalog_banner_url: banner,
