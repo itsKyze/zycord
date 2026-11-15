@@ -21,7 +21,7 @@ import path from "node:path";
 import { ASSETS_FOLDER } from "./Constants";
 import { Config } from "./Config";
 import { instanceName } from "./Branding";
-import { steamFrameCategory, steamFrameRecency } from "./SteamFrames";
+import { STEAM_CATEGORY_SKU, steamFrameCategory, steamFrameRecency } from "./SteamFrames";
 
 export enum CollectibleItemType {
     AVATAR_DECORATION = 0,
@@ -485,9 +485,28 @@ export const Collectibles = {
     },
 
     async shop() {
-        const listed = (await Collectibles.categories()).filter((x) => x.products.length);
+        const rawListed = (await Collectibles.categories()).filter((x) => x.products.length);
+
+        // Keep homepage category previews and ranked items to healthy, performant limits to prevent
+        // DOM node exhaustion, layout thrashing, flickering, and high memory consumption / crashes.
+        // The full catalog (including all 2,000+ Steam items) is browsed and searched with pagination via shop search.
+        const listed = rawListed.map((category) => {
+            const limit = category.sku_id === STEAM_CATEGORY_SKU ? 48 : 36;
+            if (category.products.length > limit) {
+                return {
+                    ...category,
+                    products: category.products.slice(0, limit),
+                    hero_ranking: (category.hero_ranking ?? category.products.map((p) => p.sku_id)).slice(0, 20),
+                };
+            }
+            return category;
+        });
+
         const [hero, ...rest] = listed;
-        const ranked = listed.flatMap(listedSkus);
+        const ranked = listed
+            .flatMap((c) => (c.hero_ranking ?? listedSkus(c)).slice(0, 8))
+            .slice(0, 48);
+
         return {
             shop_blocks: [
                 ...(hero
@@ -499,7 +518,7 @@ export const Collectibles = {
                               name: hero.name,
                               title: hero.hero_block_title ?? hero.name,
                               summary: hero.summary ?? "",
-                              ranked_sku_ids: hero.hero_ranking ?? listedSkus(hero),
+                              ranked_sku_ids: hero.hero_ranking ?? listedSkus(hero).slice(0, 20),
                               unpublished_at: null,
                               banner_text_color: hero.banner_text_color ?? null,
                               hero_banner_url: hero.hero_banner_url ?? hero.catalog_banner_url ?? null,

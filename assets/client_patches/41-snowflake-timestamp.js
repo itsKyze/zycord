@@ -36,13 +36,17 @@
     };
 
     let reqInstance;
+    let ticks = 0;
     (window.webpackChunkdiscord_app = window.webpackChunkdiscord_app || []).push([
         [Symbol("zycord-snowflake-timestamp")],
         {},
         (req) => {
             reqInstance = req;
             patchSnowflake(req);
-            setInterval(() => patchSnowflake(reqInstance), 500);
+            const interval = setInterval(() => {
+                patchSnowflake(reqInstance);
+                if (++ticks >= 6) clearInterval(interval);
+            }, 1000);
         },
     ]);
 })();

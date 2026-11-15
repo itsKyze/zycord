@@ -13,24 +13,29 @@
                     targets = [mod];
                 }
                 for (const item of targets) {
-                        if (item && typeof item === "object") {
-                            // Safely enable animations without breaking React hooks
-                            if (typeof item.isAnimationEnabled === "function") item.isAnimationEnabled = () => true;
-                            if (typeof item.rawPrefersReducedMotion === "function") item.rawPrefersReducedMotion = () => "no-preference";
-                        }
+                    if (item && typeof item === "object" && !item.__zycordAnimPatched) {
+                        item.__zycordAnimPatched = true;
+                        // Safely enable animations without breaking React hooks
+                        if (typeof item.isAnimationEnabled === "function") item.isAnimationEnabled = () => true;
+                        if (typeof item.rawPrefersReducedMotion === "function") item.rawPrefersReducedMotion = () => "no-preference";
+                    }
                 }
             }
         } catch (_) {}
     };
 
     let reqInstance;
+    let ticks = 0;
     (window.webpackChunkdiscord_app = window.webpackChunkdiscord_app || []).push([
         [Symbol("zycord-always-animate")],
         {},
         (req) => {
             reqInstance = req;
             patchAnimations(req);
-            setInterval(() => patchAnimations(reqInstance), 1000);
+            const interval = setInterval(() => {
+                patchAnimations(reqInstance);
+                if (++ticks >= 6) clearInterval(interval);
+            }, 1000);
         },
     ]);
 })();

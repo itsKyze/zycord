@@ -17,7 +17,7 @@
 */
 
 import { CollectiblePurchase } from "@spacebar/database";
-import { CollectibleItemType, Collectibles, DiscordApiErrors } from "@spacebar/util";
+import { CollectibleItemType, Collectibles, DiscordApiErrors, STEAM_CATEGORY_SKU } from "@spacebar/util";
 
 export const listCollectiblePurchases = async (user_id: string) => {
     const catalog = await Collectibles.get();
@@ -25,32 +25,36 @@ export const listCollectiblePurchases = async (user_id: string) => {
     const seen = new Set<string>();
     const result: any[] = [];
 
-    // All usable products and individual items in the store/catalog are unlocked and free for everyone
-    for (const product of catalog.products.values()) {
-        if (!product || product.type === CollectibleItemType.BUNDLE || product.type === CollectibleItemType.VARIANTS_GROUP) continue;
-        if (!seen.has(product.sku_id)) {
-            seen.add(product.sku_id);
-            result.push({
-                ...product,
-                id: product.sku_id,
-                purchased_at: now,
-                purchase_type: 0,
-                expires_at: null,
-            });
-        }
-        for (const item of product.items ?? []) {
-            if (item.sku_id && !seen.has(item.sku_id)) {
-                seen.add(item.sku_id);
+    // Pre-unlock top featured items across each category so every user has a diverse selection of
+    // free decorations, effects and nameplates ready to use without bloating client memory.
+    for (const category of catalog.categories) {
+        const featured = category.products.slice(0, 10);
+        for (const product of featured) {
+            if (!product || product.type === CollectibleItemType.BUNDLE || product.type === CollectibleItemType.VARIANTS_GROUP) continue;
+            if (!seen.has(product.sku_id)) {
+                seen.add(product.sku_id);
                 result.push({
                     ...product,
-                    sku_id: item.sku_id,
-                    id: item.sku_id,
-                    type: item.type,
-                    items: [item],
+                    id: product.sku_id,
                     purchased_at: now,
                     purchase_type: 0,
                     expires_at: null,
                 });
+            }
+            for (const item of product.items ?? []) {
+                if (item.sku_id && !seen.has(item.sku_id)) {
+                    seen.add(item.sku_id);
+                    result.push({
+                        ...product,
+                        sku_id: item.sku_id,
+                        id: item.sku_id,
+                        type: item.type,
+                        items: [item],
+                        purchased_at: now,
+                        purchase_type: 0,
+                        expires_at: null,
+                    });
+                }
             }
         }
     }

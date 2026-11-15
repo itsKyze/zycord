@@ -20,6 +20,7 @@ import crypto from "node:crypto";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { ASSETS_FOLDER } from "./Constants";
+import { Config } from "./Config";
 
 export const STEAM_SKU_BASE = 8_000_000_000_000_000_000n;
 export const STEAM_CATEGORY_SKU = STEAM_SKU_BASE.toString();
@@ -127,14 +128,28 @@ export const steamFrameRecency = (sku: string) => {
 };
 
 export function steamFrameCategory(frames = load().frames) {
+    let cdn = "";
+    try {
+        cdn = Config.get()?.cdn?.endpointPublic?.replace(/\/+$/, "") || "";
+    } catch (_) {}
+    const banner = cdn ? `${cdn}/assets/steam-frames/banner.svg` : STEAM_BANNER;
+    const logo = cdn ? `${cdn}/assets/steam-frames/logo.svg` : "/assets/steam-frames/logo.svg";
+
     const products = frames.map((frame) => ({
+        id: frame.sku_id,
         sku_id: frame.sku_id,
         store_listing_id: frame.sku_id,
         name: frame.name,
         summary: frame.description ? `${frame.app}. ${frame.description}` : `An avatar frame from ${frame.app}.`,
         styles: STYLES,
         preview_assets: null,
-        items: [{ type: 0, sku_id: frame.sku_id, asset: frame.asset, label: `${frame.name}, an avatar frame from ${frame.app}` }],
+        items: [{
+            id: frame.sku_id,
+            type: 0,
+            sku_id: frame.sku_id,
+            asset: frame.asset,
+            label: `${frame.name}, an avatar frame from ${frame.app}`,
+        }],
         type: 0,
         premium_type: 2,
         hide_badge: true,
@@ -153,12 +168,12 @@ export function steamFrameCategory(frames = load().frames) {
         styles: STYLES,
         hero_ranking: products.slice(0, 20).map((product) => product.sku_id),
         products,
-        hero_banner_url: STEAM_BANNER,
-        catalog_banner_url: STEAM_BANNER,
-        featured_block_url: STEAM_BANNER,
-        mobile_banner_url: STEAM_BANNER,
-        logo_url: "/assets/steam-frames/logo.svg",
-        hero_logo_url: "/assets/steam-frames/logo.svg",
+        hero_banner_url: banner,
+        catalog_banner_url: banner,
+        featured_block_url: banner,
+        mobile_banner_url: banner,
+        logo_url: logo,
+        hero_logo_url: logo,
         pdp_bg_url: null,
         mobile_bg_url: null,
         unpublished_at: null,

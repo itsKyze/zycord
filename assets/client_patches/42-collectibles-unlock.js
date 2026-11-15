@@ -140,7 +140,8 @@
                         item.isPremiumCollectiblesProduct = function () { return false; };
                     }
 
-                    if (item.purchases && item.purchases instanceof Map) {
+                    if (item.purchases && item.purchases instanceof Map && !item.purchases.__zycordPatched) {
+                        item.purchases.__zycordPatched = true;
                         const origMapGet = item.purchases.get.bind(item.purchases);
                         const origMapHas = item.purchases.has.bind(item.purchases);
                         item.purchases.get = function (key) {
@@ -162,13 +163,17 @@
     };
 
     let reqInstance;
+    let ticks = 0;
     (window.webpackChunkdiscord_app = window.webpackChunkdiscord_app || []).push([
         [Symbol("zycord-collectibles-unlock")],
         {},
         (req) => {
             reqInstance = req;
             patchStores(req);
-            setInterval(() => patchStores(reqInstance), 1000);
+            const interval = setInterval(() => {
+                patchStores(reqInstance);
+                if (++ticks >= 6) clearInterval(interval);
+            }, 1000);
         },
     ]);
 })();
