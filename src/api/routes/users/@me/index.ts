@@ -19,7 +19,7 @@
 import bcrypt from "bcrypt";
 import { Request, Response, Router } from "express";
 import { route } from "@spacebar/api/middlewares";
-import { EmailChange, Pomelo, authenticatorTypes, checkProfileAcrossGuilds, consumeBackupCode, oauth2User, requireMfa, revokeSessions, verifyTotp } from "@spacebar/api/util";
+import { EmailChange, Pomelo, authenticatorTypes, checkProfileAcrossGuilds, consumeBackupCode, oauth2User, requireMfa, revokeSessions, verifyTotp, setSessionCookie } from "@spacebar/api/util";
 import { AvatarDecoration, User } from "@spacebar/database";
 import {
     broadcastUserUpdate,
@@ -62,6 +62,8 @@ router.get(
             where: { id: req.user_id },
             relations: { avatar_decoration: true },
         });
+        const token = (req.headers.authorization as string)?.replace(/^Bearer\s+/i, "");
+        if (token) setSessionCookie(res, req, token);
         res.json({ ...user.toPrivateUser(), authenticator_types: await authenticatorTypes(req.user_id) });
     },
 );

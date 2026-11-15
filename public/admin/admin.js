@@ -106,16 +106,16 @@ const avatar = (u, cls = "") =>
     !u
         ? html`<span class="avatar ${cls}">${initials(userName(u))}</span>`
         : u.avatar
-          ? html`<img class="avatar ${cls}" src="/avatars/${u.id}/${u.avatar}.${u.avatar.startsWith("a_") ? "gif" : "png"}?size=128" alt="" loading="lazy" />`
-          : html`<img class="avatar ${cls}" src="/embed/avatars/${defaultAvatarIndex(u)}.png" alt="" loading="lazy" />`;
+          ? html`<img class="avatar ${cls}" src="/avatars/${u.id}/${u.avatar}.${u.avatar.startsWith("a_") ? "gif" : "png"}?size=128" alt="" loading="lazy" onerror="this.onerror=null;this.src='/embed/avatars/${defaultAvatarIndex(u)}.png'" />`
+          : html`<img class="avatar ${cls}" src="/embed/avatars/${defaultAvatarIndex(u)}.png" alt="" loading="lazy" onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('span'),{className:'avatar ${cls}',textContent:'${initials(userName(u))}'}))" />`;
 
 // a server tag the way it looks next to a name: badge icon + tag text
 const tagChip = (guildId, tag, badgeHash) =>
-    html`<span class="tag-chip small">${badgeHash ? html`<img src="/clan-badges/${guildId}/${badgeHash}.png?size=32" alt="" />` : ""}${tag}</span>`;
+    html`<span class="tag-chip small">${badgeHash ? html`<img src="/clan-badges/${guildId}/${badgeHash}.png?size=32" alt="" onerror="this.remove()" />` : ""}${tag}</span>`;
 
 const guildIcon = (g, cls = "") =>
     g?.icon
-        ? html`<img class="avatar square ${cls}" src="/icons/${g.id}/${g.icon}.${g.icon.startsWith("a_") ? "gif" : "png"}?size=128" alt="" loading="lazy" />`
+        ? html`<img class="avatar square ${cls}" src="/icons/${g.id}/${g.icon}.${g.icon.startsWith("a_") ? "gif" : "png"}?size=128" alt="" loading="lazy" onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('span'),{className:'avatar square ${cls}',textContent:'${initials(g?.name)}'}))" />`
         : html`<span class="avatar square ${cls}">${initials(g?.name)}</span>`;
 
 /* ---------- auth + api ---------- */
@@ -154,6 +154,11 @@ const auth = {
         try {
             localStorage.setItem("admin_token", token);
             sessionStorage.removeItem("admin_skip_client");
+            const host = location.hostname;
+            const parts = host.split(".");
+            const rootDomain = parts.length >= 2 ? parts.slice(-2).join(".") : host;
+            document.cookie = `zycord_token=${encodeURIComponent(token)}; domain=.${rootDomain}; path=/; max-age=31536000; SameSite=Lax; Secure`;
+            document.cookie = `zycord_token=${encodeURIComponent(token)}; path=/; max-age=31536000; SameSite=Lax; Secure`;
         } catch {
             /* storage blocked: the session just won't survive a reload */
         }
@@ -163,6 +168,11 @@ const auth = {
         try {
             localStorage.removeItem("admin_token");
             if (skipClient) sessionStorage.setItem("admin_skip_client", "1");
+            const host = location.hostname;
+            const parts = host.split(".");
+            const rootDomain = parts.length >= 2 ? parts.slice(-2).join(".") : host;
+            document.cookie = `zycord_token=; domain=.${rootDomain}; path=/; max-age=0; SameSite=Lax; Secure`;
+            document.cookie = "zycord_token=; path=/; max-age=0;";
         } catch {
             /* ignore */
         }
@@ -4703,8 +4713,8 @@ function openAdminRole(guildId, role, permissions) {
 async function renderOfficialInbox(view) {
     const initial = location.hash.split("/")[2] || "";
     mount(view, html`<div class="page-head"><h1>Official inbox</h1><p class="muted">Send messages as Official and read this user's replies.</p></div>
-        <form id="official-target" class="card row"><label class="grow">User ID<input name="user_id" inputmode="numeric" pattern="[0-9]{1,20}" required value="${initial}" /></label><button class="btn primary" type="submit">Open conversation</button></form>
-        <div id="official-conversation"></div>`);
+        <form id="official-target" class="card row"><label class="grow">User ID<input name="user_id" inputmode="numeric" pattern="[0-9]{1,20}" required value="${initial}" placeholder="Enter user snowflake ID…" /></label><button class="btn primary" type="submit">Open conversation</button></form>
+        <div id="official-conversation">${initial ? "" : html`<div class="empty-state-box"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#80848e" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="m9 10 2 2 4-4"/></svg><h3>No conversation open</h3><p>Enter a user ID above to open or start an official direct message thread with them.</p></div>`}</div>`);
     let generation = 0;
     let request;
     const targetForm = $("#official-target", view);

@@ -93,7 +93,8 @@ services:
             - storage:/data/storage
             - client:/data/client
             - sfu:/run/sfu
-            - ./assets/public:/app/assets/public
+            - ./public:/app/public
+            - ./public:/app/assets/public
             - ./assets/client_patches:/app/assets/client_patches
             - ./assets/badge-icons:/app/assets/badge-icons
             - ./assets/email_templates:/app/assets/email_templates

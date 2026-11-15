@@ -115,8 +115,21 @@ function isDocPath(slug: string): boolean {
 	if (!clean) return false;
 	if (clean === "applications" || clean.startsWith("applications/")) return false;
 	if (clean === "home") return false;
+	if (clean === "login" || clean.startsWith("login/")) return false;
 	return true;
 }
+
+router.get(
+	"/login",
+	route({
+		spacebarOnly: true,
+		authentication: "never",
+	}),
+	(req: Request, res: Response) => {
+		const redirect = (req.query.redirect_to as string) || "https://developers.zyron.site/developers/applications";
+		return res.redirect(`https://app.zyron.site/login?redirect_to=${encodeURIComponent(redirect)}`);
+	},
+);
 
 router.get(
 	"/{*splat}",

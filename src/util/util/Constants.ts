@@ -16,12 +16,18 @@
 	along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import fs from "node:fs";
 import path from "node:path";
 import { ApiError } from "./ApiError";
 
 // Environment constants
 export const ASSETS_FOLDER = path.join(__dirname, "..", "..", "..", "assets");
-export const PUBLIC_ASSETS_FOLDER = path.join(ASSETS_FOLDER, "public");
+const ROOT_PUBLIC_FOLDER = path.join(__dirname, "..", "..", "..", "public");
+export const PUBLIC_ASSETS_FOLDER = process.env.PUBLIC_ASSETS_FOLDER
+    ? path.resolve(process.env.PUBLIC_ASSETS_FOLDER)
+    : fs.existsSync(ROOT_PUBLIC_FOLDER)
+      ? ROOT_PUBLIC_FOLDER
+      : path.join(ASSETS_FOLDER, "public");
 
 // Response constants
 export const WSCodes = {

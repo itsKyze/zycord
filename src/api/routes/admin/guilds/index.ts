@@ -56,7 +56,7 @@ router.get(
         const [{ entities, raw }, total] = await Promise.all([query.getRawAndEntities(), query.getCount()]);
 
         const ownerIds = [...new Set(entities.map((g) => g.owner_id).filter((id): id is string => !!id))];
-        const owners = ownerIds.length ? await User.find({ where: { id: In(ownerIds) }, select: { id: true, username: true, discriminator: true, global_name: true } }) : [];
+        const owners = ownerIds.length ? await User.find({ where: { id: In(ownerIds) }, select: { id: true, username: true, discriminator: true, global_name: true, avatar: true } }) : [];
 
         res.json({
             total,

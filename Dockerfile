@@ -32,6 +32,7 @@ COPY src src
 COPY scripts/default-avatars.js scripts/default-avatars.js
 COPY scripts/generate-collectibles.mjs scripts/generate-collectibles.mjs
 COPY scripts/build-jsx-site.mjs scripts/build-jsx-site.mjs
+COPY public public
 COPY assets assets
 RUN npm run build:src && npm prune --omit=dev --no-audit --no-fund
 
@@ -50,6 +51,7 @@ ENV NODE_ENV=production \
 COPY package.json ./
 COPY --from=build /app/node_modules node_modules
 COPY --from=build /app/dist dist
+COPY --from=build --chown=node:node /app/public public
 COPY --from=build --chown=node:node /app/assets assets
 COPY scripts/client.js scripts/e2ee-anchors.js scripts/clan-badges.js scripts/compress-client.js scripts/docker-configure.js scripts/
 COPY --chmod=755 docker/entrypoint.sh docker/
@@ -60,6 +62,7 @@ RUN if [ -n "$REVISION" ]; then printf '{"rev":"%s","lastModified":%s}\n' "$REVI
     && mkdir -p /data/state /data/storage /data/client /run/sfu \
     && ln -s /data/client/cache assets/cache \
     && ln -s /data/client/cache_compressed assets/cache_compressed \
+    && if [ ! -e assets/public ]; then ln -s ../public assets/public; fi \
     && chown -R node:node /data /run/sfu /app
 USER node
 EXPOSE 3001

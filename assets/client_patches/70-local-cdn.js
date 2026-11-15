@@ -115,13 +115,21 @@
     // Cross-subdomain SSO token sync across *.zyron.site
     const syncTokenCookie = () => {
         try {
-            const rawToken = localStorage.getItem("token");
+            const rawToken = localStorage.getItem("token") || localStorage.getItem("admin_token");
             if (rawToken) {
-                const token = JSON.parse(rawToken);
+                let token = null;
+                try {
+                    token = JSON.parse(rawToken);
+                } catch {
+                    token = rawToken;
+                }
                 if (token && typeof token === "string") {
-                    const cookieDomain = rootDomain ? `.${rootDomain}` : "";
-                    const cookieStr = `zycord_token=${encodeURIComponent(token)}; domain=${cookieDomain}; path=/; max-age=31536000; SameSite=Lax; Secure`;
-                    document.cookie = cookieStr;
+                    token = token.replace(/^"|"$/g, "").trim();
+                    if (token) {
+                        const cookieDomain = rootDomain ? `.${rootDomain}` : "";
+                        document.cookie = `zycord_token=${encodeURIComponent(token)}; domain=${cookieDomain}; path=/; max-age=31536000; SameSite=Lax; Secure`;
+                        document.cookie = `zycord_token=${encodeURIComponent(token)}; path=/; max-age=31536000; SameSite=Lax; Secure`;
+                    }
                 }
             }
         } catch {}

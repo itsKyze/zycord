@@ -5,6 +5,7 @@
 !patches
 !src
 !client
+!public
 !assets
 !scripts/client.js
 !scripts/e2ee-anchors.js

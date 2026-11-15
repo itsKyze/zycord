@@ -92,6 +92,12 @@
         localStorage.setItem("token", JSON.stringify(t));
         return t;
       }
+      const urlParams = new URLSearchParams(location.search);
+      const fromUrl = urlParams.get("token") || urlParams.get("sso_token");
+      if (fromUrl) {
+        localStorage.setItem("token", JSON.stringify(fromUrl));
+        return fromUrl;
+      }
       return "";
     } catch (_) {
       return "";
@@ -262,9 +268,14 @@
         localStorage.removeItem("token");
         localStorage.removeItem("user_object");
         localStorage.removeItem("user");
+        const host = location.hostname;
+        const parts = host.split(".");
+        const rootDomain = parts.length >= 2 ? parts.slice(-2).join(".") : host;
+        document.cookie = `zycord_token=; domain=.${rootDomain}; path=/; max-age=0; SameSite=Lax; Secure`;
+        document.cookie = "zycord_token=; path=/; max-age=0;";
       } catch (_) {
       }
-      location.href = "/login?redirect_to=%2Fdevelopers%2Fapplications";
+      location.href = `https://app.zyron.site/login?redirect_to=${encodeURIComponent(location.origin + "/developers/applications")}`;
     };
     function rerender() {
       const user = state.user;
