@@ -22,6 +22,9 @@ import { route } from "@spacebar/api/middlewares";
 const router = Router({ mergeParams: true });
 
 router.post("/", route({ authentication: "never" }), (req: Request, res: Response) => {
+    try {
+        console.error("[ClientCrashReport]", JSON.stringify(req.body, null, 2));
+    } catch (_) {}
     res.sendStatus(200);
 });
 
