@@ -485,11 +485,24 @@ export const Collectibles = {
     },
 
     async shop() {
-        const listed = (await Collectibles.categories()).filter((x) => x.products.length);
-        const [hero, ...rest] = listed;
-        const ranked = listed
+        const allCategories = (await Collectibles.categories()).filter((x) => x.products.length);
+        const [hero, ...rest] = allCategories;
+        const ranked = allCategories
             .flatMap((c) => (c.hero_ranking ?? listedSkus(c)).slice(0, 8))
             .slice(0, 48);
+
+        // Keep shop UI categories at a bounded size so rendering does not mount thousands of concurrent APNG animations into RAM
+        const listed = allCategories.map((c) => {
+            const limit = c.sku_id === STEAM_CATEGORY_SKU ? 72 : 120;
+            if (c.products.length > limit) {
+                return {
+                    ...c,
+                    products: c.products.slice(0, limit),
+                    hero_ranking: (c.hero_ranking ?? c.products.map((p) => p.sku_id)).slice(0, 24),
+                };
+            }
+            return c;
+        });
 
         return {
             shop_blocks: [

@@ -21,7 +21,8 @@
 
 export function JSONReplacer(this: { [key: string]: unknown }, key: string, value: unknown) {
     if (this[key] instanceof Date) {
-        return (this[key] as Date).toISOString().replace("Z", "+00:00");
+        const d = this[key] as Date;
+        return Number.isNaN(d.getTime()) ? null : d.toISOString().replace("Z", "+00:00");
     }
 
     // erlpack encoding doesn't call json.stringify,

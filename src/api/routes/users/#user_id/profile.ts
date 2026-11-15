@@ -126,12 +126,23 @@ router.get("/", route({ responses: { 200: { body: "UserProfileResponse" } } }), 
             ...(x.metadata_visibility != 0 && x.metadata_ ? { metadata: x.metadata_ } : {}),
         }));
 
+    const parseDate = (val: unknown): Date | null => {
+        if (!val) return null;
+        if (val instanceof Date) return isNaN(val.getTime()) ? null : val;
+        if (typeof val === "string" && /^\d+$/.test(val)) {
+            const d = new Date(Number(val));
+            return isNaN(d.getTime()) ? null : d;
+        }
+        const d = new Date(val as any);
+        return isNaN(d.getTime()) ? null : d;
+    };
+
     const premiumSince = (!user.hide_premium_badge && (user.premium_type ?? 0) > 0)
-        ? (user.premium_since ?? user.created_at ?? new Date())
+        ? parseDate(user.premium_since ?? user.created_at) ?? new Date()
         : null;
 
     if (premiumSince) {
-        const sinceDate = new Date(premiumSince);
+        const sinceDate = premiumSince;
         const months = calculateMonthsElapsed(sinceDate);
         const milestone = NITRO_MILESTONES.find((m) => months >= m.months);
         const badgeId = milestone?.id ?? "premium";
@@ -152,8 +163,8 @@ router.get("/", route({ responses: { 200: { body: "UserProfileResponse" } } }), 
         } as unknown as Badge);
     }
 
-    if (guild_member?.premium_since && !badges.some((b) => b.id.startsWith("guild_booster"))) {
-        const boostDate = new Date(guild_member.premium_since);
+    const boostDate = parseDate(guild_member?.premium_since);
+    if (boostDate && !badges.some((b) => b.id.startsWith("guild_booster"))) {
         const boostMonths = calculateMonthsElapsed(boostDate);
         const boostMilestone = BOOST_MILESTONES.find((m) => boostMonths >= m.months);
         const boostBadgeId = boostMilestone?.id ?? "guild_booster_lvl1";
@@ -173,7 +184,7 @@ router.get("/", route({ responses: { 200: { body: "UserProfileResponse" } } }), 
         connected_accounts,
         premium_since: premiumSince,
         premium_type: user.premium_type,
-        premium_guild_since: guild_member?.premium_since ? new Date(guild_member.premium_since) : null,
+        premium_guild_since: boostDate,
         profile_themes_experiment_bucket: 4,
         user_profile: profileMetadata(user),
         badges: user.hide_premium_badge ? badges.filter((badge) => !isSubscriptionBadge(badge)) : badges,

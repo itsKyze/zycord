@@ -10,27 +10,58 @@
     if (document.head) document.head.appendChild(style);
     else document.addEventListener("DOMContentLoaded", () => document.head?.appendChild(style));
 
+    let categoryStore = null;
+    const findProduct = (skuId) => {
+        if (!skuId || typeof skuId !== "string") return null;
+        try {
+            if (categoryStore && typeof categoryStore.getProduct === "function") {
+                const p = categoryStore.getProduct(skuId);
+                if (p) return p;
+            }
+        } catch (_) {}
+        if (reqInstance?.c) {
+            for (const id in reqInstance.c) {
+                const mod = reqInstance.c[id]?.exports;
+                const s = mod?.default || mod?.Z || mod;
+                if (s && typeof s.getProduct === "function" && typeof s.getCategoryByStoreListingId === "function") {
+                    categoryStore = s;
+                    try {
+                        const p = s.getProduct(skuId);
+                        if (p) return p;
+                    } catch (_) {}
+                }
+            }
+        }
+        return null;
+    };
+
     const safePurchaseCache = new Map();
     const createSafePurchase = (skuId) => {
         if (!skuId || typeof skuId !== "string") return undefined;
         let purchase = safePurchaseCache.get(skuId);
         if (!purchase) {
+            const prod = findProduct(skuId);
+            const items = prod?.items?.length
+                ? prod.items
+                : [
+                      {
+                          id: skuId,
+                          skuId,
+                          type: prod?.type ?? 0,
+                          name: prod?.name ?? "",
+                          asset: prod?.items?.[0]?.asset ?? "",
+                          label: prod?.name ?? "",
+                      },
+                  ];
             purchase = {
                 skuId,
                 id: skuId,
-                type: 1,
+                type: prod?.type ?? 0,
+                name: prod?.name ?? "",
+                summary: prod?.summary ?? "",
                 purchasedAt: "2026-01-01T00:00:00.000Z",
                 expiresAt: null,
-                items: [
-                    {
-                        id: skuId,
-                        skuId,
-                        type: 0,
-                        name: "",
-                        asset: "",
-                        label: "",
-                    },
-                ],
+                items,
                 attributes: {},
                 purchased: true,
             };
@@ -53,7 +84,7 @@
                     targets = [mod];
                 }
                 for (const item of targets) {
-                    if (!item || typeof item !== "object" || item.__zycordPatched) continue;
+                    if (!item || typeof item !== "object" || item.__zycordCollectiblesPatched) continue;
 
                     // DO NOT touch entitlement, subscription, or boost stores as that crashes profile rendering!
                     if (
@@ -78,7 +109,19 @@
                         (typeof item.getPurchase === "function" && typeof item.getCategoryByStoreListingId === "function");
 
                     if (!isCollectiblesStore) continue;
-                    item.__zycordPatched = true;
+                    item.__zycordCollectiblesPatched = true;
+
+                    if (typeof item.canUseCollectibles === "function") {
+                        item.canUseCollectibles = function () {
+                            return true;
+                        };
+                    }
+
+                    if (typeof item.isPremiumCollectiblesProduct === "function") {
+                        item.isPremiumCollectiblesProduct = function () {
+                            return false;
+                        };
+                    }
 
                     if (typeof item.getPurchase === "function") {
                         const origGetPurchase = item.getPurchase.bind(item);
@@ -104,46 +147,26 @@
                         };
                     }
 
-                    if (typeof item.isPurchased === "function") {
-                        const origIsPurchased = item.isPurchased.bind(item);
-                        item.isPurchased = function (skuId) {
-                            if (!skuId) return false;
-                            try {
-                                if (origIsPurchased(skuId)) return true;
-                            } catch (_) {}
-                            return typeof skuId === "string" && skuId.length > 5;
-                        };
-                    }
-
-                    if (typeof item.hasPurchase === "function") {
-                        const origHasPurchase = item.hasPurchase.bind(item);
-                        item.hasPurchase = function (skuId) {
-                            if (!skuId) return false;
-                            try {
-                                if (origHasPurchase(skuId)) return true;
-                            } catch (_) {}
-                            return typeof skuId === "string" && skuId.length > 5;
-                        };
-                    }
-
                     if (typeof item.isItemPurchased === "function") {
+                        const origIsItemPurchased = item.isItemPurchased.bind(item);
                         item.isItemPurchased = function (skuId) {
-                            return typeof skuId === "string" && skuId.length > 5;
+                            if (!skuId) return false;
+                            try {
+                                if (origIsItemPurchased(skuId)) return true;
+                            } catch (_) {}
+                            return Boolean(safePurchaseCache.has(skuId) || findProduct(skuId));
                         };
                     }
 
                     if (typeof item.hasItemPurchase === "function") {
+                        const origHasItemPurchase = item.hasItemPurchase.bind(item);
                         item.hasItemPurchase = function (skuId) {
-                            return typeof skuId === "string" && skuId.length > 5;
+                            if (!skuId) return false;
+                            try {
+                                if (origHasItemPurchase(skuId)) return true;
+                            } catch (_) {}
+                            return Boolean(safePurchaseCache.has(skuId) || findProduct(skuId));
                         };
-                    }
-
-                    if (typeof item.canUseCollectibles === "function") {
-                        item.canUseCollectibles = function () { return true; };
-                    }
-
-                    if (typeof item.isPremiumCollectiblesProduct === "function") {
-                        item.isPremiumCollectiblesProduct = function () { return false; };
                     }
 
                     if (item.purchases && item.purchases instanceof Map && !item.purchases.__zycordPatched) {
@@ -153,14 +176,14 @@
                         item.purchases.get = function (key) {
                             const existing = origMapGet(key);
                             if (existing != null) return existing;
-                            if (typeof key === "string" && key.length > 5) {
+                            if (typeof key === "string" && key.length > 5 && findProduct(key)) {
                                 return createSafePurchase(key);
                             }
                             return undefined;
                         };
                         item.purchases.has = function (key) {
                             if (origMapHas(key)) return true;
-                            return typeof key === "string" && key.length > 5;
+                            return Boolean(typeof key === "string" && key.length > 5 && findProduct(key));
                         };
                     }
                 }
@@ -178,7 +201,7 @@
             patchStores(req);
             const interval = setInterval(() => {
                 patchStores(reqInstance);
-                if (++ticks >= 6) clearInterval(interval);
+                if (++ticks >= 4) clearInterval(interval);
             }, 1000);
         },
     ]);
