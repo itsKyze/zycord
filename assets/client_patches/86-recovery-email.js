@@ -42,33 +42,33 @@
             <div class="zc-rec-backdrop">
                 <div class="zc-rec-modal">
                     <div class="zc-rec-header">
-                        <h2 class="zc-rec-title">بريد الاسترداد الاحتياطي (Recovery Email)</h2>
+                        <h2 class="zc-rec-title">Backup / Recovery Email</h2>
                         <p class="zc-rec-desc">
-                            أضف بريداً إلكترونياً إضافياً (مثل Gmail) لحماية حسابك واسترجاعه في حال فقدت الوصول إلى بريدك الأساسي أو نسيت كلمة المرور.
+                            Add a backup email address (such as Gmail) to protect your account and recover access if you ever lose your primary email or forget your password.
                         </p>
                     </div>
 
                     <div id="zc-rec-body" class="zc-rec-body">
                         <div id="zc-step-1">
-                            <label class="zc-rec-label">البريد الإلكتروني الاحتياطي (Gmail أو غيره)</label>
-                            <input id="zc-rec-email-input" type="email" class="zc-rec-input" placeholder="example@gmail.com" dir="ltr" />
+                            <label class="zc-rec-label">Backup Email Address</label>
+                            <input id="zc-rec-email-input" type="email" class="zc-rec-input" placeholder="name@gmail.com" />
                             <div id="zc-rec-error-1" class="zc-rec-error" style="display: none;"></div>
                             <div class="zc-rec-actions">
-                                <button id="zc-rec-send-btn" class="zc-rec-btn zc-rec-btn-primary">إرسال رمز التحقق</button>
-                                <button id="zc-rec-cancel-btn" class="zc-rec-btn zc-rec-btn-secondary">إلغاء</button>
+                                <button id="zc-rec-cancel-btn" class="zc-rec-btn zc-rec-btn-secondary">Cancel</button>
+                                <button id="zc-rec-send-btn" class="zc-rec-btn zc-rec-btn-primary">Send Verification Code</button>
                             </div>
                         </div>
 
                         <div id="zc-step-2" style="display: none;">
-                            <p class="zc-rec-desc" style="color: #23a55a; margin-bottom: 12px;">
-                                تم إرسال رمز التحقق المكون من 6 أرقام إلى بريدك بنجاح! تفقد صندوق الوارد (أو الرسائل غير المرغوب فيها Spam).
+                            <p class="zc-rec-desc" style="color: #23a55a; margin-bottom: 14px;">
+                                A 6-digit verification code has been sent to your backup email! Please check your inbox or spam folder.
                             </p>
-                            <label class="zc-rec-label">رمز التحقق (Verification Code)</label>
-                            <input id="zc-rec-code-input" type="text" maxlength="6" class="zc-rec-input" placeholder="123456" dir="ltr" style="letter-spacing: 4px; font-weight: bold; text-align: center; font-size: 20px;" />
+                            <label class="zc-rec-label">Verification Code</label>
+                            <input id="zc-rec-code-input" type="text" maxlength="6" class="zc-rec-input" placeholder="123456" style="letter-spacing: 4px; font-weight: 700; text-align: center; font-size: 20px;" />
                             <div id="zc-rec-error-2" class="zc-rec-error" style="display: none;"></div>
                             <div class="zc-rec-actions">
-                                <button id="zc-rec-verify-btn" class="zc-rec-btn zc-rec-btn-primary">تأكيد وربط البريد</button>
-                                <button id="zc-rec-back-btn" class="zc-rec-btn zc-rec-btn-secondary">رجوع</button>
+                                <button id="zc-rec-back-btn" class="zc-rec-btn zc-rec-btn-secondary">Back</button>
+                                <button id="zc-rec-verify-btn" class="zc-rec-btn zc-rec-btn-primary">Confirm & Link Email</button>
                             </div>
                         </div>
                     </div>
@@ -106,12 +106,12 @@
         sendBtn.onclick = async () => {
             const email = (emailInput.value || "").trim();
             if (!email || !email.includes("@")) {
-                err1.innerText = "يرجى كتابة بريد إلكتروني صحيح.";
+                err1.innerText = "Please enter a valid email address.";
                 err1.style.display = "block";
                 return;
             }
             sendBtn.disabled = true;
-            sendBtn.innerText = "جاري الإرسال...";
+            sendBtn.innerText = "Sending code...";
             err1.style.display = "none";
 
             try {
@@ -123,11 +123,11 @@
 
                 if (!res.ok) {
                     const data = await res.json().catch(() => ({}));
-                    const msg = data.email?.message || data.message || "فشل إرسال الرمز، تأكد من صحة البريد وحاول مجدداً.";
+                    const msg = data.email?.message || data.message || "Failed to send verification code. Please check your address and try again.";
                     err1.innerText = msg;
                     err1.style.display = "block";
                     sendBtn.disabled = false;
-                    sendBtn.innerText = "إرسال رمز التحقق";
+                    sendBtn.innerText = "Send Verification Code";
                     return;
                 }
 
@@ -136,23 +136,23 @@
                 step2.style.display = "block";
                 codeInput.focus();
             } catch (err) {
-                err1.innerText = "تعذر الاتصال بالسيرفر.";
+                err1.innerText = "Connection error. Unable to reach the server.";
                 err1.style.display = "block";
                 sendBtn.disabled = false;
-                sendBtn.innerText = "إرسال رمز التحقق";
+                sendBtn.innerText = "Send Verification Code";
             }
         };
 
         verifyBtn.onclick = async () => {
             const code = (codeInput.value || "").trim();
             if (!code || code.length < 6) {
-                err2.innerText = "يرجى إدخال الرمز المكون من 6 أرقام.";
+                err2.innerText = "Please enter the 6-digit verification code.";
                 err2.style.display = "block";
                 return;
             }
 
             verifyBtn.disabled = true;
-            verifyBtn.innerText = "جاري التحقق...";
+            verifyBtn.innerText = "Verifying...";
             err2.style.display = "none";
 
             try {
@@ -164,11 +164,11 @@
 
                 if (!res.ok) {
                     const data = await res.json().catch(() => ({}));
-                    const msg = data.code?.message || data.message || "الرمز غير صحيح أو انتهت صلاحيته.";
+                    const msg = data.code?.message || data.message || "Invalid or expired verification code.";
                     err2.innerText = msg;
                     err2.style.display = "block";
                     verifyBtn.disabled = false;
-                    verifyBtn.innerText = "تأكيد وربط البريد";
+                    verifyBtn.innerText = "Confirm & Link Email";
                     return;
                 }
 
@@ -177,10 +177,10 @@
                 backdrop.remove();
                 updateSettingsUI();
             } catch (err) {
-                err2.innerText = "حدث خطأ أثناء التحقق.";
+                err2.innerText = "An error occurred during verification.";
                 err2.style.display = "block";
                 verifyBtn.disabled = false;
-                verifyBtn.innerText = "تأكيد وربط البريد";
+                verifyBtn.innerText = "Confirm & Link Email";
             }
         };
     };
@@ -193,7 +193,7 @@
         let emailField = null;
         fields.forEach((f) => {
             const txt = (f.innerText || "").toLowerCase();
-            if (txt.includes("email") || txt.includes("البريد الإلكتروني") || txt.includes("courrier")) {
+            if (txt.includes("email")) {
                 emailField = f;
             }
         });
@@ -212,15 +212,15 @@
 
         const emailText = recoveryEmailData?.has_recovery_email
             ? recoveryEmailData.recovery_email
-            : "لم تقم بإضافة بريد استرداد بعد";
+            : "No recovery email linked";
 
-        const btnText = recoveryEmailData?.has_recovery_email ? "تعديل" : "إضافة";
+        const btnText = recoveryEmailData?.has_recovery_email ? "Edit" : "Add";
 
         recoveryRow.innerHTML = `
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 4px 0;">
                 <div>
                     <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: #b5bac1; margin-bottom: 4px; letter-spacing: 0.5px;">
-                        بريد الاسترداد الاحتياطي (Recovery Email)
+                        RECOVERY EMAIL
                     </div>
                     <div style="font-size: 14px; color: ${recoveryEmailData?.has_recovery_email ? "#f2f3f5" : "#949ba4"}; font-weight: 500;">
                         ${emailText}
@@ -258,8 +258,8 @@
             color: #dbdee1;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 12px 28px rgba(0,0,0,0.35);
-            text-align: right;
-            direction: rtl;
+            text-align: left;
+            direction: ltr;
         }
         .zc-rec-title {
             margin: 0 0 8px;
