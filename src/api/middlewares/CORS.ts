@@ -23,9 +23,26 @@ export function CORS(req: Request, res: Response, next: NextFunction) {
     const origin = req.header("Origin");
     const allowed = Config.get().security?.allowedOrigins ?? [];
     const cdnPublic = Config.get().cdn?.endpointPublic;
+
+    const host = req.get("host") || "";
+    const parts = host.split(":")[0].split(".");
+    const rootDomain = parts.length >= 2 ? parts.slice(-2).join(".") : null;
+
+    let isTrustedOrigin = false;
+    if (origin) {
+        try {
+            const parsed = new URL(origin);
+            const originParts = parsed.hostname.split(".");
+            const originRoot = originParts.length >= 2 ? originParts.slice(-2).join(".") : null;
+            if (rootDomain && originRoot === rootDomain) {
+                isTrustedOrigin = true;
+            }
+        } catch {}
+    }
+
     const isAllowed =
         !origin ||
-        allowed.includes("*") ||
+        isTrustedOrigin ||
         allowed.includes(origin) ||
         (cdnPublic && origin === cdnPublic) ||
         (process.env.NODE_ENV !== "production" && (origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:")));
@@ -33,6 +50,9 @@ export function CORS(req: Request, res: Response, next: NextFunction) {
     if (origin && isAllowed) {
         res.set("Access-Control-Allow-Origin", origin);
         res.set("Access-Control-Allow-Credentials", "true");
+    } else if (origin && allowed.includes("*")) {
+        // Wildcard allowed for public/non-credentialed access, but NEVER with credentials
+        res.set("Access-Control-Allow-Origin", "*");
     } else if (!origin) {
         // Non-browser or same-origin request
     } else {
@@ -41,8 +61,10 @@ export function CORS(req: Request, res: Response, next: NextFunction) {
 
     res.set("Access-Control-Allow-Headers", req.header("Access-Control-Request-Headers") || "*");
     res.set("Access-Control-Allow-Methods", req.header("Access-Control-Request-Method") || "*");
-    res.set("Access-Control-Max-Age", "60"); // dont make it too long so we can change it dynamically
-    // TODO: use better CSP
+    res.set("Access-Control-Max-Age", "60");
+    res.set("X-Content-Type-Options", "nosniff");
+    res.set("X-XSS-Protection", "0");
+    res.set("Referrer-Policy", "strict-origin-when-cross-origin");
     res.set(
         "Content-security-policy",
         "default-src *  data: blob: filesystem: about: ws: wss: 'unsafe-inline' 'unsafe-eval'; script-src * data: blob: 'unsafe-inline' 'unsafe-eval'; connect-src * data: blob: 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src * data: blob: ; style-src * data: blob: 'unsafe-inline'; font-src * data: blob: 'unsafe-inline';",
