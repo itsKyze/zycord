@@ -761,6 +761,7 @@ tbody tr:last-child td {
     letter-spacing: -0.01em;
 }
 
+.drawer-close,
 .drawer-head button[data-close] {
     width: 32px !important;
     height: 32px !important;
@@ -780,6 +781,7 @@ tbody tr:last-child td {
     transition: all 0.15s ease !important;
 }
 
+.drawer-close:hover,
 .drawer-head button[data-close]:hover {
     background: rgba(255, 255, 255, 0.08) !important;
     color: #f2f3f5 !important;
@@ -1816,7 +1818,8 @@ input[type="file"]:hover {
     color: #dbdee1;
 }
 
-input[type="file"]::file-selector-button {
+input[type="file"]::file-selector-button,
+input[type="file"]::-webkit-file-upload-button {
     font-family: inherit;
     font-size: 13px;
     font-weight: 600;
@@ -1831,12 +1834,37 @@ input[type="file"]::file-selector-button {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-input[type="file"]::file-selector-button:hover {
+input[type="file"]::file-selector-button:hover,
+input[type="file"]::-webkit-file-upload-button:hover {
     background: #4752C4;
 }
 
-input[type="file"]::file-selector-button:active {
+input[type="file"]::file-selector-button:active,
+input[type="file"]::-webkit-file-upload-button:active {
     transform: scale(0.96);
+}
+
+.component-add-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    background: #1e1f22;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.component-add-row input {
+    background: #2b2d31 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    height: 40px !important;
+}
+
+.component-add-row button {
+    height: 40px !important;
+    padding: 0 18px !important;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 input[type="checkbox"] {

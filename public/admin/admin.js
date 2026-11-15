@@ -4237,10 +4237,10 @@ async function renderStatus(view) {
                                 : html`<p class="muted">No components yet. Add the parts of your service people care about, like "API", "Gateway" or "Media".</p>`
                         }
                     </div>
-                    <form id="component-add" class="row" style="margin-top:12px">
+                    <form id="component-add" class="row component-add-row" style="margin-top:12px">
                         <input name="name" placeholder="Component name, e.g. Gateway" required maxlength="100" class="grow" style="min-width:180px" />
                         <input name="description" placeholder="Description (optional)" class="grow" style="min-width:180px" />
-                        <button class="btn" type="submit">Add component</button>
+                        <button class="btn primary" type="submit">Add component</button>
                     </form>
                 </div>
 

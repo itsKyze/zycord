@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import https from "node:https";
 
-const DEST_DIR = "assets/public/developers/docs_cache";
+const DEST_DIR = "public/developers/docs_cache";
 
 const PAGES = [
 	"intro",

@@ -21,7 +21,7 @@ import { join } from "node:path";
 import { Request, Response, Router } from "express";
 import { fileTypeFromBuffer } from "file-type";
 import { HTTPError } from "lambert-server/HTTPError";
-import { DEFAULT_AVATAR_COLORS, DEFAULT_AVATARS_FOLDER, defaultAvatarSvg } from "@spacebar/util";
+import { DEFAULT_AVATAR_COLORS, DEFAULT_AVATARS_FOLDER, PUBLIC_ASSETS_FOLDER, defaultAvatarSvg } from "@spacebar/util";
 import { setCacheControl } from "../util";
 
 const defaultGroupDMAvatarHashMap = new Map([
@@ -62,15 +62,34 @@ router.get("/avatars/:id", setCacheControl, async (req: Request, res: Response) 
 router.get("/group-avatars/:id", setCacheControl, async (req: Request, res: Response) => {
     let { id } = req.params as { [key: string]: string };
     id = id.split(".")[0]; // remove .file extension
-    const hash = defaultGroupDMAvatarHashMap.get(id);
-    if (!hash) throw new HTTPError("not found", 404);
-    const path = join(__dirname, "..", "..", "..", "assets", "public", `${hash}.png`);
 
-    const file = await getFile(path);
+    let index = id;
+    if (!defaultGroupDMAvatarHashMap.has(index)) {
+        // Reverse lookup if passed as md5 hash
+        for (const [k, v] of defaultGroupDMAvatarHashMap) {
+            if (v === id) {
+                index = k;
+                break;
+            }
+        }
+    }
+
+    if (!defaultGroupDMAvatarHashMap.has(index)) throw new HTTPError("not found", 404);
+
+    // Primary: look in public/default-avatars/group/{index}.png
+    const targetFile = join(PUBLIC_ASSETS_FOLDER, "default-avatars", "group", `${index}.png`);
+    let file = await getFile(targetFile);
+
+    if (!file) {
+        // Fallback: check legacy hash file in assets/public
+        const hash = defaultGroupDMAvatarHashMap.get(index);
+        file = await getFile(join(PUBLIC_ASSETS_FOLDER, `${hash}.png`));
+    }
+
     if (!file) throw new HTTPError("not found", 404);
     const type = await fileTypeFromBuffer(file);
 
-    res.set("Content-Type", type?.mime);
+    res.set("Content-Type", type?.mime || "image/png");
 
     return res.send(file);
 });

@@ -7,16 +7,16 @@ const rootDir = path.resolve(__dirname, "..");
 
 const targets = [
 	{
-		entry: path.join(rootDir, "assets/public/jsx/index.jsx"),
-		outfile: path.join(rootDir, "assets/public/site/site.js")
+		entry: path.join(rootDir, "public/jsx/index.jsx"),
+		outfile: path.join(rootDir, "public/site/site.js")
 	},
 	{
-		entry: path.join(rootDir, "assets/public/jsx/DevelopersPortalShell.jsx"),
-		outfile: path.join(rootDir, "assets/public/developers/portal-shell.js")
+		entry: path.join(rootDir, "public/jsx/DevelopersPortalShell.jsx"),
+		outfile: path.join(rootDir, "public/developers/portal-shell.js")
 	},
 	{
-		entry: path.join(rootDir, "assets/public/jsx/AdminPortalShell.jsx"),
-		outfile: path.join(rootDir, "assets/public/admin/admin-shell.js")
+		entry: path.join(rootDir, "public/jsx/AdminPortalShell.jsx"),
+		outfile: path.join(rootDir, "public/admin/admin-shell.js")
 	}
 ];
 
@@ -39,7 +39,7 @@ for (const t of targets) {
 			logLevel: "info"
 		});
 	} else {
-		execSync(`npx esbuild "${t.entry}" --outfile="${t.outfile}" --bundle --format=iife --target=es2020 --jsx-factory=h --jsx-fragment=Fragment --charset=utf8`, {
+		execSync(`npx --yes esbuild "${t.entry}" --outfile="${t.outfile}" --bundle --format=iife --target=es2020 --jsx-factory=h --jsx-fragment=Fragment --charset=utf8`, {
 			stdio: "inherit"
 		});
 	}

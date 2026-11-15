@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 const SCRAPED_DIR = "C:\\Users\\Kyze\\.gemini\\antigravity\\brain\\0c453e88-25d0-4f07-ae4b-5adc9658a4b1\\.system_generated\\steps";
-const DEST_DIR = "assets/public/developers";
+const DEST_DIR = "public/developers";
 
 const PAGES = [
 	{
