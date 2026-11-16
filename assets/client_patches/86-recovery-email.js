@@ -790,13 +790,20 @@
             align-items: center !important;
             justify-content: center !important;
             box-sizing: border-box !important;
-            transition: background-color 0.17s ease !important;
+            outline: none !important;
+            transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease !important;
         }
         .zc-rec-btn-cancel:hover {
             background-color: var(--button-secondary-background-hover, #6d6f78) !important;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.08) !important;
         }
         .zc-rec-btn-cancel:active {
             background-color: var(--button-secondary-background-active, #80848e) !important;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2) !important;
+            transform: scale(0.98) !important;
+        }
+        .zc-rec-btn-cancel:focus-visible {
+            box-shadow: 0 0 0 2px var(--brand-experiment, #5865f2) !important;
         }
         .zc-rec-btn-primary {
             flex: 1;
@@ -817,13 +824,17 @@
             padding: 2px 14px !important;
             white-space: nowrap !important;
             text-overflow: ellipsis !important;
-            transition: background-color 0.17s ease !important;
+            outline: none !important;
+            transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease !important;
         }
         .zc-rec-btn-primary:hover {
             background-color: var(--brand-experiment-560, #4752c4) !important;
+            box-shadow: 0 0 8px rgba(88, 101, 242, 0.25) !important;
         }
         .zc-rec-btn-primary:active {
             background-color: var(--brand-experiment-600, #3c45a5) !important;
+            box-shadow: 0 0 12px rgba(88, 101, 242, 0.45) !important;
+            transform: scale(0.98) !important;
         }
         .zc-rec-btn-primary:disabled {
             opacity: 0.5;
