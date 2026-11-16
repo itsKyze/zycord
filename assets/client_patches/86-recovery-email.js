@@ -634,10 +634,8 @@
     };
 
     const updateSettingsUI = () => {
-        // Guard: only execute if User Settings "My Account" is actually mounted in DOM
-        const settingsContainer = document.querySelector('[class*="accountProfileCard"], [class*="userInfo_"], [aria-label="My Account"], [aria-label="Account"]') ||
-                                  document.querySelector('[class*="standardSidebarView"]');
-        if (!settingsContainer) return;
+        const isSettingsOpen = !!document.querySelector('[class*="standardSidebarView"], [class*="accountProfileCard"], [aria-label="My Account"], [aria-label="Account"]');
+        if (!isSettingsOpen) return;
 
         try {
             if (updateExistingRecoveryRow()) return;
@@ -1057,8 +1055,9 @@
     document.head.appendChild(style);
 
     const loop = () => {
-        // Only run when inside Settings / Account Info (/channels/@me)
-        if (location.pathname.includes("/channels/@me")) {
+        // Run updateSettingsUI whenever any settings layer is open
+        const isSettingsOpen = !!document.querySelector('[class*="standardSidebarView"], [class*="accountProfileCard"], [aria-label="My Account"], [aria-label="Account"]');
+        if (isSettingsOpen) {
             fetchRecoveryEmail();
             updateSettingsUI();
         }
