@@ -748,7 +748,7 @@
             transition: border-color 0.15s ease, background-color 0.15s ease !important;
         }
         .zc-rec-input:focus {
-            border-color: var(--brand-experiment, var(--border-focus, #5865f2)) !important;
+            border-color: rgba(88, 101, 242, 0.45) !important;
             box-shadow: none !important;
             outline: none !important;
         }
@@ -786,12 +786,12 @@
             height: 38px !important;
             min-height: 38px !important;
             border-radius: var(--radius-sm, 4px) !important;
-            background-color: var(--button-secondary-background, #4e5058) !important;
-            color: var(--button-secondary-text, var(--white, #ffffff)) !important;
+            background-color: var(--control-secondary-background-default, hsla(240, 4%, 61%, 0.12)) !important;
+            color: var(--control-secondary-text-default, var(--white, #ffffff)) !important;
+            border: 1px solid var(--control-secondary-border-default, hsla(240, 4%, 61%, 0.04)) !important;
             font-size: 14px !important;
             font-weight: 500 !important;
             font-family: inherit !important;
-            border: none !important;
             cursor: pointer !important;
             display: inline-flex !important;
             align-items: center !important;
@@ -800,15 +800,19 @@
             outline: none !important;
             box-shadow: none !important;
             filter: none !important;
-            transition: background-color 0.15s ease, transform 0.1s ease !important;
+            transition: background-color 0.15s ease-out, border-color 0.15s ease-out, color 0.15s ease-out, transform 0.1s ease !important;
         }
         .zc-rec-btn-cancel:hover {
-            background-color: var(--button-secondary-background-hover, #6d6f78) !important;
+            background-color: var(--control-secondary-background-hover, hsla(240, 4%, 61%, 0.16)) !important;
+            border-color: var(--control-secondary-border-hover, hsla(240, 4%, 61%, 0.04)) !important;
+            color: var(--control-secondary-text-hover, var(--white, #ffffff)) !important;
             box-shadow: none !important;
             filter: none !important;
         }
         .zc-rec-btn-cancel:active {
-            background-color: var(--button-secondary-background-active, #80848e) !important;
+            background-color: var(--control-secondary-background-active, hsla(240, 4%, 61%, 0.2)) !important;
+            border-color: var(--control-secondary-border-active, hsla(240, 4%, 61%, 0.04)) !important;
+            color: var(--control-secondary-text-active, var(--white, #ffffff)) !important;
             box-shadow: none !important;
             filter: none !important;
             transform: scale(0.98) !important;
