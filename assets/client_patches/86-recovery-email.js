@@ -39,33 +39,44 @@
         backdrop.id = "zycord-recovery-modal-backdrop";
         backdrop.className = "zc-rec-backdrop";
         backdrop.tabIndex = -1;
+
+        // Sync current theme classes (e.g. theme-dark, theme-light, custom appearance)
+        const themeClasses = Array.from(document.body.classList).filter((c) => c.startsWith("theme-"))
+            .concat(Array.from(document.documentElement.classList).filter((c) => c.startsWith("theme-")))
+            .concat(Array.from(document.getElementById("app-mount")?.classList || []).filter((c) => c.startsWith("theme-")));
+        if (themeClasses.length) {
+            backdrop.classList.add(...new Set(themeClasses));
+        }
+
         backdrop.innerHTML = `
             <div class="zc-rec-modal" role="dialog" aria-modal="true" aria-labelledby="zc-rec-modal-title">
                 <button class="zc-modal-close" id="zc-modal-close-btn" type="button" aria-label="Close">
                     <svg style="pointer-events: none;" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path></svg>
                 </button>
-                <div class="zc-rec-header">
-                    <h2 class="zc-rec-title" id="zc-rec-modal-title">Backup / Recovery Email</h2>
-                    <p class="zc-rec-desc" id="zc-rec-modal-desc">
-                        Enter a backup email address (such as Gmail) to protect your account and recover access if you ever lose your primary email or forget your password.
-                    </p>
-                </div>
-
-                <div id="zc-rec-body" class="zc-rec-body">
-                    <div id="zc-step-1">
-                        <label class="zc-rec-label" for="zc-rec-email-input">Backup Email</label>
-                        <input id="zc-rec-email-input" type="email" class="zc-rec-input" placeholder="name@gmail.com" autocomplete="email" spellcheck="false" />
-                        <div id="zc-rec-error-1" class="zc-rec-error" style="display: none;"></div>
+                <div class="zc-rec-content">
+                    <div class="zc-rec-header">
+                        <h2 class="zc-rec-title" id="zc-rec-modal-title">Backup / Recovery Email</h2>
+                        <p class="zc-rec-desc" id="zc-rec-modal-desc">
+                            Enter a backup email address (such as Gmail) to protect your account and recover access if you ever lose your primary email or forget your password.
+                        </p>
                     </div>
 
-                    <div id="zc-step-2" style="display: none;">
-                        <label class="zc-rec-label" for="zc-rec-code-input">Verification Code</label>
-                        <input id="zc-rec-code-input" type="text" maxlength="6" class="zc-rec-input zc-code-field" placeholder="123456" autocomplete="one-time-code" spellcheck="false" />
-                        <div id="zc-rec-error-2" class="zc-rec-error" style="display: none;"></div>
+                    <div id="zc-rec-body" class="zc-rec-body">
+                        <div id="zc-step-1">
+                            <label class="zc-rec-label" for="zc-rec-email-input">Backup Email</label>
+                            <input id="zc-rec-email-input" type="email" class="zc-rec-input" placeholder="name@gmail.com" autocomplete="email" spellcheck="false" />
+                            <div id="zc-rec-error-1" class="zc-rec-error" style="display: none;"></div>
+                        </div>
+
+                        <div id="zc-step-2" style="display: none;">
+                            <label class="zc-rec-label" for="zc-rec-code-input">Verification Code</label>
+                            <input id="zc-rec-code-input" type="text" maxlength="6" class="zc-rec-input zc-code-field" placeholder="123456" autocomplete="one-time-code" spellcheck="false" />
+                            <div id="zc-rec-error-2" class="zc-rec-error" style="display: none;"></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="zc-rec-actions">
+                <div class="zc-rec-footer">
                     <div id="zc-footer-step-1" class="zc-footer-row">
                         <button id="zc-rec-cancel-btn" class="zc-rec-btn-cancel" type="button">Cancel</button>
                         <button id="zc-rec-send-btn" class="zc-rec-btn-primary" type="button">Send Verification Code</button>
@@ -339,32 +350,38 @@
         if (refBtn) {
             btn.className = refBtn.className + " zc-rec-row-btn";
             const computed = window.getComputedStyle(refBtn);
-            const w = 112;
-            const h = 38;
+            const rect = refBtn.getBoundingClientRect();
+
+            const w = (rect.width > 30) ? Math.round(rect.width) : 60;
+            const h = (rect.height > 20) ? Math.round(rect.height) : 32;
 
             btn.style.setProperty("width", `${w}px`, "important");
             btn.style.setProperty("min-width", `${w}px`, "important");
+            btn.style.setProperty("max-width", `${w}px`, "important");
             btn.style.setProperty("height", `${h}px`, "important");
             btn.style.setProperty("min-height", `${h}px`, "important");
-            btn.style.setProperty("border-radius", computed.borderRadius || "8px", "important");
+            btn.style.setProperty("max-height", `${h}px`, "important");
+            btn.style.setProperty("border-radius", computed.borderRadius || "4px", "important");
             btn.style.setProperty("background-color", computed.backgroundColor || "#4e5058", "important");
             btn.style.setProperty("color", computed.color || "#ffffff", "important");
             btn.style.setProperty("font-family", computed.fontFamily, "important");
             btn.style.setProperty("font-size", computed.fontSize || "14px", "important");
             btn.style.setProperty("font-weight", computed.fontWeight || "500", "important");
             btn.style.setProperty("line-height", computed.lineHeight || "16px", "important");
-            btn.style.setProperty("padding", "0 24px", "important");
+            btn.style.setProperty("padding", computed.padding || "2px 16px", "important");
             btn.style.setProperty("border", "none", "important");
             btn.style.setProperty("box-shadow", "none", "important");
         } else {
-            btn.style.setProperty("width", "112px", "important");
-            btn.style.setProperty("min-width", "112px", "important");
-            btn.style.setProperty("height", "38px", "important");
-            btn.style.setProperty("min-height", "38px", "important");
-            btn.style.setProperty("border-radius", "8px", "important");
+            btn.style.setProperty("width", "60px", "important");
+            btn.style.setProperty("min-width", "60px", "important");
+            btn.style.setProperty("max-width", "60px", "important");
+            btn.style.setProperty("height", "32px", "important");
+            btn.style.setProperty("min-height", "32px", "important");
+            btn.style.setProperty("max-height", "32px", "important");
+            btn.style.setProperty("border-radius", "4px", "important");
             btn.style.setProperty("background-color", "#4e5058", "important");
             btn.style.setProperty("color", "#ffffff", "important");
-            btn.style.setProperty("padding", "0 24px", "important");
+            btn.style.setProperty("padding", "2px 16px", "important");
             btn.style.setProperty("font-size", "14px", "important");
             btn.style.setProperty("font-weight", "500", "important");
             btn.style.setProperty("border", "none", "important");
@@ -372,9 +389,9 @@
         btn.style.setProperty("cursor", "pointer", "important");
         btn.style.setProperty("display", "inline-flex", "important");
         btn.style.setProperty("align-items", "center", "important");
-        btn.style.justifyContent = "center";
-        btn.style.boxSizing = "border-box";
-        btn.style.marginLeft = "auto";
+        btn.style.setProperty("justify-content", "center", "important");
+        btn.style.setProperty("box-sizing", "border-box", "important");
+        btn.style.setProperty("margin-left", "auto", "important");
         btn.onmouseenter = () => {
             btn.style.filter = "brightness(1.18)";
         };
@@ -571,12 +588,10 @@
     style.id = "zycord-recovery-styles";
     style.textContent = `
         .zc-rec-row-btn {
-            border-radius: 8px !important;
-            height: 38px !important;
-            min-height: 38px !important;
-            width: 112px !important;
-            min-width: 112px !important;
-            padding: 0 24px !important;
+            border-radius: 4px !important;
+            height: 32px !important;
+            min-height: 32px !important;
+            padding: 2px 16px !important;
             font-size: 14px !important;
             font-weight: 500 !important;
             font-family: inherit !important;
@@ -611,19 +626,18 @@
         }
         .zc-rec-modal {
             position: relative;
-            width: min(480px, calc(100vw - 32px));
+            width: min(440px, calc(100vw - 32px));
             box-sizing: border-box;
-            background-color: #313338 !important;
-            border-radius: 12px !important;
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            box-shadow: 0 16px 32px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 255, 255, 0.05);
-            padding: 28px 24px 24px 24px;
-            overflow: hidden;
+            background-color: var(--modal-background, var(--background-floating, var(--background-primary, #313338))) !important;
+            border-radius: var(--radius-md, 8px) !important;
+            border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08)) !important;
+            box-shadow: var(--shadow-high, var(--elevation-high, 0 16px 32px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 255, 255, 0.05))) !important;
+            overflow: hidden !important;
             text-align: left;
             direction: ltr;
             display: flex;
             flex-direction: column;
-            color: #dbdee1;
+            color: var(--text-normal, #dbdee1);
             pointer-events: auto;
             transform-origin: center center;
             animation: zc-modal-in 140ms cubic-bezier(0.18, 0.89, 0.32, 1.15) forwards;
@@ -631,45 +645,56 @@
         .zc-rec-backdrop.zc-rec-closing .zc-rec-modal {
             animation: zc-modal-out 120ms ease-in forwards;
         }
+        .zc-rec-content {
+            padding: 24px 20px 20px 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            background-color: transparent !important;
+        }
         .zc-modal-close {
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 16px;
+            right: 16px;
             background-color: transparent;
             border: none;
-            color: #949ba4;
+            color: var(--interactive-normal, #949ba4);
             cursor: pointer;
             padding: 4px;
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px;
+            border-radius: var(--radius-sm, 4px);
             transition: color 0.15s ease, background-color 0.15s ease;
             z-index: 20;
             pointer-events: auto;
         }
         .zc-modal-close:hover {
-            color: #ffffff;
-            background-color: rgba(255, 255, 255, 0.08);
+            color: var(--interactive-hover, #dbdee1);
+            background-color: var(--background-modifier-hover, rgba(255, 255, 255, 0.08));
+        }
+        .zc-modal-close:active {
+            color: var(--interactive-active, #ffffff);
+            background-color: var(--background-modifier-active, rgba(255, 255, 255, 0.12));
         }
         .zc-rec-header {
-            margin-bottom: 20px;
-            padding-right: 36px;
+            margin-bottom: 16px;
+            padding-right: 32px;
         }
         .zc-rec-title {
             margin: 0 0 8px;
             font-size: 24px;
             font-weight: 700;
             line-height: 28px;
-            color: #f2f3f5;
+            color: var(--header-primary, #f2f3f5);
         }
         .zc-rec-desc {
             margin: 0;
             font-size: 14px;
             line-height: 20px;
-            color: #b5bac1;
+            color: var(--header-secondary, #b5bac1);
         }
         .zc-rec-body {
             display: flex;
@@ -681,19 +706,19 @@
             font-size: 12px;
             font-weight: 700;
             line-height: 16px;
-            color: #b5bac1;
-            text-transform: uppercase;
-            letter-spacing: 0.02em;
+            color: var(--header-secondary, #b5bac1);
+            text-transform: none !important;
+            letter-spacing: normal !important;
         }
         .zc-rec-input {
             width: 100%;
             box-sizing: border-box;
-            height: 44px;
-            padding: 0 14px;
-            border-radius: 6px;
-            background-color: #1e1f22 !important;
-            border: 1px solid rgba(0, 0, 0, 0.3) !important;
-            color: #dbdee1 !important;
+            height: 40px !important;
+            padding: 10px !important;
+            border-radius: var(--radius-sm, 4px) !important;
+            background-color: var(--input-background, #1e1f22) !important;
+            border: 1px solid var(--input-border, rgba(0, 0, 0, 0.3)) !important;
+            color: var(--text-normal, #dbdee1) !important;
             font-size: 16px !important;
             font-family: inherit !important;
             outline: none !important;
@@ -704,21 +729,14 @@
             transition: border-color 0.15s ease !important;
         }
         .zc-rec-input:hover {
-            border-color: #000000 !important;
+            border-color: var(--input-border-hover, #000000) !important;
         }
         .zc-rec-input:focus {
-            border-color: #5865f2 !important;
-            outline: 2px solid #5865f2 !important;
-            outline-offset: -2px !important;
+            border-color: var(--brand-experiment, #5865f2) !important;
+            box-shadow: 0 0 0 1px var(--brand-experiment, #5865f2) !important;
         }
         .zc-rec-input::placeholder {
-            color: #6d737b !important;
-        }
-        .zc-rec-sub-hint {
-            margin: 8px 0 0;
-            font-size: 12px;
-            line-height: 16px;
-            color: #949ba4;
+            color: var(--text-muted, #6d737b) !important;
         }
         .zc-code-field {
             letter-spacing: 6px;
@@ -729,25 +747,30 @@
         .zc-rec-error {
             margin-top: 8px;
             font-size: 13px;
-            color: #f23f43;
+            color: var(--text-danger, #f23f43);
         }
-        .zc-rec-actions {
-            margin-top: 28px;
-            width: 100%;
+        .zc-rec-footer {
+            background-color: var(--modal-footer-background, var(--background-secondary, #2b2d31)) !important;
+            padding: 16px 20px !important;
+            box-sizing: border-box !important;
+            display: flex !important;
+            align-items: center !important;
+            width: 100% !important;
+            border-top: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.04)) !important;
         }
         .zc-footer-row {
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             width: 100%;
         }
         .zc-rec-btn-cancel {
             flex: 1;
-            height: 44px;
-            min-height: 44px;
-            border-radius: 6px;
-            background-color: #4e5058 !important;
-            color: #ffffff !important;
+            height: 38px !important;
+            min-height: 38px !important;
+            border-radius: var(--radius-sm, 4px) !important;
+            background-color: var(--button-secondary-background, #4e5058) !important;
+            color: var(--button-secondary-text, var(--white, #ffffff)) !important;
             font-size: 14px !important;
             font-weight: 500 !important;
             font-family: inherit !important;
@@ -760,18 +783,18 @@
             transition: background-color 0.17s ease !important;
         }
         .zc-rec-btn-cancel:hover {
-            background-color: #6d6f78 !important;
+            background-color: var(--button-secondary-background-hover, #6d6f78) !important;
         }
         .zc-rec-btn-cancel:active {
-            background-color: #80848e !important;
+            background-color: var(--button-secondary-background-active, #80848e) !important;
         }
         .zc-rec-btn-primary {
             flex: 1;
-            height: 44px;
-            min-height: 44px;
-            border-radius: 6px;
-            background-color: #5865f2 !important;
-            color: #ffffff !important;
+            height: 38px !important;
+            min-height: 38px !important;
+            border-radius: var(--radius-sm, 4px) !important;
+            background-color: var(--brand-experiment, #5865f2) !important;
+            color: var(--white, #ffffff) !important;
             font-size: 14px !important;
             font-weight: 500 !important;
             font-family: inherit !important;
@@ -781,13 +804,16 @@
             align-items: center !important;
             justify-content: center !important;
             box-sizing: border-box !important;
+            padding: 2px 14px !important;
+            white-space: nowrap !important;
+            text-overflow: ellipsis !important;
             transition: background-color 0.17s ease !important;
         }
         .zc-rec-btn-primary:hover {
-            background-color: #4752c4 !important;
+            background-color: var(--brand-experiment-560, #4752c4) !important;
         }
         .zc-rec-btn-primary:active {
-            background-color: #3c45a5 !important;
+            background-color: var(--brand-experiment-600, #3c45a5) !important;
         }
         .zc-rec-btn-primary:disabled {
             opacity: 0.5;
