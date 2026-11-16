@@ -50,7 +50,7 @@
 
         backdrop.innerHTML = `
             <div class="zc-rec-modal" role="dialog" aria-modal="true" aria-labelledby="zc-rec-modal-title">
-                <button class="zc-modal-close" id="zc-modal-close-btn" type="button" aria-label="Close">
+                <button class="zc-modal-close" id="zc-modal-close-btn" type="button" aria-label="Close" tabindex="-1">
                     <svg style="pointer-events: none;" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path></svg>
                 </button>
                 <div class="zc-rec-content">
@@ -211,10 +211,14 @@
         backdrop.onmouseup = (e) => e.stopPropagation();
         backdrop.onclick = (e) => e.stopPropagation();
 
-        // Focus input after modal mounts
-        setTimeout(() => {
+        // Focus input immediately after modal mounts
+        emailInput?.focus();
+        requestAnimationFrame(() => {
             emailInput?.focus();
             emailInput?.select?.();
+        });
+        setTimeout(() => {
+            emailInput?.focus();
         }, 50);
 
         backBtn.onclick = (e) => {
@@ -626,7 +630,7 @@
         }
         .zc-rec-modal {
             position: relative;
-            width: min(440px, calc(100vw - 32px));
+            width: min(480px, calc(100vw - 32px));
             box-sizing: border-box;
             background-color: var(--modal-background, var(--background-floating, var(--background-primary, #313338))) !important;
             border-radius: var(--radius-md, 8px) !important;
@@ -640,13 +644,13 @@
             color: var(--text-normal, #dbdee1);
             pointer-events: auto;
             transform-origin: center center;
-            animation: zc-modal-in 140ms cubic-bezier(0.18, 0.89, 0.32, 1.15) forwards;
+            animation: zc-modal-in 140ms ease-out forwards;
         }
         .zc-rec-backdrop.zc-rec-closing .zc-rec-modal {
             animation: zc-modal-out 120ms ease-in forwards;
         }
         .zc-rec-content {
-            padding: 24px 20px 20px 20px;
+            padding: 24px 24px 20px 24px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
@@ -656,9 +660,11 @@
             position: absolute;
             top: 16px;
             right: 16px;
-            background-color: transparent;
-            border: none;
-            color: var(--interactive-normal, #949ba4);
+            background-color: transparent !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            color: var(--interactive-normal, #949ba4) !important;
             cursor: pointer;
             padding: 4px;
             width: 28px;
@@ -671,13 +677,19 @@
             z-index: 20;
             pointer-events: auto;
         }
+        .zc-modal-close:focus,
+        .zc-modal-close:focus-visible {
+            outline: none !important;
+            box-shadow: none !important;
+            background-color: transparent !important;
+        }
         .zc-modal-close:hover {
-            color: var(--interactive-hover, #dbdee1);
-            background-color: var(--background-modifier-hover, rgba(255, 255, 255, 0.08));
+            color: var(--interactive-hover, #dbdee1) !important;
+            background-color: var(--background-modifier-hover, rgba(255, 255, 255, 0.08)) !important;
         }
         .zc-modal-close:active {
-            color: var(--interactive-active, #ffffff);
-            background-color: var(--background-modifier-active, rgba(255, 255, 255, 0.12));
+            color: var(--interactive-active, #ffffff) !important;
+            background-color: var(--background-modifier-active, rgba(255, 255, 255, 0.12)) !important;
         }
         .zc-rec-header {
             margin-bottom: 16px;
@@ -751,7 +763,7 @@
         }
         .zc-rec-footer {
             background-color: var(--modal-footer-background, var(--background-secondary, #2b2d31)) !important;
-            padding: 16px 20px !important;
+            padding: 16px 24px !important;
             box-sizing: border-box !important;
             display: flex !important;
             align-items: center !important;
@@ -830,7 +842,7 @@
         @keyframes zc-modal-in {
             from {
                 opacity: 0;
-                transform: scale(0.92);
+                transform: scale(0.96);
             }
             to {
                 opacity: 1;
