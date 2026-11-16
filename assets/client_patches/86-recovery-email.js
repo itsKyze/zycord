@@ -51,7 +51,7 @@
         backdrop.innerHTML = `
             <div class="zc-rec-modal" role="dialog" aria-modal="true" aria-labelledby="zc-rec-modal-title">
                 <button class="zc-modal-close" id="zc-modal-close-btn" type="button" aria-label="Close" tabindex="-1">
-                    <svg style="pointer-events: none;" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path></svg>
+                    <svg style="pointer-events: none;" width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path></svg>
                 </button>
                 <div class="zc-rec-content">
                     <div class="zc-rec-header">
@@ -658,8 +658,8 @@
         }
         .zc-modal-close {
             position: absolute;
-            top: 16px;
-            right: 16px;
+            top: 14px;
+            right: 14px;
             background-color: transparent !important;
             border: none !important;
             outline: none !important;
@@ -667,13 +667,13 @@
             color: var(--interactive-normal, #949ba4) !important;
             cursor: pointer;
             padding: 4px;
-            width: 28px;
-            height: 28px;
+            width: 34px;
+            height: 34px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: var(--radius-sm, 4px);
-            transition: color 0.15s ease, background-color 0.15s ease;
+            border-radius: 6px;
+            transition: color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
             z-index: 20;
             pointer-events: auto;
         }
@@ -689,7 +689,8 @@
         }
         .zc-modal-close:active {
             color: var(--interactive-active, #ffffff) !important;
-            background-color: var(--background-modifier-active, rgba(255, 255, 255, 0.12)) !important;
+            background-color: var(--background-modifier-active, rgba(255, 255, 255, 0.16)) !important;
+            transform: scale(0.96);
         }
         .zc-rec-header {
             margin-bottom: 16px;
@@ -739,9 +740,6 @@
             -webkit-user-select: text !important;
             cursor: text !important;
             transition: border-color 0.15s ease !important;
-        }
-        .zc-rec-input:hover {
-            border-color: var(--input-border-hover, #000000) !important;
         }
         .zc-rec-input:focus {
             border-color: var(--brand-experiment, #5865f2) !important;
