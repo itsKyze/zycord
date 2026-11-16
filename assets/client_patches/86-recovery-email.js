@@ -110,6 +110,12 @@
         const backBtn = document.getElementById("zc-rec-back-btn");
         const err2 = document.getElementById("zc-rec-error-2");
 
+        const refInput = document.querySelector('input[class*="inputDefault"], input[class*="input_"], input[type="text"]:not(.zc-rec-input)');
+        if (refInput) {
+            emailInput.className = refInput.className + " zc-rec-input";
+            codeInput.className = refInput.className + " zc-rec-input zc-code-field";
+        }
+
         let targetEmail = "";
 
         // Temporarily pause any active react-focus-lock
@@ -729,9 +735,9 @@
             height: 40px !important;
             padding: 10px !important;
             border-radius: var(--radius-sm, 4px) !important;
-            background-color: var(--input-background, #1e1f22) !important;
-            border: 1px solid var(--input-border, rgba(0, 0, 0, 0.3)) !important;
-            color: var(--text-normal, #dbdee1) !important;
+            background-color: var(--input-background, var(--bg-overlay-3, var(--background-tertiary, rgba(0, 0, 0, 0.28)))) !important;
+            border: 1px solid var(--input-border, var(--border-subtle, rgba(0, 0, 0, 0.3))) !important;
+            color: var(--text-normal, var(--text-default, #dbdee1)) !important;
             font-size: 16px !important;
             font-family: inherit !important;
             outline: none !important;
@@ -739,14 +745,14 @@
             user-select: text !important;
             -webkit-user-select: text !important;
             cursor: text !important;
-            transition: border-color 0.15s ease !important;
+            transition: border-color 0.15s ease, background-color 0.15s ease !important;
         }
         .zc-rec-input:focus {
-            border-color: var(--brand-experiment, #5865f2) !important;
-            box-shadow: 0 0 0 1px var(--brand-experiment, #5865f2) !important;
+            border-color: var(--brand-experiment, var(--border-focus, #5865f2)) !important;
+            box-shadow: 0 0 0 1px var(--brand-experiment, var(--border-focus, #5865f2)) !important;
         }
         .zc-rec-input::placeholder {
-            color: var(--text-muted, #6d737b) !important;
+            color: var(--input-placeholder-text, var(--text-muted, #6d737b)) !important;
         }
         .zc-code-field {
             letter-spacing: 6px;
@@ -795,15 +801,17 @@
         }
         .zc-rec-btn-cancel:hover {
             background-color: var(--button-secondary-background-hover, #6d6f78) !important;
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.08) !important;
+            box-shadow: none !important;
         }
         .zc-rec-btn-cancel:active {
             background-color: var(--button-secondary-background-active, #80848e) !important;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 0 2px rgba(255, 255, 255, 0.03) !important;
             transform: scale(0.98) !important;
         }
+        .zc-rec-btn-cancel:focus,
         .zc-rec-btn-cancel:focus-visible {
-            box-shadow: 0 0 0 2px var(--brand-experiment, #5865f2) !important;
+            outline: none !important;
+            box-shadow: none !important;
         }
         .zc-rec-btn-primary {
             flex: 1;
@@ -829,11 +837,11 @@
         }
         .zc-rec-btn-primary:hover {
             background-color: var(--brand-experiment-560, #4752c4) !important;
-            box-shadow: 0 0 8px rgba(88, 101, 242, 0.25) !important;
+            box-shadow: none !important;
         }
         .zc-rec-btn-primary:active {
             background-color: var(--brand-experiment-600, #3c45a5) !important;
-            box-shadow: 0 0 12px rgba(88, 101, 242, 0.45) !important;
+            box-shadow: 0 0 6px rgba(88, 101, 242, 0.25) !important;
             transform: scale(0.98) !important;
         }
         .zc-rec-btn-primary:disabled {
