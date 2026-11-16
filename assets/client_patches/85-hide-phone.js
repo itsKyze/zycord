@@ -1,43 +1,33 @@
 (() => {
-    // 85-hide-phone.js: Remove all phone verification and phone number references from Zycord client UI
+    // 85-hide-phone.js: Remove phone verification, SMS backup and phone modals (keep Account Info row for Recovery Email)
     const hidePhoneElements = () => {
-        // 1. Hide Phone Number row in User Settings -> My Account
-        const selectors = [
-            'div[class*="accountList_"] > div',
-            'div[class*="fieldList_"] > div',
-            'div[class*="field_"]',
-            'div[role="group"] > div',
-        ];
-
-        document.querySelectorAll(selectors.join(",")).forEach((el) => {
-            const text = (el.innerText || "").trim().toLowerCase();
-            const isPhoneRow =
-                text.startsWith("phone number") ||
-                (text.includes("phone number") && (text.includes("add") || text.includes("remove") || text.includes("edit")));
-
-            if (isPhoneRow) {
-                el.style.setProperty("display", "none", "important");
-            }
-        });
-
-        // 2. Hide any standalone "Add Phone Number" buttons or banners
-        document.querySelectorAll('button, a, div[role="button"]').forEach((btn) => {
-            const btnText = (btn.innerText || "").trim().toLowerCase();
-            if (btnText === "add phone number" || btnText === "add phone") {
-                const parentField = btn.closest('div[class*="field_"]') || btn.parentElement;
-                if (parentField) parentField.style.setProperty("display", "none", "important");
-                else btn.style.setProperty("display", "none", "important");
-            }
-        });
-
-        // 3. Hide SMS Backup / SMS MFA section in User Settings
-        document.querySelectorAll('div[class*="children_"], div[class*="section_"]').forEach((sec) => {
+        // 1. Hide SMS Backup section in User Settings
+        document.querySelectorAll("div, section").forEach((sec) => {
             const secText = (sec.innerText || "").trim().toLowerCase();
-            if (secText.includes("sms backup") && !secText.includes("authenticator")) {
+            if (secText.startsWith("sms backup") && !secText.includes("authenticator app")) {
                 sec.style.setProperty("display", "none", "important");
             }
         });
+
+        // 2. Hide standalone "Add Phone Number" / "Add Phone" prompts/buttons (except inside Account Info)
+        document.querySelectorAll("button, a, div[role='button']").forEach((btn) => {
+            const txt = (btn.innerText || "").trim().toLowerCase();
+            if (txt === "add phone number" || txt === "add phone") {
+                let parent = btn.parentElement;
+                for (let i = 0; i < 4; i++) {
+                    if (!parent || parent === document.body) break;
+                    if (parent.id === "zycord-recovery-email-row" || parent.hasAttribute("data-zycord-recovery")) break;
+                    if (parent.innerText.toLowerCase().includes("phone")) {
+                        parent.style.setProperty("display", "none", "important");
+                        break;
+                    }
+                    parent = parent.parentElement;
+                }
+            }
+        });
     };
+
+    setInterval(hidePhoneElements, 300);
 
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", hidePhoneElements);
@@ -45,10 +35,7 @@
         hidePhoneElements();
     }
 
-    const observer = new MutationObserver(() => {
-        hidePhoneElements();
-    });
-
+    const observer = new MutationObserver(hidePhoneElements);
     observer.observe(document.documentElement, {
         childList: true,
         subtree: true,
