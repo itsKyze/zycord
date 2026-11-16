@@ -415,7 +415,7 @@ export const Email: {
             .card { background-color: #ffffff; border-radius: 8px; padding: 40px 48px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08); }
             h1 { font-size: 20px; font-weight: 700; line-height: 24px; color: #2e3338; margin: 0 0 16px; }
             p { font-size: 15px; line-height: 22px; color: #4f545c; margin: 0 0 20px; }
-            .code-box { background-color: #f2f3f5; border-radius: 6px; padding: 16px 20px; margin: 24px 0; text-align: center; font-size: 26px; font-weight: 700; letter-spacing: 4px; color: #5865f2; }
+            .code-box { background-color: #f2f3f5; border-radius: 6px; padding: 18px 24px; margin: 24px 0; text-align: center; font-size: 32px; font-weight: 700; letter-spacing: 6px; color: #5865f2; font-family: 'Consolas', 'Courier New', Courier, monospace; }
             .btn-container { text-align: center; padding: 20px 0 28px; }
             .btn { background-color: #5865f2; color: #ffffff !important; text-decoration: none; font-size: 15px; font-weight: 600; padding: 14px 32px; border-radius: 3px; display: inline-block; }
             hr { border: none; border-top: 1px solid #e3e5e8; margin: 24px 0; }

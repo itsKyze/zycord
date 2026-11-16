@@ -29,19 +29,15 @@ export const RecoveryEmail = {
         const subject = `[${instanceName} Security] Recovery Email Verification Code`;
         const text = `Your ${instanceName} recovery email verification code is: ${code}. It expires in 10 minutes.`;
         const html = `
-            <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; max-width: 560px; margin: 0 auto; padding: 24px; background: #232428; color: #dbdee1; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08);">
-                <h1 style="color: #ffffff; font-size: 22px; margin-top: 0;">Hey ${username},</h1>
-                <p style="font-size: 15px; line-height: 22px; color: #b5bac1;">
-                    You are adding this email as a <strong>Backup / Recovery Email</strong> on ${instanceName}. If you ever lose access to your primary email or forget your password, you can use this email to securely recover your account.
-                </p>
-                <div style="background: #111214; border: 1px solid #35363c; border-radius: 8px; padding: 16px; margin: 24px 0; text-align: center;">
-                    <div style="font-size: 13px; color: #949ba4; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">Verification Code</div>
-                    <div style="font-size: 32px; font-weight: 700; letter-spacing: 6px; color: #5865f2; font-family: monospace;">${code}</div>
-                </div>
-                <p style="font-size: 13px; color: #949ba4; margin-bottom: 0;">
-                    This code will expire in 10 minutes. If you did not request this, you can safely ignore this email.
-                </p>
-            </div>
+            <h1>Hey ${username},</h1>
+            <p>
+                You are adding this email address as a <strong>Backup / Recovery Email</strong> on ${instanceName}. If you ever lose access to your primary email or forget your password, you can use this email to securely recover your account.
+            </p>
+            <p style="margin-bottom: 8px;">Here is your 6-digit verification code:</p>
+            <div class="code-box">${code}</div>
+            <p style="font-size: 13px; color: #747f8d; margin-bottom: 0;">
+                This code will expire in 10 minutes. If you did not make this request, you can safely ignore this email.
+            </p>
         `;
 
         try {

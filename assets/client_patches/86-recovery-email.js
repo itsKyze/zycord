@@ -49,41 +49,59 @@
         }
 
         backdrop.innerHTML = `
-            <div class="zc-rec-modal" role="dialog" aria-modal="true" aria-labelledby="zc-rec-modal-title">
+            <div id="zc-rec-modal-container" class="zc-rec-modal" role="dialog" aria-modal="true" aria-labelledby="zc-rec-modal-title">
                 <button class="zc-modal-close" id="zc-modal-close-btn" type="button" aria-label="Close" tabindex="-1">
-                    <svg style="pointer-events: none;" width="22" height="22" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path></svg>
+                    <svg style="pointer-events: none;" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path></svg>
                 </button>
-                <div class="zc-rec-content">
-                    <div class="zc-rec-header">
-                        <h2 class="zc-rec-title" id="zc-rec-modal-title">Backup / Recovery Email</h2>
-                        <p class="zc-rec-desc" id="zc-rec-modal-desc">
-                            Enter a backup email address (such as Gmail) to protect your account and recover access if you ever lose your primary email or forget your password.
-                        </p>
-                    </div>
 
-                    <div id="zc-rec-body" class="zc-rec-body">
-                        <div id="zc-step-1">
+                <!-- Step 1: Request Email -->
+                <div id="zc-step-1" class="zc-step-pane">
+                    <div class="zc-rec-content">
+                        <div class="zc-rec-header">
+                            <h2 class="zc-rec-title" id="zc-rec-modal-title">Backup / Recovery Email</h2>
+                            <p class="zc-rec-desc" id="zc-rec-modal-desc">
+                                Enter a backup email address (such as Gmail) to protect your account and recover access if you ever lose your primary email or forget your password.
+                            </p>
+                        </div>
+
+                        <div class="zc-rec-body">
                             <label class="zc-rec-label" for="zc-rec-email-input">Backup Email</label>
                             <input id="zc-rec-email-input" type="email" class="zc-rec-input" placeholder="name@gmail.com" autocomplete="email" spellcheck="false" />
                             <div id="zc-rec-error-1" class="zc-rec-error" style="display: none;"></div>
                         </div>
+                    </div>
 
-                        <div id="zc-step-2" style="display: none;">
-                            <label class="zc-rec-label" for="zc-rec-code-input">Verification Code</label>
-                            <input id="zc-rec-code-input" type="text" maxlength="6" class="zc-rec-input zc-code-field" placeholder="123456" autocomplete="one-time-code" spellcheck="false" />
-                            <div id="zc-rec-error-2" class="zc-rec-error" style="display: none;"></div>
+                    <div class="zc-rec-footer">
+                        <div id="zc-footer-step-1" class="zc-footer-row">
+                            <button id="zc-rec-cancel-btn" class="zc-rec-btn-cancel" type="button">Cancel</button>
+                            <button id="zc-rec-send-btn" class="zc-rec-btn-primary" type="button">Send Verification Code</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="zc-rec-footer">
-                    <div id="zc-footer-step-1" class="zc-footer-row">
-                        <button id="zc-rec-cancel-btn" class="zc-rec-btn-cancel" type="button">Cancel</button>
-                        <button id="zc-rec-send-btn" class="zc-rec-btn-primary" type="button">Send Verification Code</button>
-                    </div>
-                    <div id="zc-footer-step-2" class="zc-footer-row" style="display: none;">
-                        <button id="zc-rec-back-btn" class="zc-rec-btn-cancel" type="button">Back</button>
-                        <button id="zc-rec-verify-btn" class="zc-rec-btn-primary" type="button">Confirm & Link Email</button>
+                <!-- Step 2: Enter code (Discord 1:1 Parity) -->
+                <div id="zc-step-2" class="zc-step-pane zc-step2-pane" style="display: none;">
+                    <div class="zc-rec-content zc-step2-content">
+                        <div class="zc-step2-graphic">
+                            <img src="/assets/902087e396aa9987.svg" alt="" width="200" height="135" draggable="false" />
+                        </div>
+                        <div class="zc-step2-header">
+                            <h2 class="zc-step2-title">Enter code</h2>
+                            <p class="zc-step2-desc">
+                                Check your email: we sent you a verification code. Enter it here to verify you’re really you.
+                            </p>
+                        </div>
+
+                        <div class="zc-step2-body">
+                            <label class="zc-rec-label" for="zc-rec-code-input">Verification Code</label>
+                            <input id="zc-rec-code-input" type="text" maxlength="8" class="zc-rec-input zc-code-input-field" autocomplete="one-time-code" spellcheck="false" />
+                            <a href="#" id="zc-rec-resend-link" class="zc-rec-resend-link" role="button">Didn’t receive a code or it expired? Resend it.</a>
+                            <div id="zc-rec-error-2" class="zc-rec-error" style="display: none;"></div>
+                        </div>
+
+                        <div class="zc-step2-actions">
+                            <button id="zc-rec-verify-btn" class="zc-rec-btn-next" type="button">Next</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -92,6 +110,7 @@
         const mountTarget = document.getElementById("app-mount") || document.body;
         mountTarget.appendChild(backdrop);
 
+        const modalContainer = document.getElementById("zc-rec-modal-container");
         const closeBtn = document.getElementById("zc-modal-close-btn");
         const modalTitle = document.getElementById("zc-rec-modal-title");
         const modalDesc = document.getElementById("zc-rec-modal-desc");
@@ -102,12 +121,10 @@
 
         const step1 = document.getElementById("zc-step-1");
         const step2 = document.getElementById("zc-step-2");
-        const footer1 = document.getElementById("zc-footer-step-1");
-        const footer2 = document.getElementById("zc-footer-step-2");
 
         const codeInput = document.getElementById("zc-rec-code-input");
+        const resendLink = document.getElementById("zc-rec-resend-link");
         const verifyBtn = document.getElementById("zc-rec-verify-btn");
-        const backBtn = document.getElementById("zc-rec-back-btn");
         const err2 = document.getElementById("zc-rec-error-2");
 
         const refInput = document.querySelector('input[class*="inputDefault"], input[class*="input_"], input[type="text"]:not(.zc-rec-input)');
@@ -227,19 +244,6 @@
             emailInput?.focus();
         }, 50);
 
-        backBtn.onclick = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            step2.style.display = "none";
-            footer2.style.display = "none";
-            step1.style.display = "block";
-            footer1.style.display = "flex";
-            err1.style.display = "none";
-            modalTitle.innerText = "Backup / Recovery Email";
-            modalDesc.innerText = "Enter a backup email address (such as Gmail) to protect your account and recover access if you ever lose your primary email or forget your password.";
-            setTimeout(() => emailInput?.focus(), 50);
-        };
-
         sendBtn.onclick = async (e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -272,12 +276,11 @@
 
                 targetEmail = email;
                 step1.style.display = "none";
-                footer1.style.display = "none";
                 step2.style.display = "block";
-                footer2.style.display = "flex";
-                modalTitle.innerText = "Verify Backup Email";
-                modalDesc.innerText = "Enter the 6-digit verification code sent to your backup email.";
-                setTimeout(() => codeInput?.focus(), 50);
+                modalContainer.classList.add("zc-step2-active");
+                codeInput.value = "";
+                err2.style.display = "none";
+                setTimeout(() => codeInput?.focus(), 60);
             } catch (err) {
                 err1.innerText = "Connection error. Unable to reach the server.";
                 err1.style.display = "block";
@@ -285,6 +288,42 @@
                 sendBtn.innerText = "Send Verification Code";
             }
         };
+
+        if (resendLink) {
+            resendLink.onclick = async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (!targetEmail) return;
+                resendLink.innerText = "Sending new code...";
+                resendLink.style.pointerEvents = "none";
+                try {
+                    const res = await fetch("/api/v9/users/@me/recovery-email/send-code", {
+                        method: "POST",
+                        headers: { authorization: token, "content-type": "application/json" },
+                        body: JSON.stringify({ email: targetEmail }),
+                    });
+                    if (res.ok) {
+                        resendLink.innerText = "Code sent! Check your inbox.";
+                        setTimeout(() => {
+                            resendLink.innerText = "Didn’t receive a code or it expired? Resend it.";
+                            resendLink.style.pointerEvents = "auto";
+                        }, 5000);
+                    } else {
+                        resendLink.innerText = "Failed to resend. Please try again shortly.";
+                        setTimeout(() => {
+                            resendLink.innerText = "Didn’t receive a code or it expired? Resend it.";
+                            resendLink.style.pointerEvents = "auto";
+                        }, 3000);
+                    }
+                } catch {
+                    resendLink.innerText = "Failed to resend. Check connection.";
+                    setTimeout(() => {
+                        resendLink.innerText = "Didn’t receive a code or it expired? Resend it.";
+                        resendLink.style.pointerEvents = "auto";
+                    }, 3000);
+                }
+            };
+        }
 
         verifyBtn.onclick = async (e) => {
             e.preventDefault();
@@ -313,7 +352,7 @@
                     err2.innerText = msg;
                     err2.style.display = "block";
                     verifyBtn.disabled = false;
-                    verifyBtn.innerText = "Confirm & Link Email";
+                    verifyBtn.innerText = "Next";
                     return;
                 }
 
@@ -325,7 +364,7 @@
                 err2.innerText = "An error occurred during verification.";
                 err2.style.display = "block";
                 verifyBtn.disabled = false;
-                verifyBtn.innerText = "Confirm & Link Email";
+                verifyBtn.innerText = "Next";
             }
         };
     };
@@ -636,7 +675,7 @@
         }
         .zc-rec-modal {
             position: relative;
-            width: min(480px, calc(100vw - 32px));
+            width: min(440px, calc(100vw - 32px));
             box-sizing: border-box;
             background-color: var(--modal-background, var(--background-floating, var(--background-primary, #313338))) !important;
             border-radius: var(--radius-md, 8px) !important;
@@ -651,9 +690,21 @@
             pointer-events: auto;
             transform-origin: center center;
             animation: zc-modal-in 140ms ease-out forwards;
+            transition: background 0.25s ease;
+        }
+        /* Native Expressive Purple Radial Gradient on Step 2 */
+        .zc-rec-modal.zc-step2-active {
+            background-color: var(--modal-background, #313338) !important;
+            background-image: radial-gradient(ellipse 130% 65% at 50% 0%, rgba(147, 51, 234, 0.38) 0%, rgba(147, 51, 234, 0) 70%) !important;
+            background-repeat: no-repeat !important;
         }
         .zc-rec-backdrop.zc-rec-closing .zc-rec-modal {
             animation: zc-modal-out 120ms ease-in forwards;
+        }
+        .zc-step-pane {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
         }
         .zc-rec-content {
             padding: 24px 24px 20px 24px;
@@ -661,6 +712,11 @@
             display: flex;
             flex-direction: column;
             background-color: transparent !important;
+        }
+        .zc-step2-content {
+            padding: 24px 24px 24px 24px !important;
+            align-items: center;
+            text-align: center;
         }
         .zc-modal-close {
             position: absolute;
@@ -673,12 +729,12 @@
             color: var(--interactive-normal, #949ba4) !important;
             cursor: pointer;
             padding: 4px;
-            width: 34px;
-            height: 34px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px;
+            border-radius: 4px;
             transition: color 0.15s ease, background-color 0.15s ease, transform 0.1s ease;
             z-index: 20;
             pointer-events: auto;
@@ -697,6 +753,41 @@
             color: var(--interactive-active, #ffffff) !important;
             background-color: var(--background-modifier-active, rgba(255, 255, 255, 0.16)) !important;
             transform: scale(0.96);
+        }
+        /* Step 2 Graphic */
+        .zc-step2-graphic {
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .zc-step2-graphic img {
+            max-width: 200px;
+            height: auto;
+            display: block;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        .zc-step2-header {
+            margin-bottom: 20px;
+            padding: 0 8px;
+            text-align: center;
+        }
+        .zc-step2-title {
+            margin: 0 0 8px;
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            line-height: 28px !important;
+            color: var(--header-primary, #ffffff) !important;
+            text-align: center !important;
+        }
+        .zc-step2-desc {
+            margin: 0;
+            font-size: 14px;
+            line-height: 20px;
+            color: var(--header-secondary, #b5bac1);
+            text-align: center;
         }
         .zc-rec-header {
             margin-bottom: 16px;
@@ -718,6 +809,14 @@
         .zc-rec-body {
             display: flex;
             flex-direction: column;
+            width: 100%;
+        }
+        .zc-step2-body {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
         }
         .zc-rec-label {
             display: block;
@@ -755,16 +854,69 @@
         .zc-rec-input::placeholder {
             color: var(--input-placeholder-text, var(--text-muted, #6d737b)) !important;
         }
-        .zc-code-field {
-            letter-spacing: 6px;
-            font-weight: 700;
-            text-align: center;
-            font-size: 20px !important;
+        .zc-code-input-field {
+            letter-spacing: 2px;
+            font-size: 16px !important;
+            font-weight: 500 !important;
+            text-align: left !important;
+        }
+        .zc-rec-resend-link {
+            display: inline-block;
+            margin-top: 10px;
+            font-size: 14px;
+            line-height: 18px;
+            color: var(--text-link, #00a8fc) !important;
+            text-decoration: none;
+            cursor: pointer;
+            transition: text-decoration 0.15s ease;
+        }
+        .zc-rec-resend-link:hover {
+            text-decoration: underline;
+        }
+        .zc-step2-actions {
+            width: 100%;
+            margin-top: 24px;
+            display: flex;
+        }
+        .zc-rec-btn-next {
+            width: 100% !important;
+            height: 44px !important;
+            min-height: 44px !important;
+            border-radius: var(--radius-sm, 4px) !important;
+            background-color: var(--brand-experiment, #5865f2) !important;
+            color: var(--white, #ffffff) !important;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            font-family: inherit !important;
+            border: none !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-sizing: border-box !important;
+            padding: 2px 16px !important;
+            outline: none !important;
+            transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease !important;
+        }
+        .zc-rec-btn-next:hover {
+            background-color: var(--brand-experiment-560, #4752c4) !important;
+            box-shadow: none !important;
+        }
+        .zc-rec-btn-next:active {
+            background-color: var(--brand-experiment-600, #3c45a5) !important;
+            box-shadow: 0 0 6px rgba(88, 101, 242, 0.25) !important;
+            transform: scale(0.99) !important;
+        }
+        .zc-rec-btn-next:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
         .zc-rec-error {
             margin-top: 8px;
             font-size: 13px;
             color: var(--text-danger, #f23f43);
+            text-align: left;
+            width: 100%;
         }
         .zc-rec-footer {
             background-color: var(--modal-footer-background, var(--background-secondary, #2b2d31)) !important;
@@ -885,8 +1037,7 @@
                 opacity: 0;
                 transform: scale(0.94);
             }
-        }
-    `;
+        }    `;
     document.head.appendChild(style);
 
     const loop = () => {
