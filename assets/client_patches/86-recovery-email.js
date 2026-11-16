@@ -749,7 +749,8 @@
         }
         .zc-rec-input:focus {
             border-color: var(--brand-experiment, var(--border-focus, #5865f2)) !important;
-            box-shadow: 0 0 0 1px var(--brand-experiment, var(--border-focus, #5865f2)) !important;
+            box-shadow: none !important;
+            outline: none !important;
         }
         .zc-rec-input::placeholder {
             color: var(--input-placeholder-text, var(--text-muted, #6d737b)) !important;
@@ -797,21 +798,26 @@
             justify-content: center !important;
             box-sizing: border-box !important;
             outline: none !important;
-            transition: background-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease !important;
+            box-shadow: none !important;
+            filter: none !important;
+            transition: background-color 0.15s ease, transform 0.1s ease !important;
         }
         .zc-rec-btn-cancel:hover {
             background-color: var(--button-secondary-background-hover, #6d6f78) !important;
             box-shadow: none !important;
+            filter: none !important;
         }
         .zc-rec-btn-cancel:active {
             background-color: var(--button-secondary-background-active, #80848e) !important;
-            box-shadow: 0 0 2px rgba(255, 255, 255, 0.03) !important;
+            box-shadow: none !important;
+            filter: none !important;
             transform: scale(0.98) !important;
         }
         .zc-rec-btn-cancel:focus,
         .zc-rec-btn-cancel:focus-visible {
             outline: none !important;
             box-shadow: none !important;
+            filter: none !important;
         }
         .zc-rec-btn-primary {
             flex: 1;
