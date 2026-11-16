@@ -266,7 +266,10 @@
 
                 if (!res.ok) {
                     const data = await res.json().catch(() => ({}));
-                    const msg = data.email?.message || data.message || "Failed to send verification code. Please check your address and try again.";
+                    const msg = data.errors?.email?._errors?.[0]?.message ||
+                                data.email?.message ||
+                                (data.message !== "Invalid Form Body" ? data.message : null) ||
+                                "This email address is already in use by another account.";
                     err1.innerText = msg;
                     err1.style.display = "block";
                     sendBtn.disabled = false;
@@ -348,7 +351,11 @@
 
                 if (!res.ok) {
                     const data = await res.json().catch(() => ({}));
-                    const msg = data.code?.message || data.message || "Invalid or expired verification code.";
+                    const msg = data.errors?.code?._errors?.[0]?.message ||
+                                data.errors?.email?._errors?.[0]?.message ||
+                                data.code?.message ||
+                                (data.message !== "Invalid Form Body" ? data.message : null) ||
+                                "Invalid or expired verification code.";
                     err2.innerText = msg;
                     err2.style.display = "block";
                     verifyBtn.disabled = false;
@@ -627,9 +634,18 @@
     };
 
     const updateSettingsUI = () => {
-        if (updateExistingRecoveryRow()) return;
-        if (transformNativePhoneRow()) return;
-        cloneEmailRow();
+        // Guard: only execute if User Settings "My Account" is actually mounted in DOM
+        const settingsContainer = document.querySelector('[class*="accountProfileCard"], [class*="userInfo_"], [aria-label="My Account"], [aria-label="Account"]') ||
+                                  document.querySelector('[class*="standardSidebarView"]');
+        if (!settingsContainer) return;
+
+        try {
+            if (updateExistingRecoveryRow()) return;
+            if (transformNativePhoneRow()) return;
+            cloneEmailRow();
+        } catch (e) {
+            console.error("[RecoveryEmail] updateSettingsUI error:", e);
+        }
     };
 
     // Inject Discord-native modal and button styles
@@ -1041,7 +1057,8 @@
     document.head.appendChild(style);
 
     const loop = () => {
-        if (location.pathname.includes("/channels/@me") || location.pathname.includes("/channels/")) {
+        // Only run when inside Settings / Account Info (/channels/@me)
+        if (location.pathname.includes("/channels/@me")) {
             fetchRecoveryEmail();
             updateSettingsUI();
         }

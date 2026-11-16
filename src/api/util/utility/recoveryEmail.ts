@@ -26,7 +26,7 @@ export const RecoveryEmail = {
         }
 
         const instanceName = Config.get().general.instanceName || "Zycord";
-        const subject = `[${instanceName} Security] Recovery Email Verification Code`;
+        const subject = `Your verification code is ${code}`;
         const text = `Your ${instanceName} recovery email verification code is: ${code}. It expires in 10 minutes.`;
         const html = `
             <h1>Hey ${username},</h1>
