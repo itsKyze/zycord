@@ -1,0 +1,46 @@
+1751(module1, __unused_rspack_exports, __webpack_require__) {
+                "use strict";
+                let electron_1 = __webpack_require__(1288),
+                    securityUtils_1 = __webpack_require__(1331),
+                    Constants_1 = __webpack_require__(6605),
+                    { APP_NAME_FOR_HUMANS } = __webpack_require__(6605),
+                    SEPARATOR = { type: "separator" },
+                    developerMenuSection = [SEPARATOR, { label: "Developer", submenu: [{ role: "toggleDevTools" }] }];
+                module1.exports = function (enableDevtools) {
+                    return [
+                        {
+                            role: "appMenu",
+                            submenu: [
+                                { label: `About ${APP_NAME_FOR_HUMANS}`, role: "about" },
+                                { label: "Check for Updates...", click: () => electron_1.app.emit(Constants_1.MenuEvents.CHECK_FOR_UPDATES) },
+                                { label: "Acknowledgements", click: () => (0, securityUtils_1.saferShellOpenExternal)("https://app.zyron.site/acknowledgements") },
+                                SEPARATOR,
+                                { label: "Preferences", click: () => electron_1.app.emit(Constants_1.MenuEvents.OPEN_SETTINGS), accelerator: "Command+," },
+                                SEPARATOR,
+                                { role: "services" },
+                                SEPARATOR,
+                                { label: `Hide ${APP_NAME_FOR_HUMANS}`, role: "hide" },
+                                { role: "hideOthers" },
+                                { role: "unhide" },
+                                SEPARATOR,
+                                { label: `Quit ${APP_NAME_FOR_HUMANS}`, role: "quit" },
+                            ],
+                        },
+                        {
+                            role: "editMenu",
+                            submenu: [
+                                { role: "undo", accelerator: "Command+Z" },
+                                { role: "redo", accelerator: "Shift+Command+Z" },
+                                SEPARATOR,
+                                { role: "cut", accelerator: "Command+X" },
+                                { role: "copy", accelerator: "Command+C" },
+                                { role: "paste", accelerator: "Command+V" },
+                                { role: "selectAll", accelerator: "Command+A" },
+                            ],
+                        },
+                        { role: "viewMenu", submenu: [{ label: "Reload", role: "forceReload", accelerator: "Command+R" }, ...(enableDevtools ? developerMenuSection : [])] },
+                        { role: "windowMenu", submenu: [{ role: "minimize" }, { role: "close" }] },
+                        { role: "help", submenu: [{ label: "Zycord Help", click: () => electron_1.app.emit(Constants_1.MenuEvents.OPEN_HELP) }] },
+                    ];
+                };
+            }

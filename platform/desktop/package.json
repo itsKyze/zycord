@@ -1,0 +1,88 @@
+{
+    "name": "zycord",
+    "productName": "Zycord",
+    "version": "1.0.17",
+    "description": "Zycord Desktop Client",
+    "main": "src/main.js",
+    "author": {
+        "name": "Zyron Solutions Ltd",
+        "email": "itsKyze@users.noreply.github.com"
+    },
+    "homepage": "https://app.zyron.site",
+    "license": "AGPL-3.0-only",
+    "scripts": {
+        "start": "electron .",
+        "pack": "electron-builder --dir",
+        "build": "electron-builder --win",
+        "dist": "electron-builder --win nsis"
+    },
+    "build": {
+        "appId": "com.zyron.zycord",
+        "productName": "Zycord",
+        "copyright": "Copyright \u00a9 2026 Zyron Solutions Ltd",
+        "directories": {
+            "output": "dist",
+            "buildResources": "assets"
+        },
+        "files": [
+            "src/**/*",
+            "assets/**/*"
+        ],
+        "win": {
+            "target": [
+                {
+                    "target": "nsis",
+                    "arch": [
+                        "x64"
+                    ]
+                }
+            ],
+            "icon": "assets/icon.ico"
+        },
+        "nsis": {
+            "oneClick": true,
+            "perMachine": false,
+            "allowElevation": false,
+            "allowToChangeInstallationDirectory": false,
+            "createDesktopShortcut": "always",
+            "createStartMenuShortcut": true,
+            "shortcutName": "Zycord",
+            "uninstallDisplayName": "Zycord",
+            "runAfterFinish": true,
+            "deleteAppDataOnUninstall": false,
+            "artifactName": "ZycordSetup-x64.exe",
+            "include": "assets/installer.nsh"
+        },
+        "publish": [
+            {
+                "provider": "generic",
+                "url": "https://app.zyron.site/updates/windows/"
+            }
+        ],
+        "electronVersion": "33.2.0",
+        "linux": {
+            "target": [
+                "deb",
+                "tar.gz"
+            ],
+            "icon": "assets/icon.png",
+            "category": "Network;Chat;InstantMessaging"
+        },
+        "mac": {
+            "target": [
+                "zip"
+            ],
+            "icon": "assets/icon.png",
+            "category": "public.app-category.social-networking"
+        }
+    },
+    "devDependencies": {
+        "electron": "33.2.0",
+        "electron-builder": "^25.1.8"
+    },
+    "dependencies": {
+        "electron-updater": "^6.3.9",
+        "electron-log": "^5.2.0",
+        "lodash": "^4.17.21"
+    }
+}

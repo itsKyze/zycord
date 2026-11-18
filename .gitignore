@@ -27,6 +27,13 @@ http-client.private.env.json
 
 build
 
+# Large release binaries (over GitHub 100MB limit)
+public/download/*.tar.gz
+public/download/*.deb
+public/download/*.zip
+public/download/*.apk
+platform/android/*.apk
+
 *.log
 *.log.ansi
 *.tmp

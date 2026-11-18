@@ -1,0 +1,8 @@
+version: 1.0.17
+files:
+  - url: zycord_1.0.17_amd64.deb
+    sha512: RCsiY4VNYmus7pjDnnq7tBQ1CS4ytyPcM4LR2yun52Dq8v1tJiESiL+4UANEPy/Yq/dkSIHbpWgn66bagkWl6w==
+    size: 88034104
+path: zycord_1.0.17_amd64.deb
+sha512: RCsiY4VNYmus7pjDnnq7tBQ1CS4ytyPcM4LR2yun52Dq8v1tJiESiL+4UANEPy/Yq/dkSIHbpWgn66bagkWl6w==
+releaseDate: '2026-11-17T11:21:55.083Z'

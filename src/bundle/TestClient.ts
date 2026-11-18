@@ -293,6 +293,7 @@ window.addEventListener("error", (e) => {
 
     return source
         .replace(envMatch[0], `${env}\n${vencord}\n${patches}`)
+        .replace(/<script[^>]*>!function\(\)\{if\(null!=window\.WebSocket[\s\S]*?\[FAST CONNECT\][\s\S]*?<\/script>/g, "")
         .replace(/<script[^>]*>[^<]*__CF\$cv\$params[\s\S]*?<\/script>/, "")
         .replace(/<script[^>]*src="\/assets\/sentry\.[0-9a-f]+\.js"[^>]*><\/script>\s*/g, "")
         .replace(/<link[^>]*href="\/assets\/sentry\.[0-9a-f]+\.js"[^>]*>\s*/g, "")
