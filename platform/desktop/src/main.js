@@ -137,11 +137,6 @@ function createMainWindow() {
     });
 }
 
-    mainWindow.on("closed", () => {
-        mainWindow = null;
-    });
-}
-
 // 3. Updater Flow
 function setupUpdates() {
     let mainCreated = false;
