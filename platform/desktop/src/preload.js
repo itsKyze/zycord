@@ -35,11 +35,12 @@ function hookWebpack() {
         if (!modules || typeof modules !== "object") return;
         for (const id in modules) {
             const origFn = modules[id];
-            modules[id] = function (module, exports, require) {
-                origFn(module, exports, require);
-                if (exports && typeof exports.WQ === "function") {
-                    const origWQ = exports.WQ;
-                    exports.WQ = function (engine) {
+            modules[id] = function () {
+                const ret = origFn.apply(this, arguments);
+                const exp = arguments[1] || (arguments[0] && arguments[0].exports) || this;
+                if (exp && typeof exp.WQ === "function") {
+                    const origWQ = exp.WQ;
+                    exp.WQ = function (engine) {
                         if (engine && typeof engine.supported === "function") {
                             engine.supported = function () {
                                 return false; // Cleanly tell Discord NativeMediaEngine is unavailable -> falls back to WebRTC
@@ -48,7 +49,9 @@ function hookWebpack() {
                         return origWQ.call(this, engine);
                     };
                 }
+                return ret;
             };
+            Object.assign(modules[id], origFn);
         }
     };
 
@@ -90,9 +93,24 @@ try {
 }
 
 // 4. Safe Proxy Generator (Returns empty string on toString to prevent UI artifacts)
+const createSafeCallable = () => {
+    const fn = function () {
+        return Promise.resolve();
+    };
+    return new Proxy(fn, {
+        get: (_target, prop) => {
+            if (prop === "then") return undefined;
+            if (prop === Symbol.toPrimitive || prop === "toString") return () => "";
+            if (prop === "length") return 0;
+            return createSafeCallable();
+        },
+        apply: () => Promise.resolve(),
+    });
+};
+
 const createSafeProxy = (name = "") => {
     const fn = function () {
-        return createSafeProxy(name);
+        return createSafeCallable();
     };
     return new Proxy(fn, {
         get: (_target, prop) => {
@@ -100,9 +118,9 @@ const createSafeProxy = (name = "") => {
             if (prop === Symbol.toPrimitive || prop === "toString") return () => "";
             if (prop === "length") return 0;
             if (prop === "hasPermission") return () => Promise.resolve(true);
-            return createSafeProxy(`${name}.${String(prop)}`);
+            return createSafeCallable();
         },
-        apply: () => createSafeProxy(name),
+        apply: () => createSafeCallable(),
     });
 };
 
@@ -117,13 +135,13 @@ function wrapWithSafeProxy(obj) {
                 return val;
             }
             if (typeof prop === "symbol" || prop === "then" || prop === "inspect") return undefined;
-            return createSafeProxy(String(prop));
+            return createSafeCallable();
         },
     });
 }
 
-// 5. Discord Utils Implementation (Concrete JavaScript methods)
-const discordUtils = {
+// 5. Discord Utils Implementation (Concrete JavaScript methods with safe callable fallback)
+const discordUtilsTarget = {
     createDateFormatter: (_format) => {
         const dtf = new Intl.DateTimeFormat(undefined, {
             dateStyle: "short",
@@ -145,6 +163,14 @@ const discordUtils = {
     inputEventRegister: () => true,
     inputEventUnregister: () => true,
 };
+
+const discordUtils = new Proxy(discordUtilsTarget, {
+    get: (target, prop) => {
+        if (prop in target) return target[prop];
+        if (typeof prop === "symbol" || prop === "then" || prop === "inspect") return undefined;
+        return createSafeCallable();
+    },
+});
 
 // 6. Complete 1:1 DiscordNative Bridge
 const rawDiscordNative = {
