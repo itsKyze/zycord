@@ -4,7 +4,7 @@
  */
 const { contextBridge, ipcRenderer, webFrame } = require("electron");
 
-// 1. Prevent ETF or Zstd WebSockets
+// 1. Prevent ETF or Zstd WebSockets (Use standard JSON & zlib for web gateway)
 if (typeof window !== "undefined") {
     const OrigWebSocket = window.WebSocket;
     if (OrigWebSocket) {
@@ -13,7 +13,9 @@ if (typeof window !== "undefined") {
                 url = url.replace("encoding=etf", "encoding=json")
                          .replace("compress=zstd-stream", "compress=zlib-stream");
             }
-            return new OrigWebSocket(url, protocols);
+            return protocols !== undefined
+                ? new OrigWebSocket(url, protocols)
+                : new OrigWebSocket(url);
         };
         PatchedWebSocket.prototype = OrigWebSocket.prototype;
         Object.assign(PatchedWebSocket, OrigWebSocket);
@@ -35,6 +37,8 @@ function hookWebpack() {
         if (!modules || typeof modules !== "object") return;
         for (const id in modules) {
             const origFn = modules[id];
+            if (typeof origFn !== "function") continue;
+
             modules[id] = function () {
                 const ret = origFn.apply(this, arguments);
                 const exp = arguments[1] || (arguments[0] && arguments[0].exports) || this;
@@ -92,35 +96,46 @@ try {
     console.error("[Zycord] hookWebpack failed:", e);
 }
 
-// 4. Safe Proxy Generator (Returns empty string on toString to prevent UI artifacts)
-const createSafeCallable = () => {
+// 4. Omnipotent Safe Proxy Generator
+// Resolves promises, handles array methods (.includes, .indexOf), event emitters (.on, .off),
+// string representations (empty string), and constructors smoothly without throwing.
+const createSafeUniverse = () => {
     const fn = function () {
-        return Promise.resolve();
+        return createSafeUniverse();
     };
-    return new Proxy(fn, {
-        get: (_target, prop) => {
-            if (prop === "then") return undefined;
-            if (prop === Symbol.toPrimitive || prop === "toString") return () => "";
-            if (prop === "length") return 0;
-            return createSafeCallable();
-        },
-        apply: () => Promise.resolve(),
-    });
-};
 
-const createSafeProxy = (name = "") => {
-    const fn = function () {
-        return createSafeCallable();
+    fn.then = function (resolve) {
+        return Promise.resolve(resolve ? resolve() : undefined);
     };
+    fn.catch = function () {
+        return fn;
+    };
+    fn.finally = function (cb) {
+        if (typeof cb === "function") cb();
+        return fn;
+    };
+
     return new Proxy(fn, {
         get: (_target, prop) => {
-            if (prop === "then") return undefined;
+            if (prop === "then") return fn.then;
+            if (prop === "catch") return fn.catch;
+            if (prop === "finally") return fn.finally;
             if (prop === Symbol.toPrimitive || prop === "toString") return () => "";
+            if (prop === "valueOf") return () => 0;
+            if (prop === Symbol.iterator) return function* () {};
             if (prop === "length") return 0;
+            if (prop === "includes") return () => false;
+            if (prop === "indexOf") return () => -1;
+            if (prop === "on" || prop === "addListener") return () => () => {};
+            if (prop === "off" || prop === "removeListener") return () => {};
+            if (prop === "emit") return () => false;
             if (prop === "hasPermission") return () => Promise.resolve(true);
-            return createSafeCallable();
+            if (prop === "command") return () => {};
+            if (prop === "destroy" || prop === "close") return () => {};
+            return createSafeUniverse();
         },
-        apply: () => createSafeCallable(),
+        apply: () => createSafeUniverse(),
+        construct: () => createSafeUniverse(),
     });
 };
 
@@ -135,12 +150,51 @@ function wrapWithSafeProxy(obj) {
                 return val;
             }
             if (typeof prop === "symbol" || prop === "then" || prop === "inspect") return undefined;
-            return createSafeCallable();
+            return createSafeUniverse();
         },
     });
 }
 
-// 5. Discord Utils Implementation (Concrete JavaScript methods with safe callable fallback)
+// 5. Mock Discord RPC Transports for module 998921 / 33006
+const createMockEmitter = () => {
+    const emitter = {
+        on: (_evt, _cb) => emitter,
+        once: (_evt, _cb) => emitter,
+        off: (_evt, _cb) => emitter,
+        emit: () => false,
+        removeListener: () => emitter,
+        removeAllListeners: () => emitter,
+        listen: (_port, cb) => { if (typeof cb === "function") cb(); return emitter; },
+        close: (cb) => { if (typeof cb === "function") cb(); },
+        write: () => true,
+        end: () => {},
+        address: () => ({ port: 6463, family: "IPv4", address: "127.0.0.1" }),
+        setHeader: () => {},
+        writeHead: () => {},
+    };
+    return emitter;
+};
+
+const mockDiscordRpc = {
+    RPCIPC: {
+        net: {
+            createServer: () => createMockEmitter(),
+            createConnection: () => createMockEmitter(),
+        },
+    },
+    RPCWebSocket: {
+        http: {
+            createServer: () => createMockEmitter(),
+        },
+        ws: {
+            Server: function () {
+                return createMockEmitter();
+            },
+        },
+    },
+};
+
+// 6. Discord Utils Implementation (Concrete JavaScript methods with safe callable fallback)
 const discordUtilsTarget = {
     createDateFormatter: (_format) => {
         const dtf = new Intl.DateTimeFormat(undefined, {
@@ -168,11 +222,11 @@ const discordUtils = new Proxy(discordUtilsTarget, {
     get: (target, prop) => {
         if (prop in target) return target[prop];
         if (typeof prop === "symbol" || prop === "then" || prop === "inspect") return undefined;
-        return createSafeCallable();
+        return createSafeUniverse();
     },
 });
 
-// 6. Complete 1:1 DiscordNative Bridge
+// 7. Complete 1:1 DiscordNative Bridge
 const rawDiscordNative = {
     isElectron: true,
     platform: "win32",
@@ -186,6 +240,7 @@ const rawDiscordNative = {
         getModuleVersions: () => ({}),
         relaunch: () => ipcRenderer.invoke("window-relaunch"),
         getPreferredSystemLanguages: () => Promise.resolve(["en-US"]),
+        setBadgeCount: () => {},
     },
 
     os: {
@@ -202,6 +257,19 @@ const rawDiscordNative = {
         env: {},
     },
 
+    processUtils: {
+        getMainArgvSync: () => [],
+        getCurrentPid: () => process.pid,
+        getMemoryUsage: () => Promise.resolve({}),
+        getLastCrash: () => Promise.resolve(null),
+        purgeCrashReports: () => Promise.resolve(),
+        getSystemInfo: () => Promise.resolve({
+            cpu: { model: "AMD Ryzen", cores: 12 },
+            memory: { total: 16000000, free: 8000000 },
+            electronGPUInfo: { gpuDevice: [] },
+        }),
+    },
+
     window: {
         minimize: () => ipcRenderer.invoke("window-minimize"),
         maximize: () => ipcRenderer.invoke("window-maximize"),
@@ -213,6 +281,7 @@ const rawDiscordNative = {
             if (typeof factor === "number" && !isNaN(factor)) {
                 webFrame.setZoomFactor(factor);
                 try { localStorage.setItem("zycord-zoom-factor", String(factor)); } catch (_) {}
+                ipcRenderer.invoke("set-zoom-factor", factor).catch(() => {});
             }
         },
         getZoomFactor: () => webFrame.getZoomFactor(),
@@ -236,17 +305,27 @@ const rawDiscordNative = {
     nativeModules: {
         canLoadNativeModules: true,
         hasUpdater: false,
-        getMetadata: () => null,
+        getMetadata: () => ({}),
+        getModuleVersions: () => ({}),
+        getDispatch: () => null,
         requireModule: (name) => {
             if (name === "discord_utils") return discordUtils;
-            if (["discord_erlpack", "erlpack", "discord_zstd", "zstd"].includes(name)) {
+            if (name === "discord_rpc") return mockDiscordRpc;
+            if (["discord_erlpack", "erlpack", "discord_zstd", "zstd", "discord_dispatch", "discord_voice"].includes(name)) {
                 const err = new Error(`Cannot find module '${name}'`);
                 err.code = "MODULE_NOT_FOUND";
                 throw err;
             }
-            return createSafeProxy(name);
+            return createSafeUniverse();
         },
-        ensureModule: (_name) => Promise.resolve(),
+        ensureModule: (name) => {
+            if (["discord_erlpack", "erlpack", "discord_zstd", "zstd", "discord_dispatch", "discord_voice"].includes(name)) {
+                const err = new Error(`Cannot find module '${name}'`);
+                err.code = "MODULE_NOT_FOUND";
+                return Promise.reject(err);
+            }
+            return Promise.resolve();
+        },
     },
 
     crashReporter: {
@@ -254,12 +333,34 @@ const rawDiscordNative = {
             distro: "CachyOS Linux",
             wm: "Hyprland",
             runtime_environment: "native",
+            version: "1.0.17",
         }),
+        updateCrashReporter: () => {},
     },
 
     settings: {
-        get: (_key, def) => Promise.resolve(def ?? null),
-        set: () => Promise.resolve(),
+        get: (key, defaultValue) => {
+            try {
+                const val = localStorage.getItem("zycord-native-settings-" + key);
+                return val !== null ? JSON.parse(val) : (defaultValue !== undefined ? defaultValue : null);
+            } catch (_) {
+                return defaultValue !== undefined ? defaultValue : null;
+            }
+        },
+        set: (key, value) => {
+            try {
+                localStorage.setItem("zycord-native-settings-" + key, JSON.stringify(value));
+            } catch (_) {}
+            return Promise.resolve();
+        },
+        getSync: (key, defaultValue) => {
+            try {
+                const val = localStorage.getItem("zycord-native-settings-" + key);
+                return val !== null ? JSON.parse(val) : (defaultValue !== undefined ? defaultValue : null);
+            } catch (_) {
+                return defaultValue !== undefined ? defaultValue : null;
+            }
+        },
     },
 
     fileManager: {
@@ -277,7 +378,7 @@ const rawDiscordNative = {
 
     voice: {
         supported: false,
-        on: () => {},
+        on: () => () => {},
         off: () => {},
         removeAllListeners: () => {},
         setTransportOptions: () => {},
@@ -293,10 +394,32 @@ const rawDiscordNative = {
 
     powerMonitor: {
         removeAllListeners: () => {},
-        on: () => {},
+        on: (_evt, _cb) => () => {},
         off: () => {},
         addListener: () => {},
         removeListener: () => {},
+        getSystemIdleTimeMs: () => 0,
+    },
+
+    ipc: {
+        send: (channel, ...args) => {
+            try { ipcRenderer.send(channel, ...args); } catch (_) {}
+        },
+        sendSync: (channel, ...args) => {
+            try { return ipcRenderer.sendSync(channel, ...args); } catch (_) { return null; }
+        },
+        invoke: (channel, ...args) => {
+            try { return ipcRenderer.invoke(channel, ...args); } catch (_) { return Promise.resolve(); }
+        },
+        on: (channel, listener) => {
+            try { ipcRenderer.on(channel, listener); } catch (_) {}
+            return () => {
+                try { ipcRenderer.removeListener(channel, listener); } catch (_) {}
+            };
+        },
+        off: (channel, listener) => {
+            try { ipcRenderer.removeListener(channel, listener); } catch (_) {}
+        },
     },
 
     userDataCache: {
@@ -337,7 +460,7 @@ try {
     window.VesktopNative = ZycordNative;
 }
 
-// 7. Restore saved zoom factor on startup
+// 8. Restore saved zoom factor on startup
 try {
     const savedZoom = localStorage.getItem("zycord-zoom-factor");
     if (savedZoom) {
@@ -348,7 +471,7 @@ try {
     }
 } catch (_) {}
 
-// 8. Global Zoom shortcuts (Ctrl++, Ctrl+-, Ctrl+0, Ctrl+Wheel)
+// 9. Global Zoom shortcuts (Ctrl++, Ctrl+-, Ctrl+0, Ctrl+Wheel)
 window.addEventListener("keydown", (e) => {
     if (!e.ctrlKey && !e.metaKey) return;
 
@@ -358,16 +481,19 @@ window.addEventListener("keydown", (e) => {
         const next = Math.min(2.5, Math.round((current + 0.1) * 10) / 10);
         webFrame.setZoomFactor(next);
         try { localStorage.setItem("zycord-zoom-factor", String(next)); } catch (_) {}
+        ipcRenderer.invoke("set-zoom-factor", next).catch(() => {});
     } else if (e.key === "-" || e.key === "_" || e.code === "NumpadSubtract") {
         e.preventDefault();
         const current = webFrame.getZoomFactor();
         const next = Math.max(0.5, Math.round((current - 0.1) * 10) / 10);
         webFrame.setZoomFactor(next);
         try { localStorage.setItem("zycord-zoom-factor", String(next)); } catch (_) {}
+        ipcRenderer.invoke("set-zoom-factor", next).catch(() => {});
     } else if (e.key === "0" || e.code === "Numpad0") {
         e.preventDefault();
         webFrame.setZoomFactor(1.0);
         try { localStorage.setItem("zycord-zoom-factor", "1.0"); } catch (_) {}
+        ipcRenderer.invoke("set-zoom-factor", 1.0).catch(() => {});
     }
 }, { capture: true });
 
@@ -379,10 +505,11 @@ window.addEventListener("wheel", (e) => {
         const next = Math.max(0.5, Math.min(2.5, Math.round((current + delta) * 100) / 100));
         webFrame.setZoomFactor(next);
         try { localStorage.setItem("zycord-zoom-factor", String(next)); } catch (_) {}
+        ipcRenderer.invoke("set-zoom-factor", next).catch(() => {});
     }
 }, { passive: false });
 
-// 9. UI Styling: Hide corrupt notices, hide browser navigation arrows, dark scrollbars
+// 10. UI Styling: Hide corrupt notices, hide browser navigation arrows, dark scrollbars
 function applyDiscordUiFixes() {
     if (document.getElementById("zycord-ui-fixes")) return;
 
@@ -420,6 +547,7 @@ function applyDiscordUiFixes() {
         ::-webkit-scrollbar-track {
             background-color: transparent !important;
             border: none !important;
+            display: none !important;
         }
         ::-webkit-scrollbar-thumb {
             background-color: rgba(26, 27, 30, 0.8) !important;
@@ -458,3 +586,4 @@ if (document.readyState === "loading") {
 } else {
     applyDiscordUiFixes();
 }
+

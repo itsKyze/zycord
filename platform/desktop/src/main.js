@@ -87,6 +87,25 @@ function createMainWindow() {
     });
     session.defaultSession.setPermissionCheckHandler(() => true);
 
+    if (session.defaultSession.setDisplayMediaRequestHandler) {
+        session.defaultSession.setDisplayMediaRequestHandler(async (_request, callback) => {
+            try {
+                const sources = await desktopCapturer.getSources({
+                    types: ["screen", "window"],
+                    thumbnailSize: { width: 1280, height: 720 },
+                });
+                if (sources && sources.length > 0) {
+                    callback({ video: sources[0] });
+                } else {
+                    callback(null);
+                }
+            } catch (err) {
+                console.error("[MainWindow] setDisplayMediaRequestHandler error:", err);
+                callback(null);
+            }
+        });
+    }
+
     const ZYCORD_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.186 Electron/33.4.11 Safari/537.36 Zycord/1.0.17";
     mainWindow.webContents.setUserAgent(ZYCORD_UA);
 
@@ -259,7 +278,11 @@ ipcMain.handle("get-zoom-factor", () => {
 });
 ipcMain.handle("desktop-capture-get-sources", async (_event, opts) => {
     try {
-        const sources = await desktopCapturer.getSources(opts || { types: ["screen", "window"] });
+        const queryOpts = Object.assign({
+            types: ["screen", "window"],
+            thumbnailSize: { width: 320, height: 180 },
+        }, opts || {});
+        const sources = await desktopCapturer.getSources(queryOpts);
         return sources.map((s) => ({
             id: s.id,
             name: s.name,
