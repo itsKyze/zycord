@@ -1,10 +1,10 @@
 /**
  * Zycord Desktop Preload Script
- * 1:1 Discord Native Integration & Clean Window Frame
+ * High Performance WebMediaEngine & Clean Frameless Integration
  */
-const { contextBridge, ipcRenderer } = require("electron");
+const { contextBridge, ipcRenderer, webFrame } = require("electron");
 
-// Prevent any attempt to use ETF or Zstd WebSockets
+// 1. Prevent any attempt to use ETF or Zstd WebSockets (ensures standard JSON gateway)
 if (typeof window !== "undefined") {
     const OrigWebSocket = window.WebSocket;
     if (OrigWebSocket) {
@@ -21,233 +21,200 @@ if (typeof window !== "undefined") {
     }
 }
 
-// Safe proxy to intercept ANY call without throwing
-const createSafeProxy = (name = "") => {
-    const fn = function () {
-        return createSafeProxy(name);
-    };
-    return new Proxy(fn, {
-        get: (_target, prop) => {
-            if (prop === "then") return undefined;
-            if (prop === Symbol.toPrimitive || prop === "toString") return () => `[SafeNativeProxy ${name}]`;
-            if (prop === "length") return 0;
-            if (prop === "hasPermission") return () => Promise.resolve(true);
-            if (prop === "VoiceConnection") return function () {};
-            return createSafeProxy(`${name}.${String(prop)}`);
-        },
-        apply: (_target, _thisArg, _argArray) => {
-            return createSafeProxy(name);
-        },
-    });
-};
+// 2. Hide nag banner / desktop download banner
+try {
+    localStorage.setItem("hideNag", "true");
+} catch (_) {}
 
-const safeModuleProxy = createSafeProxy("discord_native_module");
-
-// Auto-shim wrapper: if a property is not defined, returns a safe function/proxy rather than undefined
-function wrapWithSafeProxy(obj) {
-    return new Proxy(obj, {
-        get(target, prop) {
-            if (prop in target) {
-                const val = target[prop];
-                if (val !== null && typeof val === "object" && !(val instanceof Promise) && !Array.isArray(val)) {
-                    return wrapWithSafeProxy(val);
-                }
-                return val;
-            }
-            if (typeof prop === "symbol" || prop === "then" || prop === "inspect") return undefined;
-            return createSafeProxy(String(prop));
-        }
-    });
-}
-
-const rawNative = {
-    isElectron: true,
-    platform: process.platform,
-    appName: "Zycord",
-    domain: "app.zyron.site",
-
+// 3. Vesktop & Zycord Native bridge
+// Note: We deliberately do NOT expose window.DiscordNative.
+// Without DiscordNative, Discord uses standard Chromium WebRTC (WebMediaEngine),
+// which connects directly to the Pion SFU gateway without crashing, without corrupt banners,
+// and without fake [SafeNativeProxy] formatting artifacts.
+const VesktopNative = {
     app: {
-        getReleaseChannel: () => "stable",
         getVersion: () => "1.0.17",
-        getBuildNumber: () => 17,
-        getModuleVersions: () => ({}),
-        relaunch: () => {
-            console.log("[ZycordNative] Suppressed auto-relaunch watchdog call.");
-        },
-        getPreferredSystemLanguages: () => Promise.resolve(["en-US"]),
+        relaunch: () => ipcRenderer.invoke("window-relaunch"),
+        setBadgeCount: () => {},
+        supportsWindowsTransparency: () => false,
+        getEnableHardwareAcceleration: () => true,
+        isOutdated: () => Promise.resolve(false),
     },
-
-    os: {
-        arch: process.arch,
-        appArch: process.arch,
-        release: "6.6.0-generic",
-        systemVersion: "Linux",
-        buildRevision: 1,
-    },
-
-    process: {
-        platform: process.platform,
-        arch: process.arch,
-        env: {
-            LIBVA_DRIVER_NAME: "",
-        },
-    },
-
-    window: {
+    win: {
+        focus: () => ipcRenderer.invoke("window-focus"),
+        close: () => ipcRenderer.invoke("window-close"),
         minimize: () => ipcRenderer.invoke("window-minimize"),
         maximize: () => ipcRenderer.invoke("window-maximize"),
-        close: () => ipcRenderer.invoke("window-close"),
-        isMaximized: () => ipcRenderer.sendSync("window-is-maximized"),
-        setAlwaysOnTop: (enabled) => ipcRenderer.invoke("window-set-always-on-top", enabled),
         flashFrame: () => {},
-        setBackgroundThrottling: () => {},
-        setProgressBar: () => {},
-        blur: () => {},
-        focus: () => {},
     },
-
-    clipboard: {
-        copy: (text) => ipcRenderer.invoke("clipboard-copy", text),
-        paste: () => ipcRenderer.invoke("clipboard-paste"),
-        read: () => ipcRenderer.invoke("clipboard-paste"),
-    },
-
-    nativeModules: {
-        canLoadNativeModules: false,
-        hasUpdater: false,
-        getMetadata: () => null,
-        requireModule: (name) => {
-            if (["discord_erlpack", "erlpack", "discord_zstd", "zstd"].includes(name)) {
-                const err = new Error(`Cannot find module '${name}'`);
-                err.code = "MODULE_NOT_FOUND";
-                throw err;
-            }
-            if (name === "discord_voice") {
-                return wrapWithSafeProxy({
-                    VoiceConnection: function VoiceConnection() {
-                        return createSafeProxy("VoiceConnection");
-                    },
-                    supported: true,
-                    setDeviceChangeCallback: () => {},
-                    getAudioSubsystemInfo: () => Promise.resolve({ audio_subsystem: "standard" }),
-                    getSoundshareStatus: () => Promise.resolve(false),
-                    getOutputDevices: () => Promise.resolve([]),
-                    getInputDevices: () => Promise.resolve([]),
-                    getVideoInputDevices: () => Promise.resolve([]),
-                    setTransportOptions: () => {},
-                });
-            }
-            return createSafeProxy(name);
-        },
-        ensureModule: (_name) => Promise.resolve(),
-    },
-
-    crashReporter: {
-        getMetadata: () => ({
-            wm: "Hyprland",
-            distro: "CachyOS Linux",
-            runtime_environment: "native",
-            display_server: "wayland",
-        }),
-    },
-
     settings: {
-        get: (_key, def) => Promise.resolve(def ?? null),
+        get: () => ({}),
         set: () => Promise.resolve(),
     },
-
-    fileManager: {
-        getModulePath: () => "",
-        showItemInFolder: () => {},
-        openPath: () => {},
-    },
-
-    nativePermissions: {
-        hasPermission: () => Promise.resolve(true),
-        requestPermission: () => Promise.resolve(true),
-        getPermissionState: () => Promise.resolve(true),
-        openSettings: () => {},
-    },
-
-    voice: {
-        supported: false,
-        on: () => {},
-        off: () => {},
-        removeAllListeners: () => {},
-        setTransportOptions: () => {},
-        maybeDownloadOpenH264: () => Promise.resolve(),
-    },
-
-    gpuSettings: {
-        getEnableHardwareAcceleration: () => true,
-        setEnableHardwareAcceleration: () => {},
-        setChromiumSwitches: () => {},
-        getGPUSettings: () => Promise.resolve({}),
-    },
-
-    powerMonitor: {
-        removeAllListeners: () => {},
-        on: () => {},
-        off: () => {},
-        addListener: () => {},
-        removeListener: () => {},
-    },
-
-    userDataCache: {
-        cacheUserData: () => {},
-        getCachedUserData: () => Promise.resolve(null),
-    },
-
-    features: {
-        supports: () => false,
-        declareSupported: () => {},
-    },
-
-    spellCheck: {
-        getAvailableDictionaries: () => Promise.resolve([]),
-        setSpellcheckLanguage: () => {},
-    },
-
-    safeStorage: {
-        isEncryptionAvailable: () => false,
-        encryptString: (str) => Promise.resolve(str),
-        decryptString: (str) => Promise.resolve(str),
-    },
+    zoom: {
+        set: (factor) => {
+            if (typeof factor === "number" && !isNaN(factor)) {
+                webFrame.setZoomFactor(factor);
+                try { localStorage.setItem("zycord-zoom-factor", String(factor)); } catch (_) {}
+            }
+        },
+        get: () => webFrame.getZoomFactor(),
+    }
 };
 
-const ZycordNative = wrapWithSafeProxy(rawNative);
-
 try {
-    contextBridge.exposeInMainWorld("ZycordNative", ZycordNative);
-    contextBridge.exposeInMainWorld("DiscordNative", ZycordNative);
-} catch (e) {
-    window.ZycordNative = ZycordNative;
-    window.DiscordNative = ZycordNative;
+    contextBridge.exposeInMainWorld("VesktopNative", VesktopNative);
+    contextBridge.exposeInMainWorld("ZycordNative", VesktopNative);
+} catch (_) {
+    window.VesktopNative = VesktopNative;
+    window.ZycordNative = VesktopNative;
 }
 
-// Clean Discord Web Scrollbars, Remove Corrupt Notice Bar, Full Canvas
-function applyDiscordUiFixes() {
-    if (document.getElementById("zycord-scrollbar-fix")) return;
+// 4. Restore saved zoom factor on startup
+try {
+    const savedZoom = localStorage.getItem("zycord-zoom-factor");
+    if (savedZoom) {
+        const factor = parseFloat(savedZoom);
+        if (!isNaN(factor) && factor >= 0.5 && factor <= 2.5) {
+            webFrame.setZoomFactor(factor);
+        }
+    }
+} catch (_) {}
+
+// 5. Global Zoom shortcuts & Ctrl+MouseWheel
+window.addEventListener("keydown", (e) => {
+    if (!e.ctrlKey && !e.metaKey) return;
+
+    if (e.key === "=" || e.key === "+" || e.code === "NumpadAdd") {
+        e.preventDefault();
+        const current = webFrame.getZoomFactor();
+        const next = Math.min(2.5, Math.round((current + 0.1) * 10) / 10);
+        webFrame.setZoomFactor(next);
+        try { localStorage.setItem("zycord-zoom-factor", String(next)); } catch (_) {}
+    } else if (e.key === "-" || e.key === "_" || e.code === "NumpadSubtract") {
+        e.preventDefault();
+        const current = webFrame.getZoomFactor();
+        const next = Math.max(0.5, Math.round((current - 0.1) * 10) / 10);
+        webFrame.setZoomFactor(next);
+        try { localStorage.setItem("zycord-zoom-factor", String(next)); } catch (_) {}
+    } else if (e.key === "0" || e.code === "Numpad0") {
+        e.preventDefault();
+        webFrame.setZoomFactor(1.0);
+        try { localStorage.setItem("zycord-zoom-factor", "1.0"); } catch (_) {}
+    }
+}, { capture: true });
+
+window.addEventListener("wheel", (e) => {
+    if (e.ctrlKey) {
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.05 : -0.05;
+        const current = webFrame.getZoomFactor();
+        const next = Math.max(0.5, Math.min(2.5, Math.round((current + delta) * 100) / 100));
+        webFrame.setZoomFactor(next);
+        try { localStorage.setItem("zycord-zoom-factor", String(next)); } catch (_) {}
+    }
+}, { passive: false });
+
+// 6. Native Discord-style Window Controls & Drag Zone
+function injectWindowControls() {
+    if (document.getElementById("zycord-window-controls")) return;
+
+    // Draggable top strip
+    const dragStrip = document.createElement("div");
+    dragStrip.id = "zycord-top-drag-strip";
+    document.body.appendChild(dragStrip);
+
+    // Controls container
+    const controls = document.createElement("div");
+    controls.id = "zycord-window-controls";
+    controls.innerHTML = `
+        <button id="zycord-btn-min" class="zycord-btn" title="Minimize" aria-label="Minimize">
+            <svg width="12" height="12" viewBox="0 0 12 12"><rect fill="currentColor" width="10" height="1" x="1" y="6"></rect></svg>
+        </button>
+        <button id="zycord-btn-max" class="zycord-btn" title="Maximize" aria-label="Maximize">
+            <svg width="12" height="12" viewBox="0 0 12 12"><rect fill="none" stroke="currentColor" width="9" height="9" x="1.5" y="1.5"></rect></svg>
+        </button>
+        <button id="zycord-btn-close" class="zycord-btn zycord-btn-close" title="Close" aria-label="Close">
+            <svg width="12" height="12" viewBox="0 0 12 12"><polygon fill="currentColor" fill-rule="evenodd" points="11 1.576 6.583 6.007 11 10.424 10.424 11 5.993 6.583 1.576 11 1 10.424 5.417 6.007 1 1.576 1.576 1 5.993 5.417 10.424 1"></polygon></svg>
+        </button>
+    `;
+    document.body.appendChild(controls);
+
+    document.getElementById("zycord-btn-min")?.addEventListener("click", () => {
+        ipcRenderer.invoke("window-minimize");
+    });
+    document.getElementById("zycord-btn-max")?.addEventListener("click", () => {
+        ipcRenderer.invoke("window-maximize");
+    });
+    document.getElementById("zycord-btn-close")?.addEventListener("click", () => {
+        ipcRenderer.invoke("window-close");
+    });
+}
+
+// 7. Inject Styles for UI & Window Controls
+function applyStyles() {
+    if (document.getElementById("zycord-custom-styles")) return;
 
     const style = document.createElement("style");
-    style.id = "zycord-scrollbar-fix";
+    style.id = "zycord-custom-styles";
     style.textContent = `
-        /* Hide corrupt installation notice bar and danger notices */
-        [class*="colorDanger"],
-        [class*="notice"][class*="colorDanger"],
-        [class*="notice_"][class*="colorDanger_"],
-        [class*="notice__"][class*="colorDanger__"],
-        [class*="notice-"][class*="colorDanger-"],
-        [class*="noticeRegion"] [class*="colorDanger"] {
-            display: none !important;
-            height: 0 !important;
-            min-height: 0 !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            visibility: hidden !important;
-            opacity: 0 !important;
-            pointer-events: none !important;
-            overflow: hidden !important;
+        /* Draggable edge */
+        #zycord-top-drag-strip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 110px;
+            height: 6px;
+            z-index: 9999998;
+            -webkit-app-region: drag;
+            background: transparent;
+        }
+
+        /* Window controls */
+        #zycord-window-controls {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 28px;
+            z-index: 9999999;
+            display: flex;
+            align-items: center;
+            background: transparent;
+            -webkit-app-region: no-drag;
+        }
+
+        .zycord-btn {
+            width: 34px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: #b5bac1;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+            outline: none;
+            transition: background-color 0.12s ease, color 0.12s ease;
+        }
+
+        .zycord-btn:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            color: #dbdee1;
+        }
+
+        .zycord-btn:active {
+            background-color: rgba(255, 255, 255, 0.14);
+        }
+
+        .zycord-btn-close:hover {
+            background-color: #da373c !important;
+            color: #ffffff !important;
+        }
+
+        .zycord-btn-close:active {
+            background-color: #a1282c !important;
         }
 
         /* Discord style dark transparent scrollbars */
@@ -292,42 +259,13 @@ function applyDiscordUiFixes() {
     document.head.appendChild(style);
 }
 
-function purgeCorruptBanner() {
-    try {
-        if (!document.body) return;
-        const textNodes = document.evaluate(
-            "//*[contains(text(), 'installation is corrupt') or contains(text(), \"Let's fix that\")]",
-            document,
-            null,
-            XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
-            null
-        );
-        for (let i = 0; i < textNodes.snapshotLength; i++) {
-            const node = textNodes.snapshotItem(i);
-            const banner = node.closest('[class*="notice"]') || node.closest('[class*="colorDanger"]') || node.parentElement;
-            if (banner) {
-                banner.style.setProperty("display", "none", "important");
-                banner.remove();
-            }
-        }
-    } catch (_) {}
-}
-
-setInterval(purgeCorruptBanner, 400);
-
-if (typeof MutationObserver !== "undefined") {
-    const bannerObserver = new MutationObserver(purgeCorruptBanner);
-    if (document.documentElement) {
-        bannerObserver.observe(document.documentElement, { childList: true, subtree: true });
-    } else {
-        document.addEventListener("DOMContentLoaded", () => {
-            bannerObserver.observe(document.documentElement, { childList: true, subtree: true });
-        });
-    }
+function initDom() {
+    applyStyles();
+    injectWindowControls();
 }
 
 if (document.readyState === "loading") {
-    window.addEventListener("DOMContentLoaded", applyDiscordUiFixes);
+    window.addEventListener("DOMContentLoaded", initDom);
 } else {
-    applyDiscordUiFixes();
+    initDom();
 }

@@ -2,11 +2,16 @@
  * Zycord Desktop Main Entry Point
  */
 const path = require("path");
-const { app, BrowserWindow, Menu, ipcMain, clipboard } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, clipboard, session } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
 
 Menu.setApplicationMenu(null);
+
+// Linux Wayland & Hardware Acceleration flags
+app.commandLine.appendSwitch("enable-features", "WaylandWindowDecorations,WebRTCPipeWireCapturer");
+app.commandLine.appendSwitch("enable-webrtc-pipewire-capturer");
+app.commandLine.appendSwitch("ozone-platform-hint", "auto");
 
 log.transports.file.level = "info";
 autoUpdater.logger = log;
@@ -76,6 +81,12 @@ function createMainWindow() {
     });
     mainWindow.setMenuBarVisibility(false);
 
+    // Auto-grant permissions for audio, video, screenshare, notifications
+    session.defaultSession.setPermissionRequestHandler((_webContents, permission, callback) => {
+        callback(true);
+    });
+    session.defaultSession.setPermissionCheckHandler(() => true);
+
     const ZYCORD_UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.6613.186 Electron/33.4.11 Safari/537.36 Zycord/1.0.17";
     mainWindow.webContents.setUserAgent(ZYCORD_UA);
 
@@ -109,23 +120,6 @@ function createMainWindow() {
     mainWindow.webContents.once("did-finish-load", showMain);
     setTimeout(showMain, 2000);
 
-    const hideCorruptNoticeCss = `
-        [class*="colorDanger"],
-        [class*="notice"][class*="colorDanger"],
-        [class*="noticeRegion"] [class*="colorDanger"] {
-            display: none !important;
-            height: 0 !important;
-            visibility: hidden !important;
-            overflow: hidden !important;
-        }
-    `;
-    mainWindow.webContents.on("dom-ready", () => {
-        mainWindow.webContents.insertCSS(hideCorruptNoticeCss).catch(() => {});
-    });
-    mainWindow.webContents.on("did-finish-load", () => {
-        mainWindow.webContents.insertCSS(hideCorruptNoticeCss).catch(() => {});
-    });
-
     // Open DevTools with Ctrl+Shift+I or F12
     mainWindow.webContents.on("before-input-event", (event, input) => {
         if ((input.control && input.shift && input.key.toLowerCase() === "i") || input.key === "F12") {
@@ -137,6 +131,11 @@ function createMainWindow() {
     mainWindow.loadURL(webappUrl).catch((err) => {
         console.error("[MainWindow] loadURL error:", err);
     });
+
+    mainWindow.on("closed", () => {
+        mainWindow = null;
+    });
+}
 
     mainWindow.on("closed", () => {
         mainWindow = null;
@@ -248,6 +247,20 @@ ipcMain.handle("clipboard-paste", () => {
 ipcMain.handle("window-relaunch", () => {
     app.relaunch();
     app.quit();
+});
+ipcMain.handle("window-focus", () => {
+    if (mainWindow) {
+        if (mainWindow.isMinimized()) mainWindow.restore();
+        mainWindow.focus();
+    }
+});
+ipcMain.handle("set-zoom-factor", (_event, factor) => {
+    if (mainWindow && typeof factor === "number") {
+        mainWindow.webContents.setZoomFactor(factor);
+    }
+});
+ipcMain.handle("get-zoom-factor", () => {
+    return mainWindow ? mainWindow.webContents.getZoomFactor() : 1.0;
 });
 
 ipcMain.handle("check-for-updates", async () => {
