@@ -2,7 +2,7 @@
  * Zycord Desktop Main Entry Point
  */
 const path = require("path");
-const { app, BrowserWindow, Menu, ipcMain, clipboard, session } = require("electron");
+const { app, BrowserWindow, Menu, ipcMain, clipboard, session, desktopCapturer } = require("electron");
 const { autoUpdater } = require("electron-updater");
 const log = require("electron-log");
 
@@ -256,6 +256,18 @@ ipcMain.handle("set-zoom-factor", (_event, factor) => {
 });
 ipcMain.handle("get-zoom-factor", () => {
     return mainWindow ? mainWindow.webContents.getZoomFactor() : 1.0;
+});
+ipcMain.handle("desktop-capture-get-sources", async (_event, opts) => {
+    try {
+        const sources = await desktopCapturer.getSources(opts || { types: ["screen", "window"] });
+        return sources.map((s) => ({
+            id: s.id,
+            name: s.name,
+            url: s.thumbnail ? s.thumbnail.toDataURL() : "",
+        }));
+    } catch (e) {
+        return [];
+    }
 });
 
 ipcMain.handle("check-for-updates", async () => {
