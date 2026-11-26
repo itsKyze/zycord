@@ -4,48 +4,20 @@ import { applySiteLanguage } from "./i18n.js";
 
 export const FOOTER_COLUMNS = [
 	{
-		title: "Product",
+		title: "Zycord",
 		links: [
 			{ label: "Download", href: "/download" },
-			{ label: "Nitro", href: "/nitro" },
-			{ label: "Status", href: "/status" },
-			{ label: "App Directory", href: "/application-directory" },
-			{ label: "Gift Cards", href: "/gift-cards" }
-		]
-	},
-	{
-		title: "Company",
-		links: [
-			{ label: "About", href: "/company" },
-			{ label: "Jobs", href: "/careers" },
-			{ label: "Brand", href: "/branding" },
-			{ label: "Newsroom", href: "/newsroom" }
-		]
-	},
-	{
-		title: "Resources",
-		links: [
-			{ label: "Support", href: "/support" },
-			{ label: "Safety", href: "/safety" },
-			{ label: "Blog", href: "/blog" },
-			{ label: "Creators", href: "/creators" },
-			{ label: "Community", href: "/community" },
 			{ label: "Developers", href: "/developers" },
-			{ label: "Quests", href: "/ads/quests" },
-			{ label: "Official 3rd Party Merch", href: "/merch" },
-			{ label: "Feedback", href: "/feedback" }
+			{ label: "Web Client", href: "/app" },
+			{ label: "Status", href: "/status" }
 		]
 	},
 	{
-		title: "Policies",
+		title: "Legal & Privacy",
 		links: [
 			{ label: "Terms", href: "/terms" },
 			{ label: "Privacy", href: "/privacy" },
-			{ label: "Cookie Settings", href: "#cookie-settings", isCookieSettings: true },
-			{ label: "Guidelines", href: "/guidelines" },
-			{ label: "Acknowledgements", href: "/acknowledgements" },
-			{ label: "Licenses", href: "/licenses" },
-			{ label: "Company Information", href: "/company-information" }
+			{ label: "Licenses", href: "/licenses" }
 		]
 	}
 ];

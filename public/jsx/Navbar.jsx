@@ -3,110 +3,6 @@ import { applySiteLanguage, getSavedLanguage } from "./i18n.js";
 
 export const NAVIGATION_ITEMS = [
 	{ label: "Download", href: "/download", key: "download" },
-	{ label: "Nitro", href: "/nitro", key: "nitro" },
-	{
-		label: "Discover",
-		href: "/servers",
-		key: "discover",
-		decor: "/site/media/zycord/nav-discover-scroll.webp",
-		decorStyle: { width: "120px", right: "-38px", bottom: "-42px" },
-		columns: [
-			{
-				title: "Resources",
-				links: [
-					{ label: "Server Directory", href: "/servers" },
-					{ label: "Trending Games", href: "/trending-games" }
-				]
-			}
-		]
-	},
-	{
-		label: "Safety",
-		href: "/safety",
-		key: "safety",
-		is2Col: true,
-		decor: "/site/media/zycord/nav-safety-egg.webp",
-		decorStyle: { width: "126px", right: "-36px", bottom: "-44px" },
-		columns: [
-			{
-				title: "Resources",
-				links: [
-					{ label: "Family Center", href: "/safety-family-center" },
-					{ label: "Safety Library", href: "/safety-library" },
-					{ label: "Safety News", href: "/safety-news" },
-					{ label: "Teen Charter", href: "/safety-teen-charter" },
-					{ label: "Zycord Player's Guide", href: "/safety-players-guide" },
-					{ label: "Community Guidelines", href: "/guidelines", external: true }
-				]
-			},
-			{
-				title: "Hubs",
-				links: [
-					{ label: "Parent Hub", href: "/safety-parents" },
-					{ label: "Policy Hub", href: "/safety-policies" },
-					{ label: "Privacy Hub", href: "/safety-privacy" },
-					{ label: "Transparency Hub", href: "/safety-transparency" },
-					{ label: "Wellbeing Hub", href: "/safety-wellbeing" }
-				]
-			}
-		]
-	},
-	{
-		label: "Quests",
-		href: "/ads/quests",
-		key: "quests",
-		decor: "/site/media/zycord/nav-quests-trophy.webp",
-		decorStyle: { width: "128px", right: "-42px", bottom: "-46px" },
-		columns: [
-			{
-				title: "Resources",
-				links: [
-					{ label: "Advertising", href: "/ads/quests" },
-					{ label: "Success Stories", href: "/ads/quests-success-stories" },
-					{ label: "Quests FAQ", href: "/ads/quests-faq" }
-				]
-			}
-		]
-	},
-	{
-		label: "Support",
-		href: "/support",
-		key: "support",
-		decor: "/site/media/zycord/nav-support-nelly.webp",
-		decorStyle: { width: "136px", right: "-44px", bottom: "-46px" },
-		columns: [
-			{
-				title: "Resources",
-				links: [
-					{ label: "Help Center", href: "/support" },
-					{ label: "Feedback", href: "/feedback" },
-					{ label: "Submit a Request", href: "/support/requests/new" }
-				]
-			}
-		]
-	},
-	{
-		label: "Blog",
-		href: "/blog",
-		key: "blog",
-		isWide: true,
-		decor: "/site/media/zycord/nav-blog-cube.webp",
-		decorStyle: { width: "134px", right: "-42px", bottom: "-46px" },
-		columns: [
-			{
-				title: "Collections",
-				links: [
-					{ label: "Featured", href: "/blog" },
-					{ label: "Community", href: "/category/community" },
-					{ label: "Zycord HQ", href: "/category/company" },
-					{ label: "Engineering & Developers", href: "/category/engineering" },
-					{ label: "How to Zycord", href: "/category/how-to-discord" },
-					{ label: "Policy & Safety", href: "/category/safety" },
-					{ label: "Product & Features", href: "/category/product" }
-				]
-			}
-		]
-	},
 	{
 		label: "Developers",
 		href: "/developers",
@@ -136,8 +32,7 @@ export const NAVIGATION_ITEMS = [
 				]
 			}
 		]
-	},
-	{ label: "Careers", href: "/careers", key: "careers" }
+	}
 ];
 
 export function hasActiveSession() {

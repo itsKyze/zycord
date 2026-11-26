@@ -440,110 +440,6 @@
   // public/jsx/Navbar.jsx
   var NAVIGATION_ITEMS = [
     { label: "Download", href: "/download", key: "download" },
-    { label: "Nitro", href: "/nitro", key: "nitro" },
-    {
-      label: "Discover",
-      href: "/servers",
-      key: "discover",
-      decor: "/site/media/zycord/nav-discover-scroll.webp",
-      decorStyle: { width: "120px", right: "-38px", bottom: "-42px" },
-      columns: [
-        {
-          title: "Resources",
-          links: [
-            { label: "Server Directory", href: "/servers" },
-            { label: "Trending Games", href: "/trending-games" }
-          ]
-        }
-      ]
-    },
-    {
-      label: "Safety",
-      href: "/safety",
-      key: "safety",
-      is2Col: true,
-      decor: "/site/media/zycord/nav-safety-egg.webp",
-      decorStyle: { width: "126px", right: "-36px", bottom: "-44px" },
-      columns: [
-        {
-          title: "Resources",
-          links: [
-            { label: "Family Center", href: "/safety-family-center" },
-            { label: "Safety Library", href: "/safety-library" },
-            { label: "Safety News", href: "/safety-news" },
-            { label: "Teen Charter", href: "/safety-teen-charter" },
-            { label: "Zycord Player's Guide", href: "/safety-players-guide" },
-            { label: "Community Guidelines", href: "/guidelines", external: true }
-          ]
-        },
-        {
-          title: "Hubs",
-          links: [
-            { label: "Parent Hub", href: "/safety-parents" },
-            { label: "Policy Hub", href: "/safety-policies" },
-            { label: "Privacy Hub", href: "/safety-privacy" },
-            { label: "Transparency Hub", href: "/safety-transparency" },
-            { label: "Wellbeing Hub", href: "/safety-wellbeing" }
-          ]
-        }
-      ]
-    },
-    {
-      label: "Quests",
-      href: "/ads/quests",
-      key: "quests",
-      decor: "/site/media/zycord/nav-quests-trophy.webp",
-      decorStyle: { width: "128px", right: "-42px", bottom: "-46px" },
-      columns: [
-        {
-          title: "Resources",
-          links: [
-            { label: "Advertising", href: "/ads/quests" },
-            { label: "Success Stories", href: "/ads/quests-success-stories" },
-            { label: "Quests FAQ", href: "/ads/quests-faq" }
-          ]
-        }
-      ]
-    },
-    {
-      label: "Support",
-      href: "/support",
-      key: "support",
-      decor: "/site/media/zycord/nav-support-nelly.webp",
-      decorStyle: { width: "136px", right: "-44px", bottom: "-46px" },
-      columns: [
-        {
-          title: "Resources",
-          links: [
-            { label: "Help Center", href: "/support" },
-            { label: "Feedback", href: "/feedback" },
-            { label: "Submit a Request", href: "/support/requests/new" }
-          ]
-        }
-      ]
-    },
-    {
-      label: "Blog",
-      href: "/blog",
-      key: "blog",
-      isWide: true,
-      decor: "/site/media/zycord/nav-blog-cube.webp",
-      decorStyle: { width: "134px", right: "-42px", bottom: "-46px" },
-      columns: [
-        {
-          title: "Collections",
-          links: [
-            { label: "Featured", href: "/blog" },
-            { label: "Community", href: "/category/community" },
-            { label: "Zycord HQ", href: "/category/company" },
-            { label: "Engineering & Developers", href: "/category/engineering" },
-            { label: "How to Zycord", href: "/category/how-to-discord" },
-            { label: "Policy & Safety", href: "/category/safety" },
-            { label: "Product & Features", href: "/category/product" }
-          ]
-        }
-      ]
-    },
     {
       label: "Developers",
       href: "/developers",
@@ -573,8 +469,7 @@
           ]
         }
       ]
-    },
-    { label: "Careers", href: "/careers", key: "careers" }
+    }
   ];
   function hasActiveSession() {
     try {
@@ -885,48 +780,20 @@
   // public/jsx/Footer.jsx
   var FOOTER_COLUMNS = [
     {
-      title: "Product",
+      title: "Zycord",
       links: [
         { label: "Download", href: "/download" },
-        { label: "Nitro", href: "/nitro" },
-        { label: "Status", href: "/status" },
-        { label: "App Directory", href: "/application-directory" },
-        { label: "Gift Cards", href: "/gift-cards" }
-      ]
-    },
-    {
-      title: "Company",
-      links: [
-        { label: "About", href: "/company" },
-        { label: "Jobs", href: "/careers" },
-        { label: "Brand", href: "/branding" },
-        { label: "Newsroom", href: "/newsroom" }
-      ]
-    },
-    {
-      title: "Resources",
-      links: [
-        { label: "Support", href: "/support" },
-        { label: "Safety", href: "/safety" },
-        { label: "Blog", href: "/blog" },
-        { label: "Creators", href: "/creators" },
-        { label: "Community", href: "/community" },
         { label: "Developers", href: "/developers" },
-        { label: "Quests", href: "/ads/quests" },
-        { label: "Official 3rd Party Merch", href: "/merch" },
-        { label: "Feedback", href: "/feedback" }
+        { label: "Web Client", href: "/app" },
+        { label: "Status", href: "/status" }
       ]
     },
     {
-      title: "Policies",
+      title: "Legal & Privacy",
       links: [
         { label: "Terms", href: "/terms" },
         { label: "Privacy", href: "/privacy" },
-        { label: "Cookie Settings", href: "#cookie-settings", isCookieSettings: true },
-        { label: "Guidelines", href: "/guidelines" },
-        { label: "Acknowledgements", href: "/acknowledgements" },
-        { label: "Licenses", href: "/licenses" },
-        { label: "Company Information", href: "/company-information" }
+        { label: "Licenses", href: "/licenses" }
       ]
     }
   ];
